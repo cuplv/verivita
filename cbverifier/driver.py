@@ -9,6 +9,7 @@ import logging
 
 from counting.spec import SpecType, SpecSerializer, Spec, SpecStatus
 
+from ctrace import CTraceSerializer, ConcreteTrace
 
 def main():
     p = optparse.OptionParser()
@@ -39,7 +40,8 @@ def main():
     if (depth < 0): usage("%s must be positive!" % opts.depth)
 
     # Parse the trace file
-    # TODO
+    with open(opts.tracefile, "r") as infile:
+        ctrace = CTraceSerializer.read_trace(infile)
 
     # Parse the specification file
     with open(opts.specfile, "r") as infile:
