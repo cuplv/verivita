@@ -26,6 +26,9 @@ class Verifier:
     ERROR_STATE = "error"
 
     def __init__(self, ctrace, specs):
+        assert None != ctrace
+        assert None != specs
+        
         # concrete trace
         self.ctrace = ctrace
         # specification (list of rules)
@@ -44,13 +47,17 @@ class Verifier:
         # Initialize the transition system
         self._initialize_ts()
 
-    def _next(var):
-        # TODO
-        assert False
+    def _next(self, var):
+        assert var.is_symbol()
+        
+        base = "%s_next" % (var.symbol_name())
+        next_var = Symbol(base, BOOL)
+        
+        return next_var
 
-    def _get_evt_var(event):
-        if len(ci.args[0]) > 0:
-            args_suffix = ci.args.split("_")
+    def _get_evt_var(self, event):
+        if len(event.args[0]) > 0:
+            args_suffix = "_".join(event.args)
         else:
             args_suffix = []
 
@@ -59,9 +66,11 @@ class Verifier:
                                  args_suffix)
         return var_name
 
-    def _get_ci_var(ci):
+    def _get_ci_var(self, ci):
         # just take the first argument (the receiver)
         if len(ci.args[0]) > 0:
+            # TODO: check if the callin name already considers the
+            # Boolean arguments
             args_suffix = ci.args[0]
         else:
             args_suffix = []
@@ -71,8 +80,8 @@ class Verifier:
                                  args_suffix)
         return var_name
     
-    def _get_ci_key(ci):
-        return self.get_ci_var(ci)
+    def _get_ci_key(self, ci):
+        return self._get_ci_var(ci)
         
     def _initialize_ts(self):
         """Initialize ts_vars and ts_trans."""
@@ -108,12 +117,12 @@ class Verifier:
             for cb in event.cb:
                 for ci in cb.ci:
                     ci_var = Symbol(self._get_ci_var(ci), BOOL)
-                    if ci_var not in self.var: self.ts_var.add(ci_var)
+                    if ci_var not in self.ts_var: self.ts_var.add(ci_var)
                     # Different ci s instance can have the same
                     # variable
                     self.msgs_to_var[ci] = ci_var
 
-        self.ts_error = Symbol(ERROR_STATE, BOOL)
+        self.ts_error = Symbol(Verifier.ERROR_STATE, BOOL)
     
         
     def _init_ts_init(self):
@@ -140,9 +149,10 @@ class Verifier:
             msg_enabled[event] = 0 # unknown
             for cb in event.cb:
                 for ci in cb.ci:
-                    key = self.get_ci_key(ci)
+                    key = self._get_ci_key(ci)
+
                     if (key not in msg_enabled):
-                        msg_enabled[ci] = 0 # unknown
+                        msg_enabled[key] = 0 # unknown
 
         return msg_enabled
 
@@ -153,13 +163,13 @@ class Verifier:
         bug_ci = None
         
         # 3-valued represenation (0 unknown, -1 false, 1 true)
-        msg_enabled = sefl_get_enabled_store()
+        msg_enabled = self._get_enabled_store()
 
         # The event must be enabled
         msg_enabled[src_event] = 1
         guards = [self.msgs_to_var[src_event]]
 
-        evt_matched_rules = self._find_matching_rules_evt(evt)
+        evt_matched_rules = self._find_matching_rules_evt(src_event)
         
         # Apply the effect of the event.
         #
@@ -173,31 +183,33 @@ class Verifier:
 
 
         # Process the sequence of callins of the event
-        for ci in event.ci:
-            ci_key = _get_ci_key(ci)
-            
-            if (msg_enabled[ci_key] == 0):
-                # the ci must have been enabled in the state of the
-                # system if neiter the event itself nor a previous
-                # callin enabled it.
-                guards.append(self.msgs_to_var[src_event])
-            elif (msg_enabled[ci_key] == -1):
-                # The ci is disabled, and we are trying to invoke it
-                # This results in an error
-                bug_ci = ci_key
-
-                # We stop at the first bug, all the subsequent
-                # inferences would be bogus
-                break
-            else:
-                # enabled by some previous message
-                assert msg_enabled[ci_key] == 1
+        
+        for cb in src_event.cb:
+            for ci in cb.ci:
+                ci_key = self._get_ci_key(ci)
                 
-            # find the rules that are matched by ci            
-            ci_matching = self._find_matching_rules_ci(ci)
-            # Apply the effect for the callins
-            for (env, rule) in ci_matching:
-                self._compute_effect(env, rule, msg_enabled)
+                if (msg_enabled[ci_key] == 0):
+                    # the ci must have been enabled in the state of the
+                    # system if neiter the event itself nor a previous
+                    # callin enabled it.
+                    guards.append(self.msgs_to_var[ci])
+                elif (msg_enabled[ci_key] == -1):
+                    # The ci is disabled, and we are trying to invoke it
+                    # Thisf results in an error
+                    bug_ci = ci_key
+
+                    # We stop at the first bug, all the subsequent
+                    # inferences would be bogus
+                    break
+                else:
+                    # enabled by some previous message
+                    assert msg_enabled[ci_key] == 1
+
+                # find the rules that are matched by ci            
+                ci_matching = self._find_matching_rules_ci(ci)
+                # Apply the effect for the callins
+                for (env, rule) in ci_matching:
+                    self._compute_effect(env, rule, msg_enabled)
 
         if None != bug_ci:
             # Safe transition
@@ -237,7 +249,7 @@ class Verifier:
             evt_encoding = self._encode_evt(evt)
             events_encoding.append(evt_encoding)
         
-        self.ts_trans = Or(spec_encoding)
+        self.ts_trans = Or(events_encoding)
             
     def _build_env(self, env, formals, actuals):
         """ Add to env the matching between formal and 
@@ -308,7 +320,7 @@ class Verifier:
                 # Need to match a cb in the trace with a cb in
                 # the rule                
                 for cb in evt.cb:
-                    if (not (rule.cb == evt.cb and
+                    if (not (rule.cb == cb.symbol and
                          len(rule.cb_args) == len(cb.args))):
                         continue
 
@@ -344,9 +356,9 @@ class Verifier:
                 continue
             env = self._build_env(rule.src_args, ci.args)
             
-            matching_evt.append(rule, env)
+            matching_ci.append(rule, env)
 
-        return matching_evt
+        return matching_ci
 
     def _dst_match(self, env, dst_symbol, dst_args, rule):
         if dst_symbol != rule.dst: return False
@@ -402,7 +414,7 @@ class Verifier:
             assert rule.specType == Allow or rule.specType == Disallow
 
             for conc_callin in self._find_callin(env, rule):
-                ci_key = _get_ci_key(conc_callin)
+                ci_key = self._get_ci_key(conc_callin)
                 if (rule.specType == Allow):
                     msg_enabled[ci_key] = 1
                 else:

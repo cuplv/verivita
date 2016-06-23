@@ -51,7 +51,7 @@ def main():
     # Call the verifier
     verifier = Verifier(ctrace, specs)
     
-    cex = verifier.find_bug()
+    cex = verifier.find_bug(depth)
 
     # TODO serialize the result and the cex for inspection
 
