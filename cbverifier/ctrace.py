@@ -22,8 +22,9 @@ class CCallin:
     """ Concrete callin.
     """
     def __init__(self, symbol, ci_type):
-        # object 
-        self.symbol = None
+        # object
+        assert symbol != None        
+        self.symbol = symbol
         
         # list of all the object arguments
         self.args = []

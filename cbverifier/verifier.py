@@ -81,7 +81,7 @@ class Verifier:
 
     def _get_ci_var(self, ci):
         # just take the first argument (the receiver)
-        if len(ci.args[0]) > 0:
+        if len(ci.args) > 0:
             # TODO: check if the callin name already considers the
             # Boolean arguments
             args_suffix = ci.args[0]
@@ -149,7 +149,7 @@ class Verifier:
 
         In the initial state all the events and callins are enabled.
         """
-
+        
         # The initial state is safe
         self.ts_init = Not(self.ts_error)
 
@@ -157,6 +157,8 @@ class Verifier:
         for v in self.ts_vars:
             self.ts_init = And(self.ts_init, v)
 
+        logging.debug("Initial state is %s" % str(self.ts_init))
+            
     def _get_enabled_store(self):
         """ Return a map from messages to an internal state.
 
@@ -172,12 +174,13 @@ class Verifier:
 
                     if (key not in msg_enabled):
                         msg_enabled[key] = 0 # unknown
-
+                        
         return msg_enabled
 
     def _encode_evt(self, src_event):
         """Encode the transition relation of a single event."""
-
+        logging.debug("Encoding event %s" % src_event)
+        
         # First ci that cannot be called
         bug_ci = None
 
@@ -256,12 +259,14 @@ class Verifier:
             # taking this transition ends in an error
             evt_trans = self._next(self.ts_error)
 
+        logging.debug("Event %s: trans is %s" % (src_event, str(evt_trans)))
+
         return evt_trans
 
     def _init_ts_trans(self):
         """Initialize the ts trans."""
-
-        # a. Encode each event in the trace
+        logging.debug("Encoding the trans...")
+        
         events_encoding = []
         for evt in self.ctrace.events:
             evt_encoding = self._encode_evt(evt)
@@ -328,12 +333,12 @@ class Verifier:
                      len(rule.src_args) == len(evt.args))):
                 # skip rule if it does not match the event
                 continue
-            env = self._build_env(rule.src_args, evt.args)
+            env = self._build_env(env, rule.src_args, evt.args)
 
             if rule.cb == None:
                 # no callback in the rule, then we already have a
                 # match
-                matching_rules.append(rule, env)
+                matching_rules.append((env, rule))
             else:
                 # Need to match a cb in the trace with a cb in
                 # the rule
@@ -343,13 +348,14 @@ class Verifier:
                         continue
 
                     # match the arguments
-                    env_cb = self._build_env(rule.cb_args, cb.args)
+                    env_cb = {}
+                    env_cb = self._build_env(env_cb, rule.cb_args, cb.args)
                     merged_env = self._merge_env(env, env_cb)
 
                     # the rule does not match
                     if None == merged_env: continue
 
-                    matching_rules.append(rule, merged_env)
+                    matching_rules.append((merged_env, rule))
 
         return matching_rules
 
@@ -372,18 +378,43 @@ class Verifier:
             if (not (rule.src == ci.symbol and
                      len(rule.src_args) == len(ci.args))):
                 continue
-            env = self._build_env(rule.src_args, ci.args)
+            env = self._build_env(env, rule.src_args, ci.args)
 
-            matching_ci.append(rule, env)
+            matching_ci.append((env, rule))
 
         return matching_ci
 
     def _dst_match(self, env, dst_symbol, dst_args, rule):
-        if dst_symbol != rule.dst: return False
-        if (actual,formal) in zip(dst_args, rule.dst_args):
+        assert None != dst_symbol        
+
+        logging.debug("DST" + str(dst_args))
+        logging.debug("\n--- Matching --- \n" \
+                      "Dst symbol: %s [%s]\n"
+                      "Rule (%s[%s], %s[%s], %s[%s])\n" \
+                      "Environment %s" \
+                      % (dst_symbol,
+                         ",".join(dst_args),
+                         rule.src, ",".join(rule.src_args),
+                         rule.cb, ",".join(rule.cb_args),                         
+                         rule.dst, ",".join(rule.dst_args),
+                         str(env)))
+        
+        if dst_symbol != rule.dst:
+            logging.debug("Does not match: %s != %s" \
+                          % (dst_symbol, rule.dst))
+            return False
+        if len(dst_args) != len(rule.dst_args):
+            logging.debug("Does not match (length) " \
+                          "%d != %d" \
+                          % (len(dst_args), len(rule.dst_args)))
+        for (actual,formal) in zip(dst_args, rule.dst_args):
             if formal in env:
                 if actual != env[formal]:
+                    logging.debug("Does not match: %s != %s" \
+                                  % (actual, env[formal]))
                     return False
+
+        logging.debug("Matched!")
         return True
 
     def _find_events(self, env, rule):
@@ -392,6 +423,7 @@ class Verifier:
         The match is not unique and may be partial (since some
         parameters may be free)
         """
+        logging.debug("Matching EVENTs...")        
         matching_events = []
         for evt in self.ctrace.events:
             match = self._dst_match(env, evt.symbol, evt.args, rule)
@@ -405,35 +437,37 @@ class Verifier:
         The match is not unique and may be partial (since some
         parameters may be free)
         """
+        logging.debug("Matching CIs...")
         matching_ci = []
         for evt in self.ctrace.events:
             for cb in evt.cb:
                 for ci in cb.ci:
-                    match = self._dst_match(env, ci.symbol, ci.args,
-                                            rule)
-                    if match: matching_ci.append(ci)
+                    assert None != ci.symbol
+                    match = self._dst_match(env, ci.symbol, ci.args, rule)
+                    if match:
+                        matching_ci.append(ci)
         return matching_ci
 
     def _compute_effect(self, env, rule, msg_enabled):
         """ Given an environment and a rule,
         changes msg_enabled applying the rule.
         """
-        if (rule.specType == Enable or rule.specType == Disable):
+        if (rule.specType == SpecType.Enable or rule.specType == SpecType.Disable):
             # Effect on the events
             # Find all the concrete events that are affected by the
             # rule.
             for conc_evt in self._find_events(env, rule):
-                if (rule.specType == Enable):
+                if (rule.specType == SpecType.Enable):
                     msg_enabled[conc_evt] = 1
                 else:
                     msg_enabled[conc_evt] = -1
         else:
             # Effect on the callin
-            assert rule.specType == Allow or rule.specType == Disallow
+            assert rule.specType == SpecType.Allow or rule.specType == SpecType.Disallow
 
-            for conc_callin in self._find_callin(env, rule):
+            for conc_callin in self._find_callins(env, rule):
                 ci_key = self._get_ci_key(conc_callin)
-                if (rule.specType == Allow):
+                if (rule.specType == SpecType.Allow):
                     msg_enabled[ci_key] = 1
                 else:
                     msg_enabled[ci_key] = -1
