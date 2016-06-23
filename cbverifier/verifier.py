@@ -23,7 +23,8 @@ from ctrace import ConcreteTrace
 class Verifier:
     ENABLED_VAR_PREF  = "enabled_state"
     ALLOWED_VAR_PREF  = "allowed_state"
-    
+    ERROR_STATE = "error"
+
     def __init__(self, ctrace, specs):
         # concrete trace
         self.ctrace = ctrace
@@ -34,14 +35,16 @@ class Verifier:
         self.ts_vars = None
         self.ts_init = None        
         self.ts_trans = None
-
+        # reachability property
+        self.ts_error = None
+        
         # Messages (event or ci) to var map
         self.msgs_to_var = {}
 
         # Initialize the transition system
         self._init_ts()
 
-    def _get_next(var):
+    def _next(var):
         # TODO
         assert False
 
@@ -87,7 +90,7 @@ class Verifier:
                     # variable
                     self.msgs_to_var[ci, ci_var]
 
-        assert False
+        self.ts_error = Symbol(ERROR_STATE, BOOL)
 
     def _get_ci_key(ci):
         return self.get_ci_var(ci)
@@ -122,8 +125,11 @@ class Verifier:
 
         In the initial state all the events and callins are enabled.
         """
-        self.ts_init = TRUE
 
+        # The initial state is safe
+        self.ts_init = Not(self.ts_error)
+
+        # all the messages are enabled
         for v in self.ts_var:
             self.ts_init = And(self.ts_init, v)
             
@@ -202,12 +208,13 @@ class Verifier:
                 effects.append(not(self._get_next(self.msgs_to_var[msg])))
 
         if len(bug_ci) == 0:
-            evt_trans = And(And(guards), And(effects))
+            # safe transition
+            next_effects = [self._next(l) for l in effects]            
+            evt_trans = And([And(guards), And(next_effects),
+                             self._next(Not(self.ts_error))])
         else:
-            # TODO add error symbol
-            evt_trans = False
-
-        assert evt_trans
+            # taking this transition ends in an error
+            evt_trans = self._next(self.ts_error)
 
     def _build_env(self, env, formals, actuals):
         """ Add to env the matching between formal and 
