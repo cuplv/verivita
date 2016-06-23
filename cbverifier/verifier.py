@@ -13,6 +13,8 @@ The possible permutation of the events depend on the enabled/disabled
 status of events/callins.
 """
 
+import logging
+
 from pysmt.environment import reset_env
 from pysmt.typing import BOOL
 from pysmt.shortcuts import Symbol, TRUE, FALSE
@@ -21,7 +23,6 @@ from pysmt.shortcuts import Not, And, Or, Implies, Iff, Xor
 from pysmt.shortcuts import Solver
 from pysmt.solvers.solver import Model
 from pysmt.logics import QF_BOOL
-
 
 from counting.spec import SpecType, Spec, SpecStatus
 
@@ -38,6 +39,8 @@ class Verifier:
         assert None != ctrace
         assert None != specs
 
+        logging.debug("Creating verifier...")
+        
         # pysmt stuff
         self.env = reset_env()
         self.mgr = self.env.formula_manager
@@ -66,10 +69,10 @@ class Verifier:
         return Helper.get_next_var(var, self.mgr)
 
     def _get_evt_var(self, event):
-        if len(event.args[0]) > 0:
+        if len(event.args) > 0:
             args_suffix = "_".join(event.args)
         else:
-            args_suffix = []
+            args_suffix = ""
 
         var_name = "%s_%s_%s" % (Verifier.ENABLED_VAR_PREF,
                                  event.symbol,
@@ -83,7 +86,7 @@ class Verifier:
             # Boolean arguments
             args_suffix = ci.args[0]
         else:
-            args_suffix = []
+            args_suffix = ""
 
         var_name = "%s_%s_%s" % (Verifier.ALLOWED_VAR_PREF,
                                  ci.symbol,
@@ -95,6 +98,8 @@ class Verifier:
 
     def _initialize_ts(self):
         """Initialize ts_vars and ts_trans."""
+        logging.debug("Encode the ts...")
+        
         self._init_ts_var()
         self._init_ts_init()
         self._init_ts_trans()
@@ -113,7 +118,8 @@ class Verifier:
         "enabled_state_evt_o1_..._on".
         """
 
-        self.ts_var = set()
+        logging.debug("Create variable...")        
+        self.ts_vars = set()
         self.msgs_to_var = {}
 
         # Process the trace
@@ -121,16 +127,19 @@ class Verifier:
             # event variable
             evt_var_name = self._get_evt_var(event)
             evt_var = Symbol(evt_var_name, BOOL)
-            self.ts_var.add(evt_var)
+            self.ts_vars.add(evt_var)
             self.msgs_to_var[event] = evt_var
 
+            logging.debug("Event %s: create variable %s" % (event, evt_var_name))
+            
             for cb in event.cb:
                 for ci in cb.ci:
                     ci_var = Symbol(self._get_ci_var(ci), BOOL)
-                    if ci_var not in self.ts_var: self.ts_var.add(ci_var)
+                    if ci_var not in self.ts_vars: self.ts_vars.add(ci_var)
                     # Different ci s instance can have the same
                     # variable
                     self.msgs_to_var[ci] = ci_var
+                    logging.debug("Callin %s for ci %s" % (ci, str(ci_var)))                    
 
         self.ts_error = Symbol(Verifier.ERROR_STATE, BOOL)
 
@@ -145,7 +154,7 @@ class Verifier:
         self.ts_init = Not(self.ts_error)
 
         # all the messages are enabled
-        for v in self.ts_var:
+        for v in self.ts_vars:
             self.ts_init = And(self.ts_init, v)
 
     def _get_enabled_store(self):
@@ -193,7 +202,6 @@ class Verifier:
 
 
         # Process the sequence of callins of the event
-
         for cb in src_event.cb:
             for ci in cb.ci:
                 ci_key = self._get_ci_key(ci)
@@ -449,14 +457,14 @@ class Verifier:
         error_condition = []
         for i in range(steps + 1):
             if (i == 0):
-                f_at_i = self.helper.get_formula_at_i(self.ts_var,
+                f_at_i = self.helper.get_formula_at_i(self.ts_vars,
                                                       self.ts_init, i)
             else:
-                f_at_i = self.helper.get_formula_at_i(self.ts_var,
+                f_at_i = self.helper.get_formula_at_i(self.ts_vars,
                                                       self.ts_trans, i)
             solver.add_assertion(f_at_i)
 
-            error_condition = self.helper.get_formula_at_i(self.ts_var,
+            error_condition = self.helper.get_formula_at_i(self.ts_vars,
                                                            self.ts_error,
                                                            i)
 

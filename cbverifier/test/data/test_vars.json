@@ -1,0 +1,63 @@
+{
+    "events" : [
+        {"initial" : "true"},
+        {
+            "initial" : "false",
+            "eventIdentifier": { "callbackField": "",
+                                 "targetField": "t1",
+                                 "what": 0
+                               },
+            "concreteArgs" : [""],
+            "callbackObjects": []
+        },
+        {
+            "initial" : "false",
+            "eventIdentifier": { "callbackField": "",
+                                 "targetField": "t1",
+                                 "what": 0
+                               },
+            "concreteArgs" : ["name@1", "name@2", "name@3"],
+            "callbackObjects": []
+        },
+        {
+            "initial" : "false",
+            "eventIdentifier": { "callbackField": "",
+                                 "targetField": "t1",
+                                 "what": 0
+                               },
+            "concreteArgs" : [""],
+            "callbackObjects": [
+                {
+                    "id" : "cbEvent0",
+                    "cbObjects" : [],
+                    "callinList" : []
+                }
+            ]
+        },
+        {
+            "initial" : "false",
+            "eventIdentifier": { "callbackField": "",
+                                 "targetField": "t1",
+                                 "what": 0
+                               },
+            "concreteArgs" : [""],
+            "callbackObjects": [
+                {
+                    "id" : "cbEvent0",
+                    "cbObjects" : [],
+                    "callinList" : [
+                        {"name": "callin_a", "signature": "()", "type": "type_a",
+                         "concreteArgs": ["obj@1"],
+                         "booleanArgs": []},
+                        {"name": "callin_a", "signature": "()", "type": "type_a",
+                         "concreteArgs": ["obj@1","obj@2"],
+                         "booleanArgs": []},
+                        {"name": "callin_a", "signature": "()", "type": "type_a",
+                         "concreteArgs": ["obj@2","obj@1"],
+                         "booleanArgs": []}                        
+                    ]
+                }
+            ]
+        }
+    ]
+}
