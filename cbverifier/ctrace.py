@@ -9,21 +9,24 @@ from counting.trace import LetterType, TraceSerializer
 class CCallback:
     """ Represent a concrete callback (cb)
     """
-    def __init__(self, obj, obj_type):
+    def __init__(self):
         # object involved in the cb
-        self.obj = obj
-        self.obj_type = obj_type
+        self.args = []
+        self.cb_types = []
+        
+        # list of callins
+        self.ci = []
 
 class CCallin:
     """ Concrete callin.
     """
-    def __init__(self, symbol, receiver, ci_type):
+    def __init__(self, symbol, ci_type):
         # object 
         self.symbol = None
-        # Receiver object
-        self.receiver = None        
+        
         # list of all the object arguments
-        self.obj_args = []
+        self.args = []
+
         # type
         self.ci_type = None
         
@@ -33,16 +36,17 @@ class CEvent:
     def __init__(self, symbol):
         # name of the event
         self.symbol = symbol
+
+        # arguments of the event
+        self.args = []
+        
         # list of callbacks
         self.cb = []
-        # list of callins
-        self.ci = []
     
 class ConcreteTrace:
     
     def __init__(self):
         self.events = []
-        self.objects = set()
 
 class CTraceSerializer:
     
@@ -60,14 +64,12 @@ class CTraceSerializer:
             if (event_json["initial"] == "true"): continue
 
             event = CTraceSerializer.read_event(event_json)
-            
 
 
     @staticmethod
     def read_event(data):
         """Read a single event."""
-        evt_field = ["callbackObjects", "callinList",
-                     "eventIdentifier"]
+        evt_field = ["callbackObjects", "eventIdentifier"]
         TraceSerializer.check_keys(data, evt_field)
 
         # read the event
@@ -79,25 +81,30 @@ class CTraceSerializer:
             if cb_json != "null":
                 cb = CTraceSerializer.read_cb(cb_json)
                 event.cb.append(cb)
-
-        # read the list of callins
-        for ci_json in data["callinList"]:
-            ci = CTraceSerializer.read_ci(ci_json)            
-            event.ci.append(cb)
         
         return event
 
     @staticmethod
     def read_cb(cb_json):
         """Read a single callback."""
-        match = re.search('([a-zA-Z\. \(\)]+)@([0-9]+)', cb_json)
-        assert match
+        TraceSerializer.check_keys(cb_json, ["cbObjects", "callinList"])
 
-        obj_type = match.group(1)
-        obj = match.group(2)
+        cb = CCallback()
 
-        cb = CCallback(obj, obj_type)
-        
+        # Read the cb objects
+        for obj_str in cb_json["cbObjects"]:        
+            match = re.search('([a-zA-Z\. \(\)]+)@([0-9]+)', obj_str)
+            assert match
+            obj_type = match.group(1)
+            obj = match.group(2)
+            cb.args.append(obj)
+            cb.cb_types.append(obj_type)
+
+        # read the list of callins
+        for ci_json in data["callinList"]:
+            ci = CTraceSerializer.read_ci(ci_json)            
+            cb.ci.append(cb)
+                                   
         return cb
 
     @staticmethod
@@ -112,11 +119,9 @@ class CTraceSerializer:
 
         symbol = TraceSerializer._tr_get_callin_key(ci_json)
         ci_type = ci_json["type"]
-        # TODO
-        receiver = None
-        ci = CCallin(symbol, receiver, ci_type)
+        ci = CCallin(symbol, ci_type)
 
         for obj in ci_json["concreteArgs"]:
-            ci.obj_args.append(obj)        
+            ci.args.append(obj)        
         
         return ci
