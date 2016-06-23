@@ -13,12 +13,21 @@ The possible permutation of the events depend on the enabled/disabled
 status of events/callins.
 """
 
+from pysmt.environment import reset_env
 from pysmt.typing import BOOL
 from pysmt.shortcuts import Symbol, TRUE, FALSE
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, Xor
 
+from pysmt.shortcuts import Solver
+from pysmt.solvers.solver import Model
+from pysmt.logics import QF_BOOL
+
+
 from counting.spec import SpecType, Spec, SpecStatus
+
 from ctrace import ConcreteTrace
+from helpers import Helper
+
 
 class Verifier:
     ENABLED_VAR_PREF  = "enabled_state"
@@ -28,7 +37,12 @@ class Verifier:
     def __init__(self, ctrace, specs):
         assert None != ctrace
         assert None != specs
-        
+
+        # pysmt stuff
+        self.env = reset_env()
+        self.mgr = self.env.formula_manager
+        self.helper = Helper(self.env)
+
         # concrete trace
         self.ctrace = ctrace
         # specification (list of rules)
@@ -36,11 +50,11 @@ class Verifier:
 
         # internal representation of the transition system
         self.ts_vars = None
-        self.ts_init = None        
+        self.ts_init = None
         self.ts_trans = None
         # reachability property
         self.ts_error = None
-        
+
         # Map from concrete messages to variables in the encoding
         self.msgs_to_var = {}
 
@@ -49,11 +63,7 @@ class Verifier:
 
     def _next(self, var):
         assert var.is_symbol()
-        
-        base = "%s_next" % (var.symbol_name())
-        next_var = Symbol(base, BOOL)
-        
-        return next_var
+        return Helper.get_next_var(var, self.mgr)
 
     def _get_evt_var(self, event):
         if len(event.args[0]) > 0:
@@ -79,14 +89,14 @@ class Verifier:
                                  ci.symbol,
                                  args_suffix)
         return var_name
-    
+
     def _get_ci_key(self, ci):
         return self._get_ci_var(ci)
-        
+
     def _initialize_ts(self):
         """Initialize ts_vars and ts_trans."""
         self._init_ts_var()
-        self._init_ts_init()        
+        self._init_ts_init()
         self._init_ts_trans()
 
     def _init_ts_var(self):
@@ -99,13 +109,13 @@ class Verifier:
         is the receiver.
 
         For each event "evt" with objects "o1, ..., on" appearing in
-        the event's arguments, we have a Boolean variable 
+        the event's arguments, we have a Boolean variable
         "enabled_state_evt_o1_..._on".
         """
 
         self.ts_var = set()
         self.msgs_to_var = {}
-        
+
         # Process the trace
         for event in self.ctrace.events:
             # event variable
@@ -123,8 +133,8 @@ class Verifier:
                     self.msgs_to_var[ci] = ci_var
 
         self.ts_error = Symbol(Verifier.ERROR_STATE, BOOL)
-    
-        
+
+
     def _init_ts_init(self):
         """Initialize the ts init.
 
@@ -136,7 +146,7 @@ class Verifier:
 
         # all the messages are enabled
         for v in self.ts_var:
-            self.ts_init = And(self.ts_init, v)            
+            self.ts_init = And(self.ts_init, v)
 
     def _get_enabled_store(self):
         """ Return a map from messages to an internal state.
@@ -157,11 +167,11 @@ class Verifier:
         return msg_enabled
 
     def _encode_evt(self, src_event):
-        """Encode the transition relation of a single event."""        
+        """Encode the transition relation of a single event."""
 
         # First ci that cannot be called
         bug_ci = None
-        
+
         # 3-valued represenation (0 unknown, -1 false, 1 true)
         msg_enabled = self._get_enabled_store()
 
@@ -170,24 +180,24 @@ class Verifier:
         guards = [self.msgs_to_var[src_event]]
 
         evt_matched_rules = self._find_matching_rules_evt(src_event)
-        
+
         # Apply the effect of the event.
         #
         # This is consistent with the semantic
         # that applies the effect of the event at the beginning if it,
         # and not in the middle of other callbacks or at the end of
-        # the event execution.        
+        # the event execution.
         for (env, rule) in evt_matched_rules:
             # Apply the effect of the event
             self._compute_effect(env, rule, msg_enabled)
 
 
         # Process the sequence of callins of the event
-        
+
         for cb in src_event.cb:
             for ci in cb.ci:
                 ci_key = self._get_ci_key(ci)
-                
+
                 if (msg_enabled[ci_key] == 0):
                     # the ci must have been enabled in the state of the
                     # system if neiter the event itself nor a previous
@@ -205,7 +215,7 @@ class Verifier:
                     # enabled by some previous message
                     assert msg_enabled[ci_key] == 1
 
-                # find the rules that are matched by ci            
+                # find the rules that are matched by ci
                 ci_matching = self._find_matching_rules_ci(ci)
                 # Apply the effect for the callins
                 for (env, rule) in ci_matching:
@@ -248,11 +258,11 @@ class Verifier:
         for evt in self.ctrace.events:
             evt_encoding = self._encode_evt(evt)
             events_encoding.append(evt_encoding)
-        
+
         self.ts_trans = Or(events_encoding)
-            
+
     def _build_env(self, env, formals, actuals):
-        """ Add to env the matching between formal and 
+        """ Add to env the matching between formal and
         actual parameters.
         """
         assert len(formals) == len(actuals)
@@ -266,7 +276,7 @@ class Verifier:
         """ Merge env2 into env1.
         Return a new env obtained merging env2 into env1.
 
-        If the actual value for a parameter in env1 and 
+        If the actual value for a parameter in env1 and
         env2 differs than the function returns None.
         """
         copy_env = {}
@@ -282,13 +292,13 @@ class Verifier:
             else:
                 copy_env[var] = val
         return copy_env
-        
+
     def _find_matching_rules_evt(self, evt):
         """ Find all the rules that match an event.
-        
+
         A rule:
         src(x1, ..., xn) >> cb(y1, ..., yl) => ...
-        
+
         Matches the event evt:
           - evt_symbol, (o1, ..., on)
           - cb_symbol, (c1, ..., cl)
@@ -297,13 +307,13 @@ class Verifier:
         arguments is the same and if x_j = y_k then o_j = c_k
 
         For each matched rule, the function also builds an
-        environment that stores how formal parameters in the rule 
+        environment that stores how formal parameters in the rule
         are instantiated by the event.
         """
 
         matching_rules = []
         for rule in self.specs:
-            # Environment: map from vars to concrete values            
+            # Environment: map from vars to concrete values
             env = {}
 
             if (not (rule.src == evt.symbol and
@@ -318,7 +328,7 @@ class Verifier:
                 matching_rules.append(rule, env)
             else:
                 # Need to match a cb in the trace with a cb in
-                # the rule                
+                # the rule
                 for cb in evt.cb:
                     if (not (rule.cb == cb.symbol and
                          len(rule.cb_args) == len(cb.args))):
@@ -336,10 +346,10 @@ class Verifier:
         return matching_rules
 
     def _find_matching_rules_ci(self, ci):
-        """ Find all the rules that match a callin. 
+        """ Find all the rules that match a callin.
 
         A rule: src(x1, ..., xn) => ...
-        
+
         Matches the callin ci:
           - ci_symbol, (o1, ..., on)
 
@@ -348,14 +358,14 @@ class Verifier:
 
         """
         matching_ci = []
-        
+
         for rule in self.specs:
             env = {} # map from vars to concrete values
             if (not (rule.src == ci.symbol and
                      len(rule.src_args) == len(ci.args))):
                 continue
             env = self._build_env(rule.src_args, ci.args)
-            
+
             matching_ci.append(rule, env)
 
         return matching_ci
@@ -367,7 +377,7 @@ class Verifier:
                 if actual != env[formal]:
                     return False
         return True
-    
+
     def _find_events(self, env, rule):
         """ Find all the concrete events that match the dst of the rule.
 
@@ -393,9 +403,9 @@ class Verifier:
                 for ci in cb.ci:
                     match = self._dst_match(env, ci.symbol, ci.args,
                                             rule)
-                    if match: matching_ci.append(ci)        
+                    if match: matching_ci.append(ci)
         return matching_ci
-        
+
     def _compute_effect(self, env, rule, msg_enabled):
         """ Given an environment and a rule,
         changes msg_enabled applying the rule.
@@ -419,6 +429,11 @@ class Verifier:
                     msg_enabled[ci_key] = 1
                 else:
                     msg_enabled[ci_key] = -1
+
+    def _build_trace(self, solver):
+        """Extract the trace from the satisfying assignment."""
+        # TODO Implement the trace reading
+        return []
         
     def find_bug(self, steps):
         """Explore the system up to k steps.
@@ -428,7 +443,31 @@ class Verifier:
         Returns None if no bugs where found up to k or a
         counterexample otherwise (a list of events).
         """
-        assert False
 
-        #
-        return None
+        solver = Solver(name='z3', logic=QF_BOOL)
+
+        error_condition = []
+        for i in range(steps + 1):
+            if (i == 0):
+                f_at_i = self.helper.get_formula_at_i(self.ts_var,
+                                                      self.ts_init, i)
+            else:
+                f_at_i = self.helper.get_formula_at_i(self.ts_var,
+                                                      self.ts_trans, i)
+            solver.add_assertion(f_at_i)
+
+            error_condition = self.helper.get_formula_at_i(self.ts_var,
+                                                           self.ts_error,
+                                                           i)
+
+        # error condition in at least one of the (k-1)-th states
+        solver.add_assertion(Or(error_condition))
+
+        res = solver.solve()
+        if (solver.solve()):
+            trace = self._build_trace(solver)
+            
+            return trace
+        else:
+            # No bugs found
+            return None
