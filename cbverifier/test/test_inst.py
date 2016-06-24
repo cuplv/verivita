@@ -305,3 +305,18 @@ class TestInst(unittest.TestCase):
         v = Verifier(ctrace, specs)
         cex = v.find_bug(1)
         self.assertTrue(None != cex)
+
+    def testBmc_04(self):
+        # A disallow c1
+        # B execute c1
+        ctrace = TestInst.create_ctrace(
+            [
+                ("B", [], [("cb",[],[("c1",[])])]),
+                ("A", [], [])                
+            ])
+        specs = [TestInst.new_spec((SpecType.Disallow, "A", None,
+                                    None, None, "c1", None))]
+        v = Verifier(ctrace, specs)
+        cex = v.find_bug(1)
+        self.assertTrue(None != cex)
+        
