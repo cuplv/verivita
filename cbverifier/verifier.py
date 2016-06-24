@@ -40,7 +40,7 @@ class Verifier:
         assert None != specs
 
         logging.debug("Creating verifier...")
-        
+
         # pysmt stuff
         self.env = reset_env()
         self.mgr = self.env.formula_manager
@@ -60,7 +60,7 @@ class Verifier:
 
         # Map from concrete messages to variables in the encoding
         self.msgs_to_var = {}
-        
+
         # Initialize the transition system
         self._initialize_ts()
 
@@ -78,7 +78,7 @@ class Verifier:
                                  event.symbol,
                                  args_suffix)
         return var_name
-        
+
     def _get_ci_var(self, ci):
         # just take the first argument (the receiver)
         if len(ci.args) > 0:
@@ -99,7 +99,7 @@ class Verifier:
     def _initialize_ts(self):
         """Initialize ts_vars and ts_trans."""
         logging.debug("Encode the ts...")
-        
+
         self._init_ts_var()
         self._init_ts_init()
         self._init_ts_trans()
@@ -118,7 +118,7 @@ class Verifier:
         "enabled_state_evt_o1_..._on".
         """
 
-        logging.debug("Create variable...")        
+        logging.debug("Create variable...")
         self.ts_vars = set()
         self.msgs_to_var = {}
 
@@ -132,7 +132,7 @@ class Verifier:
             self.msgs_to_var[event] = evt_var
 
             logging.debug("Event %s: create variable %s" % (event, evt_var_name))
-            
+
             for cb in event.cb:
                 for ci in cb.ci:
                     ci_var = Symbol(self._get_ci_var(ci), BOOL)
@@ -141,7 +141,7 @@ class Verifier:
                     # variable
                     key = self._get_ci_key(ci)
                     self.msgs_to_var[key] = ci_var
-                    logging.debug("Callin %s for ci %s" % (ci, str(ci_var)))                    
+                    logging.debug("Callin %s for ci %s" % (ci, str(ci_var)))
 
         self.ts_error = Symbol(Verifier.ERROR_STATE, BOOL)
 
@@ -151,7 +151,7 @@ class Verifier:
 
         In the initial state all the events and callins are enabled.
         """
-        
+
         # The initial state is safe
         self.ts_init = Not(self.ts_error)
 
@@ -160,7 +160,7 @@ class Verifier:
             self.ts_init = And(self.ts_init, v)
 
         logging.debug("Initial state is %s" % str(self.ts_init))
-            
+
     def _get_enabled_store(self):
         """ Return a map from messages to an internal state.
 
@@ -176,12 +176,31 @@ class Verifier:
 
                     if (key not in msg_enabled):
                         msg_enabled[key] = 0 # unknown
-                        
+
         return msg_enabled
 
     def _process_event(self, src_event):
+        """ Process src_event.
+
+        Change msg_enabled updating it with the effects on the system
+        state obtained by execturing src_event (and all its callbacks
+        and callins).
+
+        Builds a guard condition that contains the pre-condition for
+        src_event to be executed.
+
+        Put in in bug_ci all the callin that must be executed in
+        src_event that are trivially disabled by some previous
+        callin.
+
+        Put in must_be_allowed a set of callins that must be allowed
+        in order to execute the event.
+        If the event is executed from a state where these callins are
+        not enabled, then we have an error.
+        """
         # First ci that cannot be called
         bug_ci = None
+        must_be_allowed = []
 
         # 3-valued represenation (0 unknown, -1 false, 1 true)
         msg_enabled = self._get_enabled_store()
@@ -211,12 +230,14 @@ class Verifier:
                     val = msg_enabled[key]
 
                     if (key not in msg_enabled):
-                        msg_enabled[key] = 0 # unknown                    
+                        msg_enabled[key] = 0 # unknown
                     if (val == 0):
                         # the ci must have been enabled in the state of the
                         # system if neiter the event itself nor a previous
                         # callin enabled it.
-                        guards.append(self.msgs_to_var[key])
+                        #
+                        # If it is not the case, then we have a bug!
+                        must_be_allowed.append(self.msgs_to_var[key])
                     elif (val == -1):
                         # The ci is disabled, and we are trying to invoke it
                         # Thisf results in an error
@@ -237,31 +258,31 @@ class Verifier:
                     for (env, rule) in ci_matching:
                         self._compute_effect(env, rule, msg_enabled)
 
-        return (msg_enabled, guards, bug_ci)
-        
-    
+        return (msg_enabled, guards, bug_ci, must_be_allowed)
+
+
     def _encode_evt(self, src_event):
         """Encode the transition relation of a single event."""
         logging.debug("Encoding event %s" % src_event)
 
-        (msg_enabled, guards, bug_ci) = self._process_event(src_event)
+        (msg_enabled, guards, bug_ci, must_be_allowed) = self._process_event(src_event)
 
-        # Create the encodign
+        # Create the encoding
         if None == bug_ci:
-            # Safe transition
+            # Non buggy transition
             logging.debug("Transition for event %s is safe" % src_event)
-            
+
             # Build the encoding for the (final) effects
             # after the execution of the callbacks
             next_effects = []
             for (msg, value) in msg_enabled.iteritems():
                 assert msg in self.msgs_to_var
                 msg_var = self.msgs_to_var[msg]
-                
+
                 if (value == 1):
                     # enabled after the trans
                     next_effects.append(self._next(msg_var))
-                elif (value == 0):
+                elif (value == -1):
                     # disable after the trans
                     next_effects.append(Not(self._next(msg_var)))
                 else:
@@ -269,7 +290,16 @@ class Verifier:
                     fc = Iff(msg_var, self._next(msg_var))
                     next_effects.append(fc)
 
-            evt_trans = Not(self._next(self.ts_error))
+            if (len(must_be_allowed) == 0):
+                evt_trans = Not(self._next(self.ts_error))
+            else:
+                evt_trans = TRUE()
+                must_ci_formula = And(must_be_allowed)
+                # All the CIs in must_be_allowed are allowed
+                # iff there is no bug.
+                evt_trans = Iff(must_ci_formula,
+                                Not(self._next(self.ts_error)))
+
             if (len(guards) > 0):
                 evt_trans = And(evt_trans, And(guards))
             if (len(next_effects) > 0):
@@ -279,6 +309,14 @@ class Verifier:
             logging.debug("Transition for event %s is a bug" % src_event)
             evt_trans = self._next(self.ts_error)
 
+            # Encode fc if we end in error - useful for debug
+            next_effects = []
+            for (msg, value) in msg_enabled.iteritems():
+                assert msg in self.msgs_to_var
+                msg_var = self.msgs_to_var[msg]
+                evt_trans = And(evt_trans,
+                                Iff(msg_var, self._next(msg_var)))
+
         logging.debug("Event %s: trans is %s" % (src_event, str(evt_trans)))
 
         return evt_trans
@@ -286,12 +324,12 @@ class Verifier:
     def _init_ts_trans(self):
         """Initialize the ts trans."""
         logging.debug("Encoding the trans...")
-        
+
         events_encoding = []
         for evt in self.ctrace.events:
             evt_encoding = self._encode_evt(evt)
             events_encoding.append(evt_encoding)
-            
+
         self.ts_trans = Or(events_encoding)
 
     def _build_env(self, env, formals, actuals):
@@ -405,7 +443,7 @@ class Verifier:
         return matching_ci
 
     def _dst_match(self, env, dst_symbol, dst_args, rule):
-        assert None != dst_symbol        
+        assert None != dst_symbol
 
         logging.debug("\n--- Matching --- \n" \
                       "Dst symbol: %s [%s]\n"
@@ -414,10 +452,10 @@ class Verifier:
                       % (dst_symbol,
                          ",".join(dst_args),
                          rule.src, ",".join(rule.src_args),
-                         rule.cb, ",".join(rule.cb_args),                         
+                         rule.cb, ",".join(rule.cb_args),
                          rule.dst, ",".join(rule.dst_args),
                          str(env)))
-        
+
         if dst_symbol != rule.dst:
             logging.debug("Does not match (name): %s != %s" \
                           % (dst_symbol, rule.dst))
@@ -442,7 +480,7 @@ class Verifier:
         The match is not unique and may be partial (since some
         parameters may be free)
         """
-        logging.debug("Matching EVENTs...")        
+        logging.debug("Matching EVENTs...")
         matching_events = []
         for evt in self.ctrace.events:
             match = self._dst_match(env, evt.symbol, evt.args, rule)
@@ -472,7 +510,7 @@ class Verifier:
         changes msg_enabled applying the rule.
         """
         logging.debug("_compute_effect")
-        
+
         if (rule.specType == SpecType.Enable or
             rule.specType == SpecType.Disable):
             # Effect on the events
@@ -506,9 +544,9 @@ class Verifier:
                 var_i = self.helper.get_var_at_time(var, i)
                 cex_i[var] = model.get_value(var_i, True)
             cex.append(cex_i)
-            
+
         return cex
-        
+
     def find_bug(self, steps):
         """Explore the system up to k steps.
         Steps correspond to the number of events executed in the
@@ -525,7 +563,7 @@ class Verifier:
         all_vars.add(self.ts_error)
         for i in range(steps + 1):
             logging.debug("Encoding %d..." % i)
-            
+
             if (i == 0):
                 f_at_i = self.helper.get_formula_at_i(all_vars,
                                                       self.ts_init, i)
@@ -533,14 +571,14 @@ class Verifier:
                 f_at_i = self.helper.get_formula_at_i(all_vars,
                                                       self.ts_trans, i-1)
             solver.add_assertion(f_at_i)
-            logging.debug("Add assertion %s" % f_at_i)
-            
+            logging.debug("Add assertion %s" % f_at_i.serialize())
+
             error_condition.append(self.helper.get_formula_at_i(all_vars,
                                                                 self.ts_error,
                                                                 i))
 
         # error condition in at least one of the (k-1)-th states
-        logging.debug("Error condition %s" % error_condition)        
+        logging.debug("Error condition %s" % error_condition)
         solver.add_assertion(Or(error_condition))
 
         logging.debug("Finding bug up to %d steps..." % steps)
@@ -550,7 +588,7 @@ class Verifier:
 
             model = solver.get_model()
             trace = self._build_trace(model, all_vars, steps)
-            
+
             return trace
         else:
             # No bugs found

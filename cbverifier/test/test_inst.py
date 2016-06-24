@@ -184,7 +184,7 @@ class TestInst(unittest.TestCase):
         specs = [TestInst.new_spec((SpecType.Enable, "A", None,
                                     None, None, "B", None))]
         v = Verifier(ctrace, specs)
-        (msg_enabled, guards, bug_ci) = v._process_event(ctrace.events[0])
+        (msg_enabled, guards, bug_ci, _) = v._process_event(ctrace.events[0])
         self.assertTrue(1 == msg_enabled[ctrace.events[0]] and
                         self.ca(v, guards, [ctrace.events[0]], []) and
                         None == bug_ci)
@@ -198,7 +198,7 @@ class TestInst(unittest.TestCase):
                                     None, None,
                                     "A", None))]
         v = Verifier(ctrace, specs)
-        (msg_enabled, guards, bug_ci) = v._process_event(ctrace.events[0])
+        (msg_enabled, guards, bug_ci, _) = v._process_event(ctrace.events[0])
         self.assertTrue(-1 == msg_enabled[ctrace.events[0]] and
                         self.ca(v, guards, [ctrace.events[0]], []) and
                         None == bug_ci)
@@ -210,7 +210,7 @@ class TestInst(unittest.TestCase):
         specs = [TestInst.new_spec((SpecType.Enable, "A", None,
                                     None, None, "C", None))]
         v = Verifier(ctrace, specs)
-        (msg_enabled, guards, bug_ci) = v._process_event(ctrace.events[0])
+        (msg_enabled, guards, bug_ci, _) = v._process_event(ctrace.events[0])
         self.assertTrue(0 == msg_enabled[ctrace.events[1]] and
                         self.ca(v, guards, [ctrace.events[0]], []) and
                         None == bug_ci)
@@ -223,7 +223,7 @@ class TestInst(unittest.TestCase):
         specs = [TestInst.new_spec((SpecType.Allow, "A", None,
                                     None, None, "ci", None))]
         v = Verifier(ctrace, specs)
-        (msg_enabled, guards, bug_ci) = v._process_event(ctrace.events[0])
+        (msg_enabled, guards, bug_ci, _) = v._process_event(ctrace.events[0])
         callin = ctrace.events[1].cb[0].ci[0]
         self.assertTrue(1 == msg_enabled[v._get_ci_key(callin)] and
                         self.ca(v, guards, [ctrace.events[0],
@@ -238,7 +238,7 @@ class TestInst(unittest.TestCase):
         specs = [TestInst.new_spec((SpecType.Disallow, "A", None,
                                     None, None, "ci", None))]
         v = Verifier(ctrace, specs)
-        (msg_enabled, guards, bug_ci) = v._process_event(ctrace.events[0])
+        (msg_enabled, guards, bug_ci, _) = v._process_event(ctrace.events[0])
         callin = ctrace.events[1].cb[0].ci[0]
         print bug_ci
         self.assertTrue(-1 == msg_enabled[v._get_ci_key(callin)] and
@@ -253,7 +253,7 @@ class TestInst(unittest.TestCase):
                  TestInst.new_spec((SpecType.Allow, "c1", None,
                                     None, None, "c2", None))]
         v = Verifier(ctrace, specs)
-        (msg_enabled, guards, bug_ci) = v._process_event(ctrace.events[0])
+        (msg_enabled, guards, bug_ci, _) = v._process_event(ctrace.events[0])
         callin = ctrace.events[0].cb[0].ci[1]
         self.assertTrue(1 == msg_enabled[v._get_ci_key(callin)] and
                         None == bug_ci)
@@ -272,9 +272,14 @@ class TestInst(unittest.TestCase):
                                     None, None, "c2", None)),
                  TestInst.new_spec((SpecType.Allow, "c1", None,
                                     None, None, "c2", None))]
+
         v = Verifier(ctrace, specs)
 
-        cex = v.find_bug(4)
+        cex = v.find_bug(1)
+
+        if (None != cex):
+            print cex
+        
         self.assertTrue(None == cex)
 
     def testBmc_02(self):
@@ -307,16 +312,16 @@ class TestInst(unittest.TestCase):
         self.assertTrue(None != cex)
 
     def testBmc_04(self):
-        # A disallow c1
-        # B execute c1
+        # c1 disallow c2
+        # B execute c2
         ctrace = TestInst.create_ctrace(
             [
-                ("B", [], [("cb",[],[("c1",[])])]),
-                ("A", [], [])                
+                ("B", [], [("cb", [], [("c2",[])])]),
+                ("A", [], [("cb", [], [("c1",[])])])
             ])
-        specs = [TestInst.new_spec((SpecType.Disallow, "A", None,
-                                    None, None, "c1", None))]
+        specs = [TestInst.new_spec((SpecType.Disallow, "c1", None,
+                                    None, None, "c2", None))]
         v = Verifier(ctrace, specs)
-        cex = v.find_bug(1)
+        cex = v.find_bug(2)
         self.assertTrue(None != cex)
         
