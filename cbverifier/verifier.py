@@ -60,7 +60,7 @@ class Verifier:
 
         # Map from concrete messages to variables in the encoding
         self.msgs_to_var = {}
-
+        
         # Initialize the transition system
         self._initialize_ts()
 
@@ -78,7 +78,7 @@ class Verifier:
                                  event.symbol,
                                  args_suffix)
         return var_name
-
+        
     def _get_ci_var(self, ci):
         # just take the first argument (the receiver)
         if len(ci.args) > 0:
@@ -128,6 +128,7 @@ class Verifier:
             evt_var_name = self._get_evt_var(event)
             evt_var = Symbol(evt_var_name, BOOL)
             self.ts_vars.add(evt_var)
+
             self.msgs_to_var[event] = evt_var
 
             logging.debug("Event %s: create variable %s" % (event, evt_var_name))
@@ -138,7 +139,8 @@ class Verifier:
                     if ci_var not in self.ts_vars: self.ts_vars.add(ci_var)
                     # Different ci s instance can have the same
                     # variable
-                    self.msgs_to_var[ci] = ci_var
+                    key = self._get_ci_key(ci)
+                    self.msgs_to_var[key] = ci_var
                     logging.debug("Callin %s for ci %s" % (ci, str(ci_var)))                    
 
         self.ts_error = Symbol(Verifier.ERROR_STATE, BOOL)
@@ -177,10 +179,7 @@ class Verifier:
                         
         return msg_enabled
 
-    def _encode_evt(self, src_event):
-        """Encode the transition relation of a single event."""
-        logging.debug("Encoding event %s" % src_event)
-        
+    def _process_event(self, src_event):
         # First ci that cannot be called
         bug_ci = None
 
@@ -203,60 +202,81 @@ class Verifier:
             # Apply the effect of the event
             self._compute_effect(env, rule, msg_enabled)
 
-
         # Process the sequence of callins of the event
-        for cb in src_event.cb:
-            for ci in cb.ci:
-                ci_key = self._get_ci_key(ci)
+        for event in self.ctrace.events:
+            for cb in event.cb:
+                for ci in cb.ci:
+                    key = self._get_ci_key(ci)
+                    assert key in msg_enabled
+                    val = msg_enabled[key]
 
-                if (msg_enabled[ci_key] == 0):
-                    # the ci must have been enabled in the state of the
-                    # system if neiter the event itself nor a previous
-                    # callin enabled it.
-                    guards.append(self.msgs_to_var[ci])
-                elif (msg_enabled[ci_key] == -1):
-                    # The ci is disabled, and we are trying to invoke it
-                    # Thisf results in an error
-                    bug_ci = ci_key
+                    if (key not in msg_enabled):
+                        msg_enabled[key] = 0 # unknown                    
+                    if (val == 0):
+                        # the ci must have been enabled in the state of the
+                        # system if neiter the event itself nor a previous
+                        # callin enabled it.
+                        guards.append(self.msgs_to_var[key])
+                    elif (val == -1):
+                        # The ci is disabled, and we are trying to invoke it
+                        # Thisf results in an error
+                        logging.debug("Bug condition: calling " \
+                                      "disabled %s" % str(key))
+                        bug_ci = key
 
-                    # We stop at the first bug, all the subsequent
-                    # inferences would be bogus
-                    break
-                else:
-                    # enabled by some previous message
-                    assert msg_enabled[ci_key] == 1
+                        # We stop at the first bug, all the subsequent
+                        # inferences would be bogus
+                        break
+                    else:
+                        # enabled by some previous message
+                        assert val == 1
 
-                # find the rules that are matched by ci
-                ci_matching = self._find_matching_rules_ci(ci)
-                # Apply the effect for the callins
-                for (env, rule) in ci_matching:
-                    self._compute_effect(env, rule, msg_enabled)
+                    # find the rules that are matched by ci
+                    ci_matching = self._find_matching_rules_ci(ci)
+                    # Apply the effect for the callins
+                    for (env, rule) in ci_matching:
+                        self._compute_effect(env, rule, msg_enabled)
 
-        if None != bug_ci:
+        return (msg_enabled, guards, bug_ci)
+        
+    
+    def _encode_evt(self, src_event):
+        """Encode the transition relation of a single event."""
+        logging.debug("Encoding event %s" % src_event)
+
+        (msg_enabled, guards, bug_ci) = self._process_event(src_event)
+
+        # Create the encodign
+        if None == bug_ci:
             # Safe transition
-
+            logging.debug("Transition for event %s is safe" % src_event)
+            
             # Build the encoding for the (final) effects
             # after the execution of the callbacks
             next_effects = []
             for (msg, value) in msg_enabled.iteritems():
                 assert msg in self.msgs_to_var
-
+                msg_var = self.msgs_to_var[msg]
+                
                 if (value == 1):
                     # enabled after the trans
-                    next_effects.append(self._get_next(self.msgs_to_var[msg]))
+                    next_effects.append(self._next(msg_var))
                 elif (value == 0):
                     # disable after the trans
-                    next_effects.append(not(self._get_next(self.msgs_to_var[msg])))
+                    next_effects.append(Not(self._next(msg_var)))
                 else:
                     # Frame condition
-                    fc = Iff(self.msgs_to_var[msg],
-                             self._get_next(self.msgs_to_var[msg]))
+                    fc = Iff(msg_var, self._next(msg_var))
                     next_effects.append(fc)
 
-            evt_trans = And([And(guards), And(next_effects),
-                             self._next(Not(self.ts_error))])
+            evt_trans = Not(self._next(self.ts_error))
+            if (len(guards) > 0):
+                evt_trans = And(evt_trans, And(guards))
+            if (len(next_effects) > 0):
+                evt_trans = And(evt_trans, And(next_effects))
         else:
             # taking this transition ends in an error
+            logging.debug("Transition for event %s is a bug" % src_event)
             evt_trans = self._next(self.ts_error)
 
         logging.debug("Event %s: trans is %s" % (src_event, str(evt_trans)))
@@ -271,7 +291,7 @@ class Verifier:
         for evt in self.ctrace.events:
             evt_encoding = self._encode_evt(evt)
             events_encoding.append(evt_encoding)
-
+            
         self.ts_trans = Or(events_encoding)
 
     def _build_env(self, env, formals, actuals):
@@ -387,7 +407,6 @@ class Verifier:
     def _dst_match(self, env, dst_symbol, dst_args, rule):
         assert None != dst_symbol        
 
-        logging.debug("DST" + str(dst_args))
         logging.debug("\n--- Matching --- \n" \
                       "Dst symbol: %s [%s]\n"
                       "Rule (%s[%s], %s[%s], %s[%s])\n" \
@@ -400,7 +419,7 @@ class Verifier:
                          str(env)))
         
         if dst_symbol != rule.dst:
-            logging.debug("Does not match: %s != %s" \
+            logging.debug("Does not match (name): %s != %s" \
                           % (dst_symbol, rule.dst))
             return False
         if len(dst_args) != len(rule.dst_args):
@@ -410,7 +429,7 @@ class Verifier:
         for (actual,formal) in zip(dst_args, rule.dst_args):
             if formal in env:
                 if actual != env[formal]:
-                    logging.debug("Does not match: %s != %s" \
+                    logging.debug("Does not match (args): %s != %s" \
                                   % (actual, env[formal]))
                     return False
 
@@ -452,11 +471,16 @@ class Verifier:
         """ Given an environment and a rule,
         changes msg_enabled applying the rule.
         """
-        if (rule.specType == SpecType.Enable or rule.specType == SpecType.Disable):
+        logging.debug("_compute_effect")
+        
+        if (rule.specType == SpecType.Enable or
+            rule.specType == SpecType.Disable):
             # Effect on the events
             # Find all the concrete events that are affected by the
             # rule.
             for conc_evt in self._find_events(env, rule):
+                logging.debug("Change status of %s" % conc_evt)
+
                 if (rule.specType == SpecType.Enable):
                     msg_enabled[conc_evt] = 1
                 else:
@@ -489,27 +513,36 @@ class Verifier:
         solver = Solver(name='z3', logic=QF_BOOL)
 
         error_condition = []
+        all_vars = set(self.ts_vars)
+        all_vars.add(self.ts_error)
         for i in range(steps + 1):
+            logging.debug("Encoding %d..." % i)
+            
             if (i == 0):
-                f_at_i = self.helper.get_formula_at_i(self.ts_vars,
+                f_at_i = self.helper.get_formula_at_i(all_vars,
                                                       self.ts_init, i)
             else:
-                f_at_i = self.helper.get_formula_at_i(self.ts_vars,
-                                                      self.ts_trans, i)
+                f_at_i = self.helper.get_formula_at_i(all_vars,
+                                                      self.ts_trans, i-1)
             solver.add_assertion(f_at_i)
-
-            error_condition = self.helper.get_formula_at_i(self.ts_vars,
-                                                           self.ts_error,
-                                                           i)
+            logging.debug("Add assertion %s" % f_at_i)
+            
+            error_condition.append(self.helper.get_formula_at_i(all_vars,
+                                                                self.ts_error,
+                                                                i))
 
         # error condition in at least one of the (k-1)-th states
+        logging.debug("Error condition %s" % error_condition)        
         solver.add_assertion(Or(error_condition))
 
+        logging.debug("Finding bug up to %d steps..." % steps)
         res = solver.solve()
         if (solver.solve()):
+            logging.debug("Found bug...")
             trace = self._build_trace(solver)
             
             return trace
         else:
             # No bugs found
+            logging.debug("No bugs found up to %d steps" % steps)
             return None
