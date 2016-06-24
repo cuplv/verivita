@@ -18,7 +18,7 @@ import logging
 from pysmt.environment import reset_env
 from pysmt.typing import BOOL
 from pysmt.shortcuts import Symbol, TRUE, FALSE
-from pysmt.shortcuts import Not, And, Or, Implies, Iff, Xor
+from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
 
 from pysmt.shortcuts import Solver
 from pysmt.solvers.solver import Model
@@ -35,7 +35,11 @@ class Verifier:
     ALLOWED_VAR_PREF  = "allowed_state"
     ERROR_STATE = "error"
 
-    def __init__(self, ctrace, specs):
+    def __init__(self, ctrace, specs, debug_encoding=False):
+        # debug_encoding: encode additional input variables to track
+        # what concrete event has been fired in each execution step.
+        # By default it is false.
+        #
         assert None != ctrace
         assert None != specs
 
@@ -51,6 +55,8 @@ class Verifier:
         # specification (list of rules)
         self.specs = specs
 
+        self.debug_encoding = debug_encoding
+
         # internal representation of the transition system
         self.ts_vars = None
         self.ts_init = None
@@ -61,6 +67,10 @@ class Verifier:
         # Map from concrete messages to variables in the encoding
         self.msgs_to_var = {}
 
+        # Map from concrete events to their invoke input variable
+        # It is used for debug
+        self.events_to_input_var = {}
+        
         # Initialize the transition system
         self._initialize_ts()
 
@@ -82,8 +92,8 @@ class Verifier:
     def _get_ci_var(self, ci):
         # just take the first argument (the receiver)
         if len(ci.args) > 0:
-            # TODO: check if the callin name already considers the
-            # Boolean arguments
+            # The concrete name of the CI considers the first arguments
+            # (the receiver)
             args_suffix = ci.args[0]
         else:
             args_suffix = ""
@@ -127,11 +137,14 @@ class Verifier:
             # event variable
             evt_var_name = self._get_evt_var(event)
             evt_var = Symbol(evt_var_name, BOOL)
+            logging.debug("Event %s: create variable %s" % (event, evt_var_name))            
             self.ts_vars.add(evt_var)
-
             self.msgs_to_var[event] = evt_var
 
-            logging.debug("Event %s: create variable %s" % (event, evt_var_name))
+            if (self.debug_encoding):
+                ivar_name = "INPUT_%s" % evt_var_name
+                ivar = Symbol(ivar_name, BOOL)
+                self.events_to_input_var[event] = ivar
 
             for cb in event.cb:
                 for ci in cb.ci:
@@ -328,9 +341,26 @@ class Verifier:
         events_encoding = []
         for evt in self.ctrace.events:
             evt_encoding = self._encode_evt(evt)
-            events_encoding.append(evt_encoding)
 
-        self.ts_trans = Or(events_encoding)
+            if (self.debug_encoding):
+                assert evt in self.events_to_input_var
+                ivar = self.events_to_input_var[evt]
+                events_encoding.append(Implies(ivar, evt_encoding))
+            else:            
+                events_encoding.append(evt_encoding)
+
+        if (self.debug_encoding):
+            # Execute exactly one event at time
+            ivars = self.events_to_input_var.values()            
+            self.ts_trans = And(And(events_encoding),
+                                ExactlyOne(ivars))
+        else:
+            # WARNING: here we use Or instead of
+            # exactly one event.
+            # This means that "compatible" events may happen
+            # at the same time.
+            # This is sound for reachability properties.
+            self.ts_trans = Or(events_encoding)
 
     def _build_env(self, env, formals, actuals):
         """ Add to env the matching between formal and

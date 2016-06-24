@@ -258,6 +258,20 @@ class TestInst(unittest.TestCase):
         self.assertTrue(1 == msg_enabled[v._get_ci_key(callin)] and
                         None == bug_ci)
 
+    
+    def _bmc_opt_tester(self, ctrace, specs, bound, is_safe):
+
+        debug_opt = [False, True]
+
+        for opt in debug_opt:
+            v = Verifier(ctrace, specs, opt)
+            cex = v.find_bug(bound)        
+
+            if (is_safe):
+                self.assertTrue(None == cex)
+            else:
+                self.assertTrue(None != cex)
+        
     def testBmc_01(self):
         # A disallow c2, c1 allow c2
         ctrace = TestInst.create_ctrace(
@@ -272,15 +286,7 @@ class TestInst(unittest.TestCase):
                                     None, None, "c2", None)),
                  TestInst.new_spec((SpecType.Allow, "c1", None,
                                     None, None, "c2", None))]
-
-        v = Verifier(ctrace, specs)
-
-        cex = v.find_bug(1)
-
-        if (None != cex):
-            print cex
-        
-        self.assertTrue(None == cex)
+        self._bmc_opt_tester(ctrace, specs, 1, True)
 
     def testBmc_02(self):
         # A disallow c2
@@ -290,10 +296,8 @@ class TestInst(unittest.TestCase):
             ])
         specs = [TestInst.new_spec((SpecType.Disallow, "A", None,
                                     None, None, "c2", None))]
-        v = Verifier(ctrace, specs)
+        self._bmc_opt_tester(ctrace, specs, 1, False)        
 
-        cex = v.find_bug(1)
-        self.assertTrue(None != cex)
 
     def testBmc_03(self):
         # A disallow c2, c1 allow c2 
@@ -307,9 +311,7 @@ class TestInst(unittest.TestCase):
                                     None, None, "c2", None)),
                  TestInst.new_spec((SpecType.Disallow, "B", None,
                                 None, None, "c3", None))]
-        v = Verifier(ctrace, specs)
-        cex = v.find_bug(1)
-        self.assertTrue(None != cex)
+        self._bmc_opt_tester(ctrace, specs, 1, False)
 
     def testBmc_04(self):
         # c1 disallow c2
@@ -321,7 +323,5 @@ class TestInst(unittest.TestCase):
             ])
         specs = [TestInst.new_spec((SpecType.Disallow, "c1", None,
                                     None, None, "c2", None))]
-        v = Verifier(ctrace, specs)
-        cex = v.find_bug(2)
-        self.assertTrue(None != cex)
+        self._bmc_opt_tester(ctrace, specs, 2, False)        
         
