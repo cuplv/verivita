@@ -3,10 +3,13 @@ Dynamic verification using callbacks.
 
 
 # External Dependencies
-
 - PySMT
-- counting module from git@git.cs.colorado.edu:cuplv/fixr-callbacks-2016.git
 
-You need to include the counting path in your PYTHONPATH.
-e.g. `export PYTHONPATH="$PYTHONPATH:<path-to-fixr-callbacks-2016>"`
+# Usage
+
+Dynamic verification:
+```python driver.py -t <trace-file> -s <spec-file> -k <bmc-bound>```
+
+Check if the input files are well formed:
+```python driver.py -m check-files -t <trace-file> -s <spec-file>```
 

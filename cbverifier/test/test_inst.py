@@ -10,7 +10,7 @@ except ImportError:
 from pysmt.shortcuts import Not, And, is_sat, reset_env
 from pysmt.logics import QF_BOOL
 
-from counting.spec import Spec, SpecType
+from cbverifier.spec import Spec, SpecType
 
 from cbverifier.ctrace import CTraceSerializer, ConcreteTrace, CEvent, CCallback, CCallin
 from cbverifier.verifier import Verifier
@@ -33,7 +33,7 @@ class TestInst(unittest.TestCase):
 
                 for (ci_name, ci_args) in cis:
                     assert None != ci_name
-                    ci = CCallin(ci_name, "t")
+                    ci = CCallin(ci_name)
                     cb.ci.append(ci)
                     for a in ci_args: ci.args.append(a)
 
@@ -78,7 +78,8 @@ class TestInst(unittest.TestCase):
         assert v is not None
         assert v.ts_vars is not None
 
-        self.assertTrue(len(v.ts_vars) == 4)
+        print v.ts_vars
+        self.assertTrue(len(v.ts_vars) == 5)
 
     def testInit(self):
         fname = "./test/data/trace_var_inst.json"
