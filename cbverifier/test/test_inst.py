@@ -10,7 +10,7 @@ except ImportError:
 from pysmt.shortcuts import Not, And, is_sat, reset_env
 from pysmt.logics import QF_BOOL
 
-from counting.spec import Spec, SpecType
+from cbverifier.spec import Spec, SpecType
 
 from cbverifier.ctrace import CTraceSerializer, ConcreteTrace, CEvent, CCallback, CCallin
 from cbverifier.verifier import Verifier

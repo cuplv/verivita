@@ -7,7 +7,7 @@ import optparse
 import logging
 
 
-from counting.spec import SpecType, SpecSerializer, Spec, SpecStatus
+from spec import SpecType, SpecSerializer, Spec, SpecStatus
 
 from ctrace import CTraceSerializer, ConcreteTrace
 from verifier import Verifier

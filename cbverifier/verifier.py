@@ -24,7 +24,7 @@ from pysmt.shortcuts import Solver
 from pysmt.solvers.solver import Model
 from pysmt.logics import QF_BOOL
 
-from counting.spec import SpecType, Spec, SpecStatus
+from spec import SpecType, Spec, SpecStatus
 
 from ctrace import ConcreteTrace
 from helpers import Helper
