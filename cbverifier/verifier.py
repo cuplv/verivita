@@ -496,10 +496,18 @@ class Verifier:
                 else:
                     msg_enabled[ci_key] = -1
 
-    def _build_trace(self, solver):
+    def _build_trace(self, model, all_vars, steps):
         """Extract the trace from the satisfying assignment."""
-        # TODO Implement the trace reading
-        return []
+        cex = []
+        for i in range(steps + 1):
+            cex_i = {}
+
+            for var in all_vars:
+                var_i = self.helper.get_var_at_time(var, i)
+                cex_i[var] = model.get_value(var_i, True)
+            cex.append(cex_i)
+            
+        return cex
         
     def find_bug(self, steps):
         """Explore the system up to k steps.
@@ -539,7 +547,9 @@ class Verifier:
         res = solver.solve()
         if (solver.solve()):
             logging.debug("Found bug...")
-            trace = self._build_trace(solver)
+
+            model = solver.get_model()
+            trace = self._build_trace(model, all_vars, steps)
             
             return trace
         else:

@@ -304,4 +304,3 @@ class TestInst(unittest.TestCase):
         v = Verifier(ctrace, specs)
         cex = v.find_bug(1)
         self.assertTrue(None != cex)
-        

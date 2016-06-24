@@ -56,6 +56,8 @@ def main():
     
     cex = verifier.find_bug(depth)
 
+    print cex
+    
     # TODO serialize the result and the cex for inspection
 
     
