@@ -13,6 +13,9 @@ from ctrace import CTraceSerializer, ConcreteTrace
 from verifier import Verifier
 
 def main():
+    # Common to all modes
+    logging.basicConfig(level=logging.DEBUG)
+    
     p = optparse.OptionParser()
     p.add_option('-t', '--tracefile',
                  help="File containing the concrete trace")    
@@ -53,6 +56,8 @@ def main():
     
     cex = verifier.find_bug(depth)
 
+    print cex
+    
     # TODO serialize the result and the cex for inspection
 
     

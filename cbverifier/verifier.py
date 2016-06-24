@@ -13,6 +13,8 @@ The possible permutation of the events depend on the enabled/disabled
 status of events/callins.
 """
 
+import logging
+
 from pysmt.environment import reset_env
 from pysmt.typing import BOOL
 from pysmt.shortcuts import Symbol, TRUE, FALSE
@@ -21,7 +23,6 @@ from pysmt.shortcuts import Not, And, Or, Implies, Iff, Xor
 from pysmt.shortcuts import Solver
 from pysmt.solvers.solver import Model
 from pysmt.logics import QF_BOOL
-
 
 from counting.spec import SpecType, Spec, SpecStatus
 
@@ -38,6 +39,8 @@ class Verifier:
         assert None != ctrace
         assert None != specs
 
+        logging.debug("Creating verifier...")
+        
         # pysmt stuff
         self.env = reset_env()
         self.mgr = self.env.formula_manager
@@ -57,7 +60,7 @@ class Verifier:
 
         # Map from concrete messages to variables in the encoding
         self.msgs_to_var = {}
-
+        
         # Initialize the transition system
         self._initialize_ts()
 
@@ -66,24 +69,24 @@ class Verifier:
         return Helper.get_next_var(var, self.mgr)
 
     def _get_evt_var(self, event):
-        if len(event.args[0]) > 0:
+        if len(event.args) > 0:
             args_suffix = "_".join(event.args)
         else:
-            args_suffix = []
+            args_suffix = ""
 
         var_name = "%s_%s_%s" % (Verifier.ENABLED_VAR_PREF,
                                  event.symbol,
                                  args_suffix)
         return var_name
-
+        
     def _get_ci_var(self, ci):
         # just take the first argument (the receiver)
-        if len(ci.args[0]) > 0:
+        if len(ci.args) > 0:
             # TODO: check if the callin name already considers the
             # Boolean arguments
             args_suffix = ci.args[0]
         else:
-            args_suffix = []
+            args_suffix = ""
 
         var_name = "%s_%s_%s" % (Verifier.ALLOWED_VAR_PREF,
                                  ci.symbol,
@@ -95,6 +98,8 @@ class Verifier:
 
     def _initialize_ts(self):
         """Initialize ts_vars and ts_trans."""
+        logging.debug("Encode the ts...")
+        
         self._init_ts_var()
         self._init_ts_init()
         self._init_ts_trans()
@@ -113,7 +118,8 @@ class Verifier:
         "enabled_state_evt_o1_..._on".
         """
 
-        self.ts_var = set()
+        logging.debug("Create variable...")        
+        self.ts_vars = set()
         self.msgs_to_var = {}
 
         # Process the trace
@@ -121,16 +127,21 @@ class Verifier:
             # event variable
             evt_var_name = self._get_evt_var(event)
             evt_var = Symbol(evt_var_name, BOOL)
-            self.ts_var.add(evt_var)
+            self.ts_vars.add(evt_var)
+
             self.msgs_to_var[event] = evt_var
 
+            logging.debug("Event %s: create variable %s" % (event, evt_var_name))
+            
             for cb in event.cb:
                 for ci in cb.ci:
                     ci_var = Symbol(self._get_ci_var(ci), BOOL)
-                    if ci_var not in self.ts_var: self.ts_var.add(ci_var)
+                    if ci_var not in self.ts_vars: self.ts_vars.add(ci_var)
                     # Different ci s instance can have the same
                     # variable
-                    self.msgs_to_var[ci] = ci_var
+                    key = self._get_ci_key(ci)
+                    self.msgs_to_var[key] = ci_var
+                    logging.debug("Callin %s for ci %s" % (ci, str(ci_var)))                    
 
         self.ts_error = Symbol(Verifier.ERROR_STATE, BOOL)
 
@@ -140,14 +151,16 @@ class Verifier:
 
         In the initial state all the events and callins are enabled.
         """
-
+        
         # The initial state is safe
         self.ts_init = Not(self.ts_error)
 
         # all the messages are enabled
-        for v in self.ts_var:
+        for v in self.ts_vars:
             self.ts_init = And(self.ts_init, v)
 
+        logging.debug("Initial state is %s" % str(self.ts_init))
+            
     def _get_enabled_store(self):
         """ Return a map from messages to an internal state.
 
@@ -163,12 +176,10 @@ class Verifier:
 
                     if (key not in msg_enabled):
                         msg_enabled[key] = 0 # unknown
-
+                        
         return msg_enabled
 
-    def _encode_evt(self, src_event):
-        """Encode the transition relation of a single event."""
-
+    def _process_event(self, src_event):
         # First ci that cannot be called
         bug_ci = None
 
@@ -191,74 +202,96 @@ class Verifier:
             # Apply the effect of the event
             self._compute_effect(env, rule, msg_enabled)
 
-
         # Process the sequence of callins of the event
+        for event in self.ctrace.events:
+            for cb in event.cb:
+                for ci in cb.ci:
+                    key = self._get_ci_key(ci)
+                    assert key in msg_enabled
+                    val = msg_enabled[key]
 
-        for cb in src_event.cb:
-            for ci in cb.ci:
-                ci_key = self._get_ci_key(ci)
+                    if (key not in msg_enabled):
+                        msg_enabled[key] = 0 # unknown                    
+                    if (val == 0):
+                        # the ci must have been enabled in the state of the
+                        # system if neiter the event itself nor a previous
+                        # callin enabled it.
+                        guards.append(self.msgs_to_var[key])
+                    elif (val == -1):
+                        # The ci is disabled, and we are trying to invoke it
+                        # Thisf results in an error
+                        logging.debug("Bug condition: calling " \
+                                      "disabled %s" % str(key))
+                        bug_ci = key
 
-                if (msg_enabled[ci_key] == 0):
-                    # the ci must have been enabled in the state of the
-                    # system if neiter the event itself nor a previous
-                    # callin enabled it.
-                    guards.append(self.msgs_to_var[ci])
-                elif (msg_enabled[ci_key] == -1):
-                    # The ci is disabled, and we are trying to invoke it
-                    # Thisf results in an error
-                    bug_ci = ci_key
+                        # We stop at the first bug, all the subsequent
+                        # inferences would be bogus
+                        break
+                    else:
+                        # enabled by some previous message
+                        assert val == 1
 
-                    # We stop at the first bug, all the subsequent
-                    # inferences would be bogus
-                    break
-                else:
-                    # enabled by some previous message
-                    assert msg_enabled[ci_key] == 1
+                    # find the rules that are matched by ci
+                    ci_matching = self._find_matching_rules_ci(ci)
+                    # Apply the effect for the callins
+                    for (env, rule) in ci_matching:
+                        self._compute_effect(env, rule, msg_enabled)
 
-                # find the rules that are matched by ci
-                ci_matching = self._find_matching_rules_ci(ci)
-                # Apply the effect for the callins
-                for (env, rule) in ci_matching:
-                    self._compute_effect(env, rule, msg_enabled)
+        return (msg_enabled, guards, bug_ci)
+        
+    
+    def _encode_evt(self, src_event):
+        """Encode the transition relation of a single event."""
+        logging.debug("Encoding event %s" % src_event)
 
-        if None != bug_ci:
+        (msg_enabled, guards, bug_ci) = self._process_event(src_event)
+
+        # Create the encodign
+        if None == bug_ci:
             # Safe transition
-
+            logging.debug("Transition for event %s is safe" % src_event)
+            
             # Build the encoding for the (final) effects
             # after the execution of the callbacks
             next_effects = []
             for (msg, value) in msg_enabled.iteritems():
                 assert msg in self.msgs_to_var
-
+                msg_var = self.msgs_to_var[msg]
+                
                 if (value == 1):
                     # enabled after the trans
-                    next_effects.append(self._get_next(self.msgs_to_var[msg]))
+                    next_effects.append(self._next(msg_var))
                 elif (value == 0):
                     # disable after the trans
-                    next_effects.append(not(self._get_next(self.msgs_to_var[msg])))
+                    next_effects.append(Not(self._next(msg_var)))
                 else:
                     # Frame condition
-                    fc = Iff(self.msgs_to_var[msg],
-                             self._get_next(self.msgs_to_var[msg]))
+                    fc = Iff(msg_var, self._next(msg_var))
                     next_effects.append(fc)
 
-            evt_trans = And([And(guards), And(next_effects),
-                             self._next(Not(self.ts_error))])
+            evt_trans = Not(self._next(self.ts_error))
+            if (len(guards) > 0):
+                evt_trans = And(evt_trans, And(guards))
+            if (len(next_effects) > 0):
+                evt_trans = And(evt_trans, And(next_effects))
         else:
             # taking this transition ends in an error
+            logging.debug("Transition for event %s is a bug" % src_event)
             evt_trans = self._next(self.ts_error)
+
+        logging.debug("Event %s: trans is %s" % (src_event, str(evt_trans)))
 
         return evt_trans
 
     def _init_ts_trans(self):
         """Initialize the ts trans."""
-
-        # a. Encode each event in the trace
+        logging.debug("Encoding the trans...")
+        
         events_encoding = []
         for evt in self.ctrace.events:
             evt_encoding = self._encode_evt(evt)
             events_encoding.append(evt_encoding)
-
+            
         self.ts_trans = Or(events_encoding)
 
     def _build_env(self, env, formals, actuals):
@@ -320,12 +353,12 @@ class Verifier:
                      len(rule.src_args) == len(evt.args))):
                 # skip rule if it does not match the event
                 continue
-            env = self._build_env(rule.src_args, evt.args)
+            env = self._build_env(env, rule.src_args, evt.args)
 
             if rule.cb == None:
                 # no callback in the rule, then we already have a
                 # match
-                matching_rules.append(rule, env)
+                matching_rules.append((env, rule))
             else:
                 # Need to match a cb in the trace with a cb in
                 # the rule
@@ -335,13 +368,14 @@ class Verifier:
                         continue
 
                     # match the arguments
-                    env_cb = self._build_env(rule.cb_args, cb.args)
+                    env_cb = {}
+                    env_cb = self._build_env(env_cb, rule.cb_args, cb.args)
                     merged_env = self._merge_env(env, env_cb)
 
                     # the rule does not match
                     if None == merged_env: continue
 
-                    matching_rules.append(rule, merged_env)
+                    matching_rules.append((merged_env, rule))
 
         return matching_rules
 
@@ -364,18 +398,42 @@ class Verifier:
             if (not (rule.src == ci.symbol and
                      len(rule.src_args) == len(ci.args))):
                 continue
-            env = self._build_env(rule.src_args, ci.args)
+            env = self._build_env(env, rule.src_args, ci.args)
 
-            matching_ci.append(rule, env)
+            matching_ci.append((env, rule))
 
         return matching_ci
 
     def _dst_match(self, env, dst_symbol, dst_args, rule):
-        if dst_symbol != rule.dst: return False
-        if (actual,formal) in zip(dst_args, rule.dst_args):
+        assert None != dst_symbol        
+
+        logging.debug("\n--- Matching --- \n" \
+                      "Dst symbol: %s [%s]\n"
+                      "Rule (%s[%s], %s[%s], %s[%s])\n" \
+                      "Environment %s" \
+                      % (dst_symbol,
+                         ",".join(dst_args),
+                         rule.src, ",".join(rule.src_args),
+                         rule.cb, ",".join(rule.cb_args),                         
+                         rule.dst, ",".join(rule.dst_args),
+                         str(env)))
+        
+        if dst_symbol != rule.dst:
+            logging.debug("Does not match (name): %s != %s" \
+                          % (dst_symbol, rule.dst))
+            return False
+        if len(dst_args) != len(rule.dst_args):
+            logging.debug("Does not match (length) " \
+                          "%d != %d" \
+                          % (len(dst_args), len(rule.dst_args)))
+        for (actual,formal) in zip(dst_args, rule.dst_args):
             if formal in env:
                 if actual != env[formal]:
+                    logging.debug("Does not match (args): %s != %s" \
+                                  % (actual, env[formal]))
                     return False
+
+        logging.debug("Matched!")
         return True
 
     def _find_events(self, env, rule):
@@ -384,6 +442,7 @@ class Verifier:
         The match is not unique and may be partial (since some
         parameters may be free)
         """
+        logging.debug("Matching EVENTs...")        
         matching_events = []
         for evt in self.ctrace.events:
             match = self._dst_match(env, evt.symbol, evt.args, rule)
@@ -397,43 +456,58 @@ class Verifier:
         The match is not unique and may be partial (since some
         parameters may be free)
         """
+        logging.debug("Matching CIs...")
         matching_ci = []
         for evt in self.ctrace.events:
             for cb in evt.cb:
                 for ci in cb.ci:
-                    match = self._dst_match(env, ci.symbol, ci.args,
-                                            rule)
-                    if match: matching_ci.append(ci)
+                    assert None != ci.symbol
+                    match = self._dst_match(env, ci.symbol, ci.args, rule)
+                    if match:
+                        matching_ci.append(ci)
         return matching_ci
 
     def _compute_effect(self, env, rule, msg_enabled):
         """ Given an environment and a rule,
         changes msg_enabled applying the rule.
         """
-        if (rule.specType == Enable or rule.specType == Disable):
+        logging.debug("_compute_effect")
+        
+        if (rule.specType == SpecType.Enable or
+            rule.specType == SpecType.Disable):
             # Effect on the events
             # Find all the concrete events that are affected by the
             # rule.
             for conc_evt in self._find_events(env, rule):
-                if (rule.specType == Enable):
+                logging.debug("Change status of %s" % conc_evt)
+
+                if (rule.specType == SpecType.Enable):
                     msg_enabled[conc_evt] = 1
                 else:
                     msg_enabled[conc_evt] = -1
         else:
             # Effect on the callin
-            assert rule.specType == Allow or rule.specType == Disallow
+            assert rule.specType == SpecType.Allow or rule.specType == SpecType.Disallow
 
-            for conc_callin in self._find_callin(env, rule):
+            for conc_callin in self._find_callins(env, rule):
                 ci_key = self._get_ci_key(conc_callin)
-                if (rule.specType == Allow):
+                if (rule.specType == SpecType.Allow):
                     msg_enabled[ci_key] = 1
                 else:
                     msg_enabled[ci_key] = -1
 
-    def _build_trace(self, solver):
+    def _build_trace(self, model, all_vars, steps):
         """Extract the trace from the satisfying assignment."""
-        # TODO Implement the trace reading
-        return []
+        cex = []
+        for i in range(steps + 1):
+            cex_i = {}
+
+            for var in all_vars:
+                var_i = self.helper.get_var_at_time(var, i)
+                cex_i[var] = model.get_value(var_i, True)
+            cex.append(cex_i)
+            
+        return cex
         
     def find_bug(self, steps):
         """Explore the system up to k steps.
@@ -447,27 +521,38 @@ class Verifier:
         solver = Solver(name='z3', logic=QF_BOOL)
 
         error_condition = []
+        all_vars = set(self.ts_vars)
+        all_vars.add(self.ts_error)
         for i in range(steps + 1):
+            logging.debug("Encoding %d..." % i)
+            
             if (i == 0):
-                f_at_i = self.helper.get_formula_at_i(self.ts_var,
+                f_at_i = self.helper.get_formula_at_i(all_vars,
                                                       self.ts_init, i)
             else:
-                f_at_i = self.helper.get_formula_at_i(self.ts_var,
-                                                      self.ts_trans, i)
+                f_at_i = self.helper.get_formula_at_i(all_vars,
+                                                      self.ts_trans, i-1)
             solver.add_assertion(f_at_i)
-
-            error_condition = self.helper.get_formula_at_i(self.ts_var,
-                                                           self.ts_error,
-                                                           i)
+            logging.debug("Add assertion %s" % f_at_i)
+            
+            error_condition.append(self.helper.get_formula_at_i(all_vars,
+                                                                self.ts_error,
+                                                                i))
 
         # error condition in at least one of the (k-1)-th states
+        logging.debug("Error condition %s" % error_condition)        
         solver.add_assertion(Or(error_condition))
 
+        logging.debug("Finding bug up to %d steps..." % steps)
         res = solver.solve()
         if (solver.solve()):
-            trace = self._build_trace(solver)
+            logging.debug("Found bug...")
+
+            model = solver.get_model()
+            trace = self._build_trace(model, all_vars, steps)
             
             return trace
         else:
             # No bugs found
+            logging.debug("No bugs found up to %d steps" % steps)
             return None
