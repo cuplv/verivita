@@ -72,7 +72,16 @@ class CTraceSerializer:
         
         return ctrace
 
-
+    @staticmethod
+    def get_message_symbol(signature, args):
+        bool_args = []
+        for arg_str in args:
+            if (arg_str == "true" or arg_str == "false"):
+                bool_args.append(arg_str)
+        if len(bool_args) > 0:
+            signature = signature + "_" + "_".join(bool_args)
+        return signature
+    
     @staticmethod
     def read_event(data):
         """Read a single event."""
@@ -81,7 +90,9 @@ class CTraceSerializer:
 
         # read the event
         event_symbol = data["signature"]
-        event = CEvent(event_symbol)
+        symbol = CTraceSerializer.get_message_symbol(data["signature"],
+                                                     data["concreteArgs"])
+        event = CEvent(symbol)
 
         if "concreteArgs" in data:
             event.args = data["concreteArgs"]
@@ -95,26 +106,14 @@ class CTraceSerializer:
                 event.cb.append(cb)
         
         return event
-
-    @staticmethod
-    def get_method_symbol(signature, args):
-        bool_args = []
-        for arg_str in args:
-            if (arg_str == "true" or arg_str == "false"):
-                bool_args.append(arg_str)
-        if len(bool_args) > 0:
-            signature = signature + "_" + "_".join(bool_args)
-        return signature
-        
-    
     
     @staticmethod
     def read_cb(cb_json):
         """Read a single callback."""
         CTraceSerializer.check_keys(cb_json, ["signature", "concreteArgs", "callinList"])
 
-        symbol = CTraceSerializer.get_method_symbol(cb_json["signature"],
-                                                    cb_json["concreteArgs"])
+        symbol = CTraceSerializer.get_message_symbol(cb_json["signature"],
+                                                     cb_json["concreteArgs"])
         cb = CCallback(symbol)
         cb.args = list(cb_json["concreteArgs"])
 
@@ -137,8 +136,8 @@ class CTraceSerializer:
         ci_fields = ["signature", "concreteArgs"]
         CTraceSerializer.check_keys(ci_json, ci_fields)
 
-        symbol = CTraceSerializer.get_method_symbol(ci_json["signature"],
-                                                    ci_json["concreteArgs"])
+        symbol = CTraceSerializer.get_message_symbol(ci_json["signature"],
+                                                     ci_json["concreteArgs"])
         ci = CCallin(symbol)
         ci.args = list(ci_json["concreteArgs"])
 

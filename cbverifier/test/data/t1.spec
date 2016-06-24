@@ -1,17 +1,24 @@
 {
     "specs": [
         {
-            "src" : "0_event_",
-            "dst" : "callin_a_[]_type_a_()",
-            "cb"  : "cbEvent0",
-            "src_args" : ["obj@1"],
-            "cb_args" : ["obj@1"],
-            "dst_args" : ["obj@2"],
-            "type" : 1,
-            "status" : 0,
-            "weight" : {"den" : "1", "num" : "1"}
+            "match" : {
+                "event" : {
+                    "signature" : "0_event",
+                    "concreteArgsVariables" : ["obj@1"]
+                },
+                "callback" : {
+                    "signature" : "cbEvent0",
+                    "concreteArgsVariables" : ["obj@1"]
+                }
+            },
+            "change" : {
+                "callin" : {
+                    "signature" : "callin",
+                    "concreteArgsVariables" : ["obj@2","true","objll","false"]
+                }
+            },
+            "type" : "disable"
         }
-    ],
-    "src_trace" : ""
+    ]
 }
-            
+
