@@ -3,20 +3,15 @@
         {"initial" : "true"},
         {
             "initial" : "false",
-            "eventIdentifier": {
-                "callbackField": "",
-                "targetField": "event",
-                "what": 0
-            },
+            "signature" : "0__event_",
             "concreteArgs" : ["obj@1"],
             "callbackObjects": [
                 {
-                    "id" : "cbEvent0",
-                    "cbObjects" : ["obj@1"],
+                    "signature" : "cbEvent0",
+                    "concreteArgs" : ["obj@1"],
                     "callinList" : [
-                        {"name": "callin_a", "signature": "()", "type": "type_a",
-                         "concreteArgs": ["obj@1"],
-                         "booleanArgs": []}                    
+                        {"signature": "type doSomething(args1, args2)",
+                         "concreteArgs": ["obj@1", "obj@2"]}
                     ]
                 }
             ]

@@ -3,58 +3,43 @@
         {"initial" : "true"},
         {
             "initial" : "false",
-            "eventIdentifier": { "callbackField": "",
-                                 "targetField": "t1",
-                                 "what": 0
-                               },
+            "signature": "0__t1",
             "concreteArgs" : [""],
             "callbackObjects": []
         },
         {
             "initial" : "false",
-            "eventIdentifier": { "callbackField": "",
-                                 "targetField": "t1",
-                                 "what": 0
-                               },
+            "signature" : "0__t1",
             "concreteArgs" : ["name@1", "name@2", "name@3"],
-            "callbackObjects": []
+            "callbackObjects": []            
         },
         {
             "initial" : "false",
-            "eventIdentifier": { "callbackField": "",
-                                 "targetField": "t1",
-                                 "what": 0
-                               },
+            "signature" : "0__t1",
             "concreteArgs" : [""],
             "callbackObjects": [
                 {
-                    "id" : "cbEvent0",
-                    "cbObjects" : [],
+                    "signature" : "cbEvent0",
+                    "concreteArgs" : [],
                     "callinList" : []
                 }
             ]
         },
         {
             "initial" : "false",
-            "eventIdentifier": { "callbackField": "",
-                                 "targetField": "t1",
-                                 "what": 0
-                               },
+            "signature": "0__t1",
             "concreteArgs" : [""],
             "callbackObjects": [
                 {
-                    "id" : "cbEvent0",
-                    "cbObjects" : [],
+                    "signature" : "cbEvent0",
+                    "concreteArgs" : [],
                     "callinList" : [
-                        {"name": "callin_a", "signature": "()", "type": "type_a",
-                         "concreteArgs": ["obj@1"],
-                         "booleanArgs": []},
-                        {"name": "callin_a", "signature": "()", "type": "type_a",
-                         "concreteArgs": ["obj@1","obj@2"],
-                         "booleanArgs": []},
-                        {"name": "callin_a", "signature": "()", "type": "type_a",
-                         "concreteArgs": ["obj@2","obj@1"],
-                         "booleanArgs": []}                        
+                        {"signature": "callin_a_signature_()_type_a",
+                         "concreteArgs": ["obj@1"]},
+                        {"signature": "callin_a_signature_()_type_a",
+                         "concreteArgs": ["obj@1","obj@2"]},
+                        {"signature": "callin_a_signature_()_type_a",
+                         "concreteArgs": ["obj@2","obj@1"]}
                     ]
                 }
             ]
