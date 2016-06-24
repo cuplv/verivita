@@ -7,7 +7,7 @@ import optparse
 import logging
 
 
-from spec import SpecType, SpecSerializer, Spec, SpecStatus
+from spec import SpecType, SpecSerializer, Spec
 
 from ctrace import CTraceSerializer, ConcreteTrace
 from verifier import Verifier
@@ -49,7 +49,7 @@ def main():
 
     # Parse the specification file
     with open(opts.specfile, "r") as infile:
-        (_, _, specs) = SpecSerializer.read_specs(infile)
+        specs = SpecSerializer.read_specs(infile)
         
     # Call the verifier
     verifier = Verifier(ctrace, specs)
