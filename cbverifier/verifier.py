@@ -29,6 +29,37 @@ from spec import SpecType, Spec
 from ctrace import ConcreteTrace
 from helpers import Helper
 
+class DebugInfo:
+    """ Store the encoding information that helps to debug counterexamples
+    """
+
+    def __init__(self, verifier):
+        # need access to the verifier
+        self.verifier = verifier
+
+        # maps from concrete events to the set of
+        # callins that must be allowed
+        self.events_to_pre = {}
+
+        # maps from events to effects
+        self.events_to_effects = {}
+
+        # Determinisic bugs when executing an event
+        self.events_to_bugs = {}
+        
+    def _add_pre(self, evt, pre):
+        assert evt not in self.events_to_pre
+        self.events_to_pre[evt] = pre
+
+    def _add_effects(self, evt, effects):
+        assert evt not in self.events_to_effects
+        self.events_to_effects[evt] = effects
+
+    def _add_bug(self, evt, bug_ci):
+        assert evt not in self.events_to_bugs
+        self.events_to_bugs[evt] = bug_ci
+        
+        
 
 class Verifier:
     ENABLED_VAR_PREF  = "enabled_state"
@@ -56,6 +87,10 @@ class Verifier:
         self.specs = specs
 
         self.debug_encoding = debug_encoding
+        if self.debug_encoding:
+            self.debug_info = DebugInfo(self)
+        else:
+            self.debug_info = None
 
         # internal representation of the transition system
         self.ts_vars = None
@@ -280,6 +315,12 @@ class Verifier:
 
         (msg_enabled, guards, bug_ci, must_be_allowed) = self._process_event(src_event)
 
+        if self.debug_encoding:
+            self.debug_info._add_pre(src_event, must_be_allowed)
+            self.debug_info._add_effects(src_event, must_be_allowed)
+            if (bug_ci != None):
+                self.debug_info._add_bug(src_event, bug_ci)
+        
         # Create the encoding
         if None == bug_ci:
             # Non buggy transition
