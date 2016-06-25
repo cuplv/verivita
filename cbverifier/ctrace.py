@@ -101,9 +101,8 @@ class CTraceSerializer:
             
         # read the list of callbacks
         for cb_json in data["callbackObjects"]:
-            if cb_json != "null":
-                cb = CTraceSerializer.read_cb(cb_json)
-                event.cb.append(cb)
+            cb = CTraceSerializer.read_cb(cb_json)
+            event.cb.append(cb)
         
         return event
     
