@@ -245,6 +245,7 @@ class Verifier:
         If the event is executed from a state where these callins are
         not enabled, then we have an error.
         """
+
         # First ci that cannot be called
         bug_ci = None
         must_be_allowed = []
@@ -269,42 +270,43 @@ class Verifier:
             self._compute_effect(env, rule, msg_enabled)
 
         # Process the sequence of callins of the event
-        for event in self.ctrace.events:
-            for cb in event.cb:
-                for ci in cb.ci:
-                    key = self._get_ci_key(ci)
-                    assert key in msg_enabled
-                    val = msg_enabled[key]
+        for cb in src_event.cb:
+            for ci in cb.ci:
+                key = self._get_ci_key(ci)
+                assert key in msg_enabled
+                val = msg_enabled[key]
 
-                    if (key not in msg_enabled):
-                        msg_enabled[key] = 0 # unknown
-                    if (val == 0):
-                        # the ci must have been enabled in the state of the
-                        # system if neiter the event itself nor a previous
-                        # callin enabled it.
-                        #
-                        # If it is not the case, then we have a bug!
-                        must_be_allowed.append(self.msgs_to_var[key])
-                    elif (val == -1):
-                        # The ci is disabled, and we are trying to invoke it
-                        # Thisf results in an error
-                        logging.debug("Bug condition: calling " \
-                                      "disabled %s" % str(key))
-                        bug_ci = key
+                assert key in msg_enabled
+#                if (key not in msg_enabled):
+#                    msg_enabled[key] = 0 # unknown
+                if (val == 0):
+                    # the ci must have been enabled in the state of the
+                    # system if neiter the event itself nor a previous
+                    # callin enabled it.
+                    #
+                    # If it is not the case, then we have a bug!
+                    must_be_allowed.append(self.msgs_to_var[key])
+                    
+                elif (val == -1):
+                    # The ci is disabled, and we are trying to invoke it
+                    # This results in an error
+                    logging.debug("Bug condition: calling " \
+                                  "disabled %s" % str(key))
+                    bug_ci = key
 
-                        # We stop at the first bug, all the subsequent
-                        # inferences would be bogus
-                        break
-                    else:
-                        # enabled by some previous message
-                        assert val == 1
+                    # We stop at the first bug, all the subsequent
+                    # inferences would be bogus
+                    break
+                else:
+                    # enabled by some previous message
+                    assert val == 1
 
-                    # find the rules that are matched by ci
-                    ci_matching = self._find_matching_rules_ci(ci)
-                    # Apply the effect for the callins
-                    for (env, rule) in ci_matching:
-                        self._compute_effect(env, rule, msg_enabled)
-
+                # find the rules that are matched by ci
+                ci_matching = self._find_matching_rules_ci(ci)
+                # Apply the effect for the callins
+                for (env, rule) in ci_matching:
+                    self._compute_effect(env, rule, msg_enabled)
+        
         return (msg_enabled, guards, bug_ci, must_be_allowed)
 
 
@@ -319,7 +321,11 @@ class Verifier:
             self.debug_info._add_effects(src_event, must_be_allowed)
             if (bug_ci != None):
                 self.debug_info._add_bug(src_event, bug_ci)
-        
+
+        logging.debug("Event %s" % src_event)
+        logging.debug("Guards %s" % guards)
+        logging.debug("Must be allowed: %s" % must_be_allowed)
+                
         # Create the encoding
         if None == bug_ci:
             # Non buggy transition
@@ -379,7 +385,7 @@ class Verifier:
                     evt_trans = And(evt_trans,
                                     Not(self._next(msg_var)))
 
-        logging.debug("Event %s: trans is %s" % (src_event, str(evt_trans)))
+        logging.debug("Event %s: trans is %s" % (src_event.symbol, str(evt_trans)))
 
         return evt_trans
 
@@ -624,7 +630,7 @@ class Verifier:
             # skip the input variables in the last step
             if (i < steps): vars_to_use = all_vars
             else: vars_to_use = state_vars
-                
+        
             for var in vars_to_use:
                 var_i = self.helper.get_var_at_time(var, i)
                 cex_i[var] = model.get_value(var_i, True)
@@ -718,14 +724,33 @@ class Verifier:
             assert evt in self.events_to_input_var
             var = self.events_to_input_var[evt]
             var_at_i = self.helper.get_var_at_time(var, i)
-
-            assert var_at_i in step
+            self.helper.get_var_at_time(var, i)
             
-        assert False
+            print self.events_to_input_var.values()
+            
+            print var_at_i
+            assert var_at_i in step
 
-    def _get_bug_ci(self, pre, step):
+            if True == step[var_at_i]:
+                return evt
+
+        return None
+
+    def _get_bug_ci(self, pre, cex, i):
         """ Get the ci that is disabled in step but should not be"""
-        assert False
+
+        step = cex[i]
+        
+        for ci in pre:
+            assert ci in self.msgs_to_var
+            var = self.msgs_to_var[ci]
+            var_at_i = self.helper.get_var_at_time(var, i)
+            assert var_at_i in step
+
+            if False == step[var_at_i]:
+                return ci
+
+        return None
         
     def debug_cex(self, cex):
         """ Finds the following information from the cex:
@@ -740,13 +765,12 @@ class Verifier:
         last_evt = self._get_evt_at(cex, len(cex)-2)
 
         if (last_evt in self.debug_info.events_to_bugs):
-            # TODO Add disabled callin
             error_ci = self.debug_info.events_to_bugs[last_evt]
             print "Callin %s disabled deterministically " \
                 "by %s" % (error_ci, last_event)
         else:
-            error_ci = self._get_changed_ci(self.debug_info.events_to_pre[last_evt],
-                                            cex[len(cex)-2])
+            error_ci = self._get_bug_ci(self.debug_info.events_to_pre[last_evt],
+                                        cex, len(cex)-2)
             print "Callin %s is disabled but the event %s executes it " \
                 "by %s" % (error_ci, last_event)
         
