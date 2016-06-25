@@ -323,5 +323,5 @@ class TestInst(unittest.TestCase):
             ])
         specs = [TestInst.new_spec((SpecType.Disallow, "c1", None,
                                     None, None, "c2", None))]
-        self._bmc_opt_tester(ctrace, specs, 2, False)        
+        self._bmc_opt_tester(ctrace, specs, 2, False)
         

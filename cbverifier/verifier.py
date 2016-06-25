@@ -583,6 +583,29 @@ class Verifier:
 
         return cex
 
+    def print_cex(self, cex, changed=False):
+        sep = "----------------------------------------"        
+        i = 0
+
+        prev_state = {}
+        
+        print(sep)
+        for step in cex:
+            print("State - %d" % i)
+            print(sep)
+            for key, value in step.iteritems():
+                if changed:
+                    if (key not in prev_state or
+                        (key in prev_state and
+                        prev_state[key] != value)):
+                        print("%s: %s" % (key, value))
+                    prev_state[key] = value
+                    
+                else:
+                    print("%s: %s" % (key, value))                    
+            print(sep)
+            
+    
     def find_bug(self, steps):
         """Explore the system up to k steps.
         Steps correspond to the number of events executed in the
@@ -613,7 +636,7 @@ class Verifier:
                 f_at_i = self.helper.get_formula_at_i(all_vars,
                                                       self.ts_trans, i-1)
             solver.add_assertion(f_at_i)
-            logging.debug("Add assertion %s" % f_at_i.serialize())
+            logging.debug("Add assertion %s" % f_at_i)
 
             error_condition.append(self.helper.get_formula_at_i(all_vars,
                                                                 self.ts_error,

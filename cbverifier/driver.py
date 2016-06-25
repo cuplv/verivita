@@ -14,13 +14,15 @@ from verifier import Verifier
 
 def main():
     # Common to all modes
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
     
     p = optparse.OptionParser()
     p.add_option('-t', '--tracefile',
                  help="File containing the concrete trace")    
     p.add_option('-s', '--specfile', help="Specification file")
     p.add_option('-k', '--depth', help="Depth of the search")
+    p.add_option('-d', '--debugenc', action="store_false",
+                 default=True,help="Use the debug encoding")
     
     p.add_option('-m', '--mode', type='choice',
                  choices= ["bmc","check-files"],
@@ -58,12 +60,12 @@ def main():
         with open(opts.specfile, "r") as infile:
             specs = SpecSerializer.read_specs(infile)
 
-        # Call the verifier
-        verifier = Verifier(ctrace, specs)
+        # Call the verifier        
+        verifier = Verifier(ctrace, specs, None != opts.debugenc)
 
         cex = verifier.find_bug(depth)
 
-        print cex
+        verifier.print_cex(cex, True)
 
         # TODO serialize the result and the cex for inspection
         
