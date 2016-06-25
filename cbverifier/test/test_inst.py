@@ -270,6 +270,8 @@ class TestInst(unittest.TestCase):
             if (is_safe):
                 self.assertTrue(None == cex)
             else:
+                v.print_cex(cex, True)
+            
                 self.assertTrue(None != cex)
         
     def testBmc_01(self):
@@ -296,7 +298,7 @@ class TestInst(unittest.TestCase):
             ])
         specs = [TestInst.new_spec((SpecType.Disallow, "A", None,
                                     None, None, "c2", None))]
-        self._bmc_opt_tester(ctrace, specs, 1, False)        
+        self._bmc_opt_tester(ctrace, specs, 1, False)
 
 
     def testBmc_03(self):

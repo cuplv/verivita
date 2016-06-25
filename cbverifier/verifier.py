@@ -319,16 +319,25 @@ class Verifier:
                 evt_trans = And(evt_trans, And(next_effects))
         else:
             # taking this transition ends in an error
+
+            bug_ci
+            
             logging.debug("Transition for event %s is a bug" % src_event)
             evt_trans = self._next(self.ts_error)
 
             # Encode fc if we end in error - useful for debug
             next_effects = []
-            for (msg, value) in msg_enabled.iteritems():
+            for (msg, value) in msg_enabled.iteritems():                
                 assert msg in self.msgs_to_var
+
                 msg_var = self.msgs_to_var[msg]
-                evt_trans = And(evt_trans,
-                                Iff(msg_var, self._next(msg_var)))
+                if msg != bug_ci:
+                    evt_trans = And(evt_trans,
+                                    Iff(msg_var, self._next(msg_var)))
+                else:
+                    # ci is disabled
+                    evt_trans = And(evt_trans,
+                                    Not(self._next(msg_var)))
 
         logging.debug("Event %s: trans is %s" % (src_event, str(evt_trans)))
 
@@ -606,7 +615,16 @@ class Verifier:
             print(sep)
             i = i + 1
             
-    
+    def debug_cex(self, cex):
+        """ Finds the following information from the cex:
+        - What ci was called and was not enabled
+        - What event disabled the ci in the trace
+        - What events could have been enabled the ci "in the middle"
+        """
+
+        
+        
+            
     def find_bug(self, steps):
         """Explore the system up to k steps.
         Steps correspond to the number of events executed in the
