@@ -79,9 +79,9 @@ class Spec:
     def get_print_desc(self):
         spec_desc = SpecType.get_desc(self.specType)
         desc = "Rule (%s[%s], %s[%s], %s[%s])" \
-               % (rule.src, ",".join(rule.src_args),
-                  rule.cb, ",".join(rule.cb_args),
-                  rule.dst, ",".join(rule.dst_args))
+               % (self.src, ",".join(self.src_args),
+                  self.cb, ",".join(self.cb_args),
+                  self.dst, ",".join(self.dst_args))
         return desc
 
     def __eq__(self, other):
