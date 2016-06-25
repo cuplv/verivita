@@ -564,13 +564,19 @@ class Verifier:
                 else:
                     msg_enabled[ci_key] = -1
 
-    def _build_trace(self, model, all_vars, steps):
+    def _build_trace(self, model, state_vars, input_vars, steps):
         """Extract the trace from the satisfying assignment."""
+        all_vars = set(state_vars).union(input_vars)
+        
         cex = []
         for i in range(steps + 1):
             cex_i = {}
 
-            for var in all_vars:
+            # skip the input variables in the last step
+            if (i < steps): vars_to_use = all_vars
+            else: vars_to_use = state_vars
+                
+            for var in vars_to_use:
                 var_i = self.helper.get_var_at_time(var, i)
                 cex_i[var] = model.get_value(var_i, True)
             cex.append(cex_i)
@@ -589,8 +595,14 @@ class Verifier:
         solver = Solver(name='z3', logic=QF_BOOL)
 
         error_condition = []
-        all_vars = set(self.ts_vars)
-        all_vars.add(self.ts_error)
+
+        # Set the variables of the ts
+        state_vars = set(self.ts_vars)
+        state_vars.add(self.ts_error)
+        input_vars = set(self.events_to_input_var.values())
+        all_vars = set(state_vars)
+        all_vars.update(input_vars)
+        
         for i in range(steps + 1):
             logging.debug("Encoding %d..." % i)
 
@@ -617,7 +629,7 @@ class Verifier:
             logging.debug("Found bug...")
 
             model = solver.get_model()
-            trace = self._build_trace(model, all_vars, steps)
+            trace = self._build_trace(model, state_vars, input_vars, steps)
 
             return trace
         else:
