@@ -21,8 +21,8 @@ def main():
                  help="File containing the concrete trace")    
     p.add_option('-s', '--specfile', help="Specification file")
     p.add_option('-k', '--depth', help="Depth of the search")
-    p.add_option('-d', '--debugenc', action="store_false",
-                 default=True,help="Use the debug encoding")
+    p.add_option('-d', '--debugenc', action="store_true",
+                 default=False,help="Use the debug encoding")
     
     p.add_option('-m', '--mode', type='choice',
                  choices= ["bmc","check-files"],
@@ -59,15 +59,18 @@ def main():
         # Parse the specification file
         with open(opts.specfile, "r") as infile:
             specs = SpecSerializer.read_specs(infile)
-
+            
         # Call the verifier        
-        verifier = Verifier(ctrace, specs, None != opts.debugenc)
-
+        verifier = Verifier(ctrace, specs, opts.debugenc)
         cex = verifier.find_bug(depth)
 
-        verifier.print_cex(cex, True)
-
-        # TODO serialize the result and the cex for inspection
+        if None != cex:
+            verifier.print_cex(cex, False)
+            if (None != opts.debugenc and False):
+                verifier.debug_cex(cex)
+        else:
+            print "No bugs found up to %d steps" % (depth)
+                
         
     elif (opts.mode == "check-files"):
         if (opts.tracefile):

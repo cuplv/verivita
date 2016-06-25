@@ -78,7 +78,6 @@ class TestInst(unittest.TestCase):
         assert v is not None
         assert v.ts_vars is not None
 
-        print v.ts_vars
         self.assertTrue(len(v.ts_vars) == 5)
 
     def testInit(self):
@@ -238,11 +237,10 @@ class TestInst(unittest.TestCase):
         specs = [TestInst.new_spec((SpecType.Disallow, "A", None,
                                     None, None, "ci", None))]
         v = Verifier(ctrace, specs)
-        (msg_enabled, guards, bug_ci, _) = v._process_event(ctrace.events[0])
-        callin = ctrace.events[1].cb[0].ci[0]
-        print bug_ci
+        (msg_enabled, guards, bug_ci, must_be_allowed) = v._process_event(ctrace.events[0])
+        callin = ctrace.events[1].cb[0].ci[0]        
         self.assertTrue(-1 == msg_enabled[v._get_ci_key(callin)] and
-                        None != bug_ci)
+                        None == bug_ci)
 
 
     def testEvtEffect_06(self):
