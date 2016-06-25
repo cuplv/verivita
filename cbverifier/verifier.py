@@ -18,7 +18,7 @@ import logging
 from pysmt.environment import reset_env
 from pysmt.typing import BOOL
 from pysmt.shortcuts import Symbol, TRUE, FALSE
-from pysmt.shortcuts import Not, And, Or, Implies, Iff, Xor
+from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
 
 from pysmt.shortcuts import Solver
 from pysmt.solvers.solver import Model
@@ -29,13 +29,47 @@ from spec import SpecType, Spec
 from ctrace import ConcreteTrace
 from helpers import Helper
 
+class DebugInfo:
+    """ Store the encoding information that helps to debug counterexamples
+    """
+
+    def __init__(self, verifier):
+        # need access to the verifier
+        self.verifier = verifier
+
+        # maps from concrete events to the set of
+        # callins that must be allowed
+        self.events_to_pre = {}
+
+        # maps from events to effects
+        self.events_to_effects = {}
+
+        # Determinisic bugs when executing an event
+        self.events_to_bugs = {}
+        
+    def _add_pre(self, evt, pre):
+        assert evt not in self.events_to_pre
+        self.events_to_pre[evt] = pre
+
+    def _add_effects(self, evt, effects):
+        assert evt not in self.events_to_effects
+        self.events_to_effects[evt] = effects
+
+    def _add_bug(self, evt, bug_ci):
+        assert evt not in self.events_to_bugs
+        self.events_to_bugs[evt] = bug_ci
+        
 
 class Verifier:
     ENABLED_VAR_PREF  = "enabled_state"
     ALLOWED_VAR_PREF  = "allowed_state"
     ERROR_STATE = "error"
 
-    def __init__(self, ctrace, specs):
+    def __init__(self, ctrace, specs, debug_encoding=False):
+        # debug_encoding: encode additional input variables to track
+        # what concrete event has been fired in each execution step.
+        # By default it is false.
+        #
         assert None != ctrace
         assert None != specs
 
@@ -51,6 +85,12 @@ class Verifier:
         # specification (list of rules)
         self.specs = specs
 
+        self.debug_encoding = debug_encoding
+        if self.debug_encoding:
+            self.debug_info = DebugInfo(self)
+        else:
+            self.debug_info = None
+
         # internal representation of the transition system
         self.ts_vars = None
         self.ts_init = None
@@ -61,6 +101,10 @@ class Verifier:
         # Map from concrete messages to variables in the encoding
         self.msgs_to_var = {}
 
+        # Map from concrete events to their invoke input variable
+        # It is used for debug
+        self.events_to_input_var = {}
+        
         # Initialize the transition system
         self._initialize_ts()
 
@@ -82,8 +126,8 @@ class Verifier:
     def _get_ci_var(self, ci):
         # just take the first argument (the receiver)
         if len(ci.args) > 0:
-            # TODO: check if the callin name already considers the
-            # Boolean arguments
+            # The concrete name of the CI considers the first arguments
+            # (the receiver)
             args_suffix = ci.args[0]
         else:
             args_suffix = ""
@@ -127,11 +171,14 @@ class Verifier:
             # event variable
             evt_var_name = self._get_evt_var(event)
             evt_var = Symbol(evt_var_name, BOOL)
+            logging.debug("Event %s: create variable %s" % (event, evt_var_name))            
             self.ts_vars.add(evt_var)
-
             self.msgs_to_var[event] = evt_var
 
-            logging.debug("Event %s: create variable %s" % (event, evt_var_name))
+            if (self.debug_encoding):
+                ivar_name = "INPUT_%s" % evt_var_name
+                ivar = Symbol(ivar_name, BOOL)
+                self.events_to_input_var[event] = ivar
 
             for cb in event.cb:
                 for ci in cb.ci:
@@ -267,6 +314,12 @@ class Verifier:
 
         (msg_enabled, guards, bug_ci, must_be_allowed) = self._process_event(src_event)
 
+        if self.debug_encoding:
+            self.debug_info._add_pre(src_event, must_be_allowed)
+            self.debug_info._add_effects(src_event, must_be_allowed)
+            if (bug_ci != None):
+                self.debug_info._add_bug(src_event, bug_ci)
+        
         # Create the encoding
         if None == bug_ci:
             # Non buggy transition
@@ -306,16 +359,25 @@ class Verifier:
                 evt_trans = And(evt_trans, And(next_effects))
         else:
             # taking this transition ends in an error
+
+            bug_ci
+            
             logging.debug("Transition for event %s is a bug" % src_event)
             evt_trans = self._next(self.ts_error)
 
             # Encode fc if we end in error - useful for debug
             next_effects = []
-            for (msg, value) in msg_enabled.iteritems():
+            for (msg, value) in msg_enabled.iteritems():                
                 assert msg in self.msgs_to_var
+
                 msg_var = self.msgs_to_var[msg]
-                evt_trans = And(evt_trans,
-                                Iff(msg_var, self._next(msg_var)))
+                if msg != bug_ci:
+                    evt_trans = And(evt_trans,
+                                    Iff(msg_var, self._next(msg_var)))
+                else:
+                    # ci is disabled
+                    evt_trans = And(evt_trans,
+                                    Not(self._next(msg_var)))
 
         logging.debug("Event %s: trans is %s" % (src_event, str(evt_trans)))
 
@@ -328,9 +390,26 @@ class Verifier:
         events_encoding = []
         for evt in self.ctrace.events:
             evt_encoding = self._encode_evt(evt)
-            events_encoding.append(evt_encoding)
 
-        self.ts_trans = Or(events_encoding)
+            if (self.debug_encoding):
+                assert evt in self.events_to_input_var
+                ivar = self.events_to_input_var[evt]
+                events_encoding.append(Implies(ivar, evt_encoding))
+            else:            
+                events_encoding.append(evt_encoding)
+
+        if (self.debug_encoding):
+            # Execute exactly one event at time
+            ivars = self.events_to_input_var.values()            
+            self.ts_trans = And(And(events_encoding),
+                                ExactlyOne(ivars))
+        else:
+            # WARNING: here we use Or instead of
+            # exactly one event.
+            # This means that "compatible" events may happen
+            # at the same time.
+            # This is sound for reachability properties.
+            self.ts_trans = Or(events_encoding)
 
     def _build_env(self, env, formals, actuals):
         """ Add to env the matching between formal and
@@ -534,19 +613,49 @@ class Verifier:
                 else:
                     msg_enabled[ci_key] = -1
 
-    def _build_trace(self, model, all_vars, steps):
+    def _build_trace(self, model, state_vars, input_vars, steps):
         """Extract the trace from the satisfying assignment."""
+        all_vars = set(state_vars).union(input_vars)
+        
         cex = []
         for i in range(steps + 1):
             cex_i = {}
 
-            for var in all_vars:
+            # skip the input variables in the last step
+            if (i < steps): vars_to_use = all_vars
+            else: vars_to_use = state_vars
+                
+            for var in vars_to_use:
                 var_i = self.helper.get_var_at_time(var, i)
                 cex_i[var] = model.get_value(var_i, True)
             cex.append(cex_i)
 
         return cex
 
+    def print_cex(self, cex, changed=False):
+        sep = "----------------------------------------"        
+        i = 0
+
+        prev_state = {}
+        
+        print(sep)
+        for step in cex:
+            print("State - %d" % i)
+            print(sep)
+            for key, value in step.iteritems():
+                if changed:
+                    if (key not in prev_state or
+                        (key in prev_state and
+                        prev_state[key] != value)):
+                        print("%s: %s" % (key, value))
+                    prev_state[key] = value
+                    
+                else:
+                    print("%s: %s" % (key, value))                    
+            print(sep)
+            i = i + 1      
+        
+            
     def find_bug(self, steps):
         """Explore the system up to k steps.
         Steps correspond to the number of events executed in the
@@ -559,8 +668,14 @@ class Verifier:
         solver = Solver(name='z3', logic=QF_BOOL)
 
         error_condition = []
-        all_vars = set(self.ts_vars)
-        all_vars.add(self.ts_error)
+
+        # Set the variables of the ts
+        state_vars = set(self.ts_vars)
+        state_vars.add(self.ts_error)
+        input_vars = set(self.events_to_input_var.values())
+        all_vars = set(state_vars)
+        all_vars.update(input_vars)
+        
         for i in range(steps + 1):
             logging.debug("Encoding %d..." % i)
 
@@ -571,7 +686,7 @@ class Verifier:
                 f_at_i = self.helper.get_formula_at_i(all_vars,
                                                       self.ts_trans, i-1)
             solver.add_assertion(f_at_i)
-            logging.debug("Add assertion %s" % f_at_i.serialize())
+            logging.debug("Add assertion %s" % f_at_i)
 
             error_condition.append(self.helper.get_formula_at_i(all_vars,
                                                                 self.ts_error,
@@ -587,10 +702,51 @@ class Verifier:
             logging.debug("Found bug...")
 
             model = solver.get_model()
-            trace = self._build_trace(model, all_vars, steps)
+            trace = self._build_trace(model, state_vars, input_vars, steps)
 
             return trace
         else:
             # No bugs found
             logging.debug("No bugs found up to %d steps" % steps)
             return None
+
+    def _get_evt_at(self, cex, i):
+        """ Get the event at the specified step."""
+
+        step = cex[i]
+        for evt in self.ctrace.events:
+            assert evt in self.events_to_input_var
+            var = self.events_to_input_var[evt]
+            var_at_i = self.helper.get_var_at_time(var, i)
+
+            assert var_at_i in step
+            
+        assert False
+
+    def _get_bug_ci(self, pre, step):
+        """ Get the ci that is disabled in step but should not be"""
+        assert False
+        
+    def debug_cex(self, cex):
+        """ Finds the following information from the cex:
+        - What ci was called and was not enabled
+        - What event disabled the ci in the trace
+        - What events could have been enabled the ci "in the middle"
+        """
+        assert len(cex) > 0 # in the initial state everything is enabled
+        assert self.debug_encoding # only available with debug info
+        
+        # What ci caused the error?
+        last_evt = self._get_evt_at(cex, len(cex)-2)
+
+        if (last_evt in self.debug_info.events_to_bugs):
+            # TODO Add disabled callin
+            error_ci = self.debug_info.events_to_bugs[last_evt]
+            print "Callin %s disabled deterministically " \
+                "by %s" % (error_ci, last_event)
+        else:
+            error_ci = self._get_changed_ci(self.debug_info.events_to_pre[last_evt],
+                                            cex[len(cex)-2])
+            print "Callin %s is disabled but the event %s executes it " \
+                "by %s" % (error_ci, last_event)
+        

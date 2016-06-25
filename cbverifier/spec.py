@@ -165,7 +165,7 @@ class SpecSerializer:
             if 'event' in match_json:
                 message_data = match_json["event"]
             elif 'callin' in match_json:
-                message_data = match_data["callin"]
+                message_data = match_json["callin"]
 
             spec.src = CTraceSerializer.get_message_symbol(message_data["signature"],
                                                            message_data["concreteArgsVariables"])
@@ -197,10 +197,10 @@ class SpecSerializer:
         # Read the specification file
         with infile as data_file:
             data = json.load(data_file)
-
-        assert 'specs' in data
+            
+#        assert 'specs' in data
         specs = []
-        for d in data['specs']:
-            specs.append(read_spec(d))
+        for elem in data:
+            specs.append(read_spec(elem))
 
         return specs
