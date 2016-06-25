@@ -59,7 +59,6 @@ class DebugInfo:
         assert evt not in self.events_to_bugs
         self.events_to_bugs[evt] = bug_ci
         
-        
 
 class Verifier:
     ENABLED_VAR_PREF  = "enabled_state"
@@ -654,16 +653,7 @@ class Verifier:
                 else:
                     print("%s: %s" % (key, value))                    
             print(sep)
-            i = i + 1
-            
-    def debug_cex(self, cex):
-        """ Finds the following information from the cex:
-        - What ci was called and was not enabled
-        - What event disabled the ci in the trace
-        - What events could have been enabled the ci "in the middle"
-        """
-
-        
+            i = i + 1      
         
             
     def find_bug(self, steps):
@@ -719,3 +709,44 @@ class Verifier:
             # No bugs found
             logging.debug("No bugs found up to %d steps" % steps)
             return None
+
+    def _get_evt_at(self, cex, i):
+        """ Get the event at the specified step."""
+
+        step = cex[i]
+        for evt in self.ctrace.events:
+            assert evt in self.events_to_input_var
+            var = self.events_to_input_var[evt]
+            var_at_i = self.helper.get_var_at_time(var, i)
+
+            assert var_at_i in step
+            
+        assert False
+
+    def _get_bug_ci(self, pre, step):
+        """ Get the ci that is disabled in step but should not be"""
+        assert False
+        
+    def debug_cex(self, cex):
+        """ Finds the following information from the cex:
+        - What ci was called and was not enabled
+        - What event disabled the ci in the trace
+        - What events could have been enabled the ci "in the middle"
+        """
+        assert len(cex) > 0 # in the initial state everything is enabled
+        assert self.debug_encoding # only available with debug info
+        
+        # What ci caused the error?
+        last_evt = self._get_evt_at(cex, len(cex)-2)
+
+        if (last_evt in self.debug_info.events_to_bugs):
+            # TODO Add disabled callin
+            error_ci = self.debug_info.events_to_bugs[last_evt]
+            print "Callin %s disabled deterministically " \
+                "by %s" % (error_ci, last_event)
+        else:
+            error_ci = self._get_changed_ci(self.debug_info.events_to_pre[last_evt],
+                                            cex[len(cex)-2])
+            print "Callin %s is disabled but the event %s executes it " \
+                "by %s" % (error_ci, last_event)
+        
