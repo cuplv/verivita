@@ -604,6 +604,7 @@ class Verifier:
                 else:
                     print("%s: %s" % (key, value))                    
             print(sep)
+            i = i + 1
             
     
     def find_bug(self, steps):
