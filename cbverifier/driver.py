@@ -66,7 +66,7 @@ def main():
 
         if None != cex:
             verifier.print_cex(cex, False)
-            if (None != opts.debugenc and False):
+            if (opts.debugenc):
                 verifier.debug_cex(cex)
         else:
             print "No bugs found up to %d steps" % (depth)

@@ -100,6 +100,7 @@ class Verifier:
 
         # Map from concrete messages to variables in the encoding
         self.msgs_to_var = {}
+        self.var_to_cis = {}
 
         # Map from concrete events to their invoke input variable
         # It is used for debug
@@ -716,6 +717,17 @@ class Verifier:
             logging.debug("No bugs found up to %d steps" % steps)
             return None
 
+    def _get_bug_index(self, cex):
+        i = 0
+        for step in cex:
+            assert self.ts_error in step
+
+            if TRUE() == step[self.ts_error]:
+                return i
+            else:
+                i = i + 1
+        assert False
+        
     def _get_evt_at(self, cex, i):
         """ Get the event at the specified step."""
 
@@ -723,15 +735,10 @@ class Verifier:
         for evt in self.ctrace.events:
             assert evt in self.events_to_input_var
             var = self.events_to_input_var[evt]
-            var_at_i = self.helper.get_var_at_time(var, i)
-            self.helper.get_var_at_time(var, i)
             
-            print self.events_to_input_var.values()
-            
-            print var_at_i
-            assert var_at_i in step
+            assert var in step
 
-            if True == step[var_at_i]:
+            if TRUE() == step[var]:
                 return evt
 
         return None
@@ -741,15 +748,20 @@ class Verifier:
 
         step = cex[i]
         
-        for ci in pre:
-            assert ci in self.msgs_to_var
-            var = self.msgs_to_var[ci]
-            var_at_i = self.helper.get_var_at_time(var, i)
-            assert var_at_i in step
+        for var_in_pre in pre:
+            assert var_in_pre in step
 
-            if False == step[var_at_i]:
-                return ci
-
+            if FALSE() == step[var_in_pre]:
+                if not var_in_pre in self.var_to_cis:
+                    self.var_to_cis[var_in_pre] = []                    
+                    for evt in self.ctrace.events:
+                        for cb in evt.cb:
+                            for ci in cb.ci:
+                                ci_key = self._get_ci_key(ci)
+                                assert ci_key in self.msgs_to_var                       
+                                if var_in_pre == self.msgs_to_var[ci_key]:
+                                    self.var_to_cis[var_in_pre].append(ci)
+                return self.var_to_cis[var_in_pre]
         return None
         
     def debug_cex(self, cex):
@@ -760,17 +772,23 @@ class Verifier:
         """
         assert len(cex) > 0 # in the initial state everything is enabled
         assert self.debug_encoding # only available with debug info
+
+        bug_index = self._get_bug_index(cex)
+        assert bug_index > 0 # initial state is safe
         
         # What ci caused the error?
-        last_evt = self._get_evt_at(cex, len(cex)-2)
-
+        last_evt = self._get_evt_at(cex, bug_index - 1)
+        assert None != last_evt
+        
         if (last_evt in self.debug_info.events_to_bugs):
             error_ci = self.debug_info.events_to_bugs[last_evt]
             print "Callin %s disabled deterministically " \
-                "by %s" % (error_ci, last_event)
+                "by %s" % (error_ci, last_evt)
         else:
+
+            assert last_evt in self.debug_info.events_to_pre
             error_ci = self._get_bug_ci(self.debug_info.events_to_pre[last_evt],
-                                        cex, len(cex)-2)
-            print "Callin %s is disabled but the event %s executes it " \
-                "by %s" % (error_ci, last_event)
+                                        cex, bug_index - 1)
+            print "Event %s tries to execute a disabled callin" % last_evt.symbol
+            print "Disabled concrete callins: %s" % str([l.symbol for l in error_ci])
         
