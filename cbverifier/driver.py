@@ -14,7 +14,7 @@ from verifier import Verifier
 
 def main():
     # Common to all modes
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
 
     p = optparse.OptionParser()
     p.add_option('-t', '--tracefile',
@@ -61,6 +61,7 @@ def main():
             specs_map = SpecSerializer.read_specs(infile)
 
         # Call the verifier
+        ctrace.rename_trace(specs_map["mappings"])
         verifier = Verifier(ctrace, specs_map["specs"],
                             specs_map["bindings"],
                             opts.debugenc)

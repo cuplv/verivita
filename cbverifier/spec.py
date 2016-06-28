@@ -212,14 +212,27 @@ class SpecSerializer:
             data = json.load(data_file)
 
         assert "specs" in data
-        assert "bindings" in data
         specs = []
         for elem in data["specs"]:
             specs.append(read_spec(elem))
+
+        assert "bindings" in data
         bindings = []
         for elem in data["bindings"]:
             bindings.append(read_binding(elem))
 
-        return {'specs' : specs, 'bindings' : bindings}
+        mappings = {}
+        if "mappings" in data:
+            for elem in data["mappings"]:
+                assert "name" in elem and "value" in elem
+                read_value = elem["value"]
+                if read_value in mappings:
+                    raise Exception("Duplicate value %s: before %s," \
+                                    "dubplicate %s" % (read_value,
+                                                       elem["name"],
+                                                       mappings[read_value]))
+                mappings[read_value] = elem["name"]
+
+        return {'specs' : specs, 'bindings' : bindings, 'mappings' : mappings}
 
 

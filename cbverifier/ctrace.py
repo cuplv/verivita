@@ -44,6 +44,18 @@ class ConcreteTrace:
     def __init__(self):
         self.events = []
 
+    def rename_trace(self, mappings):
+        """ Rename all the symbol of a trace according to mappings"""
+        for cevt in self.events:
+            if cevt.symbol in mappings:
+                cevt.symbol = mappings[cevt.symbol]
+            for ccb in cevt.cb:
+                if ccb.symbol in mappings:
+                    ccb.symbol = mappings[ccb.symbol]
+                for cci in ccb.ci:
+                    if cci.symbol in mappings:
+                        cci.symbol = mappings[cci.symbol]
+
 class CTraceSerializer:
 
     @staticmethod

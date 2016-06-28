@@ -28,6 +28,12 @@
                 "concreteArgsVariables" : ["obj@1"]
             }
         }
-    ]
+    ],
+    "mappings" : [
+        {
+            "name" : "0__event_",
+            "value" : "cavallo"
+        }
+    ]    
 }
 
