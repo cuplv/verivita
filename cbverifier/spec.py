@@ -108,30 +108,17 @@ class Spec:
             if (r.cb != None): symbols.add(r.cb)
         return symbols
 
-class SpecJSONEncoder(JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, Spec):
-            res = {"type" : obj.specType,
-                   "src" : obj.src,
-                   "dst" : obj.dst,
-                   "cb" : obj.cb,
-                   "src_args" : obj.src_args,
-                   "dst_args" : obj.dst_args,
-                   "cb_args" : obj.cb_args}
-            return res
-        elif isinstance(obj, Fraction):
-            res = {"num" : str(obj.numerator),
-                   "den" :str(obj.denominator)}
-            return res
-        else:
-            return json.JSONEncoder.default(self, obj)
+class Binding:
+    def __init__(self, event, callback, event_args = [],
+                 cb_args = []):
+        self.event = event
+        self.cb = callback
 
+        self.event_args = event_args
+        self.cb_args = cb_args
 
 class SpecSerializer:
-    @staticmethod
-    def write_specs(spec_list, outfile):
-        json.dump({"specs" : spec_list},
-                  outfile,cls=SpecJSONEncoder, allow_nan=True)
+    "Read a list of specs and bindings"
 
     @staticmethod
     def read_specs(infile):
@@ -144,39 +131,16 @@ class SpecSerializer:
             den = int(d.pop('den'))
             return Fraction(num,den)
 
-        def read_spec(d):
-            """Read a single spec"""
-            assert 'type' in d and 'match' in d and 'change' in d
+        def read_msg(message_data):
+            assert ("signature" in message_data and
+                    "concreteArgsVariables" in message_data)
 
-            specType = SpecType.spec_from_str(d['type'])
+            signature = CTraceSerializer.get_message_symbol(message_data["signature"],
+                                                            message_data["concreteArgsVariables"])
+            args = list(message_data["concreteArgsVariables"])
 
-            spec = Spec(specType, "","")
-            
-            # match
-            match_json = d['match']
+            return (signature, args)
 
-            assert (len(match_json.keys()) <= 2) 
-            # at least an event or a callin
-            assert ('event' in match_json or 'callin' in match_json)
-            # there is a callback only when there is an event (callback -> event)
-            assert ((not 'callback' in match_json) or ('event' in match_json))
-
-            
-            if 'event' in match_json:
-                message_data = match_json["event"]
-            elif 'callin' in match_json:
-                message_data = match_json["callin"]
-
-            spec.src = CTraceSerializer.get_message_symbol(message_data["signature"],
-                                                           message_data["concreteArgsVariables"])
-            spec.src_args = list(message_data["concreteArgsVariables"])
-
-            if 'callback' in match_json:
-                cb_data = match_json['callback']
-                spec.cb = CTraceSerializer.get_message_symbol(cb_data["signature"],
-                                                              cb_data["concreteArgsVariables"])
-                spec.cb_args = list(cb_data["concreteArgsVariables"])
-            
             # change
             change_json = d["change"]
             assert (len(change_json.keys()) == 1)
@@ -192,15 +156,70 @@ class SpecSerializer:
                                                            message_data["concreteArgsVariables"])
             spec.dst_args = list(message_data["concreteArgsVariables"])
 
+
+        def read_spec(d):
+            """Read a single spec"""
+            assert 'type' in d and 'match' in d and 'change' in d
+
+            specType = SpecType.spec_from_str(d['type'])
+
+            spec = Spec(specType, "","")
+
+            # match
+            match_json = d['match']
+
+            assert (len(match_json.keys()) == 1)
+            # at least an event or a callin
+            assert ('event' in match_json or 'callin' in match_json)
+            assert ('callback' not in match_json)
+            # there is a callback only when there is an event (callback -> event)
+
+            if 'event' in match_json:
+                message_data = match_json["event"]
+            elif 'callin' in match_json:
+                message_data = match_json["callin"]
+
+            (spec.src, spec.src_args) = read_msg(message_data)
+
+            # change
+            change_json = d["change"]
+            assert (len(change_json.keys()) == 1)
+            # no callbacks in change
+            assert ('event' in change_json or 'callin' in change_json)
+
+            if 'event' in change_json:
+                message_data = change_json["event"]
+            elif 'callin' in change_json:
+                message_data = change_json["callin"]
+            (spec.dst, spec.dst_args) = read_msg(message_data)
+
+            assert spec != None
             return spec
+
+        def read_binding(d):
+            assert "event" in d and "callback" in d
+            assert len(d) == 2 # exactly one event and one callback
+
+            binding = Binding("", "")
+
+            (binding.event, binding.event_args) = read_msg(d["event"])
+            (binding.cb, binding.cb_args) = read_msg(d["callback"])
+
+            return binding
 
         # Read the specification file
         with infile as data_file:
             data = json.load(data_file)
-            
-#        assert 'specs' in data
-        specs = []
-        for elem in data:
-            specs.append(read_spec(elem))
 
-        return specs
+        assert "specs" in data
+        assert "bindings" in data
+        specs = []
+        for elem in data["specs"]:
+            specs.append(read_spec(elem))
+        bindings = []
+        for elem in data["bindings"]:
+            bindings.append(read_binding(elem))
+
+        return {'specs' : specs, 'bindings' : bindings}
+
+

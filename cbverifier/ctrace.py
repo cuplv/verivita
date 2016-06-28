@@ -7,11 +7,11 @@ import re
 class CCallback:
     """ Represent a concrete callback (cb)
     """
-    def __init__(self, symbol):
+    def __init__(self, symbol, cargs = []):
         # object involved in the cb
         self.symbol = symbol
-        self.args = []
-        
+        self.args = cargs
+
         # list of callins
         self.ci = []
 
@@ -20,12 +20,12 @@ class CCallin:
     """
     def __init__(self, symbol):
         # object
-        assert symbol != None        
+        assert symbol != None
         self.symbol = symbol
-        
+
         # list of all the object arguments
         self.args = []
-        
+
 class CEvent:
     """ Represent a concrete event.
     """
@@ -35,27 +35,27 @@ class CEvent:
 
         # arguments of the event
         self.args = []
-        
+
         # list of callbacks
         self.cb = []
-    
+
 class ConcreteTrace:
-    
+
     def __init__(self):
         self.events = []
 
 class CTraceSerializer:
 
     @staticmethod
-    def check_keys(data, keys):    
+    def check_keys(data, keys):
         for key in keys:
             if (key not in data):
                 raise Exception("%s key is not in the input json file\n%s" % (str(key), data))
-    
+
     @staticmethod
     def read_trace(input_file):
         """ Read a trace from a json file."""
-        with input_file as data_file:    
+        with input_file as data_file:
             data = json.load(data_file)
 
         CTraceSerializer.check_keys(data, ["events"])
@@ -69,7 +69,7 @@ class CTraceSerializer:
             else:
                 event = CTraceSerializer.read_event(event_json)
             ctrace.events.append(event)
-        
+
         return ctrace
 
     @staticmethod
@@ -81,7 +81,7 @@ class CTraceSerializer:
         if len(bool_args) > 0:
             signature = signature + "_" + "_".join(bool_args)
         return signature
-    
+
     @staticmethod
     def read_event(data):
         """Read a single event."""
@@ -98,14 +98,14 @@ class CTraceSerializer:
             event.args = data["concreteArgs"]
         else:
             event.args = []
-            
+
         # read the list of callbacks
         for cb_json in data["callbackObjects"]:
             cb = CTraceSerializer.read_cb(cb_json)
             event.cb.append(cb)
-        
+
         return event
-    
+
     @staticmethod
     def read_cb(cb_json):
         """Read a single callback."""
@@ -127,7 +127,7 @@ class CTraceSerializer:
         for ci_json in cb_json["callinList"]:
             ci = CTraceSerializer.read_ci(ci_json)
             cb.ci.append(ci)
-                                   
+
         return cb
 
     @staticmethod
