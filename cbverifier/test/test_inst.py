@@ -19,7 +19,6 @@ from cbverifier.verifier import Verifier
 
 class TestInst(unittest.TestCase):
 
-
     @staticmethod
     def create_ctrace(l):
         ctrace = ConcreteTrace()
@@ -72,6 +71,21 @@ class TestInst(unittest.TestCase):
 
         return bind
 
+    def _bmc_opt_tester(self, ctrace, specs, bindings, bound, is_safe):
+
+        debug_opt = [False, True]
+
+        for opt in debug_opt:
+            v = Verifier(ctrace, specs, bindings, opt)
+            cex = v.find_bug(bound)
+
+            if (is_safe):
+                self.assertTrue(None == cex)
+            else:
+                if cex != None:
+                    v.print_cex(cex, True)
+
+                self.assertTrue(None != cex)
 
     def setUp(self):
         logging.basicConfig(level=logging.DEBUG)
@@ -286,6 +300,80 @@ class TestInst(unittest.TestCase):
         print msg_enabled
         self.assertTrue(msg_enabled["ci_ci32"] == -1)
 
+
+    def testBmc_01(self):
+        # A disallow c2
+        ctrace = TestInst.create_ctrace(
+            [
+                ("A", [], [("cb1",[],[("c1",[])])]),
+                #
+                ("B", [], [("cb2",[],[("c2",[])])])
+            ])
+        bindings = [Binding("A", "cb1", [], []),
+                    Binding("B", "cb2", [], [])]
+        specs = [TestInst.new_spec((SpecType.Disallow,
+                                    "A", None,
+                                    "c2", None))]
+        self._bmc_opt_tester(ctrace, specs, bindings, 2, False)
+
+        ctrace = TestInst.create_ctrace(
+            [
+                ("A", [], [("cb1",["1"],[("c1",["1"])])]),
+                #
+                ("B", [], [("cb2",["1"],[("c2",["1"])])])
+            ])
+        bindings = [Binding("A", "cb1", ["x"], ["x"]),
+                    Binding("B", "cb2", ["x"], ["x"])]
+        specs = [TestInst.new_spec((SpecType.Disallow,
+                                    "A", "x",
+                                    "c2", "x"))]
+        self._bmc_opt_tester(ctrace, specs, bindings, 2, False)
+
+
+        #
+        ctrace = TestInst.create_ctrace(
+            [
+                ("A", [], [("cb1",[],[("c1",[])])]),
+                #
+                ("B", [], [("cb2",[],[("c3",[]),("c2",[])])])
+            ])
+        bindings = [Binding("A", "cb1", [], []),
+                    Binding("B", "cb2", [], [])]
+        specs = [TestInst.new_spec((SpecType.Disallow,
+                                    "A", None,
+                                    "c2", None)),
+                 TestInst.new_spec((SpecType.Allow,
+                                    "c3", None,
+                                    "c2", None))]
+        self._bmc_opt_tester(ctrace, specs, bindings, 2, True)
+
+        #
+        ctrace = TestInst.create_ctrace(
+            [
+                ("A", [], [("cb1",["1"],[("c1",["1"])])]),
+                #
+                ("B", [], [("cb2",["2"],[("c2",["2"])])])
+            ])
+        bindings = [Binding("A", "cb1", ["x"], ["x"]),
+                    Binding("B", "cb2", ["x"], ["x"])]
+        specs = [TestInst.new_spec((SpecType.Disallow,
+                                    "A", ["a"],
+                                    "c2", ["a"]))]
+        self._bmc_opt_tester(ctrace, specs, bindings, 2, True)
+
+        # ctrace = TestInst.create_ctrace(
+        #     [
+        #         ("A", [], [("cb1",["1"],[("c1",["1"])])]),
+        #         #
+        #         ("B", [], [("cb2",["2"],[("c2",["1"])])])
+        #     ])
+        # bindings = [Binding("A", "cb1", ["x"], ["x"]),
+        #             Binding("B", "cb2", ["x"], ["x"])]
+        # specs = [TestInst.new_spec((SpecType.Disallow,
+        #                             "A", ["a"],
+        #                             "c2", ["a"]))]
+        # self._bmc_opt_tester(ctrace, specs, bindings, 1, True)
+
     # def testVar(self):
     #     fname = "./test/data/test_vars.json"
 
@@ -485,20 +573,6 @@ class TestInst(unittest.TestCase):
     #                     None == bug_ci)
 
 
-    # def _bmc_opt_tester(self, ctrace, specs, bound, is_safe):
-
-    #     debug_opt = [False, True]
-
-    #     for opt in debug_opt:
-    #         v = Verifier(ctrace, specs, opt)
-    #         cex = v.find_bug(bound)
-
-    #         if (is_safe):
-    #             self.assertTrue(None == cex)
-    #         else:
-    #             v.print_cex(cex, True)
-
-    #             self.assertTrue(None != cex)
 
     # @unittest.skip("To be update to the new semantic")
     # def testBmc_01(self):

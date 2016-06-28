@@ -63,10 +63,12 @@ class Verifier:
         # list of bindings from events to callbacks parameters
         self.bindings = bindings
         self.debug_encoding = debug_encoding
-        if self.debug_encoding:
-            self.debug_info = DebugInfo(self)
-        else:
-            self.debug_info = None
+
+        # TODO: fix
+        # if self.debug_encoding:
+        #     self.debug_info = DebugInfo(self)
+        # else:
+        #     self.debug_info = None
 
         # internal representation of the transition system
         self.ts_vars = None
@@ -356,7 +358,7 @@ class Verifier:
             if (self.debug_encoding):
                 ivar_name = "INPUT_event_%d_%s" % (i, msg_name)
                 ivar = Symbol(ivar_name, BOOL)
-                self.events_to_input_var[event] = ivar
+                self.events_to_input_var[cevent] = ivar
 
             # 4. Find all the possible instantiation of the event
             # parameter.
@@ -617,8 +619,10 @@ class Verifier:
                                 Not(self._next(self.ts_error)))
 
             if (len(guards) > 0):
+                logging.debug("Add guards " + str(guards))
                 evt_trans = And(evt_trans, And(guards))
             if (len(next_effects) > 0):
+                logging.debug("Add effects " + str(next_effects))
                 evt_trans = And(evt_trans, And(next_effects))
         else:
             # taking this transition ends in an error,
