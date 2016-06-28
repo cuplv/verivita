@@ -130,20 +130,21 @@ class Verifier:
 
             all_vals = True
             merged = []
-            for (a1,a2) in zip(v1,v2)
-            if (None != v1 and None != v2):
-                if (v1 != v2):
-                    # cannot merge
-                    return (None, None)
-                else merged.append(v1)
-            elif (None == v2 and None != v1):
-                merged.append(v1)
-            elif (None == v1 and None != v2):
-                merged.append(v2)
-            elif (None == v1 and None == v2):
-                all_vals = False
-            else:
-                assert False # should never happen
+            for (a1,a2) in zip(v1,v2):
+                if (None != v1 and None != v2):
+                    if (v1 != v2):
+                        # cannot merge
+                        return (None, None)
+                    else:
+                        merged.append(v1)
+                elif (None == v2 and None != v1):
+                    merged.append(v1)
+                elif (None == v1 and None != v2):
+                    merged.append(v2)
+                elif (None == v1 and None == v2):
+                    all_vals = False
+                else:
+                    assert False # should never happen
             return (merged, all_vals)
 
         if (len(values) == 0):
@@ -156,7 +157,7 @@ class Verifier:
         if (all_vals):
             # Found one matching
             acc.append(merged)
-        if (None != merged and ! all_vals):
+        if (None != merged and not all_vals):
             # can be merged but no result
             # try to complete merged with other values
             acc = self._enum_evt_inst_rec(values[1:len(values),
@@ -407,8 +408,8 @@ class Verifier:
             for inst in inst_list:
                 if (not (rule.src == inst.symbol and
                          len(rule.src_args) == len(inst.args))):
-                # skip rule if it does not match the event
-                continue
+                    # skip rule if it does not match the event
+                    continue
 
             # Build the "to be" list of concrete parameters
             src_env = self._build_env({}, rule.src_args, inst.args)
