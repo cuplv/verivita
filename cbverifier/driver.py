@@ -15,26 +15,26 @@ from verifier import Verifier
 def main():
     # Common to all modes
     logging.basicConfig(level=logging.INFO)
-    
+
     p = optparse.OptionParser()
     p.add_option('-t', '--tracefile',
-                 help="File containing the concrete trace")    
+                 help="File containing the concrete trace")
     p.add_option('-s', '--specfile', help="Specification file")
     p.add_option('-k', '--depth', help="Depth of the search")
     p.add_option('-d', '--debugenc', action="store_true",
                  default=False,help="Use the debug encoding")
-    
+
     p.add_option('-m', '--mode', type='choice',
                  choices= ["bmc","check-files"],
                  help="bmc: run bmc on the trace." \
                  "check-files: check if the input files are well formed.",
-                 default = "bmc")    
+                 default = "bmc")
 
     def usage(msg=""):
         if msg: print "----%s----\n" % msg
         p.print_help()
         sys.exit(1)
-    
+
     opts, args = p.parse_args()
 
     if (opts.mode == "bmc"):
@@ -58,10 +58,12 @@ def main():
 
         # Parse the specification file
         with open(opts.specfile, "r") as infile:
-            specs = SpecSerializer.read_specs(infile)
-            
-        # Call the verifier        
-        verifier = Verifier(ctrace, specs, opts.debugenc)
+            specs_map = SpecSerializer.read_specs(infile)
+
+        # Call the verifier
+        verifier = Verifier(ctrace, specs_map["specs"],
+                            specs_map["bindings"],
+                            opts.debugenc)
         cex = verifier.find_bug(depth)
 
         if None != cex:
@@ -70,12 +72,12 @@ def main():
                 verifier.debug_cex(cex)
         else:
             print "No bugs found up to %d steps" % (depth)
-                
-        
+
+
     elif (opts.mode == "check-files"):
         if (opts.tracefile):
             if (not os.path.exists(opts.tracefile)):
-                usage("Trace file %s does not exists!" % opts.tracefile)        
+                usage("Trace file %s does not exists!" % opts.tracefile)
             with open(opts.tracefile, "r") as infile:
                 ctrace = CTraceSerializer.read_trace(infile)
             print "Trace file %s read succesfully" % opts.tracefile
@@ -87,6 +89,6 @@ def main():
             print "Spec file %s read succesfully" % opts.specfile
 
 
-    
+
 if __name__ == '__main__':
     main()
