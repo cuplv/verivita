@@ -64,11 +64,10 @@ class Verifier:
         self.bindings = bindings
         self.debug_encoding = debug_encoding
 
-        # TODO: fix
-        # if self.debug_encoding:
-        #     self.debug_info = DebugInfo(self)
-        # else:
-        #     self.debug_info = None
+        if self.debug_encoding:
+            self.dbg = DebugInfo(self)
+        else:
+            self.dbg = None
 
         # internal representation of the transition system
         self.ts_vars = None
@@ -347,13 +346,20 @@ class Verifier:
             msg_name = "evt_".join(cb_names)
             self.conc_to_msg[cevent] = msg_name
 
-            evt_var_name = self._get_msg_var(msg_name, True)
-            evt_var = Symbol(evt_var_name, BOOL)
-            logging.debug("Event %s: create variable %s" % (msg_name,
-                                                            evt_var_name))
-            self.ts_vars.add(evt_var)
-            self.msgs_to_var[msg_name] = evt_var
-            self.var_to_msgs[evt_var] = msg_name
+            if (msg_name not in self.msgs_to_var):
+                evt_var_name = self._get_msg_var(msg_name, True)
+                evt_var = Symbol(evt_var_name, BOOL)
+                logging.debug("Event %s: create variable %s" % (msg_name,
+                                                                evt_var_name))
+                self.ts_vars.add(evt_var)
+                self.msgs_to_var[msg_name] = evt_var
+                self.var_to_msgs[evt_var] = msg_name
+
+                if self.debug_encoding:
+                    self.dbg[msg_name] = EventDbgInfo(msg_name)
+
+            if self.debug_encoding:
+                self.dbg[msg_name].conc_msgs.append(cevent)
 
             if (self.debug_encoding):
                 ivar_name = "INPUT_event_%d_%s" % (i, msg_name)
@@ -511,6 +517,9 @@ class Verifier:
         """
         logging.debug("START: matching rules for %s..." % msg_evt)
 
+        # TODO: dbg - add match info
+        # pippo
+
         # Get the possible instantiation of cevent from the
         # possible bindings
         # The instantiation correspond to a list of environments, one
@@ -575,10 +584,10 @@ class Verifier:
 
         # TODO: Fix
         # if self.debug_encoding:
-        #     self.debug_info._add_pre(cevent, must_be_allowed)
-        #     self.debug_info._add_effects(cevent, must_be_allowed)
+        #     self.dbg._add_pre(cevent, must_be_allowed)
+        #     self.dbg._add_effects(cevent, must_be_allowed)
         #     if (bug_ci != None):
-        #         self.debug_info._add_bug(cevent, bug_ci)
+        #         self.dbg._add_bug(cevent, bug_ci)
 
         logging.debug("Event %s" % cevent)
         logging.debug("Guards %s" % guards)
@@ -773,3 +782,33 @@ class Verifier:
             # No bugs found
             logging.debug("No bugs found up to %d steps" % steps)
             return None
+
+
+
+class EventDbgInfo:
+    def __init__(self, evt_msg):
+        self.conc_msgs = []
+        self.matches_no_effects = []
+        self.matches_w_effects = []
+        self.guards = []
+        self.req_ci = []
+        self.effects = []
+        self.bug_ci = None
+
+class DebugInfo:
+    """ Stores and print the information to explain how we obtained
+        the transition system.
+    """
+
+    def __init__(self, verifier):
+        # need access to the verifier
+        self.verifier = verifier
+
+        # maps from msgs to debug information
+        self.evt_info = {}
+
+    def __setitem__(self, msg_name, evt_info):
+        self.evt_info[msg_name] =  evt_info
+
+    def __getitem__(self, msg_name):
+        return self.evt_info[msg_name]
