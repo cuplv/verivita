@@ -257,6 +257,10 @@ class Verifier:
                 self.msgs_to_var[ci_name] = ci_var
                 self.var_to_msgs[ci_var] = ci_name
                 logging.debug("Callin %s: create variable %s" % (ci_name, str(ci_var)))
+                if self.debug_encoding:
+                    self.dbg[ci_name] = MsgDbgInfo(ci_name)
+            if self.debug_encoding:
+                self.dbg[ci_name].conc_msgs.add(cci)
 
             if ci_name not in self.msgs_to_instances:
                 self.msgs_to_instances[ci_name] = []
@@ -359,7 +363,7 @@ class Verifier:
                     self.dbg[msg_name] = EventDbgInfo(msg_name)
 
             if self.debug_encoding:
-                self.dbg[msg_name].conc_msgs.append(cevent)
+                self.dbg[msg_name].conc_msgs.add(cevent)
 
             if (self.debug_encoding):
                 ivar_name = "INPUT_event_%d_%s" % (i, msg_name)
@@ -462,6 +466,8 @@ class Verifier:
         # The event must be enabled
         msg_enabled[msg_evt] = 1
         guards = [self.msgs_to_var[msg_evt]]
+        if self.debug_encoding:
+            self.dbg[msg_evt].guards.add(msg_evt)
 
         # Apply right away the effect of the event
         # This is consistent with the semantic that applies the effect
@@ -484,12 +490,18 @@ class Verifier:
                     # If it is not the case, then we have a bug!
                     must_be_allowed.append(self.msgs_to_var[msg_ci])
 
+                    if self.debug_encoding:
+                        self.dbg[msg_evt].must_be_allowed.add(msg_ci)
+
                 elif (val == -1):
                     # The ci is disabled, and we are trying to invoke it
                     # This results in an error
                     logging.debug("Bug condition: calling " \
                                   "disabled %s" % str(msg_ci))
                     bug_ci = msg_ci
+
+                    if self.debug_encoding:
+                        self.dbg[msg_evt].bug_ci = msg_ci
 
                     # We stop at the first bug, all the subsequent
                     # inferences would be bogus
@@ -517,9 +529,6 @@ class Verifier:
         """
         logging.debug("START: matching rules for %s..." % msg_evt)
 
-        # TODO: dbg - add match info
-        # pippo
-
         # Get the possible instantiation of cevent from the
         # possible bindings
         # The instantiation correspond to a list of environments, one
@@ -546,15 +555,14 @@ class Verifier:
                         assert c in src_env
                         conc_dst_args.append(src_env[c])
                 if (len(conc_dst_args) != len(rule.dst_args)):
+                    if self.debug_encoding:
+                        self.dbg[msg_evt].add_match(rule, inst, None)
                     continue
-
-                # DEBUG
-                # search for the instantiation (rule.dst, conc_dst_args)
-                # for k,v in self.symbol_to_instances.iteritems():
-                #    print "%s:%s" % (str(k), str(v))
 
                 if rule.dst not in self.symbol_to_instances:
                     # dst not found in the trace
+                    if self.debug_encoding:
+                        self.dbg[msg_evt].add_match(rule, inst, None)
                     continue
 
                 for inst_dst in self.symbol_to_instances[rule.dst]:
@@ -565,6 +573,10 @@ class Verifier:
                                       "Src match: %s\n" \
                                       "Dst match: %s." % (rule.get_print_desc(),
                                                           inst, inst_dst))
+
+                        if self.debug_encoding:
+                            self.dbg[msg_evt].add_match(rule, inst, inst_dst)
+
                         if (rule.specType == SpecType.Enable or
                             rule.specType == SpecType.Allow):
                             msg_enabled[inst_dst.msg] = 1
@@ -785,14 +797,23 @@ class Verifier:
 
 
 
-class EventDbgInfo:
+class MsgDbgInfo(object):
+    def __init__(self, msg):
+        self.msg = msg
+        self.conc_msgs = set()
+        self.matches = []
+
+    def add_match(self, rule, match_inst, eff_inst):
+        self.matches.append((rule, match_inst, eff_inst))
+
+class EventDbgInfo(MsgDbgInfo):
     def __init__(self, evt_msg):
-        self.conc_msgs = []
-        self.matches_no_effects = []
-        self.matches_w_effects = []
-        self.guards = []
-        self.req_ci = []
-        self.effects = []
+        self.msg = evt_msg
+        self.conc_msgs = set()
+        self.matches = []
+        self.guards = set()
+        self.must_be_allowed = set()
+        self.effects = set()
         self.bug_ci = None
 
 class DebugInfo:
