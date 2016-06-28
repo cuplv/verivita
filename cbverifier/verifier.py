@@ -31,7 +31,6 @@ from spec import SpecType, Spec
 from ctrace import ConcreteTrace
 from helpers import Helper
 
-
 Instance = collections.namedtuple("Instance", ["symbol", "args", "msg"],
                                   verbose=False,
                                   rename=False)
@@ -121,53 +120,142 @@ class Verifier:
             env[var] = val
         return env
 
-    def _enum_evt_inst(self, values):
-        acc = self._enum_evt_inst_rec(values, [], [])
+    @staticmethod
+    def _enum_evt_inst(values):
+        """ Values contain a list of list of arguments.
+        Each list of arguments may not be complete (some arguments may
+        be None).
 
-    def _enum_evt_inst_rec(self, values, current_res, acc):
+        The function tries to build a set of complete matches by
+        combining multiple array of arguments.
+
+        For example, if the values list is:
+        [1, None, None], [2, None, None], [None, 3, 4]
+
+        The function builds the complete argument lists:
+        [1, 3, 4], [2, 3, 4].
+        """
+        assert None != values
+        if len(values) == 0: return []
+        init_val = [None for v in values[0]]
+        acc = Verifier._enum_evt_inst_rec(values, init_val, [])
+        return acc
+
+    @staticmethod
+    def _enum_evt_inst_rec(values, current_res, acc):
+        """ Recursive auxiliary function of _enum_evt_inst."""
         def merge_vals(v1,v2):
             assert (len(v1) == len(v2))
 
             all_vals = True
             merged = []
             for (a1,a2) in zip(v1,v2):
-                if (None != v1 and None != v2):
-                    if (v1 != v2):
+                if (None != a1 and None != a2):
+                    if (a1 != a2):
                         # cannot merge
                         return (None, None)
                     else:
-                        merged.append(v1)
-                elif (None == v2 and None != v1):
-                    merged.append(v1)
-                elif (None == v1 and None != v2):
-                    merged.append(v2)
-                elif (None == v1 and None == v2):
+                        merged.append(a1)
+                elif (None == a2 and None != a1):
+                    merged.append(a1)
+                elif (None == a1 and None != a2):
+                    merged.append(a2)
+                elif (None == a1 and None == a2):
+                    merged.append(None)
                     all_vals = False
                 else:
                     assert False # should never happen
+
+            assert len(merged) == len(v1)
             return (merged, all_vals)
 
-        if (len(values) == 0):
-            return acc
+        if (len(values) == 0): return acc
 
         current_val = values[0]
 
         # consider the current value
+        assert len(current_val) == len(current_res)
         (merged, all_vals) = merge_vals(current_val, current_res)
+
+        # Found one matching
         if (all_vals):
-            # Found one matching
+            assert len(merged) == len(current_val)
             acc.append(merged)
         if (None != merged and not all_vals):
             # can be merged but no result
             # try to complete merged with other values
-            acc = self._enum_evt_inst_rec(values[1:len(values),
-                                                 list(merged),
-                                                 acc])
+            assert len(merged) == len(current_val)
+            acc = Verifier._enum_evt_inst_rec(values[1:len(values)],
+                                              list(merged),
+                                              acc)
         # recursive search not considering the current value
-        acc = self._enum_evt_inst_rec(values[1:len(values),
-                                             list(current_res),
-                                             acc])
+        acc = Verifier._enum_evt_inst_rec(values[1:len(values)],
+                                          list(current_res),
+                                          acc)
         return acc
+
+
+    def _get_evt_signature_from_cb(self, ccb, event_cb_map):
+        """ Iterate through all the bindings, finding all the bindings
+        that contain the callback ccb.
+
+        Then, it populates a map from the event symbol of the binding
+        to the concrete arguments of the callback.
+
+        For example:
+        - concrete callin := cb(@1, @2)
+        - binding := event1(x1, x2) >> cb(x2, x1)
+
+        The function add the list [@2, @1] to the list of bindings for
+        the event "event1".
+
+        The list of concrete arguments for the event can be partial at
+        this stage (the elment in the list is None).
+        """
+        for bind in self.bindings:
+            if (ccb.symbol == bind.cb and
+                len(ccb.args) == len(bind.cb_args)):
+                env = self._build_env({}, bind.cb_args,
+                                      ccb.args)
+                cevt_args = []
+                for evt_arg in bind.event_args:
+                    if (evt_arg in env):
+                        cevt_args.append(env[evt_arg])
+                    else:
+                        # Args not matched
+                        cevt_args.append(None)
+                if bind.event not in event_cb_map:
+                    event_cb_map[bind.event] = []
+                event_cb_map[bind.event].append(cevt_args)
+
+        return event_cb_map
+
+    def _init_ts_var_callin(self, ccb):
+        """ Creates the encoding variables for all the callins in ccb,
+        and creates the data structure to keep all the instances of
+        the callin.
+        """
+        for cci in ccb.ci:
+            ci_name = "ci_" + cci.symbol + "_".join(cci.args)
+            self.conc_to_msg[cci] = ci_name
+
+            ci_var = Symbol(ci_name, BOOL)
+
+            # Different ci s instance can have the same variable
+            if ci_var not in self.ts_vars:
+                self.ts_vars.add(ci_var)
+                self.msgs_to_var[ci_name] = ci_var
+                self.var_to_msgs[ci_var] = ci_name
+                logging.debug("Callin %s: create variable %s" % (ci_name, str(ci_var)))
+
+            if ci_name not in self.msgs_to_instances:
+                self.msgs_to_instances[ci_name] = []
+            instance = Instance(ci.symol, ci.args, ci_name)
+
+            self.msgs_to_instances[ci_name].append(instance)
+            if cci.symbol not in self.symbol_to_instances:
+                self.symbol_to_instances[cci.symbol] = []
+            self.symbol_to_instances[cci.symbol].append(instance)
 
     def _init_ts_var():
         """Initialize the ts variables.
@@ -180,8 +268,7 @@ class Verifier:
 
         For each INSTANTIATION of an event "evt" we have a Boolean
         variable.
-
-        The instantiation is obtained from the bindings of the rules
+        The instantiation is obtained from the bindings of the rules.
         """
         logging.debug("Create variable...")
         self.ts_vars = set()
@@ -193,55 +280,61 @@ class Verifier:
         self.symbol_to_instances = {}
 
         i = 0
+
+        # The loop computes several information from the trace and the
+        # bindings.
+        #
+        # 1. A "name" for the event message that is determined by the
+        #    callbacks involved in the message and their concrete
+        #    parameters.
+        #
+        # 2. The set of "instances" of the event.
+        #    An instance is defined by the name of an event
+        #    (e.g. Click), the list of concrete parameters of the event
+        #    (obj1, ...) and the message names that can generate the
+        #    instance.
+        #
+        # 3. A "name" for the callin messages
+        #
+        # 4. A set of instances for each callin.
+        #
         for cevent in self.ctrace.events:
             i = i + 1
-            # each element is (event_symbol, actual_args)
+            # List of names obtained from each callback
+            # Used to name the event variable
             cb_names = []
+
+            # The key is an event symbol while the values are a list
+            # of list of arguments.
+            #
+            # The event_symbol and the arguments are found by matching
+            # the concrete callback and its actual arguments with the
+            # event symbol and its arguments specified in a binding.
+            #
+            # In practice:
+            #   - each concrete callback has a list of concrete arguments
+            #   - the binding specification tells that the
+            #     callback cb(x1, x2, ..., xn) is called by the event
+            #     event(x1, x2, ..., z1...)
+            #
+            # The loops build the "event signature" of the concrete
+            # event using the concrete callbacks name and parameters
+            # and the bindings (a map from callbacks and parameters to
+            # event names and parameters).
+            #
             event_cb_map = {}
+
             for ccb in cevent.cb:
-                cb_names.append(cb.symbol + "#" + "_".join(cb.args))
-
-                # build the event signature from the bindings
-                for bind in self.bindings:
-                    if (ccb.symbol == bind.cb and
-                        len(ccb.args) == len(bind.cb_args)):
-                        env = self._build_env({}, bind.cb_args,
-                                              ccb.args)
-                        cevt_args = []
-                        for evt_arg in bind.event_args:
-                            if (evt_arg in env):
-                                cevt_args.append(env[evt_arg])
-                            else:
-                                # Args not matched
-                                cevt_args.append(None)
-                        if bind.event not in event_cb_map:
-                            event_cb_map[bind.event] = []
-                        event_cb_map[bind.event].append(cevt_args)
-
-                # process the callins
-                for cci in cb.ci:
-                    ci_name = "ci_" + cci.symbol + "_".join(cci.args)
-                    self.conc_to_msg[cci] = ci_name
-
-                    ci_var = Symbol(ci_name, BOOL)
-                    # Different ci s instance can have the same variable
-                    if ci_var not in self.ts_vars:
-                        self.ts_vars.add(ci_var)
-                        self.msgs_to_var[ci_name] = ci_var
-                        self.var_to_msgs[ci_var] = ci_name
-                        logging.debug("Callin %s: create variable %s" % (ci_name, str(ci_var)))
-                    if ci_name not in self.msgs_to_instances:
-                        self.msgs_to_instances[ci_name] = []
-                    instance = Instance(ci.symol, ci.args, ci_name)
-                    self.msgs_to_instances[ci_name].append(instance)
-                    if cci.symbol not in self.symbol_to_instances:
-                        self.symbol_to_instances[cci.symbol] = []
-                    self.symbol_to_instances[cci.symbol].append(instance)
+                cb_names.append(cb.symbol + "_#_" + "_".join(cb.args))
+                # part of 2.
+                event_cb_map = self._evt_signature_from_cb(ccb,
+                                                           event_cb_map)
+                # process the callins (3 and 4)
+                self._init_ts_var_callin(pippo)
 
             msg_name = "evt_".join(cb_names)
-
             self.conc_to_msg[cevent] = msg_name
-            # event variable
+
             evt_var_name = self._get_msg_var(msg_name, True)
             evt_var = Symbol(evt_var_name, BOOL)
             logging.debug("Event %s: create variable %s" % (msg_name,
@@ -255,22 +348,27 @@ class Verifier:
                 ivar = Symbol(ivar_name, BOOL)
                 self.events_to_input_var[event] = ivar
 
-            # Find all the possible instantiation of the event parameter.
-            # Pre-compute the matches
+            # 4. Find all the possible instantiation of the event
+            # parameter.
+            #
+            # These information are used both to match a rule and to
+            # apply its effects.
             instances = []
             for (evt, values) in event_cb_map.iteritems():
-                all_instance = self._enum_evt_inst(values)
-                if len(all_instances) != 0:
-                    instances.append(Instance(evt, all_instance, msg_name))
 
                 # keep a map from the event name
                 if evt not in self.symbol_to_instances:
                     self.symbol_to_instances[evt] = []
-                for inst in all_instance:
-                    self.symbol_to_instances[evt].append(inst)
 
-            self.msgs_to_instances[msg_name] = instance
+                all_complete_args = Verifier._enum_evt_inst(values)
+                if len(all_complete_args) != 0:
+                    instance = Instance(evt, all_instance, msg_name)
+                    instances.append(instance)
+                    self.symbol_to_instances[evt].append(instance)
 
+            self.msgs_to_instances[msg_name] = instances
+
+        # creates the error variable
         self.ts_error = Symbol(Verifier.ERROR_STATE, BOOL)
 
     def _init_ts_init(self):

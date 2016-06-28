@@ -66,6 +66,30 @@ class TestInst(unittest.TestCase):
         self.env = reset_env()
         self.mgr = self.env.formula_manager
 
+
+
+    def test_evt_inst(self):
+        def _test_enum(values, out):
+            res = Verifier._enum_evt_inst(values)
+            self.assertTrue(res == out)
+
+        _test_enum([], [])
+        _test_enum([[1]], [[1]])
+        _test_enum([[1], [2]], [[1],[2]])
+
+        _test_enum([[1,None], [None, 2]], [[1,2]])
+        _test_enum([[1,2], [None, 2]], [[1,2]])
+        _test_enum([[1,None], [None, 2], [None, 3]],
+                   [[1,2],[1,3]])
+        _test_enum([[1,None,None], [None, 2, None], [None, None, 3]],
+                   [[1,2,3]])
+        _test_enum([[1,None,None], [None, 2, None],
+                    [None, 4, None], [None, None, 3]],
+                   [[1,2,3], [1,4,3]])
+
+
+
+        
     # def testVar(self):
     #     fname = "./test/data/test_vars.json"
 
