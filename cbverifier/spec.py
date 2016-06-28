@@ -109,12 +109,13 @@ class Spec:
         return symbols
 
 class Binding:
-    def __init__(self, event, callback):
+    def __init__(self, event, callback, event_args = [],
+                 cb_args = []):
         self.event = event
         self.cb = callback
 
-        self.event_args = []
-        self.cb_args = []
+        self.event_args = event_args
+        self.cb_args = cb_args
 
 class SpecSerializer:
     "Read a list of specs and bindings"

@@ -26,7 +26,7 @@ from pysmt.shortcuts import Solver
 from pysmt.solvers.solver import Model
 from pysmt.logics import QF_BOOL
 
-from spec import SpecType, Spec
+from spec import SpecType, Spec, Binding
 
 from ctrace import ConcreteTrace
 from helpers import Helper
@@ -40,7 +40,8 @@ class Verifier:
     ALLOWED_VAR_PREF  = "allowed_state"
     ERROR_STATE = "error"
 
-    def __init__(self, ctrace, specs, bindings, debug_encoding=False):
+    def __init__(self, ctrace, specs, bindings,
+                 debug_encoding=False):
         # debug_encoding: encode additional input variables to track
         # what concrete event has been fired in each execution step.
         # By default it is false.
@@ -102,14 +103,21 @@ class Verifier:
         self._init_ts_init()
         self._init_ts_trans()
 
-    def _get_msg_var(self, msg_name, True):
-        if (True):
+    def _get_msg_var(self, msg_name, is_evt):
+        if (is_evt):
             prefix = Verifier.ENABLED_VAR_PREF
         else:
-            prefix = Verifier.ALLOWED_STATE
+            prefix = Verifier.ALLOWED_VAR_PREF
         var_name = "%s_%s" % (prefix, msg_name)
+        return var_name
 
-    def _build_env(self, env, formals, actuals):
+    def _get_conc_var(self, conc_msg, is_evt):
+        msg_name = self.conc_to_msg[conc_msg]
+        return self.msgs_to_var[msg_name]
+
+
+    @staticmethod
+    def _build_env(env, formals, actuals):
         """ Add to env the matching between formal and
         actual parameters.
         """
@@ -194,8 +202,8 @@ class Verifier:
                                           acc)
         return acc
 
-
-    def _get_evt_signature_from_cb(self, ccb, event_cb_map):
+    @staticmethod
+    def _evt_signature_from_cb(bindings, ccb, event_cb_map):
         """ Iterate through all the bindings, finding all the bindings
         that contain the callback ccb.
 
@@ -212,11 +220,11 @@ class Verifier:
         The list of concrete arguments for the event can be partial at
         this stage (the elment in the list is None).
         """
-        for bind in self.bindings:
+        for bind in bindings:
             if (ccb.symbol == bind.cb and
                 len(ccb.args) == len(bind.cb_args)):
-                env = self._build_env({}, bind.cb_args,
-                                      ccb.args)
+                env = Verifier._build_env({}, bind.cb_args,
+                                          ccb.args)
                 cevt_args = []
                 for evt_arg in bind.event_args:
                     if (evt_arg in env):
@@ -239,7 +247,8 @@ class Verifier:
             ci_name = "ci_" + cci.symbol + "_".join(cci.args)
             self.conc_to_msg[cci] = ci_name
 
-            ci_var = Symbol(ci_name, BOOL)
+            ci_var_name = self._get_msg_var(ci_name, False)
+            ci_var = Symbol(ci_var_name, BOOL)
 
             # Different ci s instance can have the same variable
             if ci_var not in self.ts_vars:
@@ -250,14 +259,14 @@ class Verifier:
 
             if ci_name not in self.msgs_to_instances:
                 self.msgs_to_instances[ci_name] = []
-            instance = Instance(ci.symol, ci.args, ci_name)
+            instance = Instance(cci.symbol, cci.args, ci_name)
 
             self.msgs_to_instances[ci_name].append(instance)
             if cci.symbol not in self.symbol_to_instances:
                 self.symbol_to_instances[cci.symbol] = []
             self.symbol_to_instances[cci.symbol].append(instance)
 
-    def _init_ts_var():
+    def _init_ts_var(self):
         """Initialize the ts variables.
 
         What are the state variables of the system?
@@ -325,12 +334,13 @@ class Verifier:
             event_cb_map = {}
 
             for ccb in cevent.cb:
-                cb_names.append(cb.symbol + "_#_" + "_".join(cb.args))
+                cb_names.append(ccb.symbol + "_#_" + "_".join(ccb.args))
                 # part of 2.
-                event_cb_map = self._evt_signature_from_cb(ccb,
-                                                           event_cb_map)
+                event_cb_map = Verifier._evt_signature_from_cb(self.bindings,
+                                                               ccb,
+                                                               event_cb_map)
                 # process the callins (3 and 4)
-                self._init_ts_var_callin(pippo)
+                self._init_ts_var_callin(ccb)
 
             msg_name = "evt_".join(cb_names)
             self.conc_to_msg[cevent] = msg_name
@@ -362,9 +372,10 @@ class Verifier:
 
                 all_complete_args = Verifier._enum_evt_inst(values)
                 if len(all_complete_args) != 0:
-                    instance = Instance(evt, all_instance, msg_name)
-                    instances.append(instance)
-                    self.symbol_to_instances[evt].append(instance)
+                    for args_list in all_complete_args:
+                        instance = Instance(evt, args_list, msg_name)
+                        instances.append(instance)
+                        self.symbol_to_instances[evt].append(instance)
 
             self.msgs_to_instances[msg_name] = instances
 
@@ -400,10 +411,10 @@ class Verifier:
             # Initially the event value is unknown
             msg_enabled[evt_msg] = 0
 
-            for cb in event.cb:
-                for ci in cb.ci:
-                    assert ci in self.conc_to_msg
-                    ci_msg = self.conc_to_msg[ci]
+            for ccb in cevt.cb:
+                for cci in ccb.ci:
+                    assert cci in self.conc_to_msg
+                    ci_msg = self.conc_to_msg[cci]
 
                     if (ci_msg not in msg_enabled):
                         msg_enabled[ci_msg] = 0 # unknown
@@ -437,8 +448,12 @@ class Verifier:
         # 3-valued represenation: (0 unknown, -1 false, 1 true)
         msg_enabled = self._get_enabled_store()
 
-        assert msg_evt in self.conc_to_msg
+        assert cevent in self.conc_to_msg
         msg_evt = self.conc_to_msg[cevent]
+
+        # The event must be enabled
+        msg_enabled[msg_evt] = 1
+        guards = [self.msgs_to_var[msg_evt]]
 
         # Apply right away the effect of the event
         # This is consistent with the semantic that applies the effect
@@ -447,9 +462,8 @@ class Verifier:
         self._apply_rules(msg_evt, msg_enabled)
 
         # Process the sequence of callins of the event
-        for ccb in cevent.cb:
-            i = i + 1
 
+        for ccb in cevent.cb:
             for cci in ccb.ci:
                 msg_ci = self.conc_to_msg[cci]
                 val = msg_enabled[msg_ci]
@@ -493,7 +507,7 @@ class Verifier:
         The function applies the changes of the matched rules to
         msg_enabled.
         """
-        Logging.debug("START: matching rules for %s..." % msg_evt.symbol)
+        logging.debug("START: matching rules for %s..." % msg_evt)
 
         # Get the possible instantiation of cevent from the
         # possible bindings
@@ -509,39 +523,46 @@ class Verifier:
                     # skip rule if it does not match the event
                     continue
 
-            # Build the "to be" list of concrete parameters
-            src_env = self._build_env({}, rule.src_args, inst.args)
-            conc_dst_args = []
-            for c in rule.dst_args:
-                if c not in rule.src_args:
-                    Logging.debug("%s is an unbounded parameter in " \
-                                  "the rule." % (c))
-                    break
-                else:
-                    assert c in src_env
-                    conc_dst_args = src_env(c)
-            if (len(conc_dst_args) != len(rule.dst_args)):
-                continue
-
-            # search for the instantiation (rule.dst, conc_dst_args)
-            assert rule.dst in self.symbol_to_instances
-            for inst_dst in self.symbol_to_instances[rule.dst]:
-                if conc_dst_args == inst_dst.args:
-                    # we found an effect
-                    Logging.debug("Matched rule:\n" \
-                                  "%s" \
-                                  "Src match: %s\n" \
-                                  "Dst match: %s." % (rule.get_print_desc(),
-                                                      inst, inst_dst))
-                    if (rule.specType == SpecType.Enable or
-                        rule.specType == SpecType.Allow):
-                        msg_enabled[inst_dst.msg] = 1
+                # Build the "to be" list of concrete parameters
+                src_env = self._build_env({}, rule.src_args, inst.args)
+                conc_dst_args = []
+                for c in rule.dst_args:
+                    if c not in rule.src_args:
+                        logging.debug("%s is an unbounded parameter in " \
+                                      "the rule." % (c))
+                        break
                     else:
-                        assert (rule.specType == SpecType.Disable or
-                                rule.specType == SpecType.Disallow)
-                        msg_enabled[inst_dst.msg] = -1
+                        assert c in src_env
+                        conc_dst_args.append(src_env[c])
+                if (len(conc_dst_args) != len(rule.dst_args)):
+                    continue
 
-        Logging.debug("START: matching rules for %s..." % msg_evt.symbol)
+                # DEBUG
+                # search for the instantiation (rule.dst, conc_dst_args)
+                # for k,v in self.symbol_to_instances.iteritems():
+                #    print "%s:%s" % (str(k), str(v))
+
+                if rule.dst not in self.symbol_to_instances:
+                    # dst not found in the trace
+                    continue
+
+                for inst_dst in self.symbol_to_instances[rule.dst]:
+                    if conc_dst_args == inst_dst.args:
+                        # we found an effect
+                        logging.debug("Matched rule:\n" \
+                                      "%s" \
+                                      "Src match: %s\n" \
+                                      "Dst match: %s." % (rule.get_print_desc(),
+                                                          inst, inst_dst))
+                        if (rule.specType == SpecType.Enable or
+                            rule.specType == SpecType.Allow):
+                            msg_enabled[inst_dst.msg] = 1
+                        else:
+                            assert (rule.specType == SpecType.Disable or
+                                    rule.specType == SpecType.Disallow)
+                            msg_enabled[inst_dst.msg] = -1
+
+        logging.debug("START: matching rules for %s..." % msg_evt)
 
 
     def _encode_evt(self, cevent):

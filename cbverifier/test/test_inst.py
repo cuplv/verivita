@@ -11,13 +11,14 @@ except ImportError:
 from pysmt.shortcuts import Not, And, is_sat, reset_env
 from pysmt.logics import QF_BOOL
 
-from cbverifier.spec import Spec, SpecType
+from cbverifier.spec import Spec, SpecType, Binding
 
 from cbverifier.ctrace import CTraceSerializer, ConcreteTrace, CEvent, CCallback, CCallin
 from cbverifier.verifier import Verifier
 
 
 class TestInst(unittest.TestCase):
+
 
     @staticmethod
     def create_ctrace(l):
@@ -28,9 +29,8 @@ class TestInst(unittest.TestCase):
             for a in args: cevent.args.append(a)
 
             for (cb_name, cargs, cis) in cbs:
-                cb = CCallback(cb_name)
+                cb = CCallback(cb_name, cargs)
                 cevent.cb.append(cb)
-                for a in cargs: cb.args.append(a)
 
                 for (ci_name, ci_args) in cis:
                     assert None != ci_name
@@ -43,22 +43,34 @@ class TestInst(unittest.TestCase):
 
     @staticmethod
     def new_spec(l):
-        (spec_type, src, src_args, cb, cb_args, dst, dst_args) = l
+        (spec_type, src, src_args, dst, dst_args) = l
 
         assert (None != spec_type and None != src and
                 None != dst)
-        
-        spec = Spec(spec_type, src, dst)
-        if None != cb: spec.cb = cb
 
+        spec = Spec(spec_type, src, dst)
         if None != src_args:
             for f in src_args: spec.src_args.append(f)
-        if None != cb_args:
-            for f in cb_args: spec.cb_args.append(f)
         if None != dst_args:
             for f in dst_args: spec.dst_args.append(f)
 
         return spec
+
+    @staticmethod
+    def new_bind(l):
+        (spec_type, src, src_args, cb, cb_args) = l
+
+        assert (None != spec_type and None != src and
+                None != cb)
+
+        bind = Binding(src, cb)
+
+        if None != src_args:
+            for f in src_args: bind.src_args.append(f)
+        if None != cb_args:
+            for f in cb_args: bind.cb_args.append(f)
+
+        return bind
 
 
     def setUp(self):
@@ -87,9 +99,193 @@ class TestInst(unittest.TestCase):
                     [None, 4, None], [None, None, 3]],
                    [[1,2,3], [1,4,3]])
 
+    def test_evt_signatures(self):
+        def _test_evt(bindings, cb, expected):
+            evt_map = {}
+            evt_map = Verifier._evt_signature_from_cb(bindings, cb, evt_map)
+
+            self.assertTrue(len(evt_map.keys()) == len(expected.keys()))
+            for k,b1 in evt_map.iteritems():
+                self.assertTrue(k in expected)
+                b2 = expected[k]
+
+                fz1 = frozenset([frozenset(l) for l in b1])
+                fz2 = frozenset([frozenset(l) for l in b2])
+                self.assertTrue( fz1 == fz2 )
+
+        _test_evt([Binding("evt", "cb", ["x"], ["y"])],
+                  CCallback("cb", ["1"]),
+                  {"evt" : [[None]]})
+
+        _test_evt([Binding("evt", "cb", ["x"], ["x"])],
+                  CCallback("cb", ["1"]),
+                  {"evt" : [["1"]]})
+
+        _test_evt([Binding("evt", "cb", ["x","y"], ["x"])],
+                  CCallback("cb", ["1"]),
+                  {"evt" : [["1", None]]})
+
+        _test_evt([Binding("evt", "cb", ["x"], ["x","y"])],
+                  CCallback("cb", ["1","2"]),
+                  {"evt" : [["1"]]})
+
+        _test_evt([Binding("evt", "cb", ["x"], ["x","y"])],
+                  CCallback("cb", ["1","2"]),
+                  {"evt" : [["1"]]})
+
+        _test_evt([Binding("evt", "cb", ["x"], ["x","y"]),
+                   Binding("evt2", "cb", ["x"], ["x","y"])],
+                  CCallback("cb", ["1","2"]),
+                  {"evt" : [["1"]], "evt2" : [["1"]]})
+
+        _test_evt([Binding("evt", "cb", ["x"], ["x","y"]),
+                   Binding("evt2", "cb", ["x"], ["x","y"])],
+                  CCallback("cb", ["1","2"]),
+                  {"evt" : [["1"]], "evt2" : [["1"]]})
+
+    def testVar(self):
+        specs = [TestInst.new_spec((SpecType.Enable,
+                                    "A", ["x"],
+                                    "B", ["x"]))]
+        bindings = [Binding("A", "cb", ["x"], ["x"])]
+        app = [("A", ["1"],
+                [("cb", ["2"],
+                  [ ("ci1", ["3"]), ("ci2", ["4"]) ]
+                )])]
+        ctrace = TestInst.create_ctrace(app)
+        v = Verifier(ctrace, specs, bindings)
+
+        self.assertTrue(len(v.ts_vars) == 3)
+
+        res = v._process_event(ctrace.events[0])
+        (msg_enabled, guards, bug_ci, must_be_allowed) = res
+        self.assertTrue(guards == [v._get_conc_var(ctrace.events[0], True)])
+        ma = [v.msgs_to_var["ci_ci13"], v.msgs_to_var["ci_ci24"]]
+        self.assertTrue(must_be_allowed == ma)
+        self.assertTrue(None == bug_ci)
 
 
-        
+        #
+        specs = [TestInst.new_spec((SpecType.Enable,
+                                    "A", ["x"],
+                                    "B", ["x"]))]
+        bindings = [Binding("A", "cb", ["x"], ["x"])]
+        app = [("A", ["1"],
+                [("cb", ["2"],
+                  [ ("ci1", ["3"]), ("ci2", ["4"]) ])
+                ]),
+               ("A", ["2"],
+                [("cb", ["2"],
+                  [ ("ci1", ["3"]), ("ci2", ["4"]) ])
+             ])
+           ]
+        ctrace = TestInst.create_ctrace(app)
+        v = Verifier(ctrace, specs, bindings)
+        self.assertTrue(len(v.ts_vars) == 3)
+
+        res = v._process_event(ctrace.events[0])
+        (msg_enabled, guards, bug_ci, must_be_allowed) = res
+        self.assertTrue(guards == [v._get_conc_var(ctrace.events[0], True)])
+        ma = [v.msgs_to_var["ci_ci13"], v.msgs_to_var["ci_ci24"]]
+        self.assertTrue(must_be_allowed == ma)
+        self.assertTrue(None == bug_ci)
+
+        #
+        specs = [TestInst.new_spec((SpecType.Enable,
+                                    "A", ["x"],
+                                    "B", ["x"]))]
+        bindings = [Binding("A", "cb", ["x"], ["x"])]
+        app = [("A", ["1"],
+                [("cb", ["2"],
+                  [ ("ci1", ["3"]), ("ci2", ["4"]) ])
+                ]),
+               ("A", ["2"],
+                [("cb", ["3"],
+                  [ ("ci1", ["3"]), ("ci2", ["4"]) ])
+             ])
+           ]
+        ctrace = TestInst.create_ctrace(app)
+        v = Verifier(ctrace, specs, bindings)
+        self.assertTrue(len(v.ts_vars) == 4)
+
+        #
+        specs = [TestInst.new_spec((SpecType.Enable,
+                                    "A", ["x"],
+                                    "B", ["x"]))]
+        bindings = [Binding("A", "cb", ["x"], ["x"])]
+        app = [("A", ["1"],
+                [("cb", ["2"],
+                  [ ("ci1", ["3"]), ("ci2", ["4"]) ])
+                ]),
+               ("A", ["2"],
+                [("cb", ["3"],
+                  [ ("ci1", ["3"]), ("ci2", ["5"]) ])
+             ])
+           ]
+        ctrace = TestInst.create_ctrace(app)
+        v = Verifier(ctrace, specs, bindings)
+        self.assertTrue(len(v.ts_vars) == 5)
+
+        res = v._process_event(ctrace.events[1])
+        (msg_enabled, guards, bug_ci, must_be_allowed) = res
+        self.assertTrue(guards == [v._get_conc_var(ctrace.events[1], True)])
+        ma = set([v.msgs_to_var["ci_ci13"], v.msgs_to_var["ci_ci25"]])
+        self.assertTrue(set(must_be_allowed) == ma)
+        self.assertTrue(None == bug_ci)
+
+        # test disable
+        specs = [TestInst.new_spec((SpecType.Disable, "A", ["x"], "B", ["x"]))]
+        bindings = [Binding("A", "cb", ["x"], ["x"]),
+                    Binding("B", "cb", ["x"], ["x"])]
+        app = [("A", ["1"],
+                [("cb", ["2"],
+                  [ ("ci1", ["3"]), ("ci2", ["4"]) ])
+                ]),
+               ("B", ["2"],
+                [("cb", ["3"],
+                  [ ("ci1", ["3"]), ("ci2", ["5"]) ])
+             ])
+           ]
+        ctrace = TestInst.create_ctrace(app)
+        v = Verifier(ctrace, specs, bindings)
+        self.assertTrue(len(v.ts_vars) == 5)
+
+        res = v._process_event(ctrace.events[0])
+        (msg_enabled, guards, bug_ci, must_be_allowed) = res
+
+        self.assertTrue(guards == [v._get_conc_var(ctrace.events[0], True)])
+        ma = set([v.msgs_to_var["ci_ci13"], v.msgs_to_var["ci_ci24"]])
+        self.assertTrue(set(must_be_allowed) == ma)
+        self.assertTrue(None == bug_ci)
+        self.assertTrue(msg_enabled["cb_#_2"] == -1)
+
+        # test disallow
+        specs = [TestInst.new_spec((SpecType.Disallow, "A", ["x"], "ci3", ["x"]))]
+        bindings = [Binding("A", "cb", ["x"], ["x"]),
+                    Binding("B", "cb", ["x"], ["x"])]
+        app = [("A", ["1"],
+                [("cb", ["2"],
+                  [ ("ci1", ["3"]), ("ci2", ["4"]) ])
+                ]),
+               ("B", ["2"],
+                [("cb", ["3"],
+                  [ ("ci1", ["3"]), ("ci2", ["5"]), ("ci3", ["2"]) ])
+             ])
+           ]
+        ctrace = TestInst.create_ctrace(app)
+        v = Verifier(ctrace, specs, bindings)
+        self.assertTrue(len(v.ts_vars) == 6)
+
+        res = v._process_event(ctrace.events[0])
+        (msg_enabled, guards, bug_ci, must_be_allowed) = res
+
+        self.assertTrue(guards == [v._get_conc_var(ctrace.events[0], True)])
+        ma = set([v.msgs_to_var["ci_ci13"], v.msgs_to_var["ci_ci24"]])
+        self.assertTrue(set(must_be_allowed) == ma)
+        self.assertTrue(None == bug_ci)
+        print msg_enabled
+        self.assertTrue(msg_enabled["ci_ci32"] == -1)
+
     # def testVar(self):
     #     fname = "./test/data/test_vars.json"
 
@@ -144,7 +340,7 @@ class TestInst(unittest.TestCase):
     #     self.assertTrue(2 == len(v._find_events(m1[0][0], m1[0][1])))
     #     self.assertTrue(0 == len(v._find_matching_rules_evt(ctrace.events[1])))
 
-    # @unittest.skip("To be update to the new semantic")        
+    # @unittest.skip("To be update to the new semantic")
     # def testMatchEvt_02(self):
     #     specs = [TestInst.new_spec((SpecType.Enable, "A", ["x","y"],
     #                                 None, None, "B", None)),
@@ -179,9 +375,9 @@ class TestInst(unittest.TestCase):
     #            ("A", ["p@1", "p@2"], [("cb", ["p@3", "p@2"], [])]),  # no match
     #            ("A", ["p@1", "p@2"], [("cb", ["p@3"], [])])]         # no match
     #     ctrace = TestInst.create_ctrace(app)
-        
+
     #     v = Verifier(ctrace, specs)
-        
+
     #     self.assertTrue(1 == len(v._find_matching_rules_evt(ctrace.events[0])))
     #     self.assertTrue(0 == len(v._find_matching_rules_evt(ctrace.events[1])))
     #     self.assertTrue(0 == len(v._find_matching_rules_evt(ctrace.events[2])))
@@ -196,14 +392,14 @@ class TestInst(unittest.TestCase):
     #             key = v._get_ci_key(e)
     #             atom = v.msgs_to_var[key]
     #         return atom
-            
+
     #     new_f = And(formula)
     #     for e in en: new_f = And(new_f, get_atom(v,e))
     #     for e in dis: new_f = And(new_f, Not(get_atom(v,e)))
 
     #     return is_sat(new_f)
-    
-    # @unittest.skip("To be update to the new semantic")        
+
+    # @unittest.skip("To be update to the new semantic")
     # def testEvtEffect_01(self):
     #     # A is enabled if it is executed
     #     # A is enabled at the end
@@ -216,7 +412,7 @@ class TestInst(unittest.TestCase):
     #                     self.ca(v, guards, [ctrace.events[0]], []) and
     #                     None == bug_ci)
 
-    # @unittest.skip("To be update to the new semantic")        
+    # @unittest.skip("To be update to the new semantic")
     # def testEvtEffect_02(self):
     #     # A disables A
     #     # A is disabled at the end
@@ -244,7 +440,7 @@ class TestInst(unittest.TestCase):
     #                     self.ca(v, guards, [ctrace.events[0]], []) and
     #                     None == bug_ci)
 
-    # @unittest.skip("To be update to the new semantic")        
+    # @unittest.skip("To be update to the new semantic")
     # def testEvtEffect_04(self):
     #     # A allow ci
     #     # ci is allowed at the end
@@ -259,7 +455,7 @@ class TestInst(unittest.TestCase):
     #                     self.ca(v, guards, [ctrace.events[0],
     #                                         ctrace.events[0].cb[0].ci[0]], []) and
     #                     None == bug_ci)
-        
+
     # @unittest.skip("To be update to the new semantic")
     # def testEvtEffect_05(self):
     #     # A disallow ci
@@ -270,13 +466,13 @@ class TestInst(unittest.TestCase):
     #                                 None, None, "ci", None))]
     #     v = Verifier(ctrace, specs)
     #     (msg_enabled, guards, bug_ci, must_be_allowed) = v._process_event(ctrace.events[0])
-    #     callin = ctrace.events[1].cb[0].ci[0]        
+    #     callin = ctrace.events[1].cb[0].ci[0]
     #     self.assertTrue(-1 == msg_enabled[v._get_ci_key(callin)] and
     #                     None == bug_ci)
 
     # @unittest.skip("To be update to the new semantic")
     # def testEvtEffect_06(self):
-    #     # A disallow c2, c1 allow c2                
+    #     # A disallow c2, c1 allow c2
     #     ctrace = TestInst.create_ctrace([("A", [], [("cb",[],[("c1",[]),("c2",[])])])])
     #     specs = [TestInst.new_spec((SpecType.Disallow, "A", None,
     #                                 None, None, "c2", None)),
@@ -288,23 +484,23 @@ class TestInst(unittest.TestCase):
     #     self.assertTrue(1 == msg_enabled[v._get_ci_key(callin)] and
     #                     None == bug_ci)
 
-    
+
     # def _bmc_opt_tester(self, ctrace, specs, bound, is_safe):
 
     #     debug_opt = [False, True]
 
     #     for opt in debug_opt:
     #         v = Verifier(ctrace, specs, opt)
-    #         cex = v.find_bug(bound)        
+    #         cex = v.find_bug(bound)
 
     #         if (is_safe):
     #             self.assertTrue(None == cex)
     #         else:
     #             v.print_cex(cex, True)
-            
+
     #             self.assertTrue(None != cex)
 
-    # @unittest.skip("To be update to the new semantic")        
+    # @unittest.skip("To be update to the new semantic")
     # def testBmc_01(self):
     #     # A disallow c2, c1 allow c2
     #     ctrace = TestInst.create_ctrace(
@@ -313,7 +509,7 @@ class TestInst(unittest.TestCase):
     #                        ("cb",[],[("c1",[]),("c2",[])])]),
     #             #
     #             ("B", [], [("cb",[],[("c1",[]),("c2",[])]),
-    #                        ("cb",[],[("c1",[]),("c2",[])])])                
+    #                        ("cb",[],[("c1",[]),("c2",[])])])
     #         ])
     #     specs = [TestInst.new_spec((SpecType.Disallow, "A", None,
     #                                 None, None, "c2", None)),
@@ -335,7 +531,7 @@ class TestInst(unittest.TestCase):
 
     # @unittest.skip("To be update to the new semantic")
     # def testBmc_03(self):
-    #     # A disallow c2, c1 allow c2 
+    #     # A disallow c2, c1 allow c2
     #     # B disallow c3, c1 disallow c3
     #     ctrace = TestInst.create_ctrace(
     #         [
@@ -360,4 +556,7 @@ class TestInst(unittest.TestCase):
     #     specs = [TestInst.new_spec((SpecType.Disallow, "c1", None,
     #                                 None, None, "c2", None))]
     #     self._bmc_opt_tester(ctrace, specs, 2, False)
-        
+
+
+if __name__ == '__main__':
+    unittest.main()
