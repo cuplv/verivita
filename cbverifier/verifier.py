@@ -92,6 +92,9 @@ class Verifier:
         # Initialize the transition system
         self._initialize_ts()
 
+        if self.debug_encoding:
+            self.dbg.print_info()
+
     def _next(self, var):
         assert var.is_symbol()
         return Helper.get_next_var(var, self.mgr)
@@ -833,3 +836,30 @@ class DebugInfo:
 
     def __getitem__(self, msg_name):
         return self.evt_info[msg_name]
+
+    def print_info(self):
+        for msg_name, dbg_info in self.evt_info.iteritems():
+            is_evt = isinstance(dbg_info, EventDbgInfo)
+            if is_evt:
+                print("Callin: %s" % dbg_info.msg)
+            else:
+                print("Event: %s" % dbg_info.msg)
+
+            print("Concrete messages: %s" % (",".join(list(dbg_info.conc_msgs))))
+            print("List of matches:")
+            for (rule, inst, dst_inst) in dbg_info.matches:
+                print("--- Match ---")
+                print("Matched instance: %s(%s)" % (inst.symbol, ",".join(inst.args)))
+                if (dst_inst == None):
+                    print("No effects.")
+                else:
+                    print("Matched effects: %s(%s)" % (dst_inst.symbol, ",".join(dst_inst.args)))
+                print rule.get_print_desc()
+                print("-------------")
+            print("")
+            if is_evt:
+                print("Guards: %s" % ",".join(list(dbg_info.guards)))
+                print("Required callins: %s" % ",".join(list(dbg_info.must_be_allowed)))
+                print("Effects: %s" % ",".join(list(dbg_info.effects)))
+                if dbg_info.bug_ci != None:
+                    print("Event ends in bug %s" % (dbg_info.bug_ci))
