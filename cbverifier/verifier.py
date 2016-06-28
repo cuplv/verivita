@@ -32,7 +32,7 @@ from ctrace import ConcreteTrace
 from helpers import Helper
 
 
-Instance = collections.namedtuple("Instance", ["evt", "args"],
+Instance = collections.namedtuple("Instance", ["symbol", "args", "msg"],
                                   verbose=False,
                                   rename=False)
 
@@ -80,6 +80,7 @@ class Verifier:
         self.msgs_to_var = {} # Messages to Boolean variables
         self.var_to_msgs = {} # inverse map
         self.msgs_to_instances = {} # Messages to list of instances
+        self.symbol_to_instances = {} # symbols to list of instances
 
         # Map from a concrete event in the trace to their
         # invoke variable.
@@ -187,6 +188,8 @@ class Verifier:
         self.conc_to_msg = {}
         self.msgs_to_var = {}
         self.var_to_msgs = {}
+        self.msgs_to_instances = {}
+        self.symbol_to_instances = {}
 
         i = 0
         for cevent in self.ctrace.events:
@@ -212,7 +215,7 @@ class Verifier:
                                 cevt_args.append(None)
                         if bind.event not in event_cb_map:
                             event_cb_map[bind.event] = []
-                        event_cb_map.append(cevt_args)
+                        event_cb_map[bind.event].append(cevt_args)
 
                 # process the callins
                 for cci in cb.ci:
@@ -228,7 +231,11 @@ class Verifier:
                         logging.debug("Callin %s: create variable %s" % (ci_name, str(ci_var)))
                     if ci_name not in self.msgs_to_instances:
                         self.msgs_to_instances[ci_name] = []
-                    self.msgs_to_instances[ci_name].append(ci.args)
+                    instance = Instance(ci.symol, ci.args, ci_name)
+                    self.msgs_to_instances[ci_name].append(instance)
+                    if cci.symbol not in self.symbol_to_instances:
+                        self.symbol_to_instances[cci.symbol] = []
+                    self.symbol_to_instances[cci.symbol].append(instance)
 
             msg_name = "evt_".join(cb_names)
 
@@ -250,10 +257,17 @@ class Verifier:
             # Find all the possible instantiation of the event parameter.
             # Pre-compute the matches
             instances = []
-            for (evt, values) in  event_cb_map.iteritems():
+            for (evt, values) in event_cb_map.iteritems():
                 all_instance = self._enum_evt_inst(values)
                 if len(all_instances) != 0:
-                    instances.append(Instance(evt, all_instance))
+                    instances.append(Instance(evt, all_instance, msg_name))
+
+                # keep a map from the event name
+                if evt not in self.symbol_to_instances:
+                    self.symbol_to_instances[evt] = []
+                for inst in all_instance:
+                    self.symbol_to_instances[evt].append(inst)
+
             self.msgs_to_instances[msg_name] = instance
 
         self.ts_error = Symbol(Verifier.ERROR_STATE, BOOL)
@@ -363,9 +377,7 @@ class Verifier:
                     # enabled by some previous message
                     assert val == 1
 
-                # TODO: check keys
-                assert False
-                self._apply_rules(self, msg_ci, msg_enabled)
+                self._apply_rules(msg_ci, msg_enabled)
 
         return (msg_enabled, guards, bug_ci, must_be_allowed)
 
@@ -393,7 +405,7 @@ class Verifier:
 
         for rule in self.specs:
             for inst in inst_list:
-                if (not (rule.src == inst.evt and
+                if (not (rule.src == inst.symbol and
                          len(rule.src_args) == len(inst.args))):
                 # skip rule if it does not match the event
                 continue
@@ -413,15 +425,8 @@ class Verifier:
                 continue
 
             # search for the instantiation (rule.dst, conc_dst_args)
-            # TODO use the right map
-            assert False
-
-            assert rule.dst in self.self.msgs_to_instances
-            # TODO Fix dst_msg
-            dst_msg = None
-            assert False
-
-            for inst_dst in self.self.msgs_to_instances[rule.dst]:
+            assert rule.dst in self.symbol_to_instances
+            for inst_dst in self.symbol_to_instances[rule.dst]:
                 if conc_dst_args == inst_dst.args:
                     # we found an effect
                     Logging.debug("Matched rule:\n" \
@@ -431,11 +436,11 @@ class Verifier:
                                                       inst, inst_dst))
                     if (rule.specType == SpecType.Enable or
                         rule.specType == SpecType.Allow):
-                        msg_enabled[dst_msg] = 1
+                        msg_enabled[inst_dst.msg] = 1
                     else:
                         assert (rule.specType == SpecType.Disable or
                                 rule.specType == SpecType.Disallow)
-                        msg_enabled[dst_msg] = -1
+                        msg_enabled[inst_dst.msg] = -1
 
         Logging.debug("START: matching rules for %s..." % msg_evt.symbol)
 
@@ -550,3 +555,97 @@ class Verifier:
             self.ts_trans = Or(events_encoding)
 
 
+    def _build_trace(self, model, state_vars, input_vars, steps):
+        """Extract the trace from the satisfying assignment."""
+        all_vars = set(state_vars).union(input_vars)
+
+        cex = []
+        for i in range(steps + 1):
+            cex_i = {}
+
+            # skip the input variables in the last step
+            if (i < steps): vars_to_use = all_vars
+            else: vars_to_use = state_vars
+
+            for var in vars_to_use:
+                var_i = self.helper.get_var_at_time(var, i)
+                cex_i[var] = model.get_value(var_i, True)
+            cex.append(cex_i)
+        return cex
+
+    def print_cex(self, cex, changed=False):
+        sep = "----------------------------------------"
+        i = 0
+
+        prev_state = {}
+
+        print(sep)
+        for step in cex:
+            print("State - %d" % i)
+            print(sep)
+            for key, value in step.iteritems():
+                if changed:
+                    if (key not in prev_state or
+                        (key in prev_state and
+                        prev_state[key] != value)):
+                        print("%s: %s" % (key, value))
+                    prev_state[key] = value
+
+                else:
+                    print("%s: %s" % (key, value))
+            print(sep)
+            i = i + 1
+
+    def find_bug(self, steps):
+        """Explore the system up to k steps.
+        Steps correspond to the number of events executed in the
+        system.
+
+        Returns None if no bugs where found up to k or a
+        counterexample otherwise (a list of events).
+        """
+
+        solver = Solver(name='z3', logic=QF_BOOL)
+
+        error_condition = []
+
+        # Set the variables of the ts
+        state_vars = set(self.ts_vars)
+        state_vars.add(self.ts_error)
+        input_vars = set(self.events_to_input_var.values())
+        all_vars = set(state_vars)
+        all_vars.update(input_vars)
+
+        for i in range(steps + 1):
+            logging.debug("Encoding %d..." % i)
+
+            if (i == 0):
+                f_at_i = self.helper.get_formula_at_i(all_vars,
+                                                      self.ts_init, i)
+            else:
+                f_at_i = self.helper.get_formula_at_i(all_vars,
+                                                      self.ts_trans, i-1)
+            solver.add_assertion(f_at_i)
+            logging.debug("Add assertion %s" % f_at_i)
+
+            error_condition.append(self.helper.get_formula_at_i(all_vars,
+                                                                self.ts_error,
+                                                                i))
+
+        # error condition in at least one of the (k-1)-th states
+        logging.debug("Error condition %s" % error_condition)
+        solver.add_assertion(Or(error_condition))
+
+        logging.debug("Finding bug up to %d steps..." % steps)
+        res = solver.solve()
+        if (solver.solve()):
+            logging.debug("Found bug...")
+
+            model = solver.get_model()
+            trace = self._build_trace(model, state_vars, input_vars, steps)
+
+            return trace
+        else:
+            # No bugs found
+            logging.debug("No bugs found up to %d steps" % steps)
+            return None
