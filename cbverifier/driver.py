@@ -25,7 +25,7 @@ def main():
                  default=False,help="Use the debug encoding")
 
     p.add_option('-m', '--mode', type='choice',
-                 choices= ["bmc","check-files"],
+                 choices= ["bmc","check-files", "print-trace"],
                  help="bmc: run bmc on the trace." \
                  "check-files: check if the input files are well formed.",
                  default = "bmc")
@@ -60,13 +60,13 @@ def main():
         with open(opts.specfile, "r") as infile:
             specs_map = SpecSerializer.read_specs(infile)
 
-        # Call the verifier
         ctrace.rename_trace(specs_map["mappings"], True)
 
         print "Concrete trace:"
         ctrace.print_trace()
         print "---"
 
+        # Call the verifier
         verifier = Verifier(ctrace, specs_map["specs"],
                             specs_map["bindings"],
                             opts.debugenc)
@@ -78,7 +78,6 @@ def main():
                 verifier.debug_cex(cex)
         else:
             print "No bugs found up to %d steps" % (depth)
-
 
     elif (opts.mode == "check-files"):
         if (opts.tracefile):
@@ -93,6 +92,25 @@ def main():
             with open(opts.specfile, "r") as infile:
                 specs = SpecSerializer.read_specs(infile)
             print "Spec file %s read succesfully" % opts.specfile
+    elif (opts.mode == "print-trace"):
+        if (not opts.tracefile): usage("Missing trace file (-t)")
+        if (not os.path.exists(opts.tracefile)):
+            usage("Trace file %s does not exists!" % opts.tracefile)
+
+        with open(opts.tracefile, "r") as infile:
+            ctrace = CTraceSerializer.read_trace(infile)
+
+        if (opts.specfile):
+            if (not os.path.exists(opts.specfile)):
+                usage("Spec file %s does not exists!" % opts.specfile)
+            with open(opts.specfile, "r") as infile:
+                specs_map = SpecSerializer.read_specs(infile)
+
+            ctrace.rename_trace(specs_map["mappings"], True)
+
+        print "Concrete trace:"
+        ctrace.print_trace()
+        print "---"
 
 
 
