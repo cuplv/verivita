@@ -73,9 +73,12 @@ def main():
         cex = verifier.find_bug(depth)
 
         if None != cex:
-            verifier.print_cex(cex, False)
             if (opts.debugenc):
-                verifier.debug_cex(cex)
+                if verifier.debug_encoding:
+                    verifier.dbg.print_info()
+            verifier.print_cex(cex, True)
+
+            #     verifier.debug_cex(cex)
         else:
             print "No bugs found up to %d steps" % (depth)
 

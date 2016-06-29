@@ -92,9 +92,6 @@ class Verifier:
         # Initialize the transition system
         self._initialize_ts()
 
-        if self.debug_encoding:
-            self.dbg.print_info()
-
     def _next(self, var):
         assert var.is_symbol()
         return Helper.get_next_var(var, self.mgr)
@@ -779,7 +776,6 @@ class Verifier:
                 f_at_i = self.helper.get_formula_at_i(all_vars,
                                                       self.ts_trans, i-1)
             solver.add_assertion(f_at_i)
-            # logging.debug("Add assertion %s" % f_at_i)
 
             error_condition.append(self.helper.get_formula_at_i(all_vars,
                                                                 self.ts_error,
@@ -878,7 +874,7 @@ class DebugInfo:
             i = i + 1
 
             is_evt = isinstance(dbg_info, EventDbgInfo)
-            if is_evt: prefix = "Callin"
+            if not is_evt: prefix = "Callin"
             else: prefix = "Event"
             print("(%d/%d) %s: %s" % (i, total, prefix, dbg_info.msg))
 
