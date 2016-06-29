@@ -427,7 +427,6 @@ class Verifier:
             # Initially the event value is unknown
             for ccb in cevt.cb:
                 for cci in ccb.ci:
-                    print cci
                     assert cci in self.conc_to_msg
                     ci_msg = self.conc_to_msg[cci]
 
