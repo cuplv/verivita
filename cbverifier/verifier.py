@@ -64,11 +64,10 @@ class Verifier:
         self.bindings = bindings
         self.debug_encoding = debug_encoding
 
-        # TODO: fix
-        # if self.debug_encoding:
-        #     self.debug_info = DebugInfo(self)
-        # else:
-        #     self.debug_info = None
+        if self.debug_encoding:
+            self.dbg = DebugInfo(self)
+        else:
+            self.dbg = None
 
         # internal representation of the transition system
         self.ts_vars = None
@@ -92,6 +91,9 @@ class Verifier:
 
         # Initialize the transition system
         self._initialize_ts()
+
+        if self.debug_encoding:
+            self.dbg.print_info()
 
     def _next(self, var):
         assert var.is_symbol()
@@ -258,6 +260,10 @@ class Verifier:
                 self.msgs_to_var[ci_name] = ci_var
                 self.var_to_msgs[ci_var] = ci_name
                 logging.debug("Callin %s: create variable %s" % (ci_name, str(ci_var)))
+                if self.debug_encoding:
+                    self.dbg[ci_name] = MsgDbgInfo(ci_name)
+            if self.debug_encoding:
+                self.dbg[ci_name].conc_msgs.add(cci)
 
             if ci_name not in self.msgs_to_instances:
                 self.msgs_to_instances[ci_name] = []
@@ -347,13 +353,20 @@ class Verifier:
             msg_name = "evt_".join(cb_names)
             self.conc_to_msg[cevent] = msg_name
 
-            evt_var_name = self._get_msg_var(msg_name, True)
-            evt_var = Symbol(evt_var_name, BOOL)
-            logging.debug("Event %s: create variable %s" % (msg_name,
-                                                            evt_var_name))
-            self.ts_vars.add(evt_var)
-            self.msgs_to_var[msg_name] = evt_var
-            self.var_to_msgs[evt_var] = msg_name
+            if (msg_name not in self.msgs_to_var):
+                evt_var_name = self._get_msg_var(msg_name, True)
+                evt_var = Symbol(evt_var_name, BOOL)
+                logging.debug("Event %s: create variable %s" % (msg_name,
+                                                                evt_var_name))
+                self.ts_vars.add(evt_var)
+                self.msgs_to_var[msg_name] = evt_var
+                self.var_to_msgs[evt_var] = msg_name
+
+                if self.debug_encoding:
+                    self.dbg[msg_name] = EventDbgInfo(msg_name)
+
+            if self.debug_encoding:
+                self.dbg[msg_name].conc_msgs.add(cevent)
 
             if (self.debug_encoding):
                 ivar_name = "INPUT_event_%d_%s" % (i, msg_name)
@@ -456,6 +469,8 @@ class Verifier:
         # The event must be enabled
         msg_enabled[msg_evt] = 1
         guards = [self.msgs_to_var[msg_evt]]
+        if self.debug_encoding:
+            self.dbg[msg_evt].guards.add(msg_evt)
 
         # Apply right away the effect of the event
         # This is consistent with the semantic that applies the effect
@@ -478,12 +493,18 @@ class Verifier:
                     # If it is not the case, then we have a bug!
                     must_be_allowed.append(self.msgs_to_var[msg_ci])
 
+                    if self.debug_encoding:
+                        self.dbg[msg_evt].must_be_allowed.add(msg_ci)
+
                 elif (val == -1):
                     # The ci is disabled, and we are trying to invoke it
                     # This results in an error
                     logging.debug("Bug condition: calling " \
                                   "disabled %s" % str(msg_ci))
                     bug_ci = msg_ci
+
+                    if self.debug_encoding:
+                        self.dbg[msg_evt].bug_ci = msg_ci
 
                     # We stop at the first bug, all the subsequent
                     # inferences would be bogus
@@ -537,15 +558,14 @@ class Verifier:
                         assert c in src_env
                         conc_dst_args.append(src_env[c])
                 if (len(conc_dst_args) != len(rule.dst_args)):
+                    if self.debug_encoding:
+                        self.dbg[msg_evt].add_match(rule, inst, None)
                     continue
-
-                # DEBUG
-                # search for the instantiation (rule.dst, conc_dst_args)
-                # for k,v in self.symbol_to_instances.iteritems():
-                #    print "%s:%s" % (str(k), str(v))
 
                 if rule.dst not in self.symbol_to_instances:
                     # dst not found in the trace
+                    if self.debug_encoding:
+                        self.dbg[msg_evt].add_match(rule, inst, None)
                     continue
 
                 for inst_dst in self.symbol_to_instances[rule.dst]:
@@ -562,6 +582,10 @@ class Verifier:
                                       "Src match: %s\n" \
                                       "Dst match: %s." % (rule.get_print_desc(),
                                                           inst, inst_dst))
+
+                        if self.debug_encoding:
+                            self.dbg[msg_evt].add_match(rule, inst, inst_dst)
+
                         if (rule.specType == SpecType.Enable or
                             rule.specType == SpecType.Allow):
                             msg_enabled[inst_dst.msg] = 1
@@ -580,10 +604,10 @@ class Verifier:
 
         # TODO: Fix
         # if self.debug_encoding:
-        #     self.debug_info._add_pre(cevent, must_be_allowed)
-        #     self.debug_info._add_effects(cevent, must_be_allowed)
+        #     self.dbg._add_pre(cevent, must_be_allowed)
+        #     self.dbg._add_effects(cevent, must_be_allowed)
         #     if (bug_ci != None):
-        #         self.debug_info._add_bug(cevent, bug_ci)
+        #         self.dbg._add_bug(cevent, bug_ci)
 
         logging.debug("Event %s" % cevent)
         logging.debug("Guards %s" % guards)
@@ -778,3 +802,108 @@ class Verifier:
             # No bugs found
             logging.debug("No bugs found up to %d steps" % steps)
             return None
+
+
+
+class MsgDbgInfo(object):
+    def __init__(self, msg):
+        self.msg = msg
+        self.conc_msgs = set()
+        self.matches = []
+
+    def add_match(self, rule, match_inst, eff_inst):
+        self.matches.append((rule, match_inst, eff_inst))
+
+class EventDbgInfo(MsgDbgInfo):
+    def __init__(self, evt_msg):
+        self.msg = evt_msg
+        self.conc_msgs = set()
+        self.matches = []
+        self.guards = set()
+        self.must_be_allowed = set()
+        self.effects = set()
+        self.bug_ci = None
+
+class DebugInfo:
+    """ Stores and print the information to explain how we obtained
+        the transition system.
+    """
+
+    def __init__(self, verifier):
+        # need access to the verifier
+        self.verifier = verifier
+
+        # maps from msgs to debug information
+        self.evt_info = {}
+
+        # map from concrete message in the trace to index
+        self.cmsgs_to_index = {}
+        evt_index = 0
+        for cevt in self.verifier.ctrace.events:
+            evt_index = evt_index + 1
+            self.cmsgs_to_index[cevt] = [str(evt_index)]
+
+            cb_index = 0
+            for ccb in cevt.cb:
+                cb_index = cb_index + 1
+                self.cmsgs_to_index[ccb] = [str(evt_index), str(cb_index)]
+
+                ci_index = 0
+                for cci in ccb.ci:
+                    ci_index = ci_index + 1
+                    self.cmsgs_to_index[cci] = [str(evt_index),
+                                                str(cb_index),
+                                                str(ci_index)]
+
+    def __setitem__(self, msg_name, evt_info):
+        self.evt_info[msg_name] =  evt_info
+
+    def __getitem__(self, msg_name):
+        return self.evt_info[msg_name]
+
+    def print_info(self):
+        print("\n--- Encoding information ---")
+        (count_e, count_ci) = (0,0)
+        for msg_name, dbg_info in self.evt_info.iteritems():
+            if isinstance(dbg_info, EventDbgInfo):
+                count_e = count_e + 1
+            else:
+                count_ci = count_ci + 1
+        total = count_e + count_ci
+        print("Processed %d messages (%d events, %d callins)\n" \
+              % (total, count_e, count_ci))
+
+        i = 0
+        for msg_name, dbg_info in self.evt_info.iteritems():
+            i = i + 1
+
+            is_evt = isinstance(dbg_info, EventDbgInfo)
+            if is_evt: prefix = "Callin"
+            else: prefix = "Event"
+            print("(%d/%d) %s: %s" % (i, total, prefix, dbg_info.msg))
+
+            readable_msgs = []
+            for l in  dbg_info.conc_msgs:
+                ",".join(self.cmsgs_to_index[l])
+                readable_msgs.append(",".join(self.cmsgs_to_index[l]) +
+                                     " " +
+                                     str(l.symbol))
+            str_msgs = "  \n".join(readable_msgs)
+            print("Concrete messages:\n  %s" % (str_msgs))
+
+            print("List of matches:")
+            for (rule, inst, dst_inst) in dbg_info.matches:
+                print("--- Match ---")
+                print("Matched instance: %s(%s)" % (inst.symbol, ",".join(inst.args)))
+                if (dst_inst == None):
+                    print("No effects.")
+                else:
+                    print("Matched effects: %s(%s)" % (dst_inst.symbol, ",".join(dst_inst.args)))
+                print rule.get_print_desc()
+            if is_evt:
+                print("Guards: %s" % ",".join(list(dbg_info.guards)))
+                print("Required callins:\n  %s" % "\n  ".join(list(dbg_info.must_be_allowed)))
+                print("Effects: %s" % ",".join(list(dbg_info.effects)))
+                if dbg_info.bug_ci != None:
+                    print("Event ends in bug %s" % (dbg_info.bug_ci))
+            print("-------------")
