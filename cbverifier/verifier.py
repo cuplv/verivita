@@ -735,26 +735,54 @@ class Verifier:
             cex.append(cex_i)
         return cex
 
-    def print_cex(self, cex, changed=False):
+    def print_cex(self, cex, changed=False, readable=True):
+        def _print_var_set(varset, step, prev_state,
+                           only_true = False,
+                           skipinit = True,
+                           only_changed = True):
+            if skipinit:
+                print "All events/callins are enabled"
+
+            for key in varset:
+                assert key in step
+                value = step[key]
+                if only_changed:
+                    if (key not in prev_state or
+                        (key in prev_state and
+                        prev_state[key] != value)):
+                        if only_true and value == FALSE():
+                            continue
+                        if not skipinit:
+                            print("%s: %s" % (key, value))
+                    prev_state[key] = value
+                else:
+                    if only_true and value == FALSE():
+                        continue
+                    if not skipinit:
+                        print("%s: %s" % (key, value))
+
         sep = "----------------------------------------"
         i = 0
 
         prev_state = {}
 
+        print("")
+        print("--- Counterexample ---")
         print(sep)
         for step in cex:
             print("State - %d" % i)
             print(sep)
-            for key, value in step.iteritems():
-                if changed:
-                    if (key not in prev_state or
-                        (key in prev_state and
-                        prev_state[key] != value)):
-                        print("%s: %s" % (key, value))
-                    prev_state[key] = value
 
-                else:
-                    print("%s: %s" % (key, value))
+            _print_var_set(self.ts_state_vars, step, prev_state, True,
+                           (readable and i == 0), changed)
+
+            # skip the last input vars
+            if (i >= (len(cex)-1)): continue
+            print(sep)
+            print("Input - %d" % i)
+            print(sep)
+            _print_var_set(self.ts_input_vars, step, prev_state, True,
+                           False, False)
             print(sep)
             i = i + 1
 

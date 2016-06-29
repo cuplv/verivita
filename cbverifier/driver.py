@@ -14,7 +14,8 @@ from verifier import Verifier
 
 def main():
     # Common to all modes
-    logging.basicConfig(level=logging.DEBUG)
+    # logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
 
     p = optparse.OptionParser()
     p.add_option('-t', '--tracefile',
@@ -60,11 +61,13 @@ def main():
         with open(opts.specfile, "r") as infile:
             specs_map = SpecSerializer.read_specs(infile)
 
-        ctrace.rename_trace(specs_map["mappings"], True)
+        not_mapped = ctrace.rename_trace(specs_map["mappings"], True)
+        logging.debug("\n---Not mapped symbols:---")
+        for a in not_mapped: logging.debug(a)
 
         print "Concrete trace:"
         ctrace.print_trace()
-        print "---"
+        print "---\n"
 
         # Call the verifier
         verifier = Verifier(ctrace, specs_map["specs"],
@@ -76,7 +79,7 @@ def main():
             if (opts.debugenc):
                 if verifier.debug_encoding:
                     verifier.dbg.print_info()
-            verifier.print_cex(cex, True)
+            verifier.print_cex(cex, True, True)
 
             #     verifier.debug_cex(cex)
         else:

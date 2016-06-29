@@ -81,13 +81,7 @@ class ConcreteTrace:
                         without_mapping.add(cci.symbol)
 
                     cci.args = self._shorten_obj(cci.args)
-        if print_nonmapped:
-            print "----------------------------"
-            print "List of Non-mapped symbols:"
-            for s in without_mapping:
-                print s
-            print "----------------------------"
-
+        return without_mapping
 
     def print_trace(self):
         """ Print the trace """
