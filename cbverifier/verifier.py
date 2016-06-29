@@ -836,6 +836,25 @@ class DebugInfo:
         # maps from msgs to debug information
         self.evt_info = {}
 
+        # map from concrete message in the trace to index
+        self.cmsgs_to_index = {}
+        evt_index = 0
+        for cevt in self.verifier.ctrace.events:
+            evt_index = evt_index + 1
+            self.cmsgs_to_index[cevt] = [str(evt_index)]
+
+            cb_index = 0
+            for ccb in cevt.cb:
+                cb_index = cb_index + 1
+                self.cmsgs_to_index[ccb] = [str(evt_index), str(cb_index)]
+
+                ci_index = 0
+                for cci in ccb.ci:
+                    ci_index = ci_index + 1
+                    self.cmsgs_to_index[cci] = [str(evt_index),
+                                                str(cb_index),
+                                                str(ci_index)]
+
     def __setitem__(self, msg_name, evt_info):
         self.evt_info[msg_name] =  evt_info
 
@@ -843,14 +862,35 @@ class DebugInfo:
         return self.evt_info[msg_name]
 
     def print_info(self):
+        print("\n--- Encoding information ---")
+        (count_e, count_ci) = (0,0)
         for msg_name, dbg_info in self.evt_info.iteritems():
-            is_evt = isinstance(dbg_info, EventDbgInfo)
-            if is_evt:
-                print("Callin: %s" % dbg_info.msg)
+            if isinstance(dbg_info, EventDbgInfo):
+                count_e = count_e + 1
             else:
-                print("Event: %s" % dbg_info.msg)
+                count_ci = count_ci + 1
+        total = count_e + count_ci
+        print("Processed %d messages (%d events, %d callins)\n" \
+              % (total, count_e, count_ci))
 
-            print("Concrete messages: %s" % (",".join(list(dbg_info.conc_msgs))))
+        i = 0
+        for msg_name, dbg_info in self.evt_info.iteritems():
+            i = i + 1
+
+            is_evt = isinstance(dbg_info, EventDbgInfo)
+            if is_evt: prefix = "Callin"
+            else: prefix = "Event"
+            print("(%d/%d) %s: %s" % (i, total, prefix, dbg_info.msg))
+
+            readable_msgs = []
+            for l in  dbg_info.conc_msgs:
+                ",".join(self.cmsgs_to_index[l])
+                readable_msgs.append(",".join(self.cmsgs_to_index[l]) +
+                                     " " +
+                                     str(l.symbol))
+            str_msgs = "  \n".join(readable_msgs)
+            print("Concrete messages:\n  %s" % (str_msgs))
+
             print("List of matches:")
             for (rule, inst, dst_inst) in dbg_info.matches:
                 print("--- Match ---")
@@ -860,11 +900,10 @@ class DebugInfo:
                 else:
                     print("Matched effects: %s(%s)" % (dst_inst.symbol, ",".join(dst_inst.args)))
                 print rule.get_print_desc()
-                print("-------------")
-            print("")
             if is_evt:
                 print("Guards: %s" % ",".join(list(dbg_info.guards)))
-                print("Required callins: %s" % ",".join(list(dbg_info.must_be_allowed)))
+                print("Required callins:\n  %s" % "\n  ".join(list(dbg_info.must_be_allowed)))
                 print("Effects: %s" % ",".join(list(dbg_info.effects)))
                 if dbg_info.bug_ci != None:
                     print("Event ends in bug %s" % (dbg_info.bug_ci))
+            print("-------------")
