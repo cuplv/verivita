@@ -22,6 +22,8 @@ def main():
                  help="File containing the concrete trace")
     p.add_option('-s', '--specfile', help="Specification file")
     p.add_option('-k', '--depth', help="Depth of the search")
+    p.add_option('-i', '--inc', action="store_true",
+                 default=False, help="Incremental search")
     p.add_option('-d', '--debugenc', action="store_true",
                  default=False,help="Use the debug encoding")
 
@@ -65,7 +67,7 @@ def main():
         logging.debug("\n---Not mapped symbols:---")
         for a in not_mapped: logging.debug(a)
 
-        print "Concrete trace:"
+        print "--- Concrete trace ---"
         ctrace.print_trace()
         print "---\n"
 
@@ -73,7 +75,10 @@ def main():
         verifier = Verifier(ctrace, specs_map["specs"],
                             specs_map["bindings"],
                             opts.debugenc)
-        cex = verifier.find_bug(depth)
+        if (not opts.inc):
+            cex = verifier.find_bug(depth)
+        else:
+            cex = verifier.find_bug_inc(depth)
 
         if None != cex:
             if (opts.debugenc):
@@ -114,9 +119,9 @@ def main():
 
             ctrace.rename_trace(specs_map["mappings"], True)
 
-        print "Concrete trace:"
+        print "--- Concrete trace: ---"
         ctrace.print_trace()
-        print "---"
+        print "---\n"
 
 
 

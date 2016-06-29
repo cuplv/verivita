@@ -12,15 +12,15 @@ class Helper:
     def __init__(self,env):
         self.env = env
         self.time_memo = {}
-        
+
     @staticmethod
     def get_next_var(var, mgr):
         """Given a variable returns the correspondent variable with the next suffix.
         It is used when describing transition relations (over var and var_next)
         """
         return Helper.get_new_var(var, mgr, None, "", "_next")
-    
-    @staticmethod    
+
+    @staticmethod
     def get_next_variables(vars, mgr):
         """As get_next_var for a set of variables.
         Returns a set (so no order is kept)
@@ -31,12 +31,12 @@ class Helper:
     def get_new_var(var, mgr, old2new_map, prefix, suffix):
         """Returns a variable named as
         <prefix>_var_<suffix> of the same type of var.
-        
+
         If the variable does not exists it is created from scratch
         (so, do NOT expect a fresh variable here)
         """
         assert var.is_symbol()
-        base = "%s%s%s" % (prefix, var.symbol_name(), suffix) 
+        base = "%s%s%s" % (prefix, var.symbol_name(), suffix)
         try:
             new_symbol = mgr.get_symbol(base)
         except UndefinedSymbolError as e:
@@ -46,7 +46,7 @@ class Helper:
             old2new_map[var] = new_symbol
         return new_symbol
 
-    @staticmethod    
+    @staticmethod
     def get_new_variables(vars, mgr, old2new_map, prefix, suffix):
         """As get_new_var for a list of variables"""
         next_var_list = []
@@ -55,9 +55,9 @@ class Helper:
             next_symbol = Helper.get_new_var(v, mgr, old2new_map, prefix, suffix)
             next_var_list.append(next_symbol)
         return frozenset(next_var_list)
-    
+
     def get_formula_at_i(self, vars, formula, i, prefix = "bmc_"):
-        """Change formula replacing every variable var in vars with a variable 
+        """Change formula replacing every variable var in vars with a variable
         named <prefix>_var_i and every variable var_next with a
         variable named <prefix>_var_j, where j is i+1.
 
@@ -70,7 +70,7 @@ class Helper:
             time_i_map = self.time_memo[i]
         else:
             time_i_map = {}
-            
+
             Helper.get_new_variables(vars,
                                      self.env.formula_manager,
                                      time_i_map,

@@ -845,6 +845,49 @@ class Verifier:
             logging.debug("No bugs found up to %d steps" % steps)
             return None
 
+    def find_bug_inc(self, steps):
+        """ Incremental version of bmc check
+        """
+
+        solver = Solver(name='z3', logic=QF_BOOL)
+
+        error_condition = []
+
+        all_vars = self._get_ts_var()
+        # Set the variables of the ts
+        for i in range(steps + 1):
+            logging.debug("Encoding %d..." % i)
+
+            if (i == 0):
+                f_at_i = self.helper.get_formula_at_i(all_vars,
+                                                      self.ts_init, i)
+            else:
+                f_at_i = self.helper.get_formula_at_i(all_vars,
+                                                      self.ts_trans, i-1)
+            solver.add_assertion(f_at_i)
+
+            solver.push()
+            bug_at_i = self.helper.get_formula_at_i(all_vars,
+                                                    self.ts_error,
+                                                    i)
+            solver.add_assertion(bug_at_i)
+
+            logging.debug("Finding bug at %d steps..." % steps)
+            res = solver.solve()
+            if (solver.solve()):
+                logging.debug("Found bug...")
+
+                model = solver.get_model()
+                trace = self._build_trace(model, i)
+
+                return trace
+            else:
+                # No bugs found
+                logging.debug("No bugs found up to %d steps" % steps)
+                solver.pop()
+        return None
+
+
 
 
 class MsgDbgInfo(object):
