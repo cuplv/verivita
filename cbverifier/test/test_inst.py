@@ -174,7 +174,7 @@ class TestInst(unittest.TestCase):
         res = v._process_event(ctrace.events[0])
         (msg_enabled, guards, bug_ci, must_be_allowed) = res
         self.assertTrue(guards == [v._get_conc_var(ctrace.events[0], True)])
-        ma = [v.msgs_to_var["ci_ci13"], v.msgs_to_var["ci_ci24"]]
+        ma = [v.msgs_to_var["ci_ci1_3"], v.msgs_to_var["ci_ci2_4"]]
         self.assertTrue(must_be_allowed == ma)
         self.assertTrue(None == bug_ci)
 
@@ -200,7 +200,7 @@ class TestInst(unittest.TestCase):
         res = v._process_event(ctrace.events[0])
         (msg_enabled, guards, bug_ci, must_be_allowed) = res
         self.assertTrue(guards == [v._get_conc_var(ctrace.events[0], True)])
-        ma = [v.msgs_to_var["ci_ci13"], v.msgs_to_var["ci_ci24"]]
+        ma = [v.msgs_to_var["ci_ci1_3"], v.msgs_to_var["ci_ci2_4"]]
         self.assertTrue(must_be_allowed == ma)
         self.assertTrue(None == bug_ci)
 
@@ -243,7 +243,7 @@ class TestInst(unittest.TestCase):
         res = v._process_event(ctrace.events[1])
         (msg_enabled, guards, bug_ci, must_be_allowed) = res
         self.assertTrue(guards == [v._get_conc_var(ctrace.events[1], True)])
-        ma = set([v.msgs_to_var["ci_ci13"], v.msgs_to_var["ci_ci25"]])
+        ma = set([v.msgs_to_var["ci_ci1_3"], v.msgs_to_var["ci_ci2_5"]])
         self.assertTrue(set(must_be_allowed) == ma)
         self.assertTrue(None == bug_ci)
 
@@ -268,7 +268,7 @@ class TestInst(unittest.TestCase):
         (msg_enabled, guards, bug_ci, must_be_allowed) = res
 
         self.assertTrue(guards == [v._get_conc_var(ctrace.events[0], True)])
-        ma = set([v.msgs_to_var["ci_ci13"], v.msgs_to_var["ci_ci24"]])
+        ma = set([v.msgs_to_var["ci_ci1_3"], v.msgs_to_var["ci_ci2_4"]])
         self.assertTrue(set(must_be_allowed) == ma)
         self.assertTrue(None == bug_ci)
         self.assertTrue(msg_enabled["cb_#_2"] == -1)
@@ -294,11 +294,11 @@ class TestInst(unittest.TestCase):
         (msg_enabled, guards, bug_ci, must_be_allowed) = res
 
         self.assertTrue(guards == [v._get_conc_var(ctrace.events[0], True)])
-        ma = set([v.msgs_to_var["ci_ci13"], v.msgs_to_var["ci_ci24"]])
+        ma = set([v.msgs_to_var["ci_ci1_3"], v.msgs_to_var["ci_ci2_4"]])
         self.assertTrue(set(must_be_allowed) == ma)
         self.assertTrue(None == bug_ci)
         print msg_enabled
-        self.assertTrue(msg_enabled["ci_ci32"] == -1)
+        self.assertTrue(msg_enabled["ci_ci3_2"] == -1)
 
 
     def testBmc_01(self):
