@@ -70,7 +70,8 @@ class Verifier:
             self.dbg = None
 
         # internal representation of the transition system
-        self.ts_vars = None
+        self.ts_state_vars = None
+        self.ts_input_vars = None
         self.ts_init = None
         self.ts_trans = None
         # reachability property
@@ -95,6 +96,11 @@ class Verifier:
     def _next(self, var):
         assert var.is_symbol()
         return Helper.get_next_var(var, self.mgr)
+
+    def _get_ts_var(self):
+        all_vars = set(self.ts_state_vars)
+        all_vars.update(self.ts_input_vars)
+        return all_vars
 
     def _initialize_ts(self):
         """Initialize ts_vars and ts_trans."""
@@ -252,8 +258,8 @@ class Verifier:
             ci_var = Symbol(ci_var_name, BOOL)
 
             # Different ci s instance can have the same variable
-            if ci_var not in self.ts_vars:
-                self.ts_vars.add(ci_var)
+            if ci_var not in self.ts_state_vars:
+                self.ts_state_vars.add(ci_var)
                 self.msgs_to_var[ci_name] = ci_var
                 self.var_to_msgs[ci_var] = ci_name
                 logging.debug("Callin %s: create variable %s" % (ci_name, str(ci_var)))
@@ -285,7 +291,8 @@ class Verifier:
         The instantiation is obtained from the bindings of the rules.
         """
         logging.debug("Create variable...")
-        self.ts_vars = set()
+        self.ts_state_vars = set()
+        self.ts_input_vars = set()
 
         self.conc_to_msg = {}
         self.msgs_to_var = {}
@@ -355,7 +362,7 @@ class Verifier:
                 evt_var = Symbol(evt_var_name, BOOL)
                 logging.debug("Event %s: create variable %s" % (msg_name,
                                                                 evt_var_name))
-                self.ts_vars.add(evt_var)
+                self.ts_state_vars.add(evt_var)
                 self.msgs_to_var[msg_name] = evt_var
                 self.var_to_msgs[evt_var] = msg_name
 
@@ -369,6 +376,7 @@ class Verifier:
                 ivar_name = "INPUT_event_%d_%s" % (i, msg_name)
                 ivar = Symbol(ivar_name, BOOL)
                 self.events_to_input_var[cevent] = ivar
+                self.ts_input_vars.add(ivar)
 
             # 4. Find all the possible instantiation of the event
             # parameter.
@@ -393,6 +401,7 @@ class Verifier:
 
         # creates the error variable
         self.ts_error = Symbol(Verifier.ERROR_STATE, BOOL)
+        self.ts_state_vars.add(self.ts_error)
 
     def _init_ts_init(self):
         """Initialize the ts init.
@@ -402,7 +411,9 @@ class Verifier:
         # The initial state is safe
         self.ts_init = Not(self.ts_error)
         # all the messages are enabled
-        for v in self.ts_vars: self.ts_init = And(self.ts_init, v)
+        for v in self.ts_state_vars:
+            if v != self.ts_error:
+                self.ts_init = And(self.ts_init, v)
         logging.debug("Initial state is %s" % str(self.ts_init))
 
 
@@ -705,21 +716,22 @@ class Verifier:
             self.ts_trans = Or(events_encoding)
 
 
-    def _build_trace(self, model, state_vars, input_vars, steps):
+    def _build_trace(self, model, steps):
         """Extract the trace from the satisfying assignment."""
-        all_vars = set(state_vars).union(input_vars)
 
+        vars_to_use = [self.ts_state_vars, self.ts_input_vars]
         cex = []
         for i in range(steps + 1):
             cex_i = {}
 
             # skip the input variables in the last step
-            if (i < steps): vars_to_use = all_vars
-            else: vars_to_use = state_vars
+            if (i >= steps):
+                vars_to_use = [self.ts_state_vars]
 
-            for var in vars_to_use:
-                var_i = self.helper.get_var_at_time(var, i)
-                cex_i[var] = model.get_value(var_i, True)
+            for vs in vars_to_use:
+                for var in vs:
+                    var_i = self.helper.get_var_at_time(var, i)
+                    cex_i[var] = model.get_value(var_i, True)
             cex.append(cex_i)
         return cex
 
@@ -759,13 +771,8 @@ class Verifier:
 
         error_condition = []
 
+        all_vars = self._get_ts_var()
         # Set the variables of the ts
-        state_vars = set(self.ts_vars)
-        state_vars.add(self.ts_error)
-        input_vars = set(self.events_to_input_var.values())
-        all_vars = set(state_vars)
-        all_vars.update(input_vars)
-
         for i in range(steps + 1):
             logging.debug("Encoding %d..." % i)
 
@@ -791,7 +798,7 @@ class Verifier:
             logging.debug("Found bug...")
 
             model = solver.get_model()
-            trace = self._build_trace(model, state_vars, input_vars, steps)
+            trace = self._build_trace(model, steps)
 
             return trace
         else:
