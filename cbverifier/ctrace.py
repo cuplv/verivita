@@ -59,29 +59,35 @@ class ConcreteTrace:
 
     def rename_trace(self, mappings, print_nonmapped=False):
         """ Rename all the symbol of a trace according to mappings"""
+        without_mapping = set()
         for cevt in self.events:
             if cevt.symbol in mappings:
                 cevt.symbol = mappings[cevt.symbol]
             else:
-                if print_nonmapped:
-                    print cevt.symbol
+                without_mapping.add(cevt.symbol)
 
             cevt.args = self._shorten_obj(cevt.args)
             for ccb in cevt.cb:
                 if ccb.symbol in mappings:
                     ccb.symbol = mappings[ccb.symbol]
                 else:
-                    if print_nonmapped:
-                        print ccb.symbol
+                    without_mapping.add(ccb.symbol)
 
                 ccb.args = self._shorten_obj(ccb.args)
                 for cci in ccb.ci:
                     if cci.symbol in mappings:
                         cci.symbol = mappings[cci.symbol]
                     else:
-                        if print_nonmapped:
-                            print cci.symbol
+                        without_mapping.add(cci.symbol)
+
                     cci.args = self._shorten_obj(cci.args)
+        if print_nonmapped:
+            print "----------------------------"
+            print "List of Non-mapped symbols:"
+            for s in without_mapping:
+                print s
+            print "----------------------------"
+
 
     def print_trace(self):
         """ Print the trace """
@@ -100,7 +106,7 @@ class CTraceSerializer:
     def check_keys(data, keys):
         for key in keys:
             if (key not in data):
-                raise Exception("%s key is not in the input json file\n%s" % (str(key), data))
+                raise Exception("Not found expected %s property in the JSON element:\n%s" % (str(key), str(data)))
 
     @staticmethod
     def read_trace(input_file):

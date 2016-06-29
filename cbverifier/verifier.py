@@ -421,13 +421,13 @@ class Verifier:
             evt_msg = self.conc_to_msg[cevt]
 
             # already visited event
-            if (evt_msg in msg_enabled): continue
+            if (not evt_msg in msg_enabled):
+                msg_enabled[evt_msg] = 0
 
             # Initially the event value is unknown
-            msg_enabled[evt_msg] = 0
-
             for ccb in cevt.cb:
                 for cci in ccb.ci:
+                    print cci
                     assert cci in self.conc_to_msg
                     ci_msg = self.conc_to_msg[cci]
 
@@ -483,6 +483,7 @@ class Verifier:
         for ccb in cevent.cb:
             for cci in ccb.ci:
                 msg_ci = self.conc_to_msg[cci]
+                assert msg_ci in msg_enabled
                 val = msg_enabled[msg_ci]
 
                 if (val == 0):
