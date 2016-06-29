@@ -1,6 +1,7 @@
 """ Concrete trace data structure and parsing.
 """
 
+import logging
 import json # for reading the traces from file
 import re
 
@@ -44,17 +45,54 @@ class ConcreteTrace:
     def __init__(self):
         self.events = []
 
-    def rename_trace(self, mappings):
+    def _shorten_obj(self, args_list):
+        new_args=[]
+        for a in args_list:
+            match = re.search('([a-zA-Z\. \(\)]+)@([0-9]+)', a)
+            if match:
+                obj_type = match.group(1)
+                obj = match.group(2)
+                new_args.append(obj)
+            else:
+                new_args.append(a)
+        return new_args
+
+    def rename_trace(self, mappings, print_nonmapped=False):
         """ Rename all the symbol of a trace according to mappings"""
         for cevt in self.events:
             if cevt.symbol in mappings:
                 cevt.symbol = mappings[cevt.symbol]
+            else:
+                if print_nonmapped:
+                    print cevt.symbol
+
+            cevt.args = self._shorten_obj(cevt.args)
             for ccb in cevt.cb:
                 if ccb.symbol in mappings:
                     ccb.symbol = mappings[ccb.symbol]
+                else:
+                    if print_nonmapped:
+                        print ccb.symbol
+
+                ccb.args = self._shorten_obj(ccb.args)
                 for cci in ccb.ci:
                     if cci.symbol in mappings:
                         cci.symbol = mappings[cci.symbol]
+                    else:
+                        if print_nonmapped:
+                            print cci.symbol
+                    cci.args = self._shorten_obj(cci.args)
+
+    def print_trace(self):
+        """ Print the trace """
+        for cevt in self.events:
+            print "Event %s: [%s]" % (cevt.symbol, cevt.args)
+
+            for ccb in cevt.cb:
+                print "  CB %s: [%s]" % (ccb.symbol, ccb.args)
+
+                for cci in ccb.ci:
+                    print "    CI %s: [%s]" % (cci.symbol, cci.args)
 
 class CTraceSerializer:
 
@@ -80,7 +118,10 @@ class CTraceSerializer:
                 event = CEvent("initial")
             else:
                 event = CTraceSerializer.read_event(event_json)
-            ctrace.events.append(event)
+            if (len(event.cb) != 0):
+                ctrace.events.append(event)
+            # else:
+                # logging.debug("Ignoring event %s without callbacks" % event.symbol)
 
         return ctrace
 

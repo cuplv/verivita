@@ -78,9 +78,8 @@ class Spec:
 
     def get_print_desc(self):
         spec_desc = SpecType.get_desc(self.specType)
-        desc = "Rule (%s[%s], %s[%s], %s[%s])" \
+        desc = "Rule (%s[%s], %s[%s])" \
                % (self.src, ",".join(self.src_args),
-                  self.cb, ",".join(self.cb_args),
                   self.dst, ",".join(self.dst_args))
         return desc
 
@@ -88,10 +87,8 @@ class Spec:
         return (self.specType == other.specType and
                 self.src == other.src and
                 self.dst == other.dst and
-                self.cb == other.cb and
                 self.src_args == other.src_args and
-                self.dst_args == other.dst_args and
-                self.cb_args == other.cb_args)
+                self.dst_args == other.dst_args)
 
     def __hash__(self):
         return id(self)
@@ -105,7 +102,6 @@ class Spec:
         for r in spec_list:
             symbols.add(r.src)
             symbols.add(r.dst)
-            if (r.cb != None): symbols.add(r.cb)
         return symbols
 
 class Binding:

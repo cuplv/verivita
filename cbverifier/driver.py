@@ -61,7 +61,12 @@ def main():
             specs_map = SpecSerializer.read_specs(infile)
 
         # Call the verifier
-        ctrace.rename_trace(specs_map["mappings"])
+        ctrace.rename_trace(specs_map["mappings"], True)
+
+        print "Concrete trace:"
+        ctrace.print_trace()
+        print "---"
+
         verifier = Verifier(ctrace, specs_map["specs"],
                             specs_map["bindings"],
                             opts.debugenc)
