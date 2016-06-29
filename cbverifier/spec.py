@@ -78,9 +78,8 @@ class Spec:
 
     def get_print_desc(self):
         spec_desc = SpecType.get_desc(self.specType)
-        desc = "Rule (%s[%s], %s[%s], %s[%s])" \
+        desc = "Rule (%s[%s], %s[%s])" \
                % (self.src, ",".join(self.src_args),
-                  self.cb, ",".join(self.cb_args),
                   self.dst, ",".join(self.dst_args))
         return desc
 
@@ -88,10 +87,8 @@ class Spec:
         return (self.specType == other.specType and
                 self.src == other.src and
                 self.dst == other.dst and
-                self.cb == other.cb and
                 self.src_args == other.src_args and
-                self.dst_args == other.dst_args and
-                self.cb_args == other.cb_args)
+                self.dst_args == other.dst_args)
 
     def __hash__(self):
         return id(self)
@@ -105,7 +102,6 @@ class Spec:
         for r in spec_list:
             symbols.add(r.src)
             symbols.add(r.dst)
-            if (r.cb != None): symbols.add(r.cb)
         return symbols
 
 class Binding:
@@ -212,14 +208,27 @@ class SpecSerializer:
             data = json.load(data_file)
 
         assert "specs" in data
-        assert "bindings" in data
         specs = []
         for elem in data["specs"]:
             specs.append(read_spec(elem))
+
+        assert "bindings" in data
         bindings = []
         for elem in data["bindings"]:
             bindings.append(read_binding(elem))
 
-        return {'specs' : specs, 'bindings' : bindings}
+        mappings = {}
+        if "mappings" in data:
+            for elem in data["mappings"]:
+                assert "name" in elem and "value" in elem
+                read_value = elem["value"]
+                if read_value in mappings:
+                    raise Exception("Duplicate value %s: before %s," \
+                                    "dubplicate %s" % (read_value,
+                                                       elem["name"],
+                                                       mappings[read_value]))
+                mappings[read_value] = elem["name"]
+
+        return {'specs' : specs, 'bindings' : bindings, 'mappings' : mappings}
 
 

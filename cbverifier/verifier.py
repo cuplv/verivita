@@ -248,7 +248,7 @@ class Verifier:
         the callin.
         """
         for cci in ccb.ci:
-            ci_name = "ci_" + cci.symbol + "_".join(cci.args)
+            ci_name = "ci_" + cci.symbol + "_" + ",".join(cci.args)
             self.conc_to_msg[cci] = ci_name
 
             ci_var_name = self._get_msg_var(ci_name, False)
@@ -553,7 +553,7 @@ class Verifier:
                     if c not in rule.src_args:
                         logging.debug("%s is an unbounded parameter in " \
                                       "the rule." % (c))
-                        break
+                        conc_dst_args.append(None)
                     else:
                         assert c in src_env
                         conc_dst_args.append(src_env[c])
@@ -569,7 +569,13 @@ class Verifier:
                     continue
 
                 for inst_dst in self.symbol_to_instances[rule.dst]:
-                    if conc_dst_args == inst_dst.args:
+                    matches = True
+                    for (conc_arg, inst_arg) in zip(conc_dst_args, inst_dst.args):
+                        if None != conc_arg and conc_arg != inst_arg:
+                            matches = False
+                            break
+
+                    if matches:
                         # we found an effect
                         logging.debug("Matched rule:\n" \
                                       "%s" \
@@ -589,7 +595,6 @@ class Verifier:
                             msg_enabled[inst_dst.msg] = -1
 
         logging.debug("START: matching rules for %s..." % msg_evt)
-
 
     def _encode_evt(self, cevent):
         """Encode the transition relation of a single event."""
@@ -643,10 +648,10 @@ class Verifier:
                                 Not(self._next(self.ts_error)))
 
             if (len(guards) > 0):
-                logging.debug("Add guards " + str(guards))
+                # logging.debug("Add guards " + str(guards))
                 evt_trans = And(evt_trans, And(guards))
             if (len(next_effects) > 0):
-                logging.debug("Add effects " + str(next_effects))
+                # logging.debug("Add effects " + str(next_effects))
                 evt_trans = And(evt_trans, And(next_effects))
         else:
             # taking this transition ends in an error,
@@ -669,7 +674,7 @@ class Verifier:
                     evt_trans = And(evt_trans,
                                     Not(self._next(msg_var)))
 
-        logging.debug("Event %s: trans is %s" % (cevent.symbol, str(evt_trans)))
+        # logging.debug("Event %s: trans is %s" % (cevent.symbol, str(evt_trans)))
 
         return evt_trans
 
@@ -774,7 +779,7 @@ class Verifier:
                 f_at_i = self.helper.get_formula_at_i(all_vars,
                                                       self.ts_trans, i-1)
             solver.add_assertion(f_at_i)
-            logging.debug("Add assertion %s" % f_at_i)
+            # logging.debug("Add assertion %s" % f_at_i)
 
             error_condition.append(self.helper.get_formula_at_i(all_vars,
                                                                 self.ts_error,
