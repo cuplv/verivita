@@ -740,11 +740,22 @@ class Verifier:
                            only_true = False,
                            skipinit = True,
                            only_changed = True):
+            def _print_val(key,val,msg):
+                if None != msg:
+                    print("(%s): %s: %s" % (msg, key, value))
+                else:
+                    print("%s: %s" % (key, value))
             if skipinit:
                 print "All events/callins are enabled"
 
             for key in varset:
                 assert key in step
+
+                if key in self.var_to_msgs:
+                    message = self.var_to_msgs[key]
+                else:
+                    message = None
+
                 value = step[key]
                 if only_changed:
                     if (key not in prev_state or
@@ -753,13 +764,13 @@ class Verifier:
                         if only_true and value == FALSE():
                             continue
                         if not skipinit:
-                            print("%s: %s" % (key, value))
+                            _print_val(key,value,message)
                     prev_state[key] = value
                 else:
                     if only_true and value == FALSE():
                         continue
                     if not skipinit:
-                        print("%s: %s" % (key, value))
+                        _print_val(key,value,message)
 
         sep = "----------------------------------------"
         i = 0
@@ -773,7 +784,7 @@ class Verifier:
             print("State - %d" % i)
             print(sep)
 
-            _print_var_set(self.ts_state_vars, step, prev_state, True,
+            _print_var_set(self.ts_state_vars, step, prev_state, False,
                            (readable and i == 0), changed)
 
             # skip the last input vars
