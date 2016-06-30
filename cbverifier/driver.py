@@ -67,9 +67,7 @@ def main():
         logging.debug("\n---Not mapped symbols:---")
         for a in not_mapped: logging.debug(a)
 
-        print "--- Concrete trace ---"
         ctrace.print_trace()
-        print "---\n"
 
         # Call the verifier
         verifier = Verifier(ctrace, specs_map["specs"],
@@ -119,9 +117,8 @@ def main():
 
             ctrace.rename_trace(specs_map["mappings"], True)
 
-        print "--- Concrete trace: ---"
         ctrace.print_trace()
-        print "---\n"
+
 
 
 
