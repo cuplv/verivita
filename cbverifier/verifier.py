@@ -30,6 +30,7 @@ from spec import SpecType, Spec, Binding
 
 from ctrace import ConcreteTrace
 from helpers import Helper
+from tosmv import SmvTranslator
 
 Instance = collections.namedtuple("Instance", ["symbol", "args", "msg"],
                                   verbose=False,
@@ -887,7 +888,14 @@ class Verifier:
                 solver.pop()
         return None
 
-
+    def to_smv(self, stream):
+        translator = SmvTranslator(self.env,
+                                   self.ts_state_vars,
+                                   self.ts_input_vars,
+                                   self.ts_init,
+                                   self.ts_trans,
+                                   Not(self.ts_error))
+        translator.to_smv(stream)
 
 
 class MsgDbgInfo(object):

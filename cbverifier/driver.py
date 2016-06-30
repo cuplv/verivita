@@ -27,8 +27,10 @@ def main():
     p.add_option('-d', '--debugenc', action="store_true",
                  default=False,help="Use the debug encoding")
 
+    p.add_option('-f', '--smvfile', help="Output smv file")
+
     p.add_option('-m', '--mode', type='choice',
-                 choices= ["bmc","check-files", "print-trace"],
+                 choices= ["bmc","check-files", "print-trace","to-smv"],
                  help="bmc: run bmc on the trace." \
                  "check-files: check if the input files are well formed.",
                  default = "bmc")
@@ -40,7 +42,7 @@ def main():
 
     opts, args = p.parse_args()
 
-    if (opts.mode == "bmc"):
+    if (opts.mode == "bmc" or opts.mode == "to-smv"):
         if (not opts.tracefile): usage("Missing trace file (-t)")
         if (not opts.specfile): usage("Missing specification file (-s)")
         if (not opts.depth): usage("Missing BMC depth")
@@ -54,6 +56,10 @@ def main():
         except:
             usage("%s must be a natural number!" % opts.depth)
         if (depth < 0): usage("%s must be positive!" % opts.depth)
+
+        if (opts.mode == "to-smv"):
+            if (not opts.smvfile):
+                usage("Destination smv file not specified!")
 
         # Parse the trace file
         with open(opts.tracefile, "r") as infile:
@@ -73,20 +79,27 @@ def main():
         verifier = Verifier(ctrace, specs_map["specs"],
                             specs_map["bindings"],
                             opts.debugenc)
-        if (not opts.inc):
-            cex = verifier.find_bug(depth)
-        else:
-            cex = verifier.find_bug_inc(depth)
+        if (opts.mode == "bmc"):
+            if (not opts.inc):
+                cex = verifier.find_bug(depth)
+            else:
+                cex = verifier.find_bug_inc(depth)
 
-        if None != cex:
-            if (opts.debugenc):
-                if verifier.debug_encoding:
-                    verifier.dbg.print_info()
-            verifier.print_cex(cex, True, True)
+            if None != cex:
+                if (opts.debugenc):
+                    if verifier.debug_encoding:
+                        verifier.dbg.print_info()
+                verifier.print_cex(cex, True, True)
 
-            #     verifier.debug_cex(cex)
+                #     verifier.debug_cex(cex)
+            else:
+                print "No bugs found up to %d steps" % (depth)
+        elif (opts.mode == "to-smv"):
+            with open(opts.smvfile, 'w') as smvfile:
+                verifier.to_smv(smvfile)
+                smvfile.close()
         else:
-            print "No bugs found up to %d steps" % (depth)
+            assert False
 
     elif (opts.mode == "check-files"):
         if (opts.tracefile):
