@@ -60,6 +60,7 @@ class ConcreteTrace:
     def rename_trace(self, mappings, print_nonmapped=False):
         """ Rename all the symbol of a trace according to mappings"""
         without_mapping = set()
+
         for cevt in self.events:
             if cevt.symbol in mappings:
                 cevt.symbol = mappings[cevt.symbol]
@@ -81,24 +82,35 @@ class ConcreteTrace:
                         without_mapping.add(cci.symbol)
 
                     cci.args = self._shorten_obj(cci.args)
-        if print_nonmapped:
-            print "----------------------------"
-            print "List of Non-mapped symbols:"
-            for s in without_mapping:
-                print s
-            print "----------------------------"
-
+        return without_mapping
 
     def print_trace(self):
         """ Print the trace """
+        nevt = len(self.events)
+        ncb = 0
+        nci = 0
         for cevt in self.events:
-            print "Event %s: [%s]" % (cevt.symbol, cevt.args)
+            ccb = ncb + len(cevt.cb)
+            for ccb in cevt.cb:
+                    nci = nci + len(ccb.ci)
+
+        print "--- Concrete trace: ---"
+        print "Stats: "
+        print "Tot. events: %d" % nevt
+        print "Tot. callbacks: %d" % ncb
+        print "Tot. callins: %d" % nci
+
+        i = 0
+        for cevt in self.events:
+            i = i + 1
+            print "%d) Event %s: [%s]" % (i, cevt.symbol, cevt.args)
 
             for ccb in cevt.cb:
                 print "  CB %s: [%s]" % (ccb.symbol, ccb.args)
 
                 for cci in ccb.ci:
                     print "    CI %s: [%s]" % (cci.symbol, cci.args)
+        print "---\n"
 
 class CTraceSerializer:
 
@@ -116,19 +128,34 @@ class CTraceSerializer:
 
         CTraceSerializer.check_keys(data, ["events"])
 
+        initial = True
         ctrace = ConcreteTrace()
         for event_json in data["events"]:
             CTraceSerializer.check_keys(event_json, ["initial"])
-            # skip the initial event
-            if (event_json["initial"] == "true"):
-                event = CEvent("initial")
+            assert (not initial or event_json["initial"] == "true")
+            assert (initial or not event_json["initial"] == "true")
+
+            if (initial and
+                (
+                    (not "signature" in event_json) or
+                    ("signature" in event_json and
+                     event_json["signature"] == "initial")
+                )):
+                ctrace.events.append(CEvent("initial"))
+            elif (initial and event_json["signature"] != "initial"):
+                # add a fake initial symbol if not present
+                ctrace.events.append(CEvent("initial"))
+                event = CTraceSerializer.read_event(event_json)
+                if (len(event.cb) != 0):
+                    ctrace.events.append(event)
             else:
                 event = CTraceSerializer.read_event(event_json)
-            if (len(event.cb) != 0):
-                ctrace.events.append(event)
-            # else:
-                # logging.debug("Ignoring event %s without callbacks" % event.symbol)
-
+                if (len(event.cb) != 0):
+                    ctrace.events.append(event)
+                else:
+                    logging.warning("Skipping event with no " \
+                                    "callbacks: %s" % event_json['signature'])
+            initial = False
         return ctrace
 
     @staticmethod

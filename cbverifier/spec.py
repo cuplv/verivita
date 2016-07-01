@@ -117,6 +117,18 @@ class SpecSerializer:
     "Read a list of specs and bindings"
 
     @staticmethod
+    def read_multiple_specs(infiles):
+        global_map = {'specs' : [], 'bindings' : [], 'mappings' : {}}
+        for infile in infiles:
+            maps = SpecSerializer.read_specs(infile)
+            keys = ['specs', 'bindings']
+            for k in keys:
+                for a in maps[k]: global_map[k].append(a)
+            for k,v in maps['mappings'].iteritems():
+                global_map['mappings'][k] = v
+        return global_map
+
+    @staticmethod
     def read_specs(infile):
         def read_frac(d):
             if ('num' not in d):
