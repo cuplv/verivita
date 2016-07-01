@@ -12,6 +12,15 @@ from spec import SpecType, SpecSerializer, Spec
 from ctrace import CTraceSerializer, ConcreteTrace
 from verifier import Verifier
 
+def read_from_files(spec_file_list):
+    file_list = []
+    for fname in spec_file_list:
+        f = open(fname, "r")
+        file_list.append(f)
+    specs_map = SpecSerializer.read_multiple_specs(file_list)
+    for f in file_list: f.close()
+    return specs_map
+
 def main():
     # Common to all modes
     # logging.basicConfig(level=logging.DEBUG)
@@ -20,7 +29,7 @@ def main():
     p = optparse.OptionParser()
     p.add_option('-t', '--tracefile',
                  help="File containing the concrete trace")
-    p.add_option('-s', '--specfile', help="Specification file")
+    p.add_option('-s', '--specfile', help="Specification file (: separated list of files)")
     p.add_option('-k', '--depth', help="Depth of the search")
     p.add_option('-i', '--inc', action="store_true",
                  default=False, help="Incremental search")
@@ -49,8 +58,12 @@ def main():
 
         if (not os.path.exists(opts.tracefile)):
             usage("Trace file %s does not exists!" % opts.tracefile)
-        if (not os.path.exists(opts.specfile)):
-            usage("Specification file %s does not exists!" % opts.specfile)
+
+        spec_file_list = opts.specfile.split(":")
+        for f in spec_file_list:
+            print "Checking %s " % f
+            if (not os.path.exists(f)):
+                usage("Specification file %s does not exists!" % f)
         try:
             depth = int(opts.depth)
         except:
@@ -66,8 +79,7 @@ def main():
             ctrace = CTraceSerializer.read_trace(infile)
 
         # Parse the specification file
-        with open(opts.specfile, "r") as infile:
-            specs_map = SpecSerializer.read_specs(infile)
+        specs_map = read_from_files(spec_file_list)
 
         not_mapped = ctrace.rename_trace(specs_map["mappings"], True)
         logging.debug("\n---Not mapped symbols:---")
