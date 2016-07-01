@@ -60,6 +60,7 @@ class ConcreteTrace:
     def rename_trace(self, mappings, print_nonmapped=False):
         """ Rename all the symbol of a trace according to mappings"""
         without_mapping = set()
+
         for cevt in self.events:
             if cevt.symbol in mappings:
                 cevt.symbol = mappings[cevt.symbol]
@@ -151,6 +152,9 @@ class CTraceSerializer:
                 event = CTraceSerializer.read_event(event_json)
                 if (len(event.cb) != 0):
                     ctrace.events.append(event)
+                else:
+                    logging.warning("Skipping event with no " \
+                                    "callbacks: %s" % event_json['signature'])
             initial = False
         return ctrace
 

@@ -121,10 +121,13 @@ def main():
                 ctrace = CTraceSerializer.read_trace(infile)
             print "Trace file %s read succesfully" % opts.tracefile
         if (opts.specfile):
-            if (not os.path.exists(opts.specfile)):
-                usage("Spec file %s does not exists!" % opts.specfile)
-            with open(opts.specfile, "r") as infile:
-                specs = SpecSerializer.read_specs(infile)
+            spec_file_list = opts.specfile.split(":")
+            for f in spec_file_list:
+                print "Checking %s " % f
+                if (not os.path.exists(f)):
+                    usage("Specification file %s does not exists!" % f)
+            specs_map = read_from_files(spec_file_list)
+
             print "Spec file %s read succesfully" % opts.specfile
     elif (opts.mode == "print-trace"):
         if (not opts.tracefile): usage("Missing trace file (-t)")
