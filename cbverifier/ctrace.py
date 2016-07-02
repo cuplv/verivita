@@ -103,7 +103,8 @@ class ConcreteTrace:
         i = 0
         for cevt in self.events:
             i = i + 1
-            print "%d) Event %s: [%s]" % (i, cevt.symbol, cevt.args)
+            # [%s]" % (i, cevt.symbol, cevt.args)
+            print "%d) Event %s:"
 
             for ccb in cevt.cb:
                 print "  CB %s: [%s]" % (ccb.symbol, ccb.args)

@@ -97,10 +97,11 @@ def main():
             else:
                 cex = verifier.find_bug_inc(depth)
 
+            if (opts.debugenc):
+                if verifier.debug_encoding:
+                    verifier.dbg.print_info()
+
             if None != cex:
-                if (opts.debugenc):
-                    if verifier.debug_encoding:
-                        verifier.dbg.print_info()
                 verifier.print_cex(cex, True, True)
 
                 #     verifier.debug_cex(cex)
