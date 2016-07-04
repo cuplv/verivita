@@ -44,6 +44,7 @@ class SmvTranslator:
         stream.write(";\nTRANS\n")
         self.print_formula(stream, self.trans)
 
+
         self.translator = None
 
     def print_vars(self, stream, var_type, vars_set):
@@ -63,8 +64,12 @@ class SmvTranslator:
         stream.write(self.translator.translate(formula))
 
 class SmvFormulaTranslator(DagWalker):
-    def __init__(self, env, stream):
+    def __init__(self, env, stream, short_names=True):
         DagWalker.__init__(self, env, None)
+
+        self.short_names = short_names
+        self.symb_map = {}
+        self.counter = 0
 
         self.mgr = self.env.formula_manager
         self.stream = stream
@@ -112,15 +117,27 @@ class SmvFormulaTranslator(DagWalker):
         return (formula, res)
 
     def walk_symbol(self, formula, **kwargs):
-        if formula.is_symbol(types.BOOL):
+        def _get_symbol_symbol_key(formula):
+            assert formula.is_symbol(types.BOOL)
             symbol_str = formula.serialize()
             symbol_str = symbol_str.replace("\"", "")
             is_next = symbol_str.endswith("_next")
-            # remove next
             if is_next:
                 symbol_str = symbol_str[0:len(symbol_str)-len("_next")]
+            return (symbol_str, is_next)
 
-            res = "\"%s\"" % symbol_str
+        if formula.is_symbol(types.BOOL):
+            (key, is_next) = _get_symbol_symbol_key(formula)
+
+            if key in self.symb_map:
+                res = self.symb_map[key]
+            else:
+                if not self.short_names:
+                    res = "\"%s\"" % key
+                else:
+                    res = "var_%d" % self.counter
+                    self.counter = self.counter + 1
+                self.symb_map[key] = res
 
             # add next to the variable
             if is_next:
