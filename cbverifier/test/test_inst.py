@@ -158,6 +158,22 @@ class TestInst(unittest.TestCase):
                   {"evt" : [["1"]], "evt2" : [["1"]]})
 
     def testVar(self):
+        def _testVarCheck(v,
+                          state_vars_num,
+                          event,
+                          ci_allowed,
+                          bug_ci):
+            v._process_event(event)
+            self.assertTrue(len(v.ts_state_vars) == state_vars_num)
+            msg_map = v.msgs[v.conc_to_msg[event]]
+            guards = msg_map.guards
+            _bug_ci = msg_map.bug_ci
+            must_be_allowed = msg_map.must_be_allowed
+            self.assertTrue(guards == [v.conc_to_msg[event]])
+            self.assertTrue(must_be_allowed == ci_allowed)
+            self.assertTrue(_bug_ci == bug_ci)
+
+
         specs = [TestInst.new_spec((SpecType.Enable,
                                     "A", ["x"],
                                     "B", ["x"]))]
@@ -169,14 +185,10 @@ class TestInst(unittest.TestCase):
         ctrace = TestInst.create_ctrace(app)
         v = Verifier(ctrace, specs, bindings)
 
-        self.assertTrue(len(v.ts_vars) == 3)
-
-        res = v._process_event(ctrace.events[0])
-        (msg_enabled, guards, bug_ci, must_be_allowed) = res
-        self.assertTrue(guards == [v._get_conc_var(ctrace.events[0], True)])
-        ma = [v.msgs_to_var["ci_ci1_3"], v.msgs_to_var["ci_ci2_4"]]
-        self.assertTrue(must_be_allowed == ma)
-        self.assertTrue(None == bug_ci)
+        _testVarCheck(v, 4,
+                      ctrace.events[0],
+                      set(["ci_ci1_3", "ci_ci2_4"]),
+                      None)
 
 
         #
@@ -195,14 +207,10 @@ class TestInst(unittest.TestCase):
            ]
         ctrace = TestInst.create_ctrace(app)
         v = Verifier(ctrace, specs, bindings)
-        self.assertTrue(len(v.ts_vars) == 3)
-
-        res = v._process_event(ctrace.events[0])
-        (msg_enabled, guards, bug_ci, must_be_allowed) = res
-        self.assertTrue(guards == [v._get_conc_var(ctrace.events[0], True)])
-        ma = [v.msgs_to_var["ci_ci1_3"], v.msgs_to_var["ci_ci2_4"]]
-        self.assertTrue(must_be_allowed == ma)
-        self.assertTrue(None == bug_ci)
+        _testVarCheck(v, 4,
+                      ctrace.events[0],
+                      set(["ci_ci1_3", "ci_ci2_4"]),
+                      None)
 
         #
         specs = [TestInst.new_spec((SpecType.Enable,
@@ -220,7 +228,7 @@ class TestInst(unittest.TestCase):
            ]
         ctrace = TestInst.create_ctrace(app)
         v = Verifier(ctrace, specs, bindings)
-        self.assertTrue(len(v.ts_vars) == 4)
+        self.assertTrue(len(v.ts_state_vars) == 5)
 
         #
         specs = [TestInst.new_spec((SpecType.Enable,
@@ -238,14 +246,10 @@ class TestInst(unittest.TestCase):
            ]
         ctrace = TestInst.create_ctrace(app)
         v = Verifier(ctrace, specs, bindings)
-        self.assertTrue(len(v.ts_vars) == 5)
-
-        res = v._process_event(ctrace.events[1])
-        (msg_enabled, guards, bug_ci, must_be_allowed) = res
-        self.assertTrue(guards == [v._get_conc_var(ctrace.events[1], True)])
-        ma = set([v.msgs_to_var["ci_ci1_3"], v.msgs_to_var["ci_ci2_5"]])
-        self.assertTrue(set(must_be_allowed) == ma)
-        self.assertTrue(None == bug_ci)
+        _testVarCheck(v, 6,
+                      ctrace.events[1],
+                      set(["ci_ci1_3", "ci_ci2_5"]),
+                      None)
 
         # test disable
         specs = [TestInst.new_spec((SpecType.Disable, "A", ["x"], "B", ["x"]))]
@@ -262,15 +266,11 @@ class TestInst(unittest.TestCase):
            ]
         ctrace = TestInst.create_ctrace(app)
         v = Verifier(ctrace, specs, bindings)
-        self.assertTrue(len(v.ts_vars) == 5)
-
-        res = v._process_event(ctrace.events[0])
-        (msg_enabled, guards, bug_ci, must_be_allowed) = res
-
-        self.assertTrue(guards == [v._get_conc_var(ctrace.events[0], True)])
-        ma = set([v.msgs_to_var["ci_ci1_3"], v.msgs_to_var["ci_ci2_4"]])
-        self.assertTrue(set(must_be_allowed) == ma)
-        self.assertTrue(None == bug_ci)
+        _testVarCheck(v, 6,
+                      ctrace.events[0],
+                      set(["ci_ci1_3", "ci_ci2_4"]),
+                      None)
+        msg_enabled = v.msgs[v.conc_to_msg[ctrace.events[0]]].msg_enabled
         self.assertTrue(msg_enabled["cb_#_2"] == -1)
 
         # test disallow
@@ -288,16 +288,11 @@ class TestInst(unittest.TestCase):
            ]
         ctrace = TestInst.create_ctrace(app)
         v = Verifier(ctrace, specs, bindings)
-        self.assertTrue(len(v.ts_vars) == 6)
-
-        res = v._process_event(ctrace.events[0])
-        (msg_enabled, guards, bug_ci, must_be_allowed) = res
-
-        self.assertTrue(guards == [v._get_conc_var(ctrace.events[0], True)])
-        ma = set([v.msgs_to_var["ci_ci1_3"], v.msgs_to_var["ci_ci2_4"]])
-        self.assertTrue(set(must_be_allowed) == ma)
-        self.assertTrue(None == bug_ci)
-        print msg_enabled
+        _testVarCheck(v, 7,
+                      ctrace.events[0],
+                      set(["ci_ci1_3", "ci_ci2_4"]),
+                      None)
+        msg_enabled = v.msgs[v.conc_to_msg[ctrace.events[0]]].msg_enabled
         self.assertTrue(msg_enabled["ci_ci3_2"] == -1)
 
 
@@ -385,9 +380,9 @@ class TestInst(unittest.TestCase):
     #     # test_evt_no_param
     #     v = Verifier(ctrace, [])
     #     assert v is not None
-    #     assert v.ts_vars is not None
+    #     assert v.ts_state_vars is not None
 
-    #     self.assertTrue(len(v.ts_vars) == 5)
+    #     self.assertTrue(len(v.ts_state_vars) == 5)
 
     # def testInit(self):
     #     fname = "./test/data/trace_var_inst.json"
@@ -399,10 +394,10 @@ class TestInst(unittest.TestCase):
     #     # test_evt_no_param
     #     v = Verifier(ctrace, [])
     #     assert v is not None
-    #     assert v.ts_vars is not None
+    #     assert v.ts_state_vars is not None
     #     assert v.ts_init is not None
 
-    #     for var in v.ts_vars:
+    #     for var in v.ts_state_vars:
     #         assert var.is_symbol()
 
     #         if var != (v.ts_error):
