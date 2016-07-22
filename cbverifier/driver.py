@@ -99,7 +99,7 @@ def main():
 
             if (opts.debugenc):
                 if verifier.debug_encoding:
-                    verifier.dbg.print_info()
+                    verifier.msgs.print_info()
 
             if None != cex:
                 verifier.print_cex(cex, True, True)

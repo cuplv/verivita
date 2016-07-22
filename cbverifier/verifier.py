@@ -600,18 +600,30 @@ class Verifier:
                     if matches:
                         # we found an effect for the rule
                         logging.debug("Matched rule:\n" \
-                                      "%s" \
+                                      "%s\n" \
                                       "Src match: %s\n" \
                                       "Dst match: %s." % (rule.get_print_desc(),
                                                           inst, inst_dst))
                         self.msgs[cevt_msg].add_match(rule, inst, inst_dst)
-
                         if (rule.specType == SpecType.Enable or
                             rule.specType == SpecType.Allow):
+                            # if (self.msgs[cevt_msg].msg_enabled[inst_dst.msg] == -1):
+                            #     # Two rules are conflicting (here we
+                            #     # try to enalbe inst_dst.msg while
+                            #     # another rule that applies to the
+                            #     # event disables it)
+                            #     raise Exception("Found two conflicting rules")
+
                             self.msgs[cevt_msg].msg_enabled[inst_dst.msg] = 1
                         else:
                             assert (rule.specType == SpecType.Disable or
                                     rule.specType == SpecType.Disallow)
+                            # if (self.msgs[cevt_msg].msg_enabled[inst_dst.msg] == 1):
+                            #     # Two rules are conflicting (here we
+                            #     # try to disalbe inst_dst.msg while
+                            #     # another rule that applies to the
+                            #     # event enables it)
+                            #     raise Exception("Found two conflicting rules")
                             self.msgs[cevt_msg].msg_enabled[inst_dst.msg] = -1
 
         logging.debug("START: matching rules for %s..." % msg_evt)
@@ -701,13 +713,45 @@ class Verifier:
 
         return evt_trans
 
+    def _simplify_encoding(self):
+        """ Remove the events and the callins that have no effects on
+        finding bugs.
 
+        The simplification removes callins and events (messages) that
+        are not relevant.
+
+        Definition - relevant message.
+
+        - An event is relevant if:
+          - it calls a relevant callin
+          - it can enable/disable (allow/disallow) a relevant event
+            (callin)
+
+        - A callin is relevant if:
+          - it can be disabled
+          - it can enable/disable (allow/disallow) a relevant event
+            (callin)
+        """
+
+        # 1. Compute the set of relevant messages.
+        relevant_msgs = set()
+
+        # initialize the relevant messages with the callins that can
+        # be disabled
+
+        # Fix-point computation of the relevant set
+
+        # Prune the
+        
     def _init_ts_trans(self):
         """Initialize the ts trans."""
         logging.debug("Encoding the trans...")
 
         # TODO FIX
+        i = 0
         for cevt in self.ctrace.events:
+            i = i+1
+            logging.debug("evt %d\n" % i)
             self._process_event(cevt)
 
             # evt_msg = self.conc_to_msg[evt]
