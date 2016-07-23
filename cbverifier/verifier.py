@@ -15,8 +15,6 @@ status of events/callins.
 """
 
 # TODOs:
-# - add disable flag
-# - decouple declaration of state variables from the processing of messages
 # - implement pre for the simplification
 # - fix encoding (and trace construction) using the simplification
 
@@ -97,6 +95,9 @@ class Verifier:
         # It is used for debug
         self.events_to_input_var = {}
 
+        # Process trace
+        self._process_trace()
+
         # Initialize the transition system
         self._initialize_ts()
 
@@ -109,13 +110,28 @@ class Verifier:
         all_vars.update(self.ts_input_vars)
         return all_vars
 
-    def _initialize_ts(self):
-        """Initialize ts_vars and ts_trans."""
-        logging.debug("Encode the ts...")
-
+    def _process_trace(self):
+        """Process the trace."""
+        logging.debug("Process trace...")
 
         # instantiate the events, matching the bindings
         self._find_instances()
+
+        # Process every event, computing the preconditions and effects
+        # due to the specifications
+        i = 0
+        for cevt in self.ctrace.events:
+            i = i+1
+            logging.debug("evt %d\n" % i)
+            self._process_event(cevt)
+
+        # Simplify the encoding
+        # TODO: fix conditional
+        relevant_msgs = self._simplify_encoding()
+
+    def _initialize_ts(self):
+        """Initialize ts_vars and ts_trans."""
+        logging.debug("Encode the ts...")
 
         self._init_ts_var(self.msgs.evt_info.keys())
         self._init_ts_init()
@@ -278,6 +294,7 @@ class Verifier:
             if cci.symbol not in self.symbol_to_instances:
                 self.symbol_to_instances[cci.symbol] = []
             self.symbol_to_instances[cci.symbol].append(instance)
+
 
     def _init_ts_var_callin(self, relevant_msgs, ccb):
         """ Creates the encoding variables for all the (relevant) callins in ccb.
@@ -650,6 +667,11 @@ class Verifier:
                         else:
                             assert (rule.specType == SpecType.Disable or
                                     rule.specType == SpecType.Disallow)
+
+                            if (rule.specType == SpecType.Disable):
+                                # msg is a callin that can be disabled
+                                self.msgs[inst_dst.msg].disabled = True
+
                             # if (self.msgs[cevt_msg].msg_enabled[inst_dst.msg] == 1):
                             #     # Two rules are conflicting (here we
                             #     # try to disalbe inst_dst.msg while
@@ -781,17 +803,6 @@ class Verifier:
     def _init_ts_trans(self):
         """Initialize the ts trans."""
         logging.debug("Encoding the trans...")
-
-        # Processing the i-th event
-        i = 0
-        for cevt in self.ctrace.events:
-            i = i+1
-            logging.debug("evt %d\n" % i)
-            self._process_event(cevt)
-
-        # Simplify the encoding
-        # TODO: fix conditional
-        relevant_msgs = self._simplify_encoding()
 
         # Perform the encoding
         # TODO: consider the pruned relevant messages
