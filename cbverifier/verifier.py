@@ -14,6 +14,12 @@ The possible permutation of the events depend on the enabled/disabled
 status of events/callins.
 """
 
+# TODOs:
+# - add disable flag
+# - decouple declaration of state variables from the processing of messages
+# - implement pre for the simplification
+# - fix encoding (and trace construction) using the simplification
+
 import logging
 import collections
 
@@ -107,7 +113,11 @@ class Verifier:
         """Initialize ts_vars and ts_trans."""
         logging.debug("Encode the ts...")
 
-        self._init_ts_var()
+
+        # instantiate the events, matching the bindings
+        self._find_instances()
+
+        self._init_ts_var(self.msgs.evt_info.keys())
         self._init_ts_init()
         self._init_ts_trans()
 
@@ -248,27 +258,16 @@ class Verifier:
 
         return event_cb_map
 
-    def _init_ts_var_callin(self, ccb):
-        """ Creates the encoding variables for all the callins in ccb,
-        and creates the data structure to keep all the instances of
-        the callin.
+    def _find_instances_callin(self, ccb):
+        """ Creates the data structure to keep all the instances of the callin.
         """
         for cci in ccb.ci:
             ci_name = self._get_ci_msg(cci)
             self.conc_to_msg[cci] = ci_name
 
-            ci_var_name = self._get_msg_var(ci_name, False)
-            ci_var = Symbol(ci_var_name, BOOL)
-
-            # Different ci s instance can have the same variable
-            if ci_var not in self.ts_state_vars:
-                self.ts_state_vars.add(ci_var)
-                self.msgs_to_var[ci_name] = ci_var
-                self.var_to_msgs[ci_var] = ci_name
-                logging.debug("Callin %s: create variable %s" % (ci_name, str(ci_var)))
-
+            # Different ci s instance can have the same message
+            if ci_name not in self.msgs.evt_info:
                 self.msgs[ci_name] = CiInfo(ci_name)
-
             self.msgs[ci_name].conc_msgs.add(cci)
 
             if ci_name not in self.msgs_to_instances:
@@ -280,26 +279,32 @@ class Verifier:
                 self.symbol_to_instances[cci.symbol] = []
             self.symbol_to_instances[cci.symbol].append(instance)
 
-    def _init_ts_var(self):
-        """Initialize the ts variables.
-
-        What are the state variables of the system?
-
-        For each callin "ci" with the concrete objects "o1, ..., on"
-        we have a Boolean variable "allowed_state_ci_o1", where "o1"
-        is the receiver.
-
-        For each INSTANTIATION of an event "evt" we have a Boolean
-        variable.
-        The instantiation is obtained from the bindings of the rules.
+    def _init_ts_var_callin(self, relevant_msgs, ccb):
+        """ Creates the encoding variables for all the (relevant) callins in ccb.
         """
-        logging.debug("Create variable...")
-        self.ts_state_vars = set()
-        self.ts_input_vars = set()
+        for cci in ccb.ci:
+            ci_name = self._get_ci_msg(cci)
+            ci_var_name = self._get_msg_var(ci_name, False)
+            ci_var = Symbol(ci_var_name, BOOL)
+
+            # Different ci s instance can have the same variable
+            if ci_var not in self.ts_state_vars:
+                self.ts_state_vars.add(ci_var)
+                self.msgs_to_var[ci_name] = ci_var
+                self.var_to_msgs[ci_var] = ci_name
+                logging.debug("Callin %s: create variable %s" % (ci_name, str(ci_var)))
+
+    def _find_instances(self):
+        """ Instantiate the events from the trace.
+
+        The instantiation is found by looking at the bindings defined
+        in the specifications.
+
+        The function changes the maps conc_to_msg, msgs_to_instances
+        and symbol_to_instances.
+        """
 
         self.conc_to_msg = {}
-        self.msgs_to_var = {}
-        self.var_to_msgs = {}
         self.msgs_to_instances = {}
         self.symbol_to_instances = {}
 
@@ -350,34 +355,18 @@ class Verifier:
 
             for ccb in cevent.cb:
                 cb_names.append(ccb.symbol + "_#_" + "_".join(ccb.args))
-                # part of 2.
                 event_cb_map = Verifier._evt_signature_from_cb(self.bindings,
                                                                ccb,
                                                                event_cb_map)
                 # process the callins (3 and 4)
-                self._init_ts_var_callin(ccb)
+                self._find_instances_callin(ccb)
 
             msg_name = "evt_".join(cb_names)
             self.conc_to_msg[cevent] = msg_name
 
-            if (msg_name not in self.msgs_to_var):
-                evt_var_name = self._get_msg_var(msg_name, True)
-                evt_var = Symbol(evt_var_name, BOOL)
-                logging.debug("Event %s: create variable %s" % (msg_name,
-                                                                evt_var_name))
-                self.ts_state_vars.add(evt_var)
-                self.msgs_to_var[msg_name] = evt_var
-                self.var_to_msgs[evt_var] = msg_name
-
+            if (msg_name  not in self.msgs.evt_info):
                 self.msgs[msg_name] = EventInfo(msg_name)
-
             self.msgs[msg_name].conc_msgs.add(cevent)
-
-            if (self.debug_encoding):
-                ivar_name = "INPUT_event_%d_%s" % (i, msg_name)
-                ivar = Symbol(ivar_name, BOOL)
-                self.events_to_input_var[cevent] = ivar
-                self.ts_input_vars.add(ivar)
 
             # 4. Find all the possible instantiation of the event
             # parameter.
@@ -386,7 +375,6 @@ class Verifier:
             # apply its effects.
             instances = []
             for (evt, values) in event_cb_map.iteritems():
-
                 # keep a map from the event name
                 if evt not in self.symbol_to_instances:
                     self.symbol_to_instances[evt] = []
@@ -397,8 +385,57 @@ class Verifier:
                         instance = Instance(evt, args_list, msg_name)
                         instances.append(instance)
                         self.symbol_to_instances[evt].append(instance)
-
             self.msgs_to_instances[msg_name] = instances
+
+    def _init_ts_var(self, relevant_msgs):
+        """ Creates the variables in the transition system for a set
+        of relevant messages.
+
+        What are the state variables of the system?
+
+        For each (relevant) callin "ci" with the concrete objects "o1, ..., on"
+        we have a Boolean variable "allowed_state_ci_o1", where "o1"
+        is the receiver.
+
+        For each (relevant) event "evt" we have a Boolean variable.
+
+        Change ts_state_vars, ts_input_vars, msgs_to_var, var_to_msgs.
+        """
+        logging.debug("Create variable...")
+        self.ts_state_vars = set()
+        self.ts_input_vars = set()
+        self.var_to_msgs = {}
+
+        i = 0
+
+        #
+        for cevent in self.ctrace.events:
+            i = i + 1
+
+            assert cevent in self.conc_to_msg
+            msg_name = self.conc_to_msg[cevent]
+
+            # skip non-relevant messages
+            if msg_name not in relevant_msgs: continue
+
+            if (msg_name not in self.msgs_to_var):
+                evt_var_name = self._get_msg_var(msg_name, True)
+                evt_var = Symbol(evt_var_name, BOOL)
+                logging.debug("Event %s: create variable %s" % (msg_name,
+                                                                evt_var_name))
+                self.ts_state_vars.add(evt_var)
+                self.msgs_to_var[msg_name] = evt_var
+                self.var_to_msgs[evt_var] = msg_name
+
+            if (self.debug_encoding):
+                ivar_name = "INPUT_event_%d_%s" % (i, msg_name)
+                ivar = Symbol(ivar_name, BOOL)
+                self.events_to_input_var[cevent] = ivar
+                self.ts_input_vars.add(ivar)
+
+            # process the callback to add the ci called by the event
+            for ccb in cevent.cb:
+                self._init_ts_var_callin(relevant_msgs, ccb)
 
         # creates the error variable
         self.ts_error = Symbol(Verifier.ERROR_STATE, BOOL)
@@ -445,7 +482,7 @@ class Verifier:
         return msg_enabled
 
     def _process_event(self, cevent):
-        """ Process src_event.
+        """ Process cevent.
 
         Change msg_enabled updating it with the effects on the system
         state obtained by execturing src_event (and all its callbacks
@@ -469,15 +506,10 @@ class Verifier:
         msg_evt = self.conc_to_msg[cevent]
         evt_info = self.msgs[msg_evt]
 
-        # The event must be enabled
-        evt_info.guards = [msg_evt]
-        # set of ci that must be allowed to execute the event
+        evt_info.guards = [msg_evt] # The event must be enabled
         evt_info.must_be_allowed = set()
-        # maps from a message to a value in {0,1,-1}
-        # 3-valued represenation: (0 unknown, -1 false, 1 true)
         evt_info.msg_enabled = self._get_enabled_store()
         evt_info.msg_enabled[msg_evt] = 1
-        msg_enabled = evt_info.msg_enabled[msg_evt]
         # Deterministic bug
         evt_info.bug_ci = None
 
@@ -637,13 +669,6 @@ class Verifier:
                                                           self.msgs[evt_msg].guards,
                                                           self.msgs[evt_msg].bug_ci,
                                                           self.msgs[evt_msg].must_be_allowed)
-
-        # TODO: Fix
-        # if self.debug_encoding:
-        #     self.msgs._add_pre(cevent, must_be_allowed)
-        #     self.msgs._add_effects(cevent, must_be_allowed)
-        #     if (bug_ci != None):
-        #         self.msgs._add_bug(cevent, bug_ci)
         logging.debug("Event %s" % cevent)
         logging.debug("Guards %s" % guards)
         logging.debug("Must be allowed: %s" % must_be_allowed)
@@ -736,40 +761,40 @@ class Verifier:
         # 1. Compute the set of relevant messages.
         relevant_msgs = set()
 
-        # initialize the relevant messages with the callins that can
+        # Initialize the relevant messages with the callins that can
         # be disabled
+        frontier = set() # TODO
 
         # Fix-point computation of the relevant set
+        while 0 != len(frontier):
+            # add the frontier
+            relevant_msgs.update(frontier)
+            # compute the new frontier
+            frontier = compute_pre(self, frontier)
 
-        # Prune the
-        
+        # Prune the state variables
+
+        # prune the guards/must_be_allowed... structures
+
+        return relevant_msgs
+
     def _init_ts_trans(self):
         """Initialize the ts trans."""
         logging.debug("Encoding the trans...")
 
-        # TODO FIX
+        # Processing the i-th event
         i = 0
         for cevt in self.ctrace.events:
             i = i+1
             logging.debug("evt %d\n" % i)
             self._process_event(cevt)
 
-            # evt_msg = self.conc_to_msg[evt]
-            # match_evt = False
-            # evt_info = self.msgs[evt_msg]
-            # for (rule, match_inst, eff_inst) in evt_info.matches:
-            #     if (eff_inst != None): match_evt = True
+        # Simplify the encoding
+        # TODO: fix conditional
+        relevant_msgs = self._simplify_encoding()
 
-            # matching_ci = []
-            # for ccb in evt.cb:
-            #     for cci in ccb.ci:
-            #         ci_msg = self.conc_to_msg[cci]
-            #         msg_info = self.msgs[ci_msg]
-            #         for (rule, match_inst, eff_inst) in msg_info.matches:
-            #             if (eff_inst != None): match_ci = True
-        # PIPPO
-
-
+        # Perform the encoding
+        # TODO: consider the pruned relevant messages
         events_encoding = []
         for evt in self.ctrace.events:
             evt_encoding = self._encode_evt(evt)
@@ -977,10 +1002,18 @@ class Verifier:
 class MsgInfo(object):
     def __init__(self, msg):
         self.msg = msg
+        # set of concrete messages in the trace that have
+        # been mapped to the same message
         self.conc_msgs = set()
+        # List of matches
+        # A match is a tuple (rule, match_inst, eff_inst) where:
+        # - rule: is a rule from specs
+        # - match_inst: instantiation that matched the premise of the rule
+        # - eff_inst: instantiation that matched the consequence of the rule
         self.matches = []
 
     def add_match(self, rule, match_inst, eff_inst):
+        # Helper function to add a match
         self.matches.append((rule, match_inst, eff_inst))
 
 class CiInfo(MsgInfo):
@@ -995,10 +1028,17 @@ class EventInfo(MsgInfo):
         # Map from messages (events and callins) to their state that
         # could be:
         # 0  if (unkonwn), 1 (enabled/allowed), -1 (disabled/disallowed)
-        # The map is initialized frto
+        # The map must be initialized by the caller.
+        # The map represent the deterministic effects due to the
+        # execution of the event.
         self.msg_enabled = None
+        # Set of message symbols that must be enabled/allowed to
+        # enable the transition of the event.
         self.guards = set()
+        # set of CIs that must be allowed to execute the event without
+        # ending in a bug
         self.must_be_allowed = set()
+        # set of 
         self.effects = set()
         # First ci that cannot be called (if any)
         # Corner case where just observing the sequence of CI in an
@@ -1014,7 +1054,7 @@ class MatchInfo:
         # need access to the verifier
         self.verifier = verifier
 
-        # maps from msgs to debug information
+        # maps from msgs to message information
         self.evt_info = {}
 
         # map from concrete message in the trace to index
