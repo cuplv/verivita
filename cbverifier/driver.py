@@ -102,6 +102,7 @@ def main():
                     verifier.dbg.print_info()
 
             if None != cex:
+                print "Found bug"
                 verifier.print_cex(cex, True, True)
 
                 #     verifier.debug_cex(cex)
