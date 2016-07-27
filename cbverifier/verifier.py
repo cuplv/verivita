@@ -32,7 +32,7 @@ from pysmt.logics import QF_BOOL
 
 from spec import SpecType, Spec, Binding
 
-from ctrace import ConcreteTrace
+from ctrace import ConcreteTrace, CEvent, CCallin, CCallback
 from helpers import Helper
 from tosmv import SmvTranslator
 
@@ -46,7 +46,8 @@ class Verifier:
     ERROR_STATE = "error"
 
     def __init__(self, ctrace, specs, bindings,
-                 debug_encoding=False, coi=True):
+                 debug_encoding=False,
+                 coi=False):
         # debug_encoding: encode additional input variables to track
         # what concrete event has been fired in each execution step.
         # By default it is false.
@@ -70,7 +71,7 @@ class Verifier:
 
         # options
         self.debug_encoding = debug_encoding
-        self.coi = True
+        self.coi = coi
 
         # Internal data structures
         self.msgs = MatchInfo(self)
@@ -375,7 +376,12 @@ class Verifier:
             # event names and parameters).
             #
             event_cb_map = {}
+
+            for ccb in cevent.cb:
+                cb_names.append(ccb.symbol + "_#_" + "_".join(ccb.args))
             msg_name = "evt_".join(cb_names)
+            if msg_name == "":
+                msg_name = "no_callbacks"
 
             for ccb in cevent.cb:
                 cb_names.append(ccb.symbol + "_#_" + "_".join(ccb.args))
@@ -984,16 +990,34 @@ class Verifier:
 # SIMPLIFICATION - TO MOVE
 ################################################################################
 
+    def _get_containing_evt(self, frontier):
+        """ Get the event instances that call a callin contained in
+        frontier.
+        """
+        events_in_frontier = set()
+        for inst in frontier:
+            if inst.msg in self.ci_to_evt:
+                events_of_ci = self.ci_to_evt[inst.msg]
+                for evt_of_ci in events_of_ci:
+                    # add all the instances of evt_of_ci
+                    for i in self.msgs_to_instances[evt_of_ci]:
+                        events_in_frontier.add(i)
+        frontier.update(events_in_frontier)
+
+        return frontier
+
+
     def _get_buggy_instances(self):
         """ Get the set of instances that can be disabled and thus
         cause a vioalation.
         """
         buggy_instances = set()
         for rule in self.specs:
-            if (rule.specType == SpecType.Disable):
+            if (rule.specType == SpecType.Disallow):
                 if rule.dst not in self.symbol_to_instances: continue
                 for inst in self.symbol_to_instances[rule.dst]:
                     buggy_instances.add(inst)
+        buggy_instances = self._get_containing_evt(buggy_instances)
         return buggy_instances
 
     def _compute_pre(self, frontier):
@@ -1024,12 +1048,7 @@ class Verifier:
 
         # Add the instances of the events that call a ci in the
         # frontier
-        events_in_frontier = set()
-        for inst in new_frontier:
-            if inst.msg in self.ci_to_evt:
-                for i in self.msgs_to_instances[inst.msg]:
-                    events_in_frontier.add(i)
-        new_frontier.update(events_in_frontier)
+        new_frontier = self._get_containing_evt(new_frontier)
 
         return new_frontier
 
@@ -1087,25 +1106,26 @@ class Verifier:
 
         # Create a new trace
         new_ctrace = ConcreteTrace()
+        new_ctrace.events.append(CEvent("initial"))
         for cevt in self.ctrace.events:
             evt_msg = self.conc_to_msg[cevt]
             if evt_msg not in relevant_msgs: continue
 
             new_cevt = CEvent(cevt.symbol)
-            new_conc_to_msg[evt]
+            new_cevt.args = list(cevt.args)
+            new_ctrace.events.append(new_cevt)
 
             for ccb in cevt.cb:
                 new_ccb = CCallback(ccb.symbol)
+                new_ccb.args = list(ccb.args)
                 new_cevt.cb.append(new_ccb)
 
                 for cci in ccb.ci:
-                    if cci not in relevant_msgs: continue
+                    ci_name = self._get_ci_msg(cci)
+                    if ci_name not in relevant_msgs: continue
                     new_cci = CCallin(cci.symbol)
-                    for a in cci:
-                        new_cci.args.append(a)
+                    new_cci.args = list(cci.args)
                     new_ccb.ci.append(new_cci)
-
-            new_ctrace.events.add(new_cevt)
 
         # change the traces
         self.ctrace = new_ctrace
