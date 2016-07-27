@@ -72,7 +72,13 @@ class Verifier:
         self.debug_encoding = debug_encoding
         self.coi = True
 
+        # Internal data structures
         self.msgs = MatchInfo(self)
+        self.conc_to_msg = {} # From concrete events/callin to msgs
+        self.msgs_to_instances = {} # Messages to list of instances
+        self.symbol_to_instances = {} # symbols to list of instances
+        # Map from ci to its containing event (message)
+        self.ci_to_evt = {}
 
         # internal representation of the transition system
         self.ts_state_vars = None
@@ -82,13 +88,8 @@ class Verifier:
         # reachability property
         self.ts_error = None
 
-        # Internal data structures
-        self.conc_to_msg = {} # From concrete events/callin to msgs
         self.msgs_to_var = {} # Messages to Boolean variables
         self.var_to_msgs = {} # inverse map
-        self.msgs_to_instances = {} # Messages to list of instances
-        self.symbol_to_instances = {} # symbols to list of instances
-
         # Map from a concrete event in the trace to their
         # invoke variable.
         # In practice, here we have a particular instance of an event
@@ -97,6 +98,10 @@ class Verifier:
 
         # Process trace
         self._process_trace()
+
+        if self.coi:
+            # Simplify the encoding
+            self._simplify()
 
         # Initialize the transition system
         self._initialize_ts()
@@ -125,15 +130,12 @@ class Verifier:
             logging.debug("evt %d\n" % i)
             self._process_event(cevt)
 
-        # Simplify the encoding
-        # TODO: fix conditional
-        relevant_msgs = self._simplify_encoding()
 
     def _initialize_ts(self):
         """Initialize ts_vars and ts_trans."""
         logging.debug("Encode the ts...")
 
-        self._init_ts_var(self.msgs.evt_info.keys())
+        self._init_ts_var()
         self._init_ts_init()
         self._init_ts_trans()
 
@@ -274,30 +276,33 @@ class Verifier:
 
         return event_cb_map
 
-    def _find_instances_callin(self, ccb):
+    def _find_instances_callin(self, evt_msg, ccb):
         """ Creates the data structure to keep all the instances of the callin.
         """
         for cci in ccb.ci:
             ci_name = self._get_ci_msg(cci)
             self.conc_to_msg[cci] = ci_name
 
-            # Different ci s instance can have the same message
+            # Different ci instances can have the same message
             if ci_name not in self.msgs.evt_info:
                 self.msgs[ci_name] = CiInfo(ci_name)
             self.msgs[ci_name].conc_msgs.add(cci)
 
             if ci_name not in self.msgs_to_instances:
                 self.msgs_to_instances[ci_name] = []
-            instance = Instance(cci.symbol, cci.args, ci_name)
+            instance = Instance(cci.symbol, tuple(cci.args), ci_name)
 
             self.msgs_to_instances[ci_name].append(instance)
             if cci.symbol not in self.symbol_to_instances:
                 self.symbol_to_instances[cci.symbol] = []
             self.symbol_to_instances[cci.symbol].append(instance)
 
+            if ci_name not in self.ci_to_evt:
+                self.ci_to_evt[ci_name] = set()
+            self.ci_to_evt[ci_name].add(evt_msg)
 
-    def _init_ts_var_callin(self, relevant_msgs, ccb):
-        """ Creates the encoding variables for all the (relevant) callins in ccb.
+    def _init_ts_var_callin(self, ccb):
+        """ Creates the encoding variables for all the  callins in ccb.
         """
         for cci in ccb.ci:
             ci_name = self._get_ci_msg(cci)
@@ -324,6 +329,7 @@ class Verifier:
         self.conc_to_msg = {}
         self.msgs_to_instances = {}
         self.symbol_to_instances = {}
+        self.ci_to_evt = {}
 
         i = 0
 
@@ -369,6 +375,7 @@ class Verifier:
             # event names and parameters).
             #
             event_cb_map = {}
+            msg_name = "evt_".join(cb_names)
 
             for ccb in cevent.cb:
                 cb_names.append(ccb.symbol + "_#_" + "_".join(ccb.args))
@@ -376,9 +383,8 @@ class Verifier:
                                                                ccb,
                                                                event_cb_map)
                 # process the callins (3 and 4)
-                self._find_instances_callin(ccb)
+                self._find_instances_callin(msg_name, ccb)
 
-            msg_name = "evt_".join(cb_names)
             self.conc_to_msg[cevent] = msg_name
 
             if (msg_name  not in self.msgs.evt_info):
@@ -399,22 +405,22 @@ class Verifier:
                 all_complete_args = Verifier._enum_evt_inst(values)
                 if len(all_complete_args) != 0:
                     for args_list in all_complete_args:
-                        instance = Instance(evt, args_list, msg_name)
+                        instance = Instance(evt, tuple(args_list), msg_name)
                         instances.append(instance)
                         self.symbol_to_instances[evt].append(instance)
             self.msgs_to_instances[msg_name] = instances
 
-    def _init_ts_var(self, relevant_msgs):
+    def _init_ts_var(self):
         """ Creates the variables in the transition system for a set
-        of relevant messages.
+        of messages.
 
         What are the state variables of the system?
 
-        For each (relevant) callin "ci" with the concrete objects "o1, ..., on"
+        For each callin "ci" with the concrete objects "o1, ..., on"
         we have a Boolean variable "allowed_state_ci_o1", where "o1"
         is the receiver.
 
-        For each (relevant) event "evt" we have a Boolean variable.
+        For each event "evt" we have a Boolean variable.
 
         Change ts_state_vars, ts_input_vars, msgs_to_var, var_to_msgs.
         """
@@ -431,9 +437,6 @@ class Verifier:
 
             assert cevent in self.conc_to_msg
             msg_name = self.conc_to_msg[cevent]
-
-            # skip non-relevant messages
-            if msg_name not in relevant_msgs: continue
 
             if (msg_name not in self.msgs_to_var):
                 evt_var_name = self._get_msg_var(msg_name, True)
@@ -452,7 +455,7 @@ class Verifier:
 
             # process the callback to add the ci called by the event
             for ccb in cevent.cb:
-                self._init_ts_var_callin(relevant_msgs, ccb)
+                self._init_ts_var_callin(ccb)
 
         # creates the error variable
         self.ts_error = Symbol(Verifier.ERROR_STATE, BOOL)
@@ -569,6 +572,33 @@ class Verifier:
 
         return
 
+    def _inst_param_rule(self, rule_formal_args, env):
+        """ Instantiate the formal parameters of a rule given an
+        environment.
+        """
+        conc_dst_args = []
+        for c in rule_formal_args:
+            if c not in env:
+                logging.debug("%s is an unbounded parameter in " \
+                              "the rule." % (c))
+                conc_dst_args.append(None)
+            else:
+                assert c in env
+                conc_dst_args.append(env[c])
+        assert (len(conc_dst_args) == len(rule_formal_args))
+        return conc_dst_args
+
+    def _match_args(self, inst_args, conc_args):
+        """ Matches all the concrete argument of conc_args
+        with the arguments of instance
+        """
+        matches = True
+        for (conc_arg, inst_arg) in zip(conc_args, inst_args):
+            if None != conc_arg and conc_arg != inst_arg:
+                matches = False
+                break
+        return matches
+
     def _apply_rules(self, msg_evt, cevt_msg):
         """ Find all the rules that match an instantiation in inst_list.
 
@@ -619,32 +649,13 @@ class Verifier:
                 # where li = aj if l1 = xj, and li = None otherwise
                 #
                 src_env = self._build_env({}, rule.src_args, inst.args)
-                conc_dst_args = []
-                for c in rule.dst_args:
-                    if c not in src_env:
-                        logging.debug("%s is an unbounded parameter in " \
-                                      "the rule." % (c))
-                        conc_dst_args.append(None)
-                    else:
-                        assert c in src_env
-                        conc_dst_args.append(src_env[c])
-                assert (len(conc_dst_args) == len(rule.dst_args))
+                conc_dst_args = self._inst_param_rule(rule.dst_args, src_env)
 
                 # At this point: the rule matches an instance.
 
                 # Find the instances that are affected by the rule
                 for inst_dst in self.symbol_to_instances[rule.dst]:
-                    matches = True
-
-                    # Matches all the concrete argument of conc_arg
-                    # with the destination instance
-                    #
-                    # WARNING: Here we require a full match of the
-                    # instance with the rule (i.e. None is not ok)
-                    for (conc_arg, inst_arg) in zip(conc_dst_args, inst_dst.args):
-                        if None != conc_arg and conc_arg != inst_arg:
-                            matches = False
-                            break
+                    matches = self._match_args(inst_dst.args, conc_dst_args)
 
                     if matches:
                         # we found an effect for the rule
@@ -760,52 +771,11 @@ class Verifier:
 
         return evt_trans
 
-    def _simplify_encoding(self):
-        """ Remove the events and the callins that have no effects on
-        finding bugs.
-
-        The simplification removes callins and events (messages) that
-        are not relevant.
-
-        Definition - relevant message.
-
-        - An event is relevant if:
-          - it calls a relevant callin
-          - it can enable/disable (allow/disallow) a relevant event
-            (callin)
-
-        - A callin is relevant if:
-          - it can be disabled
-          - it can enable/disable (allow/disallow) a relevant event
-            (callin)
-        """
-
-        # 1. Compute the set of relevant messages.
-        relevant_msgs = set()
-
-        # Initialize the relevant messages with the callins that can
-        # be disabled
-        frontier = set() # TODO
-
-        # Fix-point computation of the relevant set
-        while 0 != len(frontier):
-            # add the frontier
-            relevant_msgs.update(frontier)
-            # compute the new frontier
-            frontier = compute_pre(self, frontier)
-
-        # Prune the state variables
-
-        # prune the guards/must_be_allowed... structures
-
-        return relevant_msgs
-
     def _init_ts_trans(self):
         """Initialize the ts trans."""
         logging.debug("Encoding the trans...")
 
         # Perform the encoding
-        # TODO: consider the pruned relevant messages
         events_encoding = []
         for evt in self.ctrace.events:
             evt_encoding = self._encode_evt(evt)
@@ -1010,6 +980,141 @@ class Verifier:
                                    Not(self.ts_error))
         translator.to_smv(stream)
 
+################################################################################
+# SIMPLIFICATION - TO MOVE
+################################################################################
+
+    def _get_buggy_instances(self):
+        """ Get the set of instances that can be disabled and thus
+        cause a vioalation.
+        """
+        buggy_instances = set()
+        for rule in self.specs:
+            if (rule.specType == SpecType.Disable):
+                if rule.dst not in self.symbol_to_instances: continue
+                for inst in self.symbol_to_instances[rule.dst]:
+                    buggy_instances.add(inst)
+        return buggy_instances
+
+    def _compute_pre(self, frontier):
+        """ Given a set of instances, it returns all the instances
+        that can enable/disable one instance in the set.
+        """
+
+        new_frontier = set()
+        for inst in frontier:
+            # find the instances that can enable/disable inst
+            # We find the rules that can have effects in inst, and
+            # then find the instances that can match them.
+            for rule in self.specs:
+                if rule.dst == inst.symbol:
+                    if not rule.src in self.symbol_to_instances:
+                        # No instances that match rule.src
+                        continue
+
+                    # Instantiate the paramter on the lhs of the rule
+                    dst_env = self._build_env({}, rule.dst_args, inst.args)
+                    conc_src_args = self._inst_param_rule(rule.src_args, dst_env)
+
+                    for prev_inst in self.symbol_to_instances[rule.src]:
+                        # we only add the instances that can match the
+                        # parameters
+                        if self._match_args(prev_inst.args, conc_src_args):
+                            new_frontier.add(prev_inst)
+
+        # Add the instances of the events that call a ci in the
+        # frontier
+        events_in_frontier = set()
+        for inst in new_frontier:
+            if inst.msg in self.ci_to_evt:
+                for i in self.msgs_to_instances[inst.msg]:
+                    events_in_frontier.add(i)
+        new_frontier.update(events_in_frontier)
+
+        return new_frontier
+
+    def _computes_relevant_instances(self):
+        """ Computes the set of relevant instances.
+
+        Definition - relevant instance.
+
+        - An event instance is relevant if:
+          - it calls a relevant callin instance
+          - it can enable/disable (allow/disallow) a relevant event
+            (callin) instance
+
+        - A callin instance is relevant if:
+          - it can be disabled
+          - it can enable/disable (allow/disallow) a relevant event
+            (callin) instance
+
+        The set is computed with a fixed point algorithm.
+        """
+
+        # Initialize the relevant instances with the callins that can be disabled
+        relevant_instances = self._get_buggy_instances()
+        frontier = set(relevant_instances)
+
+        # Fix-point computation of the relevant set
+        prev_size = 0
+        while prev_size != len(relevant_instances):
+            prev_size = len(relevant_instances)
+            # compute the frontier
+            frontier = self._compute_pre(frontier)
+            # get the new set of "reachable" instances
+            relevant_instances.update(frontier)
+
+        return relevant_instances
+
+
+    def _simplify(self):
+        """ Simplify the concrete trace according to the current
+        specification.
+        """
+        # get the relevant instances
+        relevant_instances = self._computes_relevant_instances()
+
+        # get the relevant messages
+        relevant_msgs = set()
+        for msg in self.msgs.evt_info.keys():
+            is_relevant = False
+            if msg in self.msgs_to_instances:
+                for inst in self.msgs_to_instances[msg]:
+                    if inst in relevant_instances:
+                        is_relevant = True
+            if is_relevant:
+                relevant_msgs.add(msg)
+
+        # Create a new trace
+        new_ctrace = ConcreteTrace()
+        for cevt in self.ctrace.events:
+            evt_msg = self.conc_to_msg[cevt]
+            if evt_msg not in relevant_msgs: continue
+
+            new_cevt = CEvent(cevt.symbol)
+            new_conc_to_msg[evt]
+
+            for ccb in cevt.cb:
+                new_ccb = CCallback(ccb.symbol)
+                new_cevt.cb.append(new_ccb)
+
+                for cci in ccb.ci:
+                    if cci not in relevant_msgs: continue
+                    new_cci = CCallin(cci.symbol)
+                    for a in cci:
+                        new_cci.args.append(a)
+                    new_ccb.ci.append(new_cci)
+
+            new_ctrace.events.add(new_cevt)
+
+        # change the traces
+        self.ctrace = new_ctrace
+
+        # Create a new matchinfo structure
+        self.msgs = MatchInfo(self)
+        # process the trace again
+        self._process_trace()
+
 class MsgInfo(object):
     def __init__(self, msg):
         self.msg = msg
@@ -1139,3 +1244,6 @@ class MatchInfo:
                 if dbg_info.bug_ci != None:
                     print("Event ends in bug %s" % (dbg_info.bug_ci))
             print("-------------")
+
+
+
