@@ -74,18 +74,20 @@ class TestInst(unittest.TestCase):
     def _bmc_opt_tester(self, ctrace, specs, bindings, bound, is_safe):
 
         debug_opt = [False, True]
+        coi_opt = [False, True]
 
-        for opt in debug_opt:
-            v = Verifier(ctrace, specs, bindings, opt)
-            cex = v.find_bug(bound)
+        for coi in coi_opt:
+            for opt in debug_opt:
+                v = Verifier(ctrace, specs, bindings, opt, coi)
+                cex = v.find_bug(bound)
 
-            if (is_safe):
-                self.assertTrue(None == cex)
-            else:
-                if cex != None:
-                    v.print_cex(cex, True)
+                if (is_safe):
+                    self.assertTrue(None == cex)
+                else:
+                    if cex != None:
+                        v.print_cex(cex, True)
 
-                self.assertTrue(None != cex)
+                    self.assertTrue(None != cex)
 
     def setUp(self):
         logging.basicConfig(level=logging.DEBUG)
