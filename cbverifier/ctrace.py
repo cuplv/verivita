@@ -154,8 +154,8 @@ class CTraceSerializer:
                 if (len(event.cb) != 0):
                     ctrace.events.append(event)
                 else:
-                    logging.warning("Skipping event with no " \
-                                    "callbacks: %s" % event_json['signature'])
+                    logging.debug("Skipping event with no " \
+                                  "callbacks: %s" % event_json['signature'])
             initial = False
         return ctrace
 

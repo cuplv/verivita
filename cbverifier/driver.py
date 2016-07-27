@@ -37,6 +37,8 @@ def main():
                  default=False,help="Use the debug encoding")
 
     p.add_option('-f', '--smvfile', help="Output smv file")
+    p.add_option('-c', '--coi', action="store_true",
+                 default=False, help="Apply cone of influence")
 
     p.add_option('-m', '--mode', type='choice',
                  choices= ["bmc","check-files", "print-trace","to-smv"],
@@ -85,12 +87,13 @@ def main():
         logging.debug("\n---Not mapped symbols:---")
         for a in not_mapped: logging.debug(a)
 
-        ctrace.print_trace()
+        # ctrace.print_trace()
 
         # Call the verifier
         verifier = Verifier(ctrace, specs_map["specs"],
                             specs_map["bindings"],
-                            opts.debugenc)
+                            opts.debugenc,
+                            opts.coi)
         if (opts.mode == "bmc"):
             if (not opts.inc):
                 cex = verifier.find_bug(depth)
@@ -99,7 +102,7 @@ def main():
 
             if (opts.debugenc):
                 if verifier.debug_encoding:
-                    verifier.dbg.print_info()
+                    verifier.msgs.print_info()
 
             if None != cex:
                 print "Found bug"
