@@ -1,0 +1,33 @@
+{
+    "events" : [
+        {"initial" : "true"},
+        {
+            "initial" : "false",
+            "signature" : "A",
+            "concreteArgs" : [],
+            "callbackObjects": [
+                {
+                    "signature" : "cb1",
+                    "concreteArgs" : ["1"],
+                    "callinList" : [
+                        {"signature": "c1", "concreteArgs": ["1"]}
+                    ]
+                }
+            ]
+        },
+        {
+            "initial" : "false",
+            "signature" : "B",
+            "concreteArgs" : [],
+            "callbackObjects": [
+                {
+                    "signature" : "cb2",
+                    "concreteArgs" : ["1"],
+                    "callinList" : [
+                        {"signature": "c2", "concreteArgs": ["1"]}
+                    ]
+                }
+            ]
+        }
+    ]
+}
