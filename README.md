@@ -13,3 +13,5 @@ Dynamic verification:
 Check if the input files are well formed:
 ```python driver.py -m check-files -t <trace-file> -s <spec-file>```
 
+Run unit tests:
+```cd cbverifier; nosetests```
