@@ -23,8 +23,8 @@ def read_from_files(spec_file_list):
 
 def main():
     # Common to all modes
-    # logging.basicConfig(level=logging.DEBUG)
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
+    # logging.basicConfig(level=logging.INFO)
 
     p = optparse.OptionParser()
     p.add_option('-t', '--tracefile',
@@ -87,8 +87,6 @@ def main():
         logging.debug("\n---Not mapped symbols:---")
         for a in not_mapped: logging.debug(a)
 
-        # ctrace.print_trace()
-
         # Call the verifier
         verifier = Verifier(ctrace, specs_map["specs"],
                             specs_map["bindings"],
@@ -100,7 +98,8 @@ def main():
             else:
                 cex = verifier.find_bug_inc(depth)
 
-            if (opts.debugenc):
+            if (logging.getLogger().getEffectiveLevel() >= logging.DEBUG):
+                ctrace.print_trace()
                 if verifier.debug_encoding:
                     verifier.msgs.print_info()
 
