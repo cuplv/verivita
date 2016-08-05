@@ -57,6 +57,10 @@ class Verifier:
         assert None != specs
         assert None != bindings
 
+        # at least init
+        assert len(ctrace.events) > 0
+        assert ctrace.events[0].symbol == "initial"
+
         # pysmt stuff
         self.env = reset_env()
         self.mgr = self.env.formula_manager
@@ -66,6 +70,7 @@ class Verifier:
         self.ctrace = ctrace
         # specification (list of rules)
         self.specs = specs
+
         # list of bindings from events to callbacks parameters
         self.bindings = bindings
 
@@ -131,7 +136,6 @@ class Verifier:
             logging.debug("evt %d\n" % i)
             self._process_event(cevt)
 
-
     def _initialize_ts(self):
         """Initialize ts_vars and ts_trans."""
         logging.debug("Encode the ts...")
@@ -139,6 +143,9 @@ class Verifier:
         self._init_ts_var()
         self._init_ts_init()
         self._init_ts_trans()
+
+    def _get_init_state_var(self):
+        return Symbol("__is_init_state__")
 
     def _get_msg_var(self, msg_name, is_evt):
         if (is_evt):
@@ -353,9 +360,19 @@ class Verifier:
         #
         for cevent in self.ctrace.events:
             i = i + 1
-            # List of names obtained from each callback
-            # Used to name the event variable
-            cb_names = []
+
+            if cevent.symbol != "initial":
+                # List of names obtained from each callback
+                # Used to name the event variable
+                cb_names = []
+                for ccb in cevent.cb:
+                    cb_names.append(ccb.symbol + "_#_" + "_".join(ccb.args))
+                msg_name = "evt_".join(cb_names)
+                if msg_name == "":
+                    msg_name = "no_callbacks"
+            else:
+                # initial event - automatic binding
+                msg_name = "initial"
 
             # The key is an event symbol while the values are a list
             # of list of arguments.
@@ -376,24 +393,17 @@ class Verifier:
             # event names and parameters).
             #
             event_cb_map = {}
-
-            for ccb in cevent.cb:
-                cb_names.append(ccb.symbol + "_#_" + "_".join(ccb.args))
-            msg_name = "evt_".join(cb_names)
-            if msg_name == "":
-                msg_name = "no_callbacks"
-
-            for ccb in cevent.cb:
-                cb_names.append(ccb.symbol + "_#_" + "_".join(ccb.args))
-                event_cb_map = Verifier._evt_signature_from_cb(self.bindings,
-                                                               ccb,
-                                                               event_cb_map)
-                # process the callins (3 and 4)
-                self._find_instances_callin(msg_name, ccb)
+            if cevent.symbol != "initial":
+                for ccb in cevent.cb:
+                    event_cb_map = Verifier._evt_signature_from_cb(self.bindings,
+                                                                   ccb,
+                                                                   event_cb_map)
+                    # process the callins (3 and 4)
+                    self._find_instances_callin(msg_name, ccb)
 
             self.conc_to_msg[cevent] = msg_name
 
-            if (msg_name  not in self.msgs.evt_info):
+            if (msg_name not in self.msgs.evt_info):
                 self.msgs[msg_name] = EventInfo(msg_name)
             self.msgs[msg_name].conc_msgs.add(cevent)
 
@@ -402,18 +412,21 @@ class Verifier:
             #
             # These information are used both to match a rule and to
             # apply its effects.
-            instances = []
-            for (evt, values) in event_cb_map.iteritems():
-                # keep a map from the event name
-                if evt not in self.symbol_to_instances:
-                    self.symbol_to_instances[evt] = []
+            if cevent.symbol != "initial":
+                instances = []
+                for (evt, values) in event_cb_map.iteritems():
+                    # keep a map from the event name
+                    if evt not in self.symbol_to_instances:
+                        self.symbol_to_instances[evt] = []
 
-                all_complete_args = Verifier._enum_evt_inst(values)
-                if len(all_complete_args) != 0:
-                    for args_list in all_complete_args:
-                        instance = Instance(evt, tuple(args_list), msg_name)
-                        instances.append(instance)
-                        self.symbol_to_instances[evt].append(instance)
+                    all_complete_args = Verifier._enum_evt_inst(values)
+                    if len(all_complete_args) != 0:
+                        for args_list in all_complete_args:
+                            instance = Instance(evt, tuple(args_list), msg_name)
+                            instances.append(instance)
+                            self.symbol_to_instances[evt].append(instance)
+            else:
+                instances = [Instance("initial", tuple([]), msg_name)]
             self.msgs_to_instances[msg_name] = instances
 
     def _init_ts_var(self):
@@ -463,6 +476,8 @@ class Verifier:
             for ccb in cevent.cb:
                 self._init_ts_var_callin(ccb)
 
+        self.ts_state_vars.add(self._get_init_state_var())
+
         # creates the error variable
         self.ts_error = Symbol(Verifier.ERROR_STATE, BOOL)
         self.ts_state_vars.add(self.ts_error)
@@ -478,6 +493,10 @@ class Verifier:
         for v in self.ts_state_vars:
             if v != self.ts_error:
                 self.ts_init = And(self.ts_init, v)
+
+        self.ts_init = And(self.ts_init,
+                           self._get_init_state_var())
+
         logging.debug("Initial state is %s" % str(self.ts_init))
 
 
@@ -783,27 +802,44 @@ class Verifier:
 
         # Perform the encoding
         events_encoding = []
+        init_evt_encoding = None
         for evt in self.ctrace.events:
             evt_encoding = self._encode_evt(evt)
-            if (self.debug_encoding):
-                assert evt in self.events_to_input_var
-                ivar = self.events_to_input_var[evt]
-                events_encoding.append(Implies(ivar, evt_encoding))
+
+            if (evt.symbol == "initial"):
+                init_evt_encoding = evt_encoding
+                if (self.debug_encoding):
+                    ivar = self.events_to_input_var[evt]
+                    init_evt_encoding = Implies(ivar, evt_encoding)
             else:
+                if (self.debug_encoding):
+                    assert evt in self.events_to_input_var
+                    ivar = self.events_to_input_var[evt]
+                    evt_encoding = Implies(ivar, evt_encoding)
                 events_encoding.append(evt_encoding)
 
+        is_init_state = self._get_init_state_var()
         if (self.debug_encoding):
             # Execute exactly one event at time
             ivars = self.events_to_input_var.values()
-            self.ts_trans = And(And(events_encoding),
+            all_evt_trans = And(And(events_encoding),
+                                init_evt_encoding,
                                 ExactlyOne(ivars))
+            init_input_var = self.events_to_input_var[self.ctrace.events[0]]
+            self.ts_trans = And([all_evt_trans,
+                                 Implies(is_init_state, init_input_var),
+                                 Implies(Not(is_init_state),
+                                         Not(init_input_var)),
+                                 Not(self._next(is_init_state))])
         else:
             # WARNING: here we use Or instead of
             # exactly one event.
             # This means that "compatible" events may happen
             # at the same time.
             # This is sound for reachability properties.
-            self.ts_trans = Or(events_encoding)
+            self.ts_trans = And([Implies(is_init_state, init_evt_encoding),
+                                 Implies(Not(is_init_state), Or(events_encoding)),
+                                 Not(self._next(is_init_state))])
 
 
     def _build_trace(self, model, steps):
