@@ -36,6 +36,9 @@ from ctrace import ConcreteTrace, CEvent, CCallin, CCallback
 from helpers import Helper
 from tosmv import SmvTranslator
 
+# Set to false to get all the information of the trace
+PRETTY_PRINT = True
+
 Instance = collections.namedtuple("Instance", ["symbol", "args", "msg"],
                                   verbose=False,
                                   rename=False)
@@ -86,6 +89,9 @@ class Verifier:
         # Map from ci to its containing event (message)
         self.ci_to_evt = {}
 
+        # map from msgs (events) to a human readable name
+        self.readable_msgs = {}
+
         # internal representation of the transition system
         self.ts_state_vars = None
         self.ts_input_vars = None
@@ -101,6 +107,7 @@ class Verifier:
         # In practice, here we have a particular instance of an event
         # It is used for debug
         self.events_to_input_var = {}
+        self.input_var_to_msgs = {}
 
         # Process trace
         self._process_trace()
@@ -333,6 +340,18 @@ class Verifier:
         The function changes the maps conc_to_msg, msgs_to_instances
         and symbol_to_instances.
         """
+        def get_readable_cb_name(cb_name):
+            """ Get a readable name for the callback. """
+            res = cb_name
+            dot_splitted = cb_name.split(".")
+            if len(dot_splitted) > 1:
+                last_dot = dot_splitted[-1]
+                paren_splitted = last_dot.split("(")
+                if len(paren_splitted) > 1:
+                    res = paren_splitted[0]
+                else:
+                    res = last_dot
+            return res
 
         self.conc_to_msg = {}
         self.msgs_to_instances = {}
@@ -365,14 +384,20 @@ class Verifier:
                 # List of names obtained from each callback
                 # Used to name the event variable
                 cb_names = []
+                readable_msg = []
                 for ccb in cevent.cb:
                     cb_names.append(ccb.symbol + "_#_" + "_".join(ccb.args))
+                    readable_msg.append(get_readable_cb_name(ccb.symbol))
+
                 msg_name = "evt_".join(cb_names)
                 if msg_name == "":
                     msg_name = "no_callbacks"
+
+                self.readable_msgs[msg_name] = ",".join(readable_msg)
             else:
                 # initial event - automatic binding
                 msg_name = "initial"
+                self.readable_msgs[msg_name] = "initial"
 
             # The key is an event symbol while the values are a list
             # of list of arguments.
@@ -470,6 +495,7 @@ class Verifier:
                 ivar_name = "INPUT_event_%d_%s" % (i, msg_name)
                 ivar = Symbol(ivar_name, BOOL)
                 self.events_to_input_var[cevent] = ivar
+                self.input_var_to_msgs[ivar] = msg_name
                 self.ts_input_vars.add(ivar)
 
             # process the callback to add the ci called by the event
@@ -866,9 +892,15 @@ class Verifier:
                            only_true = False,
                            skipinit = True,
                            only_changed = True):
+
             def _print_val(key,val,msg):
                 if None != msg:
-                    print("(%s): %s: %s" % (msg, key, value))
+                    if PRETTY_PRINT:
+                        if msg in self.readable_msgs:
+                            msg = self.readable_msgs[msg]
+                        print("(%s): %s" % (msg, value))
+                    else:
+                        print("(%s): %s: %s" % (msg, key, value))
                 else:
                     print("%s: %s" % (key, value))
             if skipinit:
@@ -879,6 +911,8 @@ class Verifier:
 
                 if key in self.var_to_msgs:
                     message = self.var_to_msgs[key]
+                elif key in self.input_var_to_msgs:
+                    message = self.input_var_to_msgs[key]
                 else:
                     message = None
 
@@ -1203,7 +1237,7 @@ class Verifier:
 
         # change the traces
         self.ctrace = new_ctrace
-        if (logging.getLogger().getEffectiveLevel() >= logging.DEBUG):
+        if (logging.getLogger().getEffectiveLevel() >= logging.INFO):
             # Print the simplifed trace
             print "\n--- Simplified trace ---"
             self.ctrace.print_trace()
@@ -1252,8 +1286,7 @@ class EventInfo(MsgInfo):
         # set of CIs that must be allowed to execute the event without
         # ending in a bug
         self.must_be_allowed = set()
-        # set of 
-        self.effects = set()
+
         # First ci that cannot be called (if any)
         # Corner case where just observing the sequence of CI in an
         # event we can determine that we reach a bug.
@@ -1315,7 +1348,12 @@ class MatchInfo:
             is_evt = isinstance(dbg_info, EventInfo)
             if not is_evt: prefix = "Callin"
             else: prefix = "Event"
-            print("(%d/%d) %s: %s" % (i, total, prefix, dbg_info.msg))
+
+            if is_evt:
+                evt_name = self.verifier.readable_msgs[dbg_info.msg]
+                print("(%d/%d) %s: %s" % (i, total, prefix, evt_name))
+            else:
+                print("(%d/%d) %s: %s" % (i, total, prefix, dbg_info.msg))
 
             readable_msgs = []
             for l in  dbg_info.conc_msgs:
@@ -1338,7 +1376,6 @@ class MatchInfo:
             if is_evt:
                 print("Guards: %s" % ",".join(list(dbg_info.guards)))
                 print("Required callins:\n  %s" % "\n  ".join(list(dbg_info.must_be_allowed)))
-                print("Effects: %s" % ",".join(list(dbg_info.effects)))
                 if dbg_info.bug_ci != None:
                     print("Event ends in bug %s" % (dbg_info.bug_ci))
             print("-------------")

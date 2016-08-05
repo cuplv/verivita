@@ -23,8 +23,8 @@ def read_from_files(spec_file_list):
 
 def main():
     # Common to all modes
-    logging.basicConfig(level=logging.DEBUG)
-    # logging.basicConfig(level=logging.INFO)
+    # logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
 
     p = optparse.OptionParser()
     p.add_option('-t', '--tracefile',
@@ -98,7 +98,7 @@ def main():
             else:
                 cex = verifier.find_bug_inc(depth)
 
-            if (logging.getLogger().getEffectiveLevel() >= logging.DEBUG):
+            if (logging.getLogger().getEffectiveLevel() >= logging.INFO):
                 ctrace.print_trace()
                 if verifier.debug_encoding:
                     verifier.msgs.print_info()
