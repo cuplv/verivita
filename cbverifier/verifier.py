@@ -990,18 +990,44 @@ class Verifier:
 # SIMPLIFICATION - TO MOVE
 ################################################################################
 
+    def _new_inst_tuple(self, inst):
+        return (0, inst)
+    def _new_evt_tuple(self, evt):
+        return (1, evt)
+    def _is_inst(self, tuple):
+        assert len(tuple) == 2
+        return tuple[0] == 0
+    def _is_evt(self, tuple):
+        assert len(tuple) == 2
+        return tuple[0] == 1
+
     def _get_containing_evt(self, frontier):
-        """ Get the event instances that call a callin contained in
-        frontier.
-        """
+        """ Get the event instances that call a callin contained in frontier."""
         events_in_frontier = set()
-        for inst in frontier:
+        for front_obj in frontier:
+            # if inst is an event (not an instance of an event),
+            # then continue: the event will not match any rule.
+            if self._is_evt(front_obj): continue
+            inst = front_obj[1]
+
             if inst.msg in self.ci_to_evt:
                 events_of_ci = self.ci_to_evt[inst.msg]
                 for evt_of_ci in events_of_ci:
                     # add all the instances of evt_of_ci
                     for i in self.msgs_to_instances[evt_of_ci]:
-                        events_in_frontier.add(i)
+                        events_in_frontier.add(self._new_inst_tuple(i))
+                    # Add only the event.
+                    # Why?
+                    #   - the callin is called by evt_of_ci
+                    #   - if there are no instances, then it means
+                    #   that no rules will match the event (i.e. the
+                    #   event will not have any consequence on the
+                    #   permitted/prohibited state).
+                    #   Even if there are no instances, the event
+                    #   should be considered in the trace, since executing
+                    #   it can execute a relevant callin.
+                    #
+                    events_in_frontier.add(self._new_evt_tuple(evt_of_ci))
         frontier.update(events_in_frontier)
 
         return frontier
@@ -1016,7 +1042,7 @@ class Verifier:
             if (rule.specType == SpecType.Disallow):
                 if rule.dst not in self.symbol_to_instances: continue
                 for inst in self.symbol_to_instances[rule.dst]:
-                    buggy_instances.add(inst)
+                    buggy_instances.add(self._new_inst_tuple(inst))
         buggy_instances = self._get_containing_evt(buggy_instances)
         return buggy_instances
 
@@ -1026,7 +1052,12 @@ class Verifier:
         """
 
         new_frontier = set()
-        for inst in frontier:
+        for front_obj in frontier:
+            # if inst is an event (not an instance of an event),
+            # then continue: the event will not match any rule.
+            if self._is_evt(front_obj): continue
+            inst = front_obj[1]
+
             # find the instances that can enable/disable inst
             # We find the rules that can have effects in inst, and
             # then find the instances that can match them.
@@ -1044,7 +1075,7 @@ class Verifier:
                         # we only add the instances that can match the
                         # parameters
                         if self._match_args(prev_inst.args, conc_src_args):
-                            new_frontier.add(prev_inst)
+                            new_frontier.add(self._new_inst_tuple(prev_inst))
 
         # Add the instances of the events that call a ci in the
         # frontier
@@ -1053,14 +1084,19 @@ class Verifier:
         return new_frontier
 
     def _computes_relevant_instances(self):
-        """ Computes the set of relevant instances.
+        """ Computes the set of relevant instances of events and ci.
 
         Definition - relevant instance.
 
-        - An event instance is relevant if:
+        - An event is relevant if:
           - it calls a relevant callin instance
           - it can enable/disable (allow/disallow) a relevant event
             (callin) instance
+          NOTE: we store events and not event instances.
+          An event may not have an instance (e.g. if it is not matched by any
+          binding).
+          However, the event may still be executed by the scheduler, and so
+          its callins. Hence, we need the event and not an event instance.
 
         - A callin instance is relevant if:
           - it can be disabled
@@ -1097,9 +1133,11 @@ class Verifier:
         relevant_msgs = set()
         for msg in self.msgs.evt_info.keys():
             is_relevant = False
-            if msg in self.msgs_to_instances:
+            if self._new_evt_tuple(msg) in relevant_instances:
+                is_relevant = True
+            elif msg in self.msgs_to_instances:
                 for inst in self.msgs_to_instances[msg]:
-                    if inst in relevant_instances:
+                    if self._new_inst_tuple(inst) in relevant_instances:
                         is_relevant = True
             if is_relevant:
                 relevant_msgs.add(msg)
@@ -1129,6 +1167,10 @@ class Verifier:
 
         # change the traces
         self.ctrace = new_ctrace
+        if (logging.getLogger().getEffectiveLevel() >= logging.DEBUG):
+            # Print the simplifed trace
+            print "\n--- Simplified trace ---"
+            self.ctrace.print_trace()
 
         # Create a new matchinfo structure
         self.msgs = MatchInfo(self)
