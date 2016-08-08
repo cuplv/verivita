@@ -93,15 +93,16 @@ def main():
                             opts.debugenc,
                             opts.coi)
         if (opts.mode == "bmc"):
-            if (not opts.inc):
-                cex = verifier.find_bug(depth)
-            else:
-                cex = verifier.find_bug_inc(depth)
-
-            if (logging.getLogger().getEffectiveLevel() >= logging.INFO):
-                ctrace.print_trace()
-                if verifier.debug_encoding:
-                    verifier.msgs.print_info()
+            try:
+                if (not opts.inc):
+                    cex = verifier.find_bug(depth)
+                else:
+                    cex = verifier.find_bug_inc(depth)
+            finally:
+                if (logging.getLogger().getEffectiveLevel() >= logging.INFO):
+                    ctrace.print_trace()
+                    if verifier.debug_encoding:
+                        verifier.msgs.print_info()
 
             if None != cex:
                 print "Found bug"
