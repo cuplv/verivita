@@ -11,6 +11,7 @@ from spec import SpecType, SpecSerializer, Spec
 
 from ctrace import CTraceSerializer, ConcreteTrace
 from verifier import Verifier
+from cex_printer import CexPrinter
 
 def read_from_files(spec_file_list):
     file_list = []
@@ -106,7 +107,8 @@ def main():
 
             if None != cex:
                 print "Found bug"
-                verifier.print_cex(cex, True, True)
+                printer = CexPrinter(verifier, cex)
+                printer.print_cex(True, True)
 
                 #     verifier.debug_cex(cex)
             else:
