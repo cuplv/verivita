@@ -2,6 +2,7 @@
 
 """
 
+import sys
 import collections
 
 from pysmt.shortcuts import Symbol, TRUE, FALSE
@@ -16,9 +17,50 @@ PRETTY_PRINT = True
 """
 class CexPrinter:
 
-    def __init__(self, verifier, cex):
+    def __init__(self, verifier, cex, out_stream=None):
         self._verifier = verifier
         self._cex = cex
+
+        if (None == out_stream):
+            self.out_stream = sys.stdout
+        else:
+            self.out_stream = out_stream
+
+    def _print_sep(self):
+        sep = "----------------------------------------\n"
+        self.out_stream.write(sep)
+
+    def _print_cex_header(self):
+        self.out_stream.write("\n--- Counterexample ---\n")
+        self._print_sep()
+
+    def print_cex(self, changed=False, readable=True):
+        """ Print the cex. """
+
+        i = 0
+        prev_state = {}
+
+        self._print_cex_header()
+
+        for step in self._cex:
+            self.out_stream.write("State - %d\n" % i)
+            self._print_sep()
+
+            self._print_var_set(self._verifier.ts_state_vars,
+                                step, prev_state, False,
+                                (readable and i == 0), changed)
+
+            # skip the last input vars
+            if (i >= (len(self._cex)-1)): continue
+            self._print_sep()
+            self.out_stream.write("Input - %d\n" % i)
+            self._print_sep()
+            self._print_var_set(self._verifier.ts_input_vars,
+                                step, prev_state, True,
+                                False, False)
+            self._print_sep()
+            i = i + 1
+        self.out_stream.flush()
 
     def _print_var_set(self,
                        varset, step, prev_state,
@@ -30,14 +72,17 @@ class CexPrinter:
                 if PRETTY_PRINT:
                     if msg in self._verifier.readable_msgs:
                         msg = self._verifier.readable_msgs[msg]
-                    print("(%s): %s" % (msg, value))
+                    to_print = "(%s): %s\n" % (msg, value)
+                    self.out_stream.write(to_print)
                 else:
-                    print("(%s): %s: %s" % (msg, key, value))
+                    to_print = "(%s): %s: %s\n" % (msg, key, value)
+                    self.out_stream.write(to_print)
             else:
-                print("%s: %s" % (key, value))
+                to_print = "%s: %s\n" % (key, value)
+                self.out_stream.write(to_print)
 
         if skipinit:
-            print "All events/callins are enabled"
+            self.out_stream.write("All events/callins are enabled\n")
 
         for key in varset:
             assert key in step
@@ -67,30 +112,3 @@ class CexPrinter:
 
 
 
-    def print_cex(self, changed=False, readable=True):
-        sep = "----------------------------------------"
-        i = 0
-
-        prev_state = {}
-
-        print("")
-        print("--- Counterexample ---")
-        print(sep)
-        for step in self._cex:
-            print("State - %d" % i)
-            print(sep)
-
-            self._print_var_set(self._verifier.ts_state_vars,
-                                step, prev_state, False,
-                                (readable and i == 0), changed)
-
-            # skip the last input vars
-            if (i >= (len(self._cex)-1)): continue
-            print(sep)
-            print("Input - %d" % i)
-            print(sep)
-            self._print_var_set(self._verifier.ts_input_vars,
-                                step, prev_state, True,
-                                False, False)
-            print(sep)
-            i = i + 1
