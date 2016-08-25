@@ -16,6 +16,7 @@ from cbverifier.spec import Spec, SpecType, Binding
 from cbverifier.ctrace import CTraceSerializer, ConcreteTrace, CEvent, CCallback, CCallin
 from cbverifier.verifier import Verifier
 
+from cbverifier.cex_printer import EventCexPrinter
 
 class TestInst(unittest.TestCase):
 
@@ -82,17 +83,15 @@ class TestInst(unittest.TestCase):
                 v = Verifier(ctrace, specs, bindings, opt, coi)
                 cex = v.find_bug(bound)
 
-
-                print coi
-                print opt
-
                 if (is_safe):
                     if cex != None:
-                        v.print_cex(cex, True)
+                        printer = EventCexPrinter(v, cex)
+                        printer.print_cex(True, True)
                     self.assertTrue(None == cex)
                 else:
                     if cex != None:
-                        v.print_cex(cex, True)
+                        printer = EventCexPrinter(v, cex)
+                        printer.print_cex(True, True)
 
                     self.assertTrue(None != cex)
 

@@ -36,9 +36,6 @@ from ctrace import ConcreteTrace, CEvent, CCallin, CCallback
 from helpers import Helper
 from tosmv import SmvTranslator
 
-# Set to false to get all the information of the trace
-PRETTY_PRINT = True
-
 Instance = collections.namedtuple("Instance", ["symbol", "args", "msg"],
                                   verbose=False,
                                   rename=False)
@@ -89,9 +86,6 @@ class Verifier:
         # Map from ci to its containing event (message)
         self.ci_to_evt = {}
 
-        # map from msgs (events) to a human readable name
-        self.readable_msgs = {}
-
         # internal representation of the transition system
         self.ts_state_vars = None
         self.ts_input_vars = None
@@ -108,6 +102,8 @@ class Verifier:
         # It is used for debug
         self.events_to_input_var = {}
         self.input_var_to_msgs = {}
+
+        self._readable_msgs = {}
 
         # Process trace
         self._process_trace()
@@ -331,6 +327,48 @@ class Verifier:
                 self.var_to_msgs[ci_var] = ci_name
                 logging.debug("Callin %s: create variable %s" % (ci_name, str(ci_var)))
 
+    @staticmethod
+    def _get_readable_cb_name(cb_name):
+        """ Get a readable name for the callback. """
+        res = cb_name
+        dot_splitted = cb_name.split(".")
+        if len(dot_splitted) > 1:
+            last_dot = dot_splitted[-1]
+            paren_splitted = last_dot.split("(")
+            if len(paren_splitted) > 1:
+                res = paren_splitted[0]
+            else:
+                res = last_dot
+        return res
+
+    def _get_readable_msg(self, msg):
+        result = msg
+
+        if msg not in self._readable_msgs:
+
+            if msg in self.msgs.evt_info:
+                msg_info = self.msgs[msg]
+
+                if isinstance(msg_info,EventInfo):
+                    assert len(msg_info.conc_msgs) > 0
+                    for a in msg_info.conc_msgs:
+                        cevent = a
+                        break
+
+                    if cevent.symbol != "initial":
+                        readable_msg_arr = set([])
+                        for ccb in cevent.cb:
+                            readable_msg_arr.add(Verifier._get_readable_cb_name(ccb.symbol))
+                        result = ",".join(list(readable_msg_arr))
+                    else:
+                        result= "initial"
+                    self._readable_msgs[msg] = result
+        else:
+            result = self._readable_msgs[msg]
+
+        return result
+
+
     def _find_instances(self):
         """ Instantiate the events from the trace.
 
@@ -340,19 +378,6 @@ class Verifier:
         The function changes the maps conc_to_msg, msgs_to_instances
         and symbol_to_instances.
         """
-        def get_readable_cb_name(cb_name):
-            """ Get a readable name for the callback. """
-            res = cb_name
-            dot_splitted = cb_name.split(".")
-            if len(dot_splitted) > 1:
-                last_dot = dot_splitted[-1]
-                paren_splitted = last_dot.split("(")
-                if len(paren_splitted) > 1:
-                    res = paren_splitted[0]
-                else:
-                    res = last_dot
-            return res
-
         self.conc_to_msg = {}
         self.msgs_to_instances = {}
         self.symbol_to_instances = {}
@@ -384,20 +409,15 @@ class Verifier:
                 # List of names obtained from each callback
                 # Used to name the event variable
                 cb_names = []
-                readable_msg = []
                 for ccb in cevent.cb:
                     cb_names.append(ccb.symbol + "_#_" + "_".join(ccb.args))
-                    readable_msg.append(get_readable_cb_name(ccb.symbol))
 
                 msg_name = "evt_".join(cb_names)
                 if msg_name == "":
                     msg_name = "no_callbacks"
-
-                self.readable_msgs[msg_name] = ",".join(readable_msg)
             else:
                 # initial event - automatic binding
                 msg_name = "initial"
-                self.readable_msgs[msg_name] = "initial"
 
             # The key is an event symbol while the values are a list
             # of list of arguments.
@@ -887,76 +907,6 @@ class Verifier:
             cex.append(cex_i)
         return cex
 
-    def print_cex(self, cex, changed=False, readable=True):
-        def _print_var_set(varset, step, prev_state,
-                           only_true = False,
-                           skipinit = True,
-                           only_changed = True):
-
-            def _print_val(key,val,msg):
-                if None != msg:
-                    if PRETTY_PRINT:
-                        if msg in self.readable_msgs:
-                            msg = self.readable_msgs[msg]
-                        print("(%s): %s" % (msg, value))
-                    else:
-                        print("(%s): %s: %s" % (msg, key, value))
-                else:
-                    print("%s: %s" % (key, value))
-            if skipinit:
-                print "All events/callins are enabled"
-
-            for key in varset:
-                assert key in step
-
-                if key in self.var_to_msgs:
-                    message = self.var_to_msgs[key]
-                elif key in self.input_var_to_msgs:
-                    message = self.input_var_to_msgs[key]
-                else:
-                    message = None
-
-                value = step[key]
-                if only_changed:
-                    if (key not in prev_state or
-                        (key in prev_state and
-                        prev_state[key] != value)):
-                        if only_true and value == FALSE():
-                            continue
-                        if not skipinit:
-                            _print_val(key,value,message)
-                    prev_state[key] = value
-                else:
-                    if only_true and value == FALSE():
-                        continue
-                    if not skipinit:
-                        _print_val(key,value,message)
-
-        sep = "----------------------------------------"
-        i = 0
-
-        prev_state = {}
-
-        print("")
-        print("--- Counterexample ---")
-        print(sep)
-        for step in cex:
-            print("State - %d" % i)
-            print(sep)
-
-            _print_var_set(self.ts_state_vars, step, prev_state, False,
-                           (readable and i == 0), changed)
-
-            # skip the last input vars
-            if (i >= (len(cex)-1)): continue
-            print(sep)
-            print("Input - %d" % i)
-            print(sep)
-            _print_var_set(self.ts_input_vars, step, prev_state, True,
-                           False, False)
-            print(sep)
-            i = i + 1
-
     def find_bug(self, steps):
         """Explore the system up to k steps.
         Steps correspond to the number of events executed in the
@@ -1350,8 +1300,9 @@ class MatchInfo:
             else: prefix = "Event"
 
             if is_evt:
-                evt_name = self.verifier.readable_msgs[dbg_info.msg]
-                print("(%d/%d) %s: %s" % (i, total, prefix, evt_name))
+                readable = self.verifier._get_readable_msg(dbg_info.msg)
+                print("(%d/%d) %s: %s" % (i, total, prefix, dbg_info.msg))
+                print("Full event Name: %s" % (dbg_info.msg))
             else:
                 print("(%d/%d) %s: %s" % (i, total, prefix, dbg_info.msg))
 
@@ -1363,6 +1314,7 @@ class MatchInfo:
                                      str(l.symbol))
             str_msgs = "  \n".join(readable_msgs)
             print("Concrete messages:\n  %s" % (str_msgs))
+
 
             print("List of matches:")
             for (rule, inst, dst_inst) in dbg_info.matches:

@@ -11,6 +11,7 @@ from spec import SpecType, SpecSerializer, Spec
 
 from ctrace import CTraceSerializer, ConcreteTrace
 from verifier import Verifier
+from cex_printer import EventCexPrinter
 
 def read_from_files(spec_file_list):
     file_list = []
@@ -63,7 +64,6 @@ def main():
 
         spec_file_list = opts.specfile.split(":")
         for f in spec_file_list:
-            print "Checking %s " % f
             if (not os.path.exists(f)):
                 usage("Specification file %s does not exists!" % f)
         try:
@@ -106,11 +106,11 @@ def main():
 
             if None != cex:
                 print "Found bug"
-                verifier.print_cex(cex, True, True)
-
-                #     verifier.debug_cex(cex)
+                printer = EventCexPrinter(verifier, cex)
+                printer.print_cex(True, True)
             else:
                 print "No bugs found up to %d steps" % (depth)
+
         elif (opts.mode == "to-smv"):
             with open(opts.smvfile, 'w') as smvfile:
                 verifier.to_smv(smvfile)
