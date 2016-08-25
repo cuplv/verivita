@@ -108,10 +108,9 @@ def main():
                 print "Found bug"
                 printer = EventCexPrinter(verifier, cex)
                 printer.print_cex(True, True)
-
-                #     verifier.debug_cex(cex)
             else:
                 print "No bugs found up to %d steps" % (depth)
+
         elif (opts.mode == "to-smv"):
             with open(opts.smvfile, 'w') as smvfile:
                 verifier.to_smv(smvfile)
