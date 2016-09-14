@@ -18,3 +18,6 @@ To have bash generate the list of spec files automatically from a directory:
 
 Run unit tests:
 ```cd cbverifier; nosetests```
+
+# Branches:
+- tests: used to develop integration tests for verification.
