@@ -1,0 +1,91 @@
+{
+	"match": {
+		"callin":{
+			"booleanArgs": [],
+			"calle": "asyncTask",
+			"concreteArgsVariables": [],
+			"name": "<init>",
+			"signature": "class android.os.AsyncTask (no class loader)",
+		}
+	},
+	"change":{
+		"callin":{
+			"booleanArgs": [],
+			"calle": "asyncTask",
+			"concreteArgsVariables": [],
+			"name": "execute",
+			"signature": "class android.os.AsyncTask (no class loader)",
+		}
+	},
+
+	"type": "allow"
+}
+{
+	"match": {
+		"callin":{
+			"booleanArgs": [],
+			"concreteArgsVariables": [],
+			"calle": "asyncTask",
+			"name": "execute",
+			"signature": "class android.os.AsyncTask (no class loader)",
+		}
+	},
+	"change":{
+		"callin":{
+			"booleanArgs": [],
+			"concreteArgsVariables": [],
+			"calle": "asyncTask",
+			"name": "execute",
+			"signature": "class android.os.AsyncTask (no class loader)",
+		}
+	}
+
+	"type": "allow"
+},
+{
+	"match": {
+		"callin":{
+			"booleanArgs": [],
+			"concreteArgsVariables": [],
+			"calle": "asyncTask",
+			"name": "execute",
+			"signature": "class android.os.AsyncTask (no class loader)",
+		}
+	},
+	"change": {
+		"event": {
+			"callbackField": "",
+			"targetField": "class android.os.AsyncTask$InternalHandler (no class loader)",
+			"what": 1
+			"identifierVariable": "asyncTask"
+		}
+	},
+	"type": "enable"
+},
+{
+	"match": {
+		"event": {
+			"callbackField": "",
+			"targetField": "class android.os.AsyncTask$InternalHandler (no class loader)",
+			"what": 1,
+			"identifierVariable": "asyncTask"
+		}
+		"callback":{
+			"booleanArgs": [],
+			"concreteArgsVariables": ["nn0"],
+			"calle": "asyncTask",
+			"name": "onPostExecute",
+			"signature": "class android.os.AsyncTask (no class loader)"
+
+		}
+	},
+	"change": {
+		"event": {
+			"callbackField": "",
+			"targetField": "class android.os.AsyncTask$InternalHandler (no class loader)",
+			"what": 1
+			"identifierVariable": "asyncTask"
+		}
+	},
+	"type": "disable"
+}

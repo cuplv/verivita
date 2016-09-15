@@ -1,0 +1,48 @@
+{
+	"match": {
+		"callin":{
+			"booleanArgs": [],
+			"calle": "asyncTask",
+			"concreteArgsVariables": [],
+			"name": "<init>",
+			"signature": "class android.os.AsyncTask (no class loader)",
+		}
+	},
+	"change":{
+		"event": {
+			"callbackField": "",
+			"targetField": "class android.app.ActivityThread$H (no class loader)",
+			"what": 100,
+			"identifierVariable": "activity"
+		}
+	},
+
+	"type": "enable"
+}
+
+{
+	"match": {
+		"event": {
+			"callbackField": "",
+			"targetField": "class android.app.ActivityThread$H (no class loader)",
+			"what": 100,
+			"identifierVariable": "activity"
+		}
+		"callback":{
+			"booleanArgs": [],
+			"concreteArgsVariables":["nn"],
+			"name": "onCreate",
+			"signature": "class android.support.v7.app.AppCompatActivity (no class loader)"
+		}
+	},
+	"change":{
+		"event": {
+			"callbackField": "",
+			"targetField": "class android.app.ActivityThread$H (no class loader)",
+			"what": 100,
+			"identifierVariable": "activity"
+		}
+	},
+
+	"type": "enable"
+}

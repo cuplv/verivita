@@ -1,0 +1,54 @@
+{
+	"match": "initial",
+	"change": {
+		"callbackField": "class android.view.View$PerformClick (no class loader)",
+		"targetField": "class android.view.ViewRootImpl$ViewRootHandler (no class loader)",
+		"what": 0,
+		"identifierVariable": "button"
+	}
+	"type": "enable"
+}
+{
+	"match": {
+		"callin":{
+			"booleanArgs": [true],
+			"concreteArgsVariables": ["nn"],
+			"calle": "button",
+			"name": "setEnabled",
+			"signature": "class android.support.v7.widget.AppCompatButton (no class loader)"
+		}
+	},
+
+	"change": {
+		"callbackField": "class android.view.View$PerformClick (no class loader)",
+		"targetField": "class android.view.ViewRootImpl$ViewRootHandler (no class loader)",
+		"what": 0,
+		"identifierVariable": "button"
+	}
+
+	"type": "enable"
+
+
+}
+{
+	"match": {
+		"callin":{
+			"booleanArgs": [false],
+			"concreteArgsVariables": ["nn"],
+			"calle": "button",
+			"name": "setEnabled",
+			"signature": "class android.support.v7.widget.AppCompatButton (no class loader)"
+		}
+	},
+
+	"change": {
+		"callbackField": "class android.view.View$PerformClick (no class loader)",
+		"targetField": "class android.view.ViewRootImpl$ViewRootHandler (no class loader)",
+		"what": 0,
+		"identifierVariable": "button"
+	}
+
+	"type": "disable"
+
+
+}

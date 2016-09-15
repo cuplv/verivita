@@ -1,0 +1,60 @@
+The specification language is as follows:
+
+**rule**
+{
+	"match": **SourceIdentifier**,
+	"change": **ChangeSpecifier**,
+	"type": "enable" #enable, disable, allow, disallow
+}
+
+**SourceIdentifier**
+(event identifier)
+{
+	"event":{
+			"what": 100,
+			"targetField": "class android.app.ActivityThread$H (no class loader)",
+			"callbackField": "class android.app...",
+			"identifierVariable":"a" #scoped to this rule, can be any alphanumeric string
+                },
+	"callback":{
+		"booleanArgs": []
+		"concreteArgsVariables": ["foo", "bar", "baz"] #list of variables corresponding to each concrete argument
+		"name": "onCreate",
+		"signature": "(Landroid/os/Bundle;)V",
+		"type": "class plv.colorado.edu.asynctasktest.MainActivity (no class loader)"
+	}
+}
+
+
+(callin identifier)
+{
+	"callin":{
+		"booleanArgs": [],
+		"concreteArgsVariables": ["foo", "bar", "baz"], #list of variables corresponding to each concrete argument
+		"name": "onCreate",
+		"signature": "(Landroid/os/Bundle;)V",
+		"type": "class plv.colorado.edu.asynctasktest.MainActivity (no class loader)"
+	}
+}
+
+**ChangeSpecifier**
+(allow an event)
+{
+	"event":{
+			"what": 100,
+			"targetField": "class android.app.ActivityThread$H (no class loader)",
+			"callbackField": "class android.app...",
+			"identifierVariable":"a" #scoped to this rule, can be any alphanumeric string
+                }
+}
+
+(allow a callin)
+{
+	"callin":{
+		"booleanArgs": []
+		"concreteArgsVariables": ["foo", "bar", "baz"] #list of variables corresponding to each concrete argument
+		"name": "onCreate",
+		"signature": "(Landroid/os/Bundle;)V",
+		"type": "class plv.colorado.edu.asynctasktest.MainActivity (no class loader)"
+	}
+}
