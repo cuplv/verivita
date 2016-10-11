@@ -1,38 +1,8 @@
-package com.peilunzhang.domoticzdistill;
+package com.peilunzhang.domoticzdistillfix;
 
 /**
  * Created by Pezh on 10/11/16.
  */
-import android.app.Fragment;
-import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
-import android.text.Layout;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import android.app.Fragment;
-import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -77,13 +47,13 @@ public class FunctionFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 parseJSONResponse(response);
-                Toast.makeText(getActivity(), getString(R.string.mainText), Toast.LENGTH_LONG).show();
+                if(isAdded()) Toast.makeText(getActivity(), getString(R.string.mainText), Toast.LENGTH_LONG).show();
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), getString(R.string.mainText), Toast.LENGTH_LONG).show();
+                if(isAdded()) Toast.makeText(getActivity(), getString(R.string.mainText), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -101,5 +71,3 @@ public class FunctionFragment extends Fragment {
         textMain.setText(text);
     }
 }
-
-
