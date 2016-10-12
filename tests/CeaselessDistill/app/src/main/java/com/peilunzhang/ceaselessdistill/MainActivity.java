@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
 
     }
 
-    public class BuggyFragment extends Fragment{
+    public static class BuggyFragment extends Fragment{
 
         TextView mText;
         @Override
