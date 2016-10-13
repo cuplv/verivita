@@ -1,6 +1,5 @@
-package com.peilunzhang.watchlaterdistill;
+package com.peilunzhang.watchlaterdistill2;
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
     CountDownTimer cdt;
 
     @Override
@@ -25,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 startActivity(intent);
+                finish();
             };
         });
 
@@ -48,4 +47,5 @@ public class MainActivity extends AppCompatActivity {
         cdt.start();
 
     }
+
 }
