@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         LinearLayout mainView = (LinearLayout)this.findViewById(R.id.panel_main);
-        Button btn_main= (Button)getLayoutInflater().inflate(R.layout.button_main, null);
+        Button btn_main= (Button)getLayoutInflater().inflate(R.layout.button_main, mainView);
         mainView.addView(btn_main);
     }
 
