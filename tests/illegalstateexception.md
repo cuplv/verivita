@@ -2,7 +2,7 @@ NGI = No GitHub Issues exit
 
 __/frameworks/base/core/java/android/app/__
 
-* Activity.java
+* __Activity.java__
 	* IllegalStateException("Can only be called on top-level activity");
 		* https://github.com/alibaba/freeline/issues/171 (open issue, not fixed)
 	* IllegalStateException("Must be called from main thread");
@@ -24,7 +24,7 @@ __/frameworks/base/core/java/android/app/__
 		* https://github.com/MikeOrtiz/TouchImageView/issues/47
 	
 
-* UiAutomationConnection.java
+* __UiAutomationConnection.java__
 	* IllegalStateException("Already connected.");
 	* IllegalStateException("Already disconnected.");
 	* IllegalStateException("Error while registering UiTestAutomationService.", re);
@@ -32,17 +32,30 @@ __/frameworks/base/core/java/android/app/__
 	* IllegalStateException("Connection shutdown!");
 	* IllegalStateException("Not connected!");
 	
-* TaskStackBuilder.java
+* __TaskStackBuilder.java__
 	* IllegalStateException("No intents added to TaskStackBuilder; cannot startActivities");
 	* No intents added to TaskStackBuilder; cannot getPendingIntent
 	* No intents added to TaskStackBuilder; cannot getPendingIntent
 
-* ListFragment.java
+* __ListFragment.java__
 	* IllegalStateException("Can't be used with a custom content view");
 	* IllegalStateException("Can't be used with a custom content view");
 	* IllegalStateException("Content view not yet created");
 	
-* FragmentManager.java
+* __Fragment.java__
+	* IllegalStateException("Fragment already active");
+		* https://github.com/Flaredown/FlaredownAndroid/issues/61
+		* https://github.com/unfoldingWord-dev/ts-android/issues/945
+		* TODO: there're more issues. Need to find useful ones.
+		
+	* IllegalStateException("Fragment " + this + " not attached to Activity");
+	* IllegalStateException("Can't retain fragements that are nested in other fragments");
+		* https://github.com/roomorama/Caldroid/issues/186
+	* IllegalStateException("Fragment does not have a view");
+		* NGI
+
+
+* __FragmentManager.java__
 	* IllegalStateException("Fragment " + fragment + " is not currently in the FragmentManager")
 		* https://github.com/avuton/controldlna/issues/1
 		
@@ -65,6 +78,63 @@ __/frameworks/base/core/java/android/app/__
 		* https://github.com/enviroCar/enviroCar-app/issues/268
 	* IllegalStateException("Already added!");
 	* IllegalStateException("Already attached");
+	
+* __DialogFragment.java__
+	* IllegalStateException("DialogFragment can not be attached to a container view");
+	* IllegalStateException("You can not set Dialog's OnCancelListener or OnDismissListener");
+		* https://github.com/VKCOM/vk-android-sdk/issues/206
+
+* __BackStackRecord.java__
+	* IllegalStateException("Not on back stack");
+	* IllegalStateException("Can't change tag of fragment "
+	* IllegalStateException("Can't change container ID of fragment "
+	* IllegalStateException("This FragmentTransaction is not allowed to be added to the back stack.")
+	* IllegalStateException("This transaction is already being added to the back stack");
+	*  IllegalStateException("commit already called");
+		* https://github.com/robolectric/robolectric/issues/1326
+		* https://github.com/roughike/BottomBar/issues/465
+	*  IllegalStateException("addToBackStack() called after commit()");
+
+* __LoaderManager.java__
+	* IllegalStateException("Called while creating a loader");
+	* 
+* __AppOpsManager.java__
+	* IllegalStateException("sOpToSwitch length " + sOpToSwitch.length + " should be " + _NUM_OP);
+	* IllegalStateException("sOpToString length " + sOpToSwitch.length + " should be " + _NUM_OP);
+	* IllegalStateException("sOpNames length " + sOpToSwitch.length + " should be " + _NUM_OP);
+	* IllegalStateException("sOpPerms length " + sOpToSwitch.length + " should be " + _NUM_OP);
+	* IllegalStateException("sOpDefaultMode length " + sOpToSwitch.length + " should be " + _NUM_OP);
+	* IllegalStateException("sOpDisableReset length " + sOpToSwitch.length + " should be " + _NUM_OP);
+	
+	* All NGI
+* __MediaRouteActionProvider.java__
+	* IllegalStateException("The MediaRouteActionProvider's Context "
+	
+* __DownloadManager.java__
+	* IllegalStateException("Failed to get external storage files directory");
+	* IllegalStateException(file.getAbsolutePath() +
+	* IllegalStateException("Unable to create directory: "+
+	* IllegalStateException("Failed to get external storage public directory");
+	* IllegalStateException(file.getAbsolutePath() +
+	* IllegalStateException("Unable to create directory: "+
+* __LoadedApk.java__
+ 	* IllegalStateException("Unable to get package info for "
+ 	* IllegalStateException("Unbinding Receiver " + r
+ 	* IllegalStateException("Receiver " + mReceiver + " registered with differing Context
+ 	* IllegalStateException("Receiver " + mReceiver + " registered with differing handler
+ 	* IllegalStateException("Unbinding Service " + c + " from Context that is no longer in use: 
+
+* __LocalActivityManager.java__
+	* "Activities can't be added until the containing group has been created."
+* __Dialog.java__
+	* "OnDismissListener is already taken by "
+		* https://github.com/mattrey555/visibleautomation/issues/1
+	* "OnCancelListener is already taken by "
+ 
+* __MediaRouteButton.java__
+	* IllegalStateException("The MediaRouteButton's Context is not an Activity."); 
+ 	
+ 
 __/frameworks/base/core/java/android/view/__
 
 * View.java
