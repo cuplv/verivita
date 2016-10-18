@@ -1,6 +1,25 @@
-NGI = No GitHub Issues exit
+NGI = No GitHub Issues exits
+### /frameworks/base/core/java/android/widget/
+* __PopupWindow.java__
+	* IllegalStateException("You must specify a valid content view by "
+		* NGI
+* __RelativeLayout.java__
+	* IllegalStateException("Circular dependencies cannot exist"
+		* https://github.com/flavienlaurent/datetimepicker/issues/45
 
-__/frameworks/base/core/java/android/app/__
+* __AbsListView.java__
+	* IllegalStateException("AbsListView: attempted to start selection mode " +
+		* NGI
+	* IllegalStateException("You cannot call onTextChanged with a non "
+		* NGI
+* __TextView.java__
+	* IllegalStateException("focus search returned a view " +
+		* NGI
+* __ListView.java__
+	* IllegalStateException("The content of the adapter has changed but " +)
+		* https://github.com/realm/realm-android-adapters/issues/11
+		* __Developer think there's a race condition. So it would be interesting__
+###/frameworks/base/core/java/android/app/
 
 * __Activity.java__
 	* IllegalStateException("Can only be called on top-level activity");
