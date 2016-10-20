@@ -17,8 +17,12 @@ NGI = No GitHub Issues exits
 		* NGI
 * __ListView.java__
 	* IllegalStateException("The content of the adapter has changed but " +)
+		* https://github.com/YoKeyword/IndexableRecyclerView/issues/7
+		* "When calling'addHeaderView' to ListView, Adapter will be converted into HeaderViewAdapter, so when you click back quickly, it crash because itemCount checking goes wrong "
 		* https://github.com/realm/realm-android-adapters/issues/11
 		* __Developer think there's a race condition. So it would be interesting__
+		
+		
 ###/frameworks/base/core/java/android/app/
 
 * __Activity.java__
@@ -154,8 +158,28 @@ NGI = No GitHub Issues exits
 	* IllegalStateException("The MediaRouteButton's Context is not an Activity."); 
  	
  
-__/frameworks/base/core/java/android/view/__
+### __/frameworks/base/core/java/android/view/__
 
+* LayoutInflater.java
+	* IllegalStateException("A factory has already been set on this LayoutInflater");
+	
+	
+	
+* PointerIcon.java
+	* IllegalStateException("The icon is not loaded.");
+* HardwareRenderer.java
+	* IllegalStateException("HardwareRenderer cannot be used "+ "from multiple threads")
+	* IllegalStateException("Could not create an EGL context. eglCreateContext failed with error: ")
+		* This appears to be an issue with the Nexus 4, rather than specific to app.	
+		* http://stackoverflow.com/q/19748856
+		
+	* IllegalStateException("eglMakeCurrent failed ")
+	* IllegalStateException(""Hardware acceleration can only be used with a " +
+"single UI thread.")
+		* https://github.com/mapbox/mapbox-gl-native/issues/4911
+	 
+* TextureView.java
+	* IllegalStateException("Could not acquire hardware rendering context");
 * View.java
 	*  IllegalStateException("VIEW_STATE_IDs array length does not match ViewDrawableStates style array")
 	*  IllegalStateException("Could not find a method " +                                               handlerName + "(View) in the activity "+ getContext().getClass() + " for onClick handler" + " on view " + View.this.getClass() + idText, e);
