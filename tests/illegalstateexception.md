@@ -1,4 +1,6 @@
 NGI = No GitHub Issues exits
+### /frameworks/base/core/java/android/os/
+* IllegalStateException(msg.target + " sending message to a Handler on a dead thread");
 ### /frameworks/base/core/java/android/widget/
 * __PopupWindow.java__
 	* IllegalStateException("You must specify a valid content view by "
