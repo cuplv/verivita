@@ -74,6 +74,16 @@ Seeks to specified time position.
 initialized
 
 https://github.com/WhisperSystems/Signal-Android/issues/5222
+
 https://github.com/WhisperSystems/Signal-Android/pull/5303
 
 https://github.com/WhisperSystems/Signal-Android/issues/3004
+
+https://github.com/libgdx/libgdx/pull/3399
+
+
+https://github.com/AntennaPod/AntennaPod/pull/1306
+
+
+
+https://github.com/zom/Zom-Android/issues/10
