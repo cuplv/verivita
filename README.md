@@ -4,6 +4,16 @@ Dynamic verification using callbacks.
 
 # External Dependencies
 - PySMT
+- TraceRunner
+- Google protobuf
+
+
+Compile the python package for protobuffer
+```
+protoc -I=../TraceRunner/TraceRunnerRuntimeInstrumentation/tracerunnerinstrumentation/src/main/proto/edu/colorado/plv/tracerunner_runtime_instrumentation --python_out=./cbverifier/traces ../TraceRunner/TraceRunnerRuntimeInstrumentation/tracerunnerinstrumentation/src/main/proto/edu/colorado/plv/tracerunner_runtime_instrumentation/tracemsg.proto
+
+```
+
 
 # Usage
 
