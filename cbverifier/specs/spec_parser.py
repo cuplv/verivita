@@ -146,11 +146,11 @@ def p_param_id(t):
 
 def p_param_true(t):
     '''param : TOK_TRUE'''
-    t[0] = new_true(t[1])
+    t[0] = new_true()
 
 def p_param_false(t):
     '''param : TOK_FALSE'''
-    t[0] = new_false(t[1])
+    t[0] = new_false()
 
 def p_param_float(t):
     '''param : TOK_FLOAT'''

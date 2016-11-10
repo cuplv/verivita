@@ -104,10 +104,6 @@ class TestSpecs(unittest.TestCase):
         res = spec_parser.parse(specs)
         self.assertTrue(res is None)
 
-        print "RES IS"
-        print res
-
-
 
     def test_parser(self):
         correct_expr = ["SPEC l.l() |- l.l(b)",
@@ -135,9 +131,10 @@ class TestSpecs(unittest.TestCase):
             parse_res = spec_parser.parse(specs)
             self.assertTrue(parse_res == expected)
 
-        res = [("SPEC l.method_name() |- TRUE", [('SPEC', '|-', ('CALL', 'l', 'method_name', []), 'TRUE')]),
-               ("SPEC l.method_name(1) |- TRUE", [('SPEC', '|-', ('CALL', 'l', 'method_name', [('TOK_INT',)]), 'TRUE')])]
+        res = [("SPEC l.method_name() |- TRUE", (SPEC_LIST, (SPEC_SYMB, DISABLE_OP, (CALL, (ID, 'l'), (ID, 'method_name'), (NIL,)), (0,)), (NIL,))),
+               ("SPEC l.method_name(0,1,f) |- TRUE", (SPEC_LIST, (SPEC_SYMB, DISABLE_OP, (CALL, (ID, 'l'), (ID, 'method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))), (0,)), (NIL,)))]
 
-        for r in res: test_ast_inner(r[0], r[1])
+        for r in res:
+            test_ast_inner(r[0], r[1])
 
 
