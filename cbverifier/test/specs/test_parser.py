@@ -18,6 +18,8 @@ except ImportError:
 
 from cbverifier.specs.spec_lex import lexer
 from cbverifier.specs.spec_parser import spec_parser
+from cbverifier.specs.spec_ast import *
+
 
 class TestSpecs(unittest.TestCase):
 
@@ -83,9 +85,7 @@ class TestSpecs(unittest.TestCase):
         self._test_single_token(0, 'TOK_SPEC', 1, 'SPEC', 'SPEC')
 
 
-
-
-            # TestSpecs.new_tok(lexpos,tok_type,lineno,value)
+        # TestSpecs.new_tok(lexpos,tok_type,lineno,value)
         res = [TestSpecs.new_tok(0,'TOK_ID',1,'l'),
                TestSpecs.new_tok(1,'TOK_DOT',1,'.'),
                TestSpecs.new_tok(2,'TOK_ID',1,'l'),
@@ -115,7 +115,7 @@ class TestSpecs(unittest.TestCase):
                         "SPEC l.l(l1,l2) |- l.l(b); SPEC l.l(l1,l2) |- l.l(b)",
                         "SPEC l.l(l1,l2); l.l(l1,l2) |- l.l(b)",
                         "SPEC l.l(l1,l2)[*] |- l.l(b)",
-                        "SPEC l.l(l1,l2)[*] |- l.l(b)",
+                        "SPEC l.l(l1,l2)[*] |+ l.l(b)",
                         "SPEC l.l(l1,l2)[*] |- l.l(b)",
                         "SPEC TRUE |- TRUE",
                         "SPEC TRUE[*] |- TRUE",
@@ -129,5 +129,15 @@ class TestSpecs(unittest.TestCase):
 
         wrong_expr = ["SPEC TRUE "]
         for expr in wrong_expr: self._test_parse_error(expr)
+
+    def test_ast(self):
+        def test_ast_inner(specs, expected):
+            parse_res = spec_parser.parse(specs)
+            self.assertTrue(parse_res == expected)
+
+        res = [("SPEC l.method_name() |- TRUE", [('SPEC', '|-', ('CALL', 'l', 'method_name', []), 'TRUE')]),
+               ("SPEC l.method_name(1) |- TRUE", [('SPEC', '|-', ('CALL', 'l', 'method_name', [('TOK_INT',)]), 'TRUE')])]
+
+        for r in res: test_ast_inner(r[0], r[1])
 
 
