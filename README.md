@@ -5,7 +5,9 @@ Dynamic verification using callbacks.
 # External Dependencies
 - PySMT
 - TraceRunner
-- Google protobuf
+- Google protobuf 3.0
+
+*WARNING* we require version 3.0
 
 
 Compile the python package for protobuffer

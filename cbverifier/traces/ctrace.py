@@ -13,8 +13,16 @@ import logging
 import json # for reading the traces from file
 import re
 
+
 import cbverifier.traces.tracemsg_pb2
 from  cbverifier.traces.tracemsg_pb2 import TraceMsgContainer
+
+try:
+    from google.protobuf.json_format import MessageToJson, Parse
+except ImportError as e:
+    import sys
+    sys.stderr.write("We require at least protobuf version 3.0")
+    raise e
 
 # Read a message from Java's writeDelimitedTo:
 import google.protobuf.internal.decoder as decoder
@@ -152,16 +160,24 @@ class CTraceSerializer:
     """
 
     @staticmethod
-    def read_trace_file_name(trace_file_name):
-        trace_file = open(trace_file_name, "rb")
-        return CTraceSerializer.read_trace(trace_file)
+    def read_trace_file_name(trace_file_name, is_json=False):
+        if is_json:
+            trace_file = open(trace_file_name, "r")
+        else:
+            trace_file = open(trace_file_name, "rb")
+
+        return CTraceSerializer.read_trace(trace_file, is_json)
 
 
     @staticmethod
-    def read_trace(trace_file):
+    def read_trace(trace_file, is_json=False):
         trace = CTrace()
 
-        reader = CTraceDelimitedReader(trace_file)
+        if is_json:
+            reader = CTraceJsonReader(trace_file)
+        else:
+            reader = CTraceDelimitedReader(trace_file)
+
         message_stack = []
         for tm_container in reader:
             assert None != tm_container
@@ -387,4 +403,53 @@ class CTraceDelimitedReader(object):
             raise StopIteration()
         else:
             return trace_msg_container
+
+class CTraceJsonReader(object):
+    """
+    Read the trace from a json file
+
+    USAGE:
+    ifile = open(protofile, "r")
+    reader = CTraceJsonReader(ifile)
+    for m in reader:
+      m is the message
+
+    """
+    def __init__(self,trace_file):
+        self.data = json.load(trace_file)
+        self.position = 0
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        if (self.position >= len(self.data)):
+            raise StopIteration()
+
+        trace_msg_container = tracemsg_pb2.TraceMsgContainer()
+
+        json_str = json.dumps(self.data[self.position])
+        trace_msg_container = Parse(json_str, trace_msg_container)
+        self.position = self.position + 1
+
+        return trace_msg_container
+
+
+
+class TraceProtoUtils:
+
+    @staticmethod
+    def protoToJson(protofile, jsonfile):
+        with open(protofile, 'rb') as protof:
+            json_msgs = []
+            reader = CTraceDelimitedReader(protof)
+            for tm_container in reader:
+                assert None != tm_container
+                json_msgs.append(MessageToJson(tm_container, False))
+            protof.close()
+
+        with open(jsonfile, 'w') as jsonf:
+            json.dump(json_msgs, jsonf)
+            jsonf.flush()
+            jsonf.close()
 

@@ -23,7 +23,7 @@ from google.protobuf.internal import encoder
 
 import cbverifier.traces.tracemsg_pb2 as tracemsg_pb2
 from  cbverifier.traces.tracemsg_pb2 import TraceMsgContainer
-from cbverifier.traces.ctrace import CTraceSerializer
+from cbverifier.traces.ctrace import CTraceSerializer, MalformedTraceException
 
 
 class TestTraces(unittest.TestCase):
@@ -155,7 +155,7 @@ class TestTraces(unittest.TestCase):
                             cb_exit,
                             cb_exit])
 
-        with self.assertRaises(AssertionError):
+        with self.assertRaises(MalformedTraceException):
             self.write_and_get([cb_entry,
                                 cb_entry,
                                 cb_entry,
@@ -167,7 +167,7 @@ class TestTraces(unittest.TestCase):
                                 ci_exit,
                                 cb_exit])
 
-        with self.assertRaises(AssertionError):
+        with self.assertRaises(MalformedTraceException):
             # missing an exit
             self.write_and_get([cb_entry,
                                 cb_entry,
@@ -179,7 +179,7 @@ class TestTraces(unittest.TestCase):
                                 ci_exit,
                                 cb_exit])
 
-        with self.assertRaises(AssertionError):
+        with self.assertRaises(MalformedTraceException):
             # missing an entry
             self.write_and_get([cb_entry,
                                 cb_entry,
