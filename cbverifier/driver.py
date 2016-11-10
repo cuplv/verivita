@@ -19,6 +19,12 @@ def main():
     p = optparse.OptionParser()
     p.add_option('-t', '--tracefile',
                  help="File containing the concrete trace (protobuf format)")
+
+    p.add_option('-f', '--traceformat', type='choice',
+                 choices= ["bin","json"],
+                 help="Choose between the binary and json proto formats (default bin)",
+                 default = "bin")
+
     p.add_option('-s', '--specfile', help="Colon (:) seperated list" \
                  "of specifications.")
 
@@ -41,7 +47,7 @@ def main():
     p.add_option('-i', '--bmc_inc', action="store_true",
                  default=False, help="Incremental search")
 
-    p.add_option('-f', '--smv_file', help="Output smv file")
+    p.add_option('-o', '--smv_file', help="Output smv file")
 
 
     def usage(msg=""):
@@ -86,7 +92,8 @@ def main():
 
     # Parse the trace
     try:
-        trace = CTraceSerializer.read_trace_file_name(opts.tracefile)
+        trace = CTraceSerializer.read_trace_file_name(opts.tracefile,
+                                                      opts.traceformat == "json")
     except IOError as e:
         print("An error happened reading the trace in %s" % opts.tracefile)
         sys.exit(1)
