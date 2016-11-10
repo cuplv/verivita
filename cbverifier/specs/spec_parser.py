@@ -173,9 +173,14 @@ handlers = []
 parser = yacc.yacc(debug=0)
 
 class SpecParser(object):
+    """ Parse a textual specification and returns its AST
+    representation
+    """
+
     def __init__(self, parser):
         self.parser = None
         self.in_error = False
+        self.error_value = None
 
     def parse(self, spec_str):
         self.in_error = False
@@ -187,7 +192,9 @@ class SpecParser(object):
         # DEBUG
         print("Syntax error at '%s'" % t_value)
 
+        # store the error status
         self.in_error = True
+        self.error_value = t_value
 
 
 spec_parser = SpecParser(parser)

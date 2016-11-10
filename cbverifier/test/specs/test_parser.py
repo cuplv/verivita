@@ -21,7 +21,7 @@ from cbverifier.specs.spec_parser import spec_parser
 from cbverifier.specs.spec_ast import *
 
 
-class TestSpecs(unittest.TestCase):
+class TestSpecParser(unittest.TestCase):
 
     @staticmethod
     def new_tok(lexpos, tok_type, lineno, value):
@@ -58,7 +58,7 @@ class TestSpecs(unittest.TestCase):
             lexer.next()
 
     def _test_single_token(self, lexpos, tok_type, lineno, value, string):
-        tok_ref = TestSpecs.new_tok(lexpos,tok_type,lineno,value)
+        tok_ref = TestSpecParser.new_tok(lexpos,tok_type,lineno,value)
 
         return self._test_multiple_token([tok_ref], string)
 
@@ -85,12 +85,12 @@ class TestSpecs(unittest.TestCase):
         self._test_single_token(0, 'TOK_SPEC', 1, 'SPEC', 'SPEC')
 
 
-        # TestSpecs.new_tok(lexpos,tok_type,lineno,value)
-        res = [TestSpecs.new_tok(0,'TOK_ID',1,'l'),
-               TestSpecs.new_tok(1,'TOK_DOT',1,'.'),
-               TestSpecs.new_tok(2,'TOK_ID',1,'l'),
-               TestSpecs.new_tok(3,'TOK_LPAREN',1,'('),
-               TestSpecs.new_tok(4,'TOK_RPAREN',1,')')]
+        # TestSpecParser.new_tok(lexpos,tok_type,lineno,value)
+        res = [TestSpecParser.new_tok(0,'TOK_ID',1,'l'),
+               TestSpecParser.new_tok(1,'TOK_DOT',1,'.'),
+               TestSpecParser.new_tok(2,'TOK_ID',1,'l'),
+               TestSpecParser.new_tok(3,'TOK_LPAREN',1,'('),
+               TestSpecParser.new_tok(4,'TOK_RPAREN',1,')')]
         self._test_multiple_token(res, "l.l()"),
 
 
