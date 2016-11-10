@@ -14,6 +14,14 @@ class Spec:
     def __init__(self, spec_ast):
         self.spec_ast = spec_ast
 
+    # TODO: we need to fill the spec with fields and methods from the AST
+    #
+    # The implementation depends on what we have to do in the verification
+    # algorithm
+    #
+
+    # TODO: do we need to typecheck the specifications?
+
     @staticmethod
     def get_specs_from_string(spec_list_string):
         spec_list_ast = spec_parser.parse(spec_list_string)
