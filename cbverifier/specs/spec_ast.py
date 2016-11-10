@@ -80,7 +80,7 @@ def get_node_type(node): return node[0]
 
 
 
-def pretty_print(ast_node):
+def pretty_print(ast_node, out_stream=sys.stdout):
 
     def pretty_print_aux(out_stream, node, sep):
         def my_print(out_stream, string):
@@ -139,4 +139,4 @@ def pretty_print(ast_node):
             if (get_node_type(node[2]) != new_nil()):
                 pretty_print_aux(out_stream,node[2],"")
 
-    pretty_print_aux(sys.stdout, ast_node, "")
+    pretty_print_aux(out_stream, ast_node, "")

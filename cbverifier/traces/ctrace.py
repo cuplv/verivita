@@ -22,7 +22,9 @@ import google.protobuf.internal.decoder as decoder
 
 import tracemsg_pb2
 
-
+class MalformedTraceException(Exception):
+    def __init__(self,*args,**kwargs):
+        Exception.__init__(self,*args,**kwargs)
 
 class CMessage(object):
     """ Base class that represents a concrete message.
@@ -40,7 +42,12 @@ class CMessage(object):
         self.children = []
 
     def _print(self, stream, sep):
-        stream.write("%s%d%s \n" % (sep, self.message_id, self.signature))
+        stream.write("%s[%d] %s(" % (sep, self.message_id, self.signature))
+
+        for i in range(len(self.params)):
+            if (i != 0): stream.write(",")
+            stream.write("%s" % self.params[i])
+        stream.write(")\n")
 
         for child in self.children:
             child._print(stream, "  ")
@@ -73,17 +80,49 @@ class CValue(object):
     """ Represent the concrete value of an object recorded in a
     concrete trace
     """
-    def __init__(self):
+    def __init__(self, value_msg):
         # True if it is null
-        self.is_null = None
+        self.is_null = value_msg.is_null
         # name of the type of the paramter
-        self.type = None
+        self.type = value_msg.type
         # name of the first framework type of the parameter
-        self.fmwk_type = None
+        self.fmwk_type = value_msg.fmwk_type
         # Id of the object
-        self.object_id = None
+        self.object_id = value_msg.object_id
         # Value of the object
-        self.value = None
+        self.value = value_msg.value
+
+        # at least one must be set
+        assert (not ((self.is_null is None or not self.is_null) and
+                     self.value is None and
+                     self.object_id is None))
+
+
+    def __repr__(self):
+        #repr = ""
+        def enc(value):
+            if isinstance(value, str):
+                return value
+            elif isinstance(value, unicode):
+                return value.encode('utf-8').strip()
+            else:
+                return str(value)
+
+        repr = "[%s]" % ",".join([enc(self.value), enc(self.object_id),
+                                  enc(self.is_null), enc(self.fmwk_type)])
+
+        # if self.value is not None:
+        #     repr = self.value
+        # elif self.object_id is not None:
+        #     repr = self.object_id
+        # elif self.is_null is not None:
+        #     if self.is_null:
+        #         repr = "NULL"
+
+        # if self.fmwk_type is not None and self.fmwk_type != "":
+        #     repr = repr + " : " + self.fmwk_type
+
+        return repr
 
 
 class CTrace:
@@ -140,7 +179,6 @@ class CTraceSerializer:
                 trace_message = CTraceSerializer.create_trace_message(recorded_message)
                 message_stack.append(trace_message)
             else:
-                print(str(recorded_message.type))
                 assert CTraceSerializer.is_exit_message(recorded_message)
                 # remove the message from the stack
                 trace_message = message_stack.pop()
@@ -185,6 +223,10 @@ class CTraceSerializer:
         if (TraceMsgContainer.TraceMsg.CALLIN_ENTRY == msg.type):
             trace_msg = CCallin()
             ci = msg.callinEntry
+
+            trace_msg.message_id = msg.message_id
+            trace_msg.thread_id = msg.thread_id
+
             trace_msg.signature = ci.signature
             trace_msg.method_name = ci.method_name
             trace_msg.params = CTraceSerializer.get_params(ci.param_list)
@@ -192,6 +234,10 @@ class CTraceSerializer:
         elif (TraceMsgContainer.TraceMsg.CALLBACK_ENTRY == msg.type):
             trace_msg = CCallback()
             cb = msg.callbackEntry
+
+            trace_msg.message_id = msg.message_id
+            trace_msg.thread_id = msg.thread_id
+
             trace_msg.signature = cb.signature
             trace_msg.method_name = cb.method_name
             trace_msg.params = CTraceSerializer.get_params(cb.param_list)
@@ -202,13 +248,13 @@ class CTraceSerializer:
 
             trace_msg.method_returnType = cb.method_returnType
 
-            for overrides in cb.framework_overrides:
-                assert(False)
-                trace_msg.overrides.append(None)
-            trace_msg.receiver_first_framework_super = cb.receiver_first_framework_super
+            # TODO: handle the overrides
+            # for overrides in cb.framework_overrides:
+            #     trace_msg.overrides.append(None)
+            # trace_msg.receiver_first_framework_super = cb.receiver_first_framework_super
         else:
             err = "%s msg type cannot be used to create a node" % msg.type
-            raise Exception(err)
+            raise MalformedTraceException(err)
 
         return trace_msg
 
@@ -225,25 +271,54 @@ class CTraceSerializer:
         trace_msg and msg do not match
         """
 
+
+        def check_malformed_trace(trace_msg, msg_exit, expected_class, expected_name):
+            if (not isinstance(trace_msg, expected_class)):
+                raise MalformedTraceException("Found %s for method %s, " \
+                                              "while the last message in the stack " \
+                                              "is of type %s\n" % (expected_name,
+                                                                   msg_exit.method_name,
+                                                                   str(type(trace_msg))))
+            elif (not trace_msg.signature == msg_exit.signature):
+                raise MalformedTraceException("Found exit for signature %s, " \
+                                              "while expecting it for signature " \
+                                              "%s\n" % (msg_exit.signature,
+                                                        trace_msg.signature))
+                # TODO: re-enable after fix in tracerunner
+            #elif (not trace_msg.method_name == msg_exit.method_name):
+                # raise MalformedTraceException("Found exit for method %s, " \
+                #                               "while expecting it for method " \
+                #                               "%s\n" % (msg_exit.method_name,
+                #                                         trace_msg.method_name))
+
+        def check_malformed_trace_msg(trace_msg, msg):
+            if (trace_msg.thread_id != msg.thread_id):
+                raise MalformedTraceException("Found thread id %d for " \
+                                              "while the last message in the stack " \
+                                              "has thread id %d\n" % (msg.thread_id,
+                                                                      trace_msg.thread_id))
+
+
         assert CTraceSerializer.is_exit_message(msg)
 
+        check_malformed_trace_msg(trace_msg, msg)
         if (TraceMsgContainer.TraceMsg.CALLIN_EXIT == msg.type):
             callin_exit = msg.callinExit
-            assert (isinstance(trace_msg, CCallin) and
-                    trace_msg.signature == callin_exit.signature and
-                    trace_msg.method_name == callin_exit.method_name)
+
+            check_malformed_trace(trace_msg, callin_exit, CCallin,
+                                  "CALLIN_EXIT")
 
             trace_msg.return_value = CTraceSerializer.read_value_msg(callin_exit.return_value)
         elif (TraceMsgContainer.TraceMsg.CALLBACK_EXIT == msg.type):
             callback_exit = msg.callbackExit
-            assert (isinstance(trace_msg, CCallback) and
-                    trace_msg.signature == callback_exit.signature and
-                    trace_msg.method_name == callback_exit.method_name)
+
+            check_malformed_trace(trace_msg, callback_exit, CCallback,
+                                  "CALLBACK_EXIT")
 
             trace_msg.return_value = CTraceSerializer.read_value_msg(callback_exit.return_value)
         else:
             err = "%s msg type cannot be used to update a node" % msg.type
-            raise Exception(err)
+            raise MalformedTraceException(err)
 
 
     @staticmethod
@@ -255,14 +330,7 @@ class CTraceSerializer:
 
     @staticmethod
     def read_value_msg(value_msg):
-        value = CValue()
-
-        value.is_null = value_msg.is_null
-        value.type = value_msg.type
-        value.fmwk_type = value_msg.fmwk_type
-        value.object_id = value_msg.object_id
-        value.value = value_msg.value
-
+        value = CValue(value_msg)
         return value
 
 
