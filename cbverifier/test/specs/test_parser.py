@@ -19,11 +19,6 @@ except ImportError:
 from cbverifier.specs.spec_lex import lexer
 from cbverifier.specs.spec_parser import spec_parser
 
-import cbverifier.specs.spec_parser
-
-
-
-
 class TestSpecs(unittest.TestCase):
 
     @staticmethod
@@ -100,13 +95,39 @@ class TestSpecs(unittest.TestCase):
 
 
 
+    def _test_parse(self, specs):
+        res = spec_parser.parse(specs)
+        self.assertTrue(res is not None)
+
+
+    def _test_parse_error(self, specs):
+        res = spec_parser.parse(specs)
+        self.assertTrue(res is None)
+
+        print "RES IS"
+        print res
+
+
 
     def test_parser(self):
-        # a = parser.parse("SPEC l.o|nClick(l) |- l.onDestroy(b)")
-        #a = parser.parse("SPEC l.l() |- l.l(b)")
-        #a = parser.parse("SPEC l.l() |- l.l(b)")
+        correct_expr = ["SPEC l.l() |- l.l(b)",
+                        "SPEC l.l(l1,l2) |- l.l(b)",
+                        "SPEC l.l(l1,l2) |- l.l(b); SPEC l.l(l1,l2) |- l.l(b)",
+                        "SPEC l.l(l1,l2); l.l(l1,l2) |- l.l(b)",
+                        "SPEC l.l(l1,l2)[*] |- l.l(b)",
+                        "SPEC l.l(l1,l2)[*] |- l.l(b)",
+                        "SPEC l.l(l1,l2)[*] |- l.l(b)",
+                        "SPEC TRUE |- TRUE",
+                        "SPEC TRUE[*] |- TRUE",
+                        "SPEC (TRUE)[*] |- TRUE",
+                        "SPEC (TRUE & FALSE)[*] |- TRUE",
+                        "SPEC (TRUE & FALSE | ! FALSE)[*] |- TRUE",
+                        "SPEC l1.methodName(TRUE) |- l2.methodName(bparam,TRUE)"]
 
-        a = spec_parser.parse("SPEC l.l() |- l.l(b)")
-        print a
+        for expr in correct_expr:
+            self._test_parse(expr)
 
-        self.assertTrue(a is not None)
+        wrong_expr = ["SPEC TRUE "]
+        for expr in wrong_expr: self._test_parse_error(expr)
+
+
