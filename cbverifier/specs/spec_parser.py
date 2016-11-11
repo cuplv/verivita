@@ -160,6 +160,10 @@ def p_param_int(t):
     '''param : TOK_INT'''
     t[0] = new_int(t[1])
 
+def p_param_dontcare(t):
+    '''param : TOK_DONTCARE'''
+    t[0] = new_int(t[1])
+
 
 def p_error(t):
     for handler in handlers:

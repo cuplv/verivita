@@ -25,6 +25,7 @@ SPEC_SYMB=12
 ENABLE_OP=13
 DISABLE_OP=14
 SPEC_LIST=15
+DONTCARE=16
 
 inv_map = {0 : "TRUE",
            1 : "FALSE",
@@ -42,9 +43,11 @@ inv_map = {0 : "TRUE",
            12 : "SPEC_SYMB",
            13 : "ENABLE_OP",
            14 : "DISABLE_OP",
-           15 : "SPEC_LIST"}
+           15 : "SPEC_LIST",
+           16 : "DONTCARE"}
 
 def new_nil(): return (NIL,)
+def new_dontcare(): return (DONTCARE,)
 def new_float(float_num): return (FLOAT, float_num)
 def new_int(int_num): return (INT, int_num)
 def new_id(id_string): return (ID, id_string)
@@ -89,6 +92,7 @@ def pretty_print(ast_node, out_stream=sys.stdout):
         node_type = get_node_type(node)
         if (node_type == TRUE): my_print(out_stream, "TRUE")
         elif (node_type == FALSE): my_print(out_stream, "FALSE")
+        elif (node_type == DONTCARE): my_print(out_stream, "_")
         elif (node_type == ID or node_type == INT or node_type == FLOAT):
             my_print(out_stream, "%s%s" % (sep, str(node[1])))
         elif (node_type == PARAM_LIST):
