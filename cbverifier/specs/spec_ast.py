@@ -8,9 +8,6 @@ TODO:
     are not object, apart string, the formula representation is already
     ok.
 - add walkers (e.g. explore the DAG of the formula)
-We 
-
-
 """
 import sys
 
@@ -198,7 +195,7 @@ class UnexpectedSymbol(Exception):
     def __init__(self, node):
         self.node = node
         node_type = get_node_type(node)
-        message = "Unexpected symbol %s" inv_map.[node_type]]
+        message = "Unexpected symbol %s" % inv_map[node_type]
 
         super(Exception, self).__init__(message)
 

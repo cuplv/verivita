@@ -63,11 +63,11 @@ from pysmt.shortcuts import Solver
 from pysmt.solvers.solver import Model
 from pysmt.logics import QF_BOOL
 
-from specs.spec import Spec
-from traces.ctrace import CTrace
+from cbverifier.specs.spec import Spec
+from cbverifier.traces.ctrace import CTrace
 
 
-from helpers import Helper
+from cbverifier.helpers import Helper
 
 Instance = collections.namedtuple("Instance", ["symbol", "args", "msg"],
                                   verbose=False,
@@ -198,8 +198,8 @@ class GroundSpecs(object):
             def sub_leaf(self, leaf, binding):
                 leaf_type = get_node_type(leaf)
 
-                if (leaf_type) == DONTCARE: return leaf
-                else if leaf_type != ID: return leaf
+                if (leaf_type == DONTCARE): return leaf
+                elif leaf_type != ID: return leaf
                 else:
                     assert leaf in binding
                     return binding[leaf]
@@ -219,7 +219,7 @@ class GroundSpecs(object):
 
             node_type = get_node_type(node)
             if (node_type in spec_ast.leaf_nodes): return node
-            else if (node_type == CALL):
+            elif (node_type == CALL):
                 new_params = process_param(get_call_params(node))
 
                 new_call_node = new_call(sub_leaf(self, get_call_receiver(node),
@@ -228,7 +228,7 @@ class GroundSpecs(object):
                                          new_params)
                 return new_call_node
 
-            else if (node_type == AND_OP or
+            elif (node_type == AND_OP or
                 node_type == OR_OP or
                 node_type == SEQ_OP or
                 node_type == ENABLE_OP or
@@ -238,7 +238,7 @@ class GroundSpecs(object):
                 lhs = substitute_rec(self, node[1], binding)
                 rhs = substitute_rec(self, node[2], binding)
                 return create_node(node_type, [lhs, rhs])
-            else if (node_type == STAR_OP or node_type == NOT_OP):
+            elif (node_type == STAR_OP or node_type == NOT_OP):
                 lhs = substitute_rec(self, node[1], binding)
                 return create_node(node_type, [lhs])
             else:
@@ -269,10 +269,10 @@ class GroundSpecs(object):
         """
         def _ground_bindings_rec(self, spec_node, bindings):
             node_type = get_node_type(spec_node)
-            if (node_type in spec_ast.leaf_nodes)
+            if (node_type in spec_ast.leaf_nodes):
                 # ground set do not change in these cases
                 pass
-            else if (node_type == AND_OP or
+            elif (node_type == AND_OP or
                 node_type == OR_OP or
                 node_type == SEQ_OP or
                 node_type == ENABLE_OP or
@@ -281,9 +281,9 @@ class GroundSpecs(object):
                 self._ground_bindings_rec(spec_node[2],
                                           self._ground_bindings_rec(spec_node[1],
                                                                     bindings))
-            else if (node_type == STAR_OP or node_type == NOT_OP):
+            elif (node_type == STAR_OP or node_type == NOT_OP):
                 self._ground_bindings_rec(spec_node[1], bindings)
-            else if (node_type == CALL):
+            elif (node_type == CALL):
                 # get the set of all the possible assignments
                 # TODO pass bindings to perform directly the
                 # product intersection while doing the lookup
@@ -295,7 +295,7 @@ class GroundSpecs(object):
         return binding_set
 
 
-    def class Assignments(object):
+    class Assignments(object):
         """ Represent a set of assignments derived from a single
         method call (messasge)"""
         def __init__(self):
@@ -332,7 +332,7 @@ class GroundSpecs(object):
             if self.is_bottom() or other.is_bottom(): return
 
             for (key, value) in _map.iteritems():
-                if key is in other_map:
+                if key in other_map:
                     if other_map[key] == value:
                         # add common elements
                         new_map[key] = value
@@ -355,7 +355,7 @@ class GroundSpecs(object):
             return result
 
 
-    def class AssignmentsSet(object):
+    class AssignmentsSet(object):
         """ Represent a set of assignments (or bindings) from free
         variables to actual values derived from a set of concrete
         method calls.
@@ -384,7 +384,7 @@ class GroundSpecs(object):
             assert result
 
 
-    def class TraceMap(object):
+    class TraceMap(object):
         def __init__(self, trace):
             # 2-level index with method name and arity of paramters
             self.trace_map = {}
@@ -469,7 +469,7 @@ class GroundSpecs(object):
 
                         if (formal_type == DONTCARE):
                             continue
-                        else if (formal_type in spec_ast.const_nodes):
+                        elif (formal_type in spec_ast.const_nodes):
                             # if the constant nodes do not match, do not consider
                             # this as a binding
                             # this is an optimization, it does not create bindings
@@ -477,7 +477,7 @@ class GroundSpecs(object):
                             if str(formal[1]) != actual:
                                 match = False
                                 break
-                        else if formal in method_assignments:
+                        elif formal in method_assignments:
                             assert formal_type == ID
                             if method_assignments.contains(formal, actual):
                                 # we have two different assignments
