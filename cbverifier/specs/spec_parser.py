@@ -4,7 +4,6 @@ Parser for the lifestate specifications.
 STD ISSUE WITH THIS: it is non-rentrant (e.g. issue if we span
 multiple verifiers from the same python interpreter)
 
-
 While parsing we build an AST to represent the SPEC.
 """
 

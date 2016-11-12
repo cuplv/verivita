@@ -12,7 +12,7 @@ from cbverifier.specs.spec_ast import *
 
 class Spec:
     def __init__(self, spec_ast):
-        self.spec_ast = spec_ast
+        self.ast = spec_ast
 
     # TODO: we need to fill the spec with fields and methods from the AST
     #
@@ -23,7 +23,7 @@ class Spec:
     # TODO: do we need to typecheck the specifications?
 
     def print_spec(self, stream):
-        pretty_print(self.spec_ast, stream)
+        pretty_print(self.ast, stream)
 
     @staticmethod
     def get_specs_from_string(spec_list_string, spec_list=None):

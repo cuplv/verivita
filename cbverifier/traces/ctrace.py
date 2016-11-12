@@ -27,7 +27,6 @@ except ImportError as e:
 # Read a message from Java's writeDelimitedTo:
 import google.protobuf.internal.decoder as decoder
 
-
 import tracemsg_pb2
 
 class MalformedTraceException(Exception):

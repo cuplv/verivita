@@ -1,13 +1,21 @@
 """
 Defines the AST nodes and structure for a SPEC formula.
 
-TODO: add memoization
+TODO:
+- Do we need a DAG representation for specs instead of a tree?
+  TODO: add memoization
+  - NOTE: since we are using tuples in python and the inner elements
+    are not object, apart string, the formula representation is already
+    ok.
+- add walkers (e.g. explore the DAG of the formula)
+We 
+
 
 """
 import sys
 
-# SYMBOLS
 
+# SYMBOLS
 TRUE=0
 FALSE=1
 ID=2
@@ -26,6 +34,7 @@ ENABLE_OP=13
 DISABLE_OP=14
 SPEC_LIST=15
 DONTCARE=16
+STRING=17
 
 inv_map = {0 : "TRUE",
            1 : "FALSE",
@@ -44,13 +53,26 @@ inv_map = {0 : "TRUE",
            13 : "ENABLE_OP",
            14 : "DISABLE_OP",
            15 : "SPEC_LIST",
-           16 : "DONTCARE"}
+           16 : "DONTCARE",
+           17 : "STRING"}
+
+
+################################################################################
+# Node creation
+################################################################################
+
+def create_node(node_type, children):
+    l = []
+    l.append(node_type)
+    for c in children: l.append(c)
+    return tuple(l)
 
 def new_nil(): return (NIL,)
 def new_dontcare(): return (DONTCARE,)
 def new_float(float_num): return (FLOAT, float_num)
 def new_int(int_num): return (INT, int_num)
 def new_id(id_string): return (ID, id_string)
+def new_string(string_value): return (STRING, string_value)
 def new_false(): return (FALSE,)
 def new_true(): return (TRUE,)
 def new_param(first, tails): return (PARAM_LIST, first, tails)
@@ -65,22 +87,47 @@ def new_not(p1): return (NOT_OP, p1)
 def new_seq(p1,p2): return (SEQ_OP, p1, p2)
 def new_star(p1): return (STAR_OP, p1)
 
-
 def new_enable_spec(regexp, atom):
-    return (SPEC_SYMB, ENABLE_OP, regexp, atom)
+    return (SPEC_SYMB, (ENABLE_OP, regexp, atom))
 
 def new_disable_spec(regexp, atom):
-    return (SPEC_SYMB, DISABLE_OP, regexp, atom)
+    return (SPEC_SYMB, (DISABLE_OP, regexp, atom))
 
 def new_spec_list(spec, rest):
     return (SPEC_LIST, spec, rest)
 
+
+################################################################################
+# Access node
+################################################################################
+
 def get_node_type(node): return node[0]
 
-# def is_node_leaf(node):
-#     """ True if the node is a leaf and do not require
-#     to be visited in recursion"""
+const_nodes = (TRUE,FALSE,STRING,INT,FLOAT)
+leaf_nodes = (TRUE,FALSE,ID,STRING,INT,FLOAT,NIL,DONTCARE)
+logic_nodes = (AND_OP, OR_OP,NOT_OP)
+regexp_nodes = (SEQ_OP,STAR_OP)
+spec_nodes = (SPEC_SYMB,ENABLE_OP,DISABLE_OP)
 
+
+def get_id_val(node): return node[1]
+
+def get_call_receiver(node):
+    assert CALL == get_node_type(node)
+    return node[1]
+
+def get_call_method(node):
+    assert CALL == get_node_type(node)
+    return node[2]
+
+def get_call_param(node):
+    assert CALL == get_node_type(node)
+    return node[3]
+
+
+################################################################################
+# Node creation
+################################################################################
 
 
 def pretty_print(ast_node, out_stream=sys.stdout):
@@ -93,7 +140,7 @@ def pretty_print(ast_node, out_stream=sys.stdout):
         if (node_type == TRUE): my_print(out_stream, "TRUE")
         elif (node_type == FALSE): my_print(out_stream, "FALSE")
         elif (node_type == DONTCARE): my_print(out_stream, "_")
-        elif (node_type == ID or node_type == INT or node_type == FLOAT):
+        elif (node_type == ID or node_type == INT or node_type == FLOAT or node_type == STRING):
             my_print(out_stream, "%s%s" % (sep, str(node[1])))
         elif (node_type == PARAM_LIST):
             pretty_print_aux(out_stream,node[1],"")
@@ -101,12 +148,13 @@ def pretty_print(ast_node, out_stream=sys.stdout):
                 my_print(out_stream, ",")
                 pretty_print_aux(out_stream,node[2],"")
         elif (node_type == CALL):
-            if (get_node_type(node[1]) != new_nil()):
-                pretty_print_aux(out_stream,node[1],"") # receiver
+            receiver = get_call_receiver(node)
+            if (get_node_type() != new_nil()):
+                pretty_print_aux(out_stream,receiver,"") # receiver
                 my_print(out_stream, ".")
-            pretty_print_aux(out_stream,node[2],"")
+            pretty_print_aux(out_stream,get_call_method(node),"")
             my_print(out_stream, "(")
-            pretty_print_aux(out_stream,node[3],"") # params
+            pretty_print_aux(out_stream,get_call_param(node),"") # params
             my_print(out_stream, ")")
         elif (node_type == AND_OP or node_type == OR_OP):
             my_print(out_stream, "(")
@@ -144,3 +192,14 @@ def pretty_print(ast_node, out_stream=sys.stdout):
                 pretty_print_aux(out_stream,node[2],"")
 
     pretty_print_aux(out_stream, ast_node, "")
+
+
+class UnexpectedSymbol(Exception):
+    def __init__(self, node):
+        self.node = node
+        node_type = get_node_type(node)
+        message = "Unexpected symbol %s" inv_map.[node_type]]
+
+        super(Exception, self).__init__(message)
+
+

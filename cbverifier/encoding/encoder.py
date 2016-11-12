@@ -2,9 +2,7 @@
 
 The input are:
   - a concrete trace
-  - a specification (a set of rules)
-  - a set of bindings
-  - a bound
+  - a specification
 
 The verifier finds a possible (spurious) permutation of the events in
 the concrete trace that may cause a bug (a bug arises a disabled
@@ -12,6 +10,41 @@ callin is called).
 
 The possible permutation of the events depend on the enabled/disabled
 status of events/callins.
+
+
+
+PLAN:
+  a. compute the ground specifications
+    - TEST
+  b. create the symbolic automata for the specifications
+    - TEST
+  b. create the encoding for the event transitions
+  We cannot statically encode the effect of each callback and
+  callin, since it depends on the whole history, and not on the
+  callin/callback that we are computing.
+  Hence, we need to encode one callin/callback per step and let the
+  model checker figure out the state of the system.
+
+
+OPTIMIZATIONS
+The length of the sequence that must be explored can be quite high.
+We need to optimize the encoding as much as we can.
+
+Ideas:
+  - Cone of influence reduction (harder due to regexp)
+
+  - Merge (union) the regexp automata and reduce the state space
+  Same settings of the CIAA 10 for PSL
+  (From Sequential Extended Regular Expressions to NFA with Symbolic Labels, CIAA 10)
+    - Automata with symbolic labels
+    - The size of the alphabet is huge
+
+  - Group the execution of callins and callbacks:
+    - If two callin must be executed in sequence and they are
+    independent one from each other, then there is no reason to not
+    group them togheter.
+    TODO: define when two callins and callbacks are independent.
+
 """
 
 # TODOs:
@@ -30,1307 +63,440 @@ from pysmt.shortcuts import Solver
 from pysmt.solvers.solver import Model
 from pysmt.logics import QF_BOOL
 
-from spec import SpecType, Spec, Binding
+from specs.spec import Spec
+from traces.ctrace import CTrace
 
-from ctrace import ConcreteTrace, CEvent, CCallin, CCallback
+
 from helpers import Helper
-from tosmv import SmvTranslator
 
 Instance = collections.namedtuple("Instance", ["symbol", "args", "msg"],
                                   verbose=False,
                                   rename=False)
 
-class Verifier:
-    ENABLED_VAR_PREF  = "enabled_state"
-    ALLOWED_VAR_PREF  = "allowed_state"
-    ERROR_STATE = "error"
-
-    def __init__(self, ctrace, specs, bindings,
-                 debug_encoding=False,
-                 coi=False):
-        # debug_encoding: encode additional input variables to track
-        # what concrete event has been fired in each execution step.
-        # By default it is false.
-        #
-        logging.debug("Creating verifier...")
-        assert None != ctrace
-        assert None != specs
-        assert None != bindings
-
-        # at least init
-        assert len(ctrace.events) > 0
-        assert ctrace.events[0].symbol == "initial"
-
-        # pysmt stuff
-        self.env = reset_env()
-        self.mgr = self.env.formula_manager
-        self.helper = Helper(self.env)
-
-        # concrete trace
-        self.ctrace = ctrace
-        # specification (list of rules)
-        self.specs = specs
-
-        # list of bindings from events to callbacks parameters
-        self.bindings = bindings
-
-        # options
-        self.debug_encoding = debug_encoding
-        self.coi = coi
-
-        # Internal data structures
-        self.msgs = MatchInfo(self)
-        self.conc_to_msg = {} # From concrete events/callin to msgs
-        self.msgs_to_instances = {} # Messages to list of instances
-        self.symbol_to_instances = {} # symbols to list of instances
-        # Map from ci to its containing event (message)
-        self.ci_to_evt = {}
-
+class TransitionSystem:
+    """ (symbolic) Transition system"""
+    def __init__(self):
         # internal representation of the transition system
-        self.ts_state_vars = None
-        self.ts_input_vars = None
-        self.ts_init = None
-        self.ts_trans = None
-        # reachability property
-        self.ts_error = None
+        self.state_vars = set()
+        self.input_vars = set()
+        self.init = TRUE()
+        self.trans = TRUE()
 
-        self.msgs_to_var = {} # Messages to Boolean variables
-        self.var_to_msgs = {} # inverse map
-        # Map from a concrete event in the trace to their
-        # invoke variable.
-        # In practice, here we have a particular instance of an event
-        # It is used for debug
-        self.events_to_input_var = {}
-        self.input_var_to_msgs = {}
 
-        self._readable_msgs = {}
+    def product(self, other_ts):
+        """ Computes the synchronous product of self with other_ts,
+        storing the product in self.
 
-        # Process trace
-        self._process_trace()
+        Given TS1 = <V1, W1, I1, T1> and TS2 = <V2, W2, I2, T2>
+        the product is the transition system
+        TSP = <V1 union V2, W1 union W2, I1 and I2, T1 and T2>
 
-        if self.coi:
-            # Simplify the encoding
-            self._simplify()
-
-        # Initialize the transition system
-        self._initialize_ts()
-
-    def _next(self, var):
-        assert var.is_symbol()
-        return Helper.get_next_var(var, self.mgr)
-
-    def _get_ts_var(self):
-        all_vars = set(self.ts_state_vars)
-        all_vars.update(self.ts_input_vars)
-        return all_vars
-
-    def _process_trace(self):
-        """Process the trace."""
-        logging.debug("Process trace...")
-
-        # instantiate the events, matching the bindings
-        self._find_instances()
-
-        # Process every event, computing the preconditions and effects
-        # due to the specifications
-        i = 0
-        for cevt in self.ctrace.events:
-            i = i+1
-            logging.debug("evt %d\n" % i)
-            self._process_event(cevt)
-
-    def _initialize_ts(self):
-        """Initialize ts_vars and ts_trans."""
-        logging.debug("Encode the ts...")
-
-        self._init_ts_var()
-        self._init_ts_init()
-        self._init_ts_trans()
-
-    def _get_init_state_var(self):
-        return Symbol("__is_init_state__")
-
-    def _get_msg_var(self, msg_name, is_evt):
-        if (is_evt):
-            prefix = Verifier.ENABLED_VAR_PREF
-        else:
-            prefix = Verifier.ALLOWED_VAR_PREF
-        var_name = "%s_%s" % (prefix, msg_name)
-        return var_name
-
-    def _get_conc_var(self, conc_msg, is_evt):
-        msg_name = self.conc_to_msg[conc_msg]
-        return self.msgs_to_var[msg_name]
-
-    def _get_ci_msg(self, cci):
-        return "ci_" + cci.symbol + "_" + ",".join(cci.args)
-
-    @staticmethod
-    def _build_env(env, formals, actuals):
-        """ Add to env the matching between formal and
-        actual parameters.
-        """
-        assert len(formals) == len(actuals)
-        for var, val in zip(formals, actuals):
-            # no double assignment
-            assert var not in env
-            env[var] = val
-        return env
-
-    @staticmethod
-    def _enum_evt_inst(values):
-        """ Values contain a list of list of arguments.
-        Each list of arguments may not be complete (some arguments may
-        be None).
-
-        The function tries to build a set of complete matches by
-        combining multiple array of arguments.
-
-        For example, if the values list is:
-        [1, None, None], [2, None, None], [None, 3, 4]
-
-        The function builds the complete argument lists:
-        [1, 3, 4], [2, 3, 4].
-        """
-        assert None != values
-        if len(values) == 0: return []
-        init_val = [None for v in values[0]]
-        acc = Verifier._enum_evt_inst_rec(values, init_val, [])
-        return acc
-
-    @staticmethod
-    def _enum_evt_inst_rec(values, current_res, acc):
-        """ Recursive auxiliary function of _enum_evt_inst."""
-        def merge_vals(v1,v2):
-            assert (len(v1) == len(v2))
-
-            all_vals = True
-            merged = []
-            for (a1,a2) in zip(v1,v2):
-                if (None != a1 and None != a2):
-                    if (a1 != a2):
-                        # cannot merge
-                        return (None, None)
-                    else:
-                        merged.append(a1)
-                elif (None == a2 and None != a1):
-                    merged.append(a1)
-                elif (None == a1 and None != a2):
-                    merged.append(a2)
-                elif (None == a1 and None == a2):
-                    merged.append(None)
-                    all_vals = False
-                else:
-                    assert False # should never happen
-
-            assert len(merged) == len(v1)
-            return (merged, all_vals)
-
-        if (len(values) == 0): return acc
-
-        current_val = values[0]
-
-        # consider the current value
-        assert len(current_val) == len(current_res)
-        (merged, all_vals) = merge_vals(current_val, current_res)
-
-        # Found one matching
-        if (all_vals):
-            assert len(merged) == len(current_val)
-            acc.append(merged)
-        if (None != merged and not all_vals):
-            # can be merged but no result
-            # try to complete merged with other values
-            assert len(merged) == len(current_val)
-            acc = Verifier._enum_evt_inst_rec(values[1:len(values)],
-                                              list(merged),
-                                              acc)
-        # recursive search not considering the current value
-        acc = Verifier._enum_evt_inst_rec(values[1:len(values)],
-                                          list(current_res),
-                                          acc)
-        return acc
-
-    @staticmethod
-    def _evt_signature_from_cb(bindings, ccb, event_cb_map):
-        """ Iterate through all the bindings, finding all the bindings
-        that contain the callback ccb.
-
-        Then, it populates a map from the event symbol of the binding
-        to the concrete arguments of the callback.
-
-        For example:
-        - concrete callin := cb(@1, @2)
-        - binding := event1(x1, x2) >> cb(x2, x1)
-
-        The function add the list [@2, @1] to the list of bindings for
-        the event "event1".
-
-        The list of concrete arguments for the event can be partial at
-        this stage (the elment in the list is None).
-        """
-        for bind in bindings:
-            if (ccb.symbol == bind.cb and
-                len(ccb.args) == len(bind.cb_args)):
-                env = Verifier._build_env({}, bind.cb_args,
-                                          ccb.args)
-                cevt_args = []
-                for evt_arg in bind.event_args:
-                    if (evt_arg in env):
-                        cevt_args.append(env[evt_arg])
-                    else:
-                        # Args not matched
-                        cevt_args.append(None)
-                if bind.event not in event_cb_map:
-                    event_cb_map[bind.event] = []
-                event_cb_map[bind.event].append(cevt_args)
-
-        return event_cb_map
-
-    def _find_instances_callin(self, evt_msg, ccb):
-        """ Creates the data structure to keep all the instances of the callin.
-        """
-        for cci in ccb.ci:
-            ci_name = self._get_ci_msg(cci)
-            self.conc_to_msg[cci] = ci_name
-
-            # Different ci instances can have the same message
-            if ci_name not in self.msgs.evt_info:
-                self.msgs[ci_name] = CiInfo(ci_name)
-            self.msgs[ci_name].conc_msgs.add(cci)
-
-            if ci_name not in self.msgs_to_instances:
-                self.msgs_to_instances[ci_name] = []
-            instance = Instance(cci.symbol, tuple(cci.args), ci_name)
-
-            self.msgs_to_instances[ci_name].append(instance)
-            if cci.symbol not in self.symbol_to_instances:
-                self.symbol_to_instances[cci.symbol] = []
-            self.symbol_to_instances[cci.symbol].append(instance)
-
-            if ci_name not in self.ci_to_evt:
-                self.ci_to_evt[ci_name] = set()
-            self.ci_to_evt[ci_name].add(evt_msg)
-
-    def _init_ts_var_callin(self, ccb):
-        """ Creates the encoding variables for all the  callins in ccb.
-        """
-        for cci in ccb.ci:
-            ci_name = self._get_ci_msg(cci)
-            ci_var_name = self._get_msg_var(ci_name, False)
-            ci_var = Symbol(ci_var_name, BOOL)
-
-            # Different ci s instance can have the same variable
-            if ci_var not in self.ts_state_vars:
-                self.ts_state_vars.add(ci_var)
-                self.msgs_to_var[ci_name] = ci_var
-                self.var_to_msgs[ci_var] = ci_name
-                logging.debug("Callin %s: create variable %s" % (ci_name, str(ci_var)))
-
-    @staticmethod
-    def _get_readable_cb_name(cb_name):
-        """ Get a readable name for the callback. """
-        res = cb_name
-        dot_splitted = cb_name.split(".")
-        if len(dot_splitted) > 1:
-            last_dot = dot_splitted[-1]
-            paren_splitted = last_dot.split("(")
-            if len(paren_splitted) > 1:
-                res = paren_splitted[0]
-            else:
-                res = last_dot
-        return res
-
-    def _get_readable_msg(self, msg):
-        result = msg
-
-        if msg not in self._readable_msgs:
-
-            if msg in self.msgs.evt_info:
-                msg_info = self.msgs[msg]
-
-                if isinstance(msg_info,EventInfo):
-                    assert len(msg_info.conc_msgs) > 0
-                    for a in msg_info.conc_msgs:
-                        cevent = a
-                        break
-
-                    if cevent.symbol != "initial":
-                        readable_msg_arr = set([])
-                        for ccb in cevent.cb:
-                            readable_msg_arr.add(Verifier._get_readable_cb_name(ccb.symbol))
-                        result = ",".join(list(readable_msg_arr))
-                    else:
-                        result= "initial"
-                    self._readable_msgs[msg] = result
-        else:
-            result = self._readable_msgs[msg]
-
-        return result
-
-
-    def _find_instances(self):
-        """ Instantiate the events from the trace.
-
-        The instantiation is found by looking at the bindings defined
-        in the specifications.
-
-        The function changes the maps conc_to_msg, msgs_to_instances
-        and symbol_to_instances.
-        """
-        self.conc_to_msg = {}
-        self.msgs_to_instances = {}
-        self.symbol_to_instances = {}
-        self.ci_to_evt = {}
-
-        i = 0
-
-        # The loop computes several information from the trace and the
-        # bindings.
-        #
-        # 1. A "name" for the event message that is determined by the
-        #    callbacks involved in the message and their concrete
-        #    parameters.
-        #
-        # 2. The set of "instances" of the event.
-        #    An instance is defined by the name of an event
-        #    (e.g. Click), the list of concrete parameters of the event
-        #    (obj1, ...) and the message names that can generate the
-        #    instance.
-        #
-        # 3. A "name" for the callin messages
-        #
-        # 4. A set of instances for each callin.
-        #
-        for cevent in self.ctrace.events:
-            i = i + 1
-
-            if cevent.symbol != "initial":
-                # List of names obtained from each callback
-                # Used to name the event variable
-                cb_names = []
-                for ccb in cevent.cb:
-                    cb_names.append(ccb.symbol + "_#_" + "_".join(ccb.args))
-
-                msg_name = "evt_".join(cb_names)
-                if msg_name == "":
-                    msg_name = "no_callbacks"
-            else:
-                # initial event - automatic binding
-                msg_name = "initial"
-
-            # The key is an event symbol while the values are a list
-            # of list of arguments.
-            #
-            # The event_symbol and the arguments are found by matching
-            # the concrete callback and its actual arguments with the
-            # event symbol and its arguments specified in a binding.
-            #
-            # In practice:
-            #   - each concrete callback has a list of concrete arguments
-            #   - the binding specification tells that the
-            #     callback cb(x1, x2, ..., xn) is called by the event
-            #     event(x1, x2, ..., z1...)
-            #
-            # The loops build the "event signature" of the concrete
-            # event using the concrete callbacks name and parameters
-            # and the bindings (a map from callbacks and parameters to
-            # event names and parameters).
-            #
-            event_cb_map = {}
-            if cevent.symbol != "initial":
-                for ccb in cevent.cb:
-                    event_cb_map = Verifier._evt_signature_from_cb(self.bindings,
-                                                                   ccb,
-                                                                   event_cb_map)
-                    # process the callins (3 and 4)
-                    self._find_instances_callin(msg_name, ccb)
-
-            self.conc_to_msg[cevent] = msg_name
-
-            if (msg_name not in self.msgs.evt_info):
-                self.msgs[msg_name] = EventInfo(msg_name)
-            self.msgs[msg_name].conc_msgs.add(cevent)
-
-            # 4. Find all the possible instantiation of the event
-            # parameter.
-            #
-            # These information are used both to match a rule and to
-            # apply its effects.
-            if cevent.symbol != "initial":
-                instances = []
-                for (evt, values) in event_cb_map.iteritems():
-                    # keep a map from the event name
-                    if evt not in self.symbol_to_instances:
-                        self.symbol_to_instances[evt] = []
-
-                    all_complete_args = Verifier._enum_evt_inst(values)
-                    if len(all_complete_args) != 0:
-                        for args_list in all_complete_args:
-                            instance = Instance(evt, tuple(args_list), msg_name)
-                            instances.append(instance)
-                            self.symbol_to_instances[evt].append(instance)
-            else:
-                instances = [Instance("initial", tuple([]), msg_name)]
-            self.msgs_to_instances[msg_name] = instances
-
-    def _init_ts_var(self):
-        """ Creates the variables in the transition system for a set
-        of messages.
-
-        What are the state variables of the system?
-
-        For each callin "ci" with the concrete objects "o1, ..., on"
-        we have a Boolean variable "allowed_state_ci_o1", where "o1"
-        is the receiver.
-
-        For each event "evt" we have a Boolean variable.
-
-        Change ts_state_vars, ts_input_vars, msgs_to_var, var_to_msgs.
-        """
-        logging.debug("Create variable...")
-        self.ts_state_vars = set()
-        self.ts_input_vars = set()
-        self.var_to_msgs = {}
-
-        i = 0
-
-        #
-        for cevent in self.ctrace.events:
-            i = i + 1
-
-            assert cevent in self.conc_to_msg
-            msg_name = self.conc_to_msg[cevent]
-
-            if (msg_name not in self.msgs_to_var):
-                evt_var_name = self._get_msg_var(msg_name, True)
-                evt_var = Symbol(evt_var_name, BOOL)
-                logging.debug("Event %s: create variable %s" % (msg_name,
-                                                                evt_var_name))
-                self.ts_state_vars.add(evt_var)
-                self.msgs_to_var[msg_name] = evt_var
-                self.var_to_msgs[evt_var] = msg_name
-
-            if (self.debug_encoding):
-                ivar_name = "INPUT_event_%d_%s" % (i, msg_name)
-                ivar = Symbol(ivar_name, BOOL)
-                self.events_to_input_var[cevent] = ivar
-                self.input_var_to_msgs[ivar] = msg_name
-                self.ts_input_vars.add(ivar)
-
-            # process the callback to add the ci called by the event
-            for ccb in cevent.cb:
-                self._init_ts_var_callin(ccb)
-
-        self.ts_state_vars.add(self._get_init_state_var())
-
-        # creates the error variable
-        self.ts_error = Symbol(Verifier.ERROR_STATE, BOOL)
-        self.ts_state_vars.add(self.ts_error)
-
-    def _init_ts_init(self):
-        """Initialize the ts init.
-
-        In the initial state all the events and callins are enabled.
-        """
-        # The initial state is safe
-        self.ts_init = Not(self.ts_error)
-        # all the messages are enabled
-        for v in self.ts_state_vars:
-            if v != self.ts_error:
-                self.ts_init = And(self.ts_init, v)
-
-        self.ts_init = And(self.ts_init,
-                           self._get_init_state_var())
-
-        logging.debug("Initial state is %s" % str(self.ts_init))
-
-
-    def _get_enabled_store(self):
-        """ Return a map from messages to an internal state.
-
-        The state is 0 (unkonwn), 1 (enabled/allowed),
-        -1 (disabled/disallowed)
-        """
-        msg_enabled = {}
-        for cevt in self.ctrace.events:
-            assert cevt in self.conc_to_msg
-            evt_msg = self.conc_to_msg[cevt]
-
-            # already visited event
-            if (not evt_msg in msg_enabled):
-                msg_enabled[evt_msg] = 0
-
-            # Initially the event value is unknown
-            for ccb in cevt.cb:
-                for cci in ccb.ci:
-                    assert cci in self.conc_to_msg
-                    ci_msg = self.conc_to_msg[cci]
-
-                    if (ci_msg not in msg_enabled):
-                        msg_enabled[ci_msg] = 0 # unknown
-
-        return msg_enabled
-
-    def _process_event(self, cevent):
-        """ Process cevent.
-
-        Change msg_enabled updating it with the effects on the system
-        state obtained by execturing src_event (and all its callbacks
-        and callins).
-
-        Builds a guard condition that contains the pre-condition for
-        src_event to be executed.
-
-        Put in in bug_ci all the callin that must be executed in
-        src_event that are trivially disabled by some previous
-        callin.
-
-        Put in must_be_allowed a set of callins that must be allowed
-        in order to execute the event.
-        If the event is executed from a state where these callins are
-        not enabled, then we have an error.
+        (V are the state variables, W the input variables,
+        I is the initial condition, T the transition relation)
         """
 
-        # Get the message associated to the event
-        assert cevent in self.conc_to_msg
-        msg_evt = self.conc_to_msg[cevent]
-        evt_info = self.msgs[msg_evt]
+        self.state_vars.update(other_ts.state_vars)
+        self.input_vars.update(other_ts.input_vars)
+        self.init = And(self.init, other_ts.init)
+        self.trans = And(self.trans, other_ts.trans)
 
-        evt_info.guards = [msg_evt] # The event must be enabled
-        evt_info.must_be_allowed = set()
-        evt_info.msg_enabled = self._get_enabled_store()
-        evt_info.msg_enabled[msg_evt] = 1
-        # Deterministic bug
-        evt_info.bug_ci = None
 
-        # Apply right away the effect of the event
-        # This is consistent with the semantic that applies the effect
-        # of the event at the beginning if it, and not in the middle
-        # of other callbacks or at the end of the event execution.
-        self._apply_rules(msg_evt, msg_evt)
+class TSEncoder:
+    """
+    Encodes the dynamic verification problem in a transition system.
 
-        # Process the sequence of callins of the event
-        for ccb in cevent.cb:
-            for cci in ccb.ci:
-                msg_ci = self.conc_to_msg[cci]
-                assert msg_ci in evt_info.msg_enabled
-                val = evt_info.msg_enabled[msg_ci]
-
-                if (val == 0):
-                    # the ci must have been enabled in the state of the
-                    # system if neiter the event itself nor a previous
-                    # callin enabled it.
-                    #
-                    # If it is not the case, then we have a bug!
-                    evt_info.must_be_allowed.add(msg_ci)
-
-                elif (val == -1):
-                    # The ci is disabled, and we are trying to invoke it
-                    # This results in an error
-                    logging.debug("Bug condition: calling " \
-                                  "disabled %s" % str(msg_ci))
-                    evt_info.bug_ci = msg_ci
-
-                    # We stop at the first bug, all the subsequent
-                    # inferences would be bogus
-                    break
-                else:
-                    # enabled by some previous message
-                    assert val == 1
-                # apply the rule for the callin
-                self._apply_rules(msg_ci, msg_evt)
-
-        return
-
-    def _inst_param_rule(self, rule_formal_args, env):
-        """ Instantiate the formal parameters of a rule given an
-        environment.
-        """
-        conc_dst_args = []
-        for c in rule_formal_args:
-            if c not in env:
-                logging.debug("%s is an unbounded parameter in " \
-                              "the rule." % (c))
-                conc_dst_args.append(None)
-            else:
-                assert c in env
-                conc_dst_args.append(env[c])
-        assert (len(conc_dst_args) == len(rule_formal_args))
-        return conc_dst_args
-
-    def _match_args(self, inst_args, conc_args):
-        """ Matches all the concrete argument of conc_args
-        with the arguments of instance
-        """
-        matches = True
-        for (conc_arg, inst_arg) in zip(conc_args, inst_args):
-            if None != conc_arg and conc_arg != inst_arg:
-                matches = False
-                break
-        return matches
-
-    def _apply_rules(self, msg_evt, cevt_msg):
-        """ Find all the rules that match an instantiation in inst_list.
-
-        An instantiation is of the form: evt(@1, ..., @n)
-        (a symbol and a list of actual parameters.
-
-        A rule src(x1, ..., xn) => dst(y1, ..., ym) is matched if src
-        is equal to evt and the arity of the args of src and evt are
-        the same.
-
-        The function applies the changes of the matched rules to
-        self.msgs[msg_evt].msg_enabled.
-        """
-        logging.debug("START: matching rules for %s..." % msg_evt)
-
-        msg_enabled = self.msgs[cevt_msg].msg_enabled
-
-        # Get the possible instantiation of cevent from the
-        # possible bindings
-        # The instantiation correspond to a list of environments, one
-        # for each callback in the event.
-        assert msg_evt in self.msgs_to_instances
-        inst_list = self.msgs_to_instances[msg_evt]
-
-        # process all the rules
-        for rule in self.specs:
-            # Find a matching instance for the rule
-            for inst in inst_list:
-                if (not (rule.src == inst.symbol and
-                         len(rule.src_args) == len(inst.args))):
-                    # skip rule if it does not match the event
-                    continue
-
-                # Skip rule if there are no instantiation for the dst
-                # symbol of the rule
-                if rule.dst not in self.symbol_to_instances:
-                    continue
-
-                # Build the list of actual parameters for rule.src.
-                #
-                # rule.src has a set of formal parameter [x1,x2,...,xn]
-                # Inst has a set of actual parameter [a1, ..., an]
-                # rule.dst has a set of formal parameter [y1,x2,...,yk]
-                # Some of the ai-s can be None (the instance is a
-                # partial instantiation of the event).
-                #
-                # conc_dst_args is a list [l1, ..., lk]
-                # where li = aj if l1 = xj, and li = None otherwise
-                #
-                src_env = self._build_env({}, rule.src_args, inst.args)
-                conc_dst_args = self._inst_param_rule(rule.dst_args, src_env)
-
-                # At this point: the rule matches an instance.
-
-                # Find the instances that are affected by the rule
-                for inst_dst in self.symbol_to_instances[rule.dst]:
-                    matches = self._match_args(inst_dst.args, conc_dst_args)
-
-                    if matches:
-                        # we found an effect for the rule
-                        logging.debug("Matched rule:\n" \
-                                      "%s\n" \
-                                      "Src match: %s\n" \
-                                      "Dst match: %s." % (rule.get_print_desc(),
-                                                          inst, inst_dst))
-                        self.msgs[cevt_msg].add_match(rule, inst, inst_dst)
-                        if (rule.specType == SpecType.Enable or
-                            rule.specType == SpecType.Allow):
-                            # if (self.msgs[cevt_msg].msg_enabled[inst_dst.msg] == -1):
-                            #     # Two rules are conflicting (here we
-                            #     # try to enalbe inst_dst.msg while
-                            #     # another rule that applies to the
-                            #     # event disables it)
-                            #     raise Exception("Found two conflicting rules")
-
-                            self.msgs[cevt_msg].msg_enabled[inst_dst.msg] = 1
-                        else:
-                            assert (rule.specType == SpecType.Disable or
-                                    rule.specType == SpecType.Disallow)
-
-                            if (rule.specType == SpecType.Disable):
-                                # msg is a callin that can be disabled
-                                self.msgs[inst_dst.msg].disabled = True
-
-                            # if (self.msgs[cevt_msg].msg_enabled[inst_dst.msg] == 1):
-                            #     # Two rules are conflicting (here we
-                            #     # try to disalbe inst_dst.msg while
-                            #     # another rule that applies to the
-                            #     # event enables it)
-                            #     raise Exception("Found two conflicting rules")
-                            self.msgs[cevt_msg].msg_enabled[inst_dst.msg] = -1
-
-        logging.debug("START: matching rules for %s..." % msg_evt)
-
-    def _encode_evt(self, cevent):
-        """Encode the transition relation of a single event."""
-        logging.debug("Encoding event %s" % cevent)
-
-        evt_msg = self.conc_to_msg[cevent]
-        (msg_enabled, guards, bug_ci, must_be_allowed) = (self.msgs[evt_msg].msg_enabled,
-                                                          self.msgs[evt_msg].guards,
-                                                          self.msgs[evt_msg].bug_ci,
-                                                          self.msgs[evt_msg].must_be_allowed)
-        logging.debug("Event %s" % cevent)
-        logging.debug("Guards %s" % guards)
-        logging.debug("Must be allowed: %s" % must_be_allowed)
-
-        # Create the encoding
-        if None == bug_ci:
-            # Non buggy transition
-            logging.debug("Transition for event %s may be safe" % cevent)
-
-            # Build the encoding for the (final) effects
-            # after the execution of the callbacks
-            next_effects = []
-            for (msg_key, value) in msg_enabled.iteritems():
-                assert msg_key in self.msgs_to_var
-                msg_var = self.msgs_to_var[msg_key]
-                if (value == 1):
-                    # msg is enabled after the trans
-                    next_effects.append(self._next(msg_var))
-                elif (value == -1):
-                    # msg is disabled after the trans
-                    next_effects.append(Not(self._next(msg_var)))
-                else:
-                    # Frame condition - msg does not change
-                    fc = Iff(msg_var, self._next(msg_var))
-                    next_effects.append(fc)
-
-            if (len(must_be_allowed) == 0):
-                # no callins must have been enabled in the event
-                # There cannot be bugs
-                evt_trans = Not(self._next(self.ts_error))
-            else:
-                evt_trans = TRUE()
-                must_ci_formula = And([self.msgs_to_var[v] for v in must_be_allowed])
-                # All the CIs in must_be_allowed are allowed
-                # iff there is no bug.
-                evt_trans = Iff(must_ci_formula,
-                                Not(self._next(self.ts_error)))
-
-            if (len(guards) > 0):
-                # logging.debug("Add guards " + str(guards))
-                evt_trans = And(evt_trans, And([self.msgs_to_var[v] for v in guards]))
-            if (len(next_effects) > 0):
-                # logging.debug("Add effects " + str(next_effects))
-                evt_trans = And(evt_trans, And(next_effects))
-        else:
-            # taking this transition ends in an error,
-            # independently from the system's states
-            logging.debug("Transition for event %s is a bug" % cevent)
-            evt_trans = self._next(self.ts_error)
-
-            # Encode fc of all the state space if we end in error
-            # Not compulsory, but useful for debug
-            next_effects = []
-            for (msg_key, value) in msg_enabled.iteritems():
-                assert msg_key in self.msgs_to_var
-
-                msg_var = self.msgs_to_var[msg_key]
-                if msg_key != bug_ci:
-                    evt_trans = And(evt_trans,
-                                    Iff(msg_var, self._next(msg_var)))
-                else:
-                    # ci is disabled
-                    evt_trans = And(evt_trans,
-                                    Not(self._next(msg_var)))
-
-        # logging.debug("Event %s: trans is %s" % (cevent.symbol, str(evt_trans)))
-
-        return evt_trans
-
-    def _init_ts_trans(self):
-        """Initialize the ts trans."""
-        logging.debug("Encoding the trans...")
-
-        # Perform the encoding
-        events_encoding = []
-        init_evt_encoding = None
-        for evt in self.ctrace.events:
-            evt_encoding = self._encode_evt(evt)
-
-            if (evt.symbol == "initial"):
-                init_evt_encoding = evt_encoding
-                if (self.debug_encoding):
-                    ivar = self.events_to_input_var[evt]
-                    init_evt_encoding = Implies(ivar, evt_encoding)
-            else:
-                if (self.debug_encoding):
-                    assert evt in self.events_to_input_var
-                    ivar = self.events_to_input_var[evt]
-                    evt_encoding = Implies(ivar, evt_encoding)
-                events_encoding.append(evt_encoding)
-
-        is_init_state = self._get_init_state_var()
-        if (self.debug_encoding):
-            # Execute exactly one event at time
-            ivars = self.events_to_input_var.values()
-            all_evt_trans = And(And(events_encoding),
-                                init_evt_encoding,
-                                ExactlyOne(ivars))
-            init_input_var = self.events_to_input_var[self.ctrace.events[0]]
-            self.ts_trans = And([all_evt_trans,
-                                 Implies(is_init_state, init_input_var),
-                                 Implies(Not(is_init_state),
-                                         Not(init_input_var)),
-                                 Not(self._next(is_init_state))])
-        else:
-            # WARNING: here we use Or instead of
-            # exactly one event.
-            # This means that "compatible" events may happen
-            # at the same time.
-            # This is sound for reachability properties.
-            self.ts_trans = And([Implies(is_init_state, init_evt_encoding),
-                                 Implies(Not(is_init_state), Or(events_encoding)),
-                                 Not(self._next(is_init_state))])
-
-
-    def _build_trace(self, model, steps):
-        """Extract the trace from the satisfying assignment."""
-
-        vars_to_use = [self.ts_state_vars, self.ts_input_vars]
-        cex = []
-        for i in range(steps + 1):
-            cex_i = {}
-
-            # skip the input variables in the last step
-            if (i >= steps):
-                vars_to_use = [self.ts_state_vars]
-
-            for vs in vars_to_use:
-                for var in vs:
-                    var_i = self.helper.get_var_at_time(var, i)
-                    cex_i[var] = model.get_value(var_i, True)
-            cex.append(cex_i)
-        return cex
-
-    def find_bug(self, steps):
-        """Explore the system up to k steps.
-        Steps correspond to the number of events executed in the
-        system.
-
-        Returns None if no bugs where found up to k or a
-        counterexample otherwise (a list of events).
-        """
-
-        solver = Solver(name='z3', logic=QF_BOOL)
-
-        error_condition = []
-
-        all_vars = self._get_ts_var()
-        # Set the variables of the ts
-        for i in range(steps + 1):
-            logging.debug("Encoding %d..." % i)
-
-            if (i == 0):
-                f_at_i = self.helper.get_formula_at_i(all_vars,
-                                                      self.ts_init, i)
-            else:
-                f_at_i = self.helper.get_formula_at_i(all_vars,
-                                                      self.ts_trans, i-1)
-            solver.add_assertion(f_at_i)
-
-            error_condition.append(self.helper.get_formula_at_i(all_vars,
-                                                                self.ts_error,
-                                                                i))
-
-        # error condition in at least one of the (k-1)-th states
-        logging.debug("Error condition %s" % error_condition)
-        solver.add_assertion(Or(error_condition))
-
-        logging.debug("Finding bug up to %d steps..." % steps)
-        res = solver.solve()
-        if (solver.solve()):
-            logging.debug("Found bug...")
-
-            model = solver.get_model()
-            trace = self._build_trace(model, steps)
-
-            return trace
-        else:
-            # No bugs found
-            logging.debug("No bugs found up to %d steps" % steps)
-            return None
-
-    def find_bug_inc(self, steps):
-        """ Incremental version of bmc check
-        """
-
-        solver = Solver(name='z3', logic=QF_BOOL)
-
-        error_condition = []
-
-        all_vars = self._get_ts_var()
-        # Set the variables of the ts
-        for i in range(steps + 1):
-            logging.debug("Encoding %d..." % i)
-
-            if (i == 0):
-                f_at_i = self.helper.get_formula_at_i(all_vars,
-                                                      self.ts_init, i)
-            else:
-                f_at_i = self.helper.get_formula_at_i(all_vars,
-                                                      self.ts_trans, i-1)
-            solver.add_assertion(f_at_i)
-
-            solver.push()
-            bug_at_i = self.helper.get_formula_at_i(all_vars,
-                                                    self.ts_error,
-                                                    i)
-            solver.add_assertion(bug_at_i)
-
-            logging.debug("Finding bug at %d steps..." % steps)
-            res = solver.solve()
-            if (solver.solve()):
-                logging.debug("Found bug...")
-
-                model = solver.get_model()
-                trace = self._build_trace(model, i)
-
-                return trace
-            else:
-                # No bugs found
-                logging.debug("No bugs found up to %d steps" % steps)
-                solver.pop()
-        return None
-
-    def to_smv(self, stream):
-        translator = SmvTranslator(self.env,
-                                   self.ts_state_vars,
-                                   self.ts_input_vars,
-                                   self.ts_init,
-                                   self.ts_trans,
-                                   Not(self.ts_error))
-        translator.to_smv(stream)
-
-################################################################################
-# SIMPLIFICATION - TO MOVE
-################################################################################
-
-    def _new_inst_tuple(self, inst):
-        return (0, inst)
-    def _new_evt_tuple(self, evt):
-        return (1, evt)
-    def _is_inst(self, tuple):
-        assert len(tuple) == 2
-        return tuple[0] == 0
-    def _is_evt(self, tuple):
-        assert len(tuple) == 2
-        return tuple[0] == 1
-
-    def _get_containing_evt(self, frontier):
-        """ Get the event instances that call a callin contained in frontier."""
-        events_in_frontier = set()
-        for front_obj in frontier:
-            # if inst is an event (not an instance of an event),
-            # then continue: the event will not match any rule.
-            if self._is_evt(front_obj): continue
-            inst = front_obj[1]
-
-            if inst.msg in self.ci_to_evt:
-                events_of_ci = self.ci_to_evt[inst.msg]
-                for evt_of_ci in events_of_ci:
-                    # add all the instances of evt_of_ci
-                    for i in self.msgs_to_instances[evt_of_ci]:
-                        events_in_frontier.add(self._new_inst_tuple(i))
-                    # Add only the event.
-                    # Why?
-                    #   - the callin is called by evt_of_ci
-                    #   - if there are no instances, then it means
-                    #   that no rules will match the event (i.e. the
-                    #   event will not have any consequence on the
-                    #   permitted/prohibited state).
-                    #   Even if there are no instances, the event
-                    #   should be considered in the trace, since executing
-                    #   it can execute a relevant callin.
-                    #
-                    events_in_frontier.add(self._new_evt_tuple(evt_of_ci))
-        frontier.update(events_in_frontier)
-
-        return frontier
-
-
-    def _get_buggy_instances(self):
-        """ Get the set of instances that can be disabled and thus
-        cause a vioalation.
-        """
-        buggy_instances = set()
-        for rule in self.specs:
-            if (rule.specType == SpecType.Disallow):
-                if rule.dst not in self.symbol_to_instances: continue
-                for inst in self.symbol_to_instances[rule.dst]:
-                    buggy_instances.add(self._new_inst_tuple(inst))
-        buggy_instances = self._get_containing_evt(buggy_instances)
-        return buggy_instances
-
-    def _compute_pre(self, frontier):
-        """ Given a set of instances, it returns all the instances
-        that can enable/disable one instance in the set.
-        """
-
-        new_frontier = set()
-        for front_obj in frontier:
-            # if inst is an event (not an instance of an event),
-            # then continue: the event will not match any rule.
-            if self._is_evt(front_obj): continue
-            inst = front_obj[1]
-
-            # find the instances that can enable/disable inst
-            # We find the rules that can have effects in inst, and
-            # then find the instances that can match them.
-            for rule in self.specs:
-                if rule.dst == inst.symbol:
-                    if not rule.src in self.symbol_to_instances:
-                        # No instances that match rule.src
-                        continue
-
-                    # Instantiate the paramter on the lhs of the rule
-                    dst_env = self._build_env({}, rule.dst_args, inst.args)
-                    conc_src_args = self._inst_param_rule(rule.src_args, dst_env)
-
-                    for prev_inst in self.symbol_to_instances[rule.src]:
-                        # we only add the instances that can match the
-                        # parameters
-                        if self._match_args(prev_inst.args, conc_src_args):
-                            new_frontier.add(self._new_inst_tuple(prev_inst))
-
-        # Add the instances of the events that call a ci in the
-        # frontier
-        new_frontier = self._get_containing_evt(new_frontier)
-
-        return new_frontier
-
-    def _computes_relevant_instances(self):
-        """ Computes the set of relevant instances of events and ci.
-
-        Definition - relevant instance.
-
-        - An event is relevant if:
-          - it calls a relevant callin instance
-          - it can enable/disable (allow/disallow) a relevant event
-            (callin) instance
-          NOTE: we store events and not event instances.
-          An event may not have an instance (e.g. if it is not matched by any
-          binding).
-          However, the event may still be executed by the scheduler, and so
-          its callins. Hence, we need the event and not an event instance.
-
-        - A callin instance is relevant if:
-          - it can be disabled
-          - it can enable/disable (allow/disallow) a relevant event
-            (callin) instance
-
-        The set is computed with a fixed point algorithm.
-        """
-
-        # Initialize the relevant instances with the callins that can be disabled
-        relevant_instances = self._get_buggy_instances()
-        frontier = set(relevant_instances)
-
-        # Fix-point computation of the relevant set
-        prev_size = 0
-        while prev_size != len(relevant_instances):
-            prev_size = len(relevant_instances)
-            # compute the frontier
-            frontier = self._compute_pre(frontier)
-            # get the new set of "reachable" instances
-            relevant_instances.update(frontier)
-
-        return relevant_instances
-
-
-    def _simplify(self):
-        """ Simplify the concrete trace according to the current
-        specification.
-        """
-        # get the relevant instances
-        relevant_instances = self._computes_relevant_instances()
-
-        # get the relevant messages
-        relevant_msgs = set()
-        for msg in self.msgs.evt_info.keys():
-            is_relevant = False
-            if self._new_evt_tuple(msg) in relevant_instances:
-                is_relevant = True
-            elif msg in self.msgs_to_instances:
-                for inst in self.msgs_to_instances[msg]:
-                    if self._new_inst_tuple(inst) in relevant_instances:
-                        is_relevant = True
-            if is_relevant:
-                relevant_msgs.add(msg)
-
-        # Create a new trace
-        new_ctrace = ConcreteTrace()
-        new_ctrace.events.append(CEvent("initial"))
-        for cevt in self.ctrace.events:
-            evt_msg = self.conc_to_msg[cevt]
-            if evt_msg not in relevant_msgs: continue
-
-            new_cevt = CEvent(cevt.symbol)
-            new_cevt.args = list(cevt.args)
-            new_ctrace.events.append(new_cevt)
-
-            for ccb in cevt.cb:
-                new_ccb = CCallback(ccb.symbol)
-                new_ccb.args = list(ccb.args)
-                new_cevt.cb.append(new_ccb)
-
-                for cci in ccb.ci:
-                    ci_name = self._get_ci_msg(cci)
-                    if ci_name not in relevant_msgs: continue
-                    new_cci = CCallin(cci.symbol)
-                    new_cci.args = list(cci.args)
-                    new_ccb.ci.append(new_cci)
-
-        # change the traces
-        self.ctrace = new_ctrace
-        if (logging.getLogger().getEffectiveLevel() >= logging.INFO):
-            # Print the simplifed trace
-            print "\n--- Simplified trace ---"
-            self.ctrace.print_trace()
-
-        # Create a new matchinfo structure
-        self.msgs = MatchInfo(self)
-        # process the trace again
-        self._process_trace()
-
-class MsgInfo(object):
-    def __init__(self, msg):
-        self.msg = msg
-        # set of concrete messages in the trace that have
-        # been mapped to the same message
-        self.conc_msgs = set()
-        # List of matches
-        # A match is a tuple (rule, match_inst, eff_inst) where:
-        # - rule: is a rule from specs
-        # - match_inst: instantiation that matched the premise of the rule
-        # - eff_inst: instantiation that matched the consequence of the rule
-        self.matches = []
-
-    def add_match(self, rule, match_inst, eff_inst):
-        # Helper function to add a match
-        self.matches.append((rule, match_inst, eff_inst))
-
-class CiInfo(MsgInfo):
-    def __init__(self, msg):
-        super(CiInfo, self).__init__(msg)
-        # is_disabled tracks if the Ci can be disabled by some rule
-        self.is_disabled = False
-
-class EventInfo(MsgInfo):
-    def __init__(self, evt_msg):
-        super(EventInfo, self).__init__(evt_msg)
-        # Map from messages (events and callins) to their state that
-        # could be:
-        # 0  if (unkonwn), 1 (enabled/allowed), -1 (disabled/disallowed)
-        # The map must be initialized by the caller.
-        # The map represent the deterministic effects due to the
-        # execution of the event.
-        self.msg_enabled = None
-        # Set of message symbols that must be enabled/allowed to
-        # enable the transition of the event.
-        self.guards = set()
-        # set of CIs that must be allowed to execute the event without
-        # ending in a bug
-        self.must_be_allowed = set()
-
-        # First ci that cannot be called (if any)
-        # Corner case where just observing the sequence of CI in an
-        # event we can determine that we reach a bug.
-        self.bug_ci = None
-
-class MatchInfo:
-    """ Stores and print the information to explain how we obtained
-        the transition system.
     """
 
-    def __init__(self, verifier):
-        # need access to the verifier
-        self.verifier = verifier
+    def __init__(self, trace, specs):
+        self.trace = trace
+        self.specs = specs
+        self.ts = None
+        self.error_prop = None
 
-        # maps from msgs to message information
-        self.evt_info = {}
+        self.ground_specs = self._compute_ground_spec()
 
-        # map from concrete message in the trace to index
-        self.cmsgs_to_index = {}
-        evt_index = 0
-        for cevt in self.verifier.ctrace.events:
-            evt_index = evt_index + 1
-            self.cmsgs_to_index[cevt] = [str(evt_index)]
-
-            cb_index = 0
-            for ccb in cevt.cb:
-                cb_index = cb_index + 1
-                self.cmsgs_to_index[ccb] = [str(evt_index), str(cb_index)]
-
-                ci_index = 0
-                for cci in ccb.ci:
-                    ci_index = ci_index + 1
-                    self.cmsgs_to_index[cci] = [str(evt_index),
-                                                str(cb_index),
-                                                str(ci_index)]
-
-    def __setitem__(self, msg_name, evt_info):
-        self.evt_info[msg_name] =  evt_info
-
-    def __getitem__(self, msg_name):
-        return self.evt_info[msg_name]
-
-    def print_info(self):
-        print("\n--- Encoding information ---")
-        (count_e, count_ci) = (0,0)
-        for msg_name, dbg_info in self.evt_info.iteritems():
-            if isinstance(dbg_info, EventInfo):
-                count_e = count_e + 1
-            else:
-                count_ci = count_ci + 1
-        total = count_e + count_ci
-        print("Processed %d messages (%d events, %d callins)\n" \
-              % (total, count_e, count_ci))
-
-        i = 0
-        for msg_name, dbg_info in self.evt_info.iteritems():
-            i = i + 1
-
-            is_evt = isinstance(dbg_info, EventInfo)
-            if not is_evt: prefix = "Callin"
-            else: prefix = "Event"
-
-            if is_evt:
-                readable = self.verifier._get_readable_msg(dbg_info.msg)
-                print("(%d/%d) %s: %s" % (i, total, prefix, dbg_info.msg))
-                print("Full event Name: %s" % (dbg_info.msg))
-            else:
-                print("(%d/%d) %s: %s" % (i, total, prefix, dbg_info.msg))
-
-            readable_msgs = []
-            for l in  dbg_info.conc_msgs:
-                ",".join(self.cmsgs_to_index[l])
-                readable_msgs.append(",".join(self.cmsgs_to_index[l]) +
-                                     " " +
-                                     str(l.symbol))
-            str_msgs = "  \n".join(readable_msgs)
-            print("Concrete messages:\n  %s" % (str_msgs))
+    def get_ts_encoding(self):
+        """ Returns the transition system encoding of the dynamic
+        verification problem.
+        """
+        if (self.ts is None): self._encode()
+        return self.ts
 
 
-            print("List of matches:")
-            for (rule, inst, dst_inst) in dbg_info.matches:
-                print("--- Match ---")
-                print("Matched instance: %s(%s)" % (inst.symbol, ",".join(inst.args)))
-                if (dst_inst == None):
-                    print("No effects.")
+    def _encode(self):
+        """ Function that performs the actual encoding of the TS.
+
+        The function performs the following steps:
+
+        """
+        self.ts = TransitionSystem()
+
+        # Disjunctino of the error states
+        self.error_prop = FALSE()
+
+        for ground_spec in self.ground_specs:
+            (gs_ts, error_condition) = self.get_ground_spec_ts(ground_spec)
+            self.ts.product(gs_ts)
+            self.error_prop = Or(self.error_prop, error_condition)
+
+    def _compute_ground_spec(self):
+        """ Computes all the ground specifications from the
+        specifications with free variables in self.spec and the
+        concrete trace self.trace
+
+        Return a list of ground specifications.
+        """
+
+        ground_specs = []
+
+        gs = GroundSpecs(self.trace)
+
+        for spec in self.specs:
+            tmp = gs.ground_spec(spec)
+            ground_specs.extend(tmp)
+
+        return ground_specs
+
+
+    def _get_ground_spec_ts(self, ground_spec):
+        """ Given a ground specification, returns the transition
+        system that encodes the updates implied by the specification.
+        """
+        raise Exception("Not implemented")
+
+
+
+class GroundSpecs(object):
+    """ Computes all the ground specifications from the
+    specifications with free variables in self.spec and the
+    concrete trace self.trace
+
+    Return a list of ground specifications.
+    """
+
+    def __init__(self, trace):
+        self.trace = trace
+        self.trace_map = TraceMap(self.trace)
+
+
+    def ground_spec(self, spec):
+        ground_specs = []
+
+        bindings = self._get_ground_bindings(spec)
+
+        # instantiate the bindings
+        for binding in bindings:
+            new_spec = self.substitute(spec, binding)
+            ground_specs.append(new_spec)
+
+        return ground_specs
+
+    def _substitute(self, spec, binding):
+        # TODO: add memoization
+
+        def substitute_rec(self, node, binding):
+            def sub_leaf(self, leaf, binding):
+                leaf_type = get_node_type(leaf)
+
+                if (leaf_type) == DONTCARE: return leaf
+                else if leaf_type != ID: return leaf
                 else:
-                    print("Matched effects: %s(%s)" % (dst_inst.symbol, ",".join(dst_inst.args)))
-                print rule.get_print_desc()
-            if is_evt:
-                print("Guards: %s" % ",".join(list(dbg_info.guards)))
-                print("Required callins:\n  %s" % "\n  ".join(list(dbg_info.must_be_allowed)))
-                if dbg_info.bug_ci != None:
-                    print("Event ends in bug %s" % (dbg_info.bug_ci))
-            print("-------------")
+                    assert leaf in binding
+                    return binding[leaf]
+
+
+            def process_param(param_node):
+                node_type = node_get_type(param_node)
+                if (node_type != PARAM_LIST):
+                    assert node_type == NIL
+                    pass
+                else:
+                    # the binding should be there
+                    res = bindings(param_node[1])
+                    new_param(sub_leaf(self, node[1], binding),
+                              process_param(param_node[2]))
+
+
+            node_type = get_node_type(node)
+            if (node_type in spec_ast.leaf_nodes): return node
+            else if (node_type == CALL):
+                new_params = process_param(get_call_params(node))
+
+                new_call_node = new_call(sub_leaf(self, get_call_receiver(node),
+                                                  binding),
+                                         get_call_method(node),
+                                         new_params)
+                return new_call_node
+
+            else if (node_type == AND_OP or
+                node_type == OR_OP or
+                node_type == SEQ_OP or
+                node_type == ENABLE_OP or
+                node_type == DISABLE_OP or
+                node_type == SPEC_LIST):
+
+                lhs = substitute_rec(self, node[1], binding)
+                rhs = substitute_rec(self, node[2], binding)
+                return create_node(node_type, [lhs, rhs])
+            else if (node_type == STAR_OP or node_type == NOT_OP):
+                lhs = substitute_rec(self, node[1], binding)
+                return create_node(node_type, [lhs])
+            else:
+                raise UnexpectedSymbol(spec_node)
+
+
+    def _get_ground_bindings(self, spec):
+        """ Find all the ground specifications for spec.
+
+        The algorithm proceeds recursively on the structure of the
+        formula.
+
+        For each subformula, the algorithm keeps a set of sets of
+        assignment to variables.
+
+        The final result is this set of sets of assignments.
+        For each set of assignment, we have the instantiation of a
+        rule.
+
+        NOW: this is the dumbest possible implementation of the
+        grounding.
+        Possible improvements:
+          - as usual, memoize the results for subformulas (it seems an
+          effective strategies)
+          - use decision diagram like data structure to share the
+        common assignemnts to values.
+
+        """
+        def _ground_bindings_rec(self, spec_node, bindings):
+            node_type = get_node_type(spec_node)
+            if (node_type in spec_ast.leaf_nodes)
+                # ground set do not change in these cases
+                pass
+            else if (node_type == AND_OP or
+                node_type == OR_OP or
+                node_type == SEQ_OP or
+                node_type == ENABLE_OP or
+                node_type == DISABLE_OP or
+                node_type == SPEC_LIST):
+                self._ground_bindings_rec(spec_node[2],
+                                          self._ground_bindings_rec(spec_node[1],
+                                                                    bindings))
+            else if (node_type == STAR_OP or node_type == NOT_OP):
+                self._ground_bindings_rec(spec_node[1], bindings)
+            else if (node_type == CALL):
+                # get the set of all the possible assignments
+                # TODO pass bindings to perform directly the
+                # product intersection while doing the lookup
+                bindings.combine(self.lookup_assignments(node))
+            else:
+                raise UnexpectedSymbol(spec_node)
+
+        binding_set = self._ground_bindings_rec(spec.ast, AssignmentsSet())
+        return binding_set
+
+
+    def class Assignments(object):
+        """ Represent a set of assignments derived from a single
+        method call (messasge)"""
+        def __init__(self):
+            self.assignments = {}
+            self._is_bottom = False
+
+        def add(self, variable, value):
+            assert variable not in self.assignments
+            self.assignments.add[variable] = value
+
+        def contains(self, formal, actual):
+            try:
+                return self.assignments[formal] == actual
+            except KeyError:
+                return False
+
+        def is_bottom(self):
+            """ Return true if the set of assignments represents the
+            empty set """
+            return self._is_bottom
+
+        def intersect(self, other):
+            """ Note: this is not a standard intersection.
+            If a variable assignment does not exist in one of the two
+            set, it is still present in the intersection.
+
+            Side effect on the current set
+            """
+            new_map = {}
+
+            my_map = self.assignments
+            other_map = other.assignments
+
+            if self.is_bottom() or other.is_bottom(): return
+
+            for (key, value) in _map.iteritems():
+                if key is in other_map:
+                    if other_map[key] == value:
+                        # add common elements
+                        new_map[key] = value
+                    else:
+                        # do not agree on the value for key - no
+                        # compatible assignment
+                        result = Assignments()
+                        result._is_bottom = True
+                        result.assignments = None
+                        return result
+                else:
+                    new_map[key] = value
+
+            # add the missing elements from other
+            for (key, value) in _map.iteritems():
+                if key not in my_map: new_map[key] = value
+
+            result = Assignments()
+            result.assignments = new_map
+            return result
+
+
+    def class AssignmentsSet(object):
+        """ Represent a set of assignments (or bindings) from free
+        variables to actual values derived from a set of concrete
+        method calls.
+        """
+        def __init__(self):
+            self.assignments = set()
+
+        def add(self, assignments):
+            """ Add an assignment to the set of assignments.
+
+            Assignment is a map from variables to values.
+            """
+            self.assignments.add(assignments)
+
+        def combine(self, other):
+            new_set = set()
+
+            for assignments in self.assignments():
+                for assignments_other in self.other():
+                    new_a = assignments.intersect(assignments_other)
+                    new_set,add(new_a)
+
+            result = AssignmentsSet()
+            result.assignements = new_a
+
+            assert result
+
+
+    def class TraceMap(object):
+        def __init__(self, trace):
+            # 2-level index with method name and arity of paramters
+            self.trace_map = {}
+            for child in trace.children:
+                self.trace_map = self._fill_map(child, self.trace_map)
+
+
+        def _fill_map(self, msg, trace_map):
+            """ Given a message from the trace fill and a map
+            Creates the 2-level index formed by the message name,
+            and then the arity of the message to a list of messages.
+            """
+            arity_map = None
+            try:
+                arity_map = trace_map[msg.method_name]
+            except KeyError:
+                arity_map = {}
+                trace_map[msg.method_name] = arity_map
+
+            arity = len(msg.paramters)
+            method_list = None
+            try:
+                method_list = arity_map[arity]
+            except KeyError:
+                method_list = []
+                arity_map[arity] = method_list
+            method_list.append(msg)
+
+            for child in msg.children:
+                trace_map = self._fill_map(msg, trace_map)
+
+            return trace_map
+
+        def lookup_methods(self, method_name, arity):
+            """ Given the name of a method and its arity, returns the
+            list of messages in the trace that
+            match the method name and have the same number of
+            parameters,
+            """
+            method_list = None
+            try:
+                arity_map = self.trace_map[method_name]
+                method_list = arity_map[arity]
+            except KeyError:
+                pass
+            return method_list
+
+        def lookup_assignments(self, call_node):
+            """ Given a node that represent a call in a specification, 
+            returns the set of all the assignments from free variables
+            in the call node to concrete values found in the trace.
+            """
+            assert (get_node_type(call_node) == CALL)
+
+            assignments = AssignmentsSet()
+
+            try:
+                # Build the list of formal parameters
+                # (CALL, receiver, method_name, params)
+                method_name_node = get_call_method(call_node)
+                method_name = get_id_val(method_name_node)
+                receiver = get_call_receiver(call_node)
+                params = get_call_params(call_node)
+                param_list = []
+                if (node_get_type(receiver) != NIL):
+                    param_list.append(receiver)
+                while (node_get_type(params) != PARAM_LIST):
+                    param_list.append(params[1])
+                    params = params[2]
+
+                matching_methods = self.lookup_methods(method_name, len(params))
+
+                # For each method, find the assignments to the variables in params
+                for method in matching_methods:
+                    match = True
+                    method_assignments = Assignments()
+                    for formal, actual in zip(param_list, method.params):
+                        formal_type = node_get_type(formal)
+
+                        assert formal_type in leaf_nodes
+                        assert formal_type != NIL
+
+                        if (formal_type == DONTCARE):
+                            continue
+                        else if (formal_type in spec_ast.const_nodes):
+                            # if the constant nodes do not match, do not consider
+                            # this as a binding
+                            # this is an optimization, it does not create bindings
+                            # that we do not need
+                            if str(formal[1]) != actual:
+                                match = False
+                                break
+                        else if formal in method_assignments:
+                            assert formal_type == ID
+                            if method_assignments.contains(formal, actual):
+                                # we have two different assignments
+                                # for the same free variable
+                                # remove the match
+                                match = False
+                                break
+                        else:
+                            assert formal_type == ID
+                            method_assignments.add(formal, actual)
+
+                    if match:
+                        assignements.add(method_assignment)
+
+                return assignments
+
+            except KeyError:
+                return assignments
+
 
 
 
