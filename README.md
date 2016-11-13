@@ -7,7 +7,7 @@ Dynamic verification using callbacks.
 - TraceRunner
 - Google protobuf 3.0
 
-*WARNING* we require version 3.0
+*WARNING* we require version 3.0 (update it with 
 
 
 Compile the python package for protobuffer

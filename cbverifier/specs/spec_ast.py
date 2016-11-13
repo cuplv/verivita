@@ -117,7 +117,7 @@ def get_call_method(node):
     assert CALL == get_node_type(node)
     return node[2]
 
-def get_call_param(node):
+def get_call_params(node):
     assert CALL == get_node_type(node)
     return node[3]
 
@@ -151,7 +151,7 @@ def pretty_print(ast_node, out_stream=sys.stdout):
                 my_print(out_stream, ".")
             pretty_print_aux(out_stream,get_call_method(node),"")
             my_print(out_stream, "(")
-            pretty_print_aux(out_stream,get_call_param(node),"") # params
+            pretty_print_aux(out_stream,get_call_params(node),"") # params
             my_print(out_stream, ")")
         elif (node_type == AND_OP or node_type == OR_OP):
             my_print(out_stream, "(")

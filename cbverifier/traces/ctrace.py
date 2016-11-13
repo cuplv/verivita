@@ -37,16 +37,29 @@ class CMessage(object):
     """ Base class that represents a concrete message.
     """
 
-    def __init__(self):
-        self.message_id = -1
-        self.thread_id = None
-        self.signature = None
-        self.method_name = None
-        self.params = []
-        self.return_value = None
+
+    def __init__(self,
+                 message_id = -1,
+                 thread_id = None,
+                 signature = None,
+                 method_name = None,
+                 params = [],
+                 return_value = None):
+        self.message_id = message_id
+        self.thread_id = thread_id
+        self.signature = signature
+        self.method_name = method_name
+        self.params = params
+        self.return_value = return_value
 
         # messages called inside this message
         self.children = []
+
+    def add_msg(self, msg):
+        self.children.append(msg)
+
+    def __iter__(self):
+        return iter(self.children)
 
     def _print(self, stream, sep):
         stream.write("%s[%d] %s(" % (sep, self.message_id, self.signature))
@@ -63,19 +76,45 @@ class CMessage(object):
 class CCallback(CMessage):
     """ Represents a callback message
     """
-    def __init__(self):
-        super(CCallback, self).__init__()
+    def __init__(self,
+                 message_id = -1,
+                 thread_id = None,
+                 signature = None,
+                 method_name = None,
+                 params = [],
+                 return_value = None,
+                 method_parameter_types = [],
+                 overrides = [],
+                 receiver_first_framework_super = []):
 
-        self.method_parameter_types = []
-        self.overrides = []
-        self.receiver_first_framework_super = []
+        super(CCallback, self).__init__(message_id,
+                                        thread_id,
+                                        signature,
+                                        method_name,
+                                        params,
+                                        return_value)
+
+        self.method_parameter_types = method_parameter_types
+        self.overrides = overrides
+        self.receiver_first_framework_super = receiver_first_framework_super
 
 
 class CCallin(CMessage):
     """ Represents a callin message
     """
-    def __init__(self):
-        super(CCallin, self).__init__()
+    def __init__(self,
+                 message_id = -1,
+                 thread_id = None,
+                 signature = None,
+                 method_name = None,
+                 params = [],
+                 return_value = None):
+        super(CCallin, self).__init__(message_id,
+                                      thread_id,
+                                      signature,
+                                      method_name,
+                                      params,
+                                      return_value)
 
 class AppInfo(object):
     """ Info of the app."""
@@ -87,17 +126,30 @@ class CValue(object):
     """ Represent the concrete value of an object recorded in a
     concrete trace
     """
-    def __init__(self, value_msg):
-        # True if it is null
-        self.is_null = value_msg.is_null
-        # name of the type of the paramter
-        self.type = value_msg.type
-        # name of the first framework type of the parameter
-        self.fmwk_type = value_msg.fmwk_type
-        # Id of the object
-        self.object_id = value_msg.object_id
-        # Value of the object
-        self.value = value_msg.value
+    def __init__(self, value_msg=None):
+        self._hash = None
+        if value_msg is not None:
+            # True if it is null
+            self.is_null = value_msg.is_null
+            # name of the type of the paramter
+            self.type = value_msg.type
+            # name of the first framework type of the parameter
+            self.fmwk_type = value_msg.fmwk_type
+            # Id of the object
+            self.object_id = value_msg.object_id
+            # Value of the object
+            self.value = value_msg.value
+        else:
+            # True if it is null
+            self.is_null = True
+            # name of the type of the paramter
+            self.type = "java.lang.Object"
+            # name of the first framework type of the parameter
+            self.fmwk_type = None
+            # Id of the object
+            self.object_id = None
+            # Value of the object
+            self.value = None
 
         # at least one must be set
         assert (not ((self.is_null is None or not self.is_null) and
@@ -115,21 +167,34 @@ class CValue(object):
             else:
                 return str(value)
 
-        repr = "[%s]" % ",".join([enc(self.value), enc(self.object_id),
-                                  enc(self.is_null), enc(self.fmwk_type)])
-
-        # if self.value is not None:
-        #     repr = self.value
-        # elif self.object_id is not None:
-        #     repr = self.object_id
-        # elif self.is_null is not None:
-        #     if self.is_null:
-        #         repr = "NULL"
-
-        # if self.fmwk_type is not None and self.fmwk_type != "":
-        #     repr = repr + " : " + self.fmwk_type
+        repr = "(value = %s," \
+               "object_id = %s," \
+               "is_null = %s," \
+               "type = %s)" % (enc(self.value), enc(self.object_id),
+                               enc(self.is_null), enc(self.type))
 
         return repr
+
+    def __hash__(self):
+        # provide a hash to the object
+        # This allow us to use it in a set
+        if self._hash is None:
+            self._hash = 0
+
+            self._hash ^= hash(self.is_null)
+            self._hash ^= hash(self.type)
+            self._hash ^= hash(self.fmwk_type)
+            self._hash ^= hash(self.object_id)
+            self._hash ^= hash(self.value)
+
+        return self._hash
+
+    def __eq__(self, other):
+        return (self.is_null == other.is_null and
+                self.type == other.type and
+                self.fmwk_type == other.fmwk_type and
+                self.object_id == other.object_id and
+                self.value == other.value)
 
 
 class CTrace:
@@ -138,12 +203,16 @@ class CTrace:
         self.children = []
         self.app_info = None
 
-
     def print_trace(self, stream):
         """ Print the trace """
         for child in self.children:
             child._print(stream, "")
 
+    def add_msg(self, msg):
+        self.children.append(msg)
+
+    def __iter__(self):
+        return iter(self.children)
 
 class CTraceSerializer:
     """
@@ -205,11 +274,11 @@ class CTraceSerializer:
 
                 if (len(message_stack) == 0):
                     assert (isinstance(trace_message, CCallback))
-                    trace.children.append(trace_message)
+                    trace.add_msg(trace_message)
                 else:
                     last_message = message_stack[len(message_stack)-1]
 
-                    last_message.children.append(trace_message)
+                    last_message.add_msg(trace_message)
 
         assert len(message_stack) == 0
         return trace
