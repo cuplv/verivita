@@ -90,7 +90,7 @@ def p_bexp_paren(t):
 
 
 def p_atom_no_param(t):
-    '''atom : TOK_ID TOK_DOT TOK_ID TOK_LPAREN TOK_RPAREN
+    '''atom : receiver TOK_DOT TOK_ID TOK_LPAREN TOK_RPAREN
             | TOK_ID TOK_LPAREN TOK_RPAREN
     '''
 
@@ -101,10 +101,10 @@ def p_atom_no_param(t):
         receiver = None
         method_name = t[1]
 
-    t[0] = new_call(new_id(receiver), new_id(method_name), new_nil())
+    t[0] = new_call(receiver, new_id(method_name), new_nil())
 
 def p_atom_param(t):
-    '''atom : TOK_ID TOK_DOT TOK_ID TOK_LPAREN paramlist TOK_RPAREN
+    '''atom : receiver TOK_DOT TOK_ID TOK_LPAREN paramlist TOK_RPAREN
             | TOK_ID TOK_LPAREN paramlist TOK_RPAREN
     '''
 
@@ -117,7 +117,7 @@ def p_atom_param(t):
         method_name = t[1]
         params = t[3]
 
-    t[0] = new_call(new_id(receiver), new_id(method_name), params)
+    t[0] = new_call(receiver, new_id(method_name), params)
 
 def p_atom_const(t):
     '''atom : TOK_TRUE
@@ -128,6 +128,16 @@ def p_atom_const(t):
         t[0] = new_true()
     else:
         t[0] = new_false()
+
+def p_receiver_id(t):
+    '''receiver : TOK_ID
+    '''
+    t[0] = new_id(t[1])
+
+def p_receiver_donttcare(t):
+    '''receiver : TOK_DONTCARE
+    '''
+    t[0] = new_dontcare()
 
 def p_paramlist_param(t):
     '''paramlist : param
@@ -161,7 +171,7 @@ def p_param_int(t):
 
 def p_param_dontcare(t):
     '''param : TOK_DONTCARE'''
-    t[0] = new_int(t[1])
+    t[0] = new_dontcare()
 
 
 def p_error(t):

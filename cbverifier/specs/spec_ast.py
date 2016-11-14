@@ -32,6 +32,7 @@ DISABLE_OP=14
 SPEC_LIST=15
 DONTCARE=16
 STRING=17
+VALUE=18
 
 inv_map = {0 : "TRUE",
            1 : "FALSE",
@@ -84,6 +85,10 @@ def new_not(p1): return (NOT_OP, p1)
 def new_seq(p1,p2): return (SEQ_OP, p1, p2)
 def new_star(p1): return (STAR_OP, p1)
 
+def new_value(value):
+    # wraps a trace runner value
+    return (VALUE, value)
+
 def new_enable_spec(regexp, atom):
     return (SPEC_SYMB, (ENABLE_OP, regexp, atom))
 
@@ -111,14 +116,17 @@ def get_id_val(node): return node[1]
 
 def get_call_receiver(node):
     assert CALL == get_node_type(node)
+    assert node[1] is not None
     return node[1]
 
 def get_call_method(node):
     assert CALL == get_node_type(node)
+    assert node[2] is not None
     return node[2]
 
 def get_call_params(node):
     assert CALL == get_node_type(node)
+    assert node[3] is not None
     return node[3]
 
 
@@ -139,6 +147,8 @@ def pretty_print(ast_node, out_stream=sys.stdout):
         elif (node_type == DONTCARE): my_print(out_stream, "_")
         elif (node_type == ID or node_type == INT or node_type == FLOAT or node_type == STRING):
             my_print(out_stream, "%s%s" % (sep, str(node[1])))
+        elif (node_type == VALUE):
+            my_print(out_stream, "%s%s" % (sep, str(node[1])))
         elif (node_type == PARAM_LIST):
             pretty_print_aux(out_stream,node[1],"")
             if (get_node_type(node[2]) != new_nil()):
@@ -146,7 +156,7 @@ def pretty_print(ast_node, out_stream=sys.stdout):
                 pretty_print_aux(out_stream,node[2],"")
         elif (node_type == CALL):
             receiver = get_call_receiver(node)
-            if (get_node_type() != new_nil()):
+            if (get_node_type(receiver) != new_nil()):
                 pretty_print_aux(out_stream,receiver,"") # receiver
                 my_print(out_stream, ".")
             pretty_print_aux(out_stream,get_call_method(node),"")
@@ -172,16 +182,20 @@ def pretty_print(ast_node, out_stream=sys.stdout):
             my_print(out_stream, "[*]")
         elif (node_type == SPEC_SYMB):
             my_print(out_stream, "SPEC ")
-            pretty_print_aux(out_stream,node[2],"")
+            pretty_print_aux(out_stream ,node[1], "")
+        elif (node_type == ENABLE_OP or
+              node_type == DISABLE_OP):
 
-            if (node[1] == ENABLE_OP):
+            pretty_print_aux(out_stream ,node[1], "")
+
+            if (node_type == ENABLE_OP):
                 my_print(out_stream, " |+ ")
-            elif (node[1] == DISABLE_OP):
+            elif (node_type == DISABLE_OP):
                 my_print(out_stream, " |- ")
             else:
                 raise Exception("Unkown type of spec")
 
-            pretty_print_aux(out_stream,node[3],"")
+            pretty_print_aux(out_stream,node[2],"")
         elif (node_type == SPEC_LIST):
             pretty_print_aux(out_stream,node[1],"")
             my_print(out_stream, ";\n")

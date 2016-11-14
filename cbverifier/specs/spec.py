@@ -46,6 +46,12 @@ class Spec:
             return None
 
     @staticmethod
+    def get_spec_from_string(spec_string):
+        spec_list = []
+        spec_list = Spec.get_specs_from_string(spec_string, spec_list)
+        return spec_list[0]
+
+    @staticmethod
     def get_specs_from_file(spec_file, spec_list=None):
         with open(spec_file, "r") as f:
             data = f.read()
@@ -58,4 +64,3 @@ class Spec:
         for spec_file in files_list:
             spec_list = Spec.get_specs_from_file(spec_file, spec_list)
         return spec_list
-

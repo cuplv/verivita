@@ -7,8 +7,7 @@ import collections
 
 from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
-from cbverifier.traces.ctrace import CTrace
-
+from cbverifier.traces.ctrace import CTrace, CValue
 
 from cbverifier.helpers import Helper
 
@@ -33,7 +32,8 @@ class GroundSpecs(object):
 
         # instantiate the bindings
         for binding in bindings:
-            new_spec = self.substitute(spec, binding)
+            new_spec_ast = self._substitute(spec, binding)
+            new_spec = Spec(new_spec_ast)
             ground_specs.append(new_spec)
 
         return ground_specs
@@ -42,34 +42,66 @@ class GroundSpecs(object):
         # TODO: add memoization
 
         def substitute_rec(self, node, binding):
+            def wrap_value(binding, varname):
+                assert binding.has_key(varname)
+                bind = binding.get(varname)
+
+                assert bind is not None
+
+                if (isinstance(bind, CValue)):
+                    return new_value(bind)
+                else:
+                    return bind
+
             def sub_leaf(self, leaf, binding):
+                """ Given a leaf node, substitute it """
+
                 leaf_type = get_node_type(leaf)
 
-                if (leaf_type == DONTCARE): return leaf
-                elif leaf_type != ID: return leaf
+                if (leaf_type == DONTCARE):
+                    # Leave the DONTCARE in the node
+                    assert leaf is not None
+                    return leaf
+                elif leaf_type != ID:
+                    # LEAVE the constants in the node
+                    assert leaf is not None
+                    return leaf
                 else:
-                    assert leaf in binding
-                    return binding[leaf]
-
+                    # Replace the free variables
+                    return wrap_value(binding, leaf)
 
             def process_param(param_node):
+                """ Returns the new list of parameters
+                Obtained by instantiating the variables contained in
+                the binding.
+
+                Return a PARAM_LIST node
+                """
+
                 node_type = get_node_type(param_node)
                 if (node_type != PARAM_LIST):
                     assert node_type == NIL
-                    pass
+                    return new_nil()
                 else:
-                    # the binding should be there
-                    res = bindings(param_node[1])
-                    new_param(sub_leaf(self, node[1], binding),
-                              process_param(param_node[2]))
+                    formal_param = param_node[1]
+                    formal_param_type = get_node_type(formal_param)
+                    if (DONTCARE != formal_param_type):
+                        # the binding should be there
+                        res = wrap_value(binding, formal_param)
+                    else:
+                        # leave the DONTCARE node there
+                        res = formal_param
+                    return new_param(res, process_param(param_node[2]))
 
 
             node_type = get_node_type(node)
-            if (node_type in spec_ast.leaf_nodes): return node
+            if (node_type in leaf_nodes): return node
             elif (node_type == CALL):
                 new_params = process_param(get_call_params(node))
+                assert new_params is not None
 
-                new_call_node = new_call(sub_leaf(self, get_call_receiver(node),
+                new_call_node = new_call(sub_leaf(self,
+                                                  get_call_receiver(node),
                                                   binding),
                                          get_call_method(node),
                                          new_params)
@@ -88,9 +120,13 @@ class GroundSpecs(object):
             elif (node_type == STAR_OP or node_type == NOT_OP):
                 lhs = substitute_rec(self, node[1], binding)
                 return create_node(node_type, [lhs])
+            elif (node_type == SPEC_SYMB):
+                lhs = substitute_rec(self, node[1], binding)
+                return create_node(SPEC_SYMB, [lhs])
             else:
-                raise UnexpectedSymbol(spec_node)
+                raise UnexpectedSymbol(node)
 
+        return substitute_rec(self, spec.ast, binding)
 
     def _get_ground_bindings(self, spec):
         """ Find all the ground specifications for spec.
@@ -114,33 +150,52 @@ class GroundSpecs(object):
         common assignemnts to values.
 
         """
-        def _ground_bindings_rec(self, spec_node, bindings):
-            node_type = get_node_type(spec_node)
-            if (node_type in spec_ast.leaf_nodes):
-                # ground set do not change in these cases
-                pass
-            elif (node_type == AND_OP or
-                node_type == OR_OP or
-                node_type == SEQ_OP or
-                node_type == ENABLE_OP or
-                node_type == DISABLE_OP or
-                node_type == SPEC_LIST):
-                return self._ground_bindings_rec(spec_node[2],
-                                                 self._ground_bindings_rec(spec_node[1],
-                                                                           bindings))
-            elif (node_type == STAR_OP or node_type == NOT_OP):
-                return self._ground_bindings_rec(spec_node[1], bindings)
-            elif (node_type == CALL):
-                # get the set of all the possible assignments
-                # TODO pass bindings to perform directly the
-                # product intersection while doing the lookup
-                return bindings.combine(self.lookup_assignments(node))
-            else:
-                raise UnexpectedSymbol(spec_node)
 
-        binding_set = self._ground_bindings_rec(spec.ast, AssignmentsSet())
+        all_bindings = AssignmentsSet()
+        all_assignments = Assignments()
+        all_bindings.add(all_assignments)
+
+        binding_set = self._ground_bindings_rec(spec.ast, all_bindings)
         return binding_set
 
+    def _ground_bindings_rec(self, spec_node, bindings):
+        node_type = get_node_type(spec_node)
+        if (node_type in leaf_nodes):
+            # ground set do not change in these cases
+            pass
+        elif (node_type == AND_OP or
+            node_type == OR_OP or
+            node_type == SEQ_OP or
+            node_type == ENABLE_OP or
+            node_type == DISABLE_OP or
+            node_type == SPEC_LIST):
+            return self._ground_bindings_rec(spec_node[2],
+                                             self._ground_bindings_rec(spec_node[1],
+                                                                       bindings))
+        elif (node_type == STAR_OP or node_type == NOT_OP or
+              node_type == SPEC_SYMB):
+            return self._ground_bindings_rec(spec_node[1], bindings)
+        elif (node_type == CALL):
+            # get the set of all the possible assignments
+            # TODO pass bindings to perform directly the
+            # product intersection while doing the lookup
+
+            spec_res = self.trace_map.lookup_assignments(spec_node)
+            assert spec_res is not None
+
+            # print "\n"
+            # print spec_node
+            # print spec_res
+
+            res = bindings.combine(spec_res)
+            assert res is not None
+
+            # print res
+            # print "\n"
+
+            return res
+        else:
+            raise UnexpectedSymbol(spec_node)
 
 class Assignments(object):
     """ Represent a set of assignments derived from a single
@@ -234,7 +289,6 @@ class Assignments(object):
                     break
             return eq_hash
 
-
         if self.is_frozen() and other.is_frozen():
             assert(self.assignments_set != None)
             assert(other.assignments_set != None)
@@ -260,7 +314,8 @@ class Assignments(object):
         for pair in self.assignments.iteritems():
             if not first:
                 rep += ","
-            rep += "(%s,%s)" % pair
+            rep += "[%s := %s]" % pair
+            first = False
 
         rep += "]"
         return rep
@@ -320,7 +375,7 @@ class AssignmentsSet(object):
                 # If the set is empty, then there are no assignments
                 # that are compatible with the rule.
                 if not new_a.is_bottom():
-                    result.assignments.add(new_a)
+                    result.add(new_a)
 
         return result
 
@@ -332,9 +387,10 @@ class AssignmentsSet(object):
         return not self.__eq__(other)
 
     def __repr__(self):
-        rep = "AssignmentsSet\n"
+        rep = "AssignmentsSet\n{\n"
         for a in self.assignments:
-            rep += "%s\n" % str(a)
+            rep += "  %s,\n" % str(a)
+        rep +="}"
         return rep
 
 class TraceMap(object):
@@ -377,6 +433,7 @@ class TraceMap(object):
             trace_map[msg.method_name] = arity_map
 
         arity = len(msg.params)
+
         method_list = None
         try:
             method_list = arity_map[arity]
@@ -429,8 +486,9 @@ class TraceMap(object):
             while (get_node_type(params) == PARAM_LIST):
                 param_list.append(params[1])
                 params = params[2]
+            arity = len(param_list)
 
-            matching_methods = self.lookup_methods(method_name, len(param_list))
+            matching_methods = self.lookup_methods(method_name, arity)
 
             # For each method, find the assignments to the variables in params
             for method in matching_methods:

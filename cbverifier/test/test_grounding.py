@@ -2,6 +2,7 @@
 
 """
 
+import sys
 import logging
 import unittest
 
@@ -17,6 +18,7 @@ except ImportError:
 from cbverifier.encoding.grounding import GroundSpecs, Assignments, AssignmentsSet, TraceMap
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue
 from cbverifier.specs.spec_ast import *
+from cbverifier.specs.spec import Spec
 
 class TestGrounding(unittest.TestCase):
 
@@ -89,6 +91,7 @@ class TestGrounding(unittest.TestCase):
             a = self._new_ass(row[0],row[1])
             added.append(a)
             aset.add(a)
+            assert a.is_frozen()
 
         self._test_aset_eq(aset, added)
         return aset
@@ -120,28 +123,30 @@ class TestGrounding(unittest.TestCase):
         assert(aset1 == res)
 
 
+
+    def _get_int(self, intValue):
+        v = CValue()
+        v.is_null = False
+        v.type = "java.lang.int"
+        v.value = intValue
+        return v
+
+    def _get_obj(self, objId, objType):
+        v = CValue()
+        v.is_null = False
+        v.type = objType
+        v.value = objId
+        return v
+
+
     def test_trace_map(self):
-        def _get_int(intValue):
-            v = CValue()
-            v.is_null = False
-            v.type = "java.lang.int"
-            v.value = intValue
-            return v
-
-        def _get_obj(objId, objType):
-            v = CValue()
-            v.is_null = False
-            v.type = objType
-            v.value = objId
-            return v
-
         trace = CTrace()
         cb = CCallback(1, 1, "", "doSomethingCb",
-                       [_get_obj("1","string")],
+                       [self._get_obj("1","string")],
                        None, ["string"], [], [])
         trace.add_msg(cb)
         ci = CCallin(1, 1, "", "doSomethingCi",
-                     [_get_obj("1","string")],
+                     [self._get_obj("1","string")],
                      None)
         cb.add_msg(ci)
         cb = CCallback(1, 1, "", "doSomethingCb",
@@ -149,11 +154,11 @@ class TestGrounding(unittest.TestCase):
                        None, [], [], [])
         trace.add_msg(cb)
         ci = CCallin(1, 1, "", "doSomethingCi",
-                     [_get_obj("1","string"),_get_int(2)],
+                     [self._get_obj("1","string"), self._get_int(2)],
                      None)
         cb.add_msg(ci)
         cb = CCallback(1, 1, "", "doSomethingCb",
-                       [_get_obj("2","string")],
+                       [self._get_obj("2","string")],
                        None, ["string"], [], [])
         trace.add_msg(cb)
 
@@ -169,8 +174,8 @@ class TestGrounding(unittest.TestCase):
                          new_param(new_id("l"), new_nil()))
         res = tmap.lookup_assignments(cnode)
         res_2 = self._test_aset_new([
-            [[new_id('l')],[_get_obj("1","string")]],
-            [[new_id('l')],[_get_obj("2","string")]]])
+            [[new_id('l')],[self._get_obj("1","string")]],
+            [[new_id('l')],[self._get_obj("2","string")]]])
         assert (res == res_2)
 
         cnode = new_call(new_nil(), new_id("doSomethingCb"),
@@ -183,5 +188,57 @@ class TestGrounding(unittest.TestCase):
                          new_param(new_dontcare(),
                                    new_param(new_id('z'), new_nil())))
         res = tmap.lookup_assignments(cnode)
-        res_2 = self._test_aset_new([[[new_id('z')],[_get_int(2)]]])
+
+        res_2 = self._test_aset_new([[[new_id('z')],[ self._get_int(2)]]])
         assert (res == res_2)
+
+
+
+    def test_ground_bindings(self):
+        trace = CTrace()
+        cb = CCallback(1, 1, "", "doSomethingCb",
+                       [self._get_obj("1","string")],
+                       None, ["string"], [], [])
+        trace.add_msg(cb)
+
+        # 1.doSomethingCi(2)
+        ci = CCallin(1, 1, "", "doSomethingCi",
+                     [self._get_obj("1","string"), self._get_obj("2","string")],
+                     None)
+        cb.add_msg(ci)
+
+        # 3.otherCi(1)
+        ci = CCallin(1, 1, "", "otherCi",
+                     [self._get_obj("4","string"), self._get_obj("1","string")],
+                     None)
+        cb.add_msg(ci)
+
+        # 1.doSomethingCi(4)
+        ci = CCallin(1, 1, "", "doSomethingCi",
+                     [self._get_obj("1","string"), self._get_obj("4","string")],
+                     None)
+        cb.add_msg(ci)
+
+        gs = GroundSpecs(trace)
+        spec = Spec.get_spec_from_string("SPEC l.doSomethingCi(z) |- z.otherCi(f)")
+        bindings = gs._get_ground_bindings(spec)
+        res = self._test_aset_new([
+            [[new_id('l'),new_id('z'),new_id('f')],
+             [self._get_obj("1","string"),
+              self._get_obj("4","string"),
+              self._get_obj("1","string")]]])
+        assert (bindings == res)
+
+        ground_specs = gs.ground_spec(spec)
+        assert len(ground_specs) == 1
+
+
+        spec = Spec.get_spec_from_string("SPEC l.doSomethingCi(#) |- #.otherCi(#)")
+        bindings = gs._get_ground_bindings(spec)
+        res = self._test_aset_new([
+            [[new_id('l')],
+             [self._get_obj("1","string")]]])
+        assert (bindings == res)
+
+        ground_specs = gs.ground_spec(spec)
+        assert len(ground_specs) == 1

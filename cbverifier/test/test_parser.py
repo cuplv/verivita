@@ -145,10 +145,6 @@ class TestSpecParser(unittest.TestCase):
     def test_ast(self):
         def test_ast_inner(specs, expected):
             parse_res = spec_parser.parse(specs)
-
-            print parse_res
-            print expected
-
             self.assertTrue(parse_res == expected)
 
         res = [("SPEC l.method_name() |- TRUE",
