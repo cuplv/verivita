@@ -45,6 +45,9 @@ Ideas:
     group them togheter.
     TODO: define when two callins and callbacks are independent.
 
+  - Encode a callback and its descendant messages in a single transition
+  This is similar to SSA construction
+
 """
 
 # TODOs:
@@ -127,13 +130,19 @@ class TSEncoder:
         """
         self.ts = TransitionSystem()
 
-        # Disjunctino of the error states
+        # Disjunction of the error states
         self.error_prop = FALSE()
 
+        # Encode the effects of the specifications
         for ground_spec in self.ground_specs:
-            (gs_ts, error_condition) = self.get_ground_spec_ts(ground_spec)
+            (gs_ts, error_condition) = self._get_ground_spec_ts(ground_spec)
             self.ts.product(gs_ts)
             self.error_prop = Or(self.error_prop, error_condition)
+
+        # Encode the callbacks and callins defined in the
+        # concrete trace
+        #
+
 
     def _compute_ground_spec(self):
         """ Computes all the ground specifications from the
@@ -157,7 +166,12 @@ class TSEncoder:
     def _get_ground_spec_ts(self, ground_spec):
         """ Given a ground specification, returns the transition
         system that encodes the updates implied by the specification.
+
+        We apply the same encoding used in:
+        Symbolic Compilation of PSL, Cimatti, Roveri, Tonetta, TCAD
+        Section 5, subsection A.
         """
+
         raise Exception("Not implemented")
 
 
