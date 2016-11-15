@@ -23,7 +23,7 @@ and in the Sergio Mover's master thesis www.sergiomover.eu/paper/master_thesis.p
 
 from abc import ABCMeta
 
-from pysmt.environment import reset_env
+from pysmt.environment import reset_env, get_env
 from pysmt.typing import BOOL
 from pysmt.shortcuts import Symbol, TRUE, FALSE
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
@@ -39,13 +39,18 @@ class AutoEnv(object):
     """ Environment used by the automaton class """
     def __init__(self):
         # sat solver instance
-        assert False
         self.sat_solver = None
         self.bdd_package = None
 
     @staticmethod
     def get_global_auto_env():
         auto_env = AutoEnv()
+
+        pysmt_env = get_env()
+
+        # For now use z3, we can switch to picosat if needed
+        auto_env.sat_solver = Solver(name='z3', logic=QF_BOOL)
+
         return auto_env
 
 
@@ -105,6 +110,7 @@ class Automaton(object):
 
         while (len(stack) == 0):
             s = stack.pop()
+            visited.add(s)
 
             for (dst, label) in self.trans[s]:
                 if (dst not in visited):
@@ -136,6 +142,7 @@ class Automaton(object):
 
         while (len(stack) == 0):
             s = stack.pop()
+            visited.add(s)
             new_s = self_to_new[s]
             trans = self.trans[new_s]
 
@@ -173,6 +180,64 @@ class Automaton(object):
                     trans.append((dst, label))
 
         return new_auto
+
+
+    def is_empty(self):
+        """ Returns true if the language accepted by the automaton is empty.
+        """
+        if len(self.final_states) == 0:
+            return True
+
+        stack = []
+        visited = set()
+        for s in self.initial_states:
+            stack.append(s)
+
+        while (len(stack) == 0):
+            s = stack.pop()
+            visited.add(s)
+
+            # can reach a final state
+            if (self.is_final(s)):
+                return False
+
+            for (dst, label) in self.trans[s]:
+                if (dst not in visited):
+                    stack.append(dst)
+
+        # cannot reach a final state
+        return True
+
+
+    def accept(self, word):
+        """ Returns true if self accepts the word.
+
+        Word is a list of models represented as word
+        """
+
+        def accept_from(self, state, word):
+            """ Returns true if word is accepted from state """
+
+            if (len(word) == 0 and is_final(state)):
+                return True
+            if (len(word) == 0):
+                return False
+
+            current_letter = word[0]
+            next_word = word[1:]
+            accepted = False
+            for (dst, label) in self.trans[state]:
+                if (current_letter.is_contained(label)):
+                    accepted = accepted or self.accept_from(dst, next_word)
+
+            return accepted
+
+        for s in self.initial_states:
+            accepted = self.accept_from(s, word)
+            if accepted:
+                return True
+
+        return False
 
 
     def determinize(self):
@@ -222,32 +287,40 @@ class SatLabel(Label):
     """ Represent a label with propositional formula and use a SAT
     solver to perform semantic checks.
     """
-    def __init__(self, formula, env=AutoEnv.get_global_auto_env):
+    def __init__(self, formula, env=None):
+        if env is None:
+            env = AutoEnv.get_global_auto_env()
+        self.env = env
         self.solver = env.sat_solver
         self.formula = formula
 
     def intersect(self, other):
-        return And(self.get_formula(), other.get_formula())
+        return SatLabel(And(self.get_formula(), other.get_formula()),
+                        self.env)
 
     def complement(self):
-        return Not(self.get_formula())
+        return SatLabel(Not(self.get_formula()), self.env)
 
-    def union(self):
-        return Or(self.get_formula(), other.get_formula())
+    def union(self, other):
+        return SatLabel(Or(self.get_formula(), other.get_formula()),
+                        self.env)
 
     def is_sat(self):
-        self.solver.is_sat(self.get_formula())
+        return self.solver.is_sat(self.get_formula())
 
     def is_valid(self):
-        self.solver.is_valid(self.get_formula())
+        return self.solver.is_valid(self.get_formula())
 
     def is_contained(self, other):
-        self.solver.is_sat(Implies(self.get_formula(),
-                                   other.get_formula()))
+        return self.solver.is_valid(Implies(self.get_formula(),
+                                            other.get_formula()))
 
-    def is_intersecting(self, other_label):
-        self.solver.is_sat(And(self.get_formula(),
-                               other.get_formula()))
+    def is_intersecting(self, other):
+        return self.solver.is_sat(And(self.get_formula(),
+                                      other.get_formula()))
 
     def get_formula(self):
         return self.formula
+
+    def __repr__(self):
+        return str(self.formula)
