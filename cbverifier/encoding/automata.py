@@ -27,8 +27,9 @@ from pysmt.environment import reset_env, get_env
 from pysmt.typing import BOOL
 from pysmt.shortcuts import Symbol, TRUE, FALSE
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
-
+import pysmt.operators as op
 from pysmt.shortcuts import Solver
+from pysmt.shortcuts import simplify
 from pysmt.solvers.solver import Model
 from pysmt.logics import QF_BOOL
 
@@ -45,7 +46,9 @@ class AutoEnv(object):
     def __init__(self):
         # sat solver instance
         self.sat_solver = None
-        # TODO
+        # TODO: add the bdd type of labels.
+        # With our problem bdds should not explode and be fairly
+        # efficient
         self.bdd_package = None
 
     def new_label(self, formula):
@@ -89,7 +92,7 @@ class Automaton(object):
 
         assert state_id not in self.states
         if state_id >= self.current_id:
-            self.current_id = state_id + 1
+            self.current_id = state_id
 
         self.states.add(state_id)
         self.trans[state_id] = []
@@ -111,30 +114,35 @@ class Automaton(object):
     def is_final(self, state):
         return state in self.final_states
 
-    def copy_reachable(self):
+    def copy_reachable(self, copy=None, offset = 0):
         """ Copy the reachable state of self in a new automaton """
 
-        copy = Automaton()
+        if copy is None:
+            copy = Automaton()
 
         stack = []
         visited = set()
 
         for s in self.initial_states:
-            copy._add_state(s, self.is_initial(s), self.is_final(s))
+            copy_s = s + offset
+            copy._add_state(copy_s, self.is_initial(s), self.is_final(s))
+
             visited.add(s)
             stack.append(s)
 
         while (len(stack) != 0):
             s = stack.pop()
+            copy_s = s + offset
 
             for (dst, label) in self.trans[s]:
+                copy_dst = dst + offset
                 if (dst not in visited):
-                    copy._add_state(dst, self.is_initial(dst), self.is_final(dst))
+                    copy._add_state(copy_dst, self.is_initial(dst), self.is_final(dst))
                     visited.add(dst)
                     stack.append(dst)
 
-                trans = copy.trans[s]
-                trans.append((dst,label))
+                trans = copy.trans[copy_s]
+                trans.append((copy_dst,label))
 
         return copy
 
@@ -153,7 +161,7 @@ class Automaton(object):
         self_to_new = {}
 
         for s in self.initial_states:
-            new_s = new_auto._add_new_state(self.is_initial(s),
+            new_s = new_auto._add_new_state(True,
                                             self.is_final(s))
             self_to_new[s] = new_s
             stack.append(s)
@@ -212,6 +220,44 @@ class Automaton(object):
 
         return new_auto
 
+    def union(self, other):
+        """ Returns the automaton that accepts the language accepted
+        by the union of self and other.
+        """
+
+        new_auto = self.copy_reachable()
+        new_auto = other.copy_reachable(new_auto, new_auto.current_id+1)
+
+        new_initial = new_auto._add_new_state(False, False)
+        init_is_final = False
+        for initial in new_auto.initial_states:
+            init_is_final = init_is_final or new_auto.is_final(initial)
+            for (dst_state, label) in new_auto.trans[initial]:
+                new_auto._add_trans(new_initial, dst_state, label)
+
+        new_auto.initial_states = {new_initial}
+        if init_is_final:
+            new_auto.final_states.add(new_initial)
+
+        return new_auto
+
+    def complement(self):
+        """ Returns a new automaton that accepts the complement of
+        language accepted by self """
+
+        if (len(self.initial_states) == 0 or len(self.final_states) == 0):
+            res = Automaton()
+            state_id = res._add_new_state(True,True)
+            res._add_trans(state_id, state_id, self.env.new_label(TRUE()))
+        else:
+            # we need a complete automaton
+            res = self.determinize()
+
+            # swap the accepting and non accepting states
+            non_accepting = res.states.difference(res.final_states)
+            res.final_states = non_accepting
+
+        return res
 
     def is_empty(self):
         """ Returns true if the language accepted by the automaton is empty.
@@ -239,6 +285,29 @@ class Automaton(object):
         # cannot reach a final state
         return True
 
+    def is_equivalent(self, other):
+        """ Returns true iff the language accepted by self is the same
+        of the language accepted by other.
+
+        Warning: the implementation is not efficient, but it is ok for
+        testing purposes
+
+        Check is_empty(not (self U not (other)))
+        """
+        complement = other.complement()
+        union = self.union(complement)
+        res = union.complement()
+
+        # DEBUG OUTPUT
+        # import sys
+        # self.to_dot(sys.stdout)
+        # complement.to_dot(sys.stdout)
+        # union.to_dot(sys.stdout)
+        # res.to_dot(sys.stdout)
+
+        return res.is_empty()
+
+
 
     def accept(self, word):
         """ Returns true if self accepts the word.
@@ -259,8 +328,10 @@ class Automaton(object):
             next_word = word[1:]
             accepted = False
             for (dst, label) in self.trans[state]:
-                if (current_letter.is_contained(label)):
+                if (current_letter.is_intersecting(label)):
                     accepted = accepted or accept_from(self, dst, next_word)
+                    if (accepted):
+                        break;
 
             return accepted
 
@@ -272,16 +343,16 @@ class Automaton(object):
         return False
 
     @staticmethod
-    def get_singleton(label):
-        aut = Automaton()
+    def get_singleton(label, env=None):
+        aut = Automaton(env)
         init = aut._add_new_state(True, False)
         final = aut._add_new_state(False, True)
         aut._add_trans(init, final, label)
         return aut
 
     @staticmethod
-    def get_empty():
-        aut = Automaton()
+    def get_empty(env=None):
+        aut = Automaton(env)
         init = aut._add_new_state(True, False)
         return aut
 
@@ -304,86 +375,103 @@ class Automaton(object):
         while (stack is not empty) {
            q = stack.pop
 
-           for (trans, q'') in enumerate_trans(q, states):
+           for (trans, q'') in _sc_enum_trans(q, states):
              if q'' is new: stack.push(q')
              NFA.add_trans(q, trans, q'')
         }
-
-
-        enumerate_trans(q)
 
         """
 
         dfa = Automaton()
         sc_map = SubsConsMap()
 
-        initial_dfa = dfa.add_new_state(True, False)
+        is_final = False
+        for s in self.initial_states:
+            is_final = is_final or self.is_final(s)
+        initial_set = frozenset(self.initial_states)
+        initial_dfa = dfa._add_new_state(True, is_final)
+
         if (len(self.initial_states) == 0): return dfa
 
-        initial_set = frozenset([s for s in self.initial_states])
+
         sc_map.insert(initial_dfa, initial_set)
 
         stack = []
-        stack.push(initial_dfa)
-
+        stack.append(initial_dfa)
         while (len(stack) != 0):
             q = stack.pop()
 
             q_trans = dfa.trans[q]
 
             q_set = sc_map.lookup_set(q)
-            next_trans = self._sc_enum_trans(sc_map, q_set)
-            for (comb_label, nfa_states) in next_trans:
-                q_next = sc_map.lookup_set(nfa_states)
+            next_trans = self._sc_enum_trans(q_set)
+            for (nfa_states, comb_label) in next_trans:
+                q_next = sc_map.lookup_state(nfa_states)
 
                 if (None == q_next):
-                    is_q_next_final = sc_map.is_final(nfa_states)
-                    q_next = dfa.add_new_state(False, is_q_next_final)
-                    stack.push(q_next)
+                    is_q_next_final = sc_map.is_final(self, nfa_states)
+                    q_next = dfa._add_new_state(False, is_q_next_final)
+                    sc_map.insert(q_next, nfa_states)
+                    stack.append(q_next)
 
                 q_trans.append((q_next, comb_label))
 
-
-            self._enum_dfa_successors(sc_map, stack, dfa, q)
-
         return dfa
 
-    def _sc_enum_trans(self, sc_map, q_set):
+    def _sc_enum_trans(self, q_set):
         """ Given a set of NFA states, the function returns a list of
         possible successors in the DFA.
 
-        The resutl is a list of pairs, where each pair contains a
-        label and a set of states in the NFA.
-
+        The result is a list of pairs, where each pair contains a
+        set of states in the NFA and a label.
         """
 
         # collect the set of labels
-        label_to_states = []
-        labels = []
+        label_to_states = {}
+        labels_set = set()
         for q_nfa in q_set:
             for (dst_state, label) in self.trans[q_nfa]:
-                # TODO: improve
-                # Now we are not using any sharing between labels
-                #
-                # This should be the case, to keep the size of the
-                # label small
-                #
-                # We can either do it here or use BDDs to represent
-                # the labels, hence gaining canonicity.
-                #
-                labels_to_states.append(dst_state)
-                labels.add(label)
+                try:
+                    states_set = label_to_states[label]
+                except KeyError:
+                    states_set = set()
+                    label_to_states[label] = states_set
+                states_set.add(dst_state)
+                labels_set.add(label)
 
+        labels = list(labels_set) # works on list from now on
         # enumerate the set of the possible outgoing transitions
+        trans = Automaton.enum_trans(labels, self.env.sat_solver)
+
+        # construct the list formed by dst_set and labels
+        results = []
+        for res in trans:
+            dst_set = set()
+            label_formula = TRUE()
+            for i in range(len(res)):
+
+                label_formula = And(label_formula, res[i])
+                label_formula = simplify(label_formula)
+
+                if (res[i] == labels[i].get_formula()):
+                    # same label, goes to the state with this label
+                    dst_set.update(label_to_states[labels[i]])
+            results.append((frozenset(dst_set), self.env.new_label(label_formula)))
+        return results
 
 
     @staticmethod
     def enum_trans(labels, solver):
+        """ labels is a list of labels, solver is an instance of a sat
+        solver (the procedure is specific for sat, instead of BDDs.
+
+        Returns a list of lists of *formulas*, and not labels
+        """
+
         def _enum_trans_rec(solver, labels, index, results, trail):
             """ WARNING:
             side effects on results and trails
             """
-
             def _enum_trans_one_side(solver, labels, index, results,
                                      trail, label, negate=False):
 
@@ -440,7 +528,7 @@ class Automaton(object):
             for pair in lst:
                 (dst, label) = pair
                 stream.write("node_%d -> node_%d [label = \"%s\"]\n" % (src, dst, str(label)))
-        stream.write("}")
+        stream.write("}\n")
         stream.flush()
 
 
@@ -462,6 +550,9 @@ class Label(object):
     def is_contained(self, other_label): return NotImplemented
     def is_intersecting(self, other_label): return NotImplemented
 
+    # subclasses must implement hash and eq
+    def __hash__(self): return NotImplemented
+    def __eq__(self, other): return NotImplemented
 
 class SatLabel(Label):
     """ Represent a label with propositional formula and use a SAT
@@ -475,8 +566,16 @@ class SatLabel(Label):
         self.formula = formula
 
     def intersect(self, other):
-        return SatLabel(And(self.get_formula(), other.get_formula()),
-                        self.env)
+        if (self.get_formula() == other.get_formula()):
+            return self
+        if (self.get_formula() == TRUE()):
+            return other
+        elif (other.get_formula() == TRUE()):
+            return self
+        else:
+            return SatLabel(And(self.get_formula(),
+                                other.get_formula()),
+                            self.env)
 
     def complement(self):
         return SatLabel(Not(self.get_formula()), self.env)
@@ -505,6 +604,12 @@ class SatLabel(Label):
     def __repr__(self):
         return str(self.formula)
 
+    def __hash__(self):
+        return hash(self.formula)
+
+    def __eq__(self, other):
+        return self.formula == other.formula
+
 
 class SubsConsMap:
     def __init__(self):
@@ -516,9 +621,9 @@ class SubsConsMap:
 
     def insert(self, dfa_state, nfa_states):
         self.nfa_to_dfa[nfa_states] = dfa_state
-        self.dfa_to_nfa[dfa_states] = nfa_state
+        self.dfa_to_nfa[dfa_state] = nfa_states
 
-    def lookup_set(self, dfa_state):
+    def lookup_set(self, dfa_states):
         try:
             return self.dfa_to_nfa[dfa_states]
         except KeyError:
