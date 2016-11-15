@@ -9,7 +9,10 @@ try:
 except ImportError:
     import unittest
 
-from cbverifier.encoding.automata import SatLabel
+from cbverifier.encoding.automata import SatLabel, Automaton
+
+
+import sys
 
 from pysmt.typing import BOOL
 from pysmt.shortcuts import Symbol, TRUE, FALSE
@@ -48,5 +51,47 @@ class TestAuto(unittest.TestCase):
             _check_tautologies(l)
 
 
+    def test_auto(self):
+        symbols = [Symbol(chr(i), BOOL) for i in range(ord('a'),ord('z')+1)]
+
+        a = SatLabel(symbols[0])
+        b = SatLabel(symbols[1])
+        c = SatLabel(symbols[2])
+
+        # test copy
+        auto_a = Automaton.get_singleton(a)
+        copy_1 = auto_a.copy_reachable()
+        copy_2 = copy_1.copy_reachable()
+        for auto in [auto_a, copy_1, copy_2]:
+            self.assertTrue(auto.accept([a]))
+            self.assertFalse(auto.accept([a,a]))
+
+        # aa
+        auto_aa = auto_a.concatenate(auto_a)
+        self.assertFalse(auto_aa.accept([a]))
+        self.assertTrue(auto_aa.accept([a,a]))
+        self.assertFalse(auto_aa.accept([a,a,a]))
+
+        # a[*]
+        auto_astar = auto_a.klenee_star()
+        self.assertTrue(auto_astar.accept([]))
+        self.assertTrue(auto_astar.accept([a,a]))
+        self.assertTrue(auto_astar.accept([a,a,a]))
+
+        # TRUE
+        aut_true = Automaton.get_singleton(SatLabel(TRUE()))
+        self.assertFalse(aut_true.accept([]))
+        self.assertTrue(aut_true.accept([a]))
+        self.assertTrue(aut_true.accept([b]))
+        self.assertTrue(aut_true.accept([c]))
+        self.assertFalse(aut_true.accept([a,b]))
+
+        # TRUE[*]
+        aut_truestar = aut_true.klenee_star()
+        self.assertTrue(aut_truestar.accept([]))
+        self.assertTrue(aut_truestar.accept([a]))
+        self.assertTrue(aut_truestar.accept([b]))
+        self.assertTrue(aut_truestar.accept([c]))
+        self.assertTrue(aut_truestar.accept([a,b]))
 
 

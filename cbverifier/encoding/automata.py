@@ -91,10 +91,10 @@ class Automaton(object):
         self.trans[src].append((dst,label))
 
     def is_initial(self, state):
-        return state in self.final_states.contains
+        return state in self.initial_states
 
     def is_final(self, state):
-        return state in self.final_states.contains
+        return state in self.final_states
 
     def copy_reachable(self):
         """ Copy the reachable state of self in a new automaton """
@@ -106,17 +106,19 @@ class Automaton(object):
 
         for s in self.initial_states:
             copy._add_state(s, self.is_initial(s), self.is_final(s))
+            visited.add(s)
             stack.append(s)
 
-        while (len(stack) == 0):
+        while (len(stack) != 0):
             s = stack.pop()
-            visited.add(s)
 
             for (dst, label) in self.trans[s]:
                 if (dst not in visited):
                     copy._add_state(dst, self.is_initial(dst), self.is_final(dst))
+                    visited.add(dst)
                     stack.append(dst)
-                trans = self.trans[s]
+
+                trans = copy.trans[s]
                 trans.append((dst,label))
 
         return copy
@@ -128,7 +130,7 @@ class Automaton(object):
         """
 
         # copy the other automaton
-        new_auto = other.get_reachable()
+        new_auto = other.copy_reachable()
         new_auto.initial_states = set()
 
         stack = []
@@ -136,20 +138,21 @@ class Automaton(object):
         self_to_new = {}
 
         for s in self.initial_states:
-            new_s = copy._add_new_state(s, self.is_initial(s), self.is_final(s))
+            new_s = new_auto._add_new_state(self.is_initial(s),
+                                            self.is_final(s))
             self_to_new[s] = new_s
             stack.append(s)
 
-        while (len(stack) == 0):
+        while (len(stack) != 0):
             s = stack.pop()
             visited.add(s)
             new_s = self_to_new[s]
-            trans = self.trans[new_s]
+            trans = new_auto.trans[new_s]
 
             # copy the transitions
             for (dst, label) in self.trans[s]:
                 if (dst not in visited):
-                    new_dst = copy._add_new_state(dst, self.is_initial(dst), False)
+                    new_dst = new_auto._add_new_state(self.is_initial(dst), False)
                     self_to_new[dst] = new_dst
                     stack.append(dst)
                 else:
@@ -170,14 +173,27 @@ class Automaton(object):
         """ Returns the automaton that recognize the kleene
         star operation applied to self.
         """
+
+        # corner case - no initial states
+        if len(self.initial_states) == 0:
+            res = Automaton()
+            res._add_new_state(True,True)
+            return res
+
         # copy the other automaton
-        new_auto = self.get_reachable()
+        new_auto = self.copy_reachable()
 
         for final in new_auto.final_states:
-            trans = new_auto.transp[final]
+            trans = new_auto.trans[final]
             for initial in new_auto.initial_states:
                 for (dst, label) in new_auto.trans[initial]:
+                    # Add a transition from the final state to the
+                    # states reached by the initial states
                     trans.append((dst, label))
+
+        # make all the initial also accepting
+        for initial in new_auto.initial_states:
+            new_auto.final_states.add(initial)
 
         return new_auto
 
@@ -193,7 +209,7 @@ class Automaton(object):
         for s in self.initial_states:
             stack.append(s)
 
-        while (len(stack) == 0):
+        while (len(stack) != 0):
             s = stack.pop()
             visited.add(s)
 
@@ -218,8 +234,9 @@ class Automaton(object):
         def accept_from(self, state, word):
             """ Returns true if word is accepted from state """
 
-            if (len(word) == 0 and is_final(state)):
+            if (len(word) == 0 and self.is_final(state)):
                 return True
+
             if (len(word) == 0):
                 return False
 
@@ -228,16 +245,26 @@ class Automaton(object):
             accepted = False
             for (dst, label) in self.trans[state]:
                 if (current_letter.is_contained(label)):
-                    accepted = accepted or self.accept_from(dst, next_word)
+                    accepted = accepted or accept_from(self, dst, next_word)
 
             return accepted
 
         for s in self.initial_states:
-            accepted = self.accept_from(s, word)
+            accepted = accept_from(self, s, word)
             if accepted:
                 return True
 
         return False
+
+
+
+    @staticmethod
+    def get_singleton(label):
+        aut = Automaton()
+        init = aut._add_new_state(True, False)
+        final = aut._add_new_state(False, True)
+        aut._add_trans(init, final, label)
+        return aut
 
 
     def determinize(self):
@@ -249,17 +276,22 @@ class Automaton(object):
         stream.write("digraph {\n  " \
                      "center=true;\n" \
                      "edge [fontname=\"Courier\", fontsize=10];\n" \
-                     "init [shape=plaintext,label=\"\"]")
+                     "init [shape=plaintext,label=\"\"]\n")
 
+        for s in self.states:
+            if s in self.final_states:
+                stream.write("node_%d [shape = doublecircle] " \
+                             "[label = \"%d\"]\n" % (s,s))
+            else:
+                stream.write("node_%d [shape = circle] " \
+                             "[label = \"%d\"]\n" % (s,s))
         for s in self.initial_states:
             stream.write("init -> node_%d\n" % s)
-        for s in self.final_states:
-            stream.write("node_%d [shape = doublecircle] " \
-                         "[label = \"%d\"]\n" % (s,s))
 
-        for (src,pair) in self.trans.iteritems():
-            (dst, label) = pair
-            stream.write("node_%d -> node_%d [label = \"%s\"]\n" % (src, dst, str(label)))
+        for (src, lst) in self.trans.iteritems():
+            for pair in lst:
+                (dst, label) = pair
+                stream.write("node_%d -> node_%d [label = \"%s\"]\n" % (src, dst, str(label)))
         stream.write("}")
         stream.flush()
 
