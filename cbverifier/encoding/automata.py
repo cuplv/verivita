@@ -36,16 +36,26 @@ from pysmt.logics import QF_BOOL
 auto_env = None
 
 class AutoEnv(object):
-    """ Environment used by the automaton class """
+    """ Environment used by the automaton class
+
+    It hides the implementation details (e.g. SAT or BDD labels?)
+    It keeps a unique environment for formulas.
+
+    """
     def __init__(self):
         # sat solver instance
         self.sat_solver = None
+        # TODO
         self.bdd_package = None
+
+    def new_label(self, formula):
+        # assume SAT labels
+        # Here we can do memoization baed on the formula
+        return SatLabel(formula)
 
     @staticmethod
     def get_global_auto_env():
         auto_env = AutoEnv()
-
         pysmt_env = get_env()
 
         # For now use z3, we can switch to picosat if needed
@@ -54,8 +64,14 @@ class AutoEnv(object):
         return auto_env
 
 
+
 class Automaton(object):
-    def __init__(self):
+    def __init__(self, env=None):
+        if env is None:
+            self.env = AutoEnv.get_global_auto_env()
+        else:
+            self.env = env
+
         # state ids start from 0
         self.current_id = -1
         self.states = set()
@@ -63,7 +79,6 @@ class Automaton(object):
         self.trans = {}
         self.initial_states = set()
         self.final_states = set()
-
 
     def _add_new_state(self, is_initial=False, is_final=False):
         """ Add a new state to the automaton """
@@ -256,8 +271,6 @@ class Automaton(object):
 
         return False
 
-
-
     @staticmethod
     def get_singleton(label):
         aut = Automaton()
@@ -274,8 +287,137 @@ class Automaton(object):
 
 
     def determinize(self):
-        """ Return a DFA that recognizes the same language of self"""
-        return NotImplemented
+        """ Return a DFA that recognizes the same language of self
+        (from here on the NFA).
+
+        Implement the subset construction algorithm that uses the
+        combination of the symbolic labels.
+
+        The initial state of the DFA init_DFA is given by the set of all the
+        initial states of the NFA.
+
+        A state in the DFA is a set of states in the NFA.
+        Givena a state q in the DFA, states(q) is the set of all the
+        correspondent states in the NFA.
+
+        stack.push(init_dfa)
+        while (stack is not empty) {
+           q = stack.pop
+
+           for (trans, q'') in enumerate_trans(q, states):
+             if q'' is new: stack.push(q')
+             NFA.add_trans(q, trans, q'')
+        }
+
+
+        enumerate_trans(q)
+
+        """
+
+        dfa = Automaton()
+        sc_map = SubsConsMap()
+
+        initial_dfa = dfa.add_new_state(True, False)
+        if (len(self.initial_states) == 0): return dfa
+
+        initial_set = frozenset([s for s in self.initial_states])
+        sc_map.insert(initial_dfa, initial_set)
+
+        stack = []
+        stack.push(initial_dfa)
+
+        while (len(stack) != 0):
+            q = stack.pop()
+
+            q_trans = dfa.trans[q]
+
+            q_set = sc_map.lookup_set(q)
+            next_trans = self._sc_enum_trans(sc_map, q_set)
+            for (comb_label, nfa_states) in next_trans:
+                q_next = sc_map.lookup_set(nfa_states)
+
+                if (None == q_next):
+                    is_q_next_final = sc_map.is_final(nfa_states)
+                    q_next = dfa.add_new_state(False, is_q_next_final)
+                    stack.push(q_next)
+
+                q_trans.append((q_next, comb_label))
+
+
+            self._enum_dfa_successors(sc_map, stack, dfa, q)
+
+        return dfa
+
+    def _sc_enum_trans(self, sc_map, q_set):
+        """ Given a set of NFA states, the function returns a list of
+        possible successors in the DFA.
+
+        The resutl is a list of pairs, where each pair contains a
+        label and a set of states in the NFA.
+
+        """
+
+        # collect the set of labels
+        label_to_states = []
+        labels = []
+        for q_nfa in q_set:
+            for (dst_state, label) in self.trans[q_nfa]:
+                # TODO: improve
+                # Now we are not using any sharing between labels
+                #
+                # This should be the case, to keep the size of the
+                # label small
+                #
+                # We can either do it here or use BDDs to represent
+                # the labels, hence gaining canonicity.
+                #
+                labels_to_states.append(dst_state)
+                labels.add(label)
+
+        # enumerate the set of the possible outgoing transitions
+
+
+    @staticmethod
+    def enum_trans(labels, solver):
+        def _enum_trans_rec(solver, labels, index, results, trail):
+            """ WARNING:
+            side effects on results and trails
+            """
+
+            def _enum_trans_one_side(solver, labels, index, results,
+                                     trail, label, negate=False):
+
+                literal = label.get_formula()
+                if negate:
+                    literal = Not(literal)
+
+                solver.push()
+                solver.add_assertion(literal)
+                if (solver.solve()):
+                    trail.append(literal)
+                    _enum_trans_rec(solver, labels, index, results, trail)
+                    # side effect on trail, backtrack the trail of assignments
+                    trail.pop()
+                solver.pop()
+
+            if index < len(labels):
+                _enum_trans_one_side(solver, labels, index+1, results,
+                                     trail, labels[index])
+
+                _enum_trans_one_side(solver, labels, index+1, results,
+                                     trail, labels[index], True)
+            else:
+                assert index == len(labels)
+                # copy the result
+                results.append(list(trail))
+
+        results = []
+        trail = []
+        solver.reset_assertions()
+        _enum_trans_rec(solver, labels, 0, results, trail)
+        assert len(trail) == 0
+
+        return results
 
 
     def to_dot(self, stream):
@@ -362,3 +504,32 @@ class SatLabel(Label):
 
     def __repr__(self):
         return str(self.formula)
+
+
+class SubsConsMap:
+    def __init__(self):
+        # Map from a set of states of the NFA to a single state of the
+        # DFA
+        self.nfa_to_dfa = {}
+        # Map from a state of the DFA to a set of states in the NFA
+        self.dfa_to_nfa = {}
+
+    def insert(self, dfa_state, nfa_states):
+        self.nfa_to_dfa[nfa_states] = dfa_state
+        self.dfa_to_nfa[dfa_states] = nfa_state
+
+    def lookup_set(self, dfa_state):
+        try:
+            return self.dfa_to_nfa[dfa_states]
+        except KeyError:
+            return None
+
+    def lookup_state(self, nfa_states):
+        try:
+            return self.nfa_to_dfa[nfa_states]
+        except KeyError:
+            return None
+
+    def is_final(self, nfa, nfa_states):
+        return not nfa_states.isdisjoint(nfa.final_states)
+
