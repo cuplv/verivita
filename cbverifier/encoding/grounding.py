@@ -32,16 +32,17 @@ class GroundSpecs(object):
 
         # instantiate the bindings
         for binding in bindings:
-            new_spec_ast = self._substitute(spec, binding)
+            new_spec_ast = GroundSpecs._substitute(spec, binding)
             new_spec = Spec(new_spec_ast)
             ground_specs.append(new_spec)
 
         return ground_specs
 
-    def _substitute(self, spec, binding):
+    @staticmethod
+    def _substitute(spec, binding):
         # TODO: add memoization
 
-        def substitute_rec(self, node, binding):
+        def substitute_rec(node, binding):
             def wrap_value(binding, varname):
                 assert binding.has_key(varname)
                 bind = binding.get(varname)
@@ -53,7 +54,7 @@ class GroundSpecs(object):
                 else:
                     return bind
 
-            def sub_leaf(self, leaf, binding):
+            def sub_leaf(leaf, binding):
                 """ Given a leaf node, substitute it """
 
                 leaf_type = get_node_type(leaf)
@@ -100,8 +101,7 @@ class GroundSpecs(object):
                 new_params = process_param(get_call_params(node))
                 assert new_params is not None
 
-                new_call_node = new_call(sub_leaf(self,
-                                                  get_call_receiver(node),
+                new_call_node = new_call(sub_leaf(get_call_receiver(node),
                                                   binding),
                                          get_call_method(node),
                                          new_params)
@@ -114,19 +114,19 @@ class GroundSpecs(object):
                 node_type == DISABLE_OP or
                 node_type == SPEC_LIST):
 
-                lhs = substitute_rec(self, node[1], binding)
-                rhs = substitute_rec(self, node[2], binding)
+                lhs = substitute_rec(node[1], binding)
+                rhs = substitute_rec(node[2], binding)
                 return create_node(node_type, [lhs, rhs])
             elif (node_type == STAR_OP or node_type == NOT_OP):
-                lhs = substitute_rec(self, node[1], binding)
+                lhs = substitute_rec(node[1], binding)
                 return create_node(node_type, [lhs])
             elif (node_type == SPEC_SYMB):
-                lhs = substitute_rec(self, node[1], binding)
+                lhs = substitute_rec(node[1], binding)
                 return create_node(SPEC_SYMB, [lhs])
             else:
                 raise UnexpectedSymbol(node)
 
-        return substitute_rec(self, spec.ast, binding)
+        return substitute_rec(spec.ast, binding)
 
     def _get_ground_bindings(self, spec):
         """ Find all the ground specifications for spec.

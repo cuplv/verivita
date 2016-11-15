@@ -25,7 +25,7 @@ AND_OP=8
 OR_OP=9
 NOT_OP=10
 SEQ_OP=11
-STAR_OP=11
+STAR_OP=19
 SPEC_SYMB=12
 ENABLE_OP=13
 DISABLE_OP=14
@@ -129,6 +129,25 @@ def get_call_params(node):
     assert node[3] is not None
     return node[3]
 
+def get_regexp_node(node):
+    assert SPEC_SYMB == get_node_type(node)
+    assert node[1] is not None
+    assert get_node_type(node[1]) in [ENABLE_OP, DISABLE_OP]
+
+    regexpnode = (node[1])[1]
+    assert regexpnode is not None
+    return regexpnode
+
+def is_spec_enable(node):
+    assert SPEC_SYMB == get_node_type(node)
+    assert node[1] is not None
+    return get_node_type(node[1]) == ENABLE_OP
+
+def is_spec_disable(node):
+    assert SPEC_SYMB == get_node_type(node)
+    assert node[1] is not None
+    return get_node_type(node[1]) == DISABLE_OP
+
 
 ################################################################################
 # Node creation
@@ -148,7 +167,19 @@ def pretty_print(ast_node, out_stream=sys.stdout):
         elif (node_type == ID or node_type == INT or node_type == FLOAT or node_type == STRING):
             my_print(out_stream, "%s%s" % (sep, str(node[1])))
         elif (node_type == VALUE):
-            my_print(out_stream, "%s%s" % (sep, str(node[1])))
+            value = node[1]
+
+            if value.is_null:
+                value_repr = "NULL"
+            elif value.value is not None:
+                value_repr = str(value.value)
+            elif value.object_id is not None:
+                value_repr = str(value.object_id)
+            else:
+                raise Exception("Cannot find a unique identifier for the value "\
+                                "%s%s" % (sep, str(value)))
+
+            my_print(out_stream, "%s" % value_repr)
         elif (node_type == PARAM_LIST):
             pretty_print_aux(out_stream,node[1],"")
             if (get_node_type(node[2]) != new_nil()):
@@ -161,7 +192,11 @@ def pretty_print(ast_node, out_stream=sys.stdout):
                 my_print(out_stream, ".")
             pretty_print_aux(out_stream,get_call_method(node),"")
             my_print(out_stream, "(")
-            pretty_print_aux(out_stream,get_call_params(node),"") # params
+
+            param_list = get_call_params(node)
+            if (param_list != new_nil()):
+                pretty_print_aux(out_stream, param_list, "") # params
+
             my_print(out_stream, ")")
         elif (node_type == AND_OP or node_type == OR_OP):
             my_print(out_stream, "(")
@@ -193,7 +228,7 @@ def pretty_print(ast_node, out_stream=sys.stdout):
             elif (node_type == DISABLE_OP):
                 my_print(out_stream, " |- ")
             else:
-                raise Exception("Unkown type of spec")
+                raise Exception("Unknown type of spec")
 
             pretty_print_aux(out_stream,node[2],"")
         elif (node_type == SPEC_LIST):
@@ -201,6 +236,8 @@ def pretty_print(ast_node, out_stream=sys.stdout):
             my_print(out_stream, ";\n")
             if (get_node_type(node[2]) != new_nil()):
                 pretty_print_aux(out_stream,node[2],"")
+        else:
+            raise UnexpectedSymbol(node)
 
     pretty_print_aux(out_stream, ast_node, "")
 

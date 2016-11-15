@@ -67,7 +67,6 @@ class AutoEnv(object):
         return auto_env
 
 
-
 class Automaton(object):
     def __init__(self, env=None):
         if env is None:
@@ -241,6 +240,35 @@ class Automaton(object):
 
         return new_auto
 
+    def intersection(self, other):
+        """ Returns the automaton that accepts the language accepted
+        by the intersection of self and other.
+
+        Compute A \cap B as \neg (\neg A \cub \neg B)
+        """
+        self_c = self.complement()
+        other_c = other.complement()
+        union = self_c.union(other_c)
+        self_c = None
+        other_c = None
+        intersection = union.complement()
+
+        return intersection
+
+    def is_contained(self, other):
+        """ Returns true if the language pf self is a.
+        subset of the language of other.
+
+        Not efficient.
+        """
+        neg_other = other.complement()
+        res = self.intersection(neg_other)
+        neg_other = None
+        is_contained = res.is_empty()
+        res = None
+
+        return is_contained
+
     def complement(self):
         """ Returns a new automaton that accepts the complement of
         language accepted by self """
@@ -294,19 +322,12 @@ class Automaton(object):
 
         Check is_empty(not (self U not (other)))
         """
-        complement = other.complement()
-        union = self.union(complement)
-        res = union.complement()
 
-        # DEBUG OUTPUT
-        # import sys
-        # self.to_dot(sys.stdout)
-        # complement.to_dot(sys.stdout)
-        # union.to_dot(sys.stdout)
-        # res.to_dot(sys.stdout)
-
-        return res.is_empty()
-
+        self_in_other = self.is_contained(other)
+        if self_in_other:
+            return other.is_contained(self)
+        else:
+            return False
 
 
     def accept(self, word):
@@ -341,21 +362,6 @@ class Automaton(object):
                 return True
 
         return False
-
-    @staticmethod
-    def get_singleton(label, env=None):
-        aut = Automaton(env)
-        init = aut._add_new_state(True, False)
-        final = aut._add_new_state(False, True)
-        aut._add_trans(init, final, label)
-        return aut
-
-    @staticmethod
-    def get_empty(env=None):
-        aut = Automaton(env)
-        init = aut._add_new_state(True, False)
-        return aut
-
 
     def determinize(self):
         """ Return a DFA that recognizes the same language of self
@@ -530,6 +536,20 @@ class Automaton(object):
                 stream.write("node_%d -> node_%d [label = \"%s\"]\n" % (src, dst, str(label)))
         stream.write("}\n")
         stream.flush()
+
+    @staticmethod
+    def get_singleton(label, env=None):
+        aut = Automaton(env)
+        init = aut._add_new_state(True, False)
+        final = aut._add_new_state(False, True)
+        aut._add_trans(init, final, label)
+        return aut
+
+    @staticmethod
+    def get_empty(env=None):
+        aut = Automaton(env)
+        init = aut._add_new_state(True, False)
+        return aut
 
 
 class Label(object):

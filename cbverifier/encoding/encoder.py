@@ -55,7 +55,7 @@ Ideas:
 # - fix encoding (and trace construction) using the simplification
 
 import logging
-import collections
+from cStringIO import StringIO
 
 from pysmt.environment import reset_env
 from pysmt.typing import BOOL
@@ -67,7 +67,9 @@ from pysmt.solvers.solver import Model
 from pysmt.logics import QF_BOOL
 
 from cbverifier.specs.spec import Spec
+from cbverifier.specs.spec_ast import *
 from cbverifier.traces.ctrace import CTrace
+from cbverifier.encoding.automata import Automaton, AutoEnv
 
 
 from cbverifier.helpers import Helper
@@ -175,4 +177,80 @@ class TSEncoder:
         raise Exception("Not implemented")
 
 
+
+
+class RegExpToAuto():
+    """ Utility class to convert a regular expression in an automaton.
+
+    TODO: all the recursive functions should become iterative
+
+    """
+    def __init__(self, auto_env=None):
+        if auto_env is None:
+            auto_env = AutoEnv.get_global_auto_env()
+        self.auto_env = auto_env
+
+    def get_atom_var(self, call_node):
+        out = StringIO()
+        pretty_print(call_node, out)
+        atom_name = out.getvalue()
+        return Symbol(atom_name, BOOL)
+
+
+    def get_from_regexp(self, regexp, env=None):
+        node_type = get_node_type(regexp)
+
+        if (node_type in [TRUE,FALSE,CALL,AND_OP,OR_OP,NOT_OP]):
+            # base case
+            # accept the atoms in the bexp
+            formula = self.get_be(regexp)
+            label = self.auto_env.new_label(formula)
+            automaton = Automaton.get_singleton(label)
+            return automaton
+        elif (node_type == SEQ_OP):
+            lhs = self.get_from_regexp(regexp[1])
+            rhs = self.get_from_regexp(regexp[2])
+            automaton = lhs.concatenate(rhs)
+            lhs = None
+            rhs = None
+            return automaton
+        elif (node_type == STAR_OP):
+            lhs = self.get_from_regexp(regexp[1])
+            automaton = lhs.klenee_star()
+            lhs = None
+            return automaton
+        else:
+            # Should not see them, the boolean atoms are the CALLS node
+            # ID, INT, FLOAT, PARAM_LIST, NIL, DONTCARE, STRING, VALUE
+            #
+            # Should not even see the higher level nodes:
+            # SPEC_SYMB
+            # ENABLE_OP
+            # DISABLE_OP
+            # SPEC_LIST
+            raise UnexpectedSymbol(regexp)
+
+    def get_be(self, be_node):
+        """ Given a node that represent a Boolean expression returns
+        the correspondent formula in PySMT """
+        node_type = get_node_type(be_node)
+
+        if (node_type == TRUE):
+            return TRUE()
+        elif (node_type == FALSE):
+            return FALSE()
+        elif (node_type == CALL):
+            # generate a boolean atom for the call
+            atom_var = self.get_atom_var(be_node)
+            return atom_var
+        elif (node_type == AND_OP):
+            return And(self.get_be(be_node[1]),
+                       self.get_be(be_node[2]))
+        elif (node_type == OR_OP):
+            return Or(self.get_be(be_node[1]),
+                      self.get_be(be_node[2]))
+        elif (node_type == NOT_OP):
+            return Not(self.get_be(be_node[1]))
+        else:
+            raise UnexpectedSymbol(be_node)
 
