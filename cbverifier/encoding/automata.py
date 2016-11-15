@@ -266,6 +266,12 @@ class Automaton(object):
         aut._add_trans(init, final, label)
         return aut
 
+    @staticmethod
+    def get_empty():
+        aut = Automaton()
+        init = aut._add_new_state(True, False)
+        return aut
+
 
     def determinize(self):
         """ Return a DFA that recognizes the same language of self"""

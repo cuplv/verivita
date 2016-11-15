@@ -63,23 +63,27 @@ class TestAuto(unittest.TestCase):
         copy_1 = auto_a.copy_reachable()
         copy_2 = copy_1.copy_reachable()
         for auto in [auto_a, copy_1, copy_2]:
+            self.assertFalse(auto.is_empty())
             self.assertTrue(auto.accept([a]))
             self.assertFalse(auto.accept([a,a]))
 
         # aa
         auto_aa = auto_a.concatenate(auto_a)
+        self.assertFalse(auto_aa.is_empty())
         self.assertFalse(auto_aa.accept([a]))
         self.assertTrue(auto_aa.accept([a,a]))
         self.assertFalse(auto_aa.accept([a,a,a]))
 
         # a[*]
         auto_astar = auto_a.klenee_star()
+        self.assertFalse(auto_astar.is_empty())
         self.assertTrue(auto_astar.accept([]))
         self.assertTrue(auto_astar.accept([a,a]))
         self.assertTrue(auto_astar.accept([a,a,a]))
 
         # TRUE
         aut_true = Automaton.get_singleton(SatLabel(TRUE()))
+        self.assertFalse(aut_true.is_empty())
         self.assertFalse(aut_true.accept([]))
         self.assertTrue(aut_true.accept([a]))
         self.assertTrue(aut_true.accept([b]))
@@ -88,10 +92,15 @@ class TestAuto(unittest.TestCase):
 
         # TRUE[*]
         aut_truestar = aut_true.klenee_star()
+        self.assertFalse(aut_truestar.is_empty())
         self.assertTrue(aut_truestar.accept([]))
         self.assertTrue(aut_truestar.accept([a]))
         self.assertTrue(aut_truestar.accept([b]))
         self.assertTrue(aut_truestar.accept([c]))
         self.assertTrue(aut_truestar.accept([a,b]))
 
+        a = Automaton()
+        self.assertTrue(a.is_empty())
+        a = Automaton.get_empty()
+        self.assertTrue(a.is_empty())
 
