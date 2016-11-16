@@ -83,7 +83,6 @@ class TransitionSystem:
         self.init = TRUE()
         self.trans = TRUE()
 
-
     def product(self, other_ts):
         """ Computes the synchronous product of self with other_ts,
         storing the product in self.
@@ -115,6 +114,7 @@ class TSEncoder:
         self.error_prop = None
 
         self.ground_specs = self._compute_ground_spec()
+        self.r2a = RegExpToAuto()
 
     def get_ts_encoding(self):
         """ Returns the transition system encoding of the dynamic
@@ -136,10 +136,10 @@ class TSEncoder:
         self.error_prop = FALSE()
 
         # Encode the effects of the specifications
+        spec_id = 0
         for ground_spec in self.ground_specs:
-            (gs_ts, error_condition) = self._get_ground_spec_ts(ground_spec)
+            (gs_ts, updates) = self._get_ground_spec_ts(ground_spec, spec_id)
             self.ts.product(gs_ts)
-            self.error_prop = Or(self.error_prop, error_condition)
 
         # Encode the callbacks and callins defined in the
         # concrete trace
@@ -165,7 +165,7 @@ class TSEncoder:
         return ground_specs
 
 
-    def _get_ground_spec_ts(self, ground_spec):
+    def _get_ground_spec_ts(self, ground_spec, spec_id):
         """ Given a ground specification, returns the transition
         system that encodes the updates implied by the specification.
 
@@ -174,13 +174,23 @@ class TSEncoder:
         Section 5, subsection A.
         """
 
+        auto = self.r2a.get_from_regexp(ground_spec)
+        self._get_auto_ts(auto, spec_id)
+
+
         raise Exception("Not implemented")
 
+
+    def _get_auto_ts(self, auto):
+        """ Encodes the automaton auto in a transition system """
+        
 
 
 
 class RegExpToAuto():
     """ Utility class to convert a regular expression in an automaton.
+
+    TODO: We can implement memoization of the intermediate results
 
     TODO: all the recursive functions should become iterative
 
