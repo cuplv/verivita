@@ -138,6 +138,15 @@ def get_regexp_node(node):
     assert regexpnode is not None
     return regexpnode
 
+def get_spec_rhs(node):
+    assert SPEC_SYMB == get_node_type(node)
+    assert node[1] is not None
+    assert get_node_type(node[1]) in [ENABLE_OP, DISABLE_OP]
+
+    rhs = (node[1])[2]
+    assert rhs is not None
+    return rhs
+
 def is_spec_enable(node):
     assert SPEC_SYMB == get_node_type(node)
     assert node[1] is not None

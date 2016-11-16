@@ -23,13 +23,13 @@ from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
 
 class TestRegExpToAuto(unittest.TestCase):
 
-    def test_regexp(self):
+    def test_regexptoauto(self):
         r2a = RegExpToAuto()
         env = r2a.auto_env
 
-        l1= Symbol("1.m1()", BOOL)
-        l2= Symbol("1.m2()", BOOL)
-        l3= Symbol("1.m3()", BOOL)
+        l1= Symbol("m1(1)", BOOL)
+        l2= Symbol("m2(1)", BOOL)
+        l3= Symbol("m3(1)", BOOL)
 
         spec_list = Spec.get_specs_from_string("SPEC l.m1() |- TRUE; " +
                                                "SPEC (l.m1() & l.m2()) |- TRUE; " +
@@ -46,6 +46,10 @@ class TestRegExpToAuto(unittest.TestCase):
         regexp = get_regexp_node(gs)
         auto = r2a.get_from_regexp(regexp)
         res = Automaton.get_singleton(env.new_label(l1))
+
+        import sys
+        auto.to_dot(sys.stdout)
+
         self.assertTrue(auto.is_equivalent(res))
 
         # Test l.m1() and l.m2()

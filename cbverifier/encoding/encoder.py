@@ -12,23 +12,28 @@ The possible permutation of the events depend on the enabled/disabled
 status of events/callins.
 
 
-
 PLAN:
-  a. compute the ground specifications
-    - TEST
-  b. create the symbolic automata for the specifications
-    - TEST
-  b. create the encoding for the event transitions
-  We cannot statically encode the effect of each callback and
-  callin, since it depends on the whole history, and not on the
-  callin/callback that we are computing.
-  Hence, we need to encode one callin/callback per step and let the
-  model checker figure out the state of the system.
+  a. compute the ground specifications                                DONE
+  b. create the symbolic automata for the specifications              DONE
+  c. declare the variables of the TS
+  d. encode the trace and the error conditions
+  e. encode the automata in the symbolic TS
 
 
-OPTIMIZATIONS
-The length of the sequence that must be explored can be quite high.
+NOTE:
+We cannot statically encode the effect of each callback and
+callin, since it depends on the whole history, and not on the
+callin/callback that we are computing.
+Hence, we need to encode one callin/callback per step and let the
+model checker figure out the state of the system.
+
+
+Issues:
+- The length of the sequence that must be explored can be quite high.
 We need to optimize the encoding as much as we can.
+
+- Logarithmic encoding for the input variables
+They are in mutex now.
 
 Ideas:
   - Cone of influence reduction (harder due to regexp)
@@ -50,10 +55,6 @@ Ideas:
 
 """
 
-# TODOs:
-# - implement pre for the simplification
-# - fix encoding (and trace construction) using the simplification
-
 import logging
 from cStringIO import StringIO
 
@@ -68,10 +69,9 @@ from pysmt.logics import QF_BOOL
 
 from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
-from cbverifier.traces.ctrace import CTrace
+from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
 from cbverifier.encoding.automata import Automaton, AutoEnv
-
-
+from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.helpers import Helper
 
 class TransitionSystem:
@@ -82,6 +82,12 @@ class TransitionSystem:
         self.input_vars = set()
         self.init = TRUE()
         self.trans = TRUE()
+
+    def _add_var(self, var):
+        self.state_vars.append(var)
+
+    def _add_ivar(self, var):
+        self.input_vars.append(var)
 
     def product(self, other_ts):
         """ Computes the synchronous product of self with other_ts,
@@ -115,6 +121,13 @@ class TSEncoder:
 
         self.ground_specs = self._compute_ground_spec()
         self.r2a = RegExpToAuto()
+        self.cenc = CounterEnc()
+
+        (trace_length, msgs, cb_set, ci_set) = self.get_trace_stats()
+        self.trace_length = trace_length
+        self.msgs = msgs
+        self.cb_set = cb_set
+        self.ci_set = ci_set
 
     def get_ts_encoding(self):
         """ Returns the transition system encoding of the dynamic
@@ -123,27 +136,46 @@ class TSEncoder:
         if (self.ts is None): self._encode()
         return self.ts
 
-
     def _encode(self):
         """ Function that performs the actual encoding of the TS.
 
         The function performs the following steps:
 
+        1. Encode all the variables of the system
+        2. Encode the effects of the specifications
+        3. Encode the execution of the top-level callbacks and the
+        error conditions
         """
         self.ts = TransitionSystem()
 
-        # Disjunction of the error states
-        self.error_prop = FALSE()
+        # 1. Encode all the variables of the system
+        vars_ts = self._encode_vars()
+        self.ts.product(vars_ts)
 
-        # Encode the effects of the specifications
+        # 2. Encode the effects of the specifications
+        disabled_ci = {}
         spec_id = 0
+
+        # TODO: now the ground spec may still contain wild cards
+        raise Exception("Not implemented")
+
+        # (e.g. DONTCARE values)
         for ground_spec in self.ground_specs:
             (gs_ts, updates) = self._get_ground_spec_ts(ground_spec, spec_id)
+
             self.ts.product(gs_ts)
 
-        # Encode the callbacks and callins defined in the
-        # concrete trace
-        #
+            if ground_spec.is_disable():
+                msg = get_spec_rhs(ground_spec.ast)
+                key = TSEncoder.get_key_from_call(msg)
+                if key in self.ci_set():
+                    disabled_ci.add(key)
+
+        # 3. Encode the execution of the top-level callbacks
+        (cb_ts, errors) = self._encode_cbs(disabled_ci)
+        self.error_prop = FALSE()
+        for e in errors:
+            self.error_prop = Or(self.error_prop, e)
 
 
     def _compute_ground_spec(self):
@@ -177,14 +209,207 @@ class TSEncoder:
         auto = self.r2a.get_from_regexp(ground_spec)
         self._get_auto_ts(auto, spec_id)
 
-
+        # TODO
         raise Exception("Not implemented")
+
+
+    def _encode_vars(self):
+        """ Encode the state and input variables of the system.
+
+        We create a state and an input variable for each message in
+        the trace.
+        """
+        var_ts = TransitionSystem()
+
+        for msg in self.trace_msgs:
+            # create the state variable
+            key = TSEncoder.get_msg_key(msg)
+            var = TSEncoder._get_state_var(msg)
+            var_ts.add_var(var)
+
+            # create the input variable
+            ivar = TSEncoder._get_input_var(msg)
+            var_ts.add_ivar(ivar)
+
+            # add the constraint on the input variable
+            var_ts.trans = And(var_ts.trans,
+                               And(Not(ivar), var))
+        return var_ts
+
+
+    def _encode_cbs(self, disabled_ci):
+        """ Encodes the callbacks.
+
+        The system picks a top-level callback in the trace to execute.
+
+        At that point, the system encodes the sequence of callins and
+        callbacks executed in the same stack trace of the top-level
+        callback.
+
+        We keep a program counter to encode each inner state.
+        This determines the next callin/callback to be executed.
+        The sequence is deterministic once the scheduler pick a
+        top-level callback.
+
+        Returns a transition system and a list of error states
+        """
+
+        ts = TransitionSystem()
+        errors = []
+
+        # Create the pc variable
+        length = len(self.trace_msgs)
+        num_tl_cb = len(self.trace.children)
+        pc_size = (length - num_tl_cb) + 1
+        pc_name = TSEncoder._get_pc_name()
+        self.cenc.add_var(pc_name, length)
+
+        # TODO: add all bit variables
+        raise Exception("Not implemented")
+        ts.add_var()
+
+        # start from the initial state
+        ts.init = self.cenc.eq_val(pc_name, 0)
+
+        # encode each cb
+        for tl_cb in self.trace.children:
+            # dfs on the tree of messages
+            current_state = 0
+            stack = [tl_cb]
+            while (len(stack) != 0):
+                msg = stack.pop()
+                msg_key = TSEncoder.get_key_from_call(msg)
+
+                # Fill the stack in reverse order
+                for i in reversed(range(len(msg.children))):
+                    stack.push(msg.children[i])
+
+                # encode the transition
+                if (len(stack) == 0):
+                    next_state = 0 # go back to 0
+                else:
+                    next_state = prev_state + 1
+
+                label = self._get_message_label(msg_key)
+                s0 = self.cenc.eq_val(pc_name, current_state)
+                snext = self.cenc.eq_val(pc_name, next_state)
+                snext = Helper.get_next_formula(snext)
+                ts.trans = And([ts.trans, s0, label, snext])
+                current_state = next_state
+
+                msg_enabled = TSEncoder._get_state_var(msg_key)
+                error_condition = And(s0, msg_enabled)
+                errors.add(error_condition)
+
+        return (ts, errors)
+
+
+    def _get_message_label(self, msg_key):
+        assert False
+        # encode the label for msg and the negation of all the
+        # other messages
 
 
     def _get_auto_ts(self, auto):
         """ Encodes the automaton auto in a transition system """
-        
+        # TODO
+        raise Exception("Not implemented")
 
+    @staticmethod
+    def _get_pc_name():
+        atom_name = "pc"
+        return atom_name
+
+    @staticmethod
+    def _get_state_var(key):
+        atom_name = "enabled_" + key
+        return Symbol(atom_name, BOOL)
+
+    @staticmethod
+    def _get_input_var(key):
+        atom_name = key
+        return Symbol(atom_name, BOOL)
+
+    @staticmethod
+    def get_key(method_name, params):
+        key = "%s(%s)" % (method_name,
+                          ",".join(params))
+        return key
+
+    @staticmethod
+    def get_msg_key(msg):
+        params = []
+        for p in msg.params:
+            params.add(TSEncoder.get_value_key(p))
+        return TSEncoder.get_key(msg.method_name, params)
+
+    @staticmethod
+    def get_key_from_call(call_node):
+        """ Works for grounded call node """
+        assert get_node_type(call_node) == CALL
+
+        method_name_node = get_call_method(call_node)
+        assert (ID == get_node_type(method_name_node))
+        method_name = method_name_node[1]
+
+        receiver = get_call_receiver(call_node)
+
+        if (new_nil() != receiver):
+            assert VALUE == get_node_type(receiver)
+            params = [TSEncoder.get_value_key(receiver[1])]
+        else:
+            params = []
+
+        node_params = get_call_params(call_node)
+        while (PARAM_LIST == params):
+            p = TSEncoder.get_value_key(node_params[1])
+            params.append(p)
+            node_params = node_params[2]
+
+        return TSEncoder.get_key(method_name, params)
+
+
+    @staticmethod
+    def get_value_key(value):
+        assert (isinstance(value, CValue))
+        if value.is_null:
+            value_repr = "NULL"
+        elif value.value is not None:
+            value_repr = str(value.value)
+        elif value.object_id is not None:
+            value_repr = str(value.object_id)
+        else:
+            raise Exception("Cannot find a unique identifier for the value "\
+                            "%s" % (str(value)))
+        return value_repr
+
+    def get_trace_stats(self):
+        # count the total number of messages
+        trace_length = 0
+        msgs = set()
+        cb_set = set()
+        ci_set = set()
+
+        stack = []
+        for msg in self.trace.children:
+            stack.append(msg)
+
+        while (len(stack) != 0):
+            msg = stack.pop()
+
+            trace_length = trace_length + 1
+            key = TSEncoder.get_msg_key(msg)
+
+            msgs.add(key)
+            if (isinstance(msg, CCallback)):
+                cb_set.add(key)
+            if (isinstance(msg, CCallin)):
+                ci_set.add(key)
+
+            for msg2 in msg.children:
+                stack.append(msg2)
+
+        return (trace_length, msgs, cb_set, ci_set)
 
 
 class RegExpToAuto():
@@ -201,11 +426,9 @@ class RegExpToAuto():
         self.auto_env = auto_env
 
     def get_atom_var(self, call_node):
-        out = StringIO()
-        pretty_print(call_node, out)
-        atom_name = out.getvalue()
-        return Symbol(atom_name, BOOL)
-
+        key = TSEncoder.get_key_from_call(call_node)
+        ivar = TSEncoder._get_input_var(key)
+        return ivar
 
     def get_from_regexp(self, regexp, env=None):
         node_type = get_node_type(regexp)

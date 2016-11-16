@@ -25,6 +25,9 @@ class Spec:
     def print_spec(self, stream):
         pretty_print(self.ast, stream)
 
+    def is_disable(self):
+        return is_spec_disable(self.ast)
+
     @staticmethod
     def get_specs_from_string(spec_list_string, spec_list=None):
         spec_list_ast = spec_parser.parse(spec_list_string)
