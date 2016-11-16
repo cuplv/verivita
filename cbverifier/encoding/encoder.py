@@ -186,9 +186,19 @@ class TSEncoder:
 
         # encodes the frame conditions when there are no updates
         # the frame conditions must be encoded globally
-        # TODO
-        raise Exception("Not implemented")
+        for (msg_key, update) in updates.iteritems():
+            msg_enabled = EncodeTS._get_state_var(key)
+            fc_msg = Iff(msg_enabled,
+                         Helper.get_next_formula(msg_enabled))
 
+            changes = FALSE()
+            for u in update: changes = Or(changes, u)
+
+            # if we do not end in the final states of the automata
+            # the variable should not change
+            fc = And(Helper.get_next_formula(Not(changes)),
+                     fc_msg)
+            ts.trans = And(ts.trans, fc)
 
         # 3. Encode the execution of the top-level callbacks
         (cb_ts, errors) = self._encode_cbs(disabled_ci)
@@ -284,10 +294,23 @@ class TSEncoder:
 
         # Record the final states - on these states the value of the
         # rhs of the specifications change
+        msg = get_spec_rhs(ground_spec.ast)
+        key = TSEncoder.get_key_from_call(msg)
         for a_s in auto.final_states:
             ts_s = auto2ts_map[a_s]
             eq_current = self.cenc.eq_val(auto_pc, ts_s)
+
+            # add the current state to the update states
             updates.add(eq_current)
+
+            # encode the fact that the message must be
+            # enabled/disabled in this state
+            eq_next = Helper.get_next_formula(eq_current)
+            msg_enabled = EncodeTS._get_state_var(key)
+            if (ground_spec.is_disable()):
+                msg_enabled = Not(msg_enabled)
+            msg_enabled = Helper.get_next_formula(msg_enabled)
+            ts.trans = And(ts.trans,And(eq_next, msg_enabled))
 
         return ts
 
@@ -384,10 +407,13 @@ class TSEncoder:
 
 
     def _get_message_label(self, msg_key):
-        # TODO
-        raise Exception("Not implemented")
-        # encode the label for msg and the negation of all the
-        # other messages
+        msg_ivar = TSEncoder._get_input_var(msg_key)
+        conjuncts = []
+        for ivar in self.ts.input_vars:
+            if (ivar != msg_var): ivar = Not(ivar)
+            conjuncts.append(ivar)
+
+        return And(conjuncts)
 
     @staticmethod
     def _get_pc_name():
