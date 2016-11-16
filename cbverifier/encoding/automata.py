@@ -113,6 +113,9 @@ class Automaton(object):
     def is_final(self, state):
         return state in self.final_states
 
+    def count_state(self):
+        return len(self.states)
+
     def copy_reachable(self, copy=None, offset = 0):
         """ Copy the reachable state of self in a new automaton """
 

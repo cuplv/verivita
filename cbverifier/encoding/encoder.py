@@ -157,19 +157,38 @@ class TSEncoder:
         spec_id = 0
 
         # TODO: now the ground spec may still contain wild cards
-        raise Exception("Not implemented")
-
+        logging.warning("DONTCARE are still not handled " \
+                        "in the grounding of the specifications")
+        # raise Exception("Not implemented")
         # (e.g. DONTCARE values)
-        for ground_spec in self.ground_specs:
-            (gs_ts, updates) = self._get_ground_spec_ts(ground_spec, spec_id)
 
-            self.ts.product(gs_ts)
+        updates = {}
+        for ground_spec in self.ground_specs:
+            msg = get_spec_rhs(ground_spec.ast)
+            key = TSEncoder.get_key_from_call(msg)
 
             if ground_spec.is_disable():
-                msg = get_spec_rhs(ground_spec.ast)
-                key = TSEncoder.get_key_from_call(msg)
                 if key in self.ci_set():
                     disabled_ci.add(key)
+
+            # for a key, updates contains the list of formulas where.
+            # key is changed
+            #
+            # On the negation of the disjunction of these formulas
+            # the variable do not change, so we must encode the frame
+            # condition
+            if key not in updates: updates[key] = []
+
+            gs_ts = self._get_ground_spec_ts(ground_spec,
+                                             spec_id,
+                                             updates[key])
+            self.ts.product(gs_ts)
+
+        # encodes the frame conditions when there are no updates
+        # the frame conditions must be encoded globally
+        # TODO
+        raise Exception("Not implemented")
+
 
         # 3. Encode the execution of the top-level callbacks
         (cb_ts, errors) = self._encode_cbs(disabled_ci)
@@ -197,20 +216,80 @@ class TSEncoder:
         return ground_specs
 
 
-    def _get_ground_spec_ts(self, ground_spec, spec_id):
+    def _get_ground_spec_ts(self, ground_spec, spec_id, update):
         """ Given a ground specification, returns the transition
         system that encodes the updates implied by the specification.
 
-        We apply the same encoding used in:
-        Symbolic Compilation of PSL, Cimatti, Roveri, Tonetta, TCAD
-        Section 5, subsection A.
+        updates is a map 
         """
+        def _get_pc_value(auto2ts_map, current_pc_val, auto_state):
+            if not auto_state in auto2ts_map:
+                current_pc_val += 1
+                auto2ts_map[auto_state] = current_pc_val
+            else:
+                current_pc_val = auto2ts_map[auto_state]
+            return current_pc_val
+
+        ts = TransitionSystem()
+        updates = []
+
+        # map from ids of automaton states to the value used in the
+        # counter for the transition system
+        auto2ts_map = {}
 
         auto = self.r2a.get_from_regexp(ground_spec)
-        self._get_auto_ts(auto, spec_id)
+        # TODO: ensure to prune the unreachable states in the automaton
 
-        # TODO
-        raise Exception("Not implemented")
+        # program counter of the automaton
+        auto_pc = "spec_pc_%d" % spec_id
+        self.cenc.add(auto_pc, auto.count_state() - 1)
+        for v in self.cenc.get_counter_var(auto_pc):
+            ts.add_var(v)
+
+        # initial states
+        current_pc_val = -1
+        for a_init in auto.initial_states:
+            current_pc_val = _get_pc_value(auto2ts_map,
+                                           current_pc_val,
+                                           a_init)
+
+            # auto_pc = current_pc_val
+            eq_current = self.cenc.eq_val(auto_pc,
+                                          current_pc_val)
+            ts.init = And(ts.init, eq_current)
+
+        # automata transitions
+        for a_s in auto.states:
+            current_pc_val = _get_pc_value(auto2ts_map,
+                                           current_pc_val,
+                                           a_s)
+            ts_s = current_pc_val
+            eq_current = self.cenc.eq_val(auto_pc, ts_s)
+
+            s_trans = FALSE()
+            for (a_dst, label) in auto.trans[a_s]:
+                current_pc_val = _get_pc_value(auto2ts_map,
+                                               current_pc_val,
+                                               a_dst)
+                ts_dst = current_pc_val
+
+                eq_next = self.cenc.eq_val(auto_pc, ts_dst)
+                eq_next = Helper.get_next_formula(eq_next)
+
+                t = And([eq_next, label.get_formula()])
+                s_trans = Or(s_trans, t)
+
+            s_trans = Or(Not(eq_current), s_trans)
+            ts.trans = And(ts.trans, s_trans)
+
+        # Record the final states - on these states the value of the
+        # rhs of the specifications change
+        for a_s in auto.final_states:
+            ts_s = auto2ts_map[a_s]
+            eq_current = self.cenc.eq_val(auto_pc, ts_s)
+            updates.add(eq_current)
+
+        return ts
 
 
     def _encode_vars(self):
@@ -262,11 +341,11 @@ class TSEncoder:
         num_tl_cb = len(self.trace.children)
         pc_size = (length - num_tl_cb) + 1
         pc_name = TSEncoder._get_pc_name()
-        self.cenc.add_var(pc_name, length)
+        self.cenc.add_var(pc_name, length-1) # starts from 0
 
-        # TODO: add all bit variables
-        raise Exception("Not implemented")
-        ts.add_var()
+        # add all bit variables
+        for v in self.cenc.get_counter_var(pc_name):
+            ts.add_var(v)
 
         # start from the initial state
         ts.init = self.cenc.eq_val(pc_name, 0)
@@ -305,15 +384,10 @@ class TSEncoder:
 
 
     def _get_message_label(self, msg_key):
-        assert False
-        # encode the label for msg and the negation of all the
-        # other messages
-
-
-    def _get_auto_ts(self, auto):
-        """ Encodes the automaton auto in a transition system """
         # TODO
         raise Exception("Not implemented")
+        # encode the label for msg and the negation of all the
+        # other messages
 
     @staticmethod
     def _get_pc_name():

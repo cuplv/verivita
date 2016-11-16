@@ -120,7 +120,6 @@ class CounterEnc():
         max_value = self.vars2bound[var_name]
         bitsize = CounterEnc._get_bitsize(max_value)
 
-
         # construct the bitmask: we do NOT want all the models
         i = max_value + 1
         mask = FALSE()
@@ -143,6 +142,19 @@ class CounterEnc():
             mask = self.bdd_converter.back(bdd_mask)
 
         return mask
+
+    def get_counter_var(self, var_name):
+        counter_vars = set()
+
+        assert var_name in self.vars2bound
+        max_value = self.vars2bound[var_name]
+        bitsize = CounterEnc._get_bitsize(max_value)
+
+        for i in range(bitsize):
+            bitvar = self._get_bitvar(var_name, i)
+            counter_vars.add(bitvar)
+
+        return counter_vars
 
     # def encode_fc(self, append_to, counter_name, max_value, time_frame):
     #     bitsize = VarsDecl.get_bit_sizes(max_value)
