@@ -136,77 +136,6 @@ class TSEncoder:
         if (self.ts is None): self._encode()
         return self.ts
 
-    def _encode(self):
-        """ Function that performs the actual encoding of the TS.
-
-        The function performs the following steps:
-
-        1. Encode all the variables of the system
-        2. Encode the effects of the specifications
-        3. Encode the execution of the top-level callbacks and the
-        error conditions
-        """
-        self.ts = TransitionSystem()
-
-        # 1. Encode all the variables of the system
-        vars_ts = self._encode_vars()
-        self.ts.product(vars_ts)
-
-        # 2. Encode the effects of the specifications
-        disabled_ci = {}
-        spec_id = 0
-
-        # TODO: now the ground spec may still contain wild cards
-        logging.warning("DONTCARE are still not handled " \
-                        "in the grounding of the specifications")
-        # raise Exception("Not implemented")
-        # (e.g. DONTCARE values)
-
-        updates = {}
-        for ground_spec in self.ground_specs:
-            msg = get_spec_rhs(ground_spec.ast)
-            key = TSEncoder.get_key_from_call(msg)
-
-            if ground_spec.is_disable():
-                if key in self.ci_set():
-                    disabled_ci.add(key)
-
-            # for a key, updates contains the list of formulas where.
-            # key is changed
-            #
-            # On the negation of the disjunction of these formulas
-            # the variable do not change, so we must encode the frame
-            # condition
-            if key not in updates: updates[key] = []
-
-            gs_ts = self._get_ground_spec_ts(ground_spec,
-                                             spec_id,
-                                             updates[key])
-            self.ts.product(gs_ts)
-
-        # encodes the frame conditions when there are no updates
-        # the frame conditions must be encoded globally
-        for (msg_key, update) in updates.iteritems():
-            msg_enabled = EncodeTS._get_state_var(key)
-            fc_msg = Iff(msg_enabled,
-                         Helper.get_next_formula(msg_enabled))
-
-            changes = FALSE()
-            for u in update: changes = Or(changes, u)
-
-            # if we do not end in the final states of the automata
-            # the variable should not change
-            fc = And(Helper.get_next_formula(Not(changes)),
-                     fc_msg)
-            ts.trans = And(ts.trans, fc)
-
-        # 3. Encode the execution of the top-level callbacks
-        (cb_ts, errors) = self._encode_cbs(disabled_ci)
-        self.error_prop = FALSE()
-        for e in errors:
-            self.error_prop = Or(self.error_prop, e)
-
-
     def _compute_ground_spec(self):
         """ Computes all the ground specifications from the
         specifications with free variables in self.spec and the
@@ -225,71 +154,161 @@ class TSEncoder:
 
         return ground_specs
 
+    def _encode(self):
+        """ Function that performs the actual encoding of the TS.
+
+        The function performs the following steps:
+
+        1. Encode all the variables of the system
+        2. Encode the effects of the specifications
+        3. Encode the execution of the top-level callbacks and the
+        error conditions
+        """
+        self.ts = TransitionSystem()
+
+        # 1. Encode all the variables of the system
+        vars_ts = self._encode_vars()
+        self.ts.product(vars_ts)
+
+        # 2. Specs ts
+        (spec_ts, disabled_ci) = self._encode_ground_specs()
+        self.ts.product(spec_ts)
+
+        # 3. Encode the execution of the top-level callbacks
+        (cb_ts, errors) = self._encode_cbs(disabled_ci)
+        self.ts.product(cb_ts)
+        self.error_prop = FALSE()
+        for e in errors:
+            self.error_prop = Or(self.error_prop, e)
+
+
+    def _encode_ground_specs(self):
+        """ Encode the set of ground specifications.
+
+        Returns the transition system that encodes the effects of the
+        specification and the set of messages disabled_ci.
+        disabled_ci is the set
+        of callin messages that can be disabled by some specification.
+        """
+
+        ts = TransitionSystem()
+
+        # TODO: now the ground spec may still contain wild cards
+        logging.warning("DONTCARE are still not handled " \
+                        "in the grounding of the specifications")
+
+        # Updates is a map from messages to set of states where the
+        # message enabled status is changed (because the system matched
+        # a regular expression in the specification).
+        # In practice, these are the accepting states of the automaton.
+        updates = {}
+        disabled_ci = {}
+        spec_id = 0
+        for ground_spec in self.ground_specs:
+            msg = get_spec_rhs(ground_spec.ast)
+            key = TSEncoder.get_key_from_call(msg)
+
+            if ground_spec.is_disable():
+                if key in self.ci_set():
+                    disabled_ci.add(key)
+
+            if key not in updates: updates[key] = []
+            gs_ts = self._get_ground_spec_ts(ground_spec,
+                                             spec_id,
+                                             updates[key])
+            ts.product(gs_ts)
+
+        # encodes the frame conditions when there are no updates
+        # the frame conditions must be encoded globally
+        #
+        # For each key, updates[key] contains the list of formulas
+        # where key is changed.
+        #
+        # On the negation of the disjunction of these formulas
+        # the variable do not change, so we must encode the frame
+        # condition
+        for (msg_key, update) in updates.iteritems():
+            msg_enabled = EncodeTS._get_state_var(msg_key)
+
+            # msg_enabled <-> msg_enabled'
+            fc_msg = Iff(msg_enabled,
+                         Helper.get_next_formula(msg_enabled))
+
+            changes = FALSE()
+            for u in update: changes = Or(changes, u)
+
+            # If we do not end in the final states of the automata
+            # the variable should not change
+            #
+            # Note: the changes is encoded on the next state (the
+            # accepting one)
+            fc = And(Helper.get_next_formula(Not(changes)),
+                     fc_msg)
+            ts.trans = And(ts.trans, fc)
+
+        return (ts, disabled_ci)
+
 
     def _get_ground_spec_ts(self, ground_spec, spec_id, update):
         """ Given a ground specification, returns the transition
         system that encodes the updates implied by the specification.
 
-        updates is a map 
+        It returns the ts that encode the acceptance of the language.
+
+        It has side effects on update
         """
         def _get_pc_value(auto2ts_map, current_pc_val, auto_state):
             if not auto_state in auto2ts_map:
                 current_pc_val += 1
-                auto2ts_map[auto_state] = current_pc_val
+                state_id = current_pc_val
+                auto2ts_map[auto_state] = state_id
             else:
-                current_pc_val = auto2ts_map[auto_state]
-            return current_pc_val
+                state_id = auto2ts_map[auto_state]
+            return (current_pc_val, state_id)
 
         ts = TransitionSystem()
-        updates = []
 
         # map from ids of automaton states to the value used in the
         # counter for the transition system
         auto2ts_map = {}
 
-        auto = self.r2a.get_from_regexp(ground_spec)
         # TODO: ensure to prune the unreachable states in the automaton
+        auto = self.r2a.get_from_regexp(ground_spec)
 
         # program counter of the automaton
         auto_pc = "spec_pc_%d" % spec_id
-        self.cenc.add(auto_pc, auto.count_state() - 1)
-        for v in self.cenc.get_counter_var(auto_pc):
-            ts.add_var(v)
+        self.cenc.add(auto_pc, auto.count_state() - 1) # -1 since it starts from 0
+        for v in self.cenc.get_counter_var(auto_pc): ts.add_var(v)
 
         # initial states
         current_pc_val = -1
+        ts.init = False()
         for a_init in auto.initial_states:
-            current_pc_val = _get_pc_value(auto2ts_map,
-                                           current_pc_val,
-                                           a_init)
-
-            # auto_pc = current_pc_val
-            eq_current = self.cenc.eq_val(auto_pc,
-                                          current_pc_val)
-            ts.init = And(ts.init, eq_current)
+            (current_pc_val, s_id) = _get_pc_value(auto2ts_map,
+                                                   current_pc_val,
+                                                   a_init)
+            eq_current = self.cenc.eq_val(auto_pc, s_id)
+            ts.init = Or(ts.init, eq_current)
 
         # automata transitions
         for a_s in auto.states:
-            current_pc_val = _get_pc_value(auto2ts_map,
-                                           current_pc_val,
-                                           a_s)
-            ts_s = current_pc_val
+            (current_pc_val, ts_s) = _get_pc_value(auto2ts_map,
+                                                   current_pc_val,
+                                                   a_s)
             eq_current = self.cenc.eq_val(auto_pc, ts_s)
 
             s_trans = FALSE()
             for (a_dst, label) in auto.trans[a_s]:
-                current_pc_val = _get_pc_value(auto2ts_map,
-                                               current_pc_val,
-                                               a_dst)
-                ts_dst = current_pc_val
-
+                (current_pc_val, ts_dst) = _get_pc_value(auto2ts_map,
+                                                         current_pc_val,
+                                                         a_dst)
                 eq_next = self.cenc.eq_val(auto_pc, ts_dst)
                 eq_next = Helper.get_next_formula(eq_next)
 
                 t = And([eq_next, label.get_formula()])
                 s_trans = Or(s_trans, t)
 
-            s_trans = Or(Not(eq_current), s_trans)
+            s_trans = And(Not(eq_current), s_trans)
             ts.trans = And(ts.trans, s_trans)
 
         # Record the final states - on these states the value of the
@@ -301,7 +320,7 @@ class TSEncoder:
             eq_current = self.cenc.eq_val(auto_pc, ts_s)
 
             # add the current state to the update states
-            updates.add(eq_current)
+            update.add(eq_current)
 
             # encode the fact that the message must be
             # enabled/disabled in this state
@@ -366,21 +385,24 @@ class TSEncoder:
         pc_name = TSEncoder._get_pc_name()
         self.cenc.add_var(pc_name, length-1) # starts from 0
 
-        # add all bit variables
+        # add all the bit variables
         for v in self.cenc.get_counter_var(pc_name):
             ts.add_var(v)
 
         # start from the initial state
         ts.init = self.cenc.eq_val(pc_name, 0)
 
+        ts.trans = FALSE() # disjunction of transitions
         # encode each cb
         for tl_cb in self.trace.children:
             # dfs on the tree of messages
+            state_count = 0
             current_state = 0
+
             stack = [tl_cb]
             while (len(stack) != 0):
                 msg = stack.pop()
-                msg_key = TSEncoder.get_key_from_call(msg)
+                msg_key = TSEncoder.get_msg_key(msg)
 
                 # Fill the stack in reverse order
                 for i in reversed(range(len(msg.children))):
@@ -388,20 +410,23 @@ class TSEncoder:
 
                 # encode the transition
                 if (len(stack) == 0):
-                    next_state = 0 # go back to 0
+                    # visited all the cb/ci of the top-level cb
+                    next_state = 0
                 else:
-                    next_state = prev_state + 1
+                    state_count += 1
+                    next_state = state_count
 
                 label = self._get_message_label(msg_key)
                 s0 = self.cenc.eq_val(pc_name, current_state)
                 snext = self.cenc.eq_val(pc_name, next_state)
                 snext = Helper.get_next_formula(snext)
-                ts.trans = And([ts.trans, s0, label, snext])
+                ts.trans = Or([ts.trans, s0, label, snext])
                 current_state = next_state
 
-                msg_enabled = TSEncoder._get_state_var(msg_key)
-                error_condition = And(s0, msg_enabled)
-                errors.add(error_condition)
+                if (msg_key in disabled_ci and isinstance(msg, CCallin)):
+                    msg_enabled = TSEncoder._get_state_var(msg_key)
+                    error_condition = And(s0, msg_enabled)
+                    errors.add(error_condition)
 
         return (ts, errors)
 
@@ -412,7 +437,6 @@ class TSEncoder:
         for ivar in self.ts.input_vars:
             if (ivar != msg_var): ivar = Not(ivar)
             conjuncts.append(ivar)
-
         return And(conjuncts)
 
     @staticmethod
@@ -432,15 +456,22 @@ class TSEncoder:
 
     @staticmethod
     def get_key(method_name, params):
+        assert method_name is not None
+        assert params is not None
+        assert method_name != ""
+
         key = "%s(%s)" % (method_name,
                           ",".join(params))
         return key
 
     @staticmethod
     def get_msg_key(msg):
+        """ The input is a msg from a concrete trace.
+        The output is the key to the message
+        """
         params = []
         for p in msg.params:
-            params.add(TSEncoder.get_value_key(p))
+            params.append(TSEncoder.get_value_key(p))
         return TSEncoder.get_key(msg.method_name, params)
 
     @staticmethod
@@ -461,8 +492,11 @@ class TSEncoder:
             params = []
 
         node_params = get_call_params(call_node)
-        while (PARAM_LIST == params):
-            p = TSEncoder.get_value_key(node_params[1])
+
+        while (PARAM_LIST == get_node_type(node_params)):
+            p_node = node_params[1]
+            assert (VALUE == get_node_type(p_node))
+            p = TSEncoder.get_value_key(p_node[1])
             params.append(p)
             node_params = node_params[2]
 
@@ -471,6 +505,9 @@ class TSEncoder:
 
     @staticmethod
     def get_value_key(value):
+        """ Given a value returns its representation
+        that will be used in the message key """
+
         assert (isinstance(value, CValue))
         if value.is_null:
             value_repr = "NULL"
