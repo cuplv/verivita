@@ -27,6 +27,7 @@ from pysmt.environment import reset_env, get_env
 from pysmt.typing import BOOL
 from pysmt.shortcuts import Symbol, TRUE, FALSE
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
+
 import pysmt.operators as op
 from pysmt.shortcuts import Solver
 from pysmt.shortcuts import simplify
@@ -34,7 +35,6 @@ from pysmt.solvers.solver import Model
 from pysmt.logics import QF_BOOL
 
 
-auto_env = None
 
 class AutoEnv(object):
     """ Environment used by the automaton class
@@ -43,9 +43,21 @@ class AutoEnv(object):
     It keeps a unique environment for formulas.
 
     """
-    def __init__(self):
+
+    auto_env = None
+
+    def __init__(self, pysmt_env = None):
+
+        if pysmt_env is None:
+            self.pysmt_env = get_env()
+        else:
+            self.pysmt_env = pysmt_env
+
         # sat solver instance
-        self.sat_solver = None
+        # For now use z3, we can switch to picosat if needed
+        self.sat_solver = self.pysmt_env.factory.Solver(quantified=False,
+                                                        name="z3",
+                                                        logic=QF_BOOL)
         # TODO: add the bdd type of labels.
         # With our problem bdds should not explode and be fairly
         # efficient
@@ -58,13 +70,9 @@ class AutoEnv(object):
 
     @staticmethod
     def get_global_auto_env():
-        auto_env = AutoEnv()
-        pysmt_env = get_env()
-
-        # For now use z3, we can switch to picosat if needed
-        auto_env.sat_solver = Solver(name='z3', logic=QF_BOOL)
-
-        return auto_env
+        if AutoEnv.auto_env is None:
+            AutoEnv.auto_env = AutoEnv()
+        return AutoEnv.auto_env
 
 
 class Automaton(object):

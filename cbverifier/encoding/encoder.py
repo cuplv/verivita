@@ -15,10 +15,9 @@ status of events/callins.
 PLAN:
   a. compute the ground specifications                                DONE
   b. create the symbolic automata for the specifications              DONE
-  c. declare the variables of the TS
-  d. encode the trace and the error conditions
-  e. encode the automata in the symbolic TS
-
+  c. declare the variables of the TS                                  DONE
+  d. encode the trace and the error conditions                        DONE
+  e. encode the automata in the symbolic TS                           DONE
 
 NOTE:
 We cannot statically encode the effect of each callback and
@@ -58,9 +57,13 @@ Ideas:
 import logging
 from cStringIO import StringIO
 
-from pysmt.environment import reset_env
+from pysmt.environment import reset_env, get_env
 from pysmt.typing import BOOL
-from pysmt.shortcuts import Symbol, TRUE, FALSE
+from pysmt.shortcuts import Symbol
+
+from pysmt.shortcuts import TRUE as TRUE_PYSMT
+from pysmt.shortcuts import FALSE as FALSE_PYSMT
+
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
 
 from pysmt.shortcuts import Solver
@@ -72,6 +75,8 @@ from cbverifier.specs.spec_ast import *
 from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
 from cbverifier.encoding.automata import Automaton, AutoEnv
 from cbverifier.encoding.counter_enc import CounterEnc
+from cbverifier.encoding.grounding import GroundSpecs
+
 from cbverifier.helpers import Helper
 
 class TransitionSystem:
@@ -80,14 +85,14 @@ class TransitionSystem:
         # internal representation of the transition system
         self.state_vars = set()
         self.input_vars = set()
-        self.init = TRUE()
-        self.trans = TRUE()
+        self.init = TRUE_PYSMT()
+        self.trans = TRUE_PYSMT()
 
-    def _add_var(self, var):
-        self.state_vars.append(var)
+    def add_var(self, var):
+        self.state_vars.add(var)
 
-    def _add_ivar(self, var):
-        self.input_vars.append(var)
+    def add_ivar(self, var):
+        self.input_vars.add(var)
 
     def product(self, other_ts):
         """ Computes the synchronous product of self with other_ts,
@@ -120,8 +125,11 @@ class TSEncoder:
         self.error_prop = None
 
         self.ground_specs = self._compute_ground_spec()
+        self.pysmt_env = get_env()
+        self.auto_env = AutoEnv(self.pysmt_env)
         self.r2a = RegExpToAuto()
-        self.cenc = CounterEnc()
+
+        self.cenc = CounterEnc(self.pysmt_env)
 
         (trace_length, msgs, cb_set, ci_set) = self.get_trace_stats()
         self.trace_length = trace_length
@@ -177,7 +185,7 @@ class TSEncoder:
         # 3. Encode the execution of the top-level callbacks
         (cb_ts, errors) = self._encode_cbs(disabled_ci)
         self.ts.product(cb_ts)
-        self.error_prop = FALSE()
+        self.error_prop = FALSE_PYSMT()
         for e in errors:
             self.error_prop = Or(self.error_prop, e)
 
@@ -234,7 +242,7 @@ class TSEncoder:
             fc_msg = Iff(msg_enabled,
                          Helper.get_next_formula(msg_enabled))
 
-            changes = FALSE()
+            changes = FALSE_PYSMT()
             for u in update: changes = Or(changes, u)
 
             # If we do not end in the final states of the automata
@@ -297,7 +305,7 @@ class TSEncoder:
                                                    a_s)
             eq_current = self.cenc.eq_val(auto_pc, ts_s)
 
-            s_trans = FALSE()
+            s_trans = FALSE_PYSMT()
             for (a_dst, label) in auto.trans[a_s]:
                 (current_pc_val, ts_dst) = _get_pc_value(auto2ts_map,
                                                          current_pc_val,
@@ -342,9 +350,8 @@ class TSEncoder:
         """
         var_ts = TransitionSystem()
 
-        for msg in self.trace_msgs:
+        for msg in self.msgs:
             # create the state variable
-            key = TSEncoder.get_msg_key(msg)
             var = TSEncoder._get_state_var(msg)
             var_ts.add_var(var)
 
@@ -354,7 +361,7 @@ class TSEncoder:
 
             # add the constraint on the input variable
             var_ts.trans = And(var_ts.trans,
-                               And(Not(ivar), var))
+                               Or(Not(ivar), var))
         return var_ts
 
 
@@ -392,7 +399,7 @@ class TSEncoder:
         # start from the initial state
         ts.init = self.cenc.eq_val(pc_name, 0)
 
-        ts.trans = FALSE() # disjunction of transitions
+        ts.trans = FALSE_PYSMT() # disjunction of transitions
         # encode each cb
         for tl_cb in self.trace.children:
             # dfs on the tree of messages
@@ -606,9 +613,9 @@ class RegExpToAuto():
         node_type = get_node_type(be_node)
 
         if (node_type == TRUE):
-            return TRUE()
+            return TRUE_PYSMT()
         elif (node_type == FALSE):
-            return FALSE()
+            return FALSE_PYSMT()
         elif (node_type == CALL):
             # generate a boolean atom for the call
             atom_var = self.get_atom_var(be_node)
