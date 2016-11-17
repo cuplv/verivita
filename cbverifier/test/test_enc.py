@@ -1,9 +1,5 @@
 """ Test the encoding """
 
-""" Test the grounding of specifications
-
-"""
-
 import sys
 import logging
 import unittest
@@ -402,4 +398,5 @@ class TestEnc(unittest.TestCase):
         bmc = BMC(ts_enc.helper, ts, error)
 
         # not None == there is a bug
+        self.assertTrue(bmc.find_bug(0) is None)
         self.assertTrue(bmc.find_bug(1) is not None)

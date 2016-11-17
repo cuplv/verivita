@@ -1,0 +1,76 @@
+[
+{
+  "msg": {
+    "callbackEntry": {
+      "methodReturnType": "void", 
+      "callbackCallerClass": "", 
+      "methodName": "m1", 
+      "signature": "m1", 
+      "paramList": [
+        {
+          "isNull": false, 
+          "value": "", 
+          "type": "", 
+          "fmwkType": "", 
+          "objectId": "1"
+        }
+      ], 
+      "callbackCallerMethod": "newInstance", 
+      "frameworkOverrides": [], 
+      "methodParameterTypes": [], 
+      "receiverFirstFrameworkSuper": "android.app.Activity"
+    }, 
+    "threadId": "1", 
+    "type": "CALLBACK_ENTRY", 
+    "messageId": "0"
+  }
+},
+{
+  "msg": {
+    "callinEntry": {
+      "methodName": "m2", 
+      "paramList": [
+        {
+          "isNull": false, 
+          "value": "", 
+          "type": "", 
+          "fmwkType": "", 
+          "objectId": "1"
+        }
+      ], 
+      "signature": "m2"
+    }, 
+    "threadId": "1", 
+    "type": "CALLIN_ENTRY", 
+    "messageId": "1"
+  }
+},
+{
+  "msg": {
+    "callinExit": {
+      "methodName": "m2", 
+      "returnValue": {
+        "isNull": true, 
+        "value": "", 
+        "type": "", 
+        "fmwkType": "", 
+        "objectId": ""
+      }, 
+      "signature": "m2"
+    }, 
+    "threadId": "1", 
+    "type": "CALLIN_EXIT", 
+    "messageId": "2"
+  }
+},
+{
+  "msg": {
+    "threadId": "1", 
+    "type": "CALLBACK_EXIT", 
+    "callbackExit": {
+      "methodName": "m1", 
+      "signature": "m1"
+    }, 
+    "messageId": "3"
+  }
+}]

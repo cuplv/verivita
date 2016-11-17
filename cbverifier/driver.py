@@ -9,9 +9,11 @@ import logging
 
 from cbverifier.traces.ctrace import CTraceSerializer
 from cbverifier.specs.spec import Spec
+from cbverifier.encoding.encoder import TSEncoder
+from cbverifier.bmc.bmc import BMC
 
 
-def main():
+def main(input_args=None):
     # Common to all modes
     # logging.basicConfig(level=logging.DEBUG)
     logging.basicConfig(level=logging.INFO)
@@ -55,7 +57,9 @@ def main():
         p.print_help()
         sys.exit(1)
 
-    opts, args = p.parse_args()
+    if (input_args is None):
+        input_args = sys.argv[1:]
+    opts, args = p.parse_args(input_args)
 
     if (not opts.tracefile): usage("Missing trace file (-t)")
     if (not os.path.exists(opts.tracefile)):
@@ -66,7 +70,6 @@ def main():
     for f in spec_file_list:
         if (not os.path.exists(f)):
             usage("Specification file %s does not exists!" % f)
-
 
     if (opts.mode == "bmc"):
         if (not opts.bmc_depth): usage("Missing BMC depth")
@@ -90,6 +93,7 @@ def main():
             usage("%s options cannot use in mode " % ("", opts.mode))
 
 
+
     # Parse the trace
     try:
         trace = CTraceSerializer.read_trace_file_name(opts.tracefile,
@@ -111,17 +115,24 @@ def main():
         trace.print_trace(sys.stdout)
         sys.stdout.write("\n")
 
+    elif (opts.mode == "bmc"):
+        ts_enc = TSEncoder(trace, spec_list)
 
-        # # Parse the trace file
-        # with open(opts.tracefile, "r") as infile:
-        #     ctrace = CTraceSerializer.read_trace(infile)
+        bmc = BMC(ts_enc.helper,
+                  ts_enc.get_ts_encoding(),
+                  ts_enc.error_prop)
 
-        # # Parse the specification file
-        # specs_map = read_from_files(spec_file_list)
+        cex = bmc.find_bug(depth)
 
-        # not_mapped = ctrace.rename_trace(specs_map["mappings"], True)
-        # logging.debug("\n---Not mapped symbols:---")
-        # for a in not_mapped: logging.debug(a)
+        if (cex is None):
+            print "Found bug"
+            print "Model still not available"
+        else:
+            print "No bugs found up to %d steps" % (depth)
+
+    elif (opts.mode == "to_smv"):
+        assert False
+
 
         # # Call the verifier
         # verifier = Verifier(ctrace, specs_map["specs"],
