@@ -446,11 +446,10 @@ class TSEncoder:
         errors = []
 
         # Create the pc variable
-        length = len(self.trace_msgs)
-        num_tl_cb = len(self.trace.children)
-        pc_size = (length - num_tl_cb) + 1
+        tl_callback_count = len(self.trace.children)
+        pc_size = (self.trace_length - tl_callback_count) + 1
         pc_name = TSEncoder._get_pc_name()
-        self.cenc.add_var(pc_name, length-1) # starts from 0
+        self.cenc.add_var(pc_name, pc_size - 1) # starts from 0
 
         # add all the bit variables
         for v in self.cenc.get_counter_var(pc_name):
@@ -458,6 +457,9 @@ class TSEncoder:
 
         # start from the initial state
         ts.init = self.cenc.eq_val(pc_name, 0)
+        #logging.debug("Init state: %d" % (0))
+
+        # print "Init: %s\n" % (ts.init)
 
         ts.trans = FALSE_PYSMT() # disjunction of transitions
         # encode each cb
@@ -473,7 +475,7 @@ class TSEncoder:
 
                 # Fill the stack in reverse order
                 for i in reversed(range(len(msg.children))):
-                    stack.push(msg.children[i])
+                    stack.append(msg.children[i])
 
                 # encode the transition
                 if (len(stack) == 0):
@@ -485,11 +487,21 @@ class TSEncoder:
 
                 label = self.r2a.get_msg_eq(msg_key)
 
-
                 s0 = self.cenc.eq_val(pc_name, current_state)
                 snext = self.cenc.eq_val(pc_name, next_state)
                 snext = self.helper.get_next_formula(ts.state_vars, snext)
-                ts.trans = Or([ts.trans, s0, label, snext])
+                single_trans = And([s0, label, snext])
+                ts.trans = Or([ts.trans, single_trans])
+
+#                logging.debug("Trans: %d -> %d on %s" % (current_state, next_state, msg_key))
+
+                # print "Trans: %d -> %d on %s" % (current_state, next_state, msg_key)
+                # print label
+                # print s0
+                # print snext
+                # print single_trans
+                # print ""
+
                 current_state = next_state
 
                 if (msg_key in disabled_ci and isinstance(msg, CCallin)):

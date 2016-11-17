@@ -285,11 +285,7 @@ class TestEnc(unittest.TestCase):
         self.assertFalse(self._accept_word(ts_enc, gs_ts, ["m1(1)"], error))
         self.assertFalse(self._accept_word(ts_enc, gs_ts, ["m2(1)"], error))
 
-    def test_encode_ground_specs(self):
-        def set_up_ts(ts_enc):
-            vars_ts = ts_enc._encode_vars()
-
-
+    def _get_sample_trace(self):
         spec_list = Spec.get_specs_from_string("SPEC l.m1() |- l.m2()")
         assert spec_list is not None
 
@@ -302,9 +298,14 @@ class TestEnc(unittest.TestCase):
                      None)
         cb.add_msg(ci)
         ts_enc = TSEncoder(ctrace, spec_list)
-        set_up_ts(ts_enc)
+        vars_ts = ts_enc._encode_vars()
 
+        return (ts_enc, vars_ts)
+
+    def test_encode_ground_specs(self):
+        (ts_enc, vars_ts) = self._get_sample_trace()
         (ts, disabled_ci, accepting) = ts_enc._encode_ground_specs()
+        ts.product(vars_ts)
 
         accepting_states = FALSE()
         for k,v in accepting.iteritems():
@@ -317,6 +318,57 @@ class TestEnc(unittest.TestCase):
         self.assertFalse(self._accept_word(ts_enc, ts, ["m2(1)"], accepting_states))
         error = And(accepting_states, TSEncoder._get_state_var("m2(1)"))
         self.assertFalse(self._accept_word(ts_enc, ts, ["m1(1)"], error))
+
+
+    def test_encode_cbs(self):
+        def cb(name):
+            cb = CCallback(1, 1, name, name, [], None, [], [], [])
+            return cb
+        def ci(name):
+            ci = CCallin(1, 1, name, name,[], None)
+            return ci
+
+        def new_trace(tree_trace_list):
+            def add_rec(parent, children):
+                for (child, lchildren) in children:
+                    parent.add_msg(child)
+                    add_rec(child, lchildren)
+
+            ctrace = CTrace()
+            add_rec(ctrace, tree_trace_list)
+
+            return ctrace
+
+
+        trace_tree = [(cb("cb1"), [(ci("ci1"),[])]),
+                      (cb("cb2"), [(ci("ci2"),[])])]
+        ctrace = new_trace(trace_tree)
+        # ctrace.print_trace(sys.stdout)
+        ts_enc = TSEncoder(ctrace, [])
+        vars_ts = ts_enc._encode_vars()
+
+        (ts, errors) = ts_enc._encode_cbs(set())
+        ts.product(vars_ts)
+        self.assertTrue(len(errors) == 0)
+
+        cb_1_seq = ["cb1()", "ci1()"]
+        cb_2_seq = ["cb2()", "ci2()"]
+        cb_11 = ["cb1()", "ci1()","cb1()", "ci1()"]
+        cb_12 = ["cb1()", "ci1()","cb2()", "ci2()"]
+        cb_22 = ["cb2()", "ci2()","cb2()", "ci2()"]
+
+        accepting_traces = [cb_1_seq, cb_2_seq,
+                            cb_11, cb_12, cb_22]
+
+        for seq in accepting_traces:
+            self.assertTrue(self._accept_word(ts_enc, ts, seq, TRUE()))
+
+        deadlock_traces = [["ci1()"], ["ci2()"],
+                           ["cb1()", "ci1()", "ci2()"],
+                           ["cb2()", "cb1()", "ci1()"]]
+        for seq in deadlock_traces:
+            self.assertFalse(self._accept_word(ts_enc, ts, seq, TRUE()))
+
 
 
 
