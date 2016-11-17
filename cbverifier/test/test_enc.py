@@ -36,6 +36,37 @@ from cbverifier.test.test_grounding import TestGrounding
 
 class TestEnc(unittest.TestCase):
 
+    def _accept_word(self, ts_enc, ts, word, final_states):
+        """ Check if a particular word with a given final state
+        is accepted by ts
+        """
+
+        # error is encoded in the final state
+        bmc = BMC(ts_enc.helper, ts, TRUE())
+
+        solver = Solver(name='z3', logic=QF_BOOL)
+        all_vars = set(ts.state_vars)
+        all_vars.update(ts.input_vars)
+
+        bmc.encode_up_to_k(solver, all_vars, len(word))
+
+        error = bmc.helper.get_formula_at_i(all_vars, final_states, len(word))
+        solver.add_assertion(error)
+
+        # encode the word
+        for i in range(len(word)):
+            w_formula = ts_enc.r2a.get_msg_eq(word[i])
+            w_at_i = bmc.helper.get_formula_at_i(ts.input_vars,
+                                                 w_formula, i)
+            solver.add_assertion(w_at_i)
+
+        res = solver.solve()
+        # if res:
+        #     model = solver.get_model()
+        #     print model
+        return res
+
+
     def test_get_key(self):
         """ Test the retrieval for the key of the message """
 
@@ -215,39 +246,12 @@ class TestEnc(unittest.TestCase):
 
 
     def test_get_ground_spec_ts(self):
-        def _encode_error(update, final):
+        def _encode_error(accepting, final):
             f_error = FALSE()
-            for f in update:
+            for f in accepting:
                 f_error = Or(f, f_error)
             f_error = And(f_error, final)
             return f_error
-
-        def _accept_word(ts_enc, gs_ts, word, f_error):
-            # error is encoded in the final state
-            bmc = BMC(ts_enc.helper, gs_ts, TRUE())
-
-            solver = Solver(name='z3', logic=QF_BOOL)
-            all_vars = set(gs_ts.state_vars)
-            all_vars.update(gs_ts.input_vars)
-
-            bmc.encode_up_to_k(solver, all_vars, len(word))
-
-            error = bmc.helper.get_formula_at_i(all_vars, f_error, len(word))
-            solver.add_assertion(error)
-
-            # encode the word
-            for i in range(len(word)):
-                w_formula = ts_enc.r2a.get_msg_eq(word[i])
-                w_at_i = bmc.helper.get_formula_at_i(gs_ts.input_vars,
-                                                     w_formula, i)
-                solver.add_assertion(w_at_i)
-
-            res = solver.solve()
-            # if res:
-            #     model = solver.get_model()
-            #     print model
-            return res
-
 
         spec_list = Spec.get_specs_from_string("SPEC l.m1() |- l.m2()")
         assert spec_list is not None
@@ -268,16 +272,51 @@ class TestEnc(unittest.TestCase):
         ts_enc = TSEncoder(ctrace,[])
         ts_var = ts_enc._encode_vars()
 
-        update = []
-        gs_ts = ts_enc._get_ground_spec_ts(ground_s, 0, update)
+        accepting = []
+        gs_ts = ts_enc._get_ground_spec_ts(ground_s, 0, accepting)
         gs_ts.product(ts_var)
 
-        error = _encode_error(update, TRUE())
-        self.assertTrue(_accept_word(ts_enc, gs_ts, ["m1(1)"], error))
-        self.assertFalse(_accept_word(ts_enc, gs_ts, ["m2(1)"], error))
+        error = _encode_error(accepting, TRUE())
+        self.assertTrue(self._accept_word(ts_enc, gs_ts, ["m1(1)"], error))
+        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["m2(1)"], error))
 
         # check the disable
-        error = _encode_error(update, And(TSEncoder._get_state_var("m2(1)")))
-        self.assertFalse(_accept_word(ts_enc, gs_ts, ["m1(1)"], error))
-        self.assertFalse(_accept_word(ts_enc, gs_ts, ["m2(1)"], error))
+        error = _encode_error(accepting, TSEncoder._get_state_var("m2(1)"))
+        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["m1(1)"], error))
+        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["m2(1)"], error))
+
+    def test_encode_ground_specs(self):
+        def set_up_ts(ts_enc):
+            vars_ts = ts_enc._encode_vars()
+
+
+        spec_list = Spec.get_specs_from_string("SPEC l.m1() |- l.m2()")
+        assert spec_list is not None
+
+        ctrace = CTrace()
+        cb = CCallback(1, 1, "", "m1", [TestGrounding._get_obj("1","string")],
+                       None, ["string"], [], [])
+        ctrace.add_msg(cb)
+        ci = CCallin(1, 1, "", "m2",
+                     [TestGrounding._get_obj("1","string")],
+                     None)
+        cb.add_msg(ci)
+        ts_enc = TSEncoder(ctrace, spec_list)
+        set_up_ts(ts_enc)
+
+        (ts, disabled_ci, accepting) = ts_enc._encode_ground_specs()
+
+        accepting_states = FALSE()
+        for k,v in accepting.iteritems():
+            for state in v:
+                accepting_states = Or(accepting_states, state)
+
+        assert(disabled_ci == set(["m2(1)"]))
+
+        self.assertTrue(self._accept_word(ts_enc, ts, ["m1(1)"], accepting_states))
+        self.assertFalse(self._accept_word(ts_enc, ts, ["m2(1)"], accepting_states))
+        error = And(accepting_states, TSEncoder._get_state_var("m2(1)"))
+        self.assertFalse(self._accept_word(ts_enc, ts, ["m1(1)"], error))
+
+
 

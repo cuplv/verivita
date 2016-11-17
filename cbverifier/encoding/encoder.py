@@ -221,37 +221,37 @@ class TSEncoder:
         logging.warning("DONTCARE are still not handled " \
                         "in the grounding of the specifications")
 
-        # Updates is a map from messages to set of states where the
+        # Accepting is a map from messages to set of states where the
         # message enabled status is changed (because the system matched
         # a regular expression in the specification).
         # In practice, these are the accepting states of the automaton.
-        updates = {}
-        disabled_ci = {}
+        accepting = {}
+        disabled_ci = set()
         spec_id = 0
         for ground_spec in self.ground_specs:
             msg = get_spec_rhs(ground_spec.ast)
             key = TSEncoder.get_key_from_call(msg)
 
             if ground_spec.is_disable():
-                if key in self.ci_set():
+                if key in self.ci_set:
                     disabled_ci.add(key)
 
-            if key not in updates: updates[key] = []
+            if key not in accepting: accepting[key] = []
             gs_ts = self._get_ground_spec_ts(ground_spec,
                                              spec_id,
-                                             updates[key])
+                                             accepting[key])
             ts.product(gs_ts)
 
-        # encodes the frame conditions when there are no updates
+        # encodes the frame conditions when there are no accepting
         # the frame conditions must be encoded globally
         #
-        # For each key, updates[key] contains the list of formulas
+        # For each key, accepting[key] contains the list of formulas
         # where key is changed.
         #
         # On the negation of the disjunction of these formulas
         # the variable do not change, so we must encode the frame
         # condition
-        for (msg_key, update) in updates.iteritems():
+        for (msg_key, accepting_for_var) in accepting.iteritems():
             msg_enabled = TSEncoder._get_state_var(msg_key)
 
             # msg_enabled <-> msg_enabled'
@@ -260,28 +260,27 @@ class TSEncoder:
                                              self.pysmt_env.formula_manager))
 
             changes = FALSE_PYSMT()
-            for u in update: changes = Or(changes, u)
-
             # If we do not end in the final states of the automata
             # the variable should not change
             #
             # Note: the changes is encoded on the next state (the
             # accepting one)
-            fc = And(Not(Helper.get_next_var(changes,
-                                             self.pysmt_env.formula_manager)),
-                     fc_msg)
+            for u in accepting_for_var:
+                changes = Or(changes, u)
+            changes_next = self.helper.get_next_formula(ts.state_vars,changes)
+            fc = Implies(changes_next, fc_msg)
             ts.trans = And(ts.trans, fc)
 
-        return (ts, disabled_ci)
+        return (ts, disabled_ci, accepting)
 
 
-    def _get_ground_spec_ts(self, ground_spec, spec_id, update):
+    def _get_ground_spec_ts(self, ground_spec, spec_id, accepting):
         """ Given a ground specification, returns the transition
         system that encodes the updates implied by the specification.
 
         It returns the ts that encode the acceptance of the language.
 
-        It has side effects on update.
+        It has side effects on accepting.
 
 
         Resulting transition system
@@ -375,8 +374,8 @@ class TSEncoder:
 
             eq_current = self.cenc.eq_val(auto_pc, ts_s)
 
-            # add the current state to the update states
-            update.append(eq_current)
+            # add the current state to the accepting states
+            accepting.append(eq_current)
 
             # encode the fact that the message must be
             # enabled/disabled in this state
