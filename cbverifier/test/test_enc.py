@@ -298,12 +298,13 @@ class TestEnc(unittest.TestCase):
                      None)
         cb.add_msg(ci)
         ts_enc = TSEncoder(ctrace, spec_list)
-        vars_ts = ts_enc._encode_vars()
 
-        return (ts_enc, vars_ts)
+
+        return ts_enc
 
     def test_encode_ground_specs(self):
-        (ts_enc, vars_ts) = self._get_sample_trace()
+        ts_enc = self._get_sample_trace()
+        vars_ts = ts_enc._encode_vars()
         (ts, disabled_ci, accepting) = ts_enc._encode_ground_specs()
         ts.product(vars_ts)
 
@@ -392,3 +393,13 @@ class TestEnc(unittest.TestCase):
 
 
 
+    def test_encode(self):
+        ts_enc = self._get_sample_trace()
+
+        ts = ts_enc.get_ts_encoding()
+
+        error = ts_enc.error_prop
+        bmc = BMC(ts_enc.helper, ts, error)
+
+        # not None == there is a bug
+        self.assertTrue(bmc.find_bug(1) is not None)

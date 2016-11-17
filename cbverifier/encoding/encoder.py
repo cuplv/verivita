@@ -151,8 +151,6 @@ class TSEncoder:
         self.cenc = CounterEnc(self.pysmt_env)
         self.r2a = RegExpToAuto(self.cenc, self.msgs, self.auto_env)
 
-
-
     def get_ts_encoding(self):
         """ Returns the transition system encoding of the dynamic
         verification problem.
@@ -195,7 +193,7 @@ class TSEncoder:
         self.ts.product(vars_ts)
 
         # 2. Specs ts
-        (spec_ts, disabled_ci) = self._encode_ground_specs()
+        (spec_ts, disabled_ci, accepting) = self._encode_ground_specs()
         self.ts.product(spec_ts)
 
         # 3. Encode the execution of the top-level callbacks
@@ -204,6 +202,11 @@ class TSEncoder:
         self.error_prop = FALSE_PYSMT()
         for e in errors:
             self.error_prop = Or(self.error_prop, e)
+
+        # initial condition: all the messages are enabled
+        for msg in self.msgs:
+            self.ts.init = And(self.ts.init,
+                               TSEncoder._get_state_var(msg))
 
 
     def _encode_ground_specs(self):
@@ -259,16 +262,17 @@ class TSEncoder:
                          Helper.get_next_var(msg_enabled,
                                              self.pysmt_env.formula_manager))
 
-            changes = FALSE_PYSMT()
             # If we do not end in the final states of the automata
             # the variable should not change
             #
             # Note: the changes is encoded on the next state (the
             # accepting one)
+            changes = FALSE_PYSMT()
             for u in accepting_for_var:
                 changes = Or(changes, u)
-            changes_next = self.helper.get_next_formula(ts.state_vars,changes)
-            fc = Implies(changes_next, fc_msg)
+            not_change = Not(changes)
+            not_change_next = self.helper.get_next_formula(ts.state_vars, not_change)
+            fc = Implies(not_change_next, fc_msg)
             ts.trans = And(ts.trans, fc)
 
         return (ts, disabled_ci, accepting)
@@ -505,6 +509,9 @@ class TSEncoder:
                 current_state = next_state
 
                 if (msg_key in disabled_ci and isinstance(msg, CCallin)):
+                    # note: the condition is in the current state
+                    # the system reached a state where it must inevitably execute
+                    # msg_key, and msg_key is disabled
                     msg_enabled = TSEncoder._get_state_var(msg_key)
                     error_condition = And(s0, Not(msg_enabled))
                     errors.append(error_condition)
