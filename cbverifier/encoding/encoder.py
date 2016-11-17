@@ -506,8 +506,8 @@ class TSEncoder:
 
                 if (msg_key in disabled_ci and isinstance(msg, CCallin)):
                     msg_enabled = TSEncoder._get_state_var(msg_key)
-                    error_condition = And(s0, msg_enabled)
-                    errors.add(error_condition)
+                    error_condition = And(s0, Not(msg_enabled))
+                    errors.append(error_condition)
 
         return (ts, errors)
 

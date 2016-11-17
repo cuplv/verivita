@@ -371,4 +371,24 @@ class TestEnc(unittest.TestCase):
 
 
 
+        ts_enc = TSEncoder(ctrace, [])
+        vars_ts = ts_enc._encode_vars()
+        (ts, errors) = ts_enc._encode_cbs(set(["ci1()"]))
+        ts.product(vars_ts)
+        self.assertTrue(len(errors) == 1)
+        self.assertTrue(is_sat(And(errors[0],
+                                   Not(TSEncoder._get_state_var("ci1()")))))
+
+
+        ts_enc = TSEncoder(ctrace, [])
+        vars_ts = ts_enc._encode_vars()
+        (ts, errors) = ts_enc._encode_cbs(set(["ci1()","ci2()"]))
+        ts.product(vars_ts)
+        self.assertTrue(len(errors) == 2)
+
+        self.assertTrue(is_sat(And([errors[0],
+                                    Not(TSEncoder._get_state_var("ci1()")),
+                                    Not(TSEncoder._get_state_var("ci2()"))])))
+
+
 
