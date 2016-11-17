@@ -111,6 +111,20 @@ class TransitionSystem:
         self.init = And(self.init, other_ts.init)
         self.trans = And(self.trans, other_ts.trans)
 
+    def __repr__(self):
+        """ Not efficient, need to use a buffer..."""
+
+        res = "State vars: "
+        for v in self.state_vars: res += ", %s" % v
+        res += "\nInput vars:"
+        for v in self.input_vars: res += ", %s" % v
+        res += "\nINIT: "
+
+        res += str(self.init.serialize())
+        res += "\nTRANS: "
+        res += str(self.trans.simplify().serialize())
+
+        return res
 
 class TSEncoder:
     """
@@ -124,18 +138,20 @@ class TSEncoder:
         self.ts = None
         self.error_prop = None
 
-        self.ground_specs = self._compute_ground_spec()
-        self.pysmt_env = get_env()
-        self.auto_env = AutoEnv(self.pysmt_env)
-        self.r2a = RegExpToAuto()
-
-        self.cenc = CounterEnc(self.pysmt_env)
-
         (trace_length, msgs, cb_set, ci_set) = self.get_trace_stats()
         self.trace_length = trace_length
         self.msgs = msgs
         self.cb_set = cb_set
         self.ci_set = ci_set
+
+        self.ground_specs = self._compute_ground_spec()
+        self.pysmt_env = get_env()
+        self.helper = Helper(self.pysmt_env)
+        self.auto_env = AutoEnv(self.pysmt_env)
+        self.cenc = CounterEnc(self.pysmt_env)
+        self.r2a = RegExpToAuto(self.cenc, self.msgs, self.auto_env)
+
+
 
     def get_ts_encoding(self):
         """ Returns the transition system encoding of the dynamic
@@ -236,11 +252,12 @@ class TSEncoder:
         # the variable do not change, so we must encode the frame
         # condition
         for (msg_key, update) in updates.iteritems():
-            msg_enabled = EncodeTS._get_state_var(msg_key)
+            msg_enabled = TSEncoder._get_state_var(msg_key)
 
             # msg_enabled <-> msg_enabled'
             fc_msg = Iff(msg_enabled,
-                         Helper.get_next_formula(msg_enabled))
+                         Helper.get_next_var(msg_enabled,
+                                             self.pysmt_env.formula_manager))
 
             changes = FALSE_PYSMT()
             for u in update: changes = Or(changes, u)
@@ -250,7 +267,8 @@ class TSEncoder:
             #
             # Note: the changes is encoded on the next state (the
             # accepting one)
-            fc = And(Helper.get_next_formula(Not(changes)),
+            fc = And(Not(Helper.get_next_var(changes,
+                                             self.pysmt_env.formula_manager)),
                      fc_msg)
             ts.trans = And(ts.trans, fc)
 
@@ -263,7 +281,23 @@ class TSEncoder:
 
         It returns the ts that encode the acceptance of the language.
 
-        It has side effects on update
+        It has side effects on update.
+
+
+        Resulting transition system
+
+        VAR pc : {0, ... num_states -1 };
+        INIT:= \bigvee{s in initial} pc = s;
+        TRANS
+          \bigwedge{s in states}
+            pc = s -> ( \bigvee{(dst,label) \in trans(s)} label and (pc' = dst) )
+
+        TRANS
+          \bigwedge{s in final}
+            (pc' = s ->  enable_msg/not enable_msg)
+
+        enable_msg is the message in the rhs of the spec. It is negated if
+        the spec disables it.
         """
         def _get_pc_value(auto2ts_map, current_pc_val, auto_state):
             if not auto_state in auto2ts_map:
@@ -274,27 +308,37 @@ class TSEncoder:
                 state_id = auto2ts_map[auto_state]
             return (current_pc_val, state_id)
 
+        assert isinstance(ground_spec, Spec)
+
         ts = TransitionSystem()
 
         # map from ids of automaton states to the value used in the
         # counter for the transition system
         auto2ts_map = {}
 
-        # TODO: ensure to prune the unreachable states in the automaton
-        auto = self.r2a.get_from_regexp(ground_spec)
+        # TODO: ensure to prune the unreachable states in the
+        # automaton
+        regexp = get_regexp_node(ground_spec.ast)
+        auto = self.r2a.get_from_regexp(regexp)
 
         # program counter of the automaton
         auto_pc = "spec_pc_%d" % spec_id
-        self.cenc.add(auto_pc, auto.count_state() - 1) # -1 since it starts from 0
+        self.cenc.add_var(auto_pc, auto.count_state() - 1) # -1 since it starts from 0
         for v in self.cenc.get_counter_var(auto_pc): ts.add_var(v)
 
         # initial states
+        # Initially we are in one of the initial states
+        # There should be a single initial state though since the automaton
+        # is deterministic
         current_pc_val = -1
-        ts.init = False()
+        ts.init = FALSE_PYSMT()
         for a_init in auto.initial_states:
             (current_pc_val, s_id) = _get_pc_value(auto2ts_map,
                                                    current_pc_val,
                                                    a_init)
+
+            #logging.debug("One of init: %s = %d" % (auto_pc,s_id))
+
             eq_current = self.cenc.eq_val(auto_pc, s_id)
             ts.init = Or(ts.init, eq_current)
 
@@ -310,13 +354,16 @@ class TSEncoder:
                 (current_pc_val, ts_dst) = _get_pc_value(auto2ts_map,
                                                          current_pc_val,
                                                          a_dst)
-                eq_next = self.cenc.eq_val(auto_pc, ts_dst)
-                eq_next = Helper.get_next_formula(eq_next)
 
+                # logging.debug("Trans: %s = %d ->  %s = %d on %s" % (auto_pc,ts_s,auto_pc,ts_dst,str(label.get_formula())))
+
+                eq_next = self.cenc.eq_val(auto_pc, ts_dst)
+                eq_next = self.helper.get_next_formula(ts.state_vars, eq_next)
                 t = And([eq_next, label.get_formula()])
                 s_trans = Or(s_trans, t)
 
-            s_trans = And(Not(eq_current), s_trans)
+            s_trans = Implies(eq_current, s_trans)
+
             ts.trans = And(ts.trans, s_trans)
 
         # Record the final states - on these states the value of the
@@ -325,19 +372,26 @@ class TSEncoder:
         key = TSEncoder.get_key_from_call(msg)
         for a_s in auto.final_states:
             ts_s = auto2ts_map[a_s]
+
             eq_current = self.cenc.eq_val(auto_pc, ts_s)
 
             # add the current state to the update states
-            update.add(eq_current)
+            update.append(eq_current)
 
             # encode the fact that the message must be
             # enabled/disabled in this state
-            eq_next = Helper.get_next_formula(eq_current)
-            msg_enabled = EncodeTS._get_state_var(key)
+            eq_next = self.helper.get_next_formula(ts.state_vars, eq_current)
+            msg_enabled = Helper.get_next_var(TSEncoder._get_state_var(key),
+                                              self.pysmt_env.formula_manager)
+
             if (ground_spec.is_disable()):
-                msg_enabled = Not(msg_enabled)
-            msg_enabled = Helper.get_next_formula(msg_enabled)
-            ts.trans = And(ts.trans,And(eq_next, msg_enabled))
+                effect_in_trans = Not(msg_enabled)
+            else:
+                assert ground_spec.is_enable()
+                effect_in_trans = msg_enabled
+
+            effect_in_trans = Implies(eq_next, effect_in_trans)
+            ts.trans = And(ts.trans, effect_in_trans)
 
         return ts
 
@@ -345,23 +399,30 @@ class TSEncoder:
     def _encode_vars(self):
         """ Encode the state and input variables of the system.
 
-        We create a state and an input variable for each message in
-        the trace.
+        We create a state variable for each message in the trace.
+
+        We create a single (enumerative) input variable that encodes
+        symbolically the alphabet. The enumerative is encoded with a
+        set of Boolean variables.
         """
         var_ts = TransitionSystem()
+
+        # add all the input varibles
+        for v in self.r2a.get_letter_vars():
+            var_ts.add_ivar(v)
+
 
         for msg in self.msgs:
             # create the state variable
             var = TSEncoder._get_state_var(msg)
             var_ts.add_var(var)
 
-            # create the input variable
-            ivar = TSEncoder._get_input_var(msg)
-            var_ts.add_ivar(ivar)
-
-            # add the constraint on the input variable
+            # Add the constraint on the msg
+            #
+            # msg cannot be fired if msg is not enabled
+            letter_eq_msg = self.r2a.get_msg_eq(msg)
             var_ts.trans = And(var_ts.trans,
-                               Or(Not(ivar), var))
+                               Or(Not(letter_eq_msg), var))
         return var_ts
 
 
@@ -423,10 +484,12 @@ class TSEncoder:
                     state_count += 1
                     next_state = state_count
 
-                label = self._get_message_label(msg_key)
+                label = self.r2a.get_msg_eq(msg_key)
+
+
                 s0 = self.cenc.eq_val(pc_name, current_state)
                 snext = self.cenc.eq_val(pc_name, next_state)
-                snext = Helper.get_next_formula(snext)
+                snext = self.helper.get_next_formula(ts.state_vars, snext)
                 ts.trans = Or([ts.trans, s0, label, snext])
                 current_state = next_state
 
@@ -437,15 +500,6 @@ class TSEncoder:
 
         return (ts, errors)
 
-
-    def _get_message_label(self, msg_key):
-        msg_ivar = TSEncoder._get_input_var(msg_key)
-        conjuncts = []
-        for ivar in self.ts.input_vars:
-            if (ivar != msg_var): ivar = Not(ivar)
-            conjuncts.append(ivar)
-        return And(conjuncts)
-
     @staticmethod
     def _get_pc_name():
         atom_name = "pc"
@@ -454,11 +508,6 @@ class TSEncoder:
     @staticmethod
     def _get_state_var(key):
         atom_name = "enabled_" + key
-        return Symbol(atom_name, BOOL)
-
-    @staticmethod
-    def _get_input_var(key):
-        atom_name = key
         return Symbol(atom_name, BOOL)
 
     @staticmethod
@@ -564,17 +613,45 @@ class RegExpToAuto():
     TODO: all the recursive functions should become iterative
 
     """
-    def __init__(self, auto_env=None):
+    def __init__(self, cenc, alphabet, auto_env=None):
         if auto_env is None:
             auto_env = AutoEnv.get_global_auto_env()
         self.auto_env = auto_env
 
+        self.cenc = cenc
+        self.alphabet = alphabet
+
+        self.alphabet_list = list(self.alphabet)
+        self.letter_to_val = {}
+        for i in range(len(self.alphabet_list)):
+            self.letter_to_val[self.alphabet_list[i]] = i
+
+        # TODO: get a fresh variable
+        self.counter_var = "__msg_var___"
+        self.cenc.add_var(self.counter_var, len(self.alphabet))
+
+    def get_letter_vars(self):
+        return self.cenc.get_counter_var(self.counter_var)
+
+    def get_msg_eq(self, msg_value):
+        value = self.letter_to_val[msg_value]
+        return self.cenc.eq_val(self.counter_var, value)
+
+    def get_msg_for_val(self, value):
+        assert value >= 0 and len(value) < len(self.alphabet_list) 
+        return self.alphabet_list[value]
+
     def get_atom_var(self, call_node):
         key = TSEncoder.get_key_from_call(call_node)
-        ivar = TSEncoder._get_input_var(key)
-        return ivar
+        eq = self.get_msg_eq(key)
+        return eq
 
-    def get_from_regexp(self, regexp, env=None):
+    def get_from_regexp(self, regexp):
+        """ Return a DETERMINISTIC automaton """
+        res = self.get_from_regexp_aux(regexp)
+        return res.determinize()
+
+    def get_from_regexp_aux(self, regexp):
         node_type = get_node_type(regexp)
 
         if (node_type in [TRUE,FALSE,CALL,AND_OP,OR_OP,NOT_OP]):
@@ -585,14 +662,14 @@ class RegExpToAuto():
             automaton = Automaton.get_singleton(label)
             return automaton
         elif (node_type == SEQ_OP):
-            lhs = self.get_from_regexp(regexp[1])
-            rhs = self.get_from_regexp(regexp[2])
+            lhs = self.get_from_regexp_aux(regexp[1])
+            rhs = self.get_from_regexp_aux(regexp[2])
             automaton = lhs.concatenate(rhs)
             lhs = None
             rhs = None
             return automaton
         elif (node_type == STAR_OP):
-            lhs = self.get_from_regexp(regexp[1])
+            lhs = self.get_from_regexp_aux(regexp[1])
             automaton = lhs.klenee_star()
             lhs = None
             return automaton

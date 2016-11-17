@@ -93,6 +93,7 @@ class Helper:
         f_at_i = substitute(formula, time_i_map)
         return f_at_i
 
+
     def get_next_formula(self, vars, formula):
         """Given a formula returns the same formula where all the variables
         in vars are renamed to var_next"""

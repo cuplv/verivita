@@ -22,7 +22,10 @@ from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue
 from cbverifier.specs.spec_ast import *
 from cbverifier.specs.spec import Spec
+from cbverifier.bmc.bmc import BMC
 
+from pysmt.logics import QF_BOOL
+from pysmt.shortcuts import Solver
 from pysmt.shortcuts import is_sat, is_valid
 from pysmt.shortcuts import Symbol, TRUE, FALSE
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
@@ -195,14 +198,13 @@ class TestEnc(unittest.TestCase):
         ts_var = ts_enc._encode_vars()
 
         self.assertTrue(len(ts_var.state_vars) == 3)
-        self.assertTrue(len(ts_var.state_vars) == len(ts_var.input_vars))
 
         cb_var = TSEncoder._get_state_var(TSEncoder.get_msg_key(cb))
         cb1_var = TSEncoder._get_state_var(TSEncoder.get_msg_key(cb1))
         ci_var = TSEncoder._get_state_var(TSEncoder.get_msg_key(ci))
-        cb_ivar = TSEncoder._get_input_var(TSEncoder.get_msg_key(cb))
-        cb1_ivar = TSEncoder._get_input_var(TSEncoder.get_msg_key(cb1))
-        ci_ivar = TSEncoder._get_input_var(TSEncoder.get_msg_key(ci))
+        cb_ivar = ts_enc.r2a.get_msg_eq(TSEncoder.get_msg_key(cb))
+        cb1_ivar = ts_enc.r2a.get_msg_eq(TSEncoder.get_msg_key(cb1))
+        ci_ivar = ts_enc.r2a.get_msg_eq(TSEncoder.get_msg_key(ci))
 
         trans = And([Implies(cb_ivar, cb_var),
                      Implies(cb1_ivar, cb1_var),
@@ -210,3 +212,72 @@ class TestEnc(unittest.TestCase):
 
         self.assertTrue(is_valid(Iff(ts_var.init, TRUE())))
         self.assertTrue(is_valid(Iff(ts_var.trans, trans)))
+
+
+    def test_get_ground_spec_ts(self):
+        def _encode_error(update, final):
+            f_error = FALSE()
+            for f in update:
+                f_error = Or(f, f_error)
+            f_error = And(f_error, final)
+            return f_error
+
+        def _accept_word(ts_enc, gs_ts, word, f_error):
+            # error is encoded in the final state
+            bmc = BMC(ts_enc.helper, gs_ts, TRUE())
+
+            solver = Solver(name='z3', logic=QF_BOOL)
+            all_vars = set(gs_ts.state_vars)
+            all_vars.update(gs_ts.input_vars)
+
+            bmc.encode_up_to_k(solver, all_vars, len(word))
+
+            error = bmc.helper.get_formula_at_i(all_vars, f_error, len(word))
+            solver.add_assertion(error)
+
+            # encode the word
+            for i in range(len(word)):
+                w_formula = ts_enc.r2a.get_msg_eq(word[i])
+                w_at_i = bmc.helper.get_formula_at_i(gs_ts.input_vars,
+                                                     w_formula, i)
+                solver.add_assertion(w_at_i)
+
+            res = solver.solve()
+            # if res:
+            #     model = solver.get_model()
+            #     print model
+            return res
+
+
+        spec_list = Spec.get_specs_from_string("SPEC l.m1() |- l.m2()")
+        assert spec_list is not None
+
+        binding = TestGrounding.newAssign([new_id('l')],
+                                          [TestGrounding._get_obj("1","string")])
+        ground_s = Spec(GroundSpecs._substitute(spec_list[0], binding))
+
+        ctrace = CTrace()
+        cb = CCallback(1, 1, "", "m1", [TestGrounding._get_obj("1","string")],
+                       None, ["string"], [], [])
+        ctrace.add_msg(cb)
+        ci = CCallin(1, 1, "", "m2",
+                     [TestGrounding._get_obj("1","string")],
+                     None)
+        cb.add_msg(ci)
+
+        ts_enc = TSEncoder(ctrace,[])
+        ts_var = ts_enc._encode_vars()
+
+        update = []
+        gs_ts = ts_enc._get_ground_spec_ts(ground_s, 0, update)
+        gs_ts.product(ts_var)
+
+        error = _encode_error(update, TRUE())
+        self.assertTrue(_accept_word(ts_enc, gs_ts, ["m1(1)"], error))
+        self.assertFalse(_accept_word(ts_enc, gs_ts, ["m2(1)"], error))
+
+        # check the disable
+        error = _encode_error(update, And(TSEncoder._get_state_var("m2(1)")))
+        self.assertFalse(_accept_word(ts_enc, gs_ts, ["m1(1)"], error))
+        self.assertFalse(_accept_word(ts_enc, gs_ts, ["m2(1)"], error))
+

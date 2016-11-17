@@ -9,8 +9,9 @@ try:
 except ImportError:
     import unittest
 
-from cbverifier.encoding.automata import Automaton
+from cbverifier.encoding.automata import Automaton, AutoEnv
 from cbverifier.encoding.encoder import RegExpToAuto
+from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
@@ -24,12 +25,16 @@ from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
 class TestRegExpToAuto(unittest.TestCase):
 
     def test_regexptoauto(self):
-        r2a = RegExpToAuto()
+        auto_env = AutoEnv.get_global_auto_env()
+        cenc = CounterEnc(auto_env.pysmt_env)
+        alphabet = set(["m1(1)","m2(1)","m3(1)"])
+
+        r2a = RegExpToAuto(cenc, alphabet, auto_env)
         env = r2a.auto_env
 
-        l1= Symbol("m1(1)", BOOL)
-        l2= Symbol("m2(1)", BOOL)
-        l3= Symbol("m3(1)", BOOL)
+        l1 = r2a.get_msg_eq("m1(1)")
+        l2 = r2a.get_msg_eq("m2(1)")
+        l3 = r2a.get_msg_eq("m3(1)")
 
         spec_list = Spec.get_specs_from_string("SPEC l.m1() |- TRUE; " +
                                                "SPEC (l.m1() & l.m2()) |- TRUE; " +
