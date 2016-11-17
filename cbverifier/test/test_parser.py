@@ -39,11 +39,16 @@ class TestSpecParser(unittest.TestCase):
         # for f in lexer: None
         lexer.input(string)
 
+        print string
+
         i = 0
         tok = lexer.token()
         while (tok is not None):
             if i > len(token_list):
                 raise Exception("Found more tokens than expeced")
+
+            print tok
+            print token_list[i]
 
             self.assertTrue(tok.value == token_list[i].value)
             self.assertTrue(tok.lineno == token_list[i].lineno)
@@ -79,6 +84,7 @@ class TestSpecParser(unittest.TestCase):
         self._test_single_token(0, 'TOK_COMMA', 1, ',', ',')
         self._test_single_token(0, 'TOK_LPAREN', 1, '(', '(')
         self._test_single_token(0, 'TOK_RPAREN', 1, ')', ')')
+        self._test_single_token(0, 'TOK_DONTCARE', 1, '#', '#')
 
         self._test_single_token(0, 'TOK_TRUE', 1, 'TRUE', 'TRUE')
         self._test_single_token(0, 'TOK_FALSE', 1, 'FALSE', 'FALSE')
@@ -92,6 +98,15 @@ class TestSpecParser(unittest.TestCase):
                TestSpecParser.new_tok(3,'TOK_LPAREN',1,'('),
                TestSpecParser.new_tok(4,'TOK_RPAREN',1,')')]
         self._test_multiple_token(res, "l.l()"),
+
+        # TestSpecParser.new_tok(lexpos,tok_type,lineno,value)
+        res = [TestSpecParser.new_tok(0,'TOK_ID',1,'l'),
+               TestSpecParser.new_tok(1,'TOK_DOT',1,'.'),
+               TestSpecParser.new_tok(2,'TOK_ID',1,'l'),
+               TestSpecParser.new_tok(3,'TOK_LPAREN',1,'('),
+               TestSpecParser.new_tok(4,'TOK_DONTCARE',1,'#'),
+               TestSpecParser.new_tok(5,'TOK_RPAREN',1,')')]
+        self._test_multiple_token(res, "l.l(#)"),
 
 
 
@@ -118,7 +133,8 @@ class TestSpecParser(unittest.TestCase):
                         "SPEC (TRUE)[*] |- TRUE",
                         "SPEC (TRUE & FALSE)[*] |- TRUE",
                         "SPEC (TRUE & FALSE | ! FALSE)[*] |- TRUE",
-                        "SPEC l1.methodName(TRUE) |- l2.methodName(bparam,TRUE)"]
+                        "SPEC l1.methodName(TRUE) |- l2.methodName(bparam,TRUE)",
+                        "SPEC l1.methodName(_) |- l2.methodName(bparam,TRUE)"]
 
         for expr in correct_expr:
             self._test_parse(expr)
@@ -131,8 +147,18 @@ class TestSpecParser(unittest.TestCase):
             parse_res = spec_parser.parse(specs)
             self.assertTrue(parse_res == expected)
 
-        res = [("SPEC l.method_name() |- TRUE", (SPEC_LIST, (SPEC_SYMB, DISABLE_OP, (CALL, (ID, 'l'), (ID, 'method_name'), (NIL,)), (0,)), (NIL,))),
-               ("SPEC l.method_name(0,1,f) |- TRUE", (SPEC_LIST, (SPEC_SYMB, DISABLE_OP, (CALL, (ID, 'l'), (ID, 'method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))), (0,)), (NIL,)))]
+        res = [("SPEC l.method_name() |- TRUE",
+                (SPEC_LIST,
+                 (SPEC_SYMB,
+                  (DISABLE_OP,
+                   (CALL, (ID, 'l'), (ID, 'method_name'), (NIL,)),
+                   (0,))), (NIL,))),
+               ("SPEC l.method_name(0,1,f) |- TRUE",
+                (SPEC_LIST,
+                 (SPEC_SYMB,
+                  (DISABLE_OP,
+                   (CALL, (ID, 'l'), (ID, 'method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
+                   (0,))), (NIL,)))]
 
         for r in res:
             test_ast_inner(r[0], r[1])

@@ -27,11 +27,12 @@ tokens = keywords + (
     'TOK_COMMA',
     'TOK_LPAREN',
     'TOK_RPAREN',
+    'TOK_DONTCARE'
     )
 
 # Tokens
 def t_TOK_ID(t):
-    r'[a-zA-Z_][a-zA-Z0-9_]*'
+    r'[a-zA-Z_$][a-zA-Z0-9_$]*'
     if "TOK_" + t.value in keywords:
         t.type = "TOK_" + t.value
     return t
@@ -65,7 +66,7 @@ t_TOK_DOT = r"\."
 t_TOK_COMMA = r","
 t_TOK_LPAREN  = r'\('
 t_TOK_RPAREN  = r'\)'
-
+t_TOK_DONTCARE = r'\#'
 # Ignored characters
 t_ignore = " \t"
 
