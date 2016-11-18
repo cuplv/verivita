@@ -16,12 +16,15 @@ try:
 except ImportError:
     import unittest
 
-from cbverifier.specs.spec_lex import lexer
+from cbverifier.specs.spec_lex import lexer, reset
 from cbverifier.specs.spec_parser import spec_parser
 from cbverifier.specs.spec_ast import *
 
 
 class TestSpecParser(unittest.TestCase):
+
+    def setUp(self):
+        reset()
 
     @staticmethod
     def new_tok(lexpos, tok_type, lineno, value):
@@ -31,24 +34,19 @@ class TestSpecParser(unittest.TestCase):
         tok.lineno = lineno
         tok.lexpos = lexpos
         tok.type = tok_type
-
         return tok
 
     def _test_multiple_token(self, token_list, string):
         # clean the lexer state
         # for f in lexer: None
-        lexer.input(string)
 
-        print string
+        lexer.input(string)
 
         i = 0
         tok = lexer.token()
         while (tok is not None):
             if i > len(token_list):
                 raise Exception("Found more tokens than expeced")
-
-            print tok
-            print token_list[i]
 
             self.assertTrue(tok.value == token_list[i].value)
             self.assertTrue(tok.lineno == token_list[i].lineno)
@@ -107,7 +105,6 @@ class TestSpecParser(unittest.TestCase):
                TestSpecParser.new_tok(4,'TOK_DONTCARE',1,'#'),
                TestSpecParser.new_tok(5,'TOK_RPAREN',1,')')]
         self._test_multiple_token(res, "l.l(#)"),
-
 
 
     def _test_parse(self, specs):

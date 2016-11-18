@@ -74,11 +74,21 @@ def t_newline(t):
     r'\n+'
     t.lexer.lineno += t.value.count("\n")
 
+
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
+def reset():
+    lexer.lineno = 1
+    tok = lexer.token()
+    while (tok is not None):
+        tok = lexer.token()
+
+
 # Build the lexer
 import ply.lex as lex
 lexer = lex.lex(debug=0)
+
+
 
