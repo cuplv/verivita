@@ -1,4 +1,4 @@
-""" Test the traces package.
+""" Test the specification parser
 
 """
 

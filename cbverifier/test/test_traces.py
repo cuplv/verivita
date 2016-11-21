@@ -1,12 +1,5 @@
 """ Test the traces package.
 
-Test to add:
-  - read a callback
-  - read a callin
-  - read a sequence of callbacks
-  - read a nested callback/callin
-
-  - read an unbalanced tree of cb/ci
 """
 
 import logging
@@ -23,7 +16,7 @@ from google.protobuf.internal import encoder
 
 import cbverifier.traces.tracemsg_pb2 as tracemsg_pb2
 from  cbverifier.traces.tracemsg_pb2 import TraceMsgContainer
-from cbverifier.traces.ctrace import CTraceSerializer, MalformedTraceException
+from cbverifier.traces.ctrace import CTraceSerializer, MalformedTraceException, FrameworkOverride
 
 
 class TestTraces(unittest.TestCase):
@@ -94,6 +87,21 @@ class TestTraces(unittest.TestCase):
         cb.method_returnType = "return type"
         # repeated FrameworkOverride framework_overrides = 9;
         cb.receiver_first_framework_super = "fwk super"
+
+        override = cb.framework_overrides.add()
+        override.method = "method_name"
+        override.class_name = "first"
+        override.is_interface = False
+
+        override = cb.framework_overrides.add()
+        override.method = "method_name"
+        override.class_name = "second"
+        override.is_interface = False
+
+        override = cb.framework_overrides.add()
+        override.method = "method_name"
+        override.class_name = "interface"
+        override.is_interface = True
 
         return cont
 
@@ -192,4 +200,33 @@ class TestTraces(unittest.TestCase):
                                 ci_exit,
                                 cb_exit])
 
+    def test_cb_override(self):
+        def eq_override(ctrace_o, msg_o):
+            return (ctrace_o.method_name == msg_o.method_name and
+                    ctrace_o.class_name == msg_o.class_name and
+                    ctrace_o.is_interface == msg_o.is_interface)
 
+        cb_entry = self._get_cb_entry()
+        cb_exit = self._get_cb_exit()
+
+        ctrace = self.write_and_get([cb_entry,cb_exit])
+        self.assertTrue(1 == len(ctrace.children))
+
+        cb = ctrace.children[0]
+        self.assertTrue(3 == len(cb.fmwk_overrides))
+
+
+        self.assertTrue(eq_override(cb.fmwk_overrides[0],
+                                    FrameworkOverride("first",
+                                                      "method_name",
+                                                      False)))
+
+        self.assertTrue(eq_override(cb.fmwk_overrides[1],
+                                    FrameworkOverride("second",
+                                                      "method_name",
+                                                      False)))
+
+        self.assertTrue(eq_override(cb.fmwk_overrides[2],
+                                    FrameworkOverride("interface",
+                                                      "method_name",
+                                                      True)))

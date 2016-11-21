@@ -139,7 +139,7 @@ class TestGrounding(unittest.TestCase):
         trace = CTrace()
         cb = CCallback(1, 1, "", "doSomethingCb",
                        [TestGrounding._get_obj("1","string")],
-                       None, ["string"], [], [])
+                       None, [])
         trace.add_msg(cb)
         ci = CCallin(1, 1, "", "doSomethingCi",
                      [TestGrounding._get_obj("1","string")],
@@ -147,7 +147,7 @@ class TestGrounding(unittest.TestCase):
         cb.add_msg(ci)
         cb = CCallback(1, 1, "", "doSomethingCb",
                        [],
-                       None, [], [], [])
+                       None, [])
         trace.add_msg(cb)
         ci = CCallin(1, 1, "", "doSomethingCi",
                      [TestGrounding._get_obj("1","string"), TestGrounding._get_int(2)],
@@ -155,17 +155,17 @@ class TestGrounding(unittest.TestCase):
         cb.add_msg(ci)
         cb = CCallback(1, 1, "", "doSomethingCb",
                        [TestGrounding._get_obj("2","string")],
-                       None, ["string"], [], [])
+                       None, [])
         trace.add_msg(cb)
 
         cb = CCallback(1, 1, "", "doSomethingCb",
                        [TestGrounding._get_obj("2","string")],
-                       TestGrounding._get_obj("3","string"), ["string"], [], [])
+                       TestGrounding._get_obj("3","string"), [])
         trace.add_msg(cb)
 
         cb = CCallback(1, 1, "package.MyClass", "testClassName",
                        [TestGrounding._get_obj("2","string")],
-                       TestGrounding._get_obj("3","string"), ["string"], [], [])
+                       TestGrounding._get_obj("3","string"), [])
         trace.add_msg(cb)
 
         tmap = TraceMap(trace)
@@ -230,7 +230,7 @@ class TestGrounding(unittest.TestCase):
         trace = CTrace()
         cb = CCallback(1, 1, "", "doSomethingCb",
                        [TestGrounding._get_obj("1","string")],
-                       None, ["string"], [], [])
+                       None, [])
         trace.add_msg(cb)
 
         # 1.doSomethingCi(2)

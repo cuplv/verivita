@@ -83,9 +83,7 @@ class CCallback(CMessage):
                  method_name = None,
                  params = [],
                  return_value = None,
-                 method_parameter_types = [],
-                 overrides = [],
-                 receiver_first_framework_super = []):
+                 fmwk_overrides = []):
 
         super(CCallback, self).__init__(message_id,
                                         thread_id,
@@ -93,10 +91,8 @@ class CCallback(CMessage):
                                         method_name,
                                         params,
                                         return_value)
-
-        self.method_parameter_types = method_parameter_types
-        self.overrides = overrides
-        self.receiver_first_framework_super = receiver_first_framework_super
+        #
+        self.fmwk_overrides = fmwk_overrides
 
 
 class CCallin(CMessage):
@@ -196,6 +192,29 @@ class CValue(object):
                 self.object_id == other.object_id and
                 self.value == other.value)
 
+
+class FrameworkOverride:
+    """ Represents a class or interface in the framework that
+    implements or defines a specific method."""
+    def __init__(self, class_name, method_name, is_interface):
+        self.class_name = class_name
+        self.method_name = method_name
+        self.is_interface = is_interface
+
+    def __repr__(self):
+        if self.is_interface:
+            desc = "interface"
+        else:
+            desc = "class"
+
+        return "%s %s.%s" % (desc,
+                             self.class_name,
+                             self.method_name)
+
+    def __eq__(self, other):
+        return (self.is_interface == other.is_interface and
+                self.class_name == other.class_name and
+                self.is_interface == other.is_interface)
 
 class CTrace:
     def __init__(self):
@@ -327,15 +346,19 @@ class CTraceSerializer:
             trace_msg.params = CTraceSerializer.get_params(cb.param_list)
             trace_msg.return_value = None
 
-            for meth_type in cb.method_parameter_types:
-                trace_msg.method_parameter_types.append(meth_type)
-
-            trace_msg.method_returnType = cb.method_returnType
-
             # TODO: handle the overrides
             # for overrides in cb.framework_overrides:
             #     trace_msg.overrides.append(None)
-            # trace_msg.receiver_first_framework_super = cb.receiver_first_framework_super
+            # trace_msg.receiver_first_framework_super =
+            # cb.receiver_first_framework_super
+            overrides = []
+            for override in cb.framework_overrides:
+                trace_override = FrameworkOverride(override.class_name,
+                                                   override.method,
+                                                   override.is_interface)
+                overrides.append(trace_override)
+            trace_msg.fmwk_overrides = overrides
+
         else:
             err = "%s msg type cannot be used to create a node" % msg.type
             raise MalformedTraceException(err)
