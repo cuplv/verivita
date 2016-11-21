@@ -66,14 +66,19 @@ class TestEnc(unittest.TestCase):
     def test_get_key(self):
         """ Test the retrieval for the key of the message """
 
-        self.assertTrue("method(1,2,3)" == TSEncoder.get_key("method", ["1","2","3"]))
-        self.assertTrue("method()" == TSEncoder.get_key("method", []))
+        self.assertTrue("[CB]_method(1,2,3)" ==
+                        TSEncoder.get_key(None, "CB", "method", ["1","2","3"]))
+        self.assertTrue("[CI]_method()" ==
+                        TSEncoder.get_key(None, "CI", "method", []))
+        self.assertTrue("1=[CB]_method(1,2)" ==
+                        TSEncoder.get_key("1", "CB", "method", ["1","2"]))
 
         with self.assertRaises(AssertionError):
-            TSEncoder.get_key("", [])
-
+            TSEncoder.get_key(False, "CI", "", [])
         with self.assertRaises(AssertionError):
-            TSEncoder.get_key(None, [])
+            TSEncoder.get_key(False, "CI", None, [])
+        with self.assertRaises(AssertionError):
+            TSEncoder.get_key(False, "CA", "method", [])
 
     def test_get_value_key(self):
         obj = TestGrounding._get_obj("1", "string")
@@ -99,38 +104,49 @@ class TestEnc(unittest.TestCase):
                        [TestGrounding._get_obj("1","string")],
                        None, ["string"], [], [])
         res = TSEncoder.get_msg_key(cb)
-        self.assertTrue("doSomethingCb(1)", res)
+        self.assertTrue("[CB]_doSomethingCb(1)", res)
+
+        cb = CCallback(1, 1, "", "doSomethingCb",
+                       [TestGrounding._get_obj("1","string")],
+                       TestGrounding._get_obj("1","string"),
+                       ["string"], [], [])
+        res = TSEncoder.get_msg_key(cb)
+        self.assertTrue("1=[CB]_doSomethingCb(1)", res)
 
         cb = CCallback(1, 1, "", "doSomethingCb",
                        [TestGrounding._get_obj("1","string"),
                         TestGrounding._get_int(1)],
                        None, ["string"], [], [])
         res = TSEncoder.get_msg_key(cb)
-        self.assertTrue("doSomethingCb(1,1)", res)
+        self.assertTrue("[CB]_doSomethingCb(1,1)", res)
 
         ci = CCallin(1, 1, "", "doSomethingCi",
                      [TestGrounding._get_obj("1","string")],
                      None)
         res = TSEncoder.get_msg_key(ci)
-        self.assertTrue("doSomethingCi(1)", res)
+        self.assertTrue("[CI]_doSomethingCi(1)", res)
 
         ci = CCallin(1, 1, "", "doSomethingCi",
                      [],
                      None)
         res = TSEncoder.get_msg_key(ci)
-        self.assertTrue("doSomethingCi(1)", res)
+        self.assertTrue("[CI]_doSomethingCi(1)", res)
+
+
 
     def test_get_key_from_call(self):
-        spec_list = Spec.get_specs_from_string("SPEC TRUE |- l.m1(); " +
-                                               "SPEC TRUE |- l.m1(a,b,c)")
+        spec_list = Spec.get_specs_from_string("SPEC TRUE |- [CI] [l] m1(); " +
+                                               "SPEC TRUE |- [CI] [l] m1(a,b,c);" +
+                                               "SPEC TRUE |- z = [CI] [l] m1(a,b,c)")
         assert spec_list is not None
 
         binding = TestGrounding.newAssign(
-            [new_id('l'),new_id("a"),new_id("b"),new_id("c")],
+            [new_id('l'),new_id("a"),new_id("b"),new_id("c"),new_id("z")],
             [TestGrounding._get_obj("1","string"),
              TestGrounding._get_obj("2","string"),
              TestGrounding._get_int(1),
-             TestGrounding._get_int(2)])
+             TestGrounding._get_int(2),
+             TestGrounding._get_int(3)])
 
         calls_nodes = []
         for s in spec_list:
@@ -141,9 +157,12 @@ class TestEnc(unittest.TestCase):
         assert (len(calls_nodes) == len(spec_list))
 
         res = TSEncoder.get_key_from_call(calls_nodes[0])
-        self.assertTrue("m1(1)" == res)
+        self.assertTrue("[CI]_m1(1)" == res)
         res = TSEncoder.get_key_from_call(calls_nodes[1])
-        self.assertTrue("m1(1,2,1,2)" == res)
+        self.assertTrue("[CI]_m1(1,2,1,2)" == res)
+        res = TSEncoder.get_key_from_call(calls_nodes[2])
+        self.assertTrue("3=[CI]_m1(1,2,1,2)" == res)
+
 
 
     def test_trace_stats(self):
@@ -166,7 +185,8 @@ class TestEnc(unittest.TestCase):
         cb = CCallback(1, 1, "", "doSomethingCb", [], None, [], [], [])
         trace.add_msg(cb)
         ts_enc = TSEncoder(trace, [])
-        _test_eq(ts_enc, 1, set(["doSomethingCb()"]), set(["doSomethingCb()"]), set())
+        _test_eq(ts_enc, 1, set(["[CB]_doSomethingCb()"]),
+                 set(["[CB]_doSomethingCb()"]), set())
 
         trace = CTrace()
         cb = CCallback(1, 1, "", "doSomethingCb", [], None, [], [], [])
@@ -179,8 +199,8 @@ class TestEnc(unittest.TestCase):
         cb.add_msg(ci)
 
         ts_enc = TSEncoder(trace, [])
-        _test_eq(ts_enc, 4, set(["doSomethingCb()","doSomethingCi()"]),
-                 set(["doSomethingCb()"]), set(["doSomethingCi()"]))
+        _test_eq(ts_enc, 4, set(["[CB]_doSomethingCb()","[CI]_doSomethingCi()"]),
+                 set(["[CB]_doSomethingCb()"]), set(["[CI]_doSomethingCi()"]))
 
         trace = CTrace()
 
@@ -199,8 +219,8 @@ class TestEnc(unittest.TestCase):
         trace.add_msg(cb)
 
         ts_enc = TSEncoder(trace, [])
-        _test_eq(ts_enc, 6, set(["cb()","cb1()","ci()"]),
-                 set(["cb()","cb1()"]), set(["ci()"]))
+        _test_eq(ts_enc, 6, set(["[CB]_cb()","[CB]_cb1()","[CI]_ci()"]),
+                 set(["[CB]_cb()","[CB]_cb1()"]), set(["[CI]_ci()"]))
 
 
     def test_encode_vars(self):
@@ -249,7 +269,7 @@ class TestEnc(unittest.TestCase):
             f_error = And(f_error, final)
             return f_error
 
-        spec_list = Spec.get_specs_from_string("SPEC l.m1() |- l.m2()")
+        spec_list = Spec.get_specs_from_string("SPEC [CB] [l] m1() |- [CI] [l] m2()")
         assert spec_list is not None
 
         binding = TestGrounding.newAssign([new_id('l')],
@@ -273,16 +293,16 @@ class TestEnc(unittest.TestCase):
         gs_ts.product(ts_var)
 
         error = _encode_error(accepting, TRUE())
-        self.assertTrue(self._accept_word(ts_enc, gs_ts, ["m1(1)"], error))
-        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["m2(1)"], error))
+        self.assertTrue(self._accept_word(ts_enc, gs_ts, ["[CB]_m1(1)"], error))
+        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["[CI]_m2(1)"], error))
 
         # check the disable
-        error = _encode_error(accepting, TSEncoder._get_state_var("m2(1)"))
-        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["m1(1)"], error))
-        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["m2(1)"], error))
+        error = _encode_error(accepting, TSEncoder._get_state_var("[CI]_m2(1)"))
+        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["[CB]_m1(1)"], error))
+        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["[CI]_m2(1)"], error))
 
     def _get_sample_trace(self):
-        spec_list = Spec.get_specs_from_string("SPEC l.m1() |- l.m2()")
+        spec_list = Spec.get_specs_from_string("SPEC [CB] [l] m1() |- [CI] [l] m2()")
         assert spec_list is not None
 
         ctrace = CTrace()
@@ -309,12 +329,12 @@ class TestEnc(unittest.TestCase):
             for state in v:
                 accepting_states = Or(accepting_states, state)
 
-        assert(disabled_ci == set(["m2(1)"]))
+        assert(disabled_ci == set(["[CI]_m2(1)"]))
 
-        self.assertTrue(self._accept_word(ts_enc, ts, ["m1(1)"], accepting_states))
-        self.assertFalse(self._accept_word(ts_enc, ts, ["m2(1)"], accepting_states))
-        error = And(accepting_states, TSEncoder._get_state_var("m2(1)"))
-        self.assertFalse(self._accept_word(ts_enc, ts, ["m1(1)"], error))
+        self.assertTrue(self._accept_word(ts_enc, ts, ["[CB]_m1(1)"], accepting_states))
+        self.assertFalse(self._accept_word(ts_enc, ts, ["[CI]_m2(1)"], accepting_states))
+        error = And(accepting_states, TSEncoder._get_state_var("[CI]_m2(1)"))
+        self.assertFalse(self._accept_word(ts_enc, ts, ["[CB]_m1(1)"], error))
 
 
     def test_encode_cbs(self):
@@ -348,11 +368,11 @@ class TestEnc(unittest.TestCase):
         ts.product(vars_ts)
         self.assertTrue(len(errors) == 0)
 
-        cb_1_seq = ["cb1()", "ci1()"]
-        cb_2_seq = ["cb2()", "ci2()"]
-        cb_11 = ["cb1()", "ci1()","cb1()", "ci1()"]
-        cb_12 = ["cb1()", "ci1()","cb2()", "ci2()"]
-        cb_22 = ["cb2()", "ci2()","cb2()", "ci2()"]
+        cb_1_seq = ["[CB]_cb1()", "[CI]_ci1()"]
+        cb_2_seq = ["[CB]_cb2()", "[CI]_ci2()"]
+        cb_11 = ["[CB]_cb1()", "[CI]_ci1()","[CB]_cb1()", "[CI]_ci1()"]
+        cb_12 = ["[CB]_cb1()", "[CI]_ci1()","[CB]_cb2()", "[CI]_ci2()"]
+        cb_22 = ["[CB]_cb2()", "[CI]_ci2()","[CB]_cb2()", "[CI]_ci2()"]
 
         accepting_traces = [cb_1_seq, cb_2_seq,
                             cb_11, cb_12, cb_22]
@@ -360,9 +380,9 @@ class TestEnc(unittest.TestCase):
         for seq in accepting_traces:
             self.assertTrue(self._accept_word(ts_enc, ts, seq, TRUE()))
 
-        deadlock_traces = [["ci1()"], ["ci2()"],
-                           ["cb1()", "ci1()", "ci2()"],
-                           ["cb2()", "cb1()", "ci1()"]]
+        deadlock_traces = [["[CI]_ci1()"], ["[CI]_ci2()"],
+                           ["[CB]_cb1()", "[CI]_ci1()", "[CI]_ci2()"],
+                           ["[CB]_cb2()", "[CB]_cb1()", "[CI]_ci1()"]]
         for seq in deadlock_traces:
             self.assertFalse(self._accept_word(ts_enc, ts, seq, TRUE()))
 
@@ -370,22 +390,22 @@ class TestEnc(unittest.TestCase):
 
         ts_enc = TSEncoder(ctrace, [])
         vars_ts = ts_enc._encode_vars()
-        (ts, errors) = ts_enc._encode_cbs(set(["ci1()"]))
+        (ts, errors) = ts_enc._encode_cbs(set(["[CI]_ci1()"]))
         ts.product(vars_ts)
         self.assertTrue(len(errors) == 1)
         self.assertTrue(is_sat(And(errors[0],
-                                   Not(TSEncoder._get_state_var("ci1()")))))
+                                   Not(TSEncoder._get_state_var("[CI]_ci1()")))))
 
 
         ts_enc = TSEncoder(ctrace, [])
         vars_ts = ts_enc._encode_vars()
-        (ts, errors) = ts_enc._encode_cbs(set(["ci1()","ci2()"]))
+        (ts, errors) = ts_enc._encode_cbs(set(["[CI]_ci1()","[CI]_ci2()"]))
         ts.product(vars_ts)
         self.assertTrue(len(errors) == 2)
 
         self.assertTrue(is_sat(And([errors[0],
-                                    Not(TSEncoder._get_state_var("ci1()")),
-                                    Not(TSEncoder._get_state_var("ci2()"))])))
+                                    Not(TSEncoder._get_state_var("[CI]_ci1()")),
+                                    Not(TSEncoder._get_state_var("[CI]_ci2()"))])))
 
 
 

@@ -7,7 +7,7 @@ import collections
 
 from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
-from cbverifier.traces.ctrace import CTrace, CValue
+from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
 
 from cbverifier.helpers import Helper
 
@@ -101,7 +101,10 @@ class GroundSpecs(object):
                 new_params = process_param(get_call_params(node))
                 assert new_params is not None
 
-                new_call_node = new_call(sub_leaf(get_call_receiver(node),
+                new_call_node = new_call(sub_leaf(get_call_assignee(node),
+                                                  binding),
+                                         get_call_type(node),
+                                         sub_leaf(get_call_receiver(node),
                                                   binding),
                                          get_call_method(node),
                                          new_params)
@@ -397,27 +400,52 @@ class TraceMap(object):
     """ Given a trace, builds an index of the methods called in the
     trace (messages).
 
-    The index is organized in two levels: the first level is the name of
-    the method, the second level is the arity of the method.
+    The index is organized in levels:
+      - the type of the call (callin or callback)
+      - the name of the method
+      - the arity of the method
+      - if the method returns a value
 
+    The class implements two lookup functions.
 
-    The class also implements a lookup methods.
-
-    lookup_methods: given the name of a method and its arity, return
-    the set of method calls in the trace that call that specific
+    1. lookup_methods: given the type, name, arity, and 
+    it there is a return value of a method,
+    returns the set of method calls in the trace that call that specific
     method with the given arity.
 
-    lookup_assignments: given a call_node from the specification AST
-    the method reutrns all the possible assignments to the free
+    2. lookup_assignments: given a call_node from the specification AST
+    the method returns all the possible assignments to the free
     variables in the AST node that can be built by looking at the
     method calls found in the trace.
     """
 
     def __init__(self, trace):
-        # 2-level index with method name and arity of paramters
+        # 3-level index with method name and arity of paramters
         self.trace_map = {}
         for child in trace.children:
             self.trace_map = self._fill_map(child, self.trace_map)
+
+    def _get_inner_elem(self, hash_map, key, default=None):
+        assert (type(hash_map) == type({}))
+
+        try:
+            inner_element = hash_map[key]
+        except KeyError:
+            if (default is None):
+                inner_element = {}
+            else:
+                inner_element = default
+            hash_map[key] = inner_element
+
+        return inner_element
+
+    def _lookup_inner_elem(self, hash_map, key):
+        inner_elem = None
+        try:
+            inner_elem = hash_map[key]
+        except KeyError:
+            pass
+        return inner_elem
 
     def _fill_map(self, msg, trace_map):
         """ Given a message from the trace fill and a map
@@ -425,21 +453,24 @@ class TraceMap(object):
         and then the arity of the message to a list of messages.
         """
 
-        arity_map = None
-        try:
-            arity_map = trace_map[msg.method_name]
-        except KeyError:
-            arity_map = {}
-            trace_map[msg.method_name] = arity_map
+        if (isinstance(msg, CCallin)):
+            msg_type = CI
+        elif (isinstance(msg, CCallback)):
+            msg_type = CB
+        else:
+            assert False
+        has_retval = msg.return_value is not None
 
-        arity = len(msg.params)
+        message_name_map = self._get_inner_elem(trace_map, msg_type)
+        assert (type(message_name_map) == type({}))
+        arity_map = self._get_inner_elem(message_name_map, msg.method_name)
+        assert (type(arity_map) == type({}))
+        ret_val_map = self._get_inner_elem(arity_map, len(msg.params))
+        assert (type(ret_val_map) == type({}))
+        method_list = []
+        method_list = self._get_inner_elem(ret_val_map, has_retval, method_list)
+        assert (type(method_list) == type([]))
 
-        method_list = None
-        try:
-            method_list = arity_map[arity]
-        except KeyError:
-            method_list = []
-            arity_map[arity] = method_list
         method_list.append(msg)
 
         for child in msg.children:
@@ -447,19 +478,71 @@ class TraceMap(object):
 
         return trace_map
 
-    def lookup_methods(self, method_name, arity):
+    def lookup_methods(self, msg_type_node, method_name, arity, has_retval):
         """ Given the name of a method and its arity, returns the
         list of messages in the trace that
         match the method name and have the same number of
         parameters,
         """
         method_list = []
-        try:
-            arity_map = self.trace_map[method_name]
-            method_list = arity_map[arity]
-        except KeyError:
-            pass
+
+
+        msg_type = get_node_type(msg_type_node)
+        keys = [msg_type, method_name, arity, has_retval]
+        current_map = self.trace_map
+
+        key_index = 0
+        for key in keys:
+            lookupres = self._lookup_inner_elem(current_map, key)
+
+            if key_index == len(keys) - 1:
+                # last element
+                if lookupres is None:
+                    break
+                else:
+                    method_list = lookupres
+            else:
+                key_index += 1
+                # exit the loop if the element was not found
+                if lookupres is None:
+                    break
+                else:
+                    current_map = lookupres
+
         return method_list
+
+    def _get_formal_assignment(self, method_assignments, formal, actual):
+        """ Add the assignement to formal given by actual """
+        formal_type = get_node_type(formal)
+
+        assert formal_type in leaf_nodes
+        assert formal_type != NIL
+
+        match = True
+
+        if (formal_type == DONTCARE):
+            return match
+        elif (formal_type in const_nodes):
+            # if the constant nodes do not match, do not consider
+            # this as a binding
+            # this is an optimization, it does not create bindings
+            # that we do not need
+            if str(formal[1]) != actual:
+                match = False
+                return match
+        elif method_assignments.has_key(formal):
+            assert formal_type == ID
+            if method_assignments.contains(formal, actual):
+                # we have two different assignments
+                # for the same free variable
+                # remove the match
+                match = False
+                return match
+        else:
+            assert formal_type == ID
+            method_assignments.add(formal, actual)
+
+        return match
 
     def lookup_assignments(self, call_node):
         """ Given a node that represent a call in a specification,
@@ -474,7 +557,9 @@ class TraceMap(object):
 
         try:
             # Build the list of formal parameters
-            # (CALL, receiver, method_name, params)
+            # (CALL, retval, call_type, receiver, method_name, params)
+            retval = get_call_assignee(call_node)
+            call_type = get_call_type(call_node)
             method_name_node = get_call_method(call_node)
             method_name = get_id_val(method_name_node)
             receiver = get_call_receiver(call_node)
@@ -488,39 +573,28 @@ class TraceMap(object):
                 params = params[2]
             arity = len(param_list)
 
-            matching_methods = self.lookup_methods(method_name, arity)
-
-            # For each method, find the assignments to the variables in params
+            matching_methods = self.lookup_methods(call_type, method_name,
+                                                   arity,
+                                                   retval != new_nil())
+            # For each method, find:
+            #   - the assignments to the variables in params
+            #   - the assignment to the return value
             for method in matching_methods:
                 match = True
                 method_assignments = Assignments()
+
+                # parameters
                 for formal, actual in zip(param_list, method.params):
-                    formal_type = get_node_type(formal)
+                    match = self._get_formal_assignment(method_assignments,
+                                                        formal, actual)
+                    if not match:
+                        break
 
-                    assert formal_type in leaf_nodes
-                    assert formal_type != NIL
-
-                    if (formal_type == DONTCARE):
-                        continue
-                    elif (formal_type in const_nodes):
-                        # if the constant nodes do not match, do not consider
-                        # this as a binding
-                        # this is an optimization, it does not create bindings
-                        # that we do not need
-                        if str(formal[1]) != actual:
-                            match = False
-                            break
-                    elif method_assignments.has_key(formal):
-                        assert formal_type == ID
-                        if method_assignments.contains(formal, actual):
-                            # we have two different assignments
-                            # for the same free variable
-                            # remove the match
-                            match = False
-                            break
-                    else:
-                        assert formal_type == ID
-                        method_assignments.add(formal, actual)
+                # return value
+                if match and retval != new_nil():
+                    match = self._get_formal_assignment(method_assignments,
+                                                        retval,
+                                                        method.return_value)
 
                 if match:
                     set_assignments.add(method_assignments)
