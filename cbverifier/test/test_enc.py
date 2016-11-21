@@ -99,37 +99,37 @@ class TestEnc(unittest.TestCase):
         res = TSEncoder.get_value_key(value)
         self.assertTrue(res == "NULL")
 
-    def test_get_msg_key(self):
+    def test_get_key_from_msg(self):
         cb = CCallback(1, 1, "", "doSomethingCb",
                        [TestGrounding._get_obj("1","string")],
                        None, ["string"], [], [])
-        res = TSEncoder.get_msg_key(cb)
+        res = TSEncoder.get_key_from_msg(cb)
         self.assertTrue("[CB]_doSomethingCb(1)", res)
 
         cb = CCallback(1, 1, "", "doSomethingCb",
                        [TestGrounding._get_obj("1","string")],
                        TestGrounding._get_obj("1","string"),
                        ["string"], [], [])
-        res = TSEncoder.get_msg_key(cb)
+        res = TSEncoder.get_key_from_msg(cb)
         self.assertTrue("1=[CB]_doSomethingCb(1)", res)
 
         cb = CCallback(1, 1, "", "doSomethingCb",
                        [TestGrounding._get_obj("1","string"),
                         TestGrounding._get_int(1)],
                        None, ["string"], [], [])
-        res = TSEncoder.get_msg_key(cb)
+        res = TSEncoder.get_key_from_msg(cb)
         self.assertTrue("[CB]_doSomethingCb(1,1)", res)
 
         ci = CCallin(1, 1, "", "doSomethingCi",
                      [TestGrounding._get_obj("1","string")],
                      None)
-        res = TSEncoder.get_msg_key(ci)
+        res = TSEncoder.get_key_from_msg(ci)
         self.assertTrue("[CI]_doSomethingCi(1)", res)
 
         ci = CCallin(1, 1, "", "doSomethingCi",
                      [],
                      None)
-        res = TSEncoder.get_msg_key(ci)
+        res = TSEncoder.get_key_from_msg(ci)
         self.assertTrue("[CI]_doSomethingCi(1)", res)
 
 
@@ -246,12 +246,12 @@ class TestEnc(unittest.TestCase):
 
         self.assertTrue(len(ts_var.state_vars) == 3)
 
-        cb_var = TSEncoder._get_state_var(TSEncoder.get_msg_key(cb))
-        cb1_var = TSEncoder._get_state_var(TSEncoder.get_msg_key(cb1))
-        ci_var = TSEncoder._get_state_var(TSEncoder.get_msg_key(ci))
-        cb_ivar = ts_enc.r2a.get_msg_eq(TSEncoder.get_msg_key(cb))
-        cb1_ivar = ts_enc.r2a.get_msg_eq(TSEncoder.get_msg_key(cb1))
-        ci_ivar = ts_enc.r2a.get_msg_eq(TSEncoder.get_msg_key(ci))
+        cb_var = TSEncoder._get_state_var(TSEncoder.get_key_from_msg(cb))
+        cb1_var = TSEncoder._get_state_var(TSEncoder.get_key_from_msg(cb1))
+        ci_var = TSEncoder._get_state_var(TSEncoder.get_key_from_msg(ci))
+        cb_ivar = ts_enc.r2a.get_msg_eq(TSEncoder.get_key_from_msg(cb))
+        cb1_ivar = ts_enc.r2a.get_msg_eq(TSEncoder.get_key_from_msg(cb1))
+        ci_ivar = ts_enc.r2a.get_msg_eq(TSEncoder.get_key_from_msg(ci))
 
         trans = And([Implies(cb_ivar, cb_var),
                      Implies(cb1_ivar, cb1_var),
@@ -339,10 +339,10 @@ class TestEnc(unittest.TestCase):
 
     def test_encode_cbs(self):
         def cb(name):
-            cb = CCallback(1, 1, name, name, [], None, [], [], [])
+            cb = CCallback(1, 1, "", name, [], None, [], [], [])
             return cb
         def ci(name):
-            ci = CCallin(1, 1, name, name,[], None)
+            ci = CCallin(1, 1, "", name,[], None)
             return ci
 
         def new_trace(tree_trace_list):

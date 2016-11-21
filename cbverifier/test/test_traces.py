@@ -46,7 +46,7 @@ class TestTraces(unittest.TestCase):
 
         ci = cont.msg.callinEntry
 
-        ci.signature = "signature"
+        ci.class_name = "class_name"
         ci.method_name = "method_name"
         self._get_value(ci.param_list.add())
         self._get_value(ci.param_list.add())
@@ -64,7 +64,7 @@ class TestTraces(unittest.TestCase):
         cont.msg.thread_id = 2
 
         ci = cont.msg.callinExit
-        ci.signature = "signature"
+        ci.class_name = "class_name"
         ci.method_name = "method_name"
         self._get_value(ci.return_value)
 
@@ -79,7 +79,7 @@ class TestTraces(unittest.TestCase):
 
         cb = cont.msg.callbackEntry
 
-        cb.signature = "signature"
+        cb.class_name = "class_name"
         cb.method_name = "method_name"
         self._get_value(cb.param_list.add())
         self._get_value(cb.param_list.add())
@@ -105,7 +105,7 @@ class TestTraces(unittest.TestCase):
         cont.msg.thread_id = 2
 
         cb = cont.msg.callbackExit
-        cb.signature = "signature"
+        cb.class_name = "class_name"
         cb.method_name = "method_name"
         self._get_value(cb.return_value)
 
