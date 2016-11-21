@@ -20,6 +20,6 @@ from cbverifier.specs.spec import Spec
 class TestSpecs(unittest.TestCase):
 
     def test_spec_creation(self):
-        spec_list = Spec.get_specs_from_string("SPEC l.method_name() |- TRUE; " +
-                                               "SPEC l.method_name() |- TRUE")
+        spec_list = Spec.get_specs_from_string("SPEC [CI] [l] method_name() |- TRUE; " +
+                                               "SPEC [CI] [l] method_name() |- TRUE")
         self.assertTrue(len(spec_list) == 2)

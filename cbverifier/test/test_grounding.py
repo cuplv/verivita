@@ -167,7 +167,8 @@ class TestGrounding(unittest.TestCase):
         assert (len(tmap.lookup_methods("doSomethingCi", 1)) == 1)
         assert (len(tmap.lookup_methods("doSomethingCi", 2)) == 1)
 
-        cnode = new_call(new_nil(), new_id("doSomethingCb"),
+        cnode = new_call(new_nil(), CB,
+                         new_nil(), new_id("doSomethingCb"),
                          new_param(new_id("l"), new_nil()))
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([
@@ -175,13 +176,15 @@ class TestGrounding(unittest.TestCase):
             [[new_id('l')],[TestGrounding._get_obj("2","string")]]])
         assert (res == res_2)
 
-        cnode = new_call(new_nil(), new_id("doSomethingCb"),
+        cnode = new_call(new_nil(), CB,
+                         new_nil(), new_id("doSomethingCb"),
                          new_param(new_dontcare(), new_nil()))
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([[[],[]]])
         assert (res == res_2)
 
-        cnode = new_call(new_nil(), new_id("doSomethingCi"),
+        cnode = new_call(new_nil(), CI,
+                         new_nil(), new_id("doSomethingCi"),
                          new_param(new_dontcare(),
                                    new_param(new_id('z'), new_nil())))
         res = tmap.lookup_assignments(cnode)
@@ -217,19 +220,23 @@ class TestGrounding(unittest.TestCase):
         cb.add_msg(ci)
 
         gs = GroundSpecs(trace)
-        spec = Spec.get_spec_from_string("SPEC l.doSomethingCi(z) |- z.otherCi(f)")
+        spec = Spec.get_spec_from_string("SPEC [CI] [l] doSomethingCi(z) |- [CI] [z] otherCi(f)")
         bindings = gs._get_ground_bindings(spec)
         res = TestGrounding.newBinding([
             [[new_id('l'),new_id('z'),new_id('f')],
              [TestGrounding._get_obj("1","string"),
               TestGrounding._get_obj("4","string"),
               TestGrounding._get_obj("1","string")]]])
+
+        print bindings
+        print res
+
         assert (bindings == res)
 
         ground_specs = gs.ground_spec(spec)
         assert len(ground_specs) == 1
 
-        spec = Spec.get_spec_from_string("SPEC l.doSomethingCi(#) |- #.otherCi(#)")
+        spec = Spec.get_spec_from_string("SPEC [CI] [l] doSomethingCi(#) |- [CI] [#] otherCi(#)")
         bindings = gs._get_ground_bindings(spec)
         res = TestGrounding.newBinding([
             [[new_id('l')],

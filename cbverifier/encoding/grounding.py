@@ -101,7 +101,9 @@ class GroundSpecs(object):
                 new_params = process_param(get_call_params(node))
                 assert new_params is not None
 
-                new_call_node = new_call(sub_leaf(get_call_receiver(node),
+                new_call_node = new_call(sub_leaf(get_call_assignee(node), binding),
+                                         get_call_type(node),
+                                         sub_leaf(get_call_receiver(node),
                                                   binding),
                                          get_call_method(node),
                                          new_params)

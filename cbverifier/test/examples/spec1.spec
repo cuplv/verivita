@@ -1,1 +1,1 @@
-SPEC l.m1() |- l.m2()
+SPEC [CB] [l] m1() |- [CI] [l] m2()

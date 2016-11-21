@@ -36,12 +36,12 @@ class TestRegExpToAuto(unittest.TestCase):
         l2 = r2a.get_msg_eq("m2(1)")
         l3 = r2a.get_msg_eq("m3(1)")
 
-        spec_list = Spec.get_specs_from_string("SPEC l.m1() |- TRUE; " +
-                                               "SPEC (l.m1() & l.m2()) |- TRUE; " +
-                                               "SPEC (l.m1() | l.m2()) |- TRUE; " +
-                                               "SPEC (! l.m1()) |- TRUE; " +
-                                               "SPEC l.m1(); l.m2() |- TRUE; " +
-                                               "SPEC l.m1()[*] |- TRUE")
+        spec_list = Spec.get_specs_from_string("SPEC [CB] [l] m1() |- TRUE; " +
+                                               "SPEC ([CB] [l] m1() & [CI] [l] m2()) |- TRUE; " +
+                                               "SPEC ([CB] [l] m1() | [CI] [l] m2()) |- TRUE; " +
+                                               "SPEC (! [CB] [l] m1()) |- TRUE; " +
+                                               "SPEC [CB] [l] m1(); [CI] [l] m2() |- TRUE; " +
+                                               "SPEC [CB] [l] m1()[*] |- TRUE")
         assert spec_list is not None
         binding = TestGrounding.newAssign(
             [new_id('l')], [TestGrounding._get_obj("1","string")])

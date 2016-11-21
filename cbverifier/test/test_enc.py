@@ -121,8 +121,8 @@ class TestEnc(unittest.TestCase):
         self.assertTrue("doSomethingCi(1)", res)
 
     def test_get_key_from_call(self):
-        spec_list = Spec.get_specs_from_string("SPEC TRUE |- l.m1(); " +
-                                               "SPEC TRUE |- l.m1(a,b,c)")
+        spec_list = Spec.get_specs_from_string("SPEC TRUE |- [CI] [l] m1(); " +
+                                               "SPEC TRUE |- [CI] [l] m1(a,b,c)")
         assert spec_list is not None
 
         binding = TestGrounding.newAssign(
@@ -249,7 +249,7 @@ class TestEnc(unittest.TestCase):
             f_error = And(f_error, final)
             return f_error
 
-        spec_list = Spec.get_specs_from_string("SPEC l.m1() |- l.m2()")
+        spec_list = Spec.get_specs_from_string("SPEC [CI] [l] m1() |- [CI] [l] m2()")
         assert spec_list is not None
 
         binding = TestGrounding.newAssign([new_id('l')],
@@ -282,7 +282,7 @@ class TestEnc(unittest.TestCase):
         self.assertFalse(self._accept_word(ts_enc, gs_ts, ["m2(1)"], error))
 
     def _get_sample_trace(self):
-        spec_list = Spec.get_specs_from_string("SPEC l.m1() |- l.m2()")
+        spec_list = Spec.get_specs_from_string("SPEC [CI] [l] m1() |- [CI] [l] m2()")
         assert spec_list is not None
 
         ctrace = CTrace()

@@ -122,22 +122,23 @@ class TestSpecParser(unittest.TestCase):
 
 
     def test_parser(self):
-        correct_expr = ["SPEC [CB] l.l() |- [CB] l.l(b)",
-                        "SPEC [CB] l.l(l1,l2) |- [CB] l.l(b)",
-                        "SPEC [CB] l.l(l1,l2) |- [CI] l.l(b); SPEC [CB] l.l(l1,l2) |- [CI] l.l(b)",
-                        "SPEC [CB] l.l(l1,l2); [CB] l.l(l1,l2) |- [CI] l.l(b)",
-                        "SPEC [CB] l.l(l1,l2)[*] |- [CI] l.l(b)",
-                        "SPEC [CB] l.l(l1,l2)[*] |+ [CI] l.l(b)",
-                        "SPEC [CB] l.l(l1,l2)[*] |- [CI] l.l(b)",
+        correct_expr = ["SPEC [CB] [l] l() |- [CB] [l] l(b)",
+                        "SPEC [CB] [l] l(l1,l2) |- [CB] [l] l(b)",
+                        "SPEC [CB] [l] l(l1,l2) |- [CI] [l] l(b); SPEC [CB] [l] l(l1,l2) |- [CI] [l] l(b)",
+                        "SPEC [CB] [l] l(l1,l2); [CB] [l] l(l1,l2) |- [CI] [l] l(b)",
+                        "SPEC [CB] [l] l(l1,l2)[*] |- [CI] [l] l(b)",
+                        "SPEC [CB] [l] l(l1,l2)[*] |+ [CI] [l] l(b)",
+                        "SPEC [CB] [l] l(l1,l2)[*] |- [CI] [l] l(b)",
                         "SPEC TRUE |- TRUE",
                         "SPEC TRUE[*] |- TRUE",
                         "SPEC (TRUE)[*] |- TRUE",
+                        "SPEC [CB] [l] m1()[*] |- TRUE",
                         "SPEC (TRUE & FALSE)[*] |- TRUE",
                         "SPEC (TRUE & FALSE | ! FALSE)[*] |- TRUE",
-                        "SPEC [CB] l1.methodName(TRUE) |- [CI] l2.methodName(bparam,TRUE)",
-                        "SPEC [CB] l1.methodName(#) |- [CI] l2.methodName(bparam,TRUE)",
-                        "SPEC foo = [CB] l1.methodName(#) |- [CI] l2.methodName(bparam,TRUE)",
-                        "SPEC foo = [CB] l1.methodName(a); foo = [CB] l1.methodName(a) |- [CI] l2.methodName(bparam,TRUE)"]
+                        "SPEC [CB] [l1] methodName(TRUE) |- [CI] [l2] methodName(bparam,TRUE)",
+                        "SPEC [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
+                        "SPEC foo = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
+                        "SPEC foo = [CB] [l1] methodName(a); foo = [CB] [l1] methodName(a) |- [CI] [l2] methodName(bparam,TRUE)"]
 
         for expr in correct_expr:
             self._test_parse(expr)
@@ -154,17 +155,17 @@ class TestSpecParser(unittest.TestCase):
 
             self.assertTrue(parse_res == expected)
 
-        res = [("SPEC [CB] l.method_name() |- TRUE",
+        res = [("SPEC [CB] [l] package.method_name() |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (NIL,), (CB,), (NIL,), (ID, 'l.method_name'), (NIL,)),
+                   (CALL, (NIL,), (CB,), (ID,'l'), (ID, 'package.method_name'), (NIL,)),
                    (0,))), (NIL,))),
-               ("SPEC [CI] l.method_name(0,1,f) |- TRUE",
+               ("SPEC [CI] [l] method_name(0,1,f) |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (NIL,), (CI,), (NIL,), (ID, 'l.method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
+                   (CALL, (NIL,), (CI,), (ID,'l'), (ID, 'method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
                    (0,))), (NIL,)))]
 
         for r in res:
