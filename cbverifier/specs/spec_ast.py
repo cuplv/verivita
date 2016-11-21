@@ -33,6 +33,8 @@ SPEC_LIST=15
 DONTCARE=16
 STRING=17
 VALUE=18
+CI = 19
+CB = 20
 
 inv_map = {0 : "TRUE",
            1 : "FALSE",
@@ -52,7 +54,10 @@ inv_map = {0 : "TRUE",
            14 : "DISABLE_OP",
            15 : "SPEC_LIST",
            16 : "DONTCARE",
-           17 : "STRING"}
+           17 : "STRING",
+           18 : "VALUE",
+           19 : "CI",
+           20 : "CB"}
 
 
 ################################################################################
@@ -75,8 +80,11 @@ def new_false(): return (FALSE,)
 def new_true(): return (TRUE,)
 def new_param(first, tails): return (PARAM_LIST, first, tails)
 
-def new_call(receiver, method_name, params):
-    return (CALL, receiver, method_name, params)
+def new_ci(): return (CI,)
+def new_cb(): return (CB,)
+
+def new_call(assignee, call_type, receiver, method_name, params):
+    return (CALL, assignee, call_type, receiver, method_name, params)
 
 def new_and(p1,p2): return (AND_OP, p1, p2)
 def new_or(p1,p2): return (OR_OP, p1, p2)
@@ -114,20 +122,30 @@ spec_nodes = (SPEC_SYMB,ENABLE_OP,DISABLE_OP)
 
 def get_id_val(node): return node[1]
 
-def get_call_receiver(node):
+def get_call_assignee(node):
     assert CALL == get_node_type(node)
     assert node[1] is not None
     return node[1]
 
-def get_call_method(node):
+def get_call_type(node):
     assert CALL == get_node_type(node)
     assert node[2] is not None
     return node[2]
 
-def get_call_params(node):
+def get_call_receiver(node):
     assert CALL == get_node_type(node)
     assert node[3] is not None
     return node[3]
+
+def get_call_method(node):
+    assert CALL == get_node_type(node)
+    assert node[4] is not None
+    return node[4]
+
+def get_call_params(node):
+    assert CALL == get_node_type(node)
+    assert node[5] is not None
+    return node[5]
 
 def get_regexp_node(node):
     assert SPEC_SYMB == get_node_type(node)
@@ -195,6 +213,8 @@ def pretty_print(ast_node, out_stream=sys.stdout):
                 my_print(out_stream, ",")
                 pretty_print_aux(out_stream,node[2],"")
         elif (node_type == CALL):
+            # TO FIX
+            assert False
             receiver = get_call_receiver(node)
             if (get_node_type(receiver) != new_nil()):
                 pretty_print_aux(out_stream,receiver,"") # receiver

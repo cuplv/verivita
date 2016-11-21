@@ -10,7 +10,7 @@ Lexer for the lifestate specifications
 import ply.lex as lex
 import ply.yacc as yacc
 
-keywords = ('TOK_SPEC','TOK_TRUE','TOK_FALSE',)
+keywords = ('TOK_SPEC','TOK_TRUE','TOK_FALSE','TOK_CB','TOK_CI')
 
 tokens = keywords + (
     'TOK_ID',
@@ -27,7 +27,10 @@ tokens = keywords + (
     'TOK_COMMA',
     'TOK_LPAREN',
     'TOK_RPAREN',
-    'TOK_DONTCARE'
+    'TOK_LSQUARE',
+    'TOK_RSQUARE',
+    'TOK_DONTCARE',
+    'TOK_ASSIGN',
     )
 
 # Tokens
@@ -59,14 +62,17 @@ t_TOK_NOT = r"\!"
 t_TOK_AND = r"\&"
 t_TOK_OR = r"\|"
 t_TOK_SEQUENCE=r";"
-t_TOK_STAR=r"\[\*\]"
+t_TOK_STAR=r"\*"
 t_TOK_ENABLE = r"\|\+"
 t_TOK_DISABLE = r"\|-"
 t_TOK_DOT = r"\."
 t_TOK_COMMA = r","
 t_TOK_LPAREN  = r'\('
 t_TOK_RPAREN  = r'\)'
+t_TOK_LSQUARE  = r'\['
+t_TOK_RSQUARE  = r'\]'
 t_TOK_DONTCARE = r'\#'
+t_TOK_ASSIGN = r'\='
 # Ignored characters
 t_ignore = " \t"
 
@@ -81,6 +87,8 @@ def t_error(t):
 
 def reset():
     lexer.lineno = 1
+    if lexer.lexdata is None:
+        return
     tok = lexer.token()
     while (tok is not None):
         tok = lexer.token()

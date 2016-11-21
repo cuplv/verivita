@@ -75,7 +75,7 @@ class TestSpecParser(unittest.TestCase):
         self._test_single_token(0, 'TOK_AND', 1, '&', '&')
         self._test_single_token(0, 'TOK_OR', 1, '|', '|')
         self._test_single_token(0, 'TOK_SEQUENCE', 1, ';', ';')
-        self._test_single_token(0, 'TOK_STAR', 1, '[*]', '[*]')
+        self._test_single_token(0, 'TOK_STAR', 1, '*', '*')
         self._test_single_token(0, 'TOK_ENABLE', 1, '|+', '|+')
         self._test_single_token(0, 'TOK_DISABLE', 1, '|-', '|-')
         self._test_single_token(0, 'TOK_DOT', 1, '.', '.')
@@ -86,6 +86,10 @@ class TestSpecParser(unittest.TestCase):
 
         self._test_single_token(0, 'TOK_TRUE', 1, 'TRUE', 'TRUE')
         self._test_single_token(0, 'TOK_FALSE', 1, 'FALSE', 'FALSE')
+        self._test_single_token(0, 'TOK_CB', 1, 'CB', 'CB')
+        self._test_single_token(0, 'TOK_CI', 1, 'CI', 'CI')
+        self._test_single_token(0, 'TOK_ASSIGN', 1, '=', '=')
+
         self._test_single_token(0, 'TOK_SPEC', 1, 'SPEC', 'SPEC')
 
 
@@ -118,20 +122,22 @@ class TestSpecParser(unittest.TestCase):
 
 
     def test_parser(self):
-        correct_expr = ["SPEC l.l() |- l.l(b)",
-                        "SPEC l.l(l1,l2) |- l.l(b)",
-                        "SPEC l.l(l1,l2) |- l.l(b); SPEC l.l(l1,l2) |- l.l(b)",
-                        "SPEC l.l(l1,l2); l.l(l1,l2) |- l.l(b)",
-                        "SPEC l.l(l1,l2)[*] |- l.l(b)",
-                        "SPEC l.l(l1,l2)[*] |+ l.l(b)",
-                        "SPEC l.l(l1,l2)[*] |- l.l(b)",
+        correct_expr = ["SPEC [CB] l.l() |- [CB] l.l(b)",
+                        "SPEC [CB] l.l(l1,l2) |- [CB] l.l(b)",
+                        "SPEC [CB] l.l(l1,l2) |- [CI] l.l(b); SPEC [CB] l.l(l1,l2) |- [CI] l.l(b)",
+                        "SPEC [CB] l.l(l1,l2); [CB] l.l(l1,l2) |- [CI] l.l(b)",
+                        "SPEC [CB] l.l(l1,l2)[*] |- [CI] l.l(b)",
+                        "SPEC [CB] l.l(l1,l2)[*] |+ [CI] l.l(b)",
+                        "SPEC [CB] l.l(l1,l2)[*] |- [CI] l.l(b)",
                         "SPEC TRUE |- TRUE",
                         "SPEC TRUE[*] |- TRUE",
                         "SPEC (TRUE)[*] |- TRUE",
                         "SPEC (TRUE & FALSE)[*] |- TRUE",
                         "SPEC (TRUE & FALSE | ! FALSE)[*] |- TRUE",
-                        "SPEC l1.methodName(TRUE) |- l2.methodName(bparam,TRUE)",
-                        "SPEC l1.methodName(_) |- l2.methodName(bparam,TRUE)"]
+                        "SPEC [CB] l1.methodName(TRUE) |- [CI] l2.methodName(bparam,TRUE)",
+                        "SPEC [CB] l1.methodName(#) |- [CI] l2.methodName(bparam,TRUE)",
+                        "SPEC foo = [CB] l1.methodName(#) |- [CI] l2.methodName(bparam,TRUE)",
+                        "SPEC foo = [CB] l1.methodName(a); foo = [CB] l1.methodName(a) |- [CI] l2.methodName(bparam,TRUE)"]
 
         for expr in correct_expr:
             self._test_parse(expr)
@@ -142,19 +148,23 @@ class TestSpecParser(unittest.TestCase):
     def test_ast(self):
         def test_ast_inner(specs, expected):
             parse_res = spec_parser.parse(specs)
+
+            print expected
+            print parse_res
+
             self.assertTrue(parse_res == expected)
 
-        res = [("SPEC l.method_name() |- TRUE",
+        res = [("SPEC [CB] l.method_name() |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (ID, 'l'), (ID, 'method_name'), (NIL,)),
+                   (CALL, (NIL,), (CB,), (NIL,), (ID, 'l.method_name'), (NIL,)),
                    (0,))), (NIL,))),
-               ("SPEC l.method_name(0,1,f) |- TRUE",
+               ("SPEC [CI] l.method_name(0,1,f) |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (ID, 'l'), (ID, 'method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
+                   (CALL, (NIL,), (CI,), (NIL,), (ID, 'l.method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
                    (0,))), (NIL,)))]
 
         for r in res:
