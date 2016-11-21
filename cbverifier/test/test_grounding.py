@@ -163,6 +163,11 @@ class TestGrounding(unittest.TestCase):
                        TestGrounding._get_obj("3","string"), ["string"], [], [])
         trace.add_msg(cb)
 
+        cb = CCallback(1, 1, "package.MyClass", "testClassName",
+                       [TestGrounding._get_obj("2","string")],
+                       TestGrounding._get_obj("3","string"), ["string"], [], [])
+        trace.add_msg(cb)
+
         tmap = TraceMap(trace)
 
         assert (len(tmap.lookup_methods(new_ci(), "other", 0, False)) == 0)
@@ -172,6 +177,7 @@ class TestGrounding(unittest.TestCase):
         assert (len(tmap.lookup_methods(new_cb(), "doSomethingCi", 1, False)) == 0)
         assert (len(tmap.lookup_methods(new_ci(), "doSomethingCi", 2, False)) == 1)
         assert (len(tmap.lookup_methods(new_cb(), "doSomethingCb", 1, True)) == 1)
+        assert (len(tmap.lookup_methods(new_cb(), "package.MyClass.testClassName", 1, True)) == 1)
 
         cnode = new_call(new_nil(), new_cb(),
                          new_nil(), new_id("doSomethingCb"),
@@ -200,6 +206,16 @@ class TestGrounding(unittest.TestCase):
 
         cnode = new_call(new_id("z"), new_cb(),
                          new_nil(), new_id("doSomethingCb"),
+                         new_param(new_id("l"), new_nil()))
+        res = tmap.lookup_assignments(cnode)
+        res_2 = TestGrounding.newBinding([
+            [[new_id('z'),new_id('l')],
+             [TestGrounding._get_obj("3","string"),
+              TestGrounding._get_obj("2","string")]]])
+        assert (res == res_2)
+
+        cnode = new_call(new_id("z"), new_cb(),
+                         new_nil(), new_id("package.MyClass.testClassName"),
                          new_param(new_id("l"), new_nil()))
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([
