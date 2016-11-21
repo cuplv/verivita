@@ -476,7 +476,7 @@ class TSEncoder:
             stack = [tl_cb]
             while (len(stack) != 0):
                 msg = stack.pop()
-                msg_key = TSEncoder.get_msg_key(msg)
+                msg_key = TSEncoder.get_key_from_msg(msg)
 
                 # Fill the stack in reverse order
                 for i in reversed(range(len(msg.children))):
@@ -549,7 +549,7 @@ class TSEncoder:
         return key
 
     @staticmethod
-    def get_msg_key(msg):
+    def get_key_from_msg(msg):
         """ The input is a msg from a concrete trace.
         The output is the key to the message
         """
@@ -569,7 +569,13 @@ class TSEncoder:
         params = []
         for p in msg.params:
             params.append(TSEncoder.get_value_key(p))
-        return TSEncoder.get_key(retval, msg_type, msg.method_name, params)
+
+        if (msg.class_name != ""):
+            full_msg_name = "%s.%s" % (msg.class_name, msg.method_name)
+        else:
+            full_msg_name = msg.method_name
+
+        return TSEncoder.get_key(retval, msg_type, full_msg_name, params)
 
     @staticmethod
     def get_key_from_call(call_node):
@@ -648,7 +654,7 @@ class TSEncoder:
             msg = stack.pop()
 
             trace_length = trace_length + 1
-            key = TSEncoder.get_msg_key(msg)
+            key = TSEncoder.get_key_from_msg(msg)
 
             msgs.add(key)
             if (isinstance(msg, CCallback)):

@@ -463,7 +463,13 @@ class TraceMap(object):
 
         message_name_map = self._get_inner_elem(trace_map, msg_type)
         assert (type(message_name_map) == type({}))
-        arity_map = self._get_inner_elem(message_name_map, msg.method_name)
+
+        if msg.class_name is None or msg.class_name == "":
+            method_name = msg.method_name
+        else:
+            method_name = "%s.%s" % (msg.class_name, msg.method_name)
+
+        arity_map = self._get_inner_elem(message_name_map, method_name)
         assert (type(arity_map) == type({}))
         ret_val_map = self._get_inner_elem(arity_map, len(msg.params))
         assert (type(ret_val_map) == type({}))
