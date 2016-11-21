@@ -149,6 +149,7 @@ class TSEncoder:
         self.helper = Helper(self.pysmt_env)
         self.auto_env = AutoEnv(self.pysmt_env)
         self.cenc = CounterEnc(self.pysmt_env)
+
         self.r2a = RegExpToAuto(self.cenc, self.msgs, self.auto_env)
 
     def get_ts_encoding(self):
@@ -529,13 +530,22 @@ class TSEncoder:
         return Symbol(atom_name, BOOL)
 
     @staticmethod
-    def get_key(method_name, params):
+    def get_key(retval, call_type, method_name, params):
         assert method_name is not None
         assert params is not None
         assert method_name != ""
 
-        key = "%s(%s)" % (method_name,
-                          ",".join(params))
+        assert call_type == "CI" or call_type == "CB"
+
+        if (retval != None):
+            key = "%s=[%s]_%s(%s)" % (retval,
+                                      call_type,
+                                      method_name,
+                                      ",".join(params))
+        else:
+            key = "[%s]_%s(%s)" % (call_type,
+                                   method_name,
+                                   ",".join(params))
         return key
 
     @staticmethod
@@ -543,15 +553,43 @@ class TSEncoder:
         """ The input is a msg from a concrete trace.
         The output is the key to the message
         """
+
+        if isinstance(msg, CCallin):
+            msg_type = "CI"
+        elif isinstance(msg, CCallback):
+            msg_type = "CB"
+        else:
+            assert False
+
+        if (msg.return_value is None):
+            retval = None
+        else:
+            retval = TSEncoder.get_value_key(msg.return_value)
+
         params = []
         for p in msg.params:
             params.append(TSEncoder.get_value_key(p))
-        return TSEncoder.get_key(msg.method_name, params)
+        return TSEncoder.get_key(retval, msg_type, msg.method_name, params)
 
     @staticmethod
     def get_key_from_call(call_node):
         """ Works for grounded call node """
         assert get_node_type(call_node) == CALL
+
+        node_retval = get_call_assignee(call_node)
+        if (new_nil() != node_retval):
+            assert VALUE == get_node_type(node_retval)
+            retval = TSEncoder.get_value_key(node_retval[1])
+        else:
+            retval = None
+
+        node_call_type = get_call_type(call_node)
+        if (get_node_type(node_call_type) == CI):
+            call_type = "CI"
+        elif (get_node_type(node_call_type) == CB):
+            call_type = "CB"
+        else:
+            assert False
 
         method_name_node = get_call_method(call_node)
         assert (ID == get_node_type(method_name_node))
@@ -574,7 +612,8 @@ class TSEncoder:
             params.append(p)
             node_params = node_params[2]
 
-        return TSEncoder.get_key(method_name, params)
+        return TSEncoder.get_key(retval, call_type,
+                                 method_name, params)
 
 
     @staticmethod
