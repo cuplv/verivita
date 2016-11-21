@@ -149,10 +149,6 @@ class TestSpecParser(unittest.TestCase):
     def test_ast(self):
         def test_ast_inner(specs, expected):
             parse_res = spec_parser.parse(specs)
-
-            print expected
-            print parse_res
-
             self.assertTrue(parse_res == expected)
 
         res = [("SPEC [CB] [l] package.method_name() |- TRUE",
@@ -166,6 +162,12 @@ class TestSpecParser(unittest.TestCase):
                  (SPEC_SYMB,
                   (DISABLE_OP,
                    (CALL, (NIL,), (CI,), (ID,'l'), (ID, 'method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
+                   (0,))), (NIL,))),
+               ("SPEC var = [CI] [l] method_name(0,1,f) |- TRUE",
+                (SPEC_LIST,
+                 (SPEC_SYMB,
+                  (DISABLE_OP,
+                   (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
                    (0,))), (NIL,)))]
 
         for r in res:

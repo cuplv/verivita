@@ -45,7 +45,6 @@ class TestGrounding(unittest.TestCase):
         v.value = objId
         return v
 
-
     def _new_bottom_ass(self):
         a = Assignments()
         a._is_bottom = True
@@ -159,15 +158,22 @@ class TestGrounding(unittest.TestCase):
                        None, ["string"], [], [])
         trace.add_msg(cb)
 
+        cb = CCallback(1, 1, "", "doSomethingCb",
+                       [TestGrounding._get_obj("2","string")],
+                       TestGrounding._get_obj("3","string"), ["string"], [], [])
+        trace.add_msg(cb)
+
         tmap = TraceMap(trace)
 
-        assert (len(tmap.lookup_methods("other", 0)) == 0)
-        assert (len(tmap.lookup_methods("doSomethingCb", 0)) == 1)
-        assert (len(tmap.lookup_methods("doSomethingCb", 1)) == 2)
-        assert (len(tmap.lookup_methods("doSomethingCi", 1)) == 1)
-        assert (len(tmap.lookup_methods("doSomethingCi", 2)) == 1)
+        assert (len(tmap.lookup_methods(new_ci(), "other", 0, False)) == 0)
+        assert (len(tmap.lookup_methods(new_cb(), "doSomethingCb", 0, False)) == 1)
+        assert (len(tmap.lookup_methods(new_cb(), "doSomethingCb", 1, False)) == 2)
+        assert (len(tmap.lookup_methods(new_ci(), "doSomethingCi", 1, False)) == 1)
+        assert (len(tmap.lookup_methods(new_cb(), "doSomethingCi", 1, False)) == 0)
+        assert (len(tmap.lookup_methods(new_ci(), "doSomethingCi", 2, False)) == 1)
+        assert (len(tmap.lookup_methods(new_cb(), "doSomethingCb", 1, True)) == 1)
 
-        cnode = new_call(new_nil(), CB,
+        cnode = new_call(new_nil(), new_cb(),
                          new_nil(), new_id("doSomethingCb"),
                          new_param(new_id("l"), new_nil()))
         res = tmap.lookup_assignments(cnode)
@@ -176,20 +182,30 @@ class TestGrounding(unittest.TestCase):
             [[new_id('l')],[TestGrounding._get_obj("2","string")]]])
         assert (res == res_2)
 
-        cnode = new_call(new_nil(), CB,
+        cnode = new_call(new_nil(), new_cb(),
                          new_nil(), new_id("doSomethingCb"),
                          new_param(new_dontcare(), new_nil()))
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([[[],[]]])
         assert (res == res_2)
 
-        cnode = new_call(new_nil(), CI,
+        cnode = new_call(new_nil(), new_ci(),
                          new_nil(), new_id("doSomethingCi"),
                          new_param(new_dontcare(),
                                    new_param(new_id('z'), new_nil())))
         res = tmap.lookup_assignments(cnode)
 
         res_2 = TestGrounding.newBinding([[[new_id('z')],[ TestGrounding._get_int(2)]]])
+        assert (res == res_2)
+
+        cnode = new_call(new_id("z"), new_cb(),
+                         new_nil(), new_id("doSomethingCb"),
+                         new_param(new_id("l"), new_nil()))
+        res = tmap.lookup_assignments(cnode)
+        res_2 = TestGrounding.newBinding([
+            [[new_id('z'),new_id('l')],
+             [TestGrounding._get_obj("3","string"),
+              TestGrounding._get_obj("2","string")]]])
         assert (res == res_2)
 
 
@@ -227,9 +243,6 @@ class TestGrounding(unittest.TestCase):
              [TestGrounding._get_obj("1","string"),
               TestGrounding._get_obj("4","string"),
               TestGrounding._get_obj("1","string")]]])
-
-        print bindings
-        print res
 
         assert (bindings == res)
 

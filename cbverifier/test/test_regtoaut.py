@@ -27,14 +27,14 @@ class TestRegExpToAuto(unittest.TestCase):
     def test_regexptoauto(self):
         auto_env = AutoEnv.get_global_auto_env()
         cenc = CounterEnc(auto_env.pysmt_env)
-        alphabet = set(["m1(1)","m2(1)","m3(1)"])
+        alphabet = set(["[CB]_m1(1)","[CI]_m2(1)","[CB]_m3(1)"])
 
         r2a = RegExpToAuto(cenc, alphabet, auto_env)
         env = r2a.auto_env
 
-        l1 = r2a.get_msg_eq("m1(1)")
-        l2 = r2a.get_msg_eq("m2(1)")
-        l3 = r2a.get_msg_eq("m3(1)")
+        l1 = r2a.get_msg_eq("[CB]_m1(1)")
+        l2 = r2a.get_msg_eq("[CI]_m2(1)")
+        l3 = r2a.get_msg_eq("[CB]_m3(1)")
 
         spec_list = Spec.get_specs_from_string("SPEC [CB] [l] m1() |- TRUE; " +
                                                "SPEC ([CB] [l] m1() & [CI] [l] m2()) |- TRUE; " +
@@ -51,10 +51,6 @@ class TestRegExpToAuto(unittest.TestCase):
         regexp = get_regexp_node(gs)
         auto = r2a.get_from_regexp(regexp)
         res = Automaton.get_singleton(env.new_label(l1))
-
-        import sys
-        auto.to_dot(sys.stdout)
-
         self.assertTrue(auto.is_equivalent(res))
 
         # Test l.m1() and l.m2()
