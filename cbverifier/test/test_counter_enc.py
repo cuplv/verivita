@@ -148,5 +148,3 @@ class TestCounterEnc(unittest.TestCase):
         eq_value(self, var_name, 2)
         eq_value(self, var_name, 3)
         eq_value(self, var_name, 4)
-
-
