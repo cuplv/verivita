@@ -1,6 +1,5 @@
 """ Concrete trace data structure and parsing.
 
-
 A concrete trace is represented as a forest, where each tree has
 messages as nodes and leaves.
 
@@ -91,7 +90,8 @@ class CCallback(CMessage):
                                         method_name,
                                         params,
                                         return_value)
-        #
+        # list of FrameworkOverride objects
+        # Warning: the order matteres.
         self.fmwk_overrides = fmwk_overrides
 
 
