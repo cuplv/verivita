@@ -408,7 +408,7 @@ class TraceMap(object):
 
     The class implements two lookup functions.
 
-    1. lookup_methods: given the type, name, arity, and 
+    1. lookup_methods: given the type, name, arity, and
     it there is a return value of a method,
     returns the set of method calls in the trace that call that specific
     method with the given arity.
@@ -453,6 +453,13 @@ class TraceMap(object):
         and then the arity of the message to a list of messages.
         """
 
+        def _get_full_msg_name(class_name, method_name):
+            if class_name is None or class_name == "":
+                method_name = method_name
+            else:
+                method_name = "%s.%s" % (class_name, method_name)
+            return method_name
+
         if (isinstance(msg, CCallin)):
             msg_type = CI
         elif (isinstance(msg, CCallback)):
@@ -464,20 +471,47 @@ class TraceMap(object):
         message_name_map = self._get_inner_elem(trace_map, msg_type)
         assert (type(message_name_map) == type({}))
 
-        if msg.class_name is None or msg.class_name == "":
-            method_name = msg.method_name
+        # We insert the same method multiple times in the case of callbacks.
+        #
+        # In practice we insert in the index all the possible variants that may
+        # match a rule, due to implemented interfaces and classes
+        method_names = []
+        if (isinstance(msg, CCallin)):
+            method_name = _get_full_msg_name(msg.class_name, msg.method_name)
+            method_names.append(method_name)
+        elif (isinstance(msg, CCallback)):
+            # for callbacks we look at the framework types
+
+            first_fmwk_type = True
+
+            for override in msg.fmwk_overrides:
+                assert override is not None
+                assert override.method_name == msg.method_name
+
+                if (not override.is_interface):
+                    if (first_fmwk_type):
+                        # first class
+                        method_name = _get_full_msg_name(override.class_name,
+                                                         override.method_name)
+                        method_names.append(method_name)
+                        first_fmwk_type = False
+                else:
+                    method_name = _get_full_msg_name(override.class_name,
+                                                     override.method_name)
+                    method_names.append(method_name)
         else:
-            method_name = "%s.%s" % (msg.class_name, msg.method_name)
+            assert False
 
-        arity_map = self._get_inner_elem(message_name_map, method_name)
-        assert (type(arity_map) == type({}))
-        ret_val_map = self._get_inner_elem(arity_map, len(msg.params))
-        assert (type(ret_val_map) == type({}))
-        method_list = []
-        method_list = self._get_inner_elem(ret_val_map, has_retval, method_list)
-        assert (type(method_list) == type([]))
 
-        method_list.append(msg)
+        for method_name in method_names:
+            arity_map = self._get_inner_elem(message_name_map, method_name)
+            assert (type(arity_map) == type({}))
+            ret_val_map = self._get_inner_elem(arity_map, len(msg.params))
+            assert (type(ret_val_map) == type({}))
+            method_list = []
+            method_list = self._get_inner_elem(ret_val_map, has_retval, method_list)
+            assert (type(method_list) == type([]))
+            method_list.append(msg)
 
         for child in msg.children:
             trace_map = self._fill_map(child, trace_map)

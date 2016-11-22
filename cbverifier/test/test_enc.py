@@ -100,23 +100,26 @@ class TestEnc(unittest.TestCase):
         self.assertTrue(res == "NULL")
 
     def test_get_key_from_msg(self):
+        fmwk_over = TestGrounding._get_fmwkov("","doSomethingCb", False)
+
         cb = CCallback(1, 1, "", "doSomethingCb",
                        [TestGrounding._get_obj("1","string")],
-                       None, ["string"], [], [])
+                       None,
+                       [fmwk_over])
         res = TSEncoder.get_key_from_msg(cb)
         self.assertTrue("[CB]_doSomethingCb(1)", res)
 
         cb = CCallback(1, 1, "", "doSomethingCb",
                        [TestGrounding._get_obj("1","string")],
                        TestGrounding._get_obj("1","string"),
-                       ["string"], [], [])
+                       [fmwk_over])
         res = TSEncoder.get_key_from_msg(cb)
         self.assertTrue("1=[CB]_doSomethingCb(1)", res)
 
         cb = CCallback(1, 1, "", "doSomethingCb",
                        [TestGrounding._get_obj("1","string"),
                         TestGrounding._get_int(1)],
-                       None, ["string"], [], [])
+                       None, [fmwk_over])
         res = TSEncoder.get_key_from_msg(cb)
         self.assertTrue("[CB]_doSomethingCb(1,1)", res)
 
@@ -181,19 +184,21 @@ class TestEnc(unittest.TestCase):
         ts_enc = TSEncoder(CTrace(), [])
         _test_eq(ts_enc, 0, set(), set(), set())
 
+        fmwk_over = TestGrounding._get_fmwkov("","doSomethingCb", False)
+
         trace = CTrace()
-        cb = CCallback(1, 1, "", "doSomethingCb", [], None, [], [], [])
+        cb = CCallback(1, 1, "", "doSomethingCb", [], None, [fmwk_over])
         trace.add_msg(cb)
         ts_enc = TSEncoder(trace, [])
         _test_eq(ts_enc, 1, set(["[CB]_doSomethingCb()"]),
                  set(["[CB]_doSomethingCb()"]), set())
 
         trace = CTrace()
-        cb = CCallback(1, 1, "", "doSomethingCb", [], None, [], [], [])
+        cb = CCallback(1, 1, "", "doSomethingCb", [], None, [fmwk_over])
         trace.add_msg(cb)
         ci = CCallin(1, 1, "", "doSomethingCi",[], None)
         cb.add_msg(ci)
-        cb = CCallback(1, 1, "", "doSomethingCb", [], None, [], [], [])
+        cb = CCallback(1, 1, "", "doSomethingCb", [], None, [fmwk_over])
         trace.add_msg(cb)
         ci = CCallin(1, 1, "", "doSomethingCi",[], None)
         cb.add_msg(ci)
@@ -204,15 +209,17 @@ class TestEnc(unittest.TestCase):
 
         trace = CTrace()
 
-        cb = CCallback(1, 1, "", "cb", [], None, [], [], [])
-        cb1 = CCallback(1, 1, "", "cb1", [], None, [], [], [])
+        fmwk_over_cb = TestGrounding._get_fmwkov("","cb", False)
+        fmwk_over_cb1 = TestGrounding._get_fmwkov("","cb1", False)
+        cb = CCallback(1, 1, "", "cb", [], None, [fmwk_over_cb])
+        cb1 = CCallback(1, 1, "", "cb1", [], None, [fmwk_over_cb1])
         ci = CCallin(1, 1, "", "ci",[], None)
         cb.add_msg(cb1)
         cb1.add_msg(ci)
         trace.add_msg(cb)
 
-        cb = CCallback(1, 1, "", "cb", [], None, [], [], [])
-        cb1 = CCallback(1, 1, "", "cb1", [], None, [], [], [])
+        cb = CCallback(1, 1, "", "cb", [], None, [fmwk_over_cb])
+        cb1 = CCallback(1, 1, "", "cb1", [], None, [fmwk_over_cb1])
         ci = CCallin(1, 1, "", "ci",[], None)
         cb.add_msg(cb1)
         cb1.add_msg(ci)
@@ -224,17 +231,21 @@ class TestEnc(unittest.TestCase):
 
 
     def test_encode_vars(self):
+        fmwk_over = TestGrounding._get_fmwkov("","cb", False)
         trace = CTrace()
 
-        cb = CCallback(1, 1, "", "cb", [], None, [], [], [])
-        cb1 = CCallback(1, 1, "", "cb1", [], None, [], [], [])
+        fmwk_over_cb = TestGrounding._get_fmwkov("","cb", False)
+        fmwk_over_cb1 = TestGrounding._get_fmwkov("","cb1", False)
+
+        cb = CCallback(1, 1, "", "cb", [], None, [fmwk_over_cb])
+        cb1 = CCallback(1, 1, "", "cb1", [], None, [fmwk_over_cb1])
         ci = CCallin(1, 1, "", "ci",[], None)
         cb.add_msg(cb1)
         cb1.add_msg(ci)
         trace.add_msg(cb)
 
-        cb = CCallback(1, 1, "", "cb", [], None, [], [], [])
-        cb1 = CCallback(1, 1, "", "cb1", [], None, [], [], [])
+        cb = CCallback(1, 1, "", "cb", [], None, [fmwk_over_cb])
+        cb1 = CCallback(1, 1, "", "cb1", [], None, [fmwk_over_cb1])
         ci = CCallin(1, 1, "", "ci",[], None)
         cb.add_msg(cb1)
         cb1.add_msg(ci)
@@ -277,8 +288,11 @@ class TestEnc(unittest.TestCase):
         ground_s = Spec(GroundSpecs._substitute(spec_list[0], binding))
 
         ctrace = CTrace()
-        cb = CCallback(1, 1, "", "m1", [TestGrounding._get_obj("1","string")],
-                       None, ["string"], [], [])
+
+        cb = CCallback(1, 1, "", "m1",
+                       [TestGrounding._get_obj("1","string")],
+                       None,
+                       [TestGrounding._get_fmwkov("","m1", False)])
         ctrace.add_msg(cb)
         ci = CCallin(1, 1, "", "m2",
                      [TestGrounding._get_obj("1","string")],
@@ -307,7 +321,8 @@ class TestEnc(unittest.TestCase):
 
         ctrace = CTrace()
         cb = CCallback(1, 1, "", "m1", [TestGrounding._get_obj("1","string")],
-                       None, ["string"], [], [])
+                       None,
+                       [TestGrounding._get_fmwkov("","m1", False)])
         ctrace.add_msg(cb)
         ci = CCallin(1, 1, "", "m2",
                      [TestGrounding._get_obj("1","string")],
@@ -339,7 +354,9 @@ class TestEnc(unittest.TestCase):
 
     def test_encode_cbs(self):
         def cb(name):
-            cb = CCallback(1, 1, "", name, [], None, [], [], [])
+            fmwk_over = TestGrounding._get_fmwkov("",name, False)
+
+            cb = CCallback(1, 1, "", name, [], None, [fmwk_over])
             return cb
         def ci(name):
             ci = CCallin(1, 1, "", name,[], None)
