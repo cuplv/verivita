@@ -191,6 +191,8 @@ def pretty_print(ast_node, out_stream=sys.stdout):
         if (node_type == TRUE): my_print(out_stream, "TRUE")
         elif (node_type == FALSE): my_print(out_stream, "FALSE")
         elif (node_type == DONTCARE): my_print(out_stream, "_")
+        elif (node_type == CI): my_print(out_stream, "CI")
+        elif (node_type == CB): my_print(out_stream, "CB")
         elif (node_type == ID or node_type == INT or node_type == FLOAT or node_type == STRING):
             my_print(out_stream, "%s%s" % (sep, str(node[1])))
         elif (node_type == VALUE):
@@ -213,12 +215,21 @@ def pretty_print(ast_node, out_stream=sys.stdout):
                 my_print(out_stream, ",")
                 pretty_print_aux(out_stream,node[2],"")
         elif (node_type == CALL):
-            # TO FIX
-            assert False
+            assignee = get_call_assignee(node)
+            if (get_node_type(assignee) != NIL):
+                pretty_print_aux(out_stream, assignee,"")
+                my_print(out_stream, " = ")
+
+            call_type = get_call_type(node)
+            my_print(out_stream, "[")
+            pretty_print_aux(out_stream, call_type, "")
+            my_print(out_stream, "] ")
+
             receiver = get_call_receiver(node)
-            if (get_node_type(receiver) != new_nil()):
+            if (get_node_type(receiver) != NIL):
                 pretty_print_aux(out_stream,receiver,"") # receiver
                 my_print(out_stream, ".")
+
             pretty_print_aux(out_stream,get_call_method(node),"")
             my_print(out_stream, "(")
 
