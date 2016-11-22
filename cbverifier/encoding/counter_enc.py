@@ -144,6 +144,7 @@ class CounterEnc():
         return mask
 
     def get_counter_var(self, var_name):
+        """ Returns the set of the Boolean variables used to encode var_name """
         counter_vars = set()
 
         assert var_name in self.vars2bound
@@ -155,6 +156,29 @@ class CounterEnc():
             counter_vars.add(bitvar)
 
         return counter_vars
+
+    def get_counter_value(self, var_name, model):
+        """ Return the value assigned to var_name in the model """
+
+        assert var_name in self.vars2bound
+        counter_value = 0
+
+        max_value = self.vars2bound[var_name]
+        bitsize = CounterEnc._get_bitsize(max_value)
+
+        power = 1
+        for i in range(bitsize):
+            bitvar = self._get_bitvar(var_name, i)
+            bitvar_value = model[bitvar]
+
+            assert (bitvar_value == TRUE() or
+                    bitvar_value == FALSE())
+
+            if bitvar_value == TRUE():
+                counter_value += power
+
+            power = power * 2
+        return counter_value
 
     # def encode_fc(self, append_to, counter_name, max_value, time_frame):
     #     bitsize = VarsDecl.get_bit_sizes(max_value)
