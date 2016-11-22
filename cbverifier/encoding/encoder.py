@@ -218,13 +218,15 @@ class TSEncoder:
         self.cb_set = cb_set
         self.ci_set = ci_set
 
+        self.gs = GroundSpecs(self.trace)
         self.ground_specs = self._compute_ground_spec()
         self.pysmt_env = get_env()
         self.helper = Helper(self.pysmt_env)
         self.auto_env = AutoEnv(self.pysmt_env)
         self.cenc = CounterEnc(self.pysmt_env)
+        self.mapback = TSMapback(self.pysmt_env, None, None)
+        self.r2a = RegExpToAuto(self.cenc, self.msgs, self.mapback, self.auto_env)
 
-        self.r2a = RegExpToAuto(self.cenc, self.msgs, self.auto_env)
 
     def get_ts_encoding(self):
         """ Returns the transition system encoding of the dynamic
@@ -242,11 +244,8 @@ class TSEncoder:
         """
 
         ground_specs = []
-
-        gs = GroundSpecs(self.trace)
-
         for spec in self.specs:
-            tmp = gs.ground_spec(spec)
+            tmp = self.gs.ground_spec(spec)
             ground_specs.extend(tmp)
 
         return ground_specs
@@ -446,6 +445,7 @@ class TSEncoder:
 
         # Record the final states - on these states the value of the
         # rhs of the specifications change
+        spec_accepting = []
         msg = get_spec_rhs(ground_spec.ast)
         key = TSEncoder.get_key_from_call(msg)
         for a_s in auto.final_states:
@@ -454,7 +454,7 @@ class TSEncoder:
             eq_current = self.cenc.eq_val(auto_pc, ts_s)
 
             # add the current state to the accepting states
-            accepting.append(eq_current)
+            spec_accepting.append(eq_current)
 
             # encode the fact that the message must be
             # enabled/disabled in this state
@@ -470,6 +470,15 @@ class TSEncoder:
 
             effect_in_trans = Implies(eq_next, effect_in_trans)
             ts.trans = And(ts.trans, effect_in_trans)
+        accepting.extend(spec_accepting)
+
+        # Set the mapback information
+        spec = self.gs.get_source_spec(ground_spec)
+        self.mapback.add_var2spec(TSEncoder._get_state_var(key),
+                                  ground_spec.is_enable(),
+                                  ground_spec,
+                                  spec_accepting,
+                                  spec)
 
         return ts
 
@@ -500,6 +509,7 @@ class TSEncoder:
             letter_eq_msg = self.r2a.get_msg_eq(msg)
             var_ts.trans = And(var_ts.trans,
                                Or(Not(letter_eq_msg), var))
+
         return var_ts
 
 
@@ -528,6 +538,9 @@ class TSEncoder:
         pc_size = (self.trace_length - tl_callback_count) + 1
         pc_name = TSEncoder._get_pc_name()
         self.cenc.add_var(pc_name, pc_size - 1) # starts from 0
+
+        self.mapback.set_pc_var(pc_name)
+        self.mapback.add_encoder(pc_name, self.cenc)
 
         # add all the bit variables
         for v in self.cenc.get_counter_var(pc_name):
@@ -566,6 +579,7 @@ class TSEncoder:
                 label = self.r2a.get_msg_eq(msg_key)
 
                 s0 = self.cenc.eq_val(pc_name, current_state)
+                self.mapback.add_pccounter2trace(current_state, msg)
                 snext = self.cenc.eq_val(pc_name, next_state)
                 snext = self.helper.get_next_formula(ts.state_vars, snext)
                 single_trans = And([s0, label, snext])
@@ -774,6 +788,12 @@ class TSMapback():
         # used for lazyness to evaluate a formula given a model
         self.pysmt_env = pysmt_env
 
+    def set_msg_ivar(self, msg_ivar):
+        self.msg_ivar = msg_ivar
+
+    def set_pc_var(self, pc_var):
+        self.pc_var = pc_var
+
     def add_encoder(self, var, encoder):
         self.vars_encoders[var] = encoder
 
@@ -876,7 +896,7 @@ class RegExpToAuto():
     TODO: all the recursive functions should become iterative
 
     """
-    def __init__(self, cenc, alphabet, auto_env=None):
+    def __init__(self, cenc, alphabet, mapback, auto_env=None):
         if auto_env is None:
             auto_env = AutoEnv.get_global_auto_env()
         self.auto_env = auto_env
@@ -884,17 +904,23 @@ class RegExpToAuto():
         self.cenc = cenc
         self.alphabet = alphabet
 
-        self.alphabet_list = list(self.alphabet)
-        self.letter_to_val = {}
-        for i in range(len(self.alphabet_list)):
-            self.letter_to_val[self.alphabet_list[i]] = i
-
         # TODO: get a fresh variable
         self.counter_var = "__msg_var___"
         self.cenc.add_var(self.counter_var, len(self.alphabet))
 
+        self.alphabet_list = list(self.alphabet)
+        self.letter_to_val = {}
+        for i in range(len(self.alphabet_list)):
+            self.letter_to_val[self.alphabet_list[i]] = i
+            mapback.add_vars2msg(i, self.alphabet_list[i])
+        mapback.set_msg_ivar(self.counter_var)
+        mapback.add_encoder(self.counter_var, self.cenc)
+
     def get_letter_vars(self):
         return self.cenc.get_counter_var(self.counter_var)
+
+    def get_counter_var(self):
+        return self.counter_var
 
     def get_msg_eq(self, msg_value):
         value = self.letter_to_val[msg_value]

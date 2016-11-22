@@ -23,6 +23,7 @@ class GroundSpecs(object):
     def __init__(self, trace):
         self.trace = trace
         self.trace_map = TraceMap(self.trace)
+        self.ground_to_spec = {}
 
 
     def ground_spec(self, spec):
@@ -35,6 +36,8 @@ class GroundSpecs(object):
             new_spec_ast = GroundSpecs._substitute(spec, binding)
             new_spec = Spec(new_spec_ast)
             ground_specs.append(new_spec)
+
+            self.ground_to_spec[new_spec] = spec
 
         return ground_specs
 
@@ -199,6 +202,12 @@ class GroundSpecs(object):
             return res
         else:
             raise UnexpectedSymbol(spec_node)
+
+    def get_source_spec(self, ground_spec):
+        if ground_spec not in self.ground_to_spec:
+            return None
+        else:
+            return self.ground_to_spec[ground_spec]
 
 class Assignments(object):
     """ Represent a set of assignments derived from a single
