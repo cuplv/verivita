@@ -2,55 +2,120 @@
 
 The input are:
   - a concrete trace
-  - a specification
+  - a set of specifications
 
-The verifier finds a possible (spurious) permutation of the events in
-the concrete trace that may cause a bug (a bug arises a disabled
-callin is called).
+The output is a transition system that encodes all the possible
+repetitions of callbacks and callins that are consistent with the
+specifications and an error conditions, that is true when the system
+reaches a state where it can invoke a disabled callin.
 
-The possible permutation of the events depend on the enabled/disabled
-status of events/callins.
-
-
-PLAN:
-  a. compute the ground specifications                                DONE
-  b. create the symbolic automata for the specifications              DONE
-  c. declare the variables of the TS                                  DONE
-  d. encode the trace and the error conditions                        DONE
-  e. encode the automata in the symbolic TS                           DONE
-
-NOTE:
-We cannot statically encode the effect of each callback and
-callin, since it depends on the whole history, and not on the
-callin/callback that we are computing.
-Hence, we need to encode one callin/callback per step and let the
-model checker figure out the state of the system.
+A path from an initial state to an error state may be spurious in the
+Android application.
 
 
-Issues:
-- The length of the sequence that must be explored can be quite high.
+The encoder performs the following steps:
+1. Computes the set of ground specifications
+The input specifications contains free variables. In this phase the
+encoder takes all the concrete messages found in the trace, and
+instantiates all the specifications that match them.
+
+2. Create the symbolic automata for the specifications
+For each ground specification, the encoder constructs an automaton
+that recognize the language of the specification's regular expression
+part.
+
+The "effect" of the specification (e.g. enable a callback) is forced
+int he transition system when the system visits a prefix that
+matches the regular expression.
+
+Everything is encoded as a set of transition systems.
+
+3. Declare the variables of the transition system
+The encoder keeps an enabled/allowed (state) variable for each message
+in the concrete trace, and a (input) variable that determines the
+message took in every transition of the system.
+
+4. Encode the trace and the error conditions
+In the resulting transition system each top-level callback in the
+concrete trace can be choosen to be executed non-deterministically.
+
+A top-level callback is a callback that is invoked directly by the
+generation of an asynchronous event in Android (it is not nested under
+any other callback or callin).
+
+Once a top-level callback is chosen, the system follows the sequence
+of callins and callbacks called from the top-level callback (it is a
+sequence of fixed order).
+
+The result is a transition system.
+
+5.. Performs the product of the specifications' automata and the
+transition system of the trace.
+
+Performs the syncrhonous product of all the transition systems to
+obtain the final transition system.
+
+
+
+
+Possible bottlenecks:
+a. The length of the sequence that must be explored can be huge.
 We need to optimize the encoding as much as we can.
 
-- Logarithmic encoding for the input variables
-They are in mutex now.
+b. We build a single automata for each ground specification.
+This can lead to an explosion in the state space.
 
-Ideas:
-  - Cone of influence reduction (harder due to regexp)
+c. The construction of each automaton can be expensive, since we
+perform operations on symbolic labels
 
-  - Merge (union) the regexp automata and reduce the state space
-  Same settings of the CIAA 10 for PSL
-  (From Sequential Extended Regular Expressions to NFA with Symbolic Labels, CIAA 10)
-    - Automata with symbolic labels
-    - The size of the alphabet is huge
 
-  - Group the execution of callins and callbacks:
-    - If two callin must be executed in sequence and they are
-    independent one from each other, then there is no reason to not
-    group them togheter.
-    TODO: define when two callins and callbacks are independent.
+Possible ideas to overcome these issues:
 
-  - Encode a callback and its descendant messages in a single transition
-  This is similar to SSA construction
+Improvements for a)
+- Cone of influence reduction.
+  Some messages in the trace are not useful at all to reach a
+  particular error condition.
+  This is determined from the trace and the set of specifications.
+
+  The idea is to remove these messages from the trace, reducing the
+  number of variables in the system and the length of the traces that
+  must be explored.
+
+  This may be harder due to the the regular expressions.
+  The reduction must preserve the reachability property.
+
+- Group the execution of callins and callbacks:
+  If two callin must be executed in sequence and they are
+  independent one from each other, then we can execute them together.
+  This is similar to step semantic.
+  Also here we must be careful with regular expressions.
+  The concept of "independent" callins and callback must be defined.
+
+- Encode a top-level callback and all its descendant messages in a
+  single transition (this is somehow related to the previous
+  simplification).
+  After we pick the top-level callback we have a straightline code
+  until the next top-level callback is executed (no non-determinism).
+
+  This is similar to the large block encoding in software model
+  checking.
+
+  Also here the issue is to consider the parallel execution of the
+  automata, which instead has branching.
+
+
+Improvements for b)
+- We can perform the union of different regexp automata to reduce the state space.
+  For example, we can perform the union of all the automata that have
+  the same effect on the transition system.
+  Here we will have a tradeoff between the composed representation of
+  the automata and the monolithic one (WARNING: the states of the monolithic
+  automaton can explode since we need a complete and deterministic automaton).
+
+Improvements for c)
+- Now we compute the label operations using SAT.
+  We can switch to BDD to increase the sharing and exploit the
+  canonical representation.
 
 """
 
