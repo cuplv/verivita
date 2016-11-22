@@ -777,12 +777,13 @@ class TSMapback():
     def add_encoder(self, var, encoder):
         self.vars_encoders[var] = encoder
 
-    def add_var2spec(self, var, ground_spec, accepting, spec):
-        if var not in self.vars2spec:
+    def add_var2spec(self, var, value, ground_spec, accepting, spec):
+        key = (var, value)
+        if key not in self.vars2spec:
             gs_map = {}
-            self.vars2spec[var] = gs_map
+            self.vars2spec[key] = gs_map
         else:
-            gs_map = self.vars2spec[var]
+            gs_map = self.vars2spec[key]
 
         assert ground_spec not in gs_map
         gs_map[ground_spec] = (accepting, spec)
@@ -791,13 +792,13 @@ class TSMapback():
         self.vars2msg[(self.msg_ivar,value)] = msg
 
     def add_pccounter2trace(self, value, trace_msg):
-        self.vars2msg[(self.pc_var, value)] = msg
+        self.vars2msg[(self.pc_var, value)] = trace_msg
 
     def _get_msg_for_model(self, var, current_state):
         assert var in self.vars_encoders
 
         counter_enc = self.vars_encoders[var]
-        value = counter_enc.get_counter_value(var, current_sate)
+        value = counter_enc.get_counter_value(var, current_state)
 
         key = (var, value)
         if key in self.vars2msg:
@@ -812,7 +813,7 @@ class TSMapback():
         return self._get_msg_for_model(self.msg_ivar, current_state)
 
 
-    def get_fired_trace_msg(self, pc_var, current_state, next_state):
+    def get_fired_trace_msg(self, current_state):
         """ Given the models for the current states, returns
         the correspondent message in the trace that was executed.
         """
@@ -831,18 +832,28 @@ class TSMapback():
         changed the state of the system.
         """
 
+        def same_model(var, mod1, mod2):
+            return mod1[var] == mod2[var]
+
         solver = self.pysmt_env.factory.Solver(quantified=False,
                                                name="z3",
                                                logic=QF_BOOL)
 
-        for (var,value) in current_state.iteritems():
-            solver.add_assertion(Iff(var, value))
+        for (var, value) in next_state.iteritems():
+            if (value):
+                solver.add_assertion(var)
+            else:
+                solver.add_assertion(Not(var))
 
         fired_specs = []
-        for (var, gs_map) self.var2spec.iteritems():
-            if only_changed and same_model(var,
-                                           current_state,
-                                           next_state):
+        for (key, gs_map) in self.vars2spec.iteritems():
+            (var, value) = key
+
+            if ((next_state[var] != value) or
+                (only_changed and
+                 same_model(var,
+                            current_state,
+                            next_state))):
                 continue
 
             for (gs, values) in gs_map.iteritems():
