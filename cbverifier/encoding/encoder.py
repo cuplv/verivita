@@ -57,7 +57,6 @@ obtain the final transition system.
 
 
 
-
 Possible bottlenecks:
 a. The length of the sequence that must be explored can be huge.
 We need to optimize the encoding as much as we can.
@@ -67,6 +66,9 @@ This can lead to an explosion in the state space.
 
 c. The construction of each automaton can be expensive, since we
 perform operations on symbolic labels
+
+d. Other standard bottlenecks: e.g. recursive vs. iterative, no
+memoization when visiting specs.
 
 
 Possible ideas to overcome these issues:
@@ -116,6 +118,13 @@ Improvements for c)
 - Now we compute the label operations using SAT.
   We can switch to BDD to increase the sharing and exploit the
   canonical representation.
+
+
+The module defines the following classes:
+  - TransitionSystem
+  - TSEncoder
+  - TSMapback
+  - RegExpToAuto
 
 """
 
@@ -480,7 +489,6 @@ class TSEncoder:
         for v in self.r2a.get_letter_vars():
             var_ts.add_ivar(v)
 
-
         for msg in self.msgs:
             # create the state variable
             var = TSEncoder._get_state_var(msg)
@@ -731,6 +739,122 @@ class TSEncoder:
                 stack.append(msg2)
 
         return (trace_length, msgs, cb_set, ci_set)
+
+
+class TSMapback():
+    """ Keeps the needed information to mapback the results from the
+    encoding to the trace/specification level.
+
+    Data to store:
+    a. Message state variable -> ground specification -> (accepting, specification)
+    b. (msg_ivar, value) -> msg
+       or
+       (pc_var, value) -> ci/cb in the trace
+    """
+
+    def __init__(self, pysmt_env, msg_ivar, pc_var):
+        """ Info to keep: """
+        self.vars2spec = {}
+        self.vars2msg = {}
+
+        self.msg_ivar = msg_ivar
+        self.pc_var = pc_var
+
+        # Several counter variables are encoded with a set of Boolean
+        # variables.
+        #
+        # In the model we have the Boolean variables, but we want to
+        # compare their truth assignment with the value of the
+        # counter.
+        #
+        # We reuse the counter encoders already used in the encoding
+        # for this
+        self.vars_encoders = {}
+
+        # used for lazyness to evaluate a formula given a model
+        self.pysmt_env = pysmt_env
+
+    def add_encoder(self, var, encoder):
+        self.vars_encoders[var] = encoder
+
+    def add_var2spec(self, var, ground_spec, accepting, spec):
+        if var not in self.vars2spec:
+            gs_map = {}
+            self.vars2spec[var] = gs_map
+        else:
+            gs_map = self.vars2spec[var]
+
+        assert ground_spec not in gs_map
+        gs_map[ground_spec] = (accepting, spec)
+
+    def add_vars2msg(self, value, msg):
+        self.vars2msg[(self.msg_ivar,value)] = msg
+
+    def add_pccounter2trace(self, value, trace_msg):
+        self.vars2msg[(self.pc_var, value)] = msg
+
+    def _get_msg_for_model(self, var, current_state):
+        assert var in self.vars_encoders
+
+        counter_enc = self.vars_encoders[var]
+        value = counter_enc.get_counter_value(var, current_sate)
+
+        key = (var, value)
+        if key in self.vars2msg:
+            return self.vars2msg[key]
+        else:
+            return None
+
+    def get_trans_label(self, current_state):
+        """ Given the model of the current state, returns
+        the label of the message executed in the transition
+        """
+        return self._get_msg_for_model(self.msg_ivar, current_state)
+
+
+    def get_fired_trace_msg(self, pc_var, current_state, next_state):
+        """ Given the models for the current states, returns
+        the correspondent message in the trace that was executed.
+        """
+        return self._get_msg_for_model(self.pc_var, current_state)
+
+
+    def get_fired_spec(self, current_state, next_state, only_changed=True):
+        """ Given the models for the current and next states, return
+        a set of pairs containing a ground specification and the
+        corresponding general specification.
+
+        A ground specification is in the specification if its effect
+        was applied in the transition relation.
+
+        The flag only_changed only reports the specifications that
+        changed the state of the system.
+        """
+
+        solver = self.pysmt_env.factory.Solver(quantified=False,
+                                               name="z3",
+                                               logic=QF_BOOL)
+
+        for (var,value) in current_state.iteritems():
+            solver.add_assertion(Iff(var, value))
+
+        fired_specs = []
+        for (var, gs_map) self.var2spec.iteritems():
+            if only_changed and same_model(var,
+                                           current_state,
+                                           next_state):
+                continue
+
+            for (gs, values) in gs_map.iteritems():
+                (accepting, spec) = values
+                solver.push()
+                solver.add_assertion(accepting)
+                if (solver.solve()):
+                    fired_specs.append((gs, spec))
+                solver.pop()
+
+        return fired_specs
+
 
 
 class RegExpToAuto():
