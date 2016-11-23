@@ -89,6 +89,13 @@ class TestSpecParser(unittest.TestCase):
         self._test_single_token(0, 'TOK_CI', 1, 'CI', 'CI')
         self._test_single_token(0, 'TOK_ASSIGN', 1, '=', '=')
 
+        self._test_single_token(0, 'TOK_STRING_LITERAL', 1,
+                                '"dita nel naso"',
+                                '"dita nel naso"')
+        self._test_single_token(0, 'TOK_STRING_LITERAL', 1,
+                                '"abc \\" asfds \\""',
+                                '"abc \\" asfds \\""')
+
         self._test_single_token(0, 'TOK_SPEC', 1, 'SPEC', 'SPEC')
 
 
