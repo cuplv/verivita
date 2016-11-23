@@ -118,7 +118,12 @@ callback.
 specifies the empty set of messages.
 
 When the method call is prepended by `freevar = `, it means that the
-rules applies to the method call that returns `freevar`.
+rules applies to the method call that returns a value `freevar`.
+
+*NOTE* the rule with `freevar =` will not match any method that do not
+return any value (i.e. `void` return type), while the rule without
+`freevar = ` will only match methods that do not return any value
+(i.e. `void` return type).
 
 The type of the method can either be `CI` or `CB`, specifiying that
 the method is a callin or a callback.
