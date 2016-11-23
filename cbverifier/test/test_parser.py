@@ -67,6 +67,7 @@ class TestSpecParser(unittest.TestCase):
 
     def test_lexer(self):
         self._test_single_token(0,'TOK_ID',1,'ciao','ciao')
+        self._test_single_token(0,'TOK_ID',1,'<ciao>','<ciao>')
         self._test_single_token(0,'TOK_INT',1,2,'2')
         self._test_single_token(0,'TOK_FLOAT',1,0.0,'0.0')
 
@@ -128,6 +129,8 @@ class TestSpecParser(unittest.TestCase):
                         "SPEC [CB] [l] l(l1,l2)[*] |- [CI] [l] l(b)",
                         "SPEC [CB] [l] l(l1,l2)[*] |+ [CI] [l] l(b)",
                         "SPEC [CB] [l] l(l1,l2)[*] |- [CI] [l] l(b)",
+                        "SPEC [CB] [l] a b(l1,l2)[*] |- [CI] [l] l(b)",
+                        "SPEC [CB] [l] void <init>(l1,l2)[*] |- [CI] [l] l(b)",
                         "SPEC TRUE |- TRUE",
                         "SPEC TRUE[*] |- TRUE",
                         "SPEC (TRUE)[*] |- TRUE",
@@ -158,6 +161,12 @@ class TestSpecParser(unittest.TestCase):
                  (SPEC_SYMB,
                   (DISABLE_OP,
                    (CALL, (NIL,), (CB,), (ID,'l'), (ID, 'package.method_name'), (NIL,)),
+                   (0,))), (NIL,))),
+               ("SPEC [CB] [l] void package.method_name() |- TRUE",
+                (SPEC_LIST,
+                 (SPEC_SYMB,
+                  (DISABLE_OP,
+                   (CALL, (NIL,), (CB,), (ID,'l'), (ID, 'void package.method_name'), (NIL,)),
                    (0,))), (NIL,))),
                ("SPEC [CI] [l] method_name(0,1,f) |- TRUE",
                 (SPEC_LIST,

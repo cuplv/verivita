@@ -35,7 +35,7 @@ tokens = keywords + (
 
 # Tokens
 def t_TOK_ID(t):
-    r'[a-zA-Z_$][a-zA-Z0-9_$]*'
+    r'[a-zA-Z_$<>][a-zA-Z0-9_$<>]*'
     if "TOK_" + t.value in keywords:
         t.type = "TOK_" + t.value
     return t
