@@ -88,14 +88,17 @@ class GroundSpecs(object):
                     return new_nil()
                 else:
                     formal_param = param_node[1]
-                    formal_param_type = get_node_type(formal_param)
-                    if (DONTCARE != formal_param_type):
-                        # the binding should be there
-                        res = wrap_value(binding, formal_param)
-                    else:
-                        # leave the DONTCARE node there
-                        res = formal_param
+                    res = sub_leaf(formal_param, binding)
                     return new_param(res, process_param(param_node[2]))
+
+                    # formal_param_type = get_node_type(formal_param)
+                    # if (DONTCARE != formal_param_type):
+                    #     # the binding should be there
+                    #     res = wrap_value(binding, formal_param)
+                    # else:
+                    #     # leave the DONTCARE node there
+                    #     res = formal_param
+                    # return new_param(res, process_param(param_node[2]))
 
 
             node_type = get_node_type(node)
