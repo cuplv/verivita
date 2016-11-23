@@ -17,6 +17,9 @@ class CexPrinter:
 
     def __init__(self, mapback, cex, out_stream=None):
         self._mapback = mapback
+
+        assert cex is not None
+
         self._cex = cex
 
         if (None == out_stream):

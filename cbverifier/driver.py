@@ -122,11 +122,9 @@ def main(input_args=None):
         bmc = BMC(ts_enc.helper,
                   ts_enc.get_ts_encoding(),
                   ts_enc.error_prop)
-
         cex = bmc.find_bug(depth)
 
         if (cex is not None):
-            cex = bmc.find_bug(1)
             printer = CexPrinter(ts_enc.mapback, cex, sys.stdout)
             printer.print_cex()
         else:

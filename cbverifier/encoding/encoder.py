@@ -201,7 +201,6 @@ class TSEncoder:
     Encodes the dynamic verification problem in a transition system.
 
     """
-
     def __init__(self, trace, specs):
         self.trace = trace
         self.specs = specs
@@ -221,7 +220,12 @@ class TSEncoder:
         self.auto_env = AutoEnv(self.pysmt_env)
         self.cenc = CounterEnc(self.pysmt_env)
         self.mapback = TSMapback(self.pysmt_env, None, None)
-        self.r2a = RegExpToAuto(self.cenc, self.msgs, self.mapback, self.auto_env)
+
+        self.error_label = "_error_"
+        letters = set([self.error_label])
+        letters.update(self.msgs)
+        self.r2a = RegExpToAuto(self.cenc, letters,
+                                self.mapback, self.auto_env)
 
 
     def get_ts_encoding(self):
@@ -531,16 +535,29 @@ class TSEncoder:
         """
 
         ts = TransitionSystem()
-        errors = []
+        error = None
 
         # Create the pc variable
         tl_callback_count = len(self.trace.children)
-        pc_size = (self.trace_length - tl_callback_count) + 1
+        # Creates an additional error state
+        #
+        # The trace has self.trace_length messages, and
+        # there are tl_callback_count top-level callbacks.
+        #
+        # The initial state is shared by all the top level callbacks,
+        # since from here we have the non-deterministic transitions
+        # Hence we remove tl_callback_count states and we add one
+        # single initial state.
+        # Then, we add an additional error state.
+        pc_size = self.trace_length - tl_callback_count + 1 + 1
+        max_pc_value = pc_size - 1
         pc_name = TSEncoder._get_pc_name()
-        self.cenc.add_var(pc_name, pc_size - 1) # starts from 0
-
+        self.cenc.add_var(pc_name, max_pc_value) # starts from 0
         self.mapback.set_pc_var(pc_name)
         self.mapback.add_encoder(pc_name, self.cenc)
+
+        # The last state is the error one
+        error_state_id = max_pc_value
 
         # add all the bit variables
         for v in self.cenc.get_counter_var(pc_name):
@@ -549,8 +566,6 @@ class TSEncoder:
         # start from the initial state
         ts.init = self.cenc.eq_val(pc_name, 0)
         #logging.debug("Init state: %d" % (0))
-
-        # print "Init: %s\n" % (ts.init)
 
         ts.trans = FALSE_PYSMT() # disjunction of transitions
         # encode each cb
@@ -563,6 +578,7 @@ class TSEncoder:
             while (len(stack) != 0):
                 msg = stack.pop()
                 msg_key = TSEncoder.get_key_from_msg(msg)
+                msg_enabled = TSEncoder._get_state_var(msg_key)
 
                 # Fill the stack in reverse order
                 for i in reversed(range(len(msg.children))):
@@ -576,8 +592,8 @@ class TSEncoder:
                     state_count += 1
                     next_state = state_count
 
-                label = self.r2a.get_msg_eq(msg_key)
-
+                # Encode the enabled transition
+                label = And(self.r2a.get_msg_eq(msg_key), msg_enabled)
                 s0 = self.cenc.eq_val(pc_name, current_state)
                 self.mapback.add_pccounter2trace(current_state, msg)
                 snext = self.cenc.eq_val(pc_name, next_state)
@@ -587,23 +603,35 @@ class TSEncoder:
 
 #                logging.debug("Trans: %d -> %d on %s" % (current_state, next_state, msg_key))
 
-                # print "Trans: %d -> %d on %s" % (current_state, next_state, msg_key)
-                # print label
-                # print s0
-                # print snext
-                # print single_trans
-                # print ""
+                # encode the transition to the error state
+                if (msg_key in disabled_ci and isinstance(msg, CCallin)):
+                    error_label = And(Not(msg_enabled),
+                                      self.r2a.get_msg_eq(self.error_label))
+                    error_state = self.cenc.eq_val(pc_name, error_state_id)
+                    snext_error = self.helper.get_next_formula(ts.state_vars,
+                                                               error_state)
+                    single_trans = And([s0, error_label, snext_error])
+                    ts.trans = Or([ts.trans, single_trans])
+
+                    if error is None:
+                        error = self.cenc.eq_val(pc_name, max_pc_value)
+                        self.mapback.add_pccounter2trace(error_state_id,
+                                                         self.error_label)
 
                 current_state = next_state
 
-                if (msg_key in disabled_ci and isinstance(msg, CCallin)):
-                    # note: the condition is in the current state
-                    # the system reached a state where it must inevitably execute
-                    # msg_key, and msg_key is disabled
-                    msg_enabled = TSEncoder._get_state_var(msg_key)
-                    error_condition = And(s0, Not(msg_enabled))
-                    errors.append(error_condition)
+        # Add self loop on error state to avoid deadlocks
+        error_label = And(self.r2a.get_msg_eq(self.error_label))
+        error_state = self.cenc.eq_val(pc_name, error_state_id)
+        snext_error = self.helper.get_next_formula(ts.state_vars,
+                                                   error_state)
+        single_trans = And([error_state, error_label, snext_error])
+        ts.trans = Or([ts.trans, single_trans])
 
+        if error is None:
+            errors = []
+        else:
+            errors = [error]
         return (ts, errors)
 
     @staticmethod
