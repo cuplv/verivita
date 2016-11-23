@@ -4,9 +4,8 @@ import sys
 import logging
 import unittest
 
-from ply.lex import LexToken
-import ply.yacc as yacc
 
+from cStringIO import StringIO
 
 try:
     import unittest2 as unittest
@@ -14,6 +13,7 @@ except ImportError:
     import unittest
 
 from cbverifier.encoding.encoder import TSEncoder, TSMapback
+from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue
@@ -330,8 +330,6 @@ class TestEnc(unittest.TestCase):
                      None)
         cb.add_msg(ci)
         ts_enc = TSEncoder(ctrace, spec_list)
-
-
         return ts_enc
 
     def test_encode_ground_specs(self):
@@ -497,12 +495,12 @@ class TestEnc(unittest.TestCase):
                              specs[1])
 
         for i in range(10):
-            m = get_model(cenc.eq_val(msg_ivar,i))
+            m = get_def_model(cenc.eq_val(msg_ivar,i), all_vars, False)
             res = mapback.get_trans_label(m)
             self.assertTrue("m_%d" %i == res)
 
         for i in range(10):
-            m = get_model(cenc.eq_val(pc_counter,i))
+            m = get_def_model(cenc.eq_val(pc_counter,i), all_vars, False)
             res = mapback.get_fired_trace_msg(m)
             self.assertTrue("trace_%d" %i == res)
 
@@ -540,8 +538,6 @@ class TestEnc(unittest.TestCase):
         self.assertTrue(fired_specs == [])
 
 
-
-
     def test_encode(self):
         ts_enc = self._get_sample_trace()
 
@@ -553,3 +549,20 @@ class TestEnc(unittest.TestCase):
         # not None == there is a bug
         self.assertTrue(bmc.find_bug(0) is None)
         self.assertTrue(bmc.find_bug(1) is not None)
+
+
+    def test_cex_printer(self):
+        ts_enc = self._get_sample_trace()
+        ts = ts_enc.get_ts_encoding()
+        error = ts_enc.error_prop
+        bmc = BMC(ts_enc.helper, ts, error)
+        cex = bmc.find_bug(1)
+
+        stringio = StringIO()
+        printer = CexPrinter(ts_enc.mapback, cex, stringio)
+        printer.print_cex()
+
+        io_string = stringio.getvalue()
+        self.assertTrue("SPEC [CB] 1.m1() |- [CI] 1.m2()" in io_string)
+        self.assertTrue("[CB]_m1(1)" in io_string)
+        self.assertTrue("Reached an error state in step 2" in io_string)

@@ -227,8 +227,9 @@ def pretty_print(ast_node, out_stream=sys.stdout):
 
             receiver = get_call_receiver(node)
             if (get_node_type(receiver) != NIL):
+                my_print(out_stream, "[")
                 pretty_print_aux(out_stream,receiver,"") # receiver
-                my_print(out_stream, ".")
+                my_print(out_stream, "] ")
 
             pretty_print_aux(out_stream,get_call_method(node),"")
             my_print(out_stream, "(")

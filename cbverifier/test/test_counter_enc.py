@@ -137,7 +137,7 @@ class TestCounterEnc(unittest.TestCase):
             eq_val = self.enc.eq_val(var_name, value)
             self.solver.is_sat(eq_val)
             model = self.solver.get_model()
-            res = self.enc.get_counter_value(var_name, model)
+            res = self.enc.get_counter_value(var_name, model, False)
             self.assertTrue(res == value)
 
         var_name = "counter_4"

@@ -131,18 +131,14 @@ The module defines the following classes:
 import logging
 from cStringIO import StringIO
 
-from pysmt.environment import reset_env, get_env
+from pysmt.logics import QF_BOOL
+from pysmt.environment import get_env
 from pysmt.typing import BOOL
 from pysmt.shortcuts import Symbol
-
+from pysmt.shortcuts import Solver
 from pysmt.shortcuts import TRUE as TRUE_PYSMT
 from pysmt.shortcuts import FALSE as FALSE_PYSMT
-
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
-
-from pysmt.shortcuts import Solver
-from pysmt.solvers.solver import Model
-from pysmt.logics import QF_BOOL
 
 from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
@@ -276,6 +272,7 @@ class TSEncoder:
         self.error_prop = FALSE_PYSMT()
         for e in errors:
             self.error_prop = Or(self.error_prop, e)
+        self.mapback.set_error_condition(self.error_prop)
 
         # initial condition: all the messages are enabled
         for msg in self.msgs:
@@ -473,11 +470,14 @@ class TSEncoder:
         accepting.extend(spec_accepting)
 
         # Set the mapback information
+        accepting_formula = FALSE_PYSMT()
+        for f in spec_accepting:
+            accepting_formula = Or(accepting_formula, f)
         spec = self.gs.get_source_spec(ground_spec)
         self.mapback.add_var2spec(TSEncoder._get_state_var(key),
                                   ground_spec.is_enable(),
                                   ground_spec,
-                                  spec_accepting,
+                                  accepting_formula,
                                   spec)
 
         return ts
@@ -773,6 +773,7 @@ class TSMapback():
 
         self.msg_ivar = msg_ivar
         self.pc_var = pc_var
+        self.error_condition = None
 
         # Several counter variables are encoded with a set of Boolean
         # variables.
@@ -809,10 +810,15 @@ class TSMapback():
         gs_map[ground_spec] = (accepting, spec)
 
     def add_vars2msg(self, value, msg):
+        assert self.msg_ivar is not None
         self.vars2msg[(self.msg_ivar,value)] = msg
 
     def add_pccounter2trace(self, value, trace_msg):
+        assert self.pc_var is not None
         self.vars2msg[(self.pc_var, value)] = trace_msg
+
+    def set_error_condition(self, error_condition):
+        self.error_condition = error_condition
 
     def _get_msg_for_model(self, var, current_state):
         assert var in self.vars_encoders
@@ -886,6 +892,19 @@ class TSMapback():
 
         return fired_specs
 
+    def is_error(self, state):
+        """ Return true if the state is an error state. """
+        solver = self.pysmt_env.factory.Solver(quantified=False,
+                                               name="z3",
+                                               logic=QF_BOOL)
+
+        for (var, value) in state.iteritems():
+            if (value):
+                solver.add_assertion(var)
+            else:
+                solver.add_assertion(Not(var))
+
+        return solver.is_sat(self.error_condition)
 
 
 class RegExpToAuto():
@@ -907,14 +926,14 @@ class RegExpToAuto():
         # TODO: get a fresh variable
         self.counter_var = "__msg_var___"
         self.cenc.add_var(self.counter_var, len(self.alphabet))
+        mapback.set_msg_ivar(self.counter_var)
+        mapback.add_encoder(self.counter_var, self.cenc)
 
         self.alphabet_list = list(self.alphabet)
         self.letter_to_val = {}
         for i in range(len(self.alphabet_list)):
             self.letter_to_val[self.alphabet_list[i]] = i
             mapback.add_vars2msg(i, self.alphabet_list[i])
-        mapback.set_msg_ivar(self.counter_var)
-        mapback.add_encoder(self.counter_var, self.cenc)
 
     def get_letter_vars(self):
         return self.cenc.get_counter_var(self.counter_var)

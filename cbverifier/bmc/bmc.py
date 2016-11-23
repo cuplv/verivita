@@ -88,6 +88,6 @@ class BMC:
             for vs in vars_to_use:
                 for var in vs:
                     var_i = self.helper.get_var_at_time(var, i)
-                    cex_i[var] = model.get_value(var_i, True)
+                    cex_i[var] = model.get_py_value(var_i, True)
             cex.append(cex_i)
         return cex

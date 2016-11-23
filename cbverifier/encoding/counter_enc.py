@@ -157,7 +157,7 @@ class CounterEnc():
 
         return counter_vars
 
-    def get_counter_value(self, var_name, model):
+    def get_counter_value(self, var_name, model, python_model=True):
         """ Return the value assigned to var_name in the model """
 
         assert var_name in self.vars2bound
@@ -171,10 +171,18 @@ class CounterEnc():
             bitvar = self._get_bitvar(var_name, i)
             bitvar_value = model[bitvar]
 
-            assert (bitvar_value == TRUE() or
-                    bitvar_value == FALSE())
+            if (python_model):
+                trueValue = True
+                falseValue = False
+            else:
+                # pysmt model
+                trueValue = TRUE()
+                falseValue = FALSE()
 
-            if bitvar_value == TRUE():
+            assert (bitvar_value == trueValue or
+                    bitvar_value == falseValue)
+
+            if bitvar_value == trueValue:
                 counter_value += power
 
             power = power * 2

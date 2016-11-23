@@ -1,0 +1,78 @@
+""" Utility used to print a counterexample.
+
+"""
+
+import sys
+import collections
+
+from cbverifier.specs.spec import Spec
+from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
+from cbverifier.encoding.encoder import TSMapback
+
+
+
+class CexPrinter:
+    """ Base class used to print a cex.
+    """
+
+    def __init__(self, mapback, cex, out_stream=None):
+        self._mapback = mapback
+        self._cex = cex
+
+        if (None == out_stream):
+            self.out_stream = sys.stdout
+        else:
+            self.out_stream = out_stream
+
+    def _print_sep(self):
+        sep = "----------------------------------------\n"
+        self.out_stream.write(sep)
+
+    def _print_cex_header(self):
+        self.out_stream.write("\n--- Counterexample ---\n")
+        self._print_sep()
+
+    def _print_error(self, step, disabled_ci):
+        self.out_stream.write("--- Reached an error state in step %d!\n" % step)
+
+    def print_cex(self):
+        """ Print the cex. """
+
+        self._print_cex_header()
+
+        i = 0
+        prev_step = None
+        for step in self._cex:
+
+            if (i == 0):
+                if (self._mapback.is_error(step)):
+                    # TODO: add precise list of callins that end in error
+                    self._print_error(i, [])
+            else:
+                # transition
+                trace_msg = self._mapback.get_fired_trace_msg(prev_step)
+                assert trace_msg is not None
+                msg = self._mapback.get_trans_label(prev_step)
+                assert msg is not None
+
+                self.out_stream.write("%d) msg: %s\n" % (i, msg))
+                # trace_desc = trace_msg.to_str()
+                # self.out_stream.write("From trace: %s\n" % trace_desc)
+
+                self.out_stream.write("Matched specifications:\n")
+                fired_specs = self._mapback.get_fired_spec(prev_step, step, True)
+                for s in fired_specs:
+                    (ground, spec) = s
+                    self.out_stream.write("  ")
+                    ground.print_spec(self.out_stream)
+                    self.out_stream.write("\n")
+
+                if (self._mapback.is_error(step)):
+                    # TODO: add precise list of callins that end in error
+                    self._print_error(i+1, [])
+
+            prev_step = step
+            i = i + 1
+
+        self.out_stream.flush()
+
