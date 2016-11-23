@@ -32,11 +32,15 @@ class CexPrinter:
         self.out_stream.write(sep)
 
     def _print_cex_header(self):
-        self.out_stream.write("\n--- Counterexample ---\n")
+        self.out_stream.write("\n         --- Counterexample ---         \n")
+        self._print_sep()
+
+    def _print_step_header(self, i):
+        self.out_stream.write("Step: %d\n" % i)
         self._print_sep()
 
     def _print_error(self, step, disabled_ci):
-        self.out_stream.write("--- Reached an error state in step %d!\n" % step)
+        self.out_stream.write("    Reached an error state in step %d!\n" % step)
 
     def print_cex(self):
         """ Print the cex. """
@@ -46,33 +50,41 @@ class CexPrinter:
         i = 0
         prev_step = None
         for step in self._cex:
-
             if (i == 0):
                 if (self._mapback.is_error(step)):
                     # TODO: add precise list of callins that end in error
                     self._print_error(i, [])
             else:
-                # transition
+                self._print_step_header(i)
+
                 trace_msg = self._mapback.get_fired_trace_msg(prev_step)
                 assert trace_msg is not None
                 msg = self._mapback.get_trans_label(prev_step)
                 assert msg is not None
 
-                self.out_stream.write("%d) msg: %s\n" % (i, msg))
+                #self.out_stream.write("%d) msg: %s\n" % (i, msg))
+                if (isinstance(trace_msg, str)):
+                    self.out_stream.write("[-] %s transition ---\n" % trace_msg)
+                else:
+                    trace_msg._print(self.out_stream, "", False)
+
                 # trace_desc = trace_msg.to_str()
                 # self.out_stream.write("From trace: %s\n" % trace_desc)
 
-                self.out_stream.write("Matched specifications:\n")
                 fired_specs = self._mapback.get_fired_spec(prev_step, step, True)
-                for s in fired_specs:
-                    (ground, spec) = s
-                    self.out_stream.write("  ")
-                    ground.print_spec(self.out_stream)
-                    self.out_stream.write("\n")
+                if len(fired_specs) > 0:
+                    self.out_stream.write("    Matched specifications:\n")
+                    for s in fired_specs:
+                        (ground, spec) = s
+                        self.out_stream.write("    ")
+                        ground.print_spec(self.out_stream)
+                        self.out_stream.write("\n")
 
                 if (self._mapback.is_error(step)):
                     # TODO: add precise list of callins that end in error
-                    self._print_error(i+1, [])
+                    self._print_error(i, [])
+
+                self._print_sep()
 
             prev_step = step
             i = i + 1

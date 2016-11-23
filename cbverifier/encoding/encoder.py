@@ -595,7 +595,7 @@ class TSEncoder:
                 # Encode the enabled transition
                 label = And(self.r2a.get_msg_eq(msg_key), msg_enabled)
                 s0 = self.cenc.eq_val(pc_name, current_state)
-                self.mapback.add_pccounter2trace(current_state, msg)
+                self.mapback.add_pc2trace(current_state, msg)
                 snext = self.cenc.eq_val(pc_name, next_state)
                 snext = self.helper.get_next_formula(ts.state_vars, snext)
                 single_trans = And([s0, label, snext])
@@ -615,8 +615,8 @@ class TSEncoder:
 
                     if error is None:
                         error = self.cenc.eq_val(pc_name, max_pc_value)
-                        self.mapback.add_pccounter2trace(error_state_id,
-                                                         self.error_label)
+                        self.mapback.add_pc2trace(error_state_id,
+                                                  self.error_label)
 
                 current_state = next_state
 
@@ -790,14 +790,15 @@ class TSMapback():
     Data to store:
     a. Message state variable -> ground specification -> (accepting, specification)
     b. (msg_ivar, value) -> msg
-       or
-       (pc_var, value) -> ci/cb in the trace
+    c. (pc_var, value) -> ci/cb in the trace
     """
 
     def __init__(self, pysmt_env, msg_ivar, pc_var):
         """ Info to keep: """
         self.vars2spec = {}
         self.vars2msg = {}
+        self.pc2trace = {}
+        self.pc2ci = {}
 
         self.msg_ivar = msg_ivar
         self.pc_var = pc_var
@@ -841,22 +842,22 @@ class TSMapback():
         assert self.msg_ivar is not None
         self.vars2msg[(self.msg_ivar,value)] = msg
 
-    def add_pccounter2trace(self, value, trace_msg):
+    def add_pc2trace(self, value, trace_msg):
         assert self.pc_var is not None
-        self.vars2msg[(self.pc_var, value)] = trace_msg
+        self.pc2trace[(self.pc_var, value)] = trace_msg
 
     def set_error_condition(self, error_condition):
         self.error_condition = error_condition
 
-    def _get_msg_for_model(self, var, current_state):
+    def _get_msg_for_model(self, var_map, var, current_state):
         assert var in self.vars_encoders
 
         counter_enc = self.vars_encoders[var]
         value = counter_enc.get_counter_value(var, current_state)
 
         key = (var, value)
-        if key in self.vars2msg:
-            return self.vars2msg[key]
+        if key in var_map:
+            return var_map[key]
         else:
             return None
 
@@ -864,15 +865,16 @@ class TSMapback():
         """ Given the model of the current state, returns
         the label of the message executed in the transition
         """
-        return self._get_msg_for_model(self.msg_ivar, current_state)
+        return self._get_msg_for_model(self.vars2msg,
+                                       self.msg_ivar, current_state)
 
 
     def get_fired_trace_msg(self, current_state):
         """ Given the models for the current states, returns
         the correspondent message in the trace that was executed.
         """
-        return self._get_msg_for_model(self.pc_var, current_state)
-
+        return self._get_msg_for_model(self.pc2trace,
+                                       self.pc_var, current_state)
 
     def get_fired_spec(self, current_state, next_state, only_changed=True):
         """ Given the models for the current and next states, return
