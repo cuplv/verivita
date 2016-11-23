@@ -36,7 +36,6 @@ class CMessage(object):
     """ Base class that represents a concrete message.
     """
 
-
     def __init__(self,
                  message_id = -1,
                  thread_id = None,
@@ -60,20 +59,29 @@ class CMessage(object):
     def __iter__(self):
         return iter(self.children)
 
-    def _print(self, stream, sep):
+    def _print(self, stream, sep, rec=True):
         if self.class_name is not None and self.class_name != "":
             message_sig = "%s.%s" % (self.class_name, self.method_name)
         else:
             message_sig = self.method_name
-        stream.write("%s [%d] %s (" % (sep, self.message_id, message_sig))
+
+        if isinstance(self, CCallback):
+            message_type = "CB"
+        else:
+            message_type = "CI"
+
+        stream.write("%s[%d] [%s] %s (" % (sep, self.message_id,
+                                           message_type,
+                                           message_sig))
 
         for i in range(len(self.params)):
             if (i != 0): stream.write(",")
             stream.write("%s" % self.params[i])
         stream.write(")\n")
 
-        for child in self.children:
-            child._print(stream, "  ")
+        if rec:
+            for child in self.children:
+                child._print(stream, "  ")
 
 
 class CCallback(CMessage):
@@ -130,15 +138,30 @@ class CValue(object):
         self._hash = None
         if value_msg is not None:
             # True if it is null
-            self.is_null = value_msg.is_null
-            # name of the type of the paramter
-            self.type = value_msg.type
-            # name of the first framework type of the parameter
-            self.fmwk_type = value_msg.fmwk_type
-            # Id of the object
-            self.object_id = value_msg.object_id
-            # Value of the object
-            self.value = value_msg.value
+            if value_msg.HasField("is_null"):
+                self.is_null = value_msg.is_null
+            else:
+                self.is_null = None
+
+            if value_msg.HasField("type"):
+                self.type = value_msg.type
+            else:
+                self.type = None
+
+            if value_msg.HasField("fmwk_type"):
+                self.fmwk_type = value_msg.fmwk_type
+            else:
+                self.fmwk_type = None
+
+            if value_msg.HasField("object_id"):
+                self.object_id = value_msg.object_id
+            else:
+                self.object_id = None
+
+            if value_msg.HasField("value"):
+                self.value = value_msg.value
+            else:
+                self.value = None
         else:
             # True if it is null
             self.is_null = True
@@ -167,13 +190,19 @@ class CValue(object):
             else:
                 return str(value)
 
-        repr = "(value = %s," \
-               "object_id = %s," \
-               "is_null = %s," \
-               "type = %s)" % (enc(self.value), enc(self.object_id),
-                               enc(self.is_null), enc(self.type))
+        if self.value is not None:
+            str_repr = "value = %s" % enc(self.value)
+        elif self.object_id is not None:
+            str_repr = "object_id = %s" % enc(self.object_id)
+        elif self.is_null is not None:
+            # if it does not have values and object_id it
+            # must be NULL
+            assert self.is_null
+            str_repr = "NULL"
+        else:
+            raise Exception("CValue from trace is empty!")
 
-        return repr
+        return str_repr
 
     def __hash__(self):
         # provide a hash to the object

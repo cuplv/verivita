@@ -476,7 +476,7 @@ class TestEnc(unittest.TestCase):
         for i in range(10):
             mapback.add_vars2msg(i,"m_%d" % i)
         for i in range(10):
-            mapback.add_pccounter2trace(i,"trace_%d" % i)
+            mapback.add_pc2trace(i,"trace_%d" % i)
 
         c0 = Or(cenc.eq_val(auto_counters[0], 0),
                 cenc.eq_val(auto_counters[0], 1))
@@ -566,5 +566,4 @@ class TestEnc(unittest.TestCase):
 
         io_string = stringio.getvalue()
         self.assertTrue("SPEC [CB] [1] m1() |- [CI] [1] m2()" in io_string)
-        self.assertTrue("[CB]_m1(1)" in io_string)
-        self.assertTrue("Reached an error state in step 3" in io_string)
+        self.assertTrue("Reached an error state in step 2" in io_string)
