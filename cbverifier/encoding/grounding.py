@@ -576,7 +576,8 @@ class TraceMap(object):
             # this as a binding
             # this is an optimization, it does not create bindings
             # that we do not need
-            if str(formal[1]) != actual:
+            assert isinstance(actual, CValue)
+            if str(formal[1]) != str(actual.get_value()):
                 match = False
                 return match
         elif method_assignments.has_key(formal):

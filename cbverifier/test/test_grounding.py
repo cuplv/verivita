@@ -174,6 +174,12 @@ class TestGrounding(unittest.TestCase):
                        [TestGrounding._get_fmwkov("package.MyClass","testClassName",False)])
         trace.add_msg(cb)
 
+        cb = CCallback(1, 1, "package.MyClass", "testAssignConstant",
+                       [TestGrounding._get_obj("2","string")],
+                       TestGrounding._get_int(3),
+                       [TestGrounding._get_fmwkov("package.MyClass","testAssignConstant",False)])
+        trace.add_msg(cb)
+
         # Test first framework type
         cb = CCallback(1, 1, "package.MyClass", "testClassName",
                        [TestGrounding._get_obj("2","string")],
@@ -206,6 +212,10 @@ class TestGrounding(unittest.TestCase):
         assert (len(tmap.lookup_methods(new_cb(),
                                         "android.ButtonInterface.testClassName",
                                         1, True)) == 1)
+        assert (len(tmap.lookup_methods(new_cb(),
+                                        "package.MyClass.testAssignConstant",
+                                        1, True)) == 1)
+
 
         cnode = new_call(new_nil(), new_cb(),
                          new_nil(), new_id("doSomethingCb"),
@@ -250,6 +260,16 @@ class TestGrounding(unittest.TestCase):
             [[new_id('z'),new_id('l')],
              [TestGrounding._get_obj("3","string"),
               TestGrounding._get_obj("2","string")]]])
+        assert (res == res_2)
+
+        cnode = new_call(new_int(3), new_cb(),
+                         new_nil(), new_id("package.MyClass.testAssignConstant"),
+                         new_param(new_id("l"), new_nil()))
+        res = tmap.lookup_assignments(cnode)
+
+        res_2 = TestGrounding.newBinding([
+            [[new_id('l')],
+             [TestGrounding._get_obj("2","string")]]])
         assert (res == res_2)
 
 
