@@ -402,8 +402,6 @@ class TestEnc(unittest.TestCase):
         for seq in deadlock_traces:
             self.assertFalse(self._accept_word(ts_enc, ts, seq, TRUE()))
 
-
-
         ts_enc = TSEncoder(ctrace, [])
         vars_ts = ts_enc._encode_vars()
         (ts, errors) = ts_enc._encode_cbs(set(["[CI]_ci1()"]))
@@ -417,7 +415,7 @@ class TestEnc(unittest.TestCase):
         vars_ts = ts_enc._encode_vars()
         (ts, errors) = ts_enc._encode_cbs(set(["[CI]_ci1()","[CI]_ci2()"]))
         ts.product(vars_ts)
-        self.assertTrue(len(errors) == 2)
+        self.assertTrue(len(errors) == 1)
 
         self.assertTrue(is_sat(And([errors[0],
                                     Not(TSEncoder._get_state_var("[CI]_ci1()")),
@@ -548,7 +546,9 @@ class TestEnc(unittest.TestCase):
 
         # not None == there is a bug
         self.assertTrue(bmc.find_bug(0) is None)
-        self.assertTrue(bmc.find_bug(1) is not None)
+        self.assertTrue(bmc.find_bug(1) is None)
+        self.assertTrue(bmc.find_bug(2) is not None)
+        self.assertTrue(bmc.find_bug(3) is not None)
 
 
     def test_cex_printer(self):
@@ -556,7 +556,9 @@ class TestEnc(unittest.TestCase):
         ts = ts_enc.get_ts_encoding()
         error = ts_enc.error_prop
         bmc = BMC(ts_enc.helper, ts, error)
-        cex = bmc.find_bug(1)
+        cex = bmc.find_bug(2)
+
+        self.assertFalse(cex is None)
 
         stringio = StringIO()
         printer = CexPrinter(ts_enc.mapback, cex, stringio)
@@ -565,4 +567,4 @@ class TestEnc(unittest.TestCase):
         io_string = stringio.getvalue()
         self.assertTrue("SPEC [CB] [1] m1() |- [CI] [1] m2()" in io_string)
         self.assertTrue("[CB]_m1(1)" in io_string)
-        self.assertTrue("Reached an error state in step 2" in io_string)
+        self.assertTrue("Reached an error state in step 3" in io_string)
