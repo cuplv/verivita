@@ -430,7 +430,8 @@ class CTraceSerializer:
                                               "%s\n" % (msg_exit.class_name,
                                                         trace_msg.class_name))
 
-            elif (not trace_msg.method_name == msg_exit.method_name):
+            # TEMPORARY HACK: disable the check on callback names
+            elif (TraceMsgContainer.TraceMsg.CALLIN_EXIT == msg.type and not trace_msg.method_name == msg_exit.method_name):
                 raise MalformedTraceException("Found exit for method %s, " \
                                               "while expecting it for method " \
                                               "%s\n" % (msg_exit.method_name,
