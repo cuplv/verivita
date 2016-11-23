@@ -495,8 +495,8 @@ class TraceMap(object):
 
             for override in msg.fmwk_overrides:
                 assert override is not None
-                assert override.method_name == msg.method_name
-
+                # Note: method names may change in the overriden methods due
+                # to generics
                 if (not override.is_interface):
                     if (first_fmwk_type):
                         # first class
