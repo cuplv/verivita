@@ -93,7 +93,7 @@ def p_bexp_paren(t):
 
 
 def p_atom(t):
-    '''atom : freevar TOK_ASSIGN TOK_LSQUARE method_type TOK_RSQUARE method_call
+    '''atom : param TOK_ASSIGN TOK_LSQUARE method_type TOK_RSQUARE method_call
             | TOK_LSQUARE method_type TOK_RSQUARE method_call
     '''
     if (t[2] == '='):
@@ -128,7 +128,7 @@ def p_atom_const(t):
         t[0] = new_false()
 
 def p_method_call(t):
-    '''method_call : TOK_LSQUARE freevar TOK_RSQUARE inner_call
+    '''method_call : TOK_LSQUARE param TOK_RSQUARE inner_call
                    | inner_call '''
     if (t[1] == '['):
         t[0] = (t[2], t[4])
@@ -142,47 +142,6 @@ def p_inner_call(t):
         t[0] = (t[1], t[3])
     else:
         t[0] = (t[1], new_nil())
-
-
-# def p_atom_no_param(t):
-#     '''atom : receiver TOK_DOT TOK_ID TOK_LPAREN TOK_RPAREN
-#             | TOK_ID TOK_LPAREN TOK_RPAREN
-#     '''
-
-#     if (t[2] == '.'):
-#         receiver = t[1]
-#         method_name = t[3]
-#     else:
-#         receiver = None
-#         method_name = t[1]
-
-#     t[0] = new_call(receiver, new_id(method_name), new_nil())
-
-# def p_atom_param(t):
-#     '''atom : receiver TOK_DOT TOK_ID TOK_LPAREN paramlist TOK_RPAREN
-#             | TOK_ID TOK_LPAREN paramlist TOK_RPAREN
-#     '''
-
-#     if (t[2] == '.'):
-#         receiver = t[1]
-#         method_name = t[3]
-#         params = t[5]
-#     else:
-#         receiver = new_nil()
-#         method_name = t[1]
-#         params = t[3]
-
-#     t[0] = new_call(receiver, new_id(method_name), params)
-
-def p_freevar_id(t):
-    '''freevar : TOK_ID
-    '''
-    t[0] = new_id(t[1])
-
-def p_freevar_donttcare(t):
-    '''freevar : TOK_DONTCARE
-    '''
-    t[0] = new_dontcare()
 
 def p_paramlist_param(t):
     '''paramlist : param

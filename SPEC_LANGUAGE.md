@@ -77,7 +77,7 @@ the parameters.
 
 
 ```
-message : freevar = [method_type] method_call
+message : param = [method_type] method_call
         | [method_type] method_call
         | TRUE
         | FALSE
@@ -85,10 +85,7 @@ message : freevar = [method_type] method_call
 method_type : CB
             | CI
 
-freevar : identifier
-        | #
-        
-method_call : [freevar] inner_call
+method_call : [param] inner_call
             | inner_call
             
 inner_call : composed_id(param_list)
@@ -117,12 +114,12 @@ callback.
 `TRUE` specifies the set of all the possible messages, while `FALSE`
 specifies the empty set of messages.
 
-When the method call is prepended by `freevar = `, it means that the
-rules applies to the method call that returns a value `freevar`.
+When the method call is prepended by `param = `, it means that the
+rules applies to the method call that returns a value `param`.
 
-*NOTE* the rule with `freevar =` will not match any method that do not
+*NOTE* the rule with `param =` will not match any method that do not
 return any value (i.e. `void` return type), while the rule without
-`freevar = ` will only match methods that do not return any value
+`param = ` will only match methods that do not return any value
 (i.e. `void` return type).
 
 The type of the method can either be `CI` or `CB`, specifiying that
@@ -134,7 +131,7 @@ The name of the method is a `composed_id`, and specifies both the
 full class name (with the package) and the method name, separated by
 dots.
 
-The method call may specify a receiver (`[freevar] inner_call`) or
+The method call may specify a receiver (`[param] inner_call`) or
 not and a list of parameters.
 
 The parameters can be constant values, free variables, or any value,

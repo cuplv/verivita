@@ -180,29 +180,34 @@ class CValue(object):
                      self.object_id is None))
 
 
+    @staticmethod
+    def enc(value):
+        if isinstance(value, str):
+            return value
+        elif isinstance(value, unicode):
+            return value.encode('utf-8').strip()
+        else:
+            return str(value)
+
+
     def __repr__(self):
         #repr = ""
-        def enc(value):
-            if isinstance(value, str):
-                return value
-            elif isinstance(value, unicode):
-                return value.encode('utf-8').strip()
-            else:
-                return str(value)
+        val = self.get_value()
+        str_repr = "value = %s" % val
+        return str_repr
 
+    def get_value(self):
         if self.value is not None:
-            str_repr = "value = %s" % enc(self.value)
+            return CValue.enc(self.value)
         elif self.object_id is not None:
-            str_repr = "object_id = %s" % enc(self.object_id)
+            return CValue.enc(self.object_id)
         elif self.is_null is not None:
             # if it does not have values and object_id it
             # must be NULL
             assert self.is_null
-            str_repr = "NULL"
+            return "NULL"
         else:
             raise Exception("CValue from trace is empty!")
-
-        return str_repr
 
     def __hash__(self):
         # provide a hash to the object

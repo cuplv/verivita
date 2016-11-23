@@ -6,7 +6,6 @@ import logging
 import unittest
 
 
-
 from ply.lex import LexToken
 import ply.yacc as yacc
 
@@ -138,7 +137,10 @@ class TestSpecParser(unittest.TestCase):
                         "SPEC [CB] [l1] methodName(TRUE) |- [CI] [l2] methodName(bparam,TRUE)",
                         "SPEC [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
                         "SPEC foo = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
-                        "SPEC foo = [CB] [l1] methodName(a); foo = [CB] [l1] methodName(a) |- [CI] [l2] methodName(bparam,TRUE)"]
+                        "SPEC foo = [CB] [l1] methodName(a); foo = [CB] [l1] methodName(a) |- [CI] [l2] methodName(bparam,TRUE)",
+                        "SPEC 1 = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
+                        "SPEC # = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
+                        "SPEC TRUE = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)"]
 
         for expr in correct_expr:
             self._test_parse(expr)
