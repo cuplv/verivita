@@ -8,47 +8,6 @@ While parsing we build an AST to represent the SPEC.
 
 WARNING: rhs of spec now is an atom, wich also contains the assign token.
 What does it mean for a spec?
-
-specs : spec
-      | spec TOK_SEQUENCE specs
-
-spec : TOK_SPEC regexp TOK_DISABLE atom
-     | TOK_SPEC regexp TOK_ENABLE atom
-
-regexp : bexp
-       | bexp TOK_LSQUARE TOK_STAR TOK_RSQUARE
-       | regexp TOK_SEQUENCE regexp
-
-bexp : atom
-     | TOK_NOT bexp
-     | bexp TOK_AND bexp
-     | bexp TOK_OR bexp
-     | TOK_LPAREN bexp TOK_RPAREN
-
-atom : TOK_ID TOK_ASSIGN TOK_LSQUARE method_type TOK_RSQUARE method_call
-     | TOK_LSQUARE method_type TOK_RSQUARE method_call
-
-method_call : TOK_LSQUARE freevar TOK_RSQUARE inner_call
-            | inner_call
-
-inner_call : composed_id TOK_LPAREN param_list TOK_RPAREN
-           | composed_id TOK_LPAREN TOK_RPAREN
-
-freevar : TOK_ID
-        | TOK_DONTCARE
-
-paramlist : param
-          | param TOK_COMMA paramlist
-
-param : TOK_ID | TOK_TRUE | TOK_FALSE | TOK_FLOAT | TOK_INT
-      | TOK_DONTCARE
-
-composed_id : TOK_ID
-            | TOK_ID TOK_DOT composed_id
-
-method_type : TOK_CI | TOK_CB
-
-
 """
 
 import ply.lex as lex
