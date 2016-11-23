@@ -4,28 +4,29 @@ import sys
 import logging
 import unittest
 
-from ply.lex import LexToken
-import ply.yacc as yacc
 
+from cStringIO import StringIO
 
 try:
     import unittest2 as unittest
 except ImportError:
     import unittest
 
-from cbverifier.encoding.encoder import TSEncoder
+from cbverifier.encoding.encoder import TSEncoder, TSMapback
+from cbverifier.encoding.cex_printer import CexPrinter
+from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue
 from cbverifier.specs.spec_ast import *
 from cbverifier.specs.spec import Spec
 from cbverifier.bmc.bmc import BMC
 
+from pysmt.typing import BOOL
 from pysmt.logics import QF_BOOL
 from pysmt.shortcuts import Solver
-from pysmt.shortcuts import is_sat, is_valid
+from pysmt.shortcuts import get_env, is_sat, is_valid, get_model
 from pysmt.shortcuts import Symbol, TRUE, FALSE
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
-
 
 from cbverifier.test.test_grounding import TestGrounding
 
@@ -329,8 +330,6 @@ class TestEnc(unittest.TestCase):
                      None)
         cb.add_msg(ci)
         ts_enc = TSEncoder(ctrace, spec_list)
-
-
         return ts_enc
 
     def test_encode_ground_specs(self):
@@ -425,6 +424,119 @@ class TestEnc(unittest.TestCase):
                                     Not(TSEncoder._get_state_var("[CI]_ci2()"))])))
 
 
+    def test_mapback(self):
+        def get_def_model(formula, vars_list, val):
+            model_sat = get_model(formula)
+
+            assert model_sat is not None
+
+            model = {}
+            for v in vars_list:
+                if v not in model_sat:
+                    model[v] = val
+                else:
+                    if model_sat.get_value(v) == TRUE():
+                        model[v] = True
+                    else:
+                        model[v] = False
+
+            return model
+
+        pysmt_env = get_env()
+        cenc = CounterEnc(pysmt_env)
+
+        all_vars = []
+
+        msg_ivar = "msg_ivar"
+        cenc.add_var(msg_ivar, 10)
+        all_vars.extend(cenc.get_counter_var(msg_ivar))
+
+        pc_counter = "pc_counter"
+        cenc.add_var(pc_counter, 10)
+        all_vars.extend(cenc.get_counter_var(pc_counter))
+
+        msg_vars_text = ["m_%d" % v for v in range(10)]
+        msg_vars = [Symbol(v, BOOL) for v in msg_vars_text]
+        all_vars.extend(msg_vars)
+
+        auto_counters = ["a_%d" % v for v in range(2)]
+        auto_counters_vars = []
+        for c in auto_counters:
+            cenc.add_var(c, 10)
+            all_vars.extend(cenc.get_counter_var(c))
+
+        # Fake spec (it is not important to test the mapback)
+        specs = Spec.get_specs_from_string("SPEC [CB] [l] m1() |- [CI] [l] m2();"\
+                                           "SPEC [CB] [l] m1() |- [CI] [l] m2()")
+
+
+        mapback = TSMapback(pysmt_env, msg_ivar, pc_counter)
+
+        mapback.add_encoder(msg_ivar, cenc)
+        mapback.add_encoder(pc_counter, cenc)
+
+        for i in range(10):
+            mapback.add_vars2msg(i,"m_%d" % i)
+        for i in range(10):
+            mapback.add_pccounter2trace(i,"trace_%d" % i)
+
+        c0 = Or(cenc.eq_val(auto_counters[0], 0),
+                cenc.eq_val(auto_counters[0], 1))
+        mapback.add_var2spec(msg_vars[0], True,
+                             specs[0],
+                             c0,
+                             specs[0])
+
+        c1 = Or(cenc.eq_val(auto_counters[1], 2),
+                cenc.eq_val(auto_counters[1], 3))
+        mapback.add_var2spec(msg_vars[1], True,
+                             specs[1],
+                             c1,
+                             specs[1])
+
+        for i in range(10):
+            m = get_def_model(cenc.eq_val(msg_ivar,i), all_vars, False)
+            res = mapback.get_trans_label(m)
+            self.assertTrue("m_%d" %i == res)
+
+        for i in range(10):
+            m = get_def_model(cenc.eq_val(pc_counter,i), all_vars, False)
+            res = mapback.get_fired_trace_msg(m)
+            self.assertTrue("trace_%d" %i == res)
+
+        current_m = get_def_model(TRUE(), all_vars, False)
+        next_m = get_def_model(And([msg_vars[0], c0, Not(c1)]),
+                               all_vars, False)
+        fired_specs = mapback.get_fired_spec(current_m, next_m, False)
+        self.assertTrue(fired_specs == [(specs[0], specs[0])])
+
+        current_m = get_def_model(TRUE(), all_vars, False)
+        next_m = get_def_model(And([Not(msg_vars[0]), c0, Not(c1)]),
+                               all_vars, False)
+        fired_specs = mapback.get_fired_spec(current_m, next_m, False)
+        self.assertTrue(fired_specs == [])
+
+        current_m = get_def_model(TRUE(), all_vars, False)
+        next_m = get_def_model(And([msg_vars[1], c1, Not(c0)]),
+                               all_vars, False)
+        fired_specs = mapback.get_fired_spec(current_m, next_m, False)
+        self.assertTrue(fired_specs == [(specs[1], specs[1])])
+
+        # changes msg_vars[0]
+        current_m = get_def_model(Not(msg_vars[0]),
+                                  all_vars, False)
+        next_m = get_def_model(And([msg_vars[0], c0, Not(c1)]),
+                               all_vars, False)
+        fired_specs = mapback.get_fired_spec(current_m, next_m, True)
+        self.assertTrue(fired_specs == [(specs[0], specs[0])])
+
+        current_m = get_def_model(msg_vars[0],
+                                  all_vars, False)
+        next_m = get_def_model(And([msg_vars[0], c0, Not(c1)]),
+                               all_vars, False)
+        fired_specs = mapback.get_fired_spec(current_m, next_m, True)
+        self.assertTrue(fired_specs == [])
+
 
     def test_encode(self):
         ts_enc = self._get_sample_trace()
@@ -437,3 +549,20 @@ class TestEnc(unittest.TestCase):
         # not None == there is a bug
         self.assertTrue(bmc.find_bug(0) is None)
         self.assertTrue(bmc.find_bug(1) is not None)
+
+
+    def test_cex_printer(self):
+        ts_enc = self._get_sample_trace()
+        ts = ts_enc.get_ts_encoding()
+        error = ts_enc.error_prop
+        bmc = BMC(ts_enc.helper, ts, error)
+        cex = bmc.find_bug(1)
+
+        stringio = StringIO()
+        printer = CexPrinter(ts_enc.mapback, cex, stringio)
+        printer.print_cex()
+
+        io_string = stringio.getvalue()
+        self.assertTrue("SPEC [CB] [1] m1() |- [CI] [1] m2()" in io_string)
+        self.assertTrue("[CB]_m1(1)" in io_string)
+        self.assertTrue("Reached an error state in step 2" in io_string)

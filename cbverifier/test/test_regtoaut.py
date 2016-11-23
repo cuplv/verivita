@@ -9,7 +9,7 @@ except ImportError:
     import unittest
 
 from cbverifier.encoding.automata import Automaton, AutoEnv
-from cbverifier.encoding.encoder import RegExpToAuto
+from cbverifier.encoding.encoder import RegExpToAuto, TSMapback
 from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.specs.spec import Spec
@@ -28,7 +28,9 @@ class TestRegExpToAuto(unittest.TestCase):
         cenc = CounterEnc(auto_env.pysmt_env)
         alphabet = set(["[CB]_m1(1)","[CI]_m2(1)","[CB]_m3(1)"])
 
-        r2a = RegExpToAuto(cenc, alphabet, auto_env)
+        r2a = RegExpToAuto(cenc, alphabet,
+                           TSMapback(auto_env.pysmt_env, None, None),
+                           auto_env)
         env = r2a.auto_env
 
         l1 = r2a.get_msg_eq("[CB]_m1(1)")

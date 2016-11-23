@@ -65,15 +65,29 @@ class BMC:
         if (solver.solve()):
             logging.debug("Found bug...")
 
-            # TODO To fix trace creation
-            # model = solver.get_model()
-            # trace = self._build_trace(model, k)
-            # return trace
-
-            return []
+            model = solver.get_model()
+            trace = self._build_trace(model, k)
+            return trace
         else:
             # No bugs found
             logging.debug("No bugs found up to %d steps" % k)
             return None
 
+    def _build_trace(self, model, steps):
+        """Extract the trace from the satisfying assignment."""
 
+        vars_to_use = [self.ts.state_vars, self.ts.input_vars]
+        cex = []
+        for i in range(steps + 1):
+            cex_i = {}
+
+            # skip the input variables in the last step
+            if (i >= steps):
+                vars_to_use = [self.ts.state_vars]
+
+            for vs in vars_to_use:
+                for var in vs:
+                    var_i = self.helper.get_var_at_time(var, i)
+                    cex_i[var] = model.get_py_value(var_i, True)
+            cex.append(cex_i)
+        return cex

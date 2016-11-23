@@ -61,7 +61,11 @@ class CMessage(object):
         return iter(self.children)
 
     def _print(self, stream, sep):
-        stream.write("%s[%d] %s(" % (sep, self.message_id, self.class_name))
+        if self.class_name is not None and self.class_name != "":
+            message_sig = "%s.%s" % (self.class_name, self.method_name)
+        else:
+            message_sig = self.method_name
+        stream.write("%s [%d] %s (" % (sep, self.message_id, message_sig))
 
         for i in range(len(self.params)):
             if (i != 0): stream.write(",")
@@ -415,14 +419,16 @@ class CTraceSerializer:
             check_malformed_trace(trace_msg, callin_exit, CCallin,
                                   "CALLIN_EXIT")
 
-            trace_msg.return_value = CTraceSerializer.read_value_msg(callin_exit.return_value)
+            if (callin_exit.HasField("return_value")):
+                trace_msg.return_value = CTraceSerializer.read_value_msg(callin_exit.return_value)
         elif (TraceMsgContainer.TraceMsg.CALLBACK_EXIT == msg.type):
             callback_exit = msg.callbackExit
 
             check_malformed_trace(trace_msg, callback_exit, CCallback,
                                   "CALLBACK_EXIT")
 
-            trace_msg.return_value = CTraceSerializer.read_value_msg(callback_exit.return_value)
+            if (callback_exit.HasField("return_value")):
+                trace_msg.return_value = CTraceSerializer.read_value_msg(callback_exit.return_value)
         else:
             err = "%s msg type cannot be used to update a node" % msg.type
             raise MalformedTraceException(err)
