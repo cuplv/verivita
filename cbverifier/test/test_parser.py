@@ -1,4 +1,4 @@
-""" Test the traces package.
+""" Test the specification parser
 
 """
 
@@ -16,12 +16,15 @@ try:
 except ImportError:
     import unittest
 
-from cbverifier.specs.spec_lex import lexer
+from cbverifier.specs.spec_lex import lexer, reset
 from cbverifier.specs.spec_parser import spec_parser
 from cbverifier.specs.spec_ast import *
 
 
 class TestSpecParser(unittest.TestCase):
+
+    def setUp(self):
+        reset()
 
     @staticmethod
     def new_tok(lexpos, tok_type, lineno, value):
@@ -31,24 +34,19 @@ class TestSpecParser(unittest.TestCase):
         tok.lineno = lineno
         tok.lexpos = lexpos
         tok.type = tok_type
-
         return tok
 
     def _test_multiple_token(self, token_list, string):
         # clean the lexer state
         # for f in lexer: None
-        lexer.input(string)
 
-        print string
+        lexer.input(string)
 
         i = 0
         tok = lexer.token()
         while (tok is not None):
             if i > len(token_list):
                 raise Exception("Found more tokens than expeced")
-
-            print tok
-            print token_list[i]
 
             self.assertTrue(tok.value == token_list[i].value)
             self.assertTrue(tok.lineno == token_list[i].lineno)
@@ -77,7 +75,7 @@ class TestSpecParser(unittest.TestCase):
         self._test_single_token(0, 'TOK_AND', 1, '&', '&')
         self._test_single_token(0, 'TOK_OR', 1, '|', '|')
         self._test_single_token(0, 'TOK_SEQUENCE', 1, ';', ';')
-        self._test_single_token(0, 'TOK_STAR', 1, '[*]', '[*]')
+        self._test_single_token(0, 'TOK_STAR', 1, '*', '*')
         self._test_single_token(0, 'TOK_ENABLE', 1, '|+', '|+')
         self._test_single_token(0, 'TOK_DISABLE', 1, '|-', '|-')
         self._test_single_token(0, 'TOK_DOT', 1, '.', '.')
@@ -88,6 +86,10 @@ class TestSpecParser(unittest.TestCase):
 
         self._test_single_token(0, 'TOK_TRUE', 1, 'TRUE', 'TRUE')
         self._test_single_token(0, 'TOK_FALSE', 1, 'FALSE', 'FALSE')
+        self._test_single_token(0, 'TOK_CB', 1, 'CB', 'CB')
+        self._test_single_token(0, 'TOK_CI', 1, 'CI', 'CI')
+        self._test_single_token(0, 'TOK_ASSIGN', 1, '=', '=')
+
         self._test_single_token(0, 'TOK_SPEC', 1, 'SPEC', 'SPEC')
 
 
@@ -109,7 +111,6 @@ class TestSpecParser(unittest.TestCase):
         self._test_multiple_token(res, "l.l(#)"),
 
 
-
     def _test_parse(self, specs):
         res = spec_parser.parse(specs)
         self.assertTrue(res is not None)
@@ -121,20 +122,23 @@ class TestSpecParser(unittest.TestCase):
 
 
     def test_parser(self):
-        correct_expr = ["SPEC l.l() |- l.l(b)",
-                        "SPEC l.l(l1,l2) |- l.l(b)",
-                        "SPEC l.l(l1,l2) |- l.l(b); SPEC l.l(l1,l2) |- l.l(b)",
-                        "SPEC l.l(l1,l2); l.l(l1,l2) |- l.l(b)",
-                        "SPEC l.l(l1,l2)[*] |- l.l(b)",
-                        "SPEC l.l(l1,l2)[*] |+ l.l(b)",
-                        "SPEC l.l(l1,l2)[*] |- l.l(b)",
+        correct_expr = ["SPEC [CB] [l] l() |- [CB] [l] l(b)",
+                        "SPEC [CB] [l] l(l1,l2) |- [CB] [l] l(b)",
+                        "SPEC [CB] [l] l(l1,l2) |- [CI] [l] l(b); SPEC [CB] [l] l(l1,l2) |- [CI] [l] l(b)",
+                        "SPEC [CB] [l] l(l1,l2); [CB] [l] l(l1,l2) |- [CI] [l] l(b)",
+                        "SPEC [CB] [l] l(l1,l2)[*] |- [CI] [l] l(b)",
+                        "SPEC [CB] [l] l(l1,l2)[*] |+ [CI] [l] l(b)",
+                        "SPEC [CB] [l] l(l1,l2)[*] |- [CI] [l] l(b)",
                         "SPEC TRUE |- TRUE",
                         "SPEC TRUE[*] |- TRUE",
                         "SPEC (TRUE)[*] |- TRUE",
+                        "SPEC [CB] [l] m1()[*] |- TRUE",
                         "SPEC (TRUE & FALSE)[*] |- TRUE",
                         "SPEC (TRUE & FALSE | ! FALSE)[*] |- TRUE",
-                        "SPEC l1.methodName(TRUE) |- l2.methodName(bparam,TRUE)",
-                        "SPEC l1.methodName(_) |- l2.methodName(bparam,TRUE)"]
+                        "SPEC [CB] [l1] methodName(TRUE) |- [CI] [l2] methodName(bparam,TRUE)",
+                        "SPEC [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
+                        "SPEC foo = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
+                        "SPEC foo = [CB] [l1] methodName(a); foo = [CB] [l1] methodName(a) |- [CI] [l2] methodName(bparam,TRUE)"]
 
         for expr in correct_expr:
             self._test_parse(expr)
@@ -147,17 +151,23 @@ class TestSpecParser(unittest.TestCase):
             parse_res = spec_parser.parse(specs)
             self.assertTrue(parse_res == expected)
 
-        res = [("SPEC l.method_name() |- TRUE",
+        res = [("SPEC [CB] [l] package.method_name() |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (ID, 'l'), (ID, 'method_name'), (NIL,)),
+                   (CALL, (NIL,), (CB,), (ID,'l'), (ID, 'package.method_name'), (NIL,)),
                    (0,))), (NIL,))),
-               ("SPEC l.method_name(0,1,f) |- TRUE",
+               ("SPEC [CI] [l] method_name(0,1,f) |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (ID, 'l'), (ID, 'method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
+                   (CALL, (NIL,), (CI,), (ID,'l'), (ID, 'method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
+                   (0,))), (NIL,))),
+               ("SPEC var = [CI] [l] method_name(0,1,f) |- TRUE",
+                (SPEC_LIST,
+                 (SPEC_SYMB,
+                  (DISABLE_OP,
+                   (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
                    (0,))), (NIL,)))]
 
         for r in res:

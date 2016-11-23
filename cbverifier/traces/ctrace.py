@@ -1,6 +1,5 @@
 """ Concrete trace data structure and parsing.
 
-
 A concrete trace is represented as a forest, where each tree has
 messages as nodes and leaves.
 
@@ -41,13 +40,13 @@ class CMessage(object):
     def __init__(self,
                  message_id = -1,
                  thread_id = None,
-                 signature = None,
+                 class_name = None,
                  method_name = None,
                  params = [],
                  return_value = None):
         self.message_id = message_id
         self.thread_id = thread_id
-        self.signature = signature
+        self.class_name = class_name
         self.method_name = method_name
         self.params = params
         self.return_value = return_value
@@ -62,7 +61,11 @@ class CMessage(object):
         return iter(self.children)
 
     def _print(self, stream, sep):
-        stream.write("%s[%d] %s(" % (sep, self.message_id, self.signature))
+        if self.class_name is not None and self.class_name != "":
+            message_sig = "%s.%s" % (self.class_name, self.method_name)
+        else:
+            message_sig = self.method_name
+        stream.write("%s [%d] %s (" % (sep, self.message_id, message_sig))
 
         for i in range(len(self.params)):
             if (i != 0): stream.write(",")
@@ -79,24 +82,21 @@ class CCallback(CMessage):
     def __init__(self,
                  message_id = -1,
                  thread_id = None,
-                 signature = None,
+                 class_name = None,
                  method_name = None,
                  params = [],
                  return_value = None,
-                 method_parameter_types = [],
-                 overrides = [],
-                 receiver_first_framework_super = []):
+                 fmwk_overrides = []):
 
         super(CCallback, self).__init__(message_id,
                                         thread_id,
-                                        signature,
+                                        class_name,
                                         method_name,
                                         params,
                                         return_value)
-
-        self.method_parameter_types = method_parameter_types
-        self.overrides = overrides
-        self.receiver_first_framework_super = receiver_first_framework_super
+        # list of FrameworkOverride objects
+        # Warning: the order matteres.
+        self.fmwk_overrides = fmwk_overrides
 
 
 class CCallin(CMessage):
@@ -105,13 +105,13 @@ class CCallin(CMessage):
     def __init__(self,
                  message_id = -1,
                  thread_id = None,
-                 signature = None,
+                 class_name = None,
                  method_name = None,
                  params = [],
                  return_value = None):
         super(CCallin, self).__init__(message_id,
                                       thread_id,
-                                      signature,
+                                      class_name,
                                       method_name,
                                       params,
                                       return_value)
@@ -197,6 +197,29 @@ class CValue(object):
                 self.value == other.value)
 
 
+class FrameworkOverride:
+    """ Represents a class or interface in the framework that
+    implements or defines a specific method."""
+    def __init__(self, class_name, method_name, is_interface):
+        self.class_name = class_name
+        self.method_name = method_name
+        self.is_interface = is_interface
+
+    def __repr__(self):
+        if self.is_interface:
+            desc = "interface"
+        else:
+            desc = "class"
+
+        return "%s %s.%s" % (desc,
+                             self.class_name,
+                             self.method_name)
+
+    def __eq__(self, other):
+        return (self.is_interface == other.is_interface and
+                self.class_name == other.class_name and
+                self.is_interface == other.is_interface)
+
 class CTrace:
     def __init__(self):
         # forest of message trees
@@ -267,7 +290,7 @@ class CTraceSerializer:
                 # remove the message from the stack
                 trace_message = message_stack.pop()
 
-                # Check the signature to be the same as the recorded message
+                # Check the class_name to be the same as the recorded message
 
                 # update trace_message with recorded_message
                 CTraceSerializer.update_trace_message(trace_message, recorded_message)
@@ -311,7 +334,7 @@ class CTraceSerializer:
             trace_msg.message_id = msg.message_id
             trace_msg.thread_id = msg.thread_id
 
-            trace_msg.signature = ci.signature
+            trace_msg.class_name = ci.class_name
             trace_msg.method_name = ci.method_name
             trace_msg.params = CTraceSerializer.get_params(ci.param_list)
             trace_msg.return_value = None
@@ -322,20 +345,24 @@ class CTraceSerializer:
             trace_msg.message_id = msg.message_id
             trace_msg.thread_id = msg.thread_id
 
-            trace_msg.signature = cb.signature
+            trace_msg.class_name = cb.class_name
             trace_msg.method_name = cb.method_name
             trace_msg.params = CTraceSerializer.get_params(cb.param_list)
             trace_msg.return_value = None
 
-            for meth_type in cb.method_parameter_types:
-                trace_msg.method_parameter_types.append(meth_type)
-
-            trace_msg.method_returnType = cb.method_returnType
-
             # TODO: handle the overrides
             # for overrides in cb.framework_overrides:
             #     trace_msg.overrides.append(None)
-            # trace_msg.receiver_first_framework_super = cb.receiver_first_framework_super
+            # trace_msg.receiver_first_framework_super =
+            # cb.receiver_first_framework_super
+            overrides = []
+            for override in cb.framework_overrides:
+                trace_override = FrameworkOverride(override.class_name,
+                                                   override.method,
+                                                   override.is_interface)
+                overrides.append(trace_override)
+            trace_msg.fmwk_overrides = overrides
+
         else:
             err = "%s msg type cannot be used to create a node" % msg.type
             raise MalformedTraceException(err)
@@ -351,7 +378,7 @@ class CTraceSerializer:
         callback exit.
 
         The function assumes that msg is the exit message for
-        trace_msg (an assertion fails if the name and signature of
+        trace_msg (an assertion fails if the name and class_name of
         trace_msg and msg do not match
         """
 
@@ -363,17 +390,17 @@ class CTraceSerializer:
                                               "is of type %s\n" % (expected_name,
                                                                    msg_exit.method_name,
                                                                    str(type(trace_msg))))
-            elif (not trace_msg.signature == msg_exit.signature):
-                raise MalformedTraceException("Found exit for signature %s, " \
-                                              "while expecting it for signature " \
-                                              "%s\n" % (msg_exit.signature,
-                                                        trace_msg.signature))
-                # TODO: re-enable after fix in tracerunner
-            #elif (not trace_msg.method_name == msg_exit.method_name):
-                # raise MalformedTraceException("Found exit for method %s, " \
-                #                               "while expecting it for method " \
-                #                               "%s\n" % (msg_exit.method_name,
-                #                                         trace_msg.method_name))
+            elif (not trace_msg.class_name == msg_exit.class_name):
+                raise MalformedTraceException("Found exit for class_name %s, " \
+                                              "while expecting it for class_name " \
+                                              "%s\n" % (msg_exit.class_name,
+                                                        trace_msg.class_name))
+
+            elif (not trace_msg.method_name == msg_exit.method_name):
+                raise MalformedTraceException("Found exit for method %s, " \
+                                              "while expecting it for method " \
+                                              "%s\n" % (msg_exit.method_name,
+                                                        trace_msg.method_name))
 
         def check_malformed_trace_msg(trace_msg, msg):
             if (trace_msg.thread_id != msg.thread_id):
@@ -392,14 +419,16 @@ class CTraceSerializer:
             check_malformed_trace(trace_msg, callin_exit, CCallin,
                                   "CALLIN_EXIT")
 
-            trace_msg.return_value = CTraceSerializer.read_value_msg(callin_exit.return_value)
+            if (callin_exit.HasField("return_value")):
+                trace_msg.return_value = CTraceSerializer.read_value_msg(callin_exit.return_value)
         elif (TraceMsgContainer.TraceMsg.CALLBACK_EXIT == msg.type):
             callback_exit = msg.callbackExit
 
             check_malformed_trace(trace_msg, callback_exit, CCallback,
                                   "CALLBACK_EXIT")
 
-            trace_msg.return_value = CTraceSerializer.read_value_msg(callback_exit.return_value)
+            if (callback_exit.HasField("return_value")):
+                trace_msg.return_value = CTraceSerializer.read_value_msg(callback_exit.return_value)
         else:
             err = "%s msg type cannot be used to update a node" % msg.type
             raise MalformedTraceException(err)

@@ -5,6 +5,50 @@ STD ISSUE WITH THIS: it is non-rentrant (e.g. issue if we span
 multiple verifiers from the same python interpreter)
 
 While parsing we build an AST to represent the SPEC.
+
+WARNING: rhs of spec now is an atom, wich also contains the assign token.
+What does it mean for a spec?
+
+specs : spec
+      | spec TOK_SEQUENCE specs
+
+spec : TOK_SPEC regexp TOK_DISABLE atom
+     | TOK_SPEC regexp TOK_ENABLE atom
+
+regexp : bexp
+       | bexp TOK_LSQUARE TOK_STAR TOK_RSQUARE
+       | regexp TOK_SEQUENCE regexp
+
+bexp : atom
+     | TOK_NOT bexp
+     | bexp TOK_AND bexp
+     | bexp TOK_OR bexp
+     | TOK_LPAREN bexp TOK_RPAREN
+
+atom : TOK_ID TOK_ASSIGN TOK_LSQUARE method_type TOK_RSQUARE method_call
+     | TOK_LSQUARE method_type TOK_RSQUARE method_call
+
+method_call : TOK_LSQUARE freevar TOK_RSQUARE inner_call
+            | inner_call
+
+inner_call : composed_id TOK_LPAREN param_list TOK_RPAREN
+           | composed_id TOK_LPAREN TOK_RPAREN
+
+freevar : TOK_ID
+        | TOK_DONTCARE
+
+paramlist : param
+          | param TOK_COMMA paramlist
+
+param : TOK_ID | TOK_TRUE | TOK_FALSE | TOK_FLOAT | TOK_INT
+      | TOK_DONTCARE
+
+composed_id : TOK_ID
+            | TOK_ID TOK_DOT composed_id
+
+method_type : TOK_CI | TOK_CB
+
+
 """
 
 import ply.lex as lex
@@ -40,9 +84,9 @@ def p_spec(t):
     '''spec : TOK_SPEC regexp TOK_DISABLE atom
             | TOK_SPEC regexp TOK_ENABLE atom
     '''
-    if "|-" == t[3]:
+    if '|-' == t[3]:
         t[0] = new_disable_spec(t[2], t[4])
-    elif "|+" == t[3]:
+    elif '|+' == t[3]:
         t[0] = new_enable_spec(t[2], t[4])
     else:
         p_error(t)
@@ -54,7 +98,7 @@ def p_regexp(t):
     t[0] = t[1]
 
 def p_regexp_star(t):
-    '''regexp : bexp TOK_STAR
+    '''regexp : bexp TOK_LSQUARE TOK_STAR TOK_RSQUARE
     '''
     t[0] = new_star(t[1])
 
@@ -78,7 +122,7 @@ def p_bexp_binary(t):
             | bexp TOK_OR bexp
     '''
 
-    if (t[2] == "|"):
+    if (t[2] == '|'):
         t[0] = new_or(t[1], t[3])
     else:
         t[0] = new_and(t[1], t[3])
@@ -89,35 +133,30 @@ def p_bexp_paren(t):
     t[0] = t[2]
 
 
-def p_atom_no_param(t):
-    '''atom : receiver TOK_DOT TOK_ID TOK_LPAREN TOK_RPAREN
-            | TOK_ID TOK_LPAREN TOK_RPAREN
+def p_atom(t):
+    '''atom : freevar TOK_ASSIGN TOK_LSQUARE method_type TOK_RSQUARE method_call
+            | TOK_LSQUARE method_type TOK_RSQUARE method_call
     '''
-
-    if (t[2] == '.'):
-        receiver = t[1]
-        method_name = t[3]
+    if (t[2] == '='):
+        assert len(t) == 7
+        assignee = t[1]
+        call_type = t[4]
+        method_call = t[6]
     else:
-        receiver = None
-        method_name = t[1]
+        assert len(t) == 5
+        assignee = new_nil()
+        call_type = t[2]
+        method_call = t[4]
 
-    t[0] = new_call(receiver, new_id(method_name), new_nil())
+    receiver = method_call[0]
+    inner_call = method_call[1]
+    method_name = inner_call[0]
+    method_param = inner_call[1]
 
-def p_atom_param(t):
-    '''atom : receiver TOK_DOT TOK_ID TOK_LPAREN paramlist TOK_RPAREN
-            | TOK_ID TOK_LPAREN paramlist TOK_RPAREN
-    '''
+    # print("receiver " + str(method_call[0]) + "call " + str(method_call[1]) + "name " + str(inner_call[0]) + "param " + str(inner_call[1]))
 
-    if (t[2] == '.'):
-        receiver = t[1]
-        method_name = t[3]
-        params = t[5]
-    else:
-        receiver = new_nil()
-        method_name = t[1]
-        params = t[3]
-
-    t[0] = new_call(receiver, new_id(method_name), params)
+    t[0] = new_call(assignee, call_type, receiver,
+                    method_name, method_param)
 
 def p_atom_const(t):
     '''atom : TOK_TRUE
@@ -129,25 +168,71 @@ def p_atom_const(t):
     else:
         t[0] = new_false()
 
-def p_receiver_id(t):
-    '''receiver : TOK_ID
+def p_method_call(t):
+    '''method_call : TOK_LSQUARE freevar TOK_RSQUARE inner_call
+                   | inner_call '''
+    if (t[1] == '['):
+        t[0] = (t[2], t[4])
+    else:
+        t[0] = (new_nil(), t[1])
+
+def p_inner_call(t):
+    '''inner_call : composed_id TOK_LPAREN paramlist TOK_RPAREN
+                  | composed_id TOK_LPAREN TOK_RPAREN'''
+    if (t[3] != ')'):
+        t[0] = (t[1], t[3])
+    else:
+        t[0] = (t[1], new_nil())
+
+
+# def p_atom_no_param(t):
+#     '''atom : receiver TOK_DOT TOK_ID TOK_LPAREN TOK_RPAREN
+#             | TOK_ID TOK_LPAREN TOK_RPAREN
+#     '''
+
+#     if (t[2] == '.'):
+#         receiver = t[1]
+#         method_name = t[3]
+#     else:
+#         receiver = None
+#         method_name = t[1]
+
+#     t[0] = new_call(receiver, new_id(method_name), new_nil())
+
+# def p_atom_param(t):
+#     '''atom : receiver TOK_DOT TOK_ID TOK_LPAREN paramlist TOK_RPAREN
+#             | TOK_ID TOK_LPAREN paramlist TOK_RPAREN
+#     '''
+
+#     if (t[2] == '.'):
+#         receiver = t[1]
+#         method_name = t[3]
+#         params = t[5]
+#     else:
+#         receiver = new_nil()
+#         method_name = t[1]
+#         params = t[3]
+
+#     t[0] = new_call(receiver, new_id(method_name), params)
+
+def p_freevar_id(t):
+    '''freevar : TOK_ID
     '''
     t[0] = new_id(t[1])
 
-def p_receiver_donttcare(t):
-    '''receiver : TOK_DONTCARE
+def p_freevar_donttcare(t):
+    '''freevar : TOK_DONTCARE
     '''
     t[0] = new_dontcare()
 
 def p_paramlist_param(t):
     '''paramlist : param
+                 | param TOK_COMMA paramlist
     '''
-    t[0] = new_param(t[1],new_nil())
-
-def p_paramlist(t):
-    '''paramlist : param TOK_COMMA paramlist
-    '''
-    t[0] = new_param(t[1],t[3])
+    if (len(t) == 2):
+        t[0] = new_param(t[1],new_nil())
+    else:
+        t[0] = new_param(t[1],t[3])
 
 def p_param_id(t):
     '''param : TOK_ID'''
@@ -172,6 +257,24 @@ def p_param_int(t):
 def p_param_dontcare(t):
     '''param : TOK_DONTCARE'''
     t[0] = new_dontcare()
+
+def p_composed_id(t):
+    '''composed_id : TOK_ID
+                   | TOK_ID TOK_DOT composed_id'''
+    if (len(t) == 2):
+        t[0] = new_id(t[1])
+    else:
+        t[0] = new_id("%s.%s" % (t[1], t[3][1]))
+
+def p_method_type(t):
+    ''' method_type : TOK_CI
+                    | TOK_CB
+    '''
+    if (t[1] == 'CI'):
+        t[0] = new_ci()
+    elif (t[1] == 'CB'):
+        t[0] = new_cb()
+
 
 
 def p_error(t):

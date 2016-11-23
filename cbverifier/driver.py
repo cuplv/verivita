@@ -10,6 +10,7 @@ import logging
 from cbverifier.traces.ctrace import CTraceSerializer
 from cbverifier.specs.spec import Spec
 from cbverifier.encoding.encoder import TSEncoder
+from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.bmc.bmc import BMC
 
 
@@ -121,12 +122,11 @@ def main(input_args=None):
         bmc = BMC(ts_enc.helper,
                   ts_enc.get_ts_encoding(),
                   ts_enc.error_prop)
-
         cex = bmc.find_bug(depth)
 
-        if (cex is None):
-            print "Found bug"
-            print "Model still not available"
+        if (cex is not None):
+            printer = CexPrinter(ts_enc.mapback, cex, sys.stdout)
+            printer.print_cex()
         else:
             print "No bugs found up to %d steps" % (depth)
 

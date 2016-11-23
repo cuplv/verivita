@@ -13,6 +13,7 @@ except ImportError:
 
 from cbverifier.encoding.counter_enc import CounterEnc
 
+from pysmt.shortcuts import get_model
 from pysmt.shortcuts import get_env, Solver
 from pysmt.shortcuts import TRUE, FALSE
 from pysmt.shortcuts import And, Or, Not, Iff
@@ -129,3 +130,21 @@ class TestCounterEnc(unittest.TestCase):
                      And([Not(b0), b1, b2]),
                      And([b0, b1, b2])])
         self._is_eq(mask, Not(models))
+
+
+    def test_value(self):
+        def eq_value(self, var_name, value):
+            eq_val = self.enc.eq_val(var_name, value)
+            self.solver.is_sat(eq_val)
+            model = self.solver.get_model()
+            res = self.enc.get_counter_value(var_name, model, False)
+            self.assertTrue(res == value)
+
+        var_name = "counter_4"
+
+        self.enc.add_var(var_name, 4)
+        eq_value(self, var_name, 0)
+        eq_value(self, var_name, 1)
+        eq_value(self, var_name, 2)
+        eq_value(self, var_name, 3)
+        eq_value(self, var_name, 4)

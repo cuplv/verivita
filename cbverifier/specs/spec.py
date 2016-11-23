@@ -28,6 +28,10 @@ class Spec:
     def is_disable(self):
         return is_spec_disable(self.ast)
 
+    def is_enable(self):
+        return is_spec_enable(self.ast)
+
+
     @staticmethod
     def get_specs_from_string(spec_list_string, spec_list=None):
         spec_list_ast = spec_parser.parse(spec_list_string)
