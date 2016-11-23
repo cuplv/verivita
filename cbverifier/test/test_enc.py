@@ -563,6 +563,6 @@ class TestEnc(unittest.TestCase):
         printer.print_cex()
 
         io_string = stringio.getvalue()
-        self.assertTrue("SPEC [CB] 1.m1() |- [CI] 1.m2()" in io_string)
+        self.assertTrue("SPEC [CB] [1] m1() |- [CI] [1] m2()" in io_string)
         self.assertTrue("[CB]_m1(1)" in io_string)
         self.assertTrue("Reached an error state in step 2" in io_string)
