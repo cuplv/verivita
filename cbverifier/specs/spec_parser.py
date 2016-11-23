@@ -178,11 +178,15 @@ def p_param_dontcare(t):
 
 def p_composed_id(t):
     '''composed_id : TOK_ID
-                   | TOK_ID TOK_DOT composed_id'''
+                   | TOK_ID TOK_DOT composed_id
+                   | TOK_ID composed_id'''
     if (len(t) == 2):
         t[0] = new_id(t[1])
     else:
-        t[0] = new_id("%s.%s" % (t[1], t[3][1]))
+        if (t[2] == '.'):
+            t[0] = new_id("%s.%s" % (t[1], t[3][1]))
+        else:
+            t[0] = new_id("%s %s" % (t[1], t[2][1]))
 
 def p_method_type(t):
     ''' method_type : TOK_CI
