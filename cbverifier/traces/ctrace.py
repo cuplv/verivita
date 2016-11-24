@@ -82,11 +82,23 @@ class CMessage(object):
 
     @staticmethod
     def get_full_msg_name_static(class_name, method_name):
-        if class_name is None or class_name == "":
-            res = method_name
-        else:
-            res = "%s.%s" % (class_name, method_name)
+        ret_type = None
 
+        # get the first word
+        split_name_by_space = method_name.strip().split(" ")
+        if (len(split_name_by_space) == 1):
+            ret_type = None
+        else:
+            ret_type = split_name_by_space[0]
+            method_name = " ".join(split_name_by_space[1:])
+
+        res = ""
+        if (ret_type != None):
+            res += "%s " % ret_type
+        if class_name is None or class_name == "":
+            res += method_name
+        else:
+            res += "%s.%s" % (class_name, method_name)
         return res
 
     def get_full_msg_name(self):
