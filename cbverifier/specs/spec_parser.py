@@ -109,10 +109,16 @@ def p_atom(t):
 
     receiver = method_call[0]
     inner_call = method_call[1]
-    method_name = inner_call[0]
-    method_param = inner_call[1]
+    ret_type = inner_call[0]
+    method_name = inner_call[1]
+    method_param = inner_call[2]
 
-    # print("receiver " + str(method_call[0]) + "call " + str(method_call[1]) + "name " + str(inner_call[0]) + "param " + str(inner_call[1]))
+    # Method signature
+    # return_type method_name(type_p1, type_p2, ..., type_pn)
+    assert (get_node_type(ret_type) == ID and
+            get_node_type(method_name) == ID)
+    method_name = new_id("%s %s" % (get_id_val(ret_type),
+                                    get_id_val(method_name)))
 
     t[0] = new_call(assignee, call_type, receiver,
                     method_name, method_param)
@@ -136,12 +142,12 @@ def p_method_call(t):
         t[0] = (new_nil(), t[1])
 
 def p_inner_call(t):
-    '''inner_call : composed_id TOK_LPAREN paramlist TOK_RPAREN
-                  | composed_id TOK_LPAREN TOK_RPAREN'''
-    if (t[3] != ')'):
-        t[0] = (t[1], t[3])
+    '''inner_call : composed_id composed_id TOK_LPAREN paramlist TOK_RPAREN
+                  | composed_id composed_id TOK_LPAREN TOK_RPAREN'''
+    if (t[4] != ')'):
+        t[0] = (t[1], t[2], t[4])
     else:
-        t[0] = (t[1], new_nil())
+        t[0] = (t[1], t[2], new_nil())
 
 def p_paramlist_param(t):
     '''paramlist : param
@@ -182,15 +188,12 @@ def p_param_string(t):
 
 def p_composed_id(t):
     '''composed_id : TOK_ID
-                   | TOK_ID TOK_DOT composed_id
-                   | TOK_ID composed_id'''
+                   | TOK_ID TOK_DOT composed_id'''
     if (len(t) == 2):
         t[0] = new_id(t[1])
     else:
-        if (t[2] == '.'):
-            t[0] = new_id("%s.%s" % (t[1], t[3][1]))
-        else:
-            t[0] = new_id("%s %s" % (t[1], t[2][1]))
+        assert (t[2] == '.')
+        t[0] = new_id("%s.%s" % (t[1], t[3][1]))
 
 def p_method_type(t):
     ''' method_type : TOK_CI

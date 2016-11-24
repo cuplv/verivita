@@ -20,8 +20,8 @@ from cbverifier.specs.spec import Spec
 class TestSpecs(unittest.TestCase):
 
     def test_spec_creation(self):
-        spec_list = Spec.get_specs_from_string("SPEC [CI] [l] method_name() |- TRUE; " +
-                                               "SPEC [CI] [l] method_name() |- TRUE;" +
-                                               "SPEC [CI] [b] android.widget.Button.setOnClickListener(l) |+ [CB] [l] onClick(b);" +
-                                               "SPEC TRUE[*]; [CI] [b] android.widget.Button.setOnClickListener(l) |+ [CB] [l] onClick(b)")
+        spec_list = Spec.get_specs_from_string("SPEC [CI] [l] void method_name() |- TRUE; " +
+                                               "SPEC [CI] [l] void method_name() |- TRUE;" +
+                                               "SPEC [CI] [b] void android.widget.Button.setOnClickListener(l) |+ [CB] [l] void onClick(b);" +
+                                               "SPEC TRUE[*]; [CI] [b] void android.widget.Button.setOnClickListener(l) |+ [CB] [l] void onClick(b)")
         self.assertTrue(len(spec_list) == 4)

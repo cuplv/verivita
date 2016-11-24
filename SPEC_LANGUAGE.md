@@ -88,8 +88,8 @@ method_type : CB
 method_call : [param] inner_call
             | inner_call
             
-inner_call : composed_id(param_list)
-           | composed_id()
+inner_call : composed_id composed_id(param_list)
+           | composed_id composed_id()
            
 param_list : param
            | param, param_list
@@ -159,7 +159,7 @@ enabled, we have to match an unbounded number of letters before the
 method:
 
 ```
-SPEC TRUE[*]; [CI] [b] android.widget.Button.setOnClickListener(l) |+ [CB] [l] onClick(b)
+SPEC TRUE[*]; [CI] [b] void android.widget.Button.setOnClickListener(l) |+ [CB] [l] void onClick(b)
 ```
 
 This specification tells that one can see any number of method calls

@@ -26,23 +26,23 @@ class TestRegExpToAuto(unittest.TestCase):
     def test_regexptoauto(self):
         auto_env = AutoEnv.get_global_auto_env()
         cenc = CounterEnc(auto_env.pysmt_env)
-        alphabet = set(["[CB]_m1(1)","[CI]_m2(1)","[CB]_m3(1)"])
+        alphabet = set(["[CB]_void m1(1)","[CI]_void m2(1)","[CB]_void m3(1)"])
 
         r2a = RegExpToAuto(cenc, alphabet,
                            TSMapback(auto_env.pysmt_env, None, None),
                            auto_env)
         env = r2a.auto_env
 
-        l1 = r2a.get_msg_eq("[CB]_m1(1)")
-        l2 = r2a.get_msg_eq("[CI]_m2(1)")
-        l3 = r2a.get_msg_eq("[CB]_m3(1)")
+        l1 = r2a.get_msg_eq("[CB]_void m1(1)")
+        l2 = r2a.get_msg_eq("[CI]_void m2(1)")
+        l3 = r2a.get_msg_eq("[CB]_void m3(1)")
 
-        spec_list = Spec.get_specs_from_string("SPEC [CB] [l] m1() |- TRUE; " +
-                                               "SPEC ([CB] [l] m1() & [CI] [l] m2()) |- TRUE; " +
-                                               "SPEC ([CB] [l] m1() | [CI] [l] m2()) |- TRUE; " +
-                                               "SPEC (! [CB] [l] m1()) |- TRUE; " +
-                                               "SPEC [CB] [l] m1(); [CI] [l] m2() |- TRUE; " +
-                                               "SPEC [CB] [l] m1()[*] |- TRUE")
+        spec_list = Spec.get_specs_from_string("SPEC [CB] [l] void m1() |- TRUE; " +
+                                               "SPEC ([CB] [l] void m1() & [CI] [l] void m2()) |- TRUE; " +
+                                               "SPEC ([CB] [l] void m1() | [CI] [l] void m2()) |- TRUE; " +
+                                               "SPEC (! [CB] [l] void m1()) |- TRUE; " +
+                                               "SPEC [CB] [l] void m1(); [CI] [l] void m2() |- TRUE; " +
+                                               "SPEC [CB] [l] void m1()[*] |- TRUE")
         assert spec_list is not None
         binding = TestGrounding.newAssign(
             [new_id('l')], [TestGrounding._get_obj("1","string")])

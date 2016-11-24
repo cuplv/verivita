@@ -140,9 +140,9 @@ class TestEnc(unittest.TestCase):
 
 
     def test_get_key_from_call(self):
-        spec_list = Spec.get_specs_from_string("SPEC TRUE |- [CI] [l] m1(); " +
-                                               "SPEC TRUE |- [CI] [l] m1(a,b,c);" +
-                                               "SPEC TRUE |- z = [CI] [l] m1(a,b,c)")
+        spec_list = Spec.get_specs_from_string("SPEC TRUE |- [CI] [l] void m1(); " +
+                                               "SPEC TRUE |- [CI] [l] void m1(a,b,c);" +
+                                               "SPEC TRUE |- z = [CI] [l] void m1(a,b,c)")
         assert spec_list is not None
 
         binding = TestGrounding.newAssign(
@@ -162,11 +162,11 @@ class TestEnc(unittest.TestCase):
         assert (len(calls_nodes) == len(spec_list))
 
         res = TSEncoder.get_key_from_call(calls_nodes[0])
-        self.assertTrue("[CI]_m1(1)" == res)
+        self.assertTrue("[CI]_void m1(1)" == res)
         res = TSEncoder.get_key_from_call(calls_nodes[1])
-        self.assertTrue("[CI]_m1(1,2,1,2)" == res)
+        self.assertTrue("[CI]_void m1(1,2,1,2)" == res)
         res = TSEncoder.get_key_from_call(calls_nodes[2])
-        self.assertTrue("3=[CI]_m1(1,2,1,2)" == res)
+        self.assertTrue("3=[CI]_void m1(1,2,1,2)" == res)
 
 
 
@@ -282,7 +282,7 @@ class TestEnc(unittest.TestCase):
             f_error = And(f_error, final)
             return f_error
 
-        spec_list = Spec.get_specs_from_string("SPEC [CB] [l] m1() |- [CI] [l] m2()")
+        spec_list = Spec.get_specs_from_string("SPEC [CB] [l] void m1() |- [CI] [l] void m2()")
         assert spec_list is not None
 
         binding = TestGrounding.newAssign([new_id('l')],
@@ -291,12 +291,12 @@ class TestEnc(unittest.TestCase):
 
         ctrace = CTrace()
 
-        cb = CCallback(1, 1, "", "m1",
+        cb = CCallback(1, 1, "", "void m1",
                        [TestGrounding._get_obj("1","string")],
                        None,
-                       [TestGrounding._get_fmwkov("","m1", False)])
+                       [TestGrounding._get_fmwkov("","void m1", False)])
         ctrace.add_msg(cb)
-        ci = CCallin(1, 1, "", "m2",
+        ci = CCallin(1, 1, "", "void m2",
                      [TestGrounding._get_obj("1","string")],
                      None)
         cb.add_msg(ci)
@@ -309,24 +309,24 @@ class TestEnc(unittest.TestCase):
         gs_ts.product(ts_var)
 
         error = _encode_error(accepting, TRUE())
-        self.assertTrue(self._accept_word(ts_enc, gs_ts, ["[CB]_m1(1)"], error))
-        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["[CI]_m2(1)"], error))
+        self.assertTrue(self._accept_word(ts_enc, gs_ts, ["[CB]_void m1(1)"], error))
+        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["[CI]_void m2(1)"], error))
 
         # check the disable
-        error = _encode_error(accepting, TSEncoder._get_state_var("[CI]_m2(1)"))
-        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["[CB]_m1(1)"], error))
-        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["[CI]_m2(1)"], error))
+        error = _encode_error(accepting, TSEncoder._get_state_var("[CI]_void m2(1)"))
+        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["[CB]_void m1(1)"], error))
+        self.assertFalse(self._accept_word(ts_enc, gs_ts, ["[CI]_void m2(1)"], error))
 
     def _get_sample_trace(self):
-        spec_list = Spec.get_specs_from_string("SPEC [CB] [l] m1() |- [CI] [l] m2()")
+        spec_list = Spec.get_specs_from_string("SPEC [CB] [l] void m1() |- [CI] [l] void m2()")
         assert spec_list is not None
 
         ctrace = CTrace()
-        cb = CCallback(1, 1, "", "m1", [TestGrounding._get_obj("1","string")],
+        cb = CCallback(1, 1, "", "void m1", [TestGrounding._get_obj("1","string")],
                        None,
-                       [TestGrounding._get_fmwkov("","m1", False)])
+                       [TestGrounding._get_fmwkov("","void m1", False)])
         ctrace.add_msg(cb)
-        ci = CCallin(1, 1, "", "m2",
+        ci = CCallin(1, 1, "", "void m2",
                      [TestGrounding._get_obj("1","string")],
                      None)
         cb.add_msg(ci)
@@ -344,12 +344,12 @@ class TestEnc(unittest.TestCase):
             for state in v:
                 accepting_states = Or(accepting_states, state)
 
-        assert(disabled_ci == set(["[CI]_m2(1)"]))
+        assert(disabled_ci == set(["[CI]_void m2(1)"]))
 
-        self.assertTrue(self._accept_word(ts_enc, ts, ["[CB]_m1(1)"], accepting_states))
-        self.assertFalse(self._accept_word(ts_enc, ts, ["[CI]_m2(1)"], accepting_states))
-        error = And(accepting_states, TSEncoder._get_state_var("[CI]_m2(1)"))
-        self.assertFalse(self._accept_word(ts_enc, ts, ["[CB]_m1(1)"], error))
+        self.assertTrue(self._accept_word(ts_enc, ts, ["[CB]_void m1(1)"], accepting_states))
+        self.assertFalse(self._accept_word(ts_enc, ts, ["[CI]_void m2(1)"], accepting_states))
+        error = And(accepting_states, TSEncoder._get_state_var("[CI]_void m2(1)"))
+        self.assertFalse(self._accept_word(ts_enc, ts, ["[CB]_void m1(1)"], error))
 
 
     def test_encode_cbs(self):
@@ -465,8 +465,8 @@ class TestEnc(unittest.TestCase):
             all_vars.extend(cenc.get_counter_var(c))
 
         # Fake spec (it is not important to test the mapback)
-        specs = Spec.get_specs_from_string("SPEC [CB] [l] m1() |- [CI] [l] m2();"\
-                                           "SPEC [CB] [l] m1() |- [CI] [l] m2()")
+        specs = Spec.get_specs_from_string("SPEC [CB] [l] void m1() |- [CI] [l] void m2();" \
+                                           "SPEC [CB] [l] void m1() |- [CI] [l] void m2()")
 
 
         mapback = TSMapback(pysmt_env, msg_ivar, pc_counter)
@@ -475,7 +475,7 @@ class TestEnc(unittest.TestCase):
         mapback.add_encoder(pc_counter, cenc)
 
         for i in range(10):
-            mapback.add_vars2msg(i,"m_%d" % i)
+            mapback.add_vars2msg(i,"void m_%d" % i)
         for i in range(10):
             mapback.add_pc2trace(i,"trace_%d" % i)
 
@@ -496,7 +496,7 @@ class TestEnc(unittest.TestCase):
         for i in range(10):
             m = get_def_model(cenc.eq_val(msg_ivar,i), all_vars, False)
             res = mapback.get_trans_label(m)
-            self.assertTrue("m_%d" %i == res)
+            self.assertTrue("void m_%d" %i == res)
 
         for i in range(10):
             m = get_def_model(cenc.eq_val(pc_counter,i), all_vars, False)
@@ -566,5 +566,5 @@ class TestEnc(unittest.TestCase):
         printer.print_cex()
 
         io_string = stringio.getvalue()
-        self.assertTrue("SPEC [CB] [1] m1() |- [CI] [1] m2()" in io_string)
+        self.assertTrue("SPEC [CB] [1] void m1() |- [CI] [1] void m2()" in io_string)
         self.assertTrue("Reached an error state in step 2" in io_string)

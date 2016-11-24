@@ -115,7 +115,7 @@ class TestGrounding(unittest.TestCase):
         a3 = a1.intersect(a2)
         self._check_val(a3, ['x','y','z'],[1,2,1])
 
-    def test_assignements_set(self):
+    def test_assignments_set(self):
         aset1 = TestGrounding.newBinding([])
         aset2 = TestGrounding.newBinding([])
         aset1 = aset1.combine(aset2)
@@ -272,69 +272,67 @@ class TestGrounding(unittest.TestCase):
         assert (res == res_2)
 
 
-
     def test_ground_bindings(self):
         trace = CTrace()
-        cb = CCallback(1, 1, "", "doSomethingCb",
+        cb = CCallback(1, 1, "", "void doSomethingCb",
                        [TestGrounding._get_obj("1","string")],
                        None,
                        [TestGrounding._get_fmwkov("",
-                                                  "doSomethingCb", False)])
+                                                  "void doSomethingCb", False)])
         trace.add_msg(cb)
 
         # 1.doSomethingCi(2)
-        ci = CCallin(1, 1, "", "doSomethingCi",
+        ci = CCallin(1, 1, "", "void doSomethingCi",
                      [TestGrounding._get_obj("1","string"),
                       TestGrounding._get_obj("2","string")],
                      None)
         cb.add_msg(ci)
 
         # 3.otherCi(1)
-        ci = CCallin(1, 1, "", "otherCi",
+        ci = CCallin(1, 1, "", "void otherCi",
                      [TestGrounding._get_obj("4","string"),
                       TestGrounding._get_obj("1","string")],
                      None)
         cb.add_msg(ci)
 
         # 1.doSomethingCi(4)
-        ci = CCallin(1, 1, "", "doSomethingCi",
+        ci = CCallin(1, 1, "", "void doSomethingCi",
                      [TestGrounding._get_obj("1","string"),
                       TestGrounding._get_obj("4","string")],
                      None)
         cb.add_msg(ci)
 
         gs = GroundSpecs(trace)
-        spec = Spec.get_spec_from_string("SPEC [CI] [l] doSomethingCi(z) |- [CI] [z] otherCi(f)")
+        spec = Spec.get_spec_from_string("SPEC [CI] [l] void doSomethingCi(z) |- [CI] [z] void otherCi(f)")
         bindings = gs._get_ground_bindings(spec)
         res = TestGrounding.newBinding([
             [[new_id('l'),new_id('z'),new_id('f')],
              [TestGrounding._get_obj("1","string"),
               TestGrounding._get_obj("4","string"),
               TestGrounding._get_obj("1","string")]]])
-        assert (bindings == res)
+        self.assertTrue(bindings == res)
 
         ground_specs = gs.ground_spec(spec)
-        assert len(ground_specs) == 1
-        spec = Spec.get_spec_from_string("SPEC [CI] [l] doSomethingCi(#) |- [CI] [#] otherCi(#)")
+        self.assertTrue(len(ground_specs) == 1)
+        spec = Spec.get_spec_from_string("SPEC [CI] [l] void doSomethingCi(#) |- [CI] [#] void otherCi(#)")
         bindings = gs._get_ground_bindings(spec)
         res = TestGrounding.newBinding([
             [[new_id('l')],
              [TestGrounding._get_obj("1","string")]]])
-        assert (bindings == res)
+        self.assertTrue(bindings == res)
 
         ground_specs = gs.ground_spec(spec)
-        assert len(ground_specs) == 1
-
+        self.assertTrue(len(ground_specs) == 1)
 
         ground_specs = gs.ground_spec(spec)
-        assert len(ground_specs) == 1
-        spec = Spec.get_spec_from_string("SPEC [CB] [l] doSomethingCb() |- [CI] [#] otherCi(l)")
+        self.assertTrue(len(ground_specs) == 1)
+        spec = Spec.get_spec_from_string("SPEC [CB] [l] void doSomethingCb() |- [CI] [#] void otherCi(l)")
         bindings = gs._get_ground_bindings(spec)
         res = TestGrounding.newBinding([
             [[new_id('l')],
              [TestGrounding._get_obj("1","string")]]])
 
-        assert (bindings == res)
+        self.assertTrue(bindings == res)
 
         ground_specs = gs.ground_spec(spec)
-        assert len(ground_specs) == 1
+        self.assertTrue(len(ground_specs) == 1)

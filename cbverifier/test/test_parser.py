@@ -9,6 +9,7 @@ import unittest
 from ply.lex import LexToken
 import ply.yacc as yacc
 
+from cStringIO import StringIO
 
 try:
     import unittest2 as unittest
@@ -121,54 +122,57 @@ class TestSpecParser(unittest.TestCase):
     def _test_parse(self, specs):
         res = spec_parser.parse(specs)
         self.assertTrue(res is not None)
+        # test the printing of the spec ast
+        stringio = StringIO()
+        pretty_print(res, stringio)
 
 
     def _test_parse_error(self, specs):
         res = spec_parser.parse(specs)
         self.assertTrue(res is None)
 
-
     def test_parser(self):
-        correct_expr = ["SPEC [CB] [l] l() |- [CB] [l] l(b)",
-                        "SPEC [CB] [l] l(l1,l2) |- [CB] [l] l(b)",
-                        "SPEC [CB] [l] l(l1,l2) |- [CI] [l] l(b); SPEC [CB] [l] l(l1,l2) |- [CI] [l] l(b)",
-                        "SPEC [CB] [l] l(l1,l2); [CB] [l] l(l1,l2) |- [CI] [l] l(b)",
-                        "SPEC [CB] [l] l(l1,l2)[*] |- [CI] [l] l(b)",
-                        "SPEC [CB] [l] l(l1,l2)[*] |+ [CI] [l] l(b)",
-                        "SPEC [CB] [l] l(l1,l2)[*] |- [CI] [l] l(b)",
-                        "SPEC [CB] [l] a b(l1,l2)[*] |- [CI] [l] l(b)",
-                        "SPEC [CB] [l] void <init>(l1,l2)[*] |- [CI] [l] l(b)",
+        correct_expr = ["SPEC [CB] [l] type l() |- [CB] [l] type l(b)",
+                        "SPEC [CB] [l] type l(l1,l2) |- [CB] [l] type l(b)",
+                        "SPEC [CB] [l] type l(l1,l2) |- [CI] [l] type l(b); SPEC [CB] [l] type l(l1,l2) |- [CI] [l] type l(b)",
+                        "SPEC [CB] [l] type l(l1,l2); [CB] [l] type l(l1,l2) |- [CI] [l] type l(b)",
+                        "SPEC [CB] [l] type l(l1,l2)[*] |- [CI] [l] type l(b)",
+                        "SPEC [CB] [l] type l(l1,l2)[*] |+ [CI] [l] type l(b)",
+                        "SPEC [CB] [l] type l(l1,l2)[*] |- [CI] [l] type l(b)",
+                        "SPEC [CB] [l] type b(l1,l2)[*] |- [CI] [l] type l(b)",
+                        "SPEC [CB] [l] void <init>(l1,l2)[*] |- [CI] [l] type l(b)",
                         "SPEC TRUE |- TRUE",
                         "SPEC TRUE[*] |- TRUE",
                         "SPEC (TRUE)[*] |- TRUE",
-                        "SPEC [CB] [l] m1()[*] |- TRUE",
+                        "SPEC [CB] [l] type m1()[*] |- TRUE",
                         "SPEC (TRUE & FALSE)[*] |- TRUE",
                         "SPEC (TRUE & FALSE | ! FALSE)[*] |- TRUE",
-                        "SPEC [CB] [l1] methodName(TRUE) |- [CI] [l2] methodName(bparam,TRUE)",
-                        "SPEC [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
-                        "SPEC foo = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
-                        "SPEC foo = [CB] [l1] methodName(a); foo = [CB] [l1] methodName(a) |- [CI] [l2] methodName(bparam,TRUE)",
-                        "SPEC 1 = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
-                        "SPEC # = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
-                        "SPEC TRUE = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
-                        'SPEC [CB] [l] l(l1,"foo")[*] |- [CI] [l] l(b)']
+                        "SPEC [CB] [l1] type methodName(TRUE) |- [CI] [l2] type methodName(bparam,TRUE)",
+                        "SPEC [CB] [l1] type methodName(#) |- [CI] [l2] type methodName(bparam,TRUE)",
+                        "SPEC foo = [CB] [l1] type methodName(#) |- [CI] [l2] type methodName(bparam,TRUE)",
+                        "SPEC foo = [CB] [l1] type methodName(a); foo = [CB] [l1] type methodName(a) |- [CI] [l2] type methodName(bparam,TRUE)",
+                        "SPEC 1 = [CB] [l1] type methodName(#) |- [CI] [l2] type methodName(bparam,TRUE)",
+                        "SPEC # = [CB] [l1] type methodName(#) |- [CI] [l2] type methodName(bparam,TRUE)",
+                        "SPEC TRUE = [CB] [l1] type methodName(#) |- [CI] [l2] type methodName(bparam,TRUE)",
+                        'SPEC [CB] [l] type l(l1,"foo")[*] |- [CI] [l] type l(b)']
 
         for expr in correct_expr:
             self._test_parse(expr)
 
         wrong_expr = ["SPEC TRUE "]
-        for expr in wrong_expr: self._test_parse_error(expr)
+        for expr in wrong_expr:
+            self._test_parse_error(expr)
 
     def test_ast(self):
         def test_ast_inner(specs, expected):
             parse_res = spec_parser.parse(specs)
             self.assertTrue(parse_res == expected)
 
-        res = [("SPEC [CB] [l] package.method_name() |- TRUE",
+        res = [("SPEC [CB] [l] void package.method_name() |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (NIL,), (CB,), (ID,'l'), (ID, 'package.method_name'), (NIL,)),
+                   (CALL, (NIL,), (CB,), (ID,'l'), (ID, 'void package.method_name'), (NIL,)),
                    (0,))), (NIL,))),
                ("SPEC [CB] [l] void package.method_name() |- TRUE",
                 (SPEC_LIST,
@@ -176,23 +180,23 @@ class TestSpecParser(unittest.TestCase):
                   (DISABLE_OP,
                    (CALL, (NIL,), (CB,), (ID,'l'), (ID, 'void package.method_name'), (NIL,)),
                    (0,))), (NIL,))),
-               ("SPEC [CI] [l] method_name(0,1,f) |- TRUE",
+               ("SPEC [CI] [l] void method_name(0,1,f) |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (NIL,), (CI,), (ID,'l'), (ID, 'method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
+                   (CALL, (NIL,), (CI,), (ID,'l'), (ID, 'void method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
                    (0,))), (NIL,))),
-               ("SPEC var = [CI] [l] method_name(0,1,f) |- TRUE",
+               ("SPEC var = [CI] [l] void method_name(0,1,f) |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
+                   (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'void method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
                    (0,))), (NIL,))),
-               ('SPEC var = [CI] [l] method_name(0,"foobar",f) |- TRUE',
+               ('SPEC var = [CI] [l] void method_name(0,"foobar",f) |- TRUE',
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'method_name'),
+                   (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'void method_name'),
                     (PARAM_LIST, (INT, 0), (PARAM_LIST, (STRING, '"foobar"'), (PARAM_LIST, (ID, 'f'), (NIL,))))),
                    (0,))), (NIL,)))]
 

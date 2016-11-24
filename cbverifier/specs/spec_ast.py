@@ -211,7 +211,9 @@ def pretty_print(ast_node, out_stream=sys.stdout):
                 pretty_print_aux(out_stream,receiver,"") # receiver
                 my_print(out_stream, "] ")
 
-            pretty_print_aux(out_stream,get_call_method(node),"")
+            pretty_print_aux(out_stream,
+                             get_call_method(node),"")
+
             my_print(out_stream, "(")
 
             param_list = get_call_params(node)
