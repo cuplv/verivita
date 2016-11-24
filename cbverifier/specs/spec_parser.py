@@ -136,9 +136,9 @@ def p_method_call(t):
         t[0] = (new_nil(), t[1])
 
 def p_inner_call(t):
-    '''inner_call : composed_id TOK_LSQUARE paramlist TOK_RSQUARE
-                  | composed_id TOK_LSQUARE TOK_RSQUARE'''
-    if (t[3] != ']'):
+    '''inner_call : composed_id TOK_LPAREN paramlist TOK_RPAREN
+                  | composed_id TOK_LPAREN TOK_RPAREN'''
+    if (t[3] != ')'):
         t[0] = (t[1], t[3])
     else:
         t[0] = (t[1], new_nil())
@@ -176,7 +176,7 @@ def p_param_dontcare(t):
     '''param : TOK_DONTCARE'''
     t[0] = new_dontcare()
 
-def p_composed_id_primary(t):
+def p_composed_id(t):
     '''composed_id : TOK_ID
                    | TOK_ID TOK_DOT composed_id
                    | TOK_ID composed_id'''
@@ -187,23 +187,6 @@ def p_composed_id_primary(t):
             t[0] = new_id("%s.%s" % (t[1], t[3][1]))
         else:
             t[0] = new_id("%s %s" % (t[1], t[2][1]))
-
-def p_composed_id_lparens(t):
-    '''composed_id : TOK_LPAREN
-                   | TOK_LPAREN composed_id'''
-    if (len(t) == 2):
-        t[0] = new_id("(")
-    else:
-        t[0] = new_id("(" + t[2][1])
-
-def p_composed_id_rparens(t):
-    '''composed_id : TOK_RPAREN
-                   | TOK_RPAREN composed_id'''
-    if (len(t) == 2):
-        t[0] = new_id(")")
-    else:
-        t[0] = new_id(")" + t[2][1])
-
 
 def p_method_type(t):
     ''' method_type : TOK_CI

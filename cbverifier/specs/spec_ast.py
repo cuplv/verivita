@@ -211,7 +211,7 @@ def pretty_print(ast_node, out_stream=sys.stdout):
             my_print(out_stream, "%s" % value_repr)
         elif (node_type == PARAM_LIST):
             pretty_print_aux(out_stream,node[1],"")
-            if (get_node_type(node[2]) != NIL):
+            if (get_node_type(node[2]) != new_nil()):
                 my_print(out_stream, ",")
                 pretty_print_aux(out_stream,node[2],"")
         elif (node_type == CALL):
@@ -232,13 +232,13 @@ def pretty_print(ast_node, out_stream=sys.stdout):
                 my_print(out_stream, "] ")
 
             pretty_print_aux(out_stream,get_call_method(node),"")
-            my_print(out_stream, "[")
+            my_print(out_stream, "(")
 
             param_list = get_call_params(node)
             if (param_list != new_nil()):
                 pretty_print_aux(out_stream, param_list, "") # params
 
-            my_print(out_stream, "]")
+            my_print(out_stream, ")")
         elif (node_type == AND_OP or node_type == OR_OP):
             my_print(out_stream, "(")
             pretty_print_aux(out_stream,node[1],"")
@@ -250,7 +250,7 @@ def pretty_print(ast_node, out_stream=sys.stdout):
             pretty_print_aux(out_stream,node[1],"")
         elif (node_type == SEQ_OP):
             pretty_print_aux(out_stream,node[1],"")
-            if (get_node_type(node[2]) != NIL):
+            if (get_node_type(node[2]) != new_nil()):
                 my_print(out_stream, "; ")
                 pretty_print_aux(out_stream,node[2],"")
         elif (node_type == STAR_OP):
@@ -275,10 +275,9 @@ def pretty_print(ast_node, out_stream=sys.stdout):
         elif (node_type == SPEC_LIST):
             pretty_print_aux(out_stream,node[1],"")
             my_print(out_stream, ";\n")
-            if (get_node_type(node[2]) != NIL):
+            if (get_node_type(node[2]) != new_nil()):
                 pretty_print_aux(out_stream,node[2],"")
         else:
-            print node
             raise UnexpectedSymbol(node)
 
     pretty_print_aux(out_stream, ast_node, "")
