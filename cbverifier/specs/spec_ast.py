@@ -32,9 +32,8 @@ DISABLE_OP=14
 SPEC_LIST=15
 DONTCARE=16
 STRING=17
-VALUE=18
-CI = 19
-CB = 20
+CI = 18
+CB = 19
 
 inv_map = {0 : "TRUE",
            1 : "FALSE",
@@ -55,9 +54,8 @@ inv_map = {0 : "TRUE",
            15 : "SPEC_LIST",
            16 : "DONTCARE",
            17 : "STRING",
-           18 : "VALUE",
-           19 : "CI",
-           20 : "CB"}
+           18 : "CI",
+           19 : "CB"}
 
 
 ################################################################################
@@ -92,10 +90,6 @@ def new_not(p1): return (NOT_OP, p1)
 
 def new_seq(p1,p2): return (SEQ_OP, p1, p2)
 def new_star(p1): return (STAR_OP, p1)
-
-def new_value(value):
-    # wraps a trace runner value
-    return (VALUE, value)
 
 def new_enable_spec(regexp, atom):
     return (SPEC_SYMB, (ENABLE_OP, regexp, atom))
@@ -195,20 +189,6 @@ def pretty_print(ast_node, out_stream=sys.stdout):
         elif (node_type == CB): my_print(out_stream, "CB")
         elif (node_type == ID or node_type == INT or node_type == FLOAT or node_type == STRING):
             my_print(out_stream, "%s%s" % (sep, str(node[1])))
-        elif (node_type == VALUE):
-            value = node[1]
-
-            if value.is_null:
-                value_repr = "NULL"
-            elif value.value is not None:
-                value_repr = str(value.value)
-            elif value.object_id is not None:
-                value_repr = str(value.object_id)
-            else:
-                raise Exception("Cannot find a unique identifier for the value "\
-                                "%s%s" % (sep, str(value)))
-
-            my_print(out_stream, "%s" % value_repr)
         elif (node_type == PARAM_LIST):
             pretty_print_aux(out_stream,node[1],"")
             if (get_node_type(node[2]) != NIL):

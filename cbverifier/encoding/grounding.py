@@ -46,16 +46,41 @@ class GroundSpecs(object):
         # TODO: add memoization
 
         def substitute_rec(node, binding):
+
+            def replace_consts(node):
+                assert isinstance(node, tuple)
+                assert len(node) > 0
+
+                node_type = get_node_type(node)
+                if (node_type == TRUE):
+                    return new_id("TRUE")
+                elif (node_type == FALSE):
+                    return new_id("FALSE")
+                elif (node_type == NIL):
+                    return node
+                elif (node_type == ID):
+                    return node
+                elif (node_type == STRING or
+                      node_type == INT or
+                      node_type == FLOAT):
+                    return new_id(get_id_val(node))
+                else:
+                    return None
+
             def wrap_value(binding, varname):
                 assert binding.has_key(varname)
                 bind = binding.get(varname)
 
                 assert bind is not None
 
+                # unpack the different types of values in a string
+                # (an id at the end)
                 if (isinstance(bind, CValue)):
-                    return new_value(bind)
-                else:
-                    return bind
+                    return new_id(bind.get_value())
+                elif (isinstance(bind, tuple)):
+                    ret_val = replace_consts(bind)
+                    assert ret_val is not None
+                    return ret_val
 
             def sub_leaf(leaf, binding):
                 """ Given a leaf node, substitute it """
@@ -66,13 +91,13 @@ class GroundSpecs(object):
                     # Leave the DONTCARE in the node
                     assert leaf is not None
                     return leaf
-                elif leaf_type != ID:
-                    # LEAVE the constants in the node
-                    assert leaf is not None
-                    return leaf
-                else:
+                elif (leaf_type == ID):
                     # Replace the free variables
                     return wrap_value(binding, leaf)
+                else:
+                    ret_val = replace_consts(leaf)
+                    assert ret_val is not None
+                    return ret_val
 
             def process_param(param_node):
                 """ Returns the new list of parameters
@@ -90,16 +115,6 @@ class GroundSpecs(object):
                     formal_param = param_node[1]
                     res = sub_leaf(formal_param, binding)
                     return new_param(res, process_param(param_node[2]))
-
-                    # formal_param_type = get_node_type(formal_param)
-                    # if (DONTCARE != formal_param_type):
-                    #     # the binding should be there
-                    #     res = wrap_value(binding, formal_param)
-                    # else:
-                    #     # leave the DONTCARE node there
-                    #     res = formal_param
-                    # return new_param(res, process_param(param_node[2]))
-
 
             node_type = get_node_type(node)
             if (node_type in leaf_nodes): return node

@@ -197,15 +197,12 @@ class CValue(object):
         return str_repr
 
     def get_value(self):
-        if self.value is not None:
+        if self.is_null is not None and self.is_null:
+            return "NULL"
+        elif self.value is not None:
             return CValue.enc(self.value)
         elif self.object_id is not None:
             return CValue.enc(self.object_id)
-        elif self.is_null is not None:
-            # if it does not have values and object_id it
-            # must be NULL
-            assert self.is_null
-            return "NULL"
         else:
             raise Exception("CValue from trace is empty!")
 
