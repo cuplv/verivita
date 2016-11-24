@@ -31,6 +31,7 @@ tokens = keywords + (
     'TOK_RSQUARE',
     'TOK_DONTCARE',
     'TOK_ASSIGN',
+    'TOK_STRING_LITERAL',
     )
 
 # Tokens
@@ -57,6 +58,14 @@ def t_TOK_INT(t):
         print("Integer value too large %d", t.value)
         t.value = 0
     return t
+
+# Add BSD license from: https://github.com/eliben/pycparser (or rewrite it)
+simple_escape = r"""([a-zA-Z._~!=&\^\-\\?'"])"""
+decimal_escape = r"""(\d+)"""
+hex_escape = r"""(x[0-9a-fA-F]+)"""
+escape_sequence = r"""(\\("""+simple_escape+'|'+decimal_escape+'|'+hex_escape+'))'
+string_char = r"""([^"\\\n]|"""+escape_sequence+')'
+t_TOK_STRING_LITERAL = '"'+ string_char +'*"'
 
 t_TOK_NOT = r"\!"
 t_TOK_AND = r"\&"

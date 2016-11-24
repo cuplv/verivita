@@ -89,6 +89,7 @@ class TestEnc(unittest.TestCase):
         obj = TestGrounding._get_obj("1", "string")
         obj.is_null = True
         res = TSEncoder.get_value_key(obj)
+        print res
         self.assertTrue(res == "NULL")
 
         value = TestGrounding._get_int("1")

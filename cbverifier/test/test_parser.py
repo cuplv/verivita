@@ -90,6 +90,13 @@ class TestSpecParser(unittest.TestCase):
         self._test_single_token(0, 'TOK_CI', 1, 'CI', 'CI')
         self._test_single_token(0, 'TOK_ASSIGN', 1, '=', '=')
 
+        self._test_single_token(0, 'TOK_STRING_LITERAL', 1,
+                                '"dita nel naso"',
+                                '"dita nel naso"')
+        self._test_single_token(0, 'TOK_STRING_LITERAL', 1,
+                                '"abc \\" asfds \\""',
+                                '"abc \\" asfds \\""')
+
         self._test_single_token(0, 'TOK_SPEC', 1, 'SPEC', 'SPEC')
 
 
@@ -143,7 +150,8 @@ class TestSpecParser(unittest.TestCase):
                         "SPEC foo = [CB] [l1] methodName(a); foo = [CB] [l1] methodName(a) |- [CI] [l2] methodName(bparam,TRUE)",
                         "SPEC 1 = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
                         "SPEC # = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
-                        "SPEC TRUE = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)"]
+                        "SPEC TRUE = [CB] [l1] methodName(#) |- [CI] [l2] methodName(bparam,TRUE)",
+                        'SPEC [CB] [l] l(l1,"foo")[*] |- [CI] [l] l(b)']
 
         for expr in correct_expr:
             self._test_parse(expr)
@@ -179,6 +187,13 @@ class TestSpecParser(unittest.TestCase):
                  (SPEC_SYMB,
                   (DISABLE_OP,
                    (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'method_name'), (PARAM_LIST, (INT, 0), (PARAM_LIST, (INT, 1), (PARAM_LIST, (ID, 'f'), (NIL,))))),
+                   (0,))), (NIL,))),
+               ('SPEC var = [CI] [l] method_name(0,"foobar",f) |- TRUE',
+                (SPEC_LIST,
+                 (SPEC_SYMB,
+                  (DISABLE_OP,
+                   (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'method_name'),
+                    (PARAM_LIST, (INT, 0), (PARAM_LIST, (STRING, '"foobar"'), (PARAM_LIST, (ID, 'f'), (NIL,))))),
                    (0,))), (NIL,)))]
 
         for r in res:

@@ -699,8 +699,8 @@ class TSEncoder:
 
         node_retval = get_call_assignee(call_node)
         if (new_nil() != node_retval):
-            assert VALUE == get_node_type(node_retval)
-            retval = TSEncoder.get_value_key(node_retval[1])
+            assert ID == get_node_type(node_retval)
+            retval = get_id_val(node_retval)
         else:
             retval = None
 
@@ -719,8 +719,8 @@ class TSEncoder:
         receiver = get_call_receiver(call_node)
 
         if (new_nil() != receiver):
-            assert VALUE == get_node_type(receiver)
-            params = [TSEncoder.get_value_key(receiver[1])]
+            assert ID == get_node_type(receiver)
+            params = [get_id_val(receiver)]
         else:
             params = []
 
@@ -728,8 +728,8 @@ class TSEncoder:
 
         while (PARAM_LIST == get_node_type(node_params)):
             p_node = node_params[1]
-            assert (VALUE == get_node_type(p_node))
-            p = TSEncoder.get_value_key(p_node[1])
+            assert ID == get_node_type(p_node)
+            p = get_id_val(p_node)
             params.append(p)
             node_params = node_params[2]
 
@@ -743,15 +743,9 @@ class TSEncoder:
         that will be used in the message key """
 
         assert (isinstance(value, CValue))
-        if value.is_null:
-            value_repr = "NULL"
-        elif value.value is not None:
-            value_repr = str(value.value)
-        elif value.object_id is not None:
-            value_repr = str(value.object_id)
-        else:
-            raise Exception("Cannot find a unique identifier for the value "\
-                            "%s" % (str(value)))
+
+        value_repr = value.get_value()
+
         return value_repr
 
     def get_trace_stats(self):

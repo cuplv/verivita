@@ -176,6 +176,10 @@ def p_param_dontcare(t):
     '''param : TOK_DONTCARE'''
     t[0] = new_dontcare()
 
+def p_param_string(t):
+    '''param : TOK_STRING_LITERAL'''
+    t[0] = new_string(t[1])
+
 def p_composed_id(t):
     '''composed_id : TOK_ID
                    | TOK_ID TOK_DOT composed_id

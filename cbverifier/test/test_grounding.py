@@ -216,7 +216,6 @@ class TestGrounding(unittest.TestCase):
                                         "package.MyClass.testAssignConstant",
                                         1, True)) == 1)
 
-
         cnode = new_call(new_nil(), new_cb(),
                          new_nil(), new_id("doSomethingCb"),
                          new_param(new_id("l"), new_nil()))
