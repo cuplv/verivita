@@ -685,11 +685,7 @@ class TSEncoder:
         for p in msg.params:
             params.append(TSEncoder.get_value_key(p))
 
-        if (msg.class_name != ""):
-            full_msg_name = "%s.%s" % (msg.class_name, msg.method_name)
-        else:
-            full_msg_name = msg.method_name
-
+        full_msg_name = msg.get_full_msg_name()
         return TSEncoder.get_key(retval, msg_type, full_msg_name, params)
 
     @staticmethod

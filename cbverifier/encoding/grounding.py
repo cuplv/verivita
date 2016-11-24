@@ -1,3 +1,4 @@
+
 """ Implements the function that ground the free variables contained
 in a set of rules given a concrete trace.
 """
@@ -479,14 +480,6 @@ class TraceMap(object):
         Creates the 2-level index formed by the message name,
         and then the arity of the message to a list of messages.
         """
-
-        def _get_full_msg_name(class_name, method_name):
-            if class_name is None or class_name == "":
-                method_name = method_name
-            else:
-                method_name = "%s.%s" % (class_name, method_name)
-            return method_name
-
         if (isinstance(msg, CCallin)):
             msg_type = CI
         elif (isinstance(msg, CCallback)):
@@ -504,7 +497,8 @@ class TraceMap(object):
         # match a rule, due to implemented interfaces and classes
         method_names = []
         if (isinstance(msg, CCallin)):
-            method_name = _get_full_msg_name(msg.class_name, msg.method_name)
+            method_name = msg.get_full_msg_name()
+
             method_names.append(method_name)
         elif (isinstance(msg, CCallback)):
             # for callbacks we look at the framework types
@@ -518,13 +512,11 @@ class TraceMap(object):
                 if (not override.is_interface):
                     if (first_fmwk_type):
                         # first class
-                        method_name = _get_full_msg_name(override.class_name,
-                                                         override.method_name)
+                        method_name = override.get_full_msg_name()
                         method_names.append(method_name)
                         first_fmwk_type = False
                 else:
-                    method_name = _get_full_msg_name(override.class_name,
-                                                     override.method_name)
+                    method_name = override.get_full_msg_name()
                     method_names.append(method_name)
         else:
             assert False

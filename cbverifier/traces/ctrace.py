@@ -60,10 +60,7 @@ class CMessage(object):
         return iter(self.children)
 
     def _print(self, stream, sep, rec=True):
-        if self.class_name is not None and self.class_name != "":
-            message_sig = "%s.%s" % (self.class_name, self.method_name)
-        else:
-            message_sig = self.method_name
+        message_sig = self.get_full_msg_name()
 
         if isinstance(self, CCallback):
             message_type = "CB"
@@ -83,6 +80,19 @@ class CMessage(object):
             for child in self.children:
                 child._print(stream, "  ")
 
+    @staticmethod
+    def get_full_msg_name_static(class_name, method_name):
+        if class_name is None or class_name == "":
+            res = method_name
+        else:
+            res = "%s.%s" % (class_name, method_name)
+
+        return res
+
+    def get_full_msg_name(self):
+        res = CMessage.get_full_msg_name_static(self.class_name,
+                                                self.method_name)
+        return res
 
 class CCallback(CMessage):
     """ Represents a callback message
@@ -236,6 +246,11 @@ class FrameworkOverride:
         self.method_name = method_name
         self.is_interface = is_interface
 
+    def get_full_msg_name(self):
+        res = CMessage.get_full_msg_name_static(self.class_name,
+                                                self.method_name)
+        return res
+
     def __repr__(self):
         if self.is_interface:
             desc = "interface"
@@ -243,8 +258,7 @@ class FrameworkOverride:
             desc = "class"
 
         return "%s %s.%s" % (desc,
-                             self.class_name,
-                             self.method_name)
+                             self.get_full_msg_name())
 
     def __eq__(self, other):
         return (self.is_interface == other.is_interface and
