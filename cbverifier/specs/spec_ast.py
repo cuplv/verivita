@@ -76,7 +76,9 @@ def new_id(id_string): return (ID, id_string)
 def new_string(string_value): return (STRING, string_value)
 def new_false(): return (FALSE,)
 def new_true(): return (TRUE,)
-def new_param(first, tails): return (PARAM_LIST, first, tails)
+
+def new_param(param_name, param_type, tails):
+    return (PARAM_LIST, param_name, param_type, tails)
 
 def new_ci(): return (CI,)
 def new_cb(): return (CB,)
@@ -170,6 +172,22 @@ def is_spec_disable(node):
     return get_node_type(node[1]) == DISABLE_OP
 
 
+def get_param_name(node):
+    assert PARAM_LIST == get_node_type(node)
+    assert 4 == len(node)
+    return node[1]
+
+def get_param_type(node):
+    assert PARAM_LIST == get_node_type(node)
+    assert 4 == len(node)
+    return node[2]
+
+def get_param_tail(node):
+    assert PARAM_LIST == get_node_type(node)
+    assert 4 == len(node)
+    return node[3]
+
+
 ################################################################################
 # Node creation
 ################################################################################
@@ -190,10 +208,11 @@ def pretty_print(ast_node, out_stream=sys.stdout):
         elif (node_type == ID or node_type == INT or node_type == FLOAT or node_type == STRING):
             my_print(out_stream, "%s%s" % (sep, str(node[1])))
         elif (node_type == PARAM_LIST):
-            pretty_print_aux(out_stream,node[1],"")
-            if (get_node_type(node[2]) != NIL):
+            pretty_print_aux(out_stream,
+                             get_param_name(node), "")
+            if (get_node_type(get_param_tail(node)) != NIL):
                 my_print(out_stream, ",")
-                pretty_print_aux(out_stream,node[2],"")
+                pretty_print_aux(out_stream,get_param_tail(node),"")
         elif (node_type == CALL):
             assignee = get_call_assignee(node)
             if (get_node_type(assignee) != NIL):

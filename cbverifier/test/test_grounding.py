@@ -218,7 +218,7 @@ class TestGrounding(unittest.TestCase):
 
         cnode = new_call(new_nil(), new_cb(),
                          new_nil(), new_id("doSomethingCb"),
-                         new_param(new_id("l"), new_nil()))
+                         new_param(new_id("l"), None, new_nil()))
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([
             [[new_id('l')],[TestGrounding._get_obj("1","string")]],
@@ -227,7 +227,7 @@ class TestGrounding(unittest.TestCase):
 
         cnode = new_call(new_nil(), new_cb(),
                          new_nil(), new_id("doSomethingCb"),
-                         new_param(new_dontcare(), new_nil()))
+                         new_param(new_dontcare(), None, new_nil()))
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([[[],[]]])
         assert (res == res_2)
@@ -235,7 +235,8 @@ class TestGrounding(unittest.TestCase):
         cnode = new_call(new_nil(), new_ci(),
                          new_nil(), new_id("doSomethingCi"),
                          new_param(new_dontcare(),
-                                   new_param(new_id('z'), new_nil())))
+                                   None,
+                                   new_param(new_id('z'), None, new_nil())))
         res = tmap.lookup_assignments(cnode)
 
         res_2 = TestGrounding.newBinding([[[new_id('z')],[ TestGrounding._get_int(2)]]])
@@ -243,7 +244,7 @@ class TestGrounding(unittest.TestCase):
 
         cnode = new_call(new_id("z"), new_cb(),
                          new_nil(), new_id("doSomethingCb"),
-                         new_param(new_id("l"), new_nil()))
+                         new_param(new_id("l"), None, new_nil()))
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([
             [[new_id('z'),new_id('l')],
@@ -253,7 +254,7 @@ class TestGrounding(unittest.TestCase):
 
         cnode = new_call(new_id("z"), new_cb(),
                          new_nil(), new_id("package.MyClass.testClassName"),
-                         new_param(new_id("l"), new_nil()))
+                         new_param(new_id("l"), None, new_nil()))
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([
             [[new_id('z'),new_id('l')],
@@ -263,7 +264,7 @@ class TestGrounding(unittest.TestCase):
 
         cnode = new_call(new_int(3), new_cb(),
                          new_nil(), new_id("package.MyClass.testAssignConstant"),
-                         new_param(new_id("l"), new_nil()))
+                         new_param(new_id("l"), None, new_nil()))
         res = tmap.lookup_assignments(cnode)
 
         res_2 = TestGrounding.newBinding([

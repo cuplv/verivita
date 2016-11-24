@@ -723,11 +723,11 @@ class TSEncoder:
         node_params = get_call_params(call_node)
 
         while (PARAM_LIST == get_node_type(node_params)):
-            p_node = node_params[1]
+            p_node = get_param_name(node_params)
             assert ID == get_node_type(p_node)
             p = get_id_val(p_node)
             params.append(p)
-            node_params = node_params[2]
+            node_params = get_param_tail(node_params)
 
         return TSEncoder.get_key(retval, call_type,
                                  method_name, params)

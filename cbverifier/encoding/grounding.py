@@ -113,9 +113,9 @@ class GroundSpecs(object):
                     assert node_type == NIL
                     return new_nil()
                 else:
-                    formal_param = param_node[1]
+                    formal_param = get_param_name(param_node)
                     res = sub_leaf(formal_param, binding)
-                    return new_param(res, process_param(param_node[2]))
+                    return new_param(res, new_nil(), process_param(get_param_tail(param_node)))
 
             node_type = get_node_type(node)
             if (node_type in leaf_nodes): return node
@@ -629,8 +629,8 @@ class TraceMap(object):
             if (get_node_type(receiver) != NIL):
                 param_list.append(receiver)
             while (get_node_type(params) == PARAM_LIST):
-                param_list.append(params[1])
-                params = params[2]
+                param_list.append(get_param_name(params))
+                params = get_param_tail(params)
             arity = len(param_list)
 
             matching_methods = self.lookup_methods(call_type, method_name,

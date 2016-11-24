@@ -153,10 +153,11 @@ def p_paramlist_param(t):
     '''paramlist : param
                  | param TOK_COMMA paramlist
     '''
+    # TOK_COLON composed_id
     if (len(t) == 2):
-        t[0] = new_param(t[1],new_nil())
+        t[0] = new_param(t[1], None, new_nil())
     else:
-        t[0] = new_param(t[1],t[3])
+        t[0] = new_param(t[1], None, t[3])
 
 def p_param_id(t):
     '''param : TOK_ID'''
