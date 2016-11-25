@@ -141,8 +141,8 @@ class TestEnc(unittest.TestCase):
 
     def test_get_key_from_call(self):
         spec_list = Spec.get_specs_from_string("SPEC TRUE |- [CI] [l] void m1(); " +
-                                               "SPEC TRUE |- [CI] [l] void m1(a,b,c);" +
-                                               "SPEC TRUE |- z = [CI] [l] void m1(a,b,c)")
+                                               "SPEC TRUE |- [CI] [l] void m1(a : int,b : int,c : int);" +
+                                               "SPEC TRUE |- z = [CI] [l] void m1(a : int,b : int,c : int)")
         assert spec_list is not None
 
         binding = TestGrounding.newAssign(

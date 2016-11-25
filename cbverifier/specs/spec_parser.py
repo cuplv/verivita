@@ -150,17 +150,16 @@ def p_inner_call(t):
         t[0] = (t[1], t[2], new_nil())
 
 def p_paramlist_param(t):
-    '''paramlist : param
-                 | param TOK_COMMA paramlist
+    '''paramlist : param TOK_COLON composed_id
+                 | param TOK_COLON composed_id TOK_COMMA paramlist
     '''
-    # TOK_COLON composed_id
-    if (len(t) == 2):
-        t[0] = new_param(t[1], None, new_nil())
+    if (len(t) == 4):
+        t[0] = new_param(t[1], t[3], new_nil())
     else:
-        t[0] = new_param(t[1], None, t[3])
+        t[0] = new_param(t[1], t[3], t[5])
 
 def p_param_id(t):
-    '''param : TOK_ID'''
+    '''param : TOK_ID '''
     t[0] = new_id(t[1])
 
 def p_param_true(t):

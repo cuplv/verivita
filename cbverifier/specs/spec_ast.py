@@ -210,6 +210,11 @@ def pretty_print(ast_node, out_stream=sys.stdout):
         elif (node_type == PARAM_LIST):
             pretty_print_aux(out_stream,
                              get_param_name(node), "")
+            if (None != get_param_type(node) and
+                NIL != get_node_type(get_param_type(node))):
+                my_print(out_stream, ": ")
+                pretty_print_aux(out_stream,
+                                 get_param_type(node),"")
             if (get_node_type(get_param_tail(node)) != NIL):
                 my_print(out_stream, ",")
                 pretty_print_aux(out_stream,get_param_tail(node),"")
