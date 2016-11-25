@@ -114,8 +114,10 @@ class GroundSpecs(object):
                     return new_nil()
                 else:
                     formal_param = get_param_name(param_node)
+                    p_type = get_param_type(param_node)
                     res = sub_leaf(formal_param, binding)
-                    return new_param(res, new_nil(), process_param(get_param_tail(param_node)))
+                    return new_param(res, p_type,
+                                     process_param(get_param_tail(param_node)))
 
             node_type = get_node_type(node)
             if (node_type in leaf_nodes): return node

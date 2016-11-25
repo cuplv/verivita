@@ -275,29 +275,29 @@ class TestGrounding(unittest.TestCase):
 
     def test_ground_bindings(self):
         trace = CTrace()
-        cb = CCallback(1, 1, "", "void doSomethingCb",
+        cb = CCallback(1, 1, "", "void doSomethingCb()",
                        [TestGrounding._get_obj("1","string")],
                        None,
                        [TestGrounding._get_fmwkov("",
-                                                  "void doSomethingCb", False)])
+                                                  "void doSomethingCb()", False)])
         trace.add_msg(cb)
 
         # 1.doSomethingCi(2)
-        ci = CCallin(1, 1, "", "void doSomethingCi",
+        ci = CCallin(1, 1, "", "void doSomethingCi(string)",
                      [TestGrounding._get_obj("1","string"),
                       TestGrounding._get_obj("2","string")],
                      None)
         cb.add_msg(ci)
 
         # 3.otherCi(1)
-        ci = CCallin(1, 1, "", "void otherCi",
+        ci = CCallin(1, 1, "", "void otherCi(string)",
                      [TestGrounding._get_obj("4","string"),
                       TestGrounding._get_obj("1","string")],
                      None)
         cb.add_msg(ci)
 
         # 1.doSomethingCi(4)
-        ci = CCallin(1, 1, "", "void doSomethingCi",
+        ci = CCallin(1, 1, "", "void doSomethingCi(string)",
                      [TestGrounding._get_obj("1","string"),
                       TestGrounding._get_obj("4","string")],
                      None)

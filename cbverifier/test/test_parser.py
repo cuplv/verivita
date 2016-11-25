@@ -159,7 +159,7 @@ class TestSpecParser(unittest.TestCase):
                         'SPEC [CB] [l] type l(l1 : int,"foo" : string)[*] |- [CI] [l] type l(b : type)']
 
         for expr in correct_expr:
-            print expr
+            # print expr
             self._test_parse(expr)
 
         wrong_expr = ["SPEC TRUE "]
@@ -169,25 +169,29 @@ class TestSpecParser(unittest.TestCase):
     def test_ast(self):
         def test_ast_inner(specs, expected):
             parse_res = spec_parser.parse(specs)
+
+            # print parse_res
+            # print expected
+
             self.assertTrue(parse_res == expected)
 
         res = [("SPEC [CB] [l] void package.method_name() |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (NIL,), (CB,), (ID,'l'), (ID, 'void package.method_name'), (NIL,)),
+                   (CALL, (NIL,), (CB,), (ID,'l'), (ID, 'void package.method_name()'), (NIL,)),
                    (0,))), (NIL,))),
                ("SPEC [CB] [l] void package.method_name() |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (NIL,), (CB,), (ID,'l'), (ID, 'void package.method_name'), (NIL,)),
+                   (CALL, (NIL,), (CB,), (ID,'l'), (ID, 'void package.method_name()'), (NIL,)),
                    (0,))), (NIL,))),
                ("SPEC [CI] [l] void method_name(0 : int,1 : int,f : int) |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (NIL,), (CI,), (ID,'l'), (ID, 'void method_name'),
+                   (CALL, (NIL,), (CI,), (ID,'l'), (ID, 'void method_name(int,int,int)'),
                     (PARAM_LIST, (INT, 0), (ID, 'int'),
                      (PARAM_LIST, (INT, 1), (ID, 'int'),
                       (PARAM_LIST, (ID, 'f'), (ID, 'int'), (NIL,))))),
@@ -196,7 +200,7 @@ class TestSpecParser(unittest.TestCase):
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'void method_name'),
+                   (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'void method_name(int,int,int)'),
                     (PARAM_LIST, (INT, 0), (ID, 'int'),
                      (PARAM_LIST, (INT, 1), (ID, 'int'),
                       (PARAM_LIST, (ID, 'f'), (ID, 'int'), (NIL,))))),
@@ -205,7 +209,7 @@ class TestSpecParser(unittest.TestCase):
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'void method_name'),
+                   (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'void method_name(int,string,int)'),
                     (PARAM_LIST, (INT, 0), (ID, 'int'),
                      (PARAM_LIST, (STRING, '"foobar"'), (ID, 'string'),
                       (PARAM_LIST, (ID, 'f'), (ID, 'int'), (NIL,))))),

@@ -117,8 +117,17 @@ def p_atom(t):
     # return_type method_name(type_p1, type_p2, ..., type_pn)
     assert (get_node_type(ret_type) == ID and
             get_node_type(method_name) == ID)
-    method_name = new_id("%s %s" % (get_id_val(ret_type),
-                                    get_id_val(method_name)))
+    param_types = []
+    app_node = method_param
+    while (NIL != get_node_type(app_node)):
+        ptype = get_param_type(app_node)
+        assert ID == get_node_type(ptype)
+        param_types.append(get_id_val(ptype))
+        app_node = get_param_tail(app_node)
+
+    method_name = new_id("%s %s(%s)" % (get_id_val(ret_type),
+                                        get_id_val(method_name),
+                                        ",".join(param_types)))
 
     t[0] = new_call(assignee, call_type, receiver,
                     method_name, method_param)
