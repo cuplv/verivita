@@ -708,10 +708,10 @@ class TSEncoder:
         else:
             assert False
 
-        method_name_node = get_call_method(call_node)
+        # method_name_node = get_call_method(call_node)
+        method_name_node = get_call_signature(call_node)
         assert (ID == get_node_type(method_name_node))
-        method_name = method_name_node[1]
-
+        method_name = get_id_val(method_name_node)
         receiver = get_call_receiver(call_node)
 
         if (new_nil() != receiver):

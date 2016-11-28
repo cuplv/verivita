@@ -66,6 +66,11 @@ def p_regexp_sequence(t):
     '''
     t[0] = new_seq(t[1], t[3])
 
+def p_regexp_paren(t):
+    '''regexp : TOK_LPAREN regexp TOK_RPAREN
+    '''
+    t[0] = t[2]
+
 def p_bexp(t):
     '''bexp : atom
     '''
@@ -117,17 +122,19 @@ def p_atom(t):
     # return_type method_name(type_p1, type_p2, ..., type_pn)
     assert (get_node_type(ret_type) == ID and
             get_node_type(method_name) == ID)
-    param_types = []
-    app_node = method_param
-    while (NIL != get_node_type(app_node)):
-        ptype = get_param_type(app_node)
-        assert ID == get_node_type(ptype)
-        param_types.append(get_id_val(ptype))
-        app_node = get_param_tail(app_node)
+    method_name = new_id("%s %s" % (get_id_val(ret_type),
+                                    get_id_val(method_name)))
+    # param_types = []
+    # app_node = method_param
+    # while (NIL != get_node_type(app_node)):
+    #     ptype = get_param_type(app_node)
+    #     assert ID == get_node_type(ptype)
+    #     param_types.append(get_id_val(ptype))
+    #     app_node = get_param_tail(app_node)
 
-    method_name = new_id("%s %s(%s)" % (get_id_val(ret_type),
-                                        get_id_val(method_name),
-                                        ",".join(param_types)))
+    # method_name = new_id("%s %s(%s)" % (get_id_val(ret_type),
+    #                                     get_id_val(method_name),
+    #                                     ",".join(param_types)))
 
     t[0] = new_call(assignee, call_type, receiver,
                     method_name, method_param)
@@ -178,6 +185,10 @@ def p_param_true(t):
 def p_param_false(t):
     '''param : TOK_FALSE'''
     t[0] = new_false()
+
+def p_param_null(t):
+    '''param : TOK_NULL'''
+    t[0] = new_null()
 
 def p_param_float(t):
     '''param : TOK_FLOAT'''

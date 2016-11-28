@@ -13,50 +13,51 @@ import sys
 
 
 # SYMBOLS
-TRUE=0
-FALSE=1
-ID=2
-INT=3
-FLOAT=4
-PARAM_LIST=5
-NIL=6
-CALL=7
-AND_OP=8
-OR_OP=9
-NOT_OP=10
-SEQ_OP=11
-STAR_OP=19
-SPEC_SYMB=12
-ENABLE_OP=13
-DISABLE_OP=14
-SPEC_LIST=15
-DONTCARE=16
-STRING=17
-CI = 18
-CB = 19
+TRUE          =  0
+FALSE         =  1
+ID            =  2
+INT           =  3
+FLOAT         =  4
+PARAM_LIST    =  5
+NIL           =  6
+CALL          =  7
+AND_OP        =  8
+OR_OP         =  9
+NOT_OP        = 10
+SEQ_OP        = 11
+STAR_OP       = 12
+SPEC_SYMB     = 13
+ENABLE_OP     = 14
+DISABLE_OP    = 15
+SPEC_LIST     = 16
+DONTCARE      = 17
+STRING        = 18
+CI            = 19
+CB            = 20
+NULL          = 21
 
-inv_map = {0 : "TRUE",
-           1 : "FALSE",
-           2 : "ID",
-           3 : "INT",
-           4 : "FLOAT",
-           5 : "PARAM_LIST",
-           6 : "NIL",
-           7 : "CALL",
-           8 : "AND_OP",
-           9 : "OR_OP",
+inv_map = { 0 : "TRUE",
+            1 : "FALSE",
+            2 : "ID",
+            3 : "INT",
+            4 : "FLOAT",
+            5 : "PARAM_LIST",
+            6 : "NIL",
+            7 : "CALL",
+            8 : "AND_OP",
+            9 : "OR_OP",
            10 : "NOT_OP",
            11 : "SEQ_OP",
-           11 : "STAR_OP",
-           12 : "SPEC_SYMB",
-           13 : "ENABLE_OP",
-           14 : "DISABLE_OP",
-           15 : "SPEC_LIST",
-           16 : "DONTCARE",
-           17 : "STRING",
-           18 : "CI",
-           19 : "CB"}
-
+           12 : "STAR_OP",
+           13 : "SPEC_SYMB",
+           14 : "ENABLE_OP",
+           15 : "DISABLE_OP",
+           16 : "SPEC_LIST",
+           17 : "DONTCARE",
+           18 : "STRING",
+           19 : "CI",
+           20 : "CB",
+           21 : "NULL"}
 
 ################################################################################
 # Node creation
@@ -76,6 +77,7 @@ def new_id(id_string): return (ID, id_string)
 def new_string(string_value): return (STRING, string_value)
 def new_false(): return (FALSE,)
 def new_true(): return (TRUE,)
+def new_null(): return (NULL,)
 
 def new_param(param_name, param_type, tails):
     return (PARAM_LIST, param_name, param_type, tails)
@@ -109,8 +111,8 @@ def new_spec_list(spec, rest):
 
 def get_node_type(node): return node[0]
 
-const_nodes = (TRUE,FALSE,STRING,INT,FLOAT)
-leaf_nodes = (TRUE,FALSE,ID,STRING,INT,FLOAT,NIL,DONTCARE)
+const_nodes = (TRUE,FALSE,STRING,INT,FLOAT,NULL)
+leaf_nodes = (TRUE,FALSE,ID,STRING,INT,FLOAT,NIL,DONTCARE,NULL)
 logic_nodes = (AND_OP, OR_OP,NOT_OP)
 regexp_nodes = (SEQ_OP,STAR_OP)
 spec_nodes = (SPEC_SYMB,ENABLE_OP,DISABLE_OP)
@@ -142,6 +144,29 @@ def get_call_params(node):
     assert CALL == get_node_type(node)
     assert node[5] is not None
     return node[5]
+
+def get_call_signature(node):
+    assert CALL == get_node_type(node)
+
+    method_name = get_call_method(node)
+
+    param_types = []
+    app_node = get_call_params(node)
+    while (NIL != get_node_type(app_node)):
+        ptype = get_param_type(app_node)
+        assert ID == get_node_type(ptype) or NIL == get_node_type(ptype)
+
+        if (ID == get_node_type(ptype)):
+            param_types.append(get_id_val(ptype))
+        else:
+            param_types.append("NIL")
+        app_node = get_param_tail(app_node)
+
+    method_signature = new_id("%s(%s)" % (get_id_val(method_name),
+                                          ",".join(param_types)))
+
+    return method_signature
+
 
 def get_regexp_node(node):
     assert SPEC_SYMB == get_node_type(node)
@@ -202,7 +227,8 @@ def pretty_print(ast_node, out_stream=sys.stdout):
         node_type = get_node_type(node)
         if (node_type == TRUE): my_print(out_stream, "TRUE")
         elif (node_type == FALSE): my_print(out_stream, "FALSE")
-        elif (node_type == DONTCARE): my_print(out_stream, "_")
+        elif (node_type == NULL): my_print(out_stream, "NULL")
+        elif (node_type == DONTCARE): my_print(out_stream, "#")
         elif (node_type == CI): my_print(out_stream, "CI")
         elif (node_type == CB): my_print(out_stream, "CB")
         elif (node_type == ID or node_type == INT or node_type == FLOAT or node_type == STRING):
@@ -212,7 +238,7 @@ def pretty_print(ast_node, out_stream=sys.stdout):
                              get_param_name(node), "")
             if (None != get_param_type(node) and
                 NIL != get_node_type(get_param_type(node))):
-                my_print(out_stream, ": ")
+                my_print(out_stream, " : ")
                 pretty_print_aux(out_stream,
                                  get_param_type(node),"")
             if (get_node_type(get_param_tail(node)) != NIL):
@@ -245,23 +271,33 @@ def pretty_print(ast_node, out_stream=sys.stdout):
                 pretty_print_aux(out_stream, param_list, "") # params
 
             my_print(out_stream, ")")
-        elif (node_type == AND_OP or node_type == OR_OP):
+        elif (node_type == AND_OP):
             my_print(out_stream, "(")
             pretty_print_aux(out_stream,node[1],"")
             my_print(out_stream, " & ")
             pretty_print_aux(out_stream,node[2],"")
             my_print(out_stream, ")")
+        elif (node_type == OR_OP):
+            my_print(out_stream, "(")
+            pretty_print_aux(out_stream,node[1],"")
+            my_print(out_stream, " | ")
+            pretty_print_aux(out_stream,node[2],"")
+            my_print(out_stream, ")")
         elif (node_type == NOT_OP):
-            my_print(out_stream, "! ")
+            my_print(out_stream, "! (")
             pretty_print_aux(out_stream,node[1],"")
+            my_print(out_stream, ")")
         elif (node_type == SEQ_OP):
+            my_print(out_stream, "(")
             pretty_print_aux(out_stream,node[1],"")
-            if (get_node_type(node[2]) != NIL):
-                my_print(out_stream, "; ")
-                pretty_print_aux(out_stream,node[2],"")
+            assert (get_node_type(node[2]) != NIL)
+            my_print(out_stream, "); (")
+            pretty_print_aux(out_stream,node[2],"")
+            my_print(out_stream, ")")
         elif (node_type == STAR_OP):
+            my_print(out_stream, "(")
             pretty_print_aux(out_stream,node[1],"")
-            my_print(out_stream, "[*]")
+            my_print(out_stream, ")[*]")
         elif (node_type == SPEC_SYMB):
             my_print(out_stream, "SPEC ")
             pretty_print_aux(out_stream ,node[1], "")
@@ -280,8 +316,8 @@ def pretty_print(ast_node, out_stream=sys.stdout):
             pretty_print_aux(out_stream,node[2],"")
         elif (node_type == SPEC_LIST):
             pretty_print_aux(out_stream,node[1],"")
-            my_print(out_stream, ";\n")
             if (get_node_type(node[2]) != NIL):
+                my_print(out_stream, "; ")
                 pretty_print_aux(out_stream,node[2],"")
         else:
             raise UnexpectedSymbol(node)

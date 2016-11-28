@@ -116,6 +116,8 @@ def main(input_args=None):
         trace.print_trace(sys.stdout)
         sys.stdout.write("\n")
 
+        return 0
+
     elif (opts.mode == "bmc"):
         ts_enc = TSEncoder(trace, spec_list)
 
@@ -130,9 +132,11 @@ def main(input_args=None):
         else:
             print "No bugs found up to %d steps" % (depth)
 
+        return 0
     elif (opts.mode == "to_smv"):
         assert False
 
+        return 1
 
         # # Call the verifier
         # verifier = Verifier(ctrace, specs_map["specs"],

@@ -141,132 +141,128 @@ class TestGrounding(unittest.TestCase):
 
     def test_trace_map(self):
         trace = CTrace()
-        cb = CCallback(1, 1, "", "doSomethingCb",
+        cb = CCallback(1, 1, "", "doSomethingCb()",
                        [TestGrounding._get_obj("1","string")],
-                       None, [TestGrounding._get_fmwkov("","doSomethingCb",False)])
+                       None, [TestGrounding._get_fmwkov("","doSomethingCb()",False)])
         trace.add_msg(cb)
-        ci = CCallin(1, 1, "", "doSomethingCi",
+        ci = CCallin(1, 1, "", "doSomethingCi()",
                      [TestGrounding._get_obj("1","string")],
                      None)
         cb.add_msg(ci)
-        cb = CCallback(1, 1, "", "doSomethingCb",
+        cb = CCallback(1, 1, "", "doSomethingCb()",
                        [],
-                       None, [TestGrounding._get_fmwkov("","doSomethingCb",False)])
+                       None, [TestGrounding._get_fmwkov("","doSomethingCb()",False)])
         trace.add_msg(cb)
-        ci = CCallin(1, 1, "", "doSomethingCi",
+        ci = CCallin(1, 1, "", "doSomethingCi(int)",
                      [TestGrounding._get_obj("1","string"), TestGrounding._get_int(2)],
                      None)
         cb.add_msg(ci)
-        cb = CCallback(1, 1, "", "doSomethingCb",
+        cb = CCallback(1, 1, "", "doSomethingCb()",
                        [TestGrounding._get_obj("2","string")],
-                       None, [TestGrounding._get_fmwkov("","doSomethingCb",False)])
+                       None, [TestGrounding._get_fmwkov("","doSomethingCb()",False)])
         trace.add_msg(cb)
 
-        cb = CCallback(1, 1, "", "doSomethingCb",
-                       [TestGrounding._get_obj("2","string")],
-                       TestGrounding._get_obj("3","string"),
-                       [TestGrounding._get_fmwkov("","doSomethingCb",False)])
-        trace.add_msg(cb)
-
-        cb = CCallback(1, 1, "package.MyClass", "testClassName",
+        cb = CCallback(1, 1, "", "doSomethingCb()",
                        [TestGrounding._get_obj("2","string")],
                        TestGrounding._get_obj("3","string"),
-                       [TestGrounding._get_fmwkov("package.MyClass","testClassName",False)])
+                       [TestGrounding._get_fmwkov("","doSomethingCb()",False)])
         trace.add_msg(cb)
 
-        cb = CCallback(1, 1, "package.MyClass", "testAssignConstant",
+        cb = CCallback(1, 1, "package.MyClass", "testClassName()",
+                       [TestGrounding._get_obj("2","string")],
+                       TestGrounding._get_obj("3","string"),
+                       [TestGrounding._get_fmwkov("package.MyClass","testClassName()",False)])
+        trace.add_msg(cb)
+
+        cb = CCallback(1, 1, "package.MyClass", "testAssignConstant()",
                        [TestGrounding._get_obj("2","string")],
                        TestGrounding._get_int(3),
-                       [TestGrounding._get_fmwkov("package.MyClass","testAssignConstant",False)])
+                       [TestGrounding._get_fmwkov("package.MyClass","testAssignConstant()",False)])
         trace.add_msg(cb)
 
         # Test first framework type
-        cb = CCallback(1, 1, "package.MyClass", "testClassName",
+        cb = CCallback(1, 1, "package.MyClass", "testClassName()",
                        [TestGrounding._get_obj("2","string")],
                        TestGrounding._get_obj("3","string"),
                        [TestGrounding._get_fmwkov("android.Button",
-                                                  "testClassName", False),
+                                                  "testClassName()", False),
                         TestGrounding._get_fmwkov("android.ButtonInterface",
-                                                  "testClassName", True),
+                                                  "testClassName()", True),
                         TestGrounding._get_fmwkov("android.ButtonInner",
-                                                  "testClassName", False)])
+                                                  "testClassName()", False)])
         trace.add_msg(cb)
 
         tmap = TraceMap(trace)
 
-        assert (len(tmap.lookup_methods(new_ci(), "other", 0, False)) == 0)
-        assert (len(tmap.lookup_methods(new_cb(), "doSomethingCb", 0, False)) == 1)
-        assert (len(tmap.lookup_methods(new_cb(), "doSomethingCb", 1, False)) == 2)
-        assert (len(tmap.lookup_methods(new_ci(), "doSomethingCi", 1, False)) == 1)
-        assert (len(tmap.lookup_methods(new_cb(), "doSomethingCi", 1, False)) == 0)
-        assert (len(tmap.lookup_methods(new_ci(), "doSomethingCi", 2, False)) == 1)
-        assert (len(tmap.lookup_methods(new_cb(), "doSomethingCb", 1, True)) == 1)
-        assert (len(tmap.lookup_methods(new_cb(), "package.MyClass.testClassName",
+        assert (len(tmap.lookup_methods(new_ci(), "other()", 0, False)) == 0)
+        assert (len(tmap.lookup_methods(new_cb(), "doSomethingCb()", 0, False)) == 1)
+        assert (len(tmap.lookup_methods(new_cb(), "doSomethingCb()", 1, False)) == 2)
+        assert (len(tmap.lookup_methods(new_ci(), "doSomethingCi()", 1, False)) == 1)
+        assert (len(tmap.lookup_methods(new_cb(), "doSomethingCi()", 1, False)) == 0)
+        assert (len(tmap.lookup_methods(new_ci(), "doSomethingCi(int)", 2, False)) == 1)
+        assert (len(tmap.lookup_methods(new_cb(), "doSomethingCb()", 1, True)) == 1)
+        assert (len(tmap.lookup_methods(new_cb(), "package.MyClass.testClassName()",
                                         1, True)) == 1)
         assert (len(tmap.lookup_methods(new_cb(),
-                                        "android.Button.testClassName",
+                                        "android.Button.testClassName()",
                                         1, True)) == 1)
         assert (len(tmap.lookup_methods(new_cb(),
-                                        "android.ButtonInner.testClassName",
+                                        "android.ButtonInner.testClassName()",
                                         1, True)) == 0)
         assert (len(tmap.lookup_methods(new_cb(),
-                                        "android.ButtonInterface.testClassName",
+                                        "android.ButtonInterface.testClassName()",
                                         1, True)) == 1)
         assert (len(tmap.lookup_methods(new_cb(),
-                                        "package.MyClass.testAssignConstant",
+                                        "package.MyClass.testAssignConstant()",
                                         1, True)) == 1)
 
         cnode = new_call(new_nil(), new_cb(),
-                         new_nil(), new_id("doSomethingCb"),
-                         new_param(new_id("l"), None, new_nil()))
+                         new_id("l"), new_id("doSomethingCb"),
+                         new_nil())
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([
             [[new_id('l')],[TestGrounding._get_obj("1","string")]],
             [[new_id('l')],[TestGrounding._get_obj("2","string")]]])
-        assert (res == res_2)
+        self.assertTrue(res == res_2)
 
         cnode = new_call(new_nil(), new_cb(),
-                         new_nil(), new_id("doSomethingCb"),
-                         new_param(new_dontcare(), None, new_nil()))
+                         new_dontcare(), new_id("doSomethingCb"),
+                         new_nil())
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([[[],[]]])
-        assert (res == res_2)
+        self.assertTrue(res == res_2)
 
         cnode = new_call(new_nil(), new_ci(),
-                         new_nil(), new_id("doSomethingCi"),
-                         new_param(new_dontcare(),
-                                   None,
-                                   new_param(new_id('z'), None, new_nil())))
+                 new_dontcare(), new_id("doSomethingCi"),
+                 new_param(new_id('z'), new_id("int"), new_nil()))
         res = tmap.lookup_assignments(cnode)
-
         res_2 = TestGrounding.newBinding([[[new_id('z')],[ TestGrounding._get_int(2)]]])
-        assert (res == res_2)
+        self.assertTrue(res == res_2)
 
         cnode = new_call(new_id("z"), new_cb(),
-                         new_nil(), new_id("doSomethingCb"),
-                         new_param(new_id("l"), None, new_nil()))
+                         new_id("l"), new_id("doSomethingCb"),
+                         new_nil())
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([
             [[new_id('z'),new_id('l')],
              [TestGrounding._get_obj("3","string"),
               TestGrounding._get_obj("2","string")]]])
-        assert (res == res_2)
+        self.assertTrue(res == res_2)
 
         cnode = new_call(new_id("z"), new_cb(),
-                         new_nil(), new_id("package.MyClass.testClassName"),
-                         new_param(new_id("l"), None, new_nil()))
+                         new_id("l"), new_id("package.MyClass.testClassName"),
+                         new_nil())
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([
             [[new_id('z'),new_id('l')],
              [TestGrounding._get_obj("3","string"),
               TestGrounding._get_obj("2","string")]]])
-        assert (res == res_2)
+        self.assertTrue(res == res_2)
 
         cnode = new_call(new_int(3), new_cb(),
-                         new_nil(), new_id("package.MyClass.testAssignConstant"),
-                         new_param(new_id("l"), None, new_nil()))
+                         new_id("l"), new_id("package.MyClass.testAssignConstant"),
+                         new_nil())
         res = tmap.lookup_assignments(cnode)
-
         res_2 = TestGrounding.newBinding([
             [[new_id('l')],
              [TestGrounding._get_obj("2","string")]]])

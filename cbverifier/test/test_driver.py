@@ -26,4 +26,5 @@ class TestEnc(unittest.TestCase):
         argv = ["", "-t", t1, "-f", "json",
                 "-s", s1,
                 "-m", "bmc", "-k", "2"]
-        main(argv)
+        retval = main(argv)
+        self.assertTrue(0 == retval)

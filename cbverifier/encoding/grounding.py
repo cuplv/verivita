@@ -57,6 +57,8 @@ class GroundSpecs(object):
                     return new_id("TRUE")
                 elif (node_type == FALSE):
                     return new_id("FALSE")
+                elif (node_type == NULL):
+                    return new_id("NULL")
                 elif (node_type == NIL):
                     return node
                 elif (node_type == ID):
@@ -622,20 +624,29 @@ class TraceMap(object):
             # (CALL, retval, call_type, receiver, method_name, params)
             retval = get_call_assignee(call_node)
             call_type = get_call_type(call_node)
-            method_name_node = get_call_method(call_node)
-            method_name = get_id_val(method_name_node)
+            # method_name_node = get_call_method(call_node)
+            # method_name = get_id_val(method_name_node)
+            method_signature = get_id_val(get_call_signature(call_node))
             receiver = get_call_receiver(call_node)
             params = get_call_params(call_node)
             param_list = []
 
             if (get_node_type(receiver) != NIL):
                 param_list.append(receiver)
+            else:
+                # we require to always have the receiver in the trace
+                #
+                # if there are no receiver in the spec, the correspondent receiver
+                # in the trace should be the NULL value
+                #
+                param_list.append(new_null())
+
             while (get_node_type(params) == PARAM_LIST):
                 param_list.append(get_param_name(params))
                 params = get_param_tail(params)
             arity = len(param_list)
 
-            matching_methods = self.lookup_methods(call_type, method_name,
+            matching_methods = self.lookup_methods(call_type, method_signature,
                                                    arity,
                                                    retval != new_nil())
             # For each method, find:
