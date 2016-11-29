@@ -1,3 +1,4 @@
+
 """ Implements the function that ground the free variables contained
 in a set of rules given a concrete trace.
 """
@@ -56,6 +57,8 @@ class GroundSpecs(object):
                     return new_id("TRUE")
                 elif (node_type == FALSE):
                     return new_id("FALSE")
+                elif (node_type == NULL):
+                    return new_id("NULL")
                 elif (node_type == NIL):
                     return node
                 elif (node_type == ID):
@@ -112,9 +115,11 @@ class GroundSpecs(object):
                     assert node_type == NIL
                     return new_nil()
                 else:
-                    formal_param = param_node[1]
+                    formal_param = get_param_name(param_node)
+                    p_type = get_param_type(param_node)
                     res = sub_leaf(formal_param, binding)
-                    return new_param(res, process_param(param_node[2]))
+                    return new_param(res, p_type,
+                                     process_param(get_param_tail(param_node)))
 
             node_type = get_node_type(node)
             if (node_type in leaf_nodes): return node
@@ -127,7 +132,7 @@ class GroundSpecs(object):
                                          get_call_type(node),
                                          sub_leaf(get_call_receiver(node),
                                                   binding),
-                                         get_call_method(node),
+                                         sub_leaf(get_call_method(node), binding),
                                          new_params)
                 return new_call_node
 
@@ -479,14 +484,6 @@ class TraceMap(object):
         Creates the 2-level index formed by the message name,
         and then the arity of the message to a list of messages.
         """
-
-        def _get_full_msg_name(class_name, method_name):
-            if class_name is None or class_name == "":
-                method_name = method_name
-            else:
-                method_name = "%s.%s" % (class_name, method_name)
-            return method_name
-
         if (isinstance(msg, CCallin)):
             msg_type = CI
         elif (isinstance(msg, CCallback)):
@@ -504,7 +501,8 @@ class TraceMap(object):
         # match a rule, due to implemented interfaces and classes
         method_names = []
         if (isinstance(msg, CCallin)):
-            method_name = _get_full_msg_name(msg.class_name, msg.method_name)
+            method_name = msg.get_full_msg_name()
+
             method_names.append(method_name)
         elif (isinstance(msg, CCallback)):
             # for callbacks we look at the framework types
@@ -518,13 +516,11 @@ class TraceMap(object):
                 if (not override.is_interface):
                     if (first_fmwk_type):
                         # first class
-                        method_name = _get_full_msg_name(override.class_name,
-                                                         override.method_name)
+                        method_name = override.get_full_msg_name()
                         method_names.append(method_name)
                         first_fmwk_type = False
                 else:
-                    method_name = _get_full_msg_name(override.class_name,
-                                                     override.method_name)
+                    method_name = override.get_full_msg_name()
                     method_names.append(method_name)
         else:
             assert False
@@ -629,19 +625,28 @@ class TraceMap(object):
             retval = get_call_assignee(call_node)
             call_type = get_call_type(call_node)
             method_name_node = get_call_method(call_node)
-            method_name = get_id_val(method_name_node)
+            # method_name = get_id_val(method_name_node)
+            method_signature = get_id_val(get_call_signature(call_node))
             receiver = get_call_receiver(call_node)
             params = get_call_params(call_node)
             param_list = []
 
             if (get_node_type(receiver) != NIL):
                 param_list.append(receiver)
+            else:
+                # we require to always have the receiver in the trace
+                #
+                # if there are no receiver in the spec, the correspondent receiver
+                # in the trace should be the NULL value
+                #
+                param_list.append(new_null())
+
             while (get_node_type(params) == PARAM_LIST):
-                param_list.append(params[1])
-                params = params[2]
+                param_list.append(get_param_name(params))
+                params = get_param_tail(params)
             arity = len(param_list)
 
-            matching_methods = self.lookup_methods(call_type, method_name,
+            matching_methods = self.lookup_methods(call_type, method_signature,
                                                    arity,
                                                    retval != new_nil())
             # For each method, find:
@@ -650,6 +655,11 @@ class TraceMap(object):
             for method in matching_methods:
                 match = True
                 method_assignments = Assignments()
+
+                # Replace the name of the atom in the call with the concrete name
+                # of the method that was matched.
+                method_assignments.add(method_name_node,
+                                       new_id(method.get_msg_no_params()))
 
                 # parameters
                 for formal, actual in zip(param_list, method.params):

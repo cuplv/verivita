@@ -1,1 +1,1 @@
-SPEC [CB] [l] m1() |- [CI] [l] m2()
+SPEC [CB] [l] void m1() |- [CI] [l] void m2()

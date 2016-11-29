@@ -77,6 +77,7 @@ class CexPrinter:
                     for s in fired_specs:
                         (ground, spec) = s
                         self.out_stream.write("    ")
+                        print ground.ast
                         ground.print_spec(self.out_stream)
                         self.out_stream.write("\n")
 

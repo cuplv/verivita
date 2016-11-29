@@ -235,6 +235,9 @@ class TSEncoder:
         if (self.ts is None): self._encode()
         return self.ts
 
+    def get_ground_spec(self):
+        return self.ground_specs
+
     def _compute_ground_spec(self):
         """ Computes all the ground specifications from the
         specifications with free variables in self.spec and the
@@ -685,11 +688,7 @@ class TSEncoder:
         for p in msg.params:
             params.append(TSEncoder.get_value_key(p))
 
-        if (msg.class_name != ""):
-            full_msg_name = "%s.%s" % (msg.class_name, msg.method_name)
-        else:
-            full_msg_name = msg.method_name
-
+        full_msg_name = msg.get_full_msg_name()
         return TSEncoder.get_key(retval, msg_type, full_msg_name, params)
 
     @staticmethod
@@ -712,10 +711,10 @@ class TSEncoder:
         else:
             assert False
 
-        method_name_node = get_call_method(call_node)
+        # method_name_node = get_call_method(call_node)
+        method_name_node = get_call_signature(call_node)
         assert (ID == get_node_type(method_name_node))
-        method_name = method_name_node[1]
-
+        method_name = get_id_val(method_name_node)
         receiver = get_call_receiver(call_node)
 
         if (new_nil() != receiver):
@@ -727,11 +726,11 @@ class TSEncoder:
         node_params = get_call_params(call_node)
 
         while (PARAM_LIST == get_node_type(node_params)):
-            p_node = node_params[1]
+            p_node = get_param_name(node_params)
             assert ID == get_node_type(p_node)
             p = get_id_val(p_node)
             params.append(p)
-            node_params = node_params[2]
+            node_params = get_param_tail(node_params)
 
         return TSEncoder.get_key(retval, call_type,
                                  method_name, params)
@@ -955,6 +954,9 @@ class RegExpToAuto():
 
         self.alphabet_list = list(self.alphabet)
         self.letter_to_val = {}
+
+        print self.alphabet
+
         for i in range(len(self.alphabet_list)):
             self.letter_to_val[self.alphabet_list[i]] = i
             mapback.add_vars2msg(i, self.alphabet_list[i])

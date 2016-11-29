@@ -4,7 +4,7 @@
 - Reserved keywords and operators:
 Reserved keywords:
 ```
-SPEC, TRUE, FALSE, CB, CI, #
+SPEC, TRUE, FALSE, CB, CI, #, NULL
 ```
 
 Operators:
@@ -45,6 +45,7 @@ enable/allow `message`.
 regexp : bexp
        | bexp[*]
        | regexp; regepx
+       | (regexp)
 ```
 
 The regular expressions are defined over Boolean expressions of
@@ -62,6 +63,7 @@ bexp : message
      | ! bexp
      | bexp & bexp
      | bexp | bexp
+     | (bexp)
 ```
 
 `bexp` defines the Boolean expressions where the atoms are messages.
@@ -88,16 +90,18 @@ method_type : CB
 method_call : [param] inner_call
             | inner_call
             
-inner_call : composed_id(param_list)
-           | composed_id()
+inner_call : composed_id composed_id(param_list)
+           | composed_id composed_id()
            
-param_list : param
-           | param, param_list
+param_list : param : composed_id
+           | param : composed_id, param_list
            
 param : identifier
       | TRUE
       | FALSE
+      | NULL
       | integer
+      | string_literal
       | #
 
 composed_id : identifier
@@ -105,7 +109,7 @@ composed_id : identifier
             
 identifier = [a-zA-Z_$][a-zA-Z0-9_$]*
 integer = [1-9]*[0-9]+
-
+string_literal = c-like string
 ```
 
 A message can be either `TRUE`, `FALSE`, define a callin or a
@@ -127,15 +131,18 @@ the method is a callin or a callback.
 
 `method_call` defines the call to a method.
 
-The name of the method is a `composed_id`, and specifies both the
-full class name (with the package) and the method name, separated by
-dots.
+The method call is defined by the return type (a `composed_id`) of the
+method, and by the method name. The name of the method is a
+`composed_id`, and specifies both the full class name (with the
+package) and the method name, separated by dots.
 
 The method call may specify a receiver (`[param] inner_call`) or
 not and a list of parameters.
 
 The parameters can be constant values, free variables, or any value,
-specifified with the reserved keyword `#`.
+specifified with the reserved keyword `#`. Each parameter must be
+followed by their type (the one that corresponds to the types found in
+the method signature). The type is a `composed_id`.
 
 
 # Examples
@@ -148,7 +155,7 @@ as parameter.
 
 This is achieved with the following specification:
 ```
-SPEC [CI] [b] android.widget.Button.setOnClickListener(l) |+ [CB] [l] onClick(b)
+SPEC [CI] [b] android.widget.Button.setOnClickListener(l : View.OnClickListener) |+ [CB] [l] onClick(b : android.widget.Button)
 ```
 
 Note that the regular expression only matches an execution where the
@@ -159,7 +166,7 @@ enabled, we have to match an unbounded number of letters before the
 method:
 
 ```
-SPEC TRUE[*]; [CI] [b] android.widget.Button.setOnClickListener(l) |+ [CB] [l] onClick(b)
+SPEC TRUE[*]; [CI] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener) |+ [CB] [l] void onClick(b : android.widget.Button)
 ```
 
 This specification tells that one can see any number of method calls

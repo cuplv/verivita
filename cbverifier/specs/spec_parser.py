@@ -66,6 +66,11 @@ def p_regexp_sequence(t):
     '''
     t[0] = new_seq(t[1], t[3])
 
+def p_regexp_paren(t):
+    '''regexp : TOK_LPAREN regexp TOK_RPAREN
+    '''
+    t[0] = t[2]
+
 def p_bexp(t):
     '''bexp : atom
     '''
@@ -109,10 +114,27 @@ def p_atom(t):
 
     receiver = method_call[0]
     inner_call = method_call[1]
-    method_name = inner_call[0]
-    method_param = inner_call[1]
+    ret_type = inner_call[0]
+    method_name = inner_call[1]
+    method_param = inner_call[2]
 
-    # print("receiver " + str(method_call[0]) + "call " + str(method_call[1]) + "name " + str(inner_call[0]) + "param " + str(inner_call[1]))
+    # Method signature
+    # return_type method_name(type_p1, type_p2, ..., type_pn)
+    assert (get_node_type(ret_type) == ID and
+            get_node_type(method_name) == ID)
+    method_name = new_id("%s %s" % (get_id_val(ret_type),
+                                    get_id_val(method_name)))
+    # param_types = []
+    # app_node = method_param
+    # while (NIL != get_node_type(app_node)):
+    #     ptype = get_param_type(app_node)
+    #     assert ID == get_node_type(ptype)
+    #     param_types.append(get_id_val(ptype))
+    #     app_node = get_param_tail(app_node)
+
+    # method_name = new_id("%s %s(%s)" % (get_id_val(ret_type),
+    #                                     get_id_val(method_name),
+    #                                     ",".join(param_types)))
 
     t[0] = new_call(assignee, call_type, receiver,
                     method_name, method_param)
@@ -136,24 +158,24 @@ def p_method_call(t):
         t[0] = (new_nil(), t[1])
 
 def p_inner_call(t):
-    '''inner_call : composed_id TOK_LPAREN paramlist TOK_RPAREN
-                  | composed_id TOK_LPAREN TOK_RPAREN'''
-    if (t[3] != ')'):
-        t[0] = (t[1], t[3])
+    '''inner_call : composed_id composed_id TOK_LPAREN paramlist TOK_RPAREN
+                  | composed_id composed_id TOK_LPAREN TOK_RPAREN'''
+    if (t[4] != ')'):
+        t[0] = (t[1], t[2], t[4])
     else:
-        t[0] = (t[1], new_nil())
+        t[0] = (t[1], t[2], new_nil())
 
 def p_paramlist_param(t):
-    '''paramlist : param
-                 | param TOK_COMMA paramlist
+    '''paramlist : param TOK_COLON composed_id
+                 | param TOK_COLON composed_id TOK_COMMA paramlist
     '''
-    if (len(t) == 2):
-        t[0] = new_param(t[1],new_nil())
+    if (len(t) == 4):
+        t[0] = new_param(t[1], t[3], new_nil())
     else:
-        t[0] = new_param(t[1],t[3])
+        t[0] = new_param(t[1], t[3], t[5])
 
 def p_param_id(t):
-    '''param : TOK_ID'''
+    '''param : TOK_ID '''
     t[0] = new_id(t[1])
 
 def p_param_true(t):
@@ -163,6 +185,10 @@ def p_param_true(t):
 def p_param_false(t):
     '''param : TOK_FALSE'''
     t[0] = new_false()
+
+def p_param_null(t):
+    '''param : TOK_NULL'''
+    t[0] = new_null()
 
 def p_param_float(t):
     '''param : TOK_FLOAT'''
@@ -182,15 +208,12 @@ def p_param_string(t):
 
 def p_composed_id(t):
     '''composed_id : TOK_ID
-                   | TOK_ID TOK_DOT composed_id
-                   | TOK_ID composed_id'''
+                   | TOK_ID TOK_DOT composed_id'''
     if (len(t) == 2):
         t[0] = new_id(t[1])
     else:
-        if (t[2] == '.'):
-            t[0] = new_id("%s.%s" % (t[1], t[3][1]))
-        else:
-            t[0] = new_id("%s %s" % (t[1], t[2][1]))
+        assert (t[2] == '.')
+        t[0] = new_id("%s.%s" % (t[1], t[3][1]))
 
 def p_method_type(t):
     ''' method_type : TOK_CI
@@ -206,9 +229,9 @@ def p_method_type(t):
 def p_error(t):
     for handler in handlers:
         if (t is not None):
-            handler.set_in_error(t.value)
+            handler.set_in_error(t.value, t.lineno)
         else:
-            handler.set_in_error("unknown")
+            handler.set_in_error("unknown", -1)
 
 handlers = []
 
@@ -223,6 +246,7 @@ class SpecParser(object):
         self.parser = None
         self.in_error = False
         self.error_value = None
+        self.error_line = -1
 
     def parse(self, spec_str):
         self.in_error = False
@@ -230,13 +254,14 @@ class SpecParser(object):
         if (self.in_error): spec_list = None
         return spec_list
 
-    def set_in_error(self, t_value):
+    def set_in_error(self, t_value, t_lineno):
         # DEBUG
-        print("Syntax error at '%s'" % t_value)
+        print("Syntax error at '%s' at line %d." % (t_value, t_lineno))
 
         # store the error status
         self.in_error = True
         self.error_value = t_value
+        self.error_line = t_lineno
 
 
 spec_parser = SpecParser(parser)

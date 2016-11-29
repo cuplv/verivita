@@ -39,9 +39,10 @@ def main(input_args=None):
                  default=False,help="Use the debug encoding")
 
     p.add_option('-m', '--mode', type='choice',
-                 choices= ["bmc","check-files","to-smv"],
+                 choices= ["bmc","check-files","to-smv","ground-specs"],
                  help=('bmc: run bmc on the trace; '
                        'check-files: check if the input files are well formed and prints them; ' 
+                       'ground-specs: shows the specifications instantiateed by the given trace; ' 
                        'to-smv: prints the SMV file of the generated transition system.'),
                  default = "bmc")
 
@@ -105,6 +106,10 @@ def main(input_args=None):
 
     # Parse the specs
     spec_list = Spec.get_specs_from_files(spec_file_list)
+    if spec_list is None:
+        print "Error parsing the specification file!"
+        sys.exit(1)
+
 
     if (opts.mode == "check-files"):
 
@@ -115,6 +120,15 @@ def main(input_args=None):
         sys.stdout.write("\nTRACE:\n")
         trace.print_trace(sys.stdout)
         sys.stdout.write("\n")
+
+        return 0
+
+    elif (opts.mode == "ground-specs"):
+        ts_enc = TSEncoder(trace, spec_list)
+        ground_specs = ts_enc.get_ground_spec()
+        for spec in ground_specs():
+            spec.print_spec(spec, sys.stdout)
+
 
     elif (opts.mode == "bmc"):
         ts_enc = TSEncoder(trace, spec_list)
@@ -130,9 +144,11 @@ def main(input_args=None):
         else:
             print "No bugs found up to %d steps" % (depth)
 
+        return 0
     elif (opts.mode == "to_smv"):
         assert False
 
+        return 1
 
         # # Call the verifier
         # verifier = Verifier(ctrace, specs_map["specs"],
