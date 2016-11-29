@@ -14,11 +14,14 @@ from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.bmc.bmc import BMC
 
 
-def main(input_args=None):
-    # Common to all modes
-    # logging.basicConfig(level=logging.DEBUG)
-    logging.basicConfig(level=logging.INFO)
+def print_ground_spec(ground_specs, out=sys.stdout):
+    out.write("List of ground specifications:\n")
+    for spec in ground_specs:
+        spec.print_spec(out)
+        out.write("\n")
 
+
+def main(input_args=None):
     p = optparse.OptionParser()
     p.add_option('-t', '--tracefile',
                  help="File containing the concrete trace (protobuf format)")
@@ -35,14 +38,15 @@ def main(input_args=None):
     p.add_option('-c', '--enc_coi', action="store_true",
                  default=False, help="Apply cone of influence")
 
-    p.add_option('-d', '--debugenc', action="store_true",
-                 default=False,help="Use the debug encoding")
+    p.add_option('-d', '--debug', action="store_true",
+                 default=False,
+                 help="Output debug informations")
 
     p.add_option('-m', '--mode', type='choice',
-                 choices= ["bmc","check-files","to-smv","ground-specs"],
+                 choices= ["bmc","check-files","to-smv","show-ground-specs"],
                  help=('bmc: run bmc on the trace; '
                        'check-files: check if the input files are well formed and prints them; ' 
-                       'ground-specs: shows the specifications instantiateed by the given trace; ' 
+                       'show-ground-specs: shows the specifications instantiateed by the given trace; ' 
                        'to-smv: prints the SMV file of the generated transition system.'),
                  default = "bmc")
 
@@ -94,7 +98,10 @@ def main(input_args=None):
         if opts.smv_file:
             usage("%s options cannot use in mode " % ("", opts.mode))
 
-
+    if (opts.debug):
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
 
     # Parse the trace
     try:
@@ -112,22 +119,21 @@ def main(input_args=None):
 
 
     if (opts.mode == "check-files"):
-
         sys.stdout.write("SPECIFICATIONS:\n")
         for spec in spec_list:
             spec.print_spec(sys.stdout)
 
         sys.stdout.write("\nTRACE:\n")
-        trace.print_trace(sys.stdout)
+        trace.print_trace(sys.stdout, opts.debug)
         sys.stdout.write("\n")
 
         return 0
 
-    elif (opts.mode == "ground-specs"):
+    elif (opts.mode == "show-ground-specs"):
         ts_enc = TSEncoder(trace, spec_list)
         ground_specs = ts_enc.get_ground_spec()
-        for spec in ground_specs():
-            spec.print_spec(spec, sys.stdout)
+
+        print_ground_spec(ground_specs)
 
 
     elif (opts.mode == "bmc"):

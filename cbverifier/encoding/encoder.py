@@ -955,8 +955,6 @@ class RegExpToAuto():
         self.alphabet_list = list(self.alphabet)
         self.letter_to_val = {}
 
-        print self.alphabet
-
         for i in range(len(self.alphabet_list)):
             self.letter_to_val[self.alphabet_list[i]] = i
             mapback.add_vars2msg(i, self.alphabet_list[i])

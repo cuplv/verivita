@@ -59,7 +59,7 @@ class CMessage(object):
     def __iter__(self):
         return iter(self.children)
 
-    def _print(self, stream, sep, rec=True):
+    def _print(self, stream, sep, rec=True, debug_info=False):
         message_sig = self.get_full_msg_name()
 
         if isinstance(self, CCallback):
@@ -76,9 +76,16 @@ class CMessage(object):
             stream.write("%s" % self.params[i])
         stream.write(")\n")
 
+        if debug_info:
+            if isinstance(self, CCallback):
+                stream.write("%sFramework overrides\n" % sep)
+                for override in self.fmwk_overrides:
+                    stream.write("%s%s\n" % (sep, str(override)))
+
+
         if rec:
             for child in self.children:
-                child._print(stream, "  ")
+                child._print(stream, "  ", rec, debug_info)
 
     @staticmethod
     def get_full_msg_name_static(class_name, method_name):
@@ -286,8 +293,8 @@ class FrameworkOverride:
         else:
             desc = "class"
 
-        return "%s %s.%s" % (desc,
-                             self.get_full_msg_name())
+        return "%s %s" % (desc,
+                          self.get_full_msg_name())
 
     def __eq__(self, other):
         return (self.is_interface == other.is_interface and
@@ -300,10 +307,10 @@ class CTrace:
         self.children = []
         self.app_info = None
 
-    def print_trace(self, stream):
+    def print_trace(self, stream, debug_info=False):
         """ Print the trace """
         for child in self.children:
-            child._print(stream, "")
+            child._print(stream, "", True, debug_info)
 
     def add_msg(self, msg):
         self.children.append(msg)
