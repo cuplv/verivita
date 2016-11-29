@@ -655,15 +655,17 @@ class TSEncoder:
 
         assert call_type == "CI" or call_type == "CB"
 
+        string_params = [str(f) for f in params]
+
         if (retval != None):
             key = "%s=[%s]_%s(%s)" % (retval,
                                       call_type,
                                       method_name,
-                                      ",".join(params))
+                                      ",".join(string_params))
         else:
-            key = "[%s]_%s(%s)" % (call_type,
+            key = "[%s]_%s(%s)" % (call_type ,
                                    method_name,
-                                   ",".join(params))
+                                   ",".join(string_params))
         return key
 
     @staticmethod

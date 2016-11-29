@@ -123,7 +123,7 @@ class CMessage(object):
             opening_paren = full_name.index("(")
             closing_paren = full_name.index(")")
         except ValueError:
-            return None
+            return full_name
 
         msg_no_params = full_name[0:opening_paren]
 
