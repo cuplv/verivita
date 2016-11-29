@@ -322,6 +322,7 @@ class TSEncoder:
                                              spec_id,
                                              accepting[key])
             ts.product(gs_ts)
+            spec_id = spec_id + 1
 
         # encodes the frame conditions when there are no accepting
         # the frame conditions must be encoded globally
