@@ -46,7 +46,8 @@ class TestRegExpToAuto(unittest.TestCase):
                                                "SPEC [CB] [l] void m1()[*] |- TRUE")
         assert spec_list is not None
         binding = TestGrounding.newAssign(
-            [new_id('l')], [TestGrounding._get_obj("1","string")])
+            [new_id('l'), new_id('void m1'), new_id('void m2')],
+            [TestGrounding._get_obj("1","string"), new_id('void m1'), new_id('void m2')])
 
         # Test l.m1()
         gs = GroundSpecs._substitute(spec_list[0], binding)

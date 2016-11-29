@@ -145,16 +145,23 @@ class TestEnc(unittest.TestCase):
                                                "SPEC TRUE |- z = [CI] [l] void m1(a : int,b : int,c : int)")
         assert spec_list is not None
 
-        binding = TestGrounding.newAssign(
-            [new_id('l'),new_id("a"),new_id("b"),new_id("c"),new_id("z")],
-            [TestGrounding._get_obj("1","string"),
+        base_var = [new_id('l'),new_id("a"),new_id("b"),new_id("c"),new_id("z"),
+                    new_id('void m1')]
+        base_val = [TestGrounding._get_obj("1","string"),
              TestGrounding._get_obj("2","string"),
              TestGrounding._get_int(1),
              TestGrounding._get_int(2),
-             TestGrounding._get_int(3)])
+             TestGrounding._get_int(3),
+                    new_id('void m1')]
+
+        bindings = [
+            TestGrounding.newAssign(base_var, base_val),
+            TestGrounding.newAssign(base_var, base_val),
+            TestGrounding.newAssign(base_var, base_val)
+            ]
 
         calls_nodes = []
-        for s in spec_list:
+        for (s,binding) in zip(spec_list, bindings):
             ground_s = GroundSpecs._substitute(s, binding)
             msg = get_spec_rhs(ground_s)
             assert get_node_type(msg) == CALL
@@ -285,8 +292,8 @@ class TestEnc(unittest.TestCase):
         spec_list = Spec.get_specs_from_string("SPEC [CB] [l] void m1() |- [CI] [l] void m2()")
         assert spec_list is not None
 
-        binding = TestGrounding.newAssign([new_id('l')],
-                                          [TestGrounding._get_obj("1","string")])
+        binding = TestGrounding.newAssign([new_id('l'),new_id('void m1'), new_id('void m2')],
+                                          [TestGrounding._get_obj("1","string"),new_id('void m1'), new_id('void m2')])
         ground_s = Spec(GroundSpecs._substitute(spec_list[0], binding))
 
         ctrace = CTrace()

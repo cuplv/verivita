@@ -106,6 +106,23 @@ class CMessage(object):
                                                 self.method_name)
         return res
 
+    def get_msg_no_params(self):
+        """ Returns the full name of the message
+        without the list of parameters
+        """
+        full_name = self.get_full_msg_name()
+
+        try:
+            opening_paren = full_name.index("(")
+            closing_paren = full_name.index(")")
+        except ValueError:
+            return None
+
+        msg_no_params = full_name[0:opening_paren]
+
+        return msg_no_params
+
+
 class CCallback(CMessage):
     """ Represents a callback message
     """
@@ -401,7 +418,6 @@ class CTraceSerializer:
 
             trace_msg.message_id = msg.message_id
             trace_msg.thread_id = msg.thread_id
-
             trace_msg.class_name = cb.class_name
             trace_msg.method_name = cb.method_name
             trace_msg.params = CTraceSerializer.get_params(cb.param_list)

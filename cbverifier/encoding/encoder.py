@@ -235,6 +235,9 @@ class TSEncoder:
         if (self.ts is None): self._encode()
         return self.ts
 
+    def get_ground_spec(self):
+        return self.ground_specs
+
     def _compute_ground_spec(self):
         """ Computes all the ground specifications from the
         specifications with free variables in self.spec and the
@@ -951,6 +954,9 @@ class RegExpToAuto():
 
         self.alphabet_list = list(self.alphabet)
         self.letter_to_val = {}
+
+        print self.alphabet
+
         for i in range(len(self.alphabet_list)):
             self.letter_to_val[self.alphabet_list[i]] = i
             mapback.add_vars2msg(i, self.alphabet_list[i])

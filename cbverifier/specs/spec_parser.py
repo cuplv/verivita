@@ -229,9 +229,9 @@ def p_method_type(t):
 def p_error(t):
     for handler in handlers:
         if (t is not None):
-            handler.set_in_error(t.value)
+            handler.set_in_error(t.value, t.lineno)
         else:
-            handler.set_in_error("unknown")
+            handler.set_in_error("unknown", -1)
 
 handlers = []
 
@@ -246,6 +246,7 @@ class SpecParser(object):
         self.parser = None
         self.in_error = False
         self.error_value = None
+        self.error_line = -1
 
     def parse(self, spec_str):
         self.in_error = False
@@ -253,13 +254,14 @@ class SpecParser(object):
         if (self.in_error): spec_list = None
         return spec_list
 
-    def set_in_error(self, t_value):
+    def set_in_error(self, t_value, t_lineno):
         # DEBUG
-        print("Syntax error at '%s'" % t_value)
+        print("Syntax error at '%s' at line %d." % (t_value, t_lineno))
 
         # store the error status
         self.in_error = True
         self.error_value = t_value
+        self.error_line = t_lineno
 
 
 spec_parser = SpecParser(parser)

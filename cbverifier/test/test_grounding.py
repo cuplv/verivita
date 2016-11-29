@@ -220,23 +220,26 @@ class TestGrounding(unittest.TestCase):
                          new_id("l"), new_id("doSomethingCb"),
                          new_nil())
         res = tmap.lookup_assignments(cnode)
+
         res_2 = TestGrounding.newBinding([
-            [[new_id('l')],[TestGrounding._get_obj("1","string")]],
-            [[new_id('l')],[TestGrounding._get_obj("2","string")]]])
+            [[new_id('l'),new_id('doSomethingCb')],[TestGrounding._get_obj("1","string"),new_id('doSomethingCb')]],
+            [[new_id('l'),new_id('doSomethingCb')],[TestGrounding._get_obj("2","string"),new_id('doSomethingCb')]]])
         self.assertTrue(res == res_2)
 
         cnode = new_call(new_nil(), new_cb(),
-                         new_dontcare(), new_id("doSomethingCb"),
+                         new_dontcare(),
+                         new_id("doSomethingCb"),
                          new_nil())
         res = tmap.lookup_assignments(cnode)
-        res_2 = TestGrounding.newBinding([[[],[]]])
+        res_2 = TestGrounding.newBinding([[[new_id("doSomethingCb")],[new_id("doSomethingCb")]]])
         self.assertTrue(res == res_2)
 
         cnode = new_call(new_nil(), new_ci(),
                  new_dontcare(), new_id("doSomethingCi"),
                  new_param(new_id('z'), new_id("int"), new_nil()))
         res = tmap.lookup_assignments(cnode)
-        res_2 = TestGrounding.newBinding([[[new_id('z')],[ TestGrounding._get_int(2)]]])
+        res_2 = TestGrounding.newBinding([[[new_id('z'),new_id("doSomethingCi")],
+                                           [TestGrounding._get_int(2),new_id("doSomethingCi")]]])
         self.assertTrue(res == res_2)
 
         cnode = new_call(new_id("z"), new_cb(),
@@ -244,9 +247,10 @@ class TestGrounding(unittest.TestCase):
                          new_nil())
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([
-            [[new_id('z'),new_id('l')],
+            [[new_id('z'),new_id('l'),new_id("doSomethingCb")],
              [TestGrounding._get_obj("3","string"),
-              TestGrounding._get_obj("2","string")]]])
+              TestGrounding._get_obj("2","string"),
+              new_id("doSomethingCb")]]])
         self.assertTrue(res == res_2)
 
         cnode = new_call(new_id("z"), new_cb(),
@@ -254,18 +258,20 @@ class TestGrounding(unittest.TestCase):
                          new_nil())
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([
-            [[new_id('z'),new_id('l')],
+            [[new_id('z'), new_id('l'), new_id('package.MyClass.testClassName')],
              [TestGrounding._get_obj("3","string"),
-              TestGrounding._get_obj("2","string")]]])
+              TestGrounding._get_obj("2","string"),
+              new_id('package.MyClass.testClassName')]]])
         self.assertTrue(res == res_2)
+
 
         cnode = new_call(new_int(3), new_cb(),
                          new_id("l"), new_id("package.MyClass.testAssignConstant"),
                          new_nil())
         res = tmap.lookup_assignments(cnode)
         res_2 = TestGrounding.newBinding([
-            [[new_id('l')],
-             [TestGrounding._get_obj("2","string")]]])
+            [[new_id('l'),new_id("package.MyClass.testAssignConstant")],
+             [TestGrounding._get_obj("2","string"),new_id("package.MyClass.testAssignConstant")]]])
         assert (res == res_2)
 
 
@@ -303,10 +309,12 @@ class TestGrounding(unittest.TestCase):
         spec = Spec.get_spec_from_string("SPEC [CI] [l] void doSomethingCi(z : string) |- [CI] [z] void otherCi(f  : string)")
         bindings = gs._get_ground_bindings(spec)
         res = TestGrounding.newBinding([
-            [[new_id('l'),new_id('z'),new_id('f')],
+            [[new_id('l'), new_id('z') , new_id('f'),
+              new_id('void doSomethingCi'), new_id('void otherCi')],
              [TestGrounding._get_obj("1","string"),
               TestGrounding._get_obj("4","string"),
-              TestGrounding._get_obj("1","string")]]])
+              TestGrounding._get_obj("1","string"),
+              new_id('void doSomethingCi'), new_id('void otherCi')]]])
         self.assertTrue(bindings == res)
 
         ground_specs = gs.ground_spec(spec)
@@ -314,8 +322,10 @@ class TestGrounding(unittest.TestCase):
         spec = Spec.get_spec_from_string("SPEC [CI] [l] void doSomethingCi(# : string) |- [CI] [#] void otherCi(# : string)")
         bindings = gs._get_ground_bindings(spec)
         res = TestGrounding.newBinding([
-            [[new_id('l')],
-             [TestGrounding._get_obj("1","string")]]])
+            [[new_id('l'),
+              new_id('void doSomethingCi'), new_id('void otherCi')],
+             [TestGrounding._get_obj("1","string"),
+              new_id('void doSomethingCi'), new_id('void otherCi')]]])
         self.assertTrue(bindings == res)
 
         ground_specs = gs.ground_spec(spec)
@@ -326,10 +336,39 @@ class TestGrounding(unittest.TestCase):
         spec = Spec.get_spec_from_string("SPEC [CB] [l] void doSomethingCb() |- [CI] [#] void otherCi(l : string)")
         bindings = gs._get_ground_bindings(spec)
         res = TestGrounding.newBinding([
-            [[new_id('l')],
-             [TestGrounding._get_obj("1","string")]]])
+            [[new_id('l'), new_id('void doSomethingCb'), new_id('void otherCi')],
+             [TestGrounding._get_obj("1","string"),new_id('void doSomethingCb'), new_id('void otherCi')]]])
 
         self.assertTrue(bindings == res)
 
         ground_specs = gs.ground_spec(spec)
         self.assertTrue(len(ground_specs) == 1)
+
+
+    def test_method_assignment(self):
+        trace = CTrace()
+
+        cb = CCallback(1, 1,
+                       "edu.colorado.test",
+                       "int inherithedMethod()",
+                       [TestGrounding._get_obj("1","android.widget.Button")],
+                       None,
+                       [TestGrounding._get_fmwkov("android.widget.Button",
+                                                  "int inherithedMethod()", False)])
+        trace.add_msg(cb)
+        tmap = TraceMap(trace)
+
+
+        cnode = new_call(new_nil(),
+                         new_cb(),
+                         new_id("l"),
+                         new_id("int android.widget.Button.inherithedMethod"),
+                         new_nil())
+        res = tmap.lookup_assignments(cnode)
+        res_2 = TestGrounding.newBinding([
+            [[new_id('l'),
+              new_id('int android.widget.Button.inherithedMethod')],
+             [TestGrounding._get_obj("1","android.widget.Button"),
+              new_id('int edu.colorado.test.inherithedMethod')]]])
+
+        self.assertTrue(res == res_2)

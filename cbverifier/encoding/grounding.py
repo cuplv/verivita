@@ -132,7 +132,7 @@ class GroundSpecs(object):
                                          get_call_type(node),
                                          sub_leaf(get_call_receiver(node),
                                                   binding),
-                                         get_call_method(node),
+                                         sub_leaf(get_call_method(node), binding),
                                          new_params)
                 return new_call_node
 
@@ -624,7 +624,7 @@ class TraceMap(object):
             # (CALL, retval, call_type, receiver, method_name, params)
             retval = get_call_assignee(call_node)
             call_type = get_call_type(call_node)
-            # method_name_node = get_call_method(call_node)
+            method_name_node = get_call_method(call_node)
             # method_name = get_id_val(method_name_node)
             method_signature = get_id_val(get_call_signature(call_node))
             receiver = get_call_receiver(call_node)
@@ -655,6 +655,11 @@ class TraceMap(object):
             for method in matching_methods:
                 match = True
                 method_assignments = Assignments()
+
+                # Replace the name of the atom in the call with the concrete name
+                # of the method that was matched.
+                method_assignments.add(method_name_node,
+                                       new_id(method.get_msg_no_params()))
 
                 # parameters
                 for formal, actual in zip(param_list, method.params):
