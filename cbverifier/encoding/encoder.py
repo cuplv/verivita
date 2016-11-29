@@ -716,9 +716,17 @@ class TSEncoder:
 
         # method_name_node = get_call_method(call_node)
         method_name_node = get_call_signature(call_node)
+
         assert (ID == get_node_type(method_name_node))
         method_name = get_id_val(method_name_node)
         receiver = get_call_receiver(call_node)
+
+        # WORKAROUND FOR TRACERUNNER BUG ON CB NAME
+        if (call_type == "CB" and
+            "(" in method_name and
+            ")" in method_name):
+            method_name = method_name[0:method_name.index("(")]
+
 
         if (new_nil() != receiver):
             assert ID == get_node_type(receiver)
