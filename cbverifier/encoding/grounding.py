@@ -188,10 +188,11 @@ class GroundSpecs(object):
         return binding_set
 
     def _ground_bindings_rec(self, spec_node, bindings):
+        assert bindings is not None
         node_type = get_node_type(spec_node)
         if (node_type in leaf_nodes):
             # ground set do not change in these cases
-            pass
+            return bindings
         elif (node_type == AND_OP or
             node_type == OR_OP or
             node_type == SEQ_OP or
