@@ -407,7 +407,6 @@ class CTraceSerializer:
 
             trace_msg.message_id = msg.message_id
             trace_msg.thread_id = msg.thread_id
-
             trace_msg.class_name = ci.class_name
             trace_msg.method_name = ci.method_name
             trace_msg.params = CTraceSerializer.get_params(ci.param_list)
@@ -464,17 +463,17 @@ class CTraceSerializer:
                                                                    msg_exit.method_name,
                                                                    str(type(trace_msg))))
             elif (not trace_msg.class_name == msg_exit.class_name):
-                raise MalformedTraceException("Found exit for class_name %s, " \
-                                              "while expecting it for class_name " \
-                                              "%s\n" % (msg_exit.class_name,
-                                                        trace_msg.class_name))
+                raise MalformedTraceException("Found exit for class name \"%s\", " \
+                                              "while expecting it for class name " \
+                                              "\"%s\"\n" % (msg_exit.class_name,
+                                                            trace_msg.class_name))
 
             # TEMPORARY HACK: disable the check on callback names
             elif (TraceMsgContainer.TraceMsg.CALLIN_EXIT == msg.type and not trace_msg.method_name == msg_exit.method_name):
                 raise MalformedTraceException("Found exit for method %s, " \
                                               "while expecting it for method " \
-                                              "%s\n" % (msg_exit.method_name,
-                                                        trace_msg.method_name))
+                                              "%s\n" % (trace_msg.method_name,
+                                                        msg_exit.method_name))
 
         def check_malformed_trace_msg(trace_msg, msg):
             if (trace_msg.thread_id != msg.thread_id):
