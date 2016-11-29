@@ -457,6 +457,11 @@ class TraceMap(object):
         for child in trace.children:
             self.trace_map = self._fill_map(child, self.trace_map)
 
+        if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
+            logging.debug("--- Trace map --- ")
+            logging.debug(str(self.trace_map))
+
+
     def _get_inner_elem(self, hash_map, key, default=None):
         assert (type(hash_map) == type({}))
 
@@ -549,7 +554,6 @@ class TraceMap(object):
         """
         method_list = []
 
-
         msg_type = get_node_type(msg_type_node)
         keys = [msg_type, method_name, arity, has_retval]
         current_map = self.trace_map
@@ -571,6 +575,35 @@ class TraceMap(object):
                     break
                 else:
                     current_map = lookupres
+
+        if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
+            # find where the lookup got stuck
+            if key_index == 0:
+                stop_lookup = "message type"
+            elif key_index == 1:
+                stop_lookup = "method_name"
+            elif key_index == 2:
+                stop_lookup = "arity"
+            elif key_index == 3:
+                stop_lookup = "return value"
+            elif key_index == 4:
+                stop_lookup = None
+
+            if has_retval:
+                retval = "retval = "
+            else:
+                retval = ""
+
+            if stop_lookup is None:
+                logging.debug("Lookup succeded for %s" \
+                              "%s %s with arity %d: %s"
+                              % (retval,msg_type_node, method_name, arity,
+                                 ",".join(method_list)))
+            else:
+                logging.debug("Lookup failed for %s" \
+                              "%s %s with arity %d: %s"
+                              % (retval,msg_type_node, method_name, arity,
+                                 stop_lookup))
 
         return method_list
 
