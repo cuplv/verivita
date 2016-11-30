@@ -322,6 +322,7 @@ class TSEncoder:
                                              spec_id,
                                              accepting[key])
             ts.product(gs_ts)
+            spec_id = spec_id + 1
 
         # encodes the frame conditions when there are no accepting
         # the frame conditions must be encoded globally
@@ -655,15 +656,17 @@ class TSEncoder:
 
         assert call_type == "CI" or call_type == "CB"
 
+        string_params = [str(f) for f in params]
+
         if (retval != None):
             key = "%s=[%s]_%s(%s)" % (retval,
                                       call_type,
                                       method_name,
-                                      ",".join(params))
+                                      ",".join(string_params))
         else:
-            key = "[%s]_%s(%s)" % (call_type,
+            key = "[%s]_%s(%s)" % (call_type ,
                                    method_name,
-                                   ",".join(params))
+                                   ",".join(string_params))
         return key
 
     @staticmethod
@@ -713,6 +716,7 @@ class TSEncoder:
 
         # method_name_node = get_call_method(call_node)
         method_name_node = get_call_signature(call_node)
+
         assert (ID == get_node_type(method_name_node))
         method_name = get_id_val(method_name_node)
         receiver = get_call_receiver(call_node)
