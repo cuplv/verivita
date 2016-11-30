@@ -119,11 +119,9 @@ class CMessage(object):
         """
         full_name = self.get_full_msg_name()
 
-        try:
-            opening_paren = full_name.index("(")
-            closing_paren = full_name.index(")")
-        except ValueError:
-            return full_name
+        # can throw a ValueError if names are not well formed
+        opening_paren = full_name.index("(")
+        closing_paren = full_name.index(")")
 
         msg_no_params = full_name[0:opening_paren]
 
