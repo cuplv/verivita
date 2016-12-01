@@ -1,4 +1,4 @@
-package com.peilunzhang.kistenstapelndistillfix;
+package com.peilunzhang.domoticzdistillfix;
 
 
 import android.support.test.InstrumentationRegistry;
@@ -42,11 +42,10 @@ public class TraceCrash {
 
     @Test
     public void testButton() throws Exception {
-
         solo.clickOnView( solo.getView( R.id.fragmentBtn1) );
-        solo.sleep(5000);
+        solo.sleep(500);
         solo.clickOnView( solo.getView( R.id.fragmentBtn2) );
-        solo.sleep(7000);
+        solo.sleep(10000);
 
     }
 

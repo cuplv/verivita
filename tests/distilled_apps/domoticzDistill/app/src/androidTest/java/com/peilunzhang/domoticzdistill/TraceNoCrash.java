@@ -1,4 +1,4 @@
-package com.peilunzhang.kistenstapelndistillfix;
+package com.peilunzhang.domoticzdistill;
 
 
 import android.support.test.InstrumentationRegistry;
@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith (AndroidJUnit4.class)
-public class TraceCrash {
+public class TraceNoCrash {
 
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule =
@@ -42,11 +42,9 @@ public class TraceCrash {
 
     @Test
     public void testButton() throws Exception {
-
         solo.clickOnView( solo.getView( R.id.fragmentBtn1) );
         solo.sleep(5000);
         solo.clickOnView( solo.getView( R.id.fragmentBtn2) );
-        solo.sleep(7000);
 
     }
 
