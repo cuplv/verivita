@@ -74,3 +74,15 @@
   * To reproduce:
     * press the `stop` button without pressing `start`
     
+
+
+  6. Silence
+    https://github.com/SilenceIM/Silence/commit/39a1a02fe9e9d3164098b151e28c6041b716248a
+    sendComplete UI updates on destroyed views
+
+  7. ContractionTimer
+    * Startactivity
+  https://github.com/ianhanniballake/ContractionTimer/issues/121
+
+  8. androidbetterpicker
+    * https://github.com/code-troopers/android-betterpickers/issues/285
