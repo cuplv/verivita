@@ -32,7 +32,7 @@ public class EmptyFragment extends ListFragment {
         textMain.setText("Fragment Replaced");
 
         setListShown(true);
-        
+
     }
 }
 
