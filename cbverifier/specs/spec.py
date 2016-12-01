@@ -31,7 +31,6 @@ class Spec:
     def is_enable(self):
         return is_spec_enable(self.ast)
 
-
     @staticmethod
     def get_specs_from_string(spec_list_string, spec_list=None):
         spec_list_ast = spec_parser.parse(spec_list_string)
@@ -71,3 +70,13 @@ class Spec:
         for spec_file in files_list:
             spec_list = Spec.get_specs_from_file(spec_file, spec_list)
         return spec_list
+
+    def is_spec_rhs_false(self):
+        """ Note: the check is just syntactic on the constant FALSE """
+        spec_rhs = get_spec_rhs(self.ast)
+        return get_node_type(spec_rhs) == FALSE
+
+    def is_regexp_false(self):
+        """ Note: the check is just syntactic on the constant FALSE """
+        spec_regexp = get_regexp_node(self.ast)
+        return get_node_type(spec_regexp) == FALSE
