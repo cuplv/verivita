@@ -128,9 +128,6 @@ class TestSpecParser(unittest.TestCase):
         # test the printing of the spec ast
         stringio = StringIO()
         pretty_print(res, stringio)
-        print ""
-        print spec
-        print stringio.getvalue()
         self.assertTrue(stringio.getvalue() == spec)
 
 
@@ -172,10 +169,6 @@ class TestSpecParser(unittest.TestCase):
     def test_ast(self):
         def test_ast_inner(specs, expected):
             parse_res = spec_parser.parse(specs)
-
-            # print parse_res
-            # print expected
-
             self.assertTrue(parse_res == expected)
 
         res = [("SPEC [CB] [l] void package.method_name() |- TRUE",

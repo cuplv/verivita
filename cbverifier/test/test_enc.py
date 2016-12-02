@@ -600,6 +600,5 @@ class TestEnc(unittest.TestCase):
         printer.print_cex()
 
         io_string = stringio.getvalue()
-        print io_string
         self.assertTrue("SPEC [CB] [1] void m1() |- [CI] [1] void m2()" in io_string)
         self.assertTrue("Reached an error state in step 2" in io_string)
