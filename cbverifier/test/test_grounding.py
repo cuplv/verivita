@@ -459,25 +459,36 @@ class TestGrounding(unittest.TestCase):
         trace.add_msg(cb)
         gs = GroundSpecs(trace)
         spec = Spec.get_spec_from_string("SPEC ! ([CB] void android.inheritedMethodA(3 : int)) |- [CB] void android.inheritedMethod(2 : int)")
-        bindings = gs._get_ground_bindings(spec)
         ground_specs = gs.ground_spec(spec)
         self.assertTrue(len(ground_specs) == 1)
 
 
     def test_only_methods(self):
         trace = CTrace()
-        cb = CCallback(1, 1,
-                       "edu.colorado.test",
-                       "void inheritedMethodMethod()",
-                       [TestGrounding._get_null()],
-                       None,
-                       [TestGrounding._get_fmwkov("android",
-                                                  "void inheritedMethod()",
-                                                  False)])
+        cb = CCallback(1, 1, "", "void m1()", [TestGrounding._get_null()], None,
+                       [TestGrounding._get_fmwkov("", "void m1()", False)])
+        ci1 = CCallin(1, 1, "", "void m2()", [TestGrounding._get_null()], None)
+        ci2 = CCallin(1, 1, "", "void m2()", [TestGrounding._get_null()], None)
+        ci3 = CCallin(1, 1, "", "void m2()", [TestGrounding._get_null()], None)
+        cb.add_msg(ci1)
+        cb.add_msg(ci2)
+        cb.add_msg(ci3)
         trace.add_msg(cb)
 
+        gs = GroundSpecs(trace)
+        spec = Spec.get_spec_from_string("SPEC [CI] void m2() |- [CB] void m1()")
+        ground_specs = gs.ground_spec(spec)
+        self.assertTrue(3 == len(ground_specs))
 
-        return False
+        gs = GroundSpecs(trace)
+        spec = Spec.get_spec_from_string("SPEC ! ([CB] void m3()) |- [CB] void m1()")
+        ground_specs = gs.ground_spec(spec)
+        self.assertTrue(1 == len(ground_specs))
+        self.assertTrue(new_true() == get_regexp_node(ground_specs[0].ast))
 
-    def test_method_name_clash(self):
-        return False
+        gs = GroundSpecs(trace)
+        spec = Spec.get_spec_from_string("SPEC [CB] void m3() |- [CB] void m1()")
+        ground_specs = gs.ground_spec(spec)
+        self.assertTrue(0 == len(ground_specs))
+
+
