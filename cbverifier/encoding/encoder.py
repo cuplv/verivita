@@ -146,6 +146,7 @@ from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
 from cbverifier.encoding.automata import Automaton, AutoEnv
 from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
+from cbverifier.encoding.conversion import TraceSpecConverter
 
 from cbverifier.helpers import Helper
 
@@ -689,7 +690,8 @@ class TSEncoder:
 
         params = []
         for p in msg.params:
-            params.append(TSEncoder.get_value_key(p))
+            p_value = TSEncoder.get_value_key(p)
+            params.append(p_value)
 
         full_msg_name = msg.get_full_msg_name()
         return TSEncoder.get_key(retval, msg_type, full_msg_name, params)
@@ -701,8 +703,8 @@ class TSEncoder:
 
         node_retval = get_call_assignee(call_node)
         if (new_nil() != node_retval):
-            assert ID == get_node_type(node_retval)
-            retval = get_id_val(node_retval)
+            retval_val = TraceSpecConverter.specnode2traceval(node_retval)
+            retval = TSEncoder.get_value_key(retval_val)
         else:
             retval = None
 
@@ -722,8 +724,8 @@ class TSEncoder:
         receiver = get_call_receiver(call_node)
 
         if (new_nil() != receiver):
-            assert ID == get_node_type(receiver)
-            params = [get_id_val(receiver)]
+            param_val = TraceSpecConverter.specnode2traceval(receiver)
+            params = [TSEncoder.get_value_key(param_val)]
         else:
             params = []
 
@@ -731,9 +733,9 @@ class TSEncoder:
 
         while (PARAM_LIST == get_node_type(node_params)):
             p_node = get_param_name(node_params)
-            assert ID == get_node_type(p_node)
-            p = get_id_val(p_node)
-            params.append(p)
+            p = TraceSpecConverter.specnode2traceval(p_node)
+            p_value = TSEncoder.get_value_key(p)
+            params.append(p_value)
             node_params = get_param_tail(node_params)
 
         return TSEncoder.get_key(retval, call_type,

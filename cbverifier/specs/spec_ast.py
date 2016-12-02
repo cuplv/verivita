@@ -112,7 +112,7 @@ def new_spec_list(spec, rest):
 def get_node_type(node): return node[0]
 
 const_nodes = (TRUE,FALSE,STRING,INT,FLOAT,NULL)
-leaf_nodes = (TRUE,FALSE,ID,STRING,INT,FLOAT,NIL,DONTCARE,NULL)
+leaf_nodes = (TRUE,FALSE,STRING,INT,FLOAT,NULL,NIL,DONTCARE,ID)
 logic_nodes = (AND_OP, OR_OP,NOT_OP)
 regexp_nodes = (SEQ_OP,STAR_OP)
 spec_nodes = (SPEC_SYMB,ENABLE_OP,DISABLE_OP)

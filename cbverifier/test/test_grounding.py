@@ -54,7 +54,6 @@ class TestGrounding(unittest.TestCase):
         v.value = None
         return v
 
-
     @staticmethod
     def _get_fmwkov(cname, mname, is_int):
         return FrameworkOverride(cname, mname, is_int)
@@ -350,7 +349,6 @@ class TestGrounding(unittest.TestCase):
               ci2]]
         ])
         self.assertTrue(bindings == res)
-
         ground_specs = gs.ground_spec(spec)
         self.assertTrue(len(ground_specs) == 1)
 
@@ -370,8 +368,7 @@ class TestGrounding(unittest.TestCase):
              ci3, ci2]]])
         self.assertTrue(bindings == res)
         ground_specs = gs.ground_spec(spec)
-        # FIX
-        # self.assertTrue(len(ground_specs) == 1)
+        self.assertTrue(len(ground_specs) == 2)
 
         gs = GroundSpecs(trace)
         spec = Spec.get_spec_from_string("SPEC [CB] [l] void doSomethingCb() |- [CI] [#] void otherCi(l : string)")

@@ -56,6 +56,18 @@ class CMessage(object):
     def add_msg(self, msg):
         self.children.append(msg)
 
+    def get_receiver(self):
+        if len(self.params) > 0:
+            return self.params[0]
+        else:
+            return None
+
+    def get_other_params(self):
+        if len(self.params) > 1:
+            return self.params[1:]
+        else:
+            return []
+
     def __iter__(self):
         return iter(self.children)
 
@@ -232,7 +244,6 @@ class CValue(object):
             return value.encode('utf-8').strip()
         else:
             return str(value)
-
 
     def __repr__(self):
         #repr = ""
