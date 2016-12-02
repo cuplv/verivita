@@ -148,12 +148,12 @@ class TestEnc(unittest.TestCase):
         ci1 = CCallin(1, 1, "", "void m1()",
                       [TestGrounding._get_obj("1","string")],
                       None)
-        ci2 = CCallin(1, 1, "", "void m1(int, int, int)",
+        ci2 = CCallin(1, 1, "", "void m1(int,int,int)",
                       [TestGrounding._get_obj("1","string"),
                        TestGrounding._get_int(2),
                        TestGrounding._get_int(1),
                        TestGrounding._get_int(2),], None)
-        ci3 = CCallin(1, 1, "", "void m1(int, int, int)",
+        ci3 = CCallin(1, 1, "", "void m1(int,int,int)",
                       [TestGrounding._get_obj("1","string"),
                        TestGrounding._get_int(2),
                        TestGrounding._get_int(1),
@@ -186,12 +186,20 @@ class TestEnc(unittest.TestCase):
         assert (len(calls_nodes) == len(spec_list))
 
         res = TSEncoder.get_key_from_call(calls_nodes[0])
+        res2 = TSEncoder.get_key_from_msg(ci1)
         self.assertTrue("[CI]_void m1()(1)" == res)
-        res = TSEncoder.get_key_from_call(calls_nodes[1])
-        self.assertTrue("[CI]_void m1(int,int,int)(1,2,1,2)" == res)
-        res = TSEncoder.get_key_from_call(calls_nodes[2])
-        self.assertTrue("3=[CI]_void m1(int,int,int)(1,2,1,2)" == res)
+        self.assertTrue(res == res2)
 
+        res = TSEncoder.get_key_from_call(calls_nodes[1])
+        res2 = TSEncoder.get_key_from_msg(ci2)
+        self.assertTrue("[CI]_void m1(int,int,int)(1,2,1,2)" == res)
+        self.assertTrue(res == res2)
+
+
+        res = TSEncoder.get_key_from_call(calls_nodes[2])
+        res2 = TSEncoder.get_key_from_msg(ci3)
+        self.assertTrue("3=[CI]_void m1(int,int,int)(1,2,1,2)" == res)
+        self.assertTrue(res == res2)
 
 
     def test_trace_stats(self):
@@ -592,6 +600,5 @@ class TestEnc(unittest.TestCase):
         printer.print_cex()
 
         io_string = stringio.getvalue()
-        print io_string
         self.assertTrue("SPEC [CB] [1] void m1() |- [CI] [1] void m2()" in io_string)
         self.assertTrue("Reached an error state in step 2" in io_string)

@@ -19,7 +19,7 @@ import collections
 from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
 from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
-
+from cbverifier.encoding.conversion import TraceSpecConverter
 from cbverifier.helpers import Helper
 
 
@@ -62,92 +62,48 @@ class GroundSpecs(object):
 
         def substitute_rec(node, binding):
 
-            def replace_consts(node):
-                assert isinstance(node, tuple)
-                assert len(node) > 0
-
-                node_type = get_node_type(node)
-                if (node_type == TRUE):
-                    return new_id("TRUE")
-                elif (node_type == FALSE):
-                    return new_id("FALSE")
-                elif (node_type == NULL):
-                    return new_id("NULL")
-                elif (node_type == NIL):
-                    return node
-                elif (node_type == ID):
-                    return node
-                elif (node_type == STRING or
-                      node_type == INT or
-                      node_type == FLOAT):
-                    return new_id(get_id_val(node))
-                else:
-                    raise Exception("Unknown constant node")
-
-            def wrap_value(binding, varname):
-                assert binding.has_key(varname)
-                bind = binding.get(varname)
-                assert bind is not None
-
-                # unpack the different types of values in a string
-                # (an id at the end)
-                if (isinstance(bind, CValue)):
-                    bind_val = bind.get_value()
-                    assert bind_val is not None
-                    return new_id(bind_val)
-                elif (isinstance(bind, tuple)):
-                    ret_val = replace_consts(bind)
-                    assert ret_val is not None
-                    return ret_val
-                else:
-                    return bind
-
-            def sub_leaf(leaf, binding):
+            def has_binding(leaf, binding):
                 """ Given a leaf node, substitute it """
 
                 leaf_type = get_node_type(leaf)
 
                 if (leaf_type == DONTCARE):
                     # Leave the DONTCARE in the node
-                    assert leaf is not None
-                    return leaf
+                    return True
                 elif (leaf_type == ID):
                     # Replace the free variables
-                    return wrap_value(binding, leaf)
+                    if binding.has_key(leaf):
+                        bind_value = binding.get(leaf)
+                        return bind_value != bottom_value
                 else:
-                    ret_val = replace_consts(leaf)
-                    assert ret_val is not None
-                    return ret_val
+                    # constant
+                    return True
 
-            def process_param(param_node):
-                """ Returns the new list of parameters
-                Obtained by instantiating the variables contained in
-                the binding.
-
-                Return a PARAM_LIST node or bottom_value if at least one
-                of the parameter was substituted with bottom_value
+            def check_param_bindings(param_node, binding):
+                """ Check that all the parameters have a binding.
                 """
+                all_bind = True
 
                 node_type = get_node_type(param_node)
                 if (node_type == PARAM_LIST):
                     formal_param = get_param_name(param_node)
                     p_type = get_param_type(param_node)
-                    res = sub_leaf(formal_param, binding)
+                    res = has_binding(formal_param, binding)
                     assert res is not None
 
-                    if bottom_value == res:
-                        return bottom_value
-                    else:
-                        other_params = process_param(get_param_tail(param_node))
-
-                        if bottom_value == other_params:
-                            return bottom_value
-                        else:
-                            return new_param(res, p_type, other_params)
+                    return (res and
+                            check_param_bindings(get_param_tail(param_node), binding))
                 else:
                     assert node_type == NIL
-                    return new_nil()
+                    return True
 
+            def get_param_types_list(node):
+                types_list = []
+                app = node
+                while (get_node_type(app) == PARAM_LIST):
+                    types_list.append(get_param_type(app))
+                    app = get_param_tail(app)
+                return types_list
 
             node_type = get_node_type(node)
             if (node_type in leaf_nodes): return node
@@ -168,26 +124,15 @@ class GroundSpecs(object):
                 # message that can be substituted to this call and
                 # thus we replace it with false
 
-                new_params = process_param(get_call_params(node))
-                assert new_params is not None
-                new_assignee = sub_leaf(get_call_assignee(node), binding)
-                assert new_assignee is not None
-                new_receiver = sub_leaf(get_call_receiver(node), binding)
-                assert new_receiver is not None
-                new_call_method = new_id(call_message.get_msg_no_params())
-
-                if (new_params == bottom_value or
-                    new_assignee == bottom_value or
-                    new_receiver == bottom_value):
+                if (not check_param_bindings(get_call_params(node), binding) or
+                    not has_binding(get_call_assignee(node), binding) or
+                    not has_binding(get_call_receiver(node), binding)):
                     # when the instantiation fails we replace the call node with
                     # false
                     new_call_node = new_false()
                 else:
-                    new_call_node = new_call(new_assignee,
-                                             get_call_type(node),
-                                             new_receiver,
-                                             new_call_method,
-                                             new_params)
+                    param_types = get_param_types_list(get_call_params(node))
+                    new_call_node = GroundSpecs._msg_to_call_node(call_message, param_types)
                 return new_call_node
 
             elif (node_type == AND_OP):
@@ -248,6 +193,47 @@ class GroundSpecs(object):
         new_spec_ast = substitute_rec(spec.ast, binding)
 
         return new_spec_ast
+
+    @staticmethod
+    def _msg_to_call_node(msg, param_types):
+        if (msg.return_value is None):
+            new_assignee = new_nil()
+        else:
+            new_assignee = TraceSpecConverter.traceval2specnode(msg.return_value)
+
+        if (isinstance(msg, CCallback)):
+            call_type = new_cb()
+        else:
+            assert isinstance(msg, CCallin)
+            call_type = new_ci()
+
+        receiver_msg = msg.get_receiver()
+        if receiver_msg is None:
+            new_receiver = new_nil()
+        else:
+            new_receiver = TraceSpecConverter.traceval2specnode(receiver_msg)
+
+        # rebuild the params
+        msg_params = msg.get_other_params()
+        assert (len(param_types) == len(msg_params))
+        new_params_stack = []
+        for (p,t) in zip(msg_params, param_types):
+            new_p = TraceSpecConverter.traceval2specnode(p)
+            new_params_stack.append((new_p, t))
+        call_param_list = new_nil()
+        while len(new_params_stack) != 0:
+            p = new_params_stack.pop()
+            (new_p, t) = p
+            call_param_list = new_param(new_p, t, call_param_list)
+
+        new_call_method = new_id(msg.get_msg_no_params())
+
+        call_node = new_call(new_assignee,
+                             call_type,
+                             new_receiver,
+                             new_call_method,
+                             call_param_list)
+        return call_node
 
     def _get_ground_bindings(self, spec):
         """ Find all the ground specifications for spec.
@@ -317,7 +303,6 @@ class GroundSpecs(object):
             return None
         else:
             return self.ground_to_spec[ground_spec]
-
 
 
 class AssignmentsBottom(object):
@@ -704,22 +689,7 @@ class TraceMap(object):
 
         if (formal_type == DONTCARE):
             return True
-        elif (formal_type == TRUE):
-            return "true" == actual.get_value()
-        elif (formal_type == FALSE):
-            return "false" == actual.get_value()
-        elif (formal_type == NULL):
-            return "NULL" == actual.get_value()
-        elif (formal_type in const_nodes):
-            # if the constant nodes do not match, do not consider
-            # this as a binding
-            # this is an optimization, it does not create bindings
-            # that we do not need
-            assert isinstance(actual, CValue)
-
-            return str(formal[1]) == str(actual.get_value())
-        elif method_assignments.has_key(formal):
-            assert formal_type == ID
+        elif (formal_type == ID and method_assignments.has_key(formal)):
             if not method_assignments.contains(formal, actual):
                 # Formal is already in the assignment
                 # the pair (formal, actual) is not
@@ -732,10 +702,14 @@ class TraceMap(object):
                 return False
             else:
                 return True
-        else:
-            assert formal_type == ID
+        elif (formal_type == ID):
             method_assignments.add(formal, actual)
             return True
+        elif (TraceSpecConverter.traceval2specnode(actual) == formal):
+            # constants
+            return True
+        else:
+            return False
 
     def lookup_assignments(self, call_node):
         """ Given a node that represent a call in a specification,
