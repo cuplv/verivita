@@ -1,6 +1,16 @@
 
 """ Implements the function that ground the free variables contained
 in a set of rules given a concrete trace.
+
+TODO:
+
+TraceMap:
+  - cache the result (assignment set) for a given method call
+  - represent sets of messages with the same assignments for a given method call
+    in the same assignment (the splitting is necessary if there are different
+    assignments)
+    This allows for a more compact representation, and hence possibly less
+    grounded specifications
 """
 
 import logging
@@ -36,9 +46,13 @@ class GroundSpecs(object):
         for binding in bindings:
             new_spec_ast = GroundSpecs._substitute(spec, binding)
             new_spec = Spec(new_spec_ast)
-            ground_specs.append(new_spec)
 
-            self.ground_to_spec[new_spec] = spec
+            # skip the false specification on the rhs
+            if (not new_spec.is_spec_rhs_false()):
+                # optimization: skip the spec if the regexp is false:
+                if (not new_spec.is_regexp_false()):
+                    ground_specs.append(new_spec)
+                    self.ground_to_spec[new_spec] = spec
 
         return ground_specs
 
@@ -68,22 +82,25 @@ class GroundSpecs(object):
                       node_type == FLOAT):
                     return new_id(get_id_val(node))
                 else:
-                    return None
+                    raise Exception("Unknown constant node")
 
             def wrap_value(binding, varname):
                 assert binding.has_key(varname)
                 bind = binding.get(varname)
-
                 assert bind is not None
 
                 # unpack the different types of values in a string
                 # (an id at the end)
                 if (isinstance(bind, CValue)):
-                    return new_id(bind.get_value())
+                    bind_val = bind.get_value()
+                    assert bind_val is not None
+                    return new_id(bind_val)
                 elif (isinstance(bind, tuple)):
                     ret_val = replace_consts(bind)
                     assert ret_val is not None
                     return ret_val
+                else:
+                    return bind
 
             def sub_leaf(leaf, binding):
                 """ Given a leaf node, substitute it """
@@ -107,46 +124,119 @@ class GroundSpecs(object):
                 Obtained by instantiating the variables contained in
                 the binding.
 
-                Return a PARAM_LIST node
+                Return a PARAM_LIST node or bottom_value if at least one
+                of the parameter was substituted with bottom_value
                 """
 
                 node_type = get_node_type(param_node)
-                if (node_type != PARAM_LIST):
-                    assert node_type == NIL
-                    return new_nil()
-                else:
+                if (node_type == PARAM_LIST):
                     formal_param = get_param_name(param_node)
                     p_type = get_param_type(param_node)
                     res = sub_leaf(formal_param, binding)
-                    return new_param(res, p_type,
-                                     process_param(get_param_tail(param_node)))
+                    assert res is not None
+
+                    if bottom_value == res:
+                        return bottom_value
+                    else:
+                        other_params = process_param(get_param_tail(param_node))
+
+                        if bottom_value == other_params:
+                            return bottom_value
+                        else:
+                            return new_param(res, p_type, other_params)
+                else:
+                    assert node_type == NIL
+                    return new_nil()
+
 
             node_type = get_node_type(node)
             if (node_type in leaf_nodes): return node
             elif (node_type == CALL):
+
+                # not found any message that can match the call
+                if not binding.has_key(node):
+                    return new_false()
+                call_message = binding.get(node)
+                if bottom_value == call_message:
+                    return new_false()
+
+                # reconstruct the call node,
+                # finding the assignments to the free variables
+                #
+                # At this point we may have that a free variable is
+                # assigned to bottom. In that case, we did not find a
+                # message that can be substituted to this call and
+                # thus we replace it with false
+
                 new_params = process_param(get_call_params(node))
                 assert new_params is not None
+                new_assignee = sub_leaf(get_call_assignee(node), binding)
+                assert new_assignee is not None
+                new_receiver = sub_leaf(get_call_receiver(node), binding)
+                assert new_receiver is not None
+                new_call_method = new_id(call_message.get_msg_no_params())
 
-                new_call_node = new_call(sub_leaf(get_call_assignee(node),
-                                                  binding),
-                                         get_call_type(node),
-                                         sub_leaf(get_call_receiver(node),
-                                                  binding),
-                                         sub_leaf(get_call_method(node), binding),
-                                         new_params)
+                if (new_params == bottom_value or
+                    new_assignee == bottom_value or
+                    new_receiver == bottom_value):
+                    # when the instantiation fails we replace the call node with
+                    # false
+                    new_call_node = new_false()
+                else:
+                    new_call_node = new_call(new_assignee,
+                                             get_call_type(node),
+                                             new_receiver,
+                                             new_call_method,
+                                             new_params)
                 return new_call_node
 
-            elif (node_type == AND_OP or
-                node_type == OR_OP or
-                node_type == SEQ_OP or
-                node_type == ENABLE_OP or
-                node_type == DISABLE_OP or
-                node_type == SPEC_LIST):
+            elif (node_type == AND_OP):
+                lhs = substitute_rec(node[1], binding)
+                rhs = substitute_rec(node[2], binding)
 
+                if (get_node_type(lhs) == FALSE or
+                    get_node_type(lhs) == FALSE):
+                    return new_false()
+                elif (get_node_type(lhs) == TRUE):
+                    return rhs
+                elif (get_node_type(rhs) == TRUE):
+                    return lhs
+                else:
+                    return create_node(node_type, [lhs, rhs])
+
+            elif (node_type == OR_OP):
+                lhs = substitute_rec(node[1], binding)
+                rhs = substitute_rec(node[2], binding)
+
+                if (get_node_type(lhs) == TRUE or
+                    get_node_type(lhs) == TRUE):
+                    return new_true()
+                elif (get_node_type(lhs) == FALSE):
+                    return rhs
+                elif (get_node_type(rhs) == FALSE):
+                    return lhs
+                else:
+                    return create_node(node_type, [lhs, rhs])
+
+            elif (node_type == SEQ_OP or
+                  node_type == ENABLE_OP or
+                  node_type == DISABLE_OP or
+                  node_type == SPEC_LIST):
                 lhs = substitute_rec(node[1], binding)
                 rhs = substitute_rec(node[2], binding)
                 return create_node(node_type, [lhs, rhs])
-            elif (node_type == STAR_OP or node_type == NOT_OP):
+
+            elif (node_type == NOT_OP):
+                lhs = substitute_rec(node[1], binding)
+
+                if (get_node_type(lhs) == FALSE):
+                    return new_true()
+                elif (get_node_type(lhs) == TRUE):
+                    return new_false()
+                else:
+                    return create_node(node_type, [lhs])
+
+            elif (node_type == STAR_OP):
                 lhs = substitute_rec(node[1], binding)
                 return create_node(node_type, [lhs])
             elif (node_type == SPEC_SYMB):
@@ -155,7 +245,9 @@ class GroundSpecs(object):
             else:
                 raise UnexpectedSymbol(node)
 
-        return substitute_rec(spec.ast, binding)
+        new_spec_ast = substitute_rec(spec.ast, binding)
+
+        return new_spec_ast
 
     def _get_ground_bindings(self, spec):
         """ Find all the ground specifications for spec.
@@ -213,15 +305,8 @@ class GroundSpecs(object):
             spec_res = self.trace_map.lookup_assignments(spec_node)
             assert spec_res is not None
 
-            # print "\n"
-            # print spec_node
-            # print spec_res
-
             res = bindings.combine(spec_res)
             assert res is not None
-
-            # print res
-            # print "\n"
 
             return res
         else:
@@ -233,18 +318,30 @@ class GroundSpecs(object):
         else:
             return self.ground_to_spec[ground_spec]
 
+
+
+class AssignmentsBottom(object):
+    """ Object used to represent the bottom value inside Assignemnts """
+
+# global variable to be used as bottom
+bottom_value = AssignmentsBottom()
+
 class Assignments(object):
     """ Represent a set of assignments derived from a single
-    method call (messasge)"""
+    method call (messasge)
+
+    Implicitly all the variables are assigned to top.
+
+    The set can assign bottom to some variables.
+    """
     def __init__(self):
         self.assignments = {}
-        self._is_bottom = False
         self._is_frozen = False
         self._hash = None
         self.assignments_set = None
 
-    def add(self, variable, value):
-        assert variable not in self.assignments
+    def add(self, variable, value, reassign=False):
+        assert reassign or variable not in self.assignments
         assert self._is_frozen == False
         self.assignments[variable] = value
 
@@ -259,11 +356,6 @@ class Assignments(object):
 
     def get(self, v):
         return self.assignments[v]
-
-    def is_bottom(self):
-        """ Return true if the set of assignments represents the
-        empty set """
-        return self._is_bottom
 
     def make_frozen(self):
         """ froze the set, not allowing modifications and making it a
@@ -288,8 +380,6 @@ class Assignments(object):
         my_map = self.assignments
         other_map = other.assignments
 
-        if self.is_bottom() or other.is_bottom(): return
-
         for (key, value) in my_map.iteritems():
             if key in other_map:
                 if other_map[key] == value:
@@ -298,15 +388,18 @@ class Assignments(object):
                 else:
                     # do not agree on the value for key - no
                     # compatible assignment
-                    result._is_bottom = True
-                    result.assignments = {} # empty
-                    return result
+                    result.add(key, bottom_value)
             else:
+                # assume that value for key in my_map
+                # to be Top
                 result.add(key, value)
 
         # add the missing elements from other
         for (key, value) in other_map.iteritems():
-            if key not in my_map: result.add(key, value)
+            if key not in my_map:
+                # assume that value for key in my_map
+                # to be Top
+                result.add(key, value)
 
         assert result.assignments is not None
 
@@ -329,15 +422,15 @@ class Assignments(object):
             assert(self.assignments_set != None)
             assert(other.assignments_set != None)
 
-            eq_bottom = self._is_bottom == other._is_bottom
-            eq_sets = self.assignments_set.issubset(other.assignments_set) and self.assignments_set.issuperset(other.assignments_set)
+            eq_sets = (self.assignments_set.issubset(other.assignments_set) and
+                       self.assignments_set.issuperset(other.assignments_set))
 
-            return (eq_bottom and eq_sets)
+            return eq_sets
         else:
             eq_hash = _contained(self.assignments, other.assignments)
             if eq_hash:
                 eq_hash = _contained(other.assignments, self.assignments)
-            return (self._is_bottom == other._is_bottom and eq_hash)
+            return eq_hash
 
 
     def __ne__(self, other):
@@ -404,14 +497,8 @@ class AssignmentsSet(object):
 
         for assignments in self.assignments:
             for assignments_other in other.assignments:
-
                 new_a = assignments.intersect(assignments_other)
-
-                # Do not add bottom to the set.
-                # If the set is empty, then there are no assignments
-                # that are compatible with the rule.
-                if not new_a.is_bottom():
-                    result.add(new_a)
+                result.add(new_a)
 
         return result
 
@@ -615,32 +702,40 @@ class TraceMap(object):
         assert formal_type in leaf_nodes
         assert formal_type != NIL
 
-        match = True
-
         if (formal_type == DONTCARE):
-            return match
+            return True
+        elif (formal_type == TRUE):
+            return "true" == actual.get_value()
+        elif (formal_type == FALSE):
+            return "false" == actual.get_value()
+        elif (formal_type == NULL):
+            return "NULL" == actual.get_value()
         elif (formal_type in const_nodes):
             # if the constant nodes do not match, do not consider
             # this as a binding
             # this is an optimization, it does not create bindings
             # that we do not need
             assert isinstance(actual, CValue)
-            if str(formal[1]) != str(actual.get_value()):
-                match = False
-                return match
+
+            return str(formal[1]) == str(actual.get_value())
         elif method_assignments.has_key(formal):
             assert formal_type == ID
-            if method_assignments.contains(formal, actual):
-                # we have two different assignments
-                # for the same free variable
-                # remove the match
-                match = False
-                return match
+            if not method_assignments.contains(formal, actual):
+                # Formal is already in the assignment
+                # the pair (formal, actual) is not
+                # Hence, the value already inserted for formal is
+                # different from actual
+                #
+                # We have a mismatch, hence we assign the
+                # bottom value
+                method_assignments.add(formal, bottom_value, True)
+                return False
+            else:
+                return True
         else:
             assert formal_type == ID
             method_assignments.add(formal, actual)
-
-        return match
+            return True
 
     def lookup_assignments(self, call_node):
         """ Given a node that represent a call in a specification,
@@ -653,66 +748,67 @@ class TraceMap(object):
 
         set_assignments = AssignmentsSet()
 
-        try:
-            # Build the list of formal parameters
-            # (CALL, retval, call_type, receiver, method_name, params)
-            retval = get_call_assignee(call_node)
-            call_type = get_call_type(call_node)
-            method_name_node = get_call_method(call_node)
-            # method_name = get_id_val(method_name_node)
-            method_signature = get_id_val(get_call_signature(call_node))
-            receiver = get_call_receiver(call_node)
-            params = get_call_params(call_node)
-            param_list = []
+        # Build the list of formal parameters
+        # (CALL, retval, call_type, receiver, method_name, params)
+        retval = get_call_assignee(call_node)
+        call_type = get_call_type(call_node)
+        method_name_node = get_call_method(call_node)
+        # method_name = get_id_val(method_name_node)
+        method_signature = get_id_val(get_call_signature(call_node))
+        receiver = get_call_receiver(call_node)
+        params = get_call_params(call_node)
+        param_list = []
 
-            if (get_node_type(receiver) != NIL):
-                param_list.append(receiver)
-            else:
-                # we require to always have the receiver in the trace
-                #
-                # if there are no receiver in the spec, the correspondent receiver
-                # in the trace should be the NULL value
-                #
-                param_list.append(new_null())
+        if (get_node_type(receiver) != NIL):
+            param_list.append(receiver)
+        else:
+            # we require to always have the receiver in the trace
+            #
+            # if there are no receiver in the spec, the correspondent receiver
+            # in the trace should be the NULL value
+            #
+            param_list.append(new_null())
 
-            while (get_node_type(params) == PARAM_LIST):
-                param_list.append(get_param_name(params))
-                params = get_param_tail(params)
-            arity = len(param_list)
+        while (get_node_type(params) == PARAM_LIST):
+            param_list.append(get_param_name(params))
+            params = get_param_tail(params)
+        arity = len(param_list)
 
-            matching_methods = self.lookup_methods(call_type, method_signature,
-                                                   arity,
-                                                   retval != new_nil())
-            # For each method, find:
-            #   - the assignments to the variables in params
-            #   - the assignment to the return value
-            for method in matching_methods:
-                match = True
-                method_assignments = Assignments()
+        matching_methods = self.lookup_methods(call_type, method_signature,
+                                               arity,
+                                               retval != new_nil())
+        # For each method, find:
+        #   - the assignments to the variables in params
+        #   - the assignment to the return value
+        no_assignments = True
+        for method in matching_methods:
+            match = True
+            method_assignments = Assignments()
 
-                # Replace the name of the atom in the call with the concrete name
-                # of the method that was matched.
-                method_assignments.add(method_name_node,
-                                       new_id(method.get_msg_no_params()))
+            # Replace the call node with the
+            # method message that was matched
+            #
+            # Track what methods have been found so far
+            method_assignments.add(call_node, method)
 
-                # parameters
-                for formal, actual in zip(param_list, method.params):
-                    match = self._get_formal_assignment(method_assignments,
-                                                        formal, actual)
-                    if not match:
-                        break
+            # parameters
+            for formal, actual in zip(param_list, method.params):
+                match = match and self._get_formal_assignment(method_assignments,
+                                                              formal, actual)
+            # return value
+            if match and retval != new_nil():
+                match = match and self._get_formal_assignment(method_assignments,
+                                                              retval,
+                                                              method.return_value)
 
-                # return value
-                if match and retval != new_nil():
-                    match = self._get_formal_assignment(method_assignments,
-                                                        retval,
-                                                        method.return_value)
+            if match:
+                no_assignments = False
+                set_assignments.add(method_assignments)
 
-                if match:
-                    set_assignments.add(method_assignments)
+        if no_assignments:
+            method_assignments = Assignments()
+            method_assignments.add(call_node, bottom_value)
+            set_assignments.add(method_assignments)
 
-            return set_assignments
-
-        except KeyError:
-            return set_assignments
+        return set_assignments
 

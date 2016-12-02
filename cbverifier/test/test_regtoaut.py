@@ -15,6 +15,8 @@ from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
 
+from cbverifier.traces.ctrace import CCallback, CCallin
+
 from cbverifier.test.test_grounding import TestGrounding
 
 from pysmt.typing import BOOL
@@ -45,9 +47,14 @@ class TestRegExpToAuto(unittest.TestCase):
                                                "SPEC [CB] [l] void m1(); [CI] [l] void m2() |- TRUE; " +
                                                "SPEC [CB] [l] void m1()[*] |- TRUE")
         assert spec_list is not None
-        binding = TestGrounding.newAssign(
-            [new_id('l'), new_id('void m1'), new_id('void m2')],
-            [TestGrounding._get_obj("1","string"), new_id('void m1'), new_id('void m2')])
+
+        m1 = new_call(new_nil(), new_cb(), new_id("l"), new_id("void m1"), new_nil())
+        m2 = new_call(new_nil(), new_ci(), new_id("l"), new_id("void m2"), new_nil())
+        m1_cb = CCallback(1, 1, "", "void m1()", [TestGrounding._get_obj("1","")],
+                          None, [TestGrounding._get_fmwkov("", "void m1()", False)])
+        m2_ci = CCallin(1, 1, "", "void m2()", [TestGrounding._get_obj("1","")], None)
+        binding = TestGrounding.newAssign([new_id('l'), m1, m2],
+                                          [TestGrounding._get_obj("1","string"), m1_cb, m2_ci])
 
         # Test l.m1()
         gs = GroundSpecs._substitute(spec_list[0], binding)
