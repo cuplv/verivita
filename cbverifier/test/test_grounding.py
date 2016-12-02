@@ -465,6 +465,18 @@ class TestGrounding(unittest.TestCase):
 
 
     def test_only_methods(self):
+        trace = CTrace()
+        cb = CCallback(1, 1,
+                       "edu.colorado.test",
+                       "void inheritedMethodMethod()",
+                       [TestGrounding._get_null()],
+                       None,
+                       [TestGrounding._get_fmwkov("android",
+                                                  "void inheritedMethod()",
+                                                  False)])
+        trace.add_msg(cb)
+
+
         return False
 
     def test_method_name_clash(self):

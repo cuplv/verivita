@@ -145,25 +145,42 @@ class TestEnc(unittest.TestCase):
                                                "SPEC TRUE |- z = [CI] [l] void m1(a : int,b : int,c : int)")
         assert spec_list is not None
 
-        base_var = [new_id('l'),new_id("a"),new_id("b"),new_id("c"),new_id("z"),
-                    new_id('void m1')]
+        ci1 = CCallin(1, 1, "", "void m1()",
+                      [TestGrounding._get_obj("1","string")],
+                      None)
+        ci2 = CCallin(1, 1, "", "void m1(int, int, int)",
+                      [TestGrounding._get_obj("1","string"),
+                       TestGrounding._get_int(2),
+                       TestGrounding._get_int(1),
+                       TestGrounding._get_int(2),], None)
+        ci3 = CCallin(1, 1, "", "void m1(int, int, int)",
+                      [TestGrounding._get_obj("1","string"),
+                       TestGrounding._get_int(2),
+                       TestGrounding._get_int(1),
+                       TestGrounding._get_int(2),],
+                      TestGrounding._get_int(3))
+
+        base_var = [new_id('l'),new_id("a"),new_id("b"),new_id("c"),new_id("z")]
         base_val = [TestGrounding._get_obj("1","string"),
-             TestGrounding._get_obj("2","string"),
-             TestGrounding._get_int(1),
-             TestGrounding._get_int(2),
-             TestGrounding._get_int(3),
-                    new_id('void m1')]
+                    TestGrounding._get_int(2),
+                    TestGrounding._get_int(1),
+                    TestGrounding._get_int(2),
+                    TestGrounding._get_int(3)]
 
         bindings = [
-            TestGrounding.newAssign(base_var, base_val),
-            TestGrounding.newAssign(base_var, base_val),
-            TestGrounding.newAssign(base_var, base_val)
+            TestGrounding.newAssign(base_var + [get_spec_rhs(spec_list[0].ast)],
+                                    base_val + [ci1]),
+            TestGrounding.newAssign(base_var + [get_spec_rhs(spec_list[1].ast)],
+                                    base_val + [ci2]),
+            TestGrounding.newAssign(base_var + [get_spec_rhs(spec_list[2].ast)],
+                                    base_val + [ci3])
             ]
 
         calls_nodes = []
         for (s,binding) in zip(spec_list, bindings):
             ground_s = GroundSpecs._substitute(s, binding)
             msg = get_spec_rhs(ground_s)
+
             assert get_node_type(msg) == CALL
             calls_nodes.append(msg)
         assert (len(calls_nodes) == len(spec_list))
@@ -292,12 +309,7 @@ class TestEnc(unittest.TestCase):
         spec_list = Spec.get_specs_from_string("SPEC [CB] [l] void m1() |- [CI] [l] void m2()")
         assert spec_list is not None
 
-        binding = TestGrounding.newAssign([new_id('l'),new_id('void m1'), new_id('void m2')],
-                                          [TestGrounding._get_obj("1","string"),new_id('void m1'), new_id('void m2')])
-        ground_s = Spec(GroundSpecs._substitute(spec_list[0], binding))
-
         ctrace = CTrace()
-
         cb = CCallback(1, 1, "", "void m1()",
                        [TestGrounding._get_obj("1","string")],
                        None,
@@ -307,6 +319,13 @@ class TestEnc(unittest.TestCase):
                      [TestGrounding._get_obj("1","string")],
                      None)
         cb.add_msg(ci)
+
+        binding = TestGrounding.newAssign([new_id('l'),
+                                           get_regexp_node(spec_list[0].ast),
+                                           get_spec_rhs(spec_list[0].ast)],
+                                          [TestGrounding._get_obj("1","string"),
+                                           cb, ci])
+        ground_s = Spec(GroundSpecs._substitute(spec_list[0], binding))
 
         ts_enc = TSEncoder(ctrace,[])
         ts_var = ts_enc._encode_vars()

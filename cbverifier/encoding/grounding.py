@@ -49,7 +49,6 @@ class GroundSpecs(object):
 
             # skip the false specification on the rhs
             if (not new_spec.is_spec_rhs_false()):
-
                 # optimization: skip the spec if the regexp is false:
                 if (not new_spec.is_regexp_false()):
                     ground_specs.append(new_spec)
@@ -246,7 +245,9 @@ class GroundSpecs(object):
             else:
                 raise UnexpectedSymbol(node)
 
-        return substitute_rec(spec.ast, binding)
+        new_spec_ast = substitute_rec(spec.ast, binding)
+
+        return new_spec_ast
 
     def _get_ground_bindings(self, spec):
         """ Find all the ground specifications for spec.
