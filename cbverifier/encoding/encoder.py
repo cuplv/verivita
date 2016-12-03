@@ -454,27 +454,28 @@ class TSEncoder:
         spec_accepting = []
         msg = get_spec_rhs(ground_spec.ast)
         key = TSEncoder.get_key_from_call(msg)
+        msg_enabled = TSEncoder._get_state_var(key)
+        all_vars = set(ts.state_vars)
+        all_vars.add(msg_enabled)
         for a_s in auto.final_states:
             ts_s = auto2ts_map[a_s]
-
             eq_current = self.cenc.eq_val(auto_pc, ts_s)
 
             # add the current state to the accepting states
             spec_accepting.append(eq_current)
 
             # encode the fact that the message must be
-            # enabled/disabled in this state
-            eq_next = self.helper.get_next_formula(ts.state_vars, eq_current)
-            msg_enabled = Helper.get_next_var(TSEncoder._get_state_var(key),
-                                              self.pysmt_env.formula_manager)
-
+            # enabled/disabled in *this* state
             if (ground_spec.is_disable()):
-                effect_in_trans = Not(msg_enabled)
+                effect = Not(msg_enabled)
             else:
                 assert ground_spec.is_enable()
-                effect_in_trans = msg_enabled
+                effect = msg_enabled
+            effect = Implies(eq_current, effect)
+            ts.init = And(ts.init, effect)
 
-            effect_in_trans = Implies(eq_next, effect_in_trans)
+            effect_in_trans = self.helper.get_next_formula(all_vars, effect)
+
             ts.trans = And(ts.trans, effect_in_trans)
         accepting.extend(spec_accepting)
 
