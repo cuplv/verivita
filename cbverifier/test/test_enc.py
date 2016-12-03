@@ -602,3 +602,25 @@ class TestEnc(unittest.TestCase):
         io_string = stringio.getvalue()
         self.assertTrue("SPEC [CB] [1] void m1() |- [CI] [1] void m2()" in io_string)
         self.assertTrue("Reached an error state in step 2" in io_string)
+
+
+    def test_init_state(self):
+        """ Test if specification can force an initial value
+
+          - m2 is disabled in the initial state
+          - the trace try to call m1 and then m2, causing an exception
+        """
+        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CI] void m2()")
+
+        ctrace = CTrace()
+
+        cb = CCallback(1, 1, "", "void m1()", [TestGrounding._get_null()], None,
+                       [TestGrounding._get_fmwkov("","void m1()", False)])
+        ci = CCallin(1, 1, "", "void m2()", [TestGrounding._get_null()], None)
+        cb.add_msg(ci)
+        ctrace.add_msg(cb)
+
+        ts_enc = TSEncoder(ctrace, spec_list)
+        ts = ts_enc.get_ts_encoding()
+        bmc = BMC(ts_enc.helper, ts, ts_enc.error_prop)
+        self.assertTrue(bmc.find_bug(2) is not None)
