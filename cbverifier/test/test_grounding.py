@@ -15,7 +15,7 @@ try:
 except ImportError:
     import unittest
 
-from cbverifier.encoding.grounding import GroundSpecs, Assignments, bottom_value
+from cbverifier.encoding.grounding import GroundSpecs, Assignments, bottom_value, TraceSpecConverter
 from cbverifier.encoding.grounding import AssignmentsSet, TraceMap
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, FrameworkOverride, CValue
 from cbverifier.specs.spec_ast import *
@@ -53,6 +53,23 @@ class TestGrounding(unittest.TestCase):
         v.type = None
         v.value = None
         return v
+
+    @staticmethod
+    def _get_true():
+        v = CValue()
+        v.is_null = False
+        v.type = TraceSpecConverter.JAVA_BOOLEAN
+        v.value = "true"
+        return v
+
+    @staticmethod
+    def _get_false():
+        v = CValue()
+        v.is_null = False
+        v.type = TraceSpecConverter.JAVA_BOOLEAN
+        v.value = "false"
+        return v
+
 
     @staticmethod
     def _get_fmwkov(cname, mname, is_int):
@@ -488,4 +505,28 @@ class TestGrounding(unittest.TestCase):
         ground_specs = gs.ground_spec(spec)
         self.assertTrue(0 == len(ground_specs))
 
+    def test_boolean(self):
+        trace = CTrace()
+        cb = CCallback(1, 1, "", "void m1(%s)" % TraceSpecConverter.JAVA_BOOLEAN,
+                       [TestGrounding._get_null(), TestGrounding._get_true()], None,
+                       [TestGrounding._get_fmwkov("", "void m1(%s)" % TraceSpecConverter.JAVA_BOOLEAN, False)])
+        trace.add_msg(cb)
+        cb = CCallback(1, 1, "", "void m2(%s)" % TraceSpecConverter.JAVA_BOOLEAN,
+                       [TestGrounding._get_null(), TestGrounding._get_false()], None,
+                       [TestGrounding._get_fmwkov("", "void m2(%s)" % TraceSpecConverter.JAVA_BOOLEAN, False)])
+        trace.add_msg(cb)
+        gs = GroundSpecs(trace)
+        spec = Spec.get_spec_from_string("SPEC TRUE |- [CB] void m2(FALSE : %s)" % TraceSpecConverter.JAVA_BOOLEAN)
+        ground_specs = gs.ground_spec(spec)
+        self.assertTrue(1 == len(ground_specs))
 
+    def test_int(self):
+        trace = CTrace()
+        cb = CCallback(1, 1, "", "void m1(%s)" % TraceSpecConverter.JAVA_INT,
+                       [TestGrounding._get_null(), TestGrounding._get_int(2)], None,
+                       [TestGrounding._get_fmwkov("", "void m1(%s)" % TraceSpecConverter.JAVA_INT, False)])
+        trace.add_msg(cb)
+        gs = GroundSpecs(trace)
+        spec = Spec.get_spec_from_string("SPEC TRUE |- [CB] void m1(2 : %s)" % TraceSpecConverter.JAVA_INT)
+        ground_specs = gs.ground_spec(spec)
+        self.assertTrue(1 == len(ground_specs))
