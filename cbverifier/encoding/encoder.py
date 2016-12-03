@@ -282,10 +282,7 @@ class TSEncoder:
             self.error_prop = Or(self.error_prop, e)
         self.mapback.set_error_condition(self.error_prop)
 
-        # initial condition: all the messages are enabled
-        for msg in self.msgs:
-            self.ts.init = And(self.ts.init,
-                               TSEncoder._get_state_var(msg))
+        self._encode_initial_conditions()
 
 
     def _encode_ground_specs(self):
@@ -454,27 +451,29 @@ class TSEncoder:
         spec_accepting = []
         msg = get_spec_rhs(ground_spec.ast)
         key = TSEncoder.get_key_from_call(msg)
+        msg_enabled = TSEncoder._get_state_var(key)
+        all_vars = set(ts.state_vars)
+        all_vars.add(msg_enabled)
         for a_s in auto.final_states:
             ts_s = auto2ts_map[a_s]
-
             eq_current = self.cenc.eq_val(auto_pc, ts_s)
 
             # add the current state to the accepting states
             spec_accepting.append(eq_current)
 
             # encode the fact that the message must be
-            # enabled/disabled in this state
-            eq_next = self.helper.get_next_formula(ts.state_vars, eq_current)
-            msg_enabled = Helper.get_next_var(TSEncoder._get_state_var(key),
-                                              self.pysmt_env.formula_manager)
-
+            # enabled/disabled in *this* state
             if (ground_spec.is_disable()):
-                effect_in_trans = Not(msg_enabled)
+                effect = Not(msg_enabled)
             else:
                 assert ground_spec.is_enable()
-                effect_in_trans = msg_enabled
+                effect = msg_enabled
+            effect = Implies(eq_current, effect)
 
-            effect_in_trans = Implies(eq_next, effect_in_trans)
+            ts.init = And(ts.init, effect)
+
+            effect_in_trans = self.helper.get_next_formula(all_vars, effect)
+
             ts.trans = And(ts.trans, effect_in_trans)
         accepting.extend(spec_accepting)
 
@@ -638,6 +637,28 @@ class TSEncoder:
         else:
             errors = [error]
         return (ts, errors)
+
+
+    def _encode_initial_conditions(self):
+        """ Initial condition:
+        All the messages that are not specifically disabled/disallowed are
+        enalbed/allowed
+        """
+        solver = self.pysmt_env.factory.Solver(quantified=False,
+                                               name="z3",
+                                               logic=QF_BOOL)
+        solver.add_assertion(self.ts.init)
+
+        for msg in self.msgs:
+            msg_var = TSEncoder._get_state_var(msg)
+            solver.push()
+            solver.add_assertion(msg_var)
+            can_be_enabled = solver.solve()
+            solver.pop()
+
+            if (can_be_enabled):
+                self.ts.init = And(self.ts.init, msg_var)
+
 
     @staticmethod
     def _get_pc_name():
