@@ -63,6 +63,24 @@ class TestTraces(unittest.TestCase):
 
         return cont
 
+    def _get_ci_exception(self):
+        cont = tracemsg_pb2.TraceMsgContainer()
+
+        cont.msg.type = TraceMsgContainer.TraceMsg.CALLIN_EXEPION
+        cont.msg.message_id = 1
+        cont.msg.thread_id = 2
+
+        cie = cont.msg.callinException
+        cie.throwing_class_name = "class_name"
+        cie.throwing_method_name = "method_name"
+        cie.type = "type"
+        cie.exception_message = "exception message"
+        stack_trace1 = cie.stack_trace.add()
+        stack_trace1.method = "m1"
+        stack_trace1.class_name = "c1"
+
+        return cont
+
     def _get_cb_entry(self):
         cont = tracemsg_pb2.TraceMsgContainer()
 
@@ -119,6 +137,23 @@ class TestTraces(unittest.TestCase):
 
         return cont
 
+    def _get_cb_exception(self):
+        cont = tracemsg_pb2.TraceMsgContainer()
+
+        cont.msg.type = TraceMsgContainer.TraceMsg.CALLBACK_EXCEPTION
+        cont.msg.message_id = 1
+        cont.msg.thread_id = 2
+
+        cbe = cont.msg.callbackException
+        cbe.throwing_class_name = "class_name"
+        cbe.throwing_method_name = "method_name"
+        cbe.type = "type"
+        stack_trace1 = cbe.stack_trace.add()
+        stack_trace1.method = "m1"
+        stack_trace1.class_name = "c1"
+
+        return cont
+
 
     def write_proto(self, buff, msgs):
         out = None
@@ -146,9 +181,11 @@ class TestTraces(unittest.TestCase):
     def test_read_cb(self):
         cb_entry = self._get_cb_entry()
         cb_exit = self._get_cb_exit()
+        cb_exception = self._get_cb_exception()
 
         ci_entry = self._get_ci_entry()
         ci_exit = self._get_ci_exit()
+        ci_exception = self._get_ci_exception()
 
         self.write_and_get([cb_entry, ci_entry, ci_exit, cb_exit])
 
@@ -199,6 +236,10 @@ class TestTraces(unittest.TestCase):
                                 cb_exit,
                                 ci_exit,
                                 cb_exit])
+
+
+        self.write_and_get([cb_entry, ci_entry, ci_exception, cb_exit])
+
 
     def test_cb_override(self):
         def eq_override(ctrace_o, msg_o):

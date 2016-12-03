@@ -12,6 +12,7 @@ import logging
 import json # for reading the traces from file
 import re
 
+import copy
 
 import cbverifier.traces.tracemsg_pb2
 from  cbverifier.traces.tracemsg_pb2 import TraceMsgContainer
@@ -42,13 +43,15 @@ class CMessage(object):
                  class_name = None,
                  method_name = None,
                  params = [],
-                 return_value = None):
+                 return_value = None,
+                 exception = None):
         self.message_id = message_id
         self.thread_id = thread_id
         self.class_name = class_name
         self.method_name = method_name
         self.params = params
         self.return_value = return_value
+        self.exception = exception
 
         # messages called inside this message
         self.children = []
@@ -79,14 +82,21 @@ class CMessage(object):
         else:
             message_type = "CI"
 
+
+        if self.exception is not None:
+            exception = "(raises %s: %s)" % (self.exception.exc_type,
+                                             self.exception.message)
+        else:
+            exception = ""
+
         stream.write("%s[%d] [%s] %s (" % (sep, self.message_id,
                                            message_type,
                                            message_sig))
 
         for i in range(len(self.params)):
             if (i != 0): stream.write(",")
-            stream.write("%s" % self.params[i])
-        stream.write(")\n")
+            stream.write("%s" % self.params[i].get_value())
+        stream.write(") %s\n" % exception)
 
         if debug_info:
             if isinstance(self, CCallback):
@@ -157,7 +167,8 @@ class CCallback(CMessage):
                                         class_name,
                                         method_name,
                                         params,
-                                        return_value)
+                                        return_value,
+                                        None)
         # list of FrameworkOverride objects
         # Warning: the order matteres.
         self.fmwk_overrides = fmwk_overrides
@@ -178,7 +189,8 @@ class CCallin(CMessage):
                                       class_name,
                                       method_name,
                                       params,
-                                      return_value)
+                                      return_value,
+                                      None)
 
 class AppInfo(object):
     """ Info of the app."""
@@ -310,6 +322,14 @@ class FrameworkOverride:
                 self.class_name == other.class_name and
                 self.is_interface == other.is_interface)
 
+class CTraceException:
+    """ Store the information of the exception """
+    def __init__(self, method_name, class_name, exc_type, message):
+        self.method_name = method_name
+        self.class_name = class_name
+        self.exc_type = exc_type
+        self.message = message
+
 class CTrace:
     def __init__(self):
         # forest of message trees
@@ -326,6 +346,24 @@ class CTrace:
 
     def __iter__(self):
         return iter(self.children)
+
+    def copy(self, remove_exception=False):
+        """ Copy the trace, eventually removing the top-level
+        callbacks that ends in an exception. """
+        new_trace = CTrace()
+        copy.app_info = copy.deepcopy(self.app_info)
+        for child in self.children:
+            if not (remove_exception and
+                    child.exception is not None):
+                new_trace.children.append(copy.deepcopy(child))
+            else:
+                if (logging.getLogger().getEffectiveLevel() >= logging.WARNING):
+                    stringio = StringIO()
+                    child._print(stringio, "", rec=False, debug_info=False)
+                    logging.info("Removing top-level callback" \
+                                 ": %s" % stringio.getvalue())
+        return new_trace
+
 
 class CTraceSerializer:
     """
@@ -376,14 +414,19 @@ class CTraceSerializer:
                 trace_message = CTraceSerializer.create_trace_message(recorded_message)
                 message_stack.append(trace_message)
             else:
-                assert CTraceSerializer.is_exit_message(recorded_message)
+                assert (CTraceSerializer.is_exit_message(recorded_message) or
+                        CTraceSerializer.is_exception_message(recorded_message))
                 # remove the message from the stack
                 trace_message = message_stack.pop()
 
-                # Check the class_name to be the same as the recorded message
-
                 # update trace_message with recorded_message
-                CTraceSerializer.update_trace_message(trace_message, recorded_message)
+                if (CTraceSerializer.is_exit_message(recorded_message)):
+                    CTraceSerializer.update_trace_message(trace_message,
+                                                          recorded_message)
+                else:
+                    assert (CTraceSerializer.is_exception_message(recorded_message))
+                    CTraceSerializer.update_trace_message(trace_message,
+                                                          recorded_message)
 
                 if (len(message_stack) == 0):
                     assert (isinstance(trace_message, CCallback))
@@ -393,7 +436,10 @@ class CTraceSerializer:
 
                     last_message.add_msg(trace_message)
 
-        assert len(message_stack) == 0
+        if len(message_stack) != 0:
+            raise MalformedTraceException("The number of entry messages does " \
+                                          "match the number of exit/exception " \
+                                          "messages.")
         return trace
 
 
@@ -410,6 +456,12 @@ class CTraceSerializer:
     def is_exit_message(msg):
         return (TraceMsgContainer.TraceMsg.CALLIN_EXIT == msg.type or
                 TraceMsgContainer.TraceMsg.CALLBACK_EXIT == msg.type)
+
+    @staticmethod
+    def is_exception_message(msg):
+        return (TraceMsgContainer.TraceMsg.CALLIN_EXEPION == msg.type or
+                TraceMsgContainer.TraceMsg.CALLBACK_EXCEPTION == msg.type)
+
 
     @staticmethod
     def create_trace_message(msg):
@@ -470,7 +522,6 @@ class CTraceSerializer:
         trace_msg and msg do not match
         """
 
-
         def check_malformed_trace(trace_msg, msg_exit, expected_class, expected_name):
             if (not isinstance(trace_msg, expected_class)):
                 raise MalformedTraceException("Found %s for method %s, " \
@@ -491,6 +542,26 @@ class CTraceSerializer:
                                               "%s\n" % (trace_msg.method_name,
                                                         msg_exit.method_name))
 
+        def check_malformed_trace_exception(trace_msg, msg_exit, expected_class, expected_name):
+            if (not isinstance(trace_msg, expected_class)):
+                raise MalformedTraceException("Found %s for method %s, " \
+                                              "while the last message in the stack " \
+                                              "is of type %s\n" % (expected_name,
+                                                                   msg_exit.throwing_method_name,
+                                                                   str(type(trace_msg))))
+            elif (not trace_msg.class_name == msg_exit.throwing_class_name):
+                raise MalformedTraceException("Found exit for class name \"%s\", " \
+                                              "while expecting it for class name " \
+                                              "\"%s\"\n" % (msg_exit.throwing_class_name,
+                                                            trace_msg.class_name))
+
+            # TEMPORARY HACK: disable the check on callback names
+            elif (TraceMsgContainer.TraceMsg.CALLIN_EXEPION == msg.type and not trace_msg.method_name == msg_exit.throwing_method_name):
+                raise MalformedTraceException("Found exit for method %s, " \
+                                              "while expecting it for method " \
+                                              "%s\n" % (trace_msg.method_name,
+                                                        msg_exit.throwing_method_name))
+
         def check_malformed_trace_msg(trace_msg, msg):
             if (trace_msg.thread_id != msg.thread_id):
                 raise MalformedTraceException("Found thread id %d for " \
@@ -499,25 +570,33 @@ class CTraceSerializer:
                                                                       trace_msg.thread_id))
 
 
-        assert CTraceSerializer.is_exit_message(msg)
+        def read_exception(trace_msg, msg):
+            trace_msg.exception = CTraceException(msg.throwing_method_name,
+                                                  msg.throwing_class_name,
+                                                  msg.type,
+                                                  msg.exception_message)
+
+
+        assert (CTraceSerializer.is_exit_message(msg) or
+                CTraceSerializer.is_exception_message(msg))
 
         check_malformed_trace_msg(trace_msg, msg)
         if (TraceMsgContainer.TraceMsg.CALLIN_EXIT == msg.type):
-            callin_exit = msg.callinExit
-
-            check_malformed_trace(trace_msg, callin_exit, CCallin,
-                                  "CALLIN_EXIT")
-
-            if (callin_exit.HasField("return_value")):
-                trace_msg.return_value = CTraceSerializer.read_value_msg(callin_exit.return_value)
+            callinExit = msg.callinExit
+            check_malformed_trace(trace_msg, callinExit, CCallin, "CALLIN_EXIT")
+            if (callinExit.HasField("return_value")):
+                trace_msg.return_value = CTraceSerializer.read_value_msg(callinExit.return_value)
         elif (TraceMsgContainer.TraceMsg.CALLBACK_EXIT == msg.type):
-            callback_exit = msg.callbackExit
-
-            check_malformed_trace(trace_msg, callback_exit, CCallback,
-                                  "CALLBACK_EXIT")
-
-            if (callback_exit.HasField("return_value")):
-                trace_msg.return_value = CTraceSerializer.read_value_msg(callback_exit.return_value)
+            callbackExit = msg.callbackExit
+            check_malformed_trace(trace_msg, callbackExit, CCallback, "CALLBACK_EXIT")
+            if (callbackExit.HasField("return_value")):
+                trace_msg.return_value = CTraceSerializer.read_value_msg(callbackExit.return_value)
+        elif (TraceMsgContainer.TraceMsg.CALLIN_EXEPION  == msg.type):
+            # check_malformed_trace_exception(trace_msg, msg.callinException, CCallin, "CALLIN_EXCEPTION")
+            read_exception(trace_msg, msg.callinException)
+        elif (TraceMsgContainer.TraceMsg.CALLBACK_EXCEPTION  == msg.type):
+            # check_malformed_trace_exception(trace_msg, msg.callbackException, CCallback, "CALLBACK_EXCEPTION")
+            read_exception(trace_msg, msg.callbackException)
         else:
             err = "%s msg type cannot be used to update a node" % msg.type
             raise MalformedTraceException(err)
