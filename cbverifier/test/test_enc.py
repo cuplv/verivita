@@ -16,7 +16,7 @@ from cbverifier.encoding.encoder import TSEncoder, TSMapback
 from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
-from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue
+from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceException
 from cbverifier.specs.spec_ast import *
 from cbverifier.specs.spec import Spec
 from cbverifier.bmc.bmc import BMC
@@ -624,3 +624,33 @@ class TestEnc(unittest.TestCase):
         ts = ts_enc.get_ts_encoding()
         bmc = BMC(ts_enc.helper, ts, ts_enc.error_prop)
         self.assertTrue(bmc.find_bug(2) is not None)
+
+    def test_exception(self):
+        """ Test the removal of exception from top-level callbacks
+        """
+        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CI] void m2()")
+
+        ctrace = CTrace()
+        cb1 = CCallback(1, 1, "", "void m1()", [TestGrounding._get_null()], None,
+                        [TestGrounding._get_fmwkov("","void m1()", False)])
+
+        cb1.exception = CTraceException("void m1()", "",
+                                        "NullPointerException",
+                                        "NullPointerException message")
+
+        ci1 = CCallin(1, 1, "", "void m2()", [TestGrounding._get_null()], None)
+        cb1.add_msg(ci1)
+        ctrace.add_msg(cb1)
+
+        cb2 = CCallback(1, 1, "", "void m1()", [TestGrounding._get_null()], None,
+                        [TestGrounding._get_fmwkov("","void m1()", False)])
+        ci2 = CCallin(1, 1, "", "void m3()", [TestGrounding._get_null()], None)
+        cb2.add_msg(ci2)
+        ctrace.add_msg(cb2)
+
+        ts_enc = TSEncoder(ctrace, spec_list)
+        assert (1 == len(ts_enc.trace.children))
+        ts = ts_enc.get_ts_encoding()
+        bmc = BMC(ts_enc.helper, ts, ts_enc.error_prop)
+        # if the first callback is removed, m2 cannot be called anymore
+        self.assertTrue(bmc.find_bug(2) is None)

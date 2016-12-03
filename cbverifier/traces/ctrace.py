@@ -12,6 +12,7 @@ import logging
 import json # for reading the traces from file
 import re
 
+import copy
 
 import cbverifier.traces.tracemsg_pb2
 from  cbverifier.traces.tracemsg_pb2 import TraceMsgContainer
@@ -345,6 +346,24 @@ class CTrace:
 
     def __iter__(self):
         return iter(self.children)
+
+    def copy(self, remove_exception=False):
+        """ Copy the trace, eventually removing the top-level
+        callbacks that ends in an exception. """
+        new_trace = CTrace()
+        copy.app_info = copy.deepcopy(self.app_info)
+        for child in self.children:
+            if not (remove_exception and
+                    child.exception is not None):
+                new_trace.children.append(copy.deepcopy(child))
+            else:
+                if (logging.getLogger().getEffectiveLevel() >= logging.WARNING):
+                    stringio = StringIO()
+                    child._print(stringio, "", rec=False, debug_info=False)
+                    logging.info("Removing top-level callback" \
+                                 ": %s" % stringio.getvalue())
+        return new_trace
+
 
 class CTraceSerializer:
     """

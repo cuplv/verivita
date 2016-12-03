@@ -203,7 +203,9 @@ class TSEncoder:
 
     """
     def __init__(self, trace, specs):
-        self.trace = trace
+        # copy the trace removing the top-level exception
+        self.trace = trace.copy(True)
+
         self.specs = specs
         self.ts = None
         self.error_prop = None
