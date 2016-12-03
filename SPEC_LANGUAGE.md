@@ -1,16 +1,21 @@
 # Description of the specification language
 
 # Grammar
-- Reserved keywords and operators:
+- Reserved keywords and operators
 Reserved keywords:
 ```
 SPEC, TRUE, FALSE, CB, CI, #, NULL
 ```
 
-Operators:
+- Operators
 ```
 =, !, &, |, ;, [*], |-, |+,
 ```
+
+- Comments
+
+All the symbols on a line that follows the sequence `//` are comments, and they will be ignored by the parser (i.e. like single line comments in C or Java).
+
 
 - List of specifications
 ```
