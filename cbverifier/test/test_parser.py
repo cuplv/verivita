@@ -160,7 +160,9 @@ class TestSpecParser(unittest.TestCase):
                         "SPEC # = [CB] [l1] type methodName(# : boolean) |- [CI] [l2] type methodName(bparam : type,TRUE : boolean)",
                         "SPEC TRUE = [CB] [l1] type methodName(# : boolean) |- [CI] [l2] type methodName(bparam : type,TRUE : boolean)",
                         'SPEC ([CB] [l] type l(l1 : int,"foo" : string))[*] |- [CI] [l] type l(b : type)',
-                        "SPEC [CB] [l] type l(NULL : boolean) |- [CB] [l] type l(b : type)"]
+                        "SPEC [CB] [l] type l(NULL : boolean) |- [CB] [l] type l(b : type)",
+                        "SPEC [CI] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener) |+ [CB] [l] void onClick(b : android.widget.Button)",
+                        "SPEC ((TRUE)[*]); ([CI] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener)) |+ [CB] [l] void onClick(b : android.widget.Button)"]
 
         for expr in correct_expr:
             self._test_parse(expr)

@@ -49,7 +49,7 @@ regexp : bexp
 ```
 
 The regular expressions are defined over Boolean expressions of
-messages. In these settings, a `bexp` describe a set of possible
+messages. In these settings, a `bexp` describes a set of possible
 messages.
 
 `[*]` is the Kleene star operator that can be applied only to a
@@ -131,18 +131,23 @@ the method is a callin or a callback.
 
 `method_call` defines the call to a method.
 
-The method call is defined by the return type (a `composed_id`) of the
-method, and by the method name. The name of the method is a
-`composed_id`, and specifies both the full class name (with the
-package) and the method name, separated by dots.
+The method call is defined by an optional receiver `[param]
+inner_call` (the object used to invoke the method), 
+a return type (a `composed_id`), the method name and a list of
+parameters (`param_list`).
 
-The method call may specify a receiver (`[param] inner_call`) or
-not and a list of parameters.
+The name of the method is a `composed_id`, and specifies both the full
+class name (with the package) and the method name, separated by dots.
 
-The parameters can be constant values, free variables, or any value,
-specifified with the reserved keyword `#`. Each parameter must be
-followed by their type (the one that corresponds to the types found in
-the method signature). The type is a `composed_id`.
+
+The receiver is a `param` and the parameter list is either empty or a
+comma separated list of parameters (`param`).
+A parameter `param` can be a constant value, a free variable, or any
+value, specifified with the reserved keyword `#`.
+
+Each parameters in `param_list` must be followed by their type (the
+one that corresponds to the types found in the method signature). The
+type is a `composed_id`.
 
 
 # Examples
@@ -155,12 +160,12 @@ as parameter.
 
 This is achieved with the following specification:
 ```
-SPEC [CI] [b] android.widget.Button.setOnClickListener(l : View.OnClickListener) |+ [CB] [l] onClick(b : android.widget.Button)
+SPEC [CI] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener) |+ [CB] [l] void onClick(b : android.widget.Button)
 ```
 
 Note that the regular expression only matches an execution where the
 *first* callin called is `setOnClickListener`.
-To specify that, independetly from the previous callins/callbacks,
+To specify that, independently from the previous callins/callbacks,
 when the method `setOnClickListener` is executed then `onClick` is
 enabled, we have to match an unbounded number of letters before the
 method:
@@ -172,6 +177,17 @@ SPEC TRUE[*]; [CI] [b] void android.widget.Button.setOnClickListener(l : View.On
 This specification tells that one can see any number of method calls
 before the `setOnClickListener`.
 
+
+# Hints
+
+- Force an effect in the intial state of the system:
+```
+SPEC FALSE[*] |- [CI] [l] void callin(b : Button)
+```
+
+In this case the callin `void callin(b : Button)` will be disabled at
+the beginning of the execution (note that `FALSE[*]` accepts only the
+empty word).
 
 
 
