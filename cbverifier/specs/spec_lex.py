@@ -86,6 +86,8 @@ t_TOK_DONTCARE = r'\#'
 t_TOK_ASSIGN = r'\='
 # Ignored characters
 t_ignore = " \t"
+t_ignore_COMMENT = r'\/\/.*'
+
 
 def t_newline(t):
     r'\n+'

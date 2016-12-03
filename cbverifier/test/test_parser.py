@@ -48,7 +48,6 @@ class TestSpecParser(unittest.TestCase):
         while (tok is not None):
             if i > len(token_list):
                 raise Exception("Found more tokens than expeced")
-
             self.assertTrue(tok.value == token_list[i].value)
             self.assertTrue(tok.lineno == token_list[i].lineno)
             self.assertTrue(tok.lexpos == token_list[i].lexpos)
@@ -101,6 +100,9 @@ class TestSpecParser(unittest.TestCase):
                                 '"abc \\" asfds \\""',
                                 '"abc \\" asfds \\""')
 
+        # test comment, ignore everything after //
+        self._test_single_token(0, 'TOK_ASSIGN', 1, '=', '=//ciao')
+
         self._test_single_token(0, 'TOK_SPEC', 1, 'SPEC', 'SPEC')
 
 
@@ -122,13 +124,14 @@ class TestSpecParser(unittest.TestCase):
         self._test_multiple_token(res, "l.l(#)"),
 
 
-    def _test_parse(self, spec):
+    def _test_parse(self, spec, same_out=True):
         res = spec_parser.parse(spec)
         self.assertTrue(res is not None)
+
         # test the printing of the spec ast
         stringio = StringIO()
         pretty_print(res, stringio)
-        self.assertTrue(stringio.getvalue() == spec)
+        self.assertTrue((not same_out) or stringio.getvalue() == spec)
 
 
     def _test_parse_error(self, specs):
@@ -161,6 +164,12 @@ class TestSpecParser(unittest.TestCase):
 
         for expr in correct_expr:
             self._test_parse(expr)
+
+        # do not require the spec read from the parser to be printed
+        # and be equal to the input spec
+        correct_expr_no_print = ["SPEC [CB] [l] type l() |- [CB] [l] type l(b : type)//foo"]
+        for expr in correct_expr_no_print:
+            self._test_parse(expr,False)
 
         wrong_expr = ["SPEC TRUE "]
         for expr in wrong_expr:
