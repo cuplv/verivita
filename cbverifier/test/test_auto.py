@@ -244,9 +244,4 @@ class TestAuto(unittest.TestCase):
         auto_c = Automaton.get_singleton(a_label)
         auto_d = auto_b.concatenate(auto_c)
 
-        auto_d.to_dot(sys.stdout)
-
         self.assertFalse(auto_d.accept([]))
-
-
-        aaa
