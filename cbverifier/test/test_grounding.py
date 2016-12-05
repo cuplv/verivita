@@ -59,7 +59,7 @@ class TestGrounding(unittest.TestCase):
         v = CValue()
         v.is_null = False
         v.type = TraceSpecConverter.JAVA_BOOLEAN
-        v.value = "true"
+        v.value = TraceSpecConverter.TRUE_CONSTANT
         return v
 
     @staticmethod
@@ -67,7 +67,7 @@ class TestGrounding(unittest.TestCase):
         v = CValue()
         v.is_null = False
         v.type = TraceSpecConverter.JAVA_BOOLEAN
-        v.value = "false"
+        v.value = TraceSpecConverter.FALSE_CONSTANT
         return v
 
 

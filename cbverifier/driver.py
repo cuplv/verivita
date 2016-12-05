@@ -122,6 +122,7 @@ def main(input_args=None):
         sys.stdout.write("SPECIFICATIONS:\n")
         for spec in spec_list:
             spec.print_spec(sys.stdout)
+            sys.stdout.write("\n")
 
         sys.stdout.write("\nTRACE:\n")
         trace.print_trace(sys.stdout, opts.debug)
