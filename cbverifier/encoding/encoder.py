@@ -354,6 +354,17 @@ class TSEncoder:
             fc = Implies(not_change_next, fc_msg)
             ts.trans = And(ts.trans, fc)
 
+        # If a message is not in the msg_key, then its value do not change.
+        # This applies to all the messages that are not changed by a
+        # specification
+        for msg in self.msgs:
+            if msg not in accepting:
+                msg_enabled = TSEncoder._get_state_var(msg)
+                fc_msg = Iff(msg_enabled,
+                             Helper.get_next_var(msg_enabled,
+                                                 self.pysmt_env.formula_manager))
+                ts.trans = And(ts.trans, fc_msg)
+
         return (ts, disabled_ci, accepting)
 
 
