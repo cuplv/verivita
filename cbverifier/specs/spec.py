@@ -69,6 +69,14 @@ class Spec:
     def get_specs_from_files(files_list, spec_list=None):
         for spec_file in files_list:
             spec_list = Spec.get_specs_from_file(spec_file, spec_list)
+
+            # Fail if at least one spec file fails
+            if spec_list == None:
+                logging.error("Error parsing the specification " \
+                              "file %s" % spec_file)
+
+                return None
+
         return spec_list
 
     def is_spec_rhs_false(self):

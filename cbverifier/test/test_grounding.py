@@ -59,7 +59,7 @@ class TestGrounding(unittest.TestCase):
         v = CValue()
         v.is_null = False
         v.type = TraceSpecConverter.JAVA_BOOLEAN
-        v.value = "true"
+        v.value = TraceSpecConverter.TRUE_CONSTANT
         return v
 
     @staticmethod
@@ -67,7 +67,7 @@ class TestGrounding(unittest.TestCase):
         v = CValue()
         v.is_null = False
         v.type = TraceSpecConverter.JAVA_BOOLEAN
-        v.value = "false"
+        v.value = TraceSpecConverter.FALSE_CONSTANT
         return v
 
 
@@ -516,7 +516,7 @@ class TestGrounding(unittest.TestCase):
                        [TestGrounding._get_fmwkov("", "void m2(%s)" % TraceSpecConverter.JAVA_BOOLEAN, False)])
         trace.add_msg(cb)
         gs = GroundSpecs(trace)
-        spec = Spec.get_spec_from_string("SPEC TRUE |- [CB] void m2(FALSE : %s)" % TraceSpecConverter.JAVA_BOOLEAN)
+        spec = Spec.get_spec_from_string("SPEC TRUE |- [CB] void m2(FALSE : %s)" % (TraceSpecConverter.JAVA_BOOLEAN))
         ground_specs = gs.ground_spec(spec)
         self.assertTrue(1 == len(ground_specs))
 

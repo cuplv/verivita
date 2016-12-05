@@ -232,5 +232,16 @@ class TestAuto(unittest.TestCase):
 
         self.assertTrue(_compare(solver, res, expected))
 
+    def test_seq(self):
+        env = AutoEnv.get_global_auto_env()
 
+        a_label = env.new_label('a')
+        b_label = env.new_label('b')
+        c_label = env.new_label('c')
 
+        auto_a = Automaton.get_singleton(TRUE())
+        auto_b = auto_a.klenee_star()
+        auto_c = Automaton.get_singleton(a_label)
+        auto_d = auto_b.concatenate(auto_c)
+
+        self.assertFalse(auto_d.accept([]))

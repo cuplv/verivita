@@ -4,6 +4,7 @@
 
 import sys
 import collections
+import logging
 
 from cbverifier.specs.spec import Spec
 from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
@@ -42,6 +43,32 @@ class CexPrinter:
     def _print_error(self, step, disabled_ci):
         self.out_stream.write("    Reached an error state in step %d!\n" % step)
 
+
+    def _print_state(self, step, i):
+        """ Print the state of the system
+        Useful for debug, not user friendly"""
+
+        self._print_sep()
+        self.out_stream.write("State: %d\n" % i)
+        self._print_sep()
+
+        for s in self._mapback.state_vars:
+            assert s in step
+            s_val = step[s]
+            self.out_stream.write("  %s := %s\n" %  (s, s_val))
+
+
+        if (i < (len(self._cex)-1)):
+            s = self._mapback.msg_ivar
+            s_val = self._mapback._get_pc_value(s, step)
+            readable = self._mapback.get_trans_label(step)
+            self.out_stream.write("  %s := %s (%s)\n" %  (s, s_val, readable))
+
+            s = self._mapback.pc_var
+            s_val = self._mapback._get_pc_value(s, step)
+            self.out_stream.write("  %s := %s\n" %  (s, s_val))
+
+
     def print_cex(self):
         """ Print the cex. """
 
@@ -50,6 +77,9 @@ class CexPrinter:
         i = 0
         prev_step = None
         for step in self._cex:
+            if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
+                self._print_state(step, i)
+
             if (i == 0):
                 if (self._mapback.is_error(step)):
                     # TODO: add precise list of callins that end in error

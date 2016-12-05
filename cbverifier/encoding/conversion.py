@@ -15,6 +15,9 @@ class TraceSpecConverter:
     JAVA_BOOLEAN = "java.lang.Boolean"
     JAVA_STRING = "java.lang.String"
 
+    TRUE_CONSTANT = 1
+    FALSE_CONSTANT = 0
+
     @staticmethod
     def traceval2specnode(trace_val):
         assert isinstance(trace_val, CValue)
@@ -38,9 +41,10 @@ class TraceSpecConverter:
             elif (TraceSpecConverter.JAVA_BOOLEAN_PRIMITIVE == trace_val.type or
                   TraceSpecConverter.JAVA_BOOLEAN == trace_val.type):
                 enc_value = CValue.enc(trace_val.value)
-                if (enc_value == "true"):
+
+                if (str(enc_value) == str(TraceSpecConverter.TRUE_CONSTANT)):
                     return new_true()
-                elif (enc_value == "false"):
+                elif (str(enc_value) == str(TraceSpecConverter.FALSE_CONSTANT)):
                     return new_false()
                 else:
                     raise Exception("Wrong value for Boolean %s" % enc_value)
@@ -74,14 +78,14 @@ class TraceSpecConverter:
             v = CValue()
             v.is_null = False
             v.type = TraceSpecConverter.JAVA_BOOLEAN
-            v.value = "true"
+            v.value = TraceSpecConverter.TRUE_CONSTANT
             v.object_id = None
             return v
         elif FALSE == node_type:
             v = CValue()
             v.is_null = False
             v.type = TraceSpecConverter.JAVA_BOOLEAN
-            v.value = "false"
+            v.value = TraceSpecConverter.FALSE_CONSTANT
             v.object_id = None
             return v
         elif STRING == node_type:

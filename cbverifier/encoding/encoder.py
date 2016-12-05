@@ -354,6 +354,17 @@ class TSEncoder:
             fc = Implies(not_change_next, fc_msg)
             ts.trans = And(ts.trans, fc)
 
+        # If a message is not in the msg_key, then its value do not change.
+        # This applies to all the messages that are not changed by a
+        # specification
+        for msg in self.msgs:
+            if msg not in accepting:
+                msg_enabled = TSEncoder._get_state_var(msg)
+                fc_msg = Iff(msg_enabled,
+                             Helper.get_next_var(msg_enabled,
+                                                 self.pysmt_env.formula_manager))
+                ts.trans = And(ts.trans, fc_msg)
+
         return (ts, disabled_ci, accepting)
 
 
@@ -520,6 +531,8 @@ class TSEncoder:
             var_ts.trans = And(var_ts.trans,
                                Or(Not(letter_eq_msg), var))
 
+        self.mapback.add_state_vars(var_ts.state_vars)
+
         return var_ts
 
 
@@ -564,6 +577,7 @@ class TSEncoder:
 
         # The last state is the error one
         error_state_id = max_pc_value
+        logging.debug("%d is the error state: " % error_state_id)
 
         # add all the bit variables
         for v in self.cenc.get_counter_var(pc_name):
@@ -571,8 +585,9 @@ class TSEncoder:
 
         # start from the initial state
         ts.init = self.cenc.eq_val(pc_name, 0)
-        #logging.debug("Init state: %d" % (0))
+        logging.debug("Init state: %d" % (0))
 
+        offset = 0
         ts.trans = FALSE_PYSMT() # disjunction of transitions
         # encode each cb
         for tl_cb in self.trace.children:
@@ -593,10 +608,11 @@ class TSEncoder:
                 # encode the transition
                 if (len(stack) == 0):
                     # visited all the cb/ci of the top-level cb
+                    offset = current_state
                     next_state = 0
                 else:
                     state_count += 1
-                    next_state = state_count
+                    next_state = state_count + offset
 
                 # Encode the enabled transition
                 label = And(self.r2a.get_msg_eq(msg_key), msg_enabled)
@@ -607,10 +623,11 @@ class TSEncoder:
                 single_trans = And([s0, label, snext])
                 ts.trans = Or([ts.trans, single_trans])
 
-#                logging.debug("Trans: %d -> %d on %s" % (current_state, next_state, msg_key))
+                logging.debug("Trans: %d -> %d on %s" % (current_state, next_state, msg_key))
 
                 # encode the transition to the error state
                 if (msg_key in disabled_ci and isinstance(msg, CCallin)):
+                    logging.debug("Error condition: %s not enabled" % str(msg_enabled))
                     error_label = And(Not(msg_enabled),
                                       self.r2a.get_msg_eq(self.error_label))
                     error_state = self.cenc.eq_val(pc_name, error_state_id)
@@ -820,7 +837,6 @@ class TSMapback():
         self.vars2spec = {}
         self.vars2msg = {}
         self.pc2trace = {}
-        self.pc2ci = {}
 
         self.msg_ivar = msg_ivar
         self.pc_var = pc_var
@@ -836,6 +852,9 @@ class TSMapback():
         # We reuse the counter encoders already used in the encoding
         # for this
         self.vars_encoders = {}
+
+        # set of state variables
+        self.state_vars = set()
 
         # used for lazyness to evaluate a formula given a model
         self.pysmt_env = pysmt_env
@@ -871,11 +890,19 @@ class TSMapback():
     def set_error_condition(self, error_condition):
         self.error_condition = error_condition
 
+    def _get_pc_value(self, var, current_state):
+        assert var in self.vars_encoders
+        counter_enc = self.vars_encoders[var]
+
+        value = counter_enc.get_counter_value(var, current_state)
+
+        return value
+
     def _get_msg_for_model(self, var_map, var, current_state):
         assert var in self.vars_encoders
 
         counter_enc = self.vars_encoders[var]
-        value = counter_enc.get_counter_value(var, current_state)
+        value = self._get_pc_value(var, current_state)
 
         key = (var, value)
         if key in var_map:
@@ -958,6 +985,8 @@ class TSMapback():
 
         return solver.is_sat(self.error_condition)
 
+    def add_state_vars(self, set_vars):
+        self.state_vars.update(set_vars)
 
 class RegExpToAuto():
     """ Utility class to convert a regular expression in an automaton.

@@ -160,6 +160,11 @@ class Automaton(object):
     def concatenate(self, other):
         """ Returns the automaton that recognize the concatenation
         of the language of self with the language of other_auto
+
+        Algorithm:
+          - copy the other automaton, removing its initial states
+          -
+
         """
 
         # copy the other automaton
@@ -170,12 +175,15 @@ class Automaton(object):
         visited = set()
         self_to_new = {}
 
+        # copy in new_auto the initial states of self.
+        # If the initial state is final in self, it should not be final in
+        # new_auto (the word is accepted only after the concatenation
         for s in self.initial_states:
-            new_s = new_auto._add_new_state(True,
-                                            self.is_final(s))
+            new_s = new_auto._add_new_state(True, False)
             self_to_new[s] = new_s
             stack.append(s)
 
+        # copy all self
         while (len(stack) != 0):
             s = stack.pop()
             visited.add(s)
