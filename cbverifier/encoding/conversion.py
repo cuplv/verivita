@@ -41,9 +41,10 @@ class TraceSpecConverter:
             elif (TraceSpecConverter.JAVA_BOOLEAN_PRIMITIVE == trace_val.type or
                   TraceSpecConverter.JAVA_BOOLEAN == trace_val.type):
                 enc_value = CValue.enc(trace_val.value)
-                if (enc_value == TraceSpecConverter.TRUE_CONSTANT):
+
+                if (str(enc_value) == str(TraceSpecConverter.TRUE_CONSTANT)):
                     return new_true()
-                elif (enc_value == TraceSpecConverter.FALSE_CONSTANT):
+                elif (str(enc_value) == str(TraceSpecConverter.FALSE_CONSTANT)):
                     return new_false()
                 else:
                     raise Exception("Wrong value for Boolean %s" % enc_value)
