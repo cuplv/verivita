@@ -686,3 +686,41 @@ class TestEnc(unittest.TestCase):
         bmc = BMC(ts_enc.helper, ts, error)
         cex = bmc.find_bug(2)
         self.assertTrue(cex is None)
+
+
+    def test_multiple_single_cb(self):
+        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CB] [l] void m3(); SPEC FALSE[*] |- [CI] [l] void m4()")
+        assert spec_list is not None
+
+
+        ctrace = CTrace()
+        cb = CCallback(1, 1, "", "void m1()",
+                       [TestGrounding._get_obj("1","string")],
+                       None,
+                       [TestGrounding._get_fmwkov("","void m1()", False)])
+        ctrace.add_msg(cb)
+        ci = CCallin(1, 1, "", "void m2()",
+                     [TestGrounding._get_obj("1","string")],
+                     None)
+        cb.add_msg(ci)
+        cb = CCallback(1, 1, "", "void m5()",
+                       [TestGrounding._get_obj("1","string")],
+                       None,
+                       [TestGrounding._get_fmwkov("","void m5()", False)])
+        ctrace.add_msg(cb)
+        cb = CCallback(1, 1, "", "void m3()",
+                       [TestGrounding._get_obj("1","string")],
+                       None,
+                       [TestGrounding._get_fmwkov("","void m3()", False)])
+        ctrace.add_msg(cb)
+        ci = CCallin(1, 1, "", "void m4()",
+                     [TestGrounding._get_obj("1","string")],
+                     None)
+        cb.add_msg(ci)
+
+        ts_enc = TSEncoder(ctrace, spec_list)
+        ts = ts_enc.get_ts_encoding()
+        error = ts_enc.error_prop
+        bmc = BMC(ts_enc.helper, ts, error)
+        cex = bmc.find_bug(2)
+        self.assertTrue(cex is None)

@@ -608,10 +608,13 @@ class TSEncoder:
                 # encode the transition
                 if (len(stack) == 0):
                     # visited all the cb/ci of the top-level cb
-                    offset = current_state
+                    if offset < current_state:
+                        # handle 0 -> 0 transition used for callbacks with no ci
+                        offset = current_state
                     next_state = 0
                 else:
                     state_count += 1
+                    # add the offset when we move to an inner message
                     next_state = state_count + offset
 
                 # Encode the enabled transition
