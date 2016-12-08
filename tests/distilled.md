@@ -76,12 +76,17 @@
 
 
 6. Silence
+  * Issue: https://github.com/itkach/aard2-android/issues/6
+  * Sorry about the naming, because I was confusing this issue with the following fix:
     https://github.com/SilenceIM/Silence/commit/39a1a02fe9e9d3164098b151e28c6041b716248a
-    sendComplete UI updates on destroyed views
-
+  * Cause of bug:
+    * Wrong lifecycle of `ListFragment`
+    
+    
 7. ContractionTimer
     * Startactivity
   https://github.com/ianhanniballake/ContractionTimer/issues/121
+    * Should be similar to Kistenstapleln
 
 8. androidbetterpicker
     * https://github.com/code-troopers/android-betterpickers/issues/285
