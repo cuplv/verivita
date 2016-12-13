@@ -176,13 +176,7 @@ class CCallback(CMessage):
         if filter == None:
             super(CCallback, self)._print(stream, sep, rec, debug_info)
         else:
-            printme = self.return_value != None and self.return_value.type == filter
-            for param in self.params:
-                param_type = param.type
-                if param_type == filter:
-                    printme = True
-                    break
-            if(printme):
+            if(filter(self)):
                 super(CCallback, self)._print(stream, sep, rec, debug_info, filter)
 
 
@@ -204,15 +198,10 @@ class CCallin(CMessage):
                                       return_value,
                                       None)
     def _print(self, stream, sep, rec=True, debug_info=False, filter=None):
-        if filter == None:
+        if filter is None:
             super(CCallin, self)._print(stream, sep, rec, debug_info)
         else:
-            printme = self.return_value != None and self.return_value.type == filter
-            for param in self.params:
-                if param.type == filter:
-                    printme = True
-                    break
-            if(printme):
+            if filter(self):
                 super(CCallin, self)._print(stream, sep, rec, debug_info, filter)
 class AppInfo(object):
     """ Info of the app."""

@@ -7,7 +7,7 @@ import optparse
 import logging
 
 
-from cbverifier.traces.ctrace import CTraceSerializer
+from cbverifier.traces.ctrace import CTraceSerializer, CCallin, CCallback
 from cbverifier.specs.spec import Spec
 from cbverifier.encoding.encoder import TSEncoder
 from cbverifier.encoding.cex_printer import CexPrinter
@@ -129,7 +129,18 @@ def main(input_args=None):
 
         sys.stdout.write("\nTRACE:\n")
         if (opts.filter != None):
-            trace.print_trace(sys.stdout, opts.debug, opts.filter)
+            def typeFilter(cMessage):
+                if isinstance(cMessage, CCallin) or isinstance(cMessage, CCallback):
+                    printme = cMessage.return_value != None and cMessage.return_value.type == opts.filter
+                    for param in cMessage.params:
+                        param_type = param.type
+                        if param_type == opts.filter:
+                            printme = True
+                            break
+                    return printme
+                else:
+                    return False
+            trace.print_trace(sys.stdout, opts.debug, typeFilter)
         else:
             trace.print_trace(sys.stdout, opts.debug)
         sys.stdout.write("\n")
