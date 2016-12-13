@@ -74,7 +74,7 @@ class CMessage(object):
     def __iter__(self):
         return iter(self.children)
 
-    def _print(self, stream, sep, rec=True, debug_info=False):
+    def _print(self, stream, sep, rec=True, debug_info=False, filter = None):
         message_sig = self.get_full_msg_name()
 
         if isinstance(self, CCallback):
@@ -107,7 +107,7 @@ class CMessage(object):
 
         if rec:
             for child in self.children:
-                child._print(stream, "  ", rec, debug_info)
+                child._print(stream, "  ", rec, debug_info, filter)
 
     @staticmethod
     def get_full_msg_name_static(class_name, method_name):
@@ -172,6 +172,18 @@ class CCallback(CMessage):
         # list of FrameworkOverride objects
         # Warning: the order matteres.
         self.fmwk_overrides = fmwk_overrides
+    def _print(self, stream, sep, rec=True, debug_info=False, filter=None):
+        if filter == None:
+            super(CCallback, self)._print(stream, sep, rec, debug_info)
+        else:
+            printme = self.return_value != None and self.return_value.type == filter
+            for param in self.params:
+                param_type = param.type
+                if param_type == filter:
+                    printme = True
+                    break
+            if(printme):
+                super(CCallback, self)._print(stream, sep, rec, debug_info, filter)
 
 
 class CCallin(CMessage):
@@ -191,7 +203,17 @@ class CCallin(CMessage):
                                       params,
                                       return_value,
                                       None)
-
+    def _print(self, stream, sep, rec=True, debug_info=False, filter=None):
+        if filter == None:
+            super(CCallin, self)._print(stream, sep, rec, debug_info)
+        else:
+            printme = self.return_value != None and self.return_value.type == filter
+            for param in self.params:
+                if param.type == filter:
+                    printme = True
+                    break
+            if(printme):
+                super(CCallin, self)._print(stream, sep, rec, debug_info, filter)
 class AppInfo(object):
     """ Info of the app."""
     def __init__(self, app_name):
@@ -336,10 +358,10 @@ class CTrace:
         self.children = []
         self.app_info = None
 
-    def print_trace(self, stream, debug_info=False):
+    def print_trace(self, stream, debug_info=False, filter=None):
         """ Print the trace """
         for child in self.children:
-            child._print(stream, "", True, debug_info)
+            child._print(stream, "", True, debug_info, filter)
 
     def add_msg(self, msg):
         self.children.append(msg)

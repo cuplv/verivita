@@ -56,6 +56,8 @@ def main(input_args=None):
                  default=False, help="Incremental search")
 
     p.add_option('-o', '--smv_file', help="Output smv file")
+    p.add_option('-l', '--filter', help="When running check-files this will only: filter all messages to the ones"
+                                        "where type is matched")
 
 
     def usage(msg=""):
@@ -119,13 +121,17 @@ def main(input_args=None):
 
 
     if (opts.mode == "check-files"):
+
         sys.stdout.write("SPECIFICATIONS:\n")
         for spec in spec_list:
             spec.print_spec(sys.stdout)
             sys.stdout.write("\n")
 
         sys.stdout.write("\nTRACE:\n")
-        trace.print_trace(sys.stdout, opts.debug)
+        if (opts.filter != None):
+            trace.print_trace(sys.stdout, opts.debug, opts.filter)
+        else:
+            trace.print_trace(sys.stdout, opts.debug)
         sys.stdout.write("\n")
 
         return 0
