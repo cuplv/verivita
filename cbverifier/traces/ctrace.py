@@ -364,6 +364,20 @@ class CTrace:
                                  ": %s" % stringio.getvalue())
         return new_trace
 
+    def get_total_msg(self):
+        msgs = []
+        for m in self.children:
+            msgs.append(m)
+
+        count = 0
+        while 0 < len(msgs):
+            msg = msgs.pop()
+            count += 1
+            for m in msg.children:
+                msgs.append(m)
+
+        return count
+
 
 class CTraceSerializer:
     """
@@ -389,7 +403,7 @@ class CTraceSerializer:
 
 
     @staticmethod
-    def read_trace(trace_file, is_json=False):
+    def read_trace(trace_file, is_json=False, ignore_non_ui_threads=True):
         trace = CTrace()
 
         if is_json:
@@ -409,7 +423,11 @@ class CTraceSerializer:
                 # other types in the protobuf.
                 # To be clarified with Shawn
                 trace.app_info = trace.app_info
-            if CTraceSerializer.is_entry_message(recorded_message):
+            elif ignore_non_ui_threads and (not CTraceSerializer.is_on_ui_thread(recorded_message)):
+                logging.warning("Ignoring message executed on a non-UI thread...")
+                if (logging.getLogger().getEffectiveLevel() >= logging.WARNING):
+                    logging.debug("Ignored message:\n%s\n" % str(recorded_message))
+            elif CTraceSerializer.is_entry_message(recorded_message):
                 # create the trace message
                 trace_message = CTraceSerializer.create_trace_message(recorded_message)
                 message_stack.append(trace_message)
@@ -446,6 +464,10 @@ class CTraceSerializer:
     @staticmethod
     def is_app_message(msg):
         return TraceMsgContainer.TraceMsg.APP == msg.type
+
+    @staticmethod
+    def is_on_ui_thread(msg):
+        return msg.is_activity_thread
 
     @staticmethod
     def is_entry_message(msg):
