@@ -29,6 +29,21 @@ import google.protobuf.internal.decoder as decoder
 
 import tracemsg_pb2
 
+class MessageFilter:
+    @staticmethod
+    def typeFilterFrom(filter):
+        def typeFilter(cMessage):
+            if isinstance(cMessage, CCallin) or isinstance(cMessage, CCallback):
+                printme = cMessage.return_value != None and cMessage.return_value.type == filter
+                for param in cMessage.params:
+                    param_type = param.type
+                    if param_type == filter:
+                        printme = True
+                        break
+                return printme
+            else:
+                return False
+        return typeFilter
 class MalformedTraceException(Exception):
     def __init__(self,*args,**kwargs):
         Exception.__init__(self,*args,**kwargs)

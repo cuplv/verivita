@@ -1,6 +1,6 @@
 
 
-from cbverifier.traces.ctrace import CTrace, FrameworkOverride, CCallin, CCallback, CValue
+from cbverifier.traces.ctrace import CTrace, FrameworkOverride, CCallin, CCallback, CValue, MessageFilter
 
 try:
     import unittest2 as unittest
@@ -26,19 +26,19 @@ class TestTracefilter(unittest.TestCase):
                       [self._get_obj(3,"watbar2")],None)
         cb2.add_msg(ci2)
         trace.add_msg(cb2)
-        def typeFilter(cMessage):
-            if isinstance(cMessage, CCallin) or isinstance(cMessage, CCallback):
-                printme = cMessage.return_value != None and cMessage.return_value.type == "mehbar2"
-                for param in cMessage.params:
-                    param_type = param.type
-                    if param_type == "mehbar2":
-                        printme = True
-                        break
-                return printme
-            else:
-                return False
+        # def typeFilter(cMessage):
+        #     if isinstance(cMessage, CCallin) or isinstance(cMessage, CCallback):
+        #         printme = cMessage.return_value != None and cMessage.return_value.type == "mehbar2"
+        #         for param in cMessage.params:
+        #             param_type = param.type
+        #             if param_type == "mehbar2":
+        #                 printme = True
+        #                 break
+        #         return printme
+        #     else:
+        #         return False
         stringio = StringIO()
-        trace.print_trace(stringio, True, typeFilter)
+        trace.print_trace(stringio, True, MessageFilter.typeFilterFrom("mehbar2"))
         print "-"
         print stringio.getvalue()
         print "-"
