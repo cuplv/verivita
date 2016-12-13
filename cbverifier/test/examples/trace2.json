@@ -4,7 +4,7 @@
     "callbackEntry": {
       "methodReturnType": "void", 
       "callbackCallerClass": "", 
-      "methodName": "void m1()", 
+      "methodName": "void m1(string)", 
       "class_name": "android.app.Activity", 
       "paramList": [
         {
@@ -12,10 +12,16 @@
           "value": "1", 
           "type": "",
           "fmwkType": ""
+        },
+        {
+          "isNull": false, 
+          "value": "\"foobar\"", 
+          "type": "string",
+          "fmwkType": ""
         }
       ], 
       "callbackCallerMethod": "newInstance", 
-      "frameworkOverrides": [{"class_name" : "", "method" : "void m1()", "is_interface" : false}], 
+      "frameworkOverrides": [{"class_name" : "android.app.Activity", "method" : "void m1(string)", "is_interface" : false}], 
       "methodParameterTypes": [], 
       "receiverFirstFrameworkSuper": "android.app.Activity"
     }, 
@@ -37,7 +43,7 @@
           "fmwkType": ""
         }
       ], 
-      "class_name": ""
+      "class_name": "android.widget.Button"
     }, 
     "threadId": "1", 
     "isActivityThread" : true,
@@ -49,7 +55,7 @@
   "msg": {
     "callinExit": {
       "methodName": "void m2()", 
-      "class_name": ""
+      "class_name": "android.widget.Button"
     }, 
     "threadId": "1", 
     "isActivityThread" : true,
@@ -65,7 +71,7 @@
     "callbackExit": {
       "methodName": "void m1()", 
       "class_name": "android.app.Activity"
-    },
+    }, 
     "messageId": "3"
   }
 }]

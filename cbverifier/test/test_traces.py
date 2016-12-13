@@ -36,6 +36,7 @@ class TestTraces(unittest.TestCase):
         cont.msg.type = TraceMsgContainer.TraceMsg.CALLIN_ENTRY
         cont.msg.message_id = 1
         cont.msg.thread_id = 2
+        cont.msg.is_activity_thread = 1
 
         ci = cont.msg.callinEntry
 
@@ -55,6 +56,7 @@ class TestTraces(unittest.TestCase):
         cont.msg.type = TraceMsgContainer.TraceMsg.CALLIN_EXIT
         cont.msg.message_id = 1
         cont.msg.thread_id = 2
+        cont.msg.is_activity_thread = 1
 
         ci = cont.msg.callinExit
         ci.class_name = "class_name"
@@ -69,6 +71,7 @@ class TestTraces(unittest.TestCase):
         cont.msg.type = TraceMsgContainer.TraceMsg.CALLIN_EXEPION
         cont.msg.message_id = 1
         cont.msg.thread_id = 2
+        cont.msg.is_activity_thread = 1
 
         cie = cont.msg.callinException
         cie.throwing_class_name = "class_name"
@@ -87,6 +90,7 @@ class TestTraces(unittest.TestCase):
         cont.msg.type = TraceMsgContainer.TraceMsg.CALLBACK_ENTRY
         cont.msg.message_id = 1
         cont.msg.thread_id = 2
+        cont.msg.is_activity_thread = 1
 
         cb = cont.msg.callbackEntry
 
@@ -129,6 +133,7 @@ class TestTraces(unittest.TestCase):
         cont.msg.type = TraceMsgContainer.TraceMsg.CALLBACK_EXIT
         cont.msg.message_id = 1
         cont.msg.thread_id = 2
+        cont.msg.is_activity_thread = 1
 
         cb = cont.msg.callbackExit
         cb.class_name = "class_name"
@@ -143,6 +148,7 @@ class TestTraces(unittest.TestCase):
         cont.msg.type = TraceMsgContainer.TraceMsg.CALLBACK_EXCEPTION
         cont.msg.message_id = 1
         cont.msg.thread_id = 2
+        cont.msg.is_activity_thread = 1
 
         cbe = cont.msg.callbackException
         cbe.throwing_class_name = "class_name"
@@ -271,3 +277,32 @@ class TestTraces(unittest.TestCase):
                                     FrameworkOverride("interface",
                                                       "method_name",
                                                       True)))
+
+    def test_non_ui_threads(self):
+        cb_entry = self._get_cb_entry()
+        cb_exit = self._get_cb_exit()
+        cb_exception = self._get_cb_exception()
+        ci_entry = self._get_ci_entry()
+        ci_exit = self._get_ci_exit()
+        ci_exception = self._get_ci_exception()
+
+        cb_entry_non_ui = self._get_cb_entry()
+        cb_entry_non_ui.msg.is_activity_thread = False
+        cb_exit_non_ui = self._get_cb_exit()
+        cb_exit_non_ui.msg.is_activity_thread = False
+        cb_exception_non_ui = self._get_cb_exception()
+        cb_exception_non_ui.msg.is_activity_thread = False
+        ci_entry_non_ui = self._get_ci_entry()
+        ci_entry_non_ui.msg.is_activity_thread = False
+        ci_exit_non_ui = self._get_ci_exit()
+        ci_exit_non_ui.msg.is_activity_thread = False
+        ci_exception_non_ui = self._get_ci_exception()
+        ci_exception_non_ui.msg.is_activity_thread = False
+
+        # ignore the message on the non-ui thread
+        read_trace = self.write_and_get([cb_entry,
+                                         cb_entry_non_ui,
+                                         cb_exit_non_ui,
+                                         cb_exit])
+        self.assertTrue(1 == read_trace.get_total_msg())
+
