@@ -30,7 +30,7 @@
     * Open the app and before the cdt finishes, click `Click Me` button
   
  
- 3. watchlater
+3. watchlater
   * Issue: https://github.com/lambdasoup/watchlater/issues/29
   * Hash of bug: 1c3e264
   * Hash of fix: e11255b 
@@ -46,7 +46,7 @@
 
 
  
- 4. ContractionTimer
+4. ContractionTimer
    * Issue: https://github.com/ianhanniballake/ContractionTimer/issues/121 
    * Hash of bug: `88eacfa`
    * Hash of fix: `258e996`
@@ -61,8 +61,7 @@
     * Press `First Fragment` Button and quickly press `Second Fragment` Button
     
 
-
-   5. Zom
+5. Zom
    * Issue: https://github.com/zom/Zom-Android/issues/10
    * Hash of bug: `3f7d426`
    * Hash of fix: `02bbbf1`
@@ -74,3 +73,20 @@
   * To reproduce:
     * press the `stop` button without pressing `start`
     
+
+
+6. Silence
+  * Issue: https://github.com/itkach/aard2-android/issues/6
+  * Sorry about the naming, because I was confusing this issue with the following fix:
+    https://github.com/SilenceIM/Silence/commit/39a1a02fe9e9d3164098b151e28c6041b716248a
+  * Cause of bug:
+    * Wrong lifecycle of `ListFragment`
+    
+    
+7. ContractionTimer
+    * Startactivity
+  https://github.com/ianhanniballake/ContractionTimer/issues/121
+    * Should be similar to Kistenstapleln
+
+8. androidbetterpicker
+    * https://github.com/code-troopers/android-betterpickers/issues/285

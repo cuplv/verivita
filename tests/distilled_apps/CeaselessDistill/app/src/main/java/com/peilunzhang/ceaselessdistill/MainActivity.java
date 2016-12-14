@@ -10,7 +10,12 @@ import android.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 
 public class MainActivity extends Activity {
@@ -22,8 +27,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, new BuggyFragment()).commit();
+        Button btn = (Button) findViewById(R.id.btn_main);
+        btn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    getFragmentManager().beginTransaction()
+                            .add(R.id.fragment_container, new BuggyFragment()).commit();
+                }
+        });
 
     }
 
@@ -38,10 +49,19 @@ public class MainActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.fragment_main, container);
-            mText = (TextView) v.findViewById(R.id.textMain);
-            mText.setText("success");
-            return v;
+            View view = inflater.inflate(R.layout.fragment_main, container,
+                    false);
+            return view;
+        }
+
+        @Override
+        public void onActivityCreated(Bundle savedInstanceState){
+            LinearLayout note = (LinearLayout) getActivity().findViewById(R.id.notes);
+
+            View tv = getActivity().getLayoutInflater().inflate(R.layout.text_main, note);
+
+            note.addView(tv);
+
         }
     }
 }
