@@ -314,7 +314,8 @@ class CValue(object):
         return self._hash
 
     def __eq__(self, other):
-        return (self.is_null == other.is_null and
+        return (type(self) == type(other) and
+                self.is_null == other.is_null and
                 self.type == other.type and
                 self.fmwk_type == other.fmwk_type and
                 self.object_id == other.object_id and
