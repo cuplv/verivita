@@ -7,7 +7,7 @@ import optparse
 import logging
 
 
-from cbverifier.traces.ctrace import CTraceSerializer
+from cbverifier.traces.ctrace import CTraceSerializer, CCallin, CCallback, MessageFilter
 from cbverifier.specs.spec import Spec
 from cbverifier.encoding.encoder import TSEncoder
 from cbverifier.encoding.cex_printer import CexPrinter
@@ -56,6 +56,8 @@ def main(input_args=None):
                  default=False, help="Incremental search")
 
     p.add_option('-o', '--smv_file', help="Output smv file")
+    p.add_option('-l', '--filter', help="When running check-files this will only: filter all messages to the ones"
+                                        "where type is matched")
 
 
     def usage(msg=""):
@@ -119,13 +121,28 @@ def main(input_args=None):
 
 
     if (opts.mode == "check-files"):
+
         sys.stdout.write("SPECIFICATIONS:\n")
         for spec in spec_list:
             spec.print_spec(sys.stdout)
             sys.stdout.write("\n")
 
         sys.stdout.write("\nTRACE:\n")
-        trace.print_trace(sys.stdout, opts.debug)
+        if (opts.filter != None):
+            # def typeFilter(cMessage):
+            #     if isinstance(cMessage, CCallin) or isinstance(cMessage, CCallback):
+            #         printme = cMessage.return_value != None and cMessage.return_value.type == opts.filter
+            #         for param in cMessage.params:
+            #             param_type = param.type
+            #             if param_type == opts.filter:
+            #                 printme = True
+            #                 break
+            #         return printme
+            #     else:
+            #         return False
+            trace.print_trace(sys.stdout, opts.debug, MessageFilter.typeFilterFrom(opts.filter))
+        else:
+            trace.print_trace(sys.stdout, opts.debug)
         sys.stdout.write("\n")
 
         return 0

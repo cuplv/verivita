@@ -29,6 +29,21 @@ import google.protobuf.internal.decoder as decoder
 
 import tracemsg_pb2
 
+class MessageFilter:
+    @staticmethod
+    def typeFilterFrom(filter):
+        def typeFilter(cMessage):
+            if isinstance(cMessage, CCallin) or isinstance(cMessage, CCallback):
+                printme = cMessage.return_value != None and cMessage.return_value.type == filter
+                for param in cMessage.params:
+                    param_type = param.type
+                    if param_type == filter:
+                        printme = True
+                        break
+                return printme
+            else:
+                return False
+        return typeFilter
 class MalformedTraceException(Exception):
     def __init__(self,*args,**kwargs):
         Exception.__init__(self,*args,**kwargs)
@@ -74,7 +89,7 @@ class CMessage(object):
     def __iter__(self):
         return iter(self.children)
 
-    def _print(self, stream, sep, rec=True, debug_info=False):
+    def _print(self, stream, sep, rec=True, debug_info=False, filter = None):
         message_sig = self.get_full_msg_name()
 
         if isinstance(self, CCallback):
@@ -107,7 +122,7 @@ class CMessage(object):
 
         if rec:
             for child in self.children:
-                child._print(stream, "  ", rec, debug_info)
+                child._print(stream, "  ", rec, debug_info, filter)
 
     @staticmethod
     def get_full_msg_name_static(class_name, method_name):
@@ -172,6 +187,12 @@ class CCallback(CMessage):
         # list of FrameworkOverride objects
         # Warning: the order matteres.
         self.fmwk_overrides = fmwk_overrides
+    def _print(self, stream, sep, rec=True, debug_info=False, filter=None):
+        if filter == None:
+            super(CCallback, self)._print(stream, sep, rec, debug_info)
+        else:
+            if(filter(self)):
+                super(CCallback, self)._print(stream, sep, rec, debug_info, filter)
 
 
 class CCallin(CMessage):
@@ -191,7 +212,12 @@ class CCallin(CMessage):
                                       params,
                                       return_value,
                                       None)
-
+    def _print(self, stream, sep, rec=True, debug_info=False, filter=None):
+        if filter is None:
+            super(CCallin, self)._print(stream, sep, rec, debug_info)
+        else:
+            if filter(self):
+                super(CCallin, self)._print(stream, sep, rec, debug_info, filter)
 class AppInfo(object):
     """ Info of the app."""
     def __init__(self, app_name):
@@ -336,10 +362,10 @@ class CTrace:
         self.children = []
         self.app_info = None
 
-    def print_trace(self, stream, debug_info=False):
+    def print_trace(self, stream, debug_info=False, filter=None):
         """ Print the trace """
         for child in self.children:
-            child._print(stream, "", True, debug_info)
+            child._print(stream, "", True, debug_info, filter)
 
     def add_msg(self, msg):
         self.children.append(msg)
