@@ -511,7 +511,7 @@ class TestEnc(unittest.TestCase):
         for i in range(10):
             mapback.add_vars2msg(i,"void m_%d()" % i)
         for i in range(10):
-            mapback.add_pc2trace(i,"trace_%d" % i)
+            mapback.add_pc2trace(i, i+1, "trace_%d" % i, "void m_0()")
 
         c0 = Or(cenc.eq_val(auto_counters[0], 0),
                 cenc.eq_val(auto_counters[0], 1))
@@ -533,8 +533,9 @@ class TestEnc(unittest.TestCase):
             self.assertTrue("void m_%d()" %i == res)
 
         for i in range(10):
-            m = get_def_model(cenc.eq_val(pc_counter,i), all_vars, False)
-            res = mapback.get_fired_trace_msg(m)
+            m = get_def_model(And(msg_vars[i], cenc.eq_val(pc_counter,i)), all_vars, False)
+            m_next = get_def_model(cenc.eq_val(pc_counter,i+1), all_vars, False)
+            res = mapback.get_fired_trace_msg(m, m_next)
             self.assertTrue("trace_%d" %i == res)
 
         current_m = get_def_model(TRUE(), all_vars, False)

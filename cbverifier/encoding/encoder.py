@@ -620,7 +620,8 @@ class TSEncoder:
                 # Encode the enabled transition
                 label = And(self.r2a.get_msg_eq(msg_key), msg_enabled)
                 s0 = self.cenc.eq_val(pc_name, current_state)
-                self.mapback.add_pc2trace(current_state, msg)
+                self.mapback.add_pc2trace(current_state, next_state,
+                                          msg, msg_key)
                 snext = self.cenc.eq_val(pc_name, next_state)
                 snext = self.helper.get_next_formula(ts.state_vars, snext)
                 single_trans = And([s0, label, snext])
@@ -641,8 +642,14 @@ class TSEncoder:
 
                     if error is None:
                         error = self.cenc.eq_val(pc_name, max_pc_value)
-                        self.mapback.add_pc2trace(error_state_id,
-                                                  self.error_label)
+                        #error_state_id
+                        # self.mapback.add_pc2trace(current_state,
+                        #                           self.error_label,
+                        #                           self.error_label)
+                    self.mapback.add_pc2trace(current_state,
+                                              error_state_id,
+                                              msg,
+                                              self.error_label)
 
                 current_state = next_state
 
@@ -652,6 +659,11 @@ class TSEncoder:
         snext_error = self.helper.get_next_formula(ts.state_vars,
                                                    error_state)
         single_trans = And([error_state, error_label, snext_error])
+        self.mapback.add_pc2trace(error_state_id,
+                                  error_state_id,
+                                  self.error_label,
+                                  self.error_label)
+
         ts.trans = Or([ts.trans, single_trans])
 
         if error is None:
@@ -886,9 +898,9 @@ class TSMapback():
         assert self.msg_ivar is not None
         self.vars2msg[(self.msg_ivar,value)] = msg
 
-    def add_pc2trace(self, value, trace_msg):
+    def add_pc2trace(self, value, next_value, trace_msg, msg_key):
         assert self.pc_var is not None
-        self.pc2trace[(self.pc_var, value)] = trace_msg
+        self.pc2trace[(self.pc_var, value, next_value, msg_key)] = trace_msg
 
     def set_error_condition(self, error_condition):
         self.error_condition = error_condition
@@ -921,12 +933,24 @@ class TSMapback():
                                        self.msg_ivar, current_state)
 
 
-    def get_fired_trace_msg(self, current_state):
+    def get_fired_trace_msg(self, current_state, next_state):
         """ Given the models for the current states, returns
         the correspondent message in the trace that was executed.
         """
-        return self._get_msg_for_model(self.pc2trace,
-                                       self.pc_var, current_state)
+
+        trans_label = self.get_trans_label(current_state)
+
+        assert self.pc_var in self.vars_encoders
+        counter_enc = self.vars_encoders[self.pc_var]
+        value = self._get_pc_value(self.pc_var, current_state)
+        next_value = self._get_pc_value(self.pc_var, next_state)
+
+
+        key = (self.pc_var, value, next_value, trans_label)
+        if key in self.pc2trace:
+            return self.pc2trace[key]
+        else:
+            return None
 
     def get_fired_spec(self, current_state, next_state, only_changed=True):
         """ Given the models for the current and next states, return
