@@ -210,14 +210,15 @@ class TSEncoder:
         self.ts = None
         self.error_prop = None
 
+        self.gs = GroundSpecs(self.trace)
+        self.ground_specs = TSEncoder._compute_ground_spec(self.gs, self.specs)
+
         (trace_length, msgs, cb_set, ci_set) = self.get_trace_stats()
         self.trace_length = trace_length
         self.msgs = msgs
         self.cb_set = cb_set
         self.ci_set = ci_set
 
-        self.gs = GroundSpecs(self.trace)
-        self.ground_specs = self._compute_ground_spec()
         self.pysmt_env = get_env()
         self.helper = Helper(self.pysmt_env)
         self.auto_env = AutoEnv(self.pysmt_env)
@@ -241,7 +242,8 @@ class TSEncoder:
     def get_ground_spec(self):
         return self.ground_specs
 
-    def _compute_ground_spec(self):
+    @staticmethod
+    def _compute_ground_spec(gs, specs):
         """ Computes all the ground specifications from the
         specifications with free variables in self.spec and the
         concrete trace self.trace
@@ -250,8 +252,8 @@ class TSEncoder:
         """
 
         ground_specs = []
-        for spec in self.specs:
-            tmp = self.gs.ground_spec(spec)
+        for spec in specs:
+            tmp = gs.ground_spec(spec)
             ground_specs.extend(tmp)
 
         return ground_specs
