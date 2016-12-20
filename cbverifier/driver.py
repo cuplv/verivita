@@ -38,6 +38,9 @@ def main(input_args=None):
     p.add_option('-c', '--enc_coi', action="store_true",
                  default=False, help="Apply cone of influence")
 
+    p.add_option('-z', '--simplify_trace', action="store_true",
+                 default=False, help="Simplify the trace (possibly unsound)")
+
     p.add_option('-d', '--debug', action="store_true",
                  default=False,
                  help="Output debug informations")
@@ -155,7 +158,7 @@ def main(input_args=None):
 
 
     elif (opts.mode == "bmc"):
-        ts_enc = TSEncoder(trace, spec_list)
+        ts_enc = TSEncoder(trace, spec_list, opts.simplify_trace)
 
         bmc = BMC(ts_enc.helper,
                   ts_enc.get_ts_encoding(),
