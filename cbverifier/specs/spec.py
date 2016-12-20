@@ -88,3 +88,7 @@ class Spec:
         """ Note: the check is just syntactic on the constant FALSE """
         spec_regexp = get_regexp_node(self.ast)
         return get_node_type(spec_regexp) == FALSE
+
+    def get_spec_calls(self):
+        """ Returns a set of all the call atoms used in the spec """
+        return get_call_nodes(self.ast)

@@ -232,3 +232,21 @@ class TestSpecParser(unittest.TestCase):
                                                "SPEC [CI] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [l] void onClick(b : type);" +
                                                "SPEC TRUE[*]; [CI] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [l] void onClick(b : type)")
         self.assertTrue(len(spec_list) == 4)
+
+    def test_call_set(self):
+        spec_list = Spec.get_specs_from_string("SPEC [CI] [l] void method_name() |- TRUE; " +
+                                               "SPEC [CI] [l] void method_name() |- TRUE;" +
+                                               "SPEC [CI] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [l] void onClick(b : type);" +
+                                               "SPEC TRUE[*]; [CI] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [l] void onClick(b : type);" +
+                                               "SPEC [CI] [b] void android.widget.Button.setOnClickListener(l : type); " +
+                                               "[CB] [b] void android.widget.Button.setOnClickListener(l : type); " +
+                                               "[CI] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [l] void onClick(b : type)")
+
+        self.assertTrue(len(spec_list) == 5)
+        self.assertTrue(1 == len(spec_list[0].get_spec_calls()))
+        self.assertTrue(1 == len(spec_list[1].get_spec_calls()))
+        self.assertTrue(2 == len(spec_list[2].get_spec_calls()))
+        self.assertTrue(2 == len(spec_list[3].get_spec_calls()))
+        self.assertTrue(3 == len(spec_list[4].get_spec_calls()))
+
+

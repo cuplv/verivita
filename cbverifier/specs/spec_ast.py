@@ -214,9 +214,34 @@ def get_param_tail(node):
 
 
 ################################################################################
-# Node creation
+# End - Node creation
 ################################################################################
 
+
+def get_call_nodes(ast_node):
+    def _get_call_nodes_rec(ast_node, call_set):
+        node_type = get_node_type(ast_node)
+
+        if (node_type in leaf_nodes):
+            return call_set
+        elif (node_type == SPEC_LIST or
+              node_type == AND_OP or
+              node_type == OR_OP or
+              node_type == SEQ_OP or
+              node_type == ENABLE_OP or
+              node_type == DISABLE_OP):
+            return _get_call_nodes_rec(ast_node[1],
+                                       _get_call_nodes_rec(ast_node[2], call_set))
+        elif (node_type == SPEC_SYMB):
+            return _get_call_nodes_rec(ast_node[1], call_set)
+        elif (node_type == NOT_OP or
+              node_type == STAR_OP):
+            return _get_call_nodes_rec(ast_node[1], call_set)
+        elif (node_type == CALL):
+            call_set.add(ast_node)
+            return call_set
+
+    return _get_call_nodes_rec(ast_node, set())
 
 def pretty_print(ast_node, out_stream=sys.stdout):
 
