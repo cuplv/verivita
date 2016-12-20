@@ -222,6 +222,10 @@ class TSEncoder:
             self.trace = TSEncoder._simplify_trace(self.trace,
                                                    self.ground_specs)
 
+            print("\n---Simplified Trace---")
+            self.trace.print_trace(sys.stdout)
+            print("\n")
+
         (trace_length, msgs, cb_set, ci_set) = self.get_trace_stats()
         self.trace_length = trace_length
         self.msgs = msgs
