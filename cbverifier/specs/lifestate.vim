@@ -7,5 +7,5 @@ endif
 syntax keyword potionKeyword SPEC
 highlight link potionKeyword Keyword
 
-syntax match potionComment "|-"
+syntax match potionComment "|-" "|+"
 highlight link potionComment Keyword
