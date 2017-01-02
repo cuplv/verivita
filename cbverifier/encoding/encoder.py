@@ -130,6 +130,7 @@ The module defines the following classes:
 
 import logging
 from cStringIO import StringIO
+import copy
 
 from pysmt.logics import QF_BOOL
 from pysmt.environment import get_env
@@ -202,7 +203,7 @@ class TSEncoder:
     Encodes the dynamic verification problem in a transition system.
 
     """
-    def __init__(self, trace, specs):
+    def __init__(self, trace, specs, ignore_msgs = False):
         # copy the trace removing the top-level exception
         self.trace = trace.copy(True)
 
@@ -210,14 +211,27 @@ class TSEncoder:
         self.ts = None
         self.error_prop = None
 
+        self.gs = GroundSpecs(self.trace)
+        self.ground_specs = TSEncoder._compute_ground_spec(self.gs, self.specs)
+
+        # Remove all the messages in the trace that do not
+        # appear in the specification.
+        # WARNING: the simplification is UNSOUND - added to make
+        # progresses in the verification.
+        if (ignore_msgs):
+            self.trace = TSEncoder._simplify_trace(self.trace,
+                                                   self.ground_specs)
+
+            print("\n---Simplified Trace---")
+            self.trace.print_trace(sys.stdout)
+            print("\n")
+
         (trace_length, msgs, cb_set, ci_set) = self.get_trace_stats()
         self.trace_length = trace_length
         self.msgs = msgs
         self.cb_set = cb_set
         self.ci_set = ci_set
 
-        self.gs = GroundSpecs(self.trace)
-        self.ground_specs = self._compute_ground_spec()
         self.pysmt_env = get_env()
         self.helper = Helper(self.pysmt_env)
         self.auto_env = AutoEnv(self.pysmt_env)
@@ -241,7 +255,8 @@ class TSEncoder:
     def get_ground_spec(self):
         return self.ground_specs
 
-    def _compute_ground_spec(self):
+    @staticmethod
+    def _compute_ground_spec(gs, specs):
         """ Computes all the ground specifications from the
         specifications with free variables in self.spec and the
         concrete trace self.trace
@@ -250,11 +265,62 @@ class TSEncoder:
         """
 
         ground_specs = []
-        for spec in self.specs:
-            tmp = self.gs.ground_spec(spec)
+        for spec in specs:
+            tmp = gs.ground_spec(spec)
             ground_specs.extend(tmp)
 
         return ground_specs
+
+
+    @staticmethod
+    def _simplify_trace(trace, ground_specs):
+        """ Collect all the symbols appearing in the ground
+        specifications
+
+        Remove all the messages in the trace that do not
+        correspond to a symbol from the above set.
+
+        Caveat: we still keep the top-level callbacks even if
+        they are not in the set but they contain a messsage that
+        is included.
+
+        WARNING: the simplification is UNSOUND
+
+        The result is a new trace.
+        """
+
+        def simplify_msg(parent, trace_msg, spec_msg):
+            for child in trace_msg.children:
+                if TSEncoder.get_key_from_msg(child) in spec_msg:
+                    new_parent = copy.copy(child)
+                    new_parent.children = []
+                    parent.add_msg(new_parent)
+                else:
+                    # skip child if it is not in the set
+                    new_parent = parent
+                simplify_msg(new_parent, child, spec_msg)
+
+        logging.warning("The simplification of the trace is UNSOUND")
+
+        # collect the calls appearing in the ground specs
+        spec_msgs = set()
+        for spec in ground_specs:
+            for call in spec.get_spec_calls():
+                spec_msgs.add(TSEncoder.get_key_from_call(call))
+
+        # reconstruct the trace ignoring symbols not in spec_calls
+        new_trace = CTrace()
+        for cb in trace.children:
+            parent = copy.copy(cb)
+            parent.children = []
+            simplify_msg(parent, cb, spec_msgs)
+
+            if (TSEncoder.get_key_from_msg(cb) in spec_msgs or
+                len(parent.children) > 0):
+                new_trace.add_msg(parent)
+
+        return new_trace
+
 
     def _encode(self):
         """ Function that performs the actual encoding of the TS.
