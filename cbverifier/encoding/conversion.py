@@ -8,7 +8,7 @@ from cbverifier.traces.ctrace import CValue
 class TraceSpecConverter:
 
     JAVA_INT_PRIMITIVE = "java.lang.int"
-    JAVA_INT = "java.lang.Int"
+    JAVA_INT = "java.lang.Integer"
     JAVA_FLOAT_PRIMITIVE = "java.lang.float"
     JAVA_FLOAT = "java.lang.Float"
     JAVA_BOOLEAN_PRIMITIVE = "java.lang.boolean"
