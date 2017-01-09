@@ -21,4 +21,5 @@
 //SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onPause() |+ [CB] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle)
 //SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onPause() |+ [CB] [f] void android.app.Fragment.onResume()
 //SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onResume() |- [CB] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle)
-SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle) |- [CB] [f] void android.app.Fragment.onResume()
+//SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle) |- [CB] [f] void android.app.Fragment.onResume()
+SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle) |+ [CB] [f] void android.app.Fragment.onStop()
