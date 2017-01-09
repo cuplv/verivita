@@ -5,6 +5,6 @@
 //SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |+ [CB] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
 //SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onCreate(# : android.os.Bundle) |- [CB] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
 //SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onCreate(# : android.os.Bundle) |+ # = [CB] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle);
-SPEC TRUE[*]; # = [CB] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle) |- # = [CB] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle)
-
+//SPEC TRUE[*]; # = [CB] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle) |- # = [CB] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle)
+SPEC TRUE[*]; # = [CB] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle) |+ [CB] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle)
 
