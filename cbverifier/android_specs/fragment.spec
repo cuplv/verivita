@@ -22,4 +22,16 @@
 //SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onPause() |+ [CB] [f] void android.app.Fragment.onResume()
 //SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onResume() |- [CB] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle)
 //SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle) |- [CB] [f] void android.app.Fragment.onResume()
-SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle) |+ [CB] [f] void android.app.Fragment.onStop()
+//SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle) |+ [CB] [f] void android.app.Fragment.onStop()
+//SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onStop() |- [CB] [f] void android.app.Fragment.onStop()
+//SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onStop() |+ [CB] [f] void android.app.Fragment.onStart()
+SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onStop() |+ [CB] [f] void android.app.Fragment.onCreate(# : android.os.Bundle)
+//SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onStop() |+ [CB] [f] void android.app.Fragment.onDestroyView();
+
+//SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onStart() |- [CB] [f] void android.app.Fragment.onDestroyView();
+//SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onDestroyView() |- [CB] [f] void android.app.Fragment.onStart();
+
+
+
+//SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onDestroyView() |- [CB] [f] void android.app.Fragment.onDestroyView()
+
