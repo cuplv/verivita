@@ -1,5 +1,10 @@
-//SPEC FALSE[*] |- [CI] [f] void android.app.Fragment.startActivity(i : android.content.Intent);
+//*** Allow Disallow Rules ***
+SPEC FALSE[*] |- [CI] [f] void android.app.Fragment.startActivity(i : android.content.Intent);
+SPEC FALSE[*]; [CB] [f] void android.app.Fragment.onDetach() |- [CI] [f] void android.app.Fragment.startActivity(i : android.content.Intent);
+SPEC TRUE[*]; # = [CB] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle) |+ [CI] [f] void android.app.Fragment.startActivity(i : android.content.Intent);
 
+
+//*** Enable Disable Rules ***
 //Initial disable rules
 SPEC FALSE[*] |- [CB] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
 SPEC FALSE[*] |- # = [CB] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle);
