@@ -17,6 +17,7 @@ SPEC FALSE[*] |- [CB] [f] void android.app.Fragment.onStop();
 SPEC FALSE[*] |- [CB] [f] void android.app.Fragment.onDestroyView();
 SPEC FALSE[*] |- [CB] [f] void android.app.Fragment.onDestroy();
 SPEC FALSE[*] |- [CB] [f] void android.app.Fragment.onDetach();
+SPEC FALSE[*] |- [CB] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle);
 
 
 
@@ -31,6 +32,11 @@ SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onViewCreated(# : android.view.
 
 //TODO: onActivityCreated and onViewStateRestored conditional on init, for now left unspecified
 //When added in the below rule will also need to know whether its in the starting cycle.
+
+SPEC TRUE[*]; # = [CB] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle) |+ [CB] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle);
+SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle) |- [CB] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle);
+SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onStart() |- [CB] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle);
+
 
 SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle) |+ [CB] [f] void android.app.Fragment.onStart();
 SPEC TRUE[*]; [CB] [f] void android.app.Fragment.onStart() |- [CB] [f] void android.app.Fragment.onStart();
