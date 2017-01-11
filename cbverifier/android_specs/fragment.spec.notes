@@ -1,0 +1,5 @@
+Currently not handled:
+starting fragment (we could write specs to say posting a transaction starts it but it will be a lot of work so this was overapproximated for now)
+
+onActivityCreated only happens on fragment restart, but assuming this can happen non deterministically seems sufficient for now
+to improve this make the rules conditional on wherever the restart occurs not having happened to that object.
