@@ -14,6 +14,71 @@ from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.bmc.bmc import BMC
 
 
+class DriverOptions:
+    def __init__(self,
+                 tracefile,
+                 traceformat,
+                 spec_file_list,
+                 simplify_trace,
+                 debug,
+                 filter_msgs):
+        self.tracefile = tracefile
+        self.traceformat = traceformat
+        self.spec_file_list = spec_file_list
+        self.simplify_trace = simplify_trace
+        self.debug = debug
+        self.filter_msgs = filter_msgs
+
+
+class Driver:
+    def __init__(self, opts):
+        self.opts = opts
+
+        # Parse the trace
+        try:
+            self.trace = CTraceSerializer.read_trace_file_name(self.opts.tracefile,
+                                                               self.opts.traceformat == "json")
+        except IOError as e:
+            raise Exception("An error happened reading the trace in %s" % self.opts.tracefile)
+
+        # Parse the specs
+        self.spec_list = Spec.get_specs_from_files(self.opts.spec_file_list)
+        if self.spec_list is None:
+            raise Exception("Error parsing the specification file!")
+
+
+    def check_files(self, stream):
+        stream.write("SPECIFICATIONS:\n")
+        for spec in self.spec_list:
+            spec.print_spec(stream)
+            stream.write("\n")
+
+        stream.write("\nTRACE:\n")
+        if (self.opts.filter_msgs != None):
+            self.trace.print_trace(stream, self.opts.debug,
+                              MessageFilter.typeFilterFrom(self.opts.filter_msgs))
+        else:
+            self.trace.print_trace(stream, self.opts.debug)
+        stream.write("\n")
+
+    def get_ground_specs(self):
+        ts_enc = TSEncoder(self.trace, self.spec_list)
+        ground_specs = ts_enc.get_ground_spec()
+        return ground_specs
+
+
+    def run_bmc(self, depth):
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+
+        bmc = BMC(ts_enc.helper,
+                  ts_enc.get_ts_encoding(),
+                  ts_enc.error_prop)
+
+        cex = bmc.find_bug(depth)
+
+        return (cex, ts_enc.mapback)
+
+
 def print_ground_spec(ground_specs, out=sys.stdout):
     out.write("List of ground specifications:\n")
     for spec in ground_specs:
@@ -108,106 +173,37 @@ def main(input_args=None):
     else:
         logging.basicConfig(level=logging.INFO)
 
-    # Parse the trace
-    try:
-        trace = CTraceSerializer.read_trace_file_name(opts.tracefile,
-                                                      opts.traceformat == "json")
-    except IOError as e:
-        print("An error happened reading the trace in %s" % opts.tracefile)
-        sys.exit(1)
+    driver_opts = DriverOptions(opts.tracefile,
+                                opts.traceformat,
+                                spec_file_list,
+                                opts.simplify_trace,
+                                opts.debug,
+                                opts.filter)
 
-    # Parse the specs
-    spec_list = Spec.get_specs_from_files(spec_file_list)
-    if spec_list is None:
-        print "Error parsing the specification file!"
-        sys.exit(1)
-
+    driver = Driver(driver_opts)
 
     if (opts.mode == "check-files"):
-
-        sys.stdout.write("SPECIFICATIONS:\n")
-        for spec in spec_list:
-            spec.print_spec(sys.stdout)
-            sys.stdout.write("\n")
-
-        sys.stdout.write("\nTRACE:\n")
-        if (opts.filter != None):
-            # def typeFilter(cMessage):
-            #     if isinstance(cMessage, CCallin) or isinstance(cMessage, CCallback):
-            #         printme = cMessage.return_value != None and cMessage.return_value.type == opts.filter
-            #         for param in cMessage.params:
-            #             param_type = param.type
-            #             if param_type == opts.filter:
-            #                 printme = True
-            #                 break
-            #         return printme
-            #     else:
-            #         return False
-            trace.print_trace(sys.stdout, opts.debug, MessageFilter.typeFilterFrom(opts.filter))
-        else:
-            trace.print_trace(sys.stdout, opts.debug)
-        sys.stdout.write("\n")
-
+        driver.check_files(sys.stdout)
         return 0
 
     elif (opts.mode == "show-ground-specs"):
-        ts_enc = TSEncoder(trace, spec_list)
-        ground_specs = ts_enc.get_ground_spec()
-
+        ground_specs = driver.ground_specs()
         print_ground_spec(ground_specs)
 
-
     elif (opts.mode == "bmc"):
-        ts_enc = TSEncoder(trace, spec_list, opts.simplify_trace)
-
-        bmc = BMC(ts_enc.helper,
-                  ts_enc.get_ts_encoding(),
-                  ts_enc.error_prop)
-        cex = bmc.find_bug(depth)
+        (cex, mapback) = driver.run_bmc(depth)
 
         if (cex is not None):
-            printer = CexPrinter(ts_enc.mapback, cex, sys.stdout)
+            printer = CexPrinter(mapback, cex, sys.stdout)
             printer.print_cex()
         else:
             print "No bugs found up to %d steps" % (depth)
 
         return 0
+
     elif (opts.mode == "to_smv"):
         assert False
-
         return 1
-
-        # # Call the verifier
-        # verifier = Verifier(ctrace, specs_map["specs"],
-        #                     specs_map["bindings"],
-        #                     opts.debugenc,
-        #                     opts.coi)
-        # if (opts.mode == "bmc"):
-        #     try:
-        #         if (not opts.inc):
-        #             cex = verifier.find_bug(depth)
-        #         else:
-        #             cex = verifier.find_bug_inc(depth)
-        #     finally:
-        #         if (logging.getLogger().getEffectiveLevel() >= logging.INFO):
-        #             ctrace.print_trace()
-        #             if verifier.debug_encoding:
-        #                 verifier.msgs.print_info()
-
-        #     if None != cex:
-        #         print "Found bug"
-        #         printer = EventCexPrinter(verifier, cex)
-        #         printer.print_cex(True, True)
-        #     else:
-        #         print "No bugs found up to %d steps" % (depth)
-
-        # elif (opts.mode == "to-smv"):
-        #     with open(opts.smv_file, 'w') as smvfile:
-        #         verifier.to_smv(smvfile)
-        #         smvfile.close()
-        # else:
-        #     assert False
-
 
 
 
