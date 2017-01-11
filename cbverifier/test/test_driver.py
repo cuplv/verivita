@@ -47,7 +47,9 @@ class TestEnc(unittest.TestCase):
 
         driver.check_files(sys.stdout)
 
-        driver.get_ground_specs()
+        ground_specs = driver.get_ground_specs()
+        assert(ground_specs is not None and
+               len(ground_specs) > 0)
 
         trace = driver.run_bmc(2)
         assert (trace is not None)
