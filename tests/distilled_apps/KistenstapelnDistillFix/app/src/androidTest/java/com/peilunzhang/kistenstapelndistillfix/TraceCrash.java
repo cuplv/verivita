@@ -35,8 +35,11 @@ public class TraceCrash {
     public void tearDown() throws Exception {
         //tearDown() is run after a test case has finished.
         //finishOpenedActivities() will finish all the activities that have been opened during the test execution.
+        solo.sleep(3000);
 
         solo.finishOpenedActivities();
+
+        solo.sleep(3000);
 
     }
 

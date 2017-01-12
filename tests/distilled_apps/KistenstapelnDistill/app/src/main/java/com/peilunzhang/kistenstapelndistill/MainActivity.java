@@ -1,12 +1,16 @@
 package com.peilunzhang.kistenstapelndistill;
 
-import android.support.v7.app.AppCompatActivity;
+
+// import android.support.v7.app.AppCompatActivity;
+
+import android.support.v7.app.ActionBarActivity;
+
 import android.os.Bundle;
 import android.app.FragmentManager;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ActionBarActivity {
 
 
     FragmentManager fragmentManager = getFragmentManager();
