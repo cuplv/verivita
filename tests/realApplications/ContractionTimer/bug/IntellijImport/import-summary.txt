@@ -1,0 +1,79 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .gitignore
+* art/
+* art/drawable-xhdpi-v14/
+* art/drawable-xhdpi-v14/appwidget_bg.9.psd
+* art/drawable-xhdpi-v14/appwidget_dark_bg.9.psd
+* art/icon.png
+* art/icon.psd
+* art/screenshot-1.png
+* art/screenshot-2.png
+* art/screenshot-cab-2.png
+* art/screenshot-cab.png
+* art/screenshot-context_menu.png
+* art/screenshot-edit-2.png
+* art/screenshot-edit.png
+* art/screenshot-menu-2.png
+* art/screenshot-menu.png
+* art/screenshot-popup.png
+* art/screenshot-preferences-2.png
+* art/screenshot-preferences.png
+* art/screenshot-view-2.png
+* art/screenshot-view.png
+* art/screenshot-widgets-dark.png
+* art/screenshot-widgets-light.png
+* proguard/
+* proguard/dump.txt
+* proguard/mapping.txt
+* proguard/seeds.txt
+* proguard/usage.txt
+* readme.txt
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:18.0.0
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app/src/main/AndroidManifest.xml
+* libs/acra-4.4.0.jar => app/libs/acra-4.4.0.jar
+* libs/libGoogleAnalyticsV2.jar => app/libs/libGoogleAnalyticsV2.jar
+* lint.xml => app/lint.xml
+* proguard/proguard-project.txt => app/proguard-project.txt
+* res/ => app/src/main/res/
+* src/ => app/src/main/java/
+* src/com/android/vending/billing/IInAppBillingService.aidl => app/src/main/aidl/com/android/vending/billing/IInAppBillingService.aidl
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
