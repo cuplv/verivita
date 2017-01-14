@@ -539,12 +539,16 @@ class CTraceSerializer:
             trace_msg.params = CTraceSerializer.get_params(cb.param_list)
             trace_msg.return_value = None
 
-            # TODO: handle the overrides
-            # for overrides in cb.framework_overrides:
-            #     trace_msg.overrides.append(None)
-            # trace_msg.receiver_first_framework_super =
-            # cb.receiver_first_framework_super
             overrides = []
+
+            # Issue 107 (link to 103)
+            # Workaround for trace runner bug 17
+            if ("<init>" in trace_msg.method_name):
+                trace_override = FrameworkOverride(cb.receiver_first_framework_super,
+                                                   cb.method_name,
+                                                   False)
+                overrides.append(trace_override)
+
             for override in cb.framework_overrides:
                 trace_override = FrameworkOverride(override.class_name,
                                                    override.method,

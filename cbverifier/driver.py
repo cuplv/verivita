@@ -187,7 +187,7 @@ def main(input_args=None):
         return 0
 
     elif (opts.mode == "show-ground-specs"):
-        ground_specs = driver.ground_specs()
+        ground_specs = driver.get_ground_specs()
         print_ground_spec(ground_specs)
 
     elif (opts.mode == "bmc"):
