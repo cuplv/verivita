@@ -362,6 +362,7 @@ class CTrace:
         # forest of message trees
         self.children = []
         self.app_info = None
+        self.id_to_cb = None
 
     def print_trace(self, stream, debug_info=False, filter=None):
         """ Print the trace """
@@ -405,6 +406,12 @@ class CTrace:
 
         return count
 
+    def get_tl_cb_from_id(self, message_id):
+        if (self.id_to_cb is None):
+            self.id_to_cb = {}
+            for cb in self.chidren:
+                self.id_to_cb[cb.message_id] = cb
+        return self.id_to_cb[message_id]
 
 class CTraceSerializer:
     """
