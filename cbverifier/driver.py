@@ -78,6 +78,18 @@ class Driver:
 
         return (cex, ts_enc.mapback)
 
+    def run_simulation(self, cb_sequence = None):
+        ts_enc = TSEncoder(self.trace, self.spec_list,
+                           self.opts.simplify_trace)
+
+        bmc = BMC(ts_enc.helper,
+                  ts_enc.get_ts_encoding(),
+                  ts_enc.error_prop)
+        trace_enc = ts_enc.get_trace_encoding(cb_sequence)
+        (step, cex) = bmc.simulate(trace_enc)
+
+        return (step, cex, ts_enc.mapback)
+
 
 def print_ground_spec(ground_specs, out=sys.stdout):
     out.write("List of ground specifications:\n")
@@ -111,10 +123,11 @@ def main(input_args=None):
                  help="Output debug informations")
 
     p.add_option('-m', '--mode', type='choice',
-                 choices= ["bmc","check-files","to-smv","show-ground-specs"],
+                 choices= ["bmc","check-files","to-smv","show-ground-specs","simulate"],
                  help=('bmc: run bmc on the trace; '
                        'check-files: check if the input files are well formed and prints them; ' 
                        'show-ground-specs: shows the specifications instantiateed by the given trace; ' 
+                       'simulate: simulate the given trace with the existing specification; '
                        'to-smv: prints the SMV file of the generated transition system.'),
                  default = "bmc")
 
@@ -127,6 +140,9 @@ def main(input_args=None):
     p.add_option('-l', '--filter', help="When running check-files this will only: filter all messages to the ones"
                                         "where type is matched")
 
+    # simulation options
+    p.add_option("-w", '--cb_sequence', help="Sequence of callbacks " \
+                 "(message ids) to be simulated.")
 
     def usage(msg=""):
         if msg: print "----%s----\n" % msg
@@ -160,6 +176,14 @@ def main(input_args=None):
         for (opt, desc) in bmc_opt:
             if opt:
                 usage("%s options cannot use in mode %s\n" % (desc, opts.mode))
+
+    if (opts.mode == "simulate"):
+        if (opts.cb_sequence):
+            cb_sequence = []
+            for n in opts.cb_sequence.split(":"):
+                cb_sequence.append(int(n))
+        else:
+            cb_sequence = None
 
     if (opts.mode == "--smv_file"):
         if (not opts.smv_file): usage("Destination smv file not specified!")
@@ -200,6 +224,19 @@ def main(input_args=None):
             print "No bugs found up to %d steps" % (depth)
 
         return 0
+
+    elif (opts.mode == "simulate"):
+        (steps, cex, mapback) = driver.run_simulation(cb_sequence)
+
+        if (cex is not None):
+            print "\nThe trace can be simulated in %d steps." % steps
+            printer = CexPrinter(mapback, cex, sys.stdout)
+            printer.print_cex()
+        else:
+            print "The trace cannot be simulated (it gets stuck after %d transition)" % (steps)
+
+        return 0
+
 
     elif (opts.mode == "to_smv"):
         assert False

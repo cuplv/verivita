@@ -409,9 +409,13 @@ class CTrace:
     def get_tl_cb_from_id(self, message_id):
         if (self.id_to_cb is None):
             self.id_to_cb = {}
-            for cb in self.chidren:
+            for cb in self.children:
                 self.id_to_cb[cb.message_id] = cb
-        return self.id_to_cb[message_id]
+
+        try:
+            return self.id_to_cb[message_id]
+        except KeyError:
+            return None
 
 class CTraceSerializer:
     """
