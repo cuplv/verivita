@@ -191,7 +191,7 @@ def main(input_args=None):
         print_ground_spec(ground_specs)
 
     elif (opts.mode == "bmc"):
-        (cex, mapback) = driver.run_bmc(depth, opts.incremental)
+        (cex, mapback) = driver.run_bmc(depth, opts.bmc_inc)
 
         if (cex is not None):
             printer = CexPrinter(mapback, cex, sys.stdout)
