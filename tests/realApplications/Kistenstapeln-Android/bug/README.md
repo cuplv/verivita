@@ -1,0 +1,3 @@
+5e54c44349a194006c8f0e3605efc504470b68a3
+
+Fragment not attached bug
