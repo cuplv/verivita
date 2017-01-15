@@ -80,7 +80,7 @@ class BMC:
                                                       i)
             solver.add_assertion(error_at_i)
 
-            res = self.solve(solver, k)
+            res = self.solve(solver, i)
             if res is not None:
                 return res
 
@@ -167,7 +167,9 @@ class BMC:
 
             for vs in vars_to_use:
                 for var in vs:
+                    assert var is not None
                     var_i = self.helper.get_var_at_time(var, i)
+                    assert var_i is not None
                     cex_i[var] = model.get_py_value(var_i, True)
             cex.append(cex_i)
         return cex
