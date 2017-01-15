@@ -279,7 +279,11 @@ class CValue(object):
         if isinstance(value, str):
             return value
         elif isinstance(value, unicode):
-            return value.encode('utf-8').strip()
+            # Workaround: just consider ascii characters.
+            # See Issue 113
+            stripped = ''.join([i if ord(i) < 128 else ' ' for i in value])
+#            return value.encode('utf-8').strip()
+            return stripped
         else:
             return str(value)
 
