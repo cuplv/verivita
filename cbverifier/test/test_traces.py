@@ -12,8 +12,11 @@ except ImportError:
     import unittest
 
 import io
+import os
 from google.protobuf.internal import encoder
 
+
+import cbverifier.test.examples
 import cbverifier.traces.tracemsg_pb2 as tracemsg_pb2
 from  cbverifier.traces.tracemsg_pb2 import TraceMsgContainer
 from cbverifier.traces.ctrace import CTraceSerializer, MalformedTraceException, FrameworkOverride
@@ -306,3 +309,13 @@ class TestTraces(unittest.TestCase):
                                          cb_exit])
         self.assertTrue(1 == read_trace.get_total_msg())
 
+    def test_init_workaround(self):
+        test_path = os.path.dirname(cbverifier.test.examples.__file__)
+        t1 = os.path.join(test_path, "trace_init.json")
+
+        trace = CTraceSerializer.read_trace_file_name(t1, True)
+        self.assertTrue(trace is not None)
+        self.assertTrue(len(trace.children) > 0)
+        cb = trace.children[0]
+        self.assertTrue(len(cb.fmwk_overrides) == 1)
+        self.assertTrue(cb.fmwk_overrides[0].class_name == "android.support.v7.app.AppCompatActivity")

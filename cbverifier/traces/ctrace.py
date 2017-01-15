@@ -279,7 +279,11 @@ class CValue(object):
         if isinstance(value, str):
             return value
         elif isinstance(value, unicode):
-            return value.encode('utf-8').strip()
+            # Workaround: just consider ascii characters.
+            # See Issue 113
+            stripped = ''.join([i if ord(i) < 128 else ' ' for i in value])
+#            return value.encode('utf-8').strip()
+            return stripped
         else:
             return str(value)
 
@@ -362,6 +366,7 @@ class CTrace:
         # forest of message trees
         self.children = []
         self.app_info = None
+        self.id_to_cb = None
 
     def print_trace(self, stream, debug_info=False, filter=None):
         """ Print the trace """
@@ -405,6 +410,16 @@ class CTrace:
 
         return count
 
+    def get_tl_cb_from_id(self, message_id):
+        if (self.id_to_cb is None):
+            self.id_to_cb = {}
+            for cb in self.children:
+                self.id_to_cb[cb.message_id] = cb
+
+        try:
+            return self.id_to_cb[message_id]
+        except KeyError:
+            return None
 
 class CTraceSerializer:
     """
@@ -539,12 +554,16 @@ class CTraceSerializer:
             trace_msg.params = CTraceSerializer.get_params(cb.param_list)
             trace_msg.return_value = None
 
-            # TODO: handle the overrides
-            # for overrides in cb.framework_overrides:
-            #     trace_msg.overrides.append(None)
-            # trace_msg.receiver_first_framework_super =
-            # cb.receiver_first_framework_super
             overrides = []
+
+            # Issue 107 (link to 103)
+            # Workaround for trace runner bug 17
+            if ("<init>" in trace_msg.method_name):
+                trace_override = FrameworkOverride(cb.receiver_first_framework_super,
+                                                   cb.method_name,
+                                                   False)
+                overrides.append(trace_override)
+
             for override in cb.framework_overrides:
                 trace_override = FrameworkOverride(override.class_name,
                                                    override.method,
