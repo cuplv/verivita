@@ -817,5 +817,5 @@ class TestEnc(unittest.TestCase):
         bmc = BMC(ts_enc.helper, ts, FALSE())
         (step, trace) = bmc.simulate(trace_enc)
 
-        self.assertTrue(trace is None)
+        self.assertTrue(trace is not None)
 

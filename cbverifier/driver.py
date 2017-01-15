@@ -67,7 +67,7 @@ class Driver:
         return ground_specs
 
 
-    def run_bmc(self, depth, inc):
+    def run_bmc(self, depth, inc=False):
         ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
 
         bmc = BMC(ts_enc.helper,
