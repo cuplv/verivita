@@ -16,42 +16,44 @@ class BMC:
     def __init__(self, helper, ts, error):
         self.helper = helper
         self.ts = ts
+        self.all_vars = set(self.ts.state_vars)
+        self.all_vars.update(self.ts.input_vars)
         self.error = error
 
-    def find_bug(self, k):
+    def find_bug(self, k, incremental=False):
         """Explore the system up to k steps.
 
         Returns None if no bugs where found up to k or a
         counterexample otherwise.
         """
 
-        all_vars = set(self.ts.state_vars)
-        all_vars.update(self.ts.input_vars)
+        if (not incremental):
+            return self.find_bug_non_inc(k, None)
+        else:
+            return self.find_bug_inc(k, None)
 
+
+    def find_bug_non_inc(self, k, trace_enc=None):
         solver = Solver(name='z3', logic=QF_BOOL)
-        encoding = self.encode_up_to_k(solver, all_vars, k)
+        self.encode_up_to_k(solver, self.all_vars, k, trace_enc)
         res = self.solve(solver, k)
-
         return res
 
-
-    def encode_up_to_k(self, solver, all_vars, k):
+    def encode_up_to_k(self, solver, all_vars, k, trace_enc=None):
         # Get the BMC encoding up to k
         error_condition = []
         for i in range(k + 1):
             # encode the i-th BMC step
             logging.debug("Encoding %d..." % i)
 
-            if (i == 0):
-                f_at_i = self.helper.get_formula_at_i(all_vars,
-                                                      self.ts.init, i)
-            else:
-                f_at_i = self.helper.get_formula_at_i(all_vars,
-                                                      self.ts.trans, i-1)
+            f_at_i = self.get_ts_enc_at_i(i)
             solver.add_assertion(f_at_i)
 
+            if (trace_enc is not None):
+                tenc_at_i = self.get_trace_enc_at_i(i, trace_enc)
+                solver.add_assertion(tenc_at_i)
 
-            error_condition.append(self.helper.get_formula_at_i(all_vars,
+            error_condition.append(self.helper.get_formula_at_i(self.all_vars,
                                                                 self.error,
                                                                 i))
         # error condition in at least one of the (k-1)-th states
@@ -59,12 +61,90 @@ class BMC:
         solver.add_assertion(Or(error_condition))
 
 
+    def find_bug_inc(self, k, trace_enc=None):
+        solver = Solver(name='z3', logic=QF_BOOL)
+
+        res = None
+        for i in range(k + 1):
+            f_at_i = self.get_ts_enc_at_i(i)
+            solver.add_assertion(f_at_i)
+
+            if (trace_enc is not None):
+                tenc_at_i = self.get_trace_enc_at_i(i, trace_enc)
+                solver.add_assertion(tenc_at_i)
+
+            solver.push()
+
+            error_at_i = self.helper.get_formula_at_i(self.all_vars,
+                                                      self.error,
+                                                      i)
+            solver.add_assertion(error_at_i)
+
+            res = self.solve(solver, k)
+            if res is not None:
+                return res
+
+            solver.pop()
+
+        return res
+
+    def simulate(self, trace_enc):
+        """Simulate the trace
+        """
+
+        solver = Solver(name='z3', logic=QF_BOOL)
+
+        res = None
+        k = len(trace_enc)
+        for i in range(k + 1):
+            f_at_i = self.get_ts_enc_at_i(i)
+            solver.add_assertion(f_at_i)
+
+            tenc_at_i = self.get_trace_enc_at_i(i, trace_enc)
+            solver.add_assertion(tenc_at_i)
+
+            solver.push()
+
+            res = self.solve(solver, i)
+
+            if res is None:
+                return (i, None)
+
+        return (k, res)
+
+
+    def get_ts_enc_at_i(self, i):
+        if (i == 0):
+            f_at_i = self.helper.get_formula_at_i(self.all_vars,
+                                                  self.ts.init, i)
+        else:
+            f_at_i = self.helper.get_formula_at_i(self.all_vars,
+                                                  self.ts.trans, i-1)
+        return f_at_i
+
+    def get_trace_enc_at_i(self, i, trace_enc, all_vars=None):
+        if all_vars is None:
+            all_vars = self.all_vars
+
+        tenc = TRUE()
+        if (i > 0):
+            (state, next_state) = trace_enc[i-1]
+
+            tenc_prev = self.helper.get_formula_at_i(all_vars,
+                                                     state,
+                                                     i-1)
+            tenc_next = self.helper.get_formula_at_i(all_vars,
+                                                     next_state,
+                                                     i)
+            tenc = And([tenc, tenc_prev, tenc_next])
+
+        return tenc
+
     def solve(self, solver, k):
         logging.debug("Finding bug up to %d steps..." % k)
         res = solver.solve()
         if (solver.solve()):
             logging.debug("Found bug...")
-
             model = solver.get_model()
             trace = self._build_trace(model, k)
             return trace

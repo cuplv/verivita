@@ -586,6 +586,11 @@ class TestEnc(unittest.TestCase):
         self.assertTrue(bmc.find_bug(2) is not None)
         self.assertTrue(bmc.find_bug(3) is not None)
 
+        self.assertTrue(bmc.find_bug(0,True) is None)
+        self.assertTrue(bmc.find_bug(1,True) is None)
+        self.assertTrue(bmc.find_bug(2,True) is not None)
+        self.assertTrue(bmc.find_bug(3,True) is not None)
+
 
     def test_cex_printer(self):
         ts_enc = self._get_sample_trace()
@@ -593,6 +598,7 @@ class TestEnc(unittest.TestCase):
         error = ts_enc.error_prop
         bmc = BMC(ts_enc.helper, ts, error)
         cex = bmc.find_bug(2)
+        cex = bmc.find_bug(2,True)
 
         self.assertFalse(cex is None)
 
@@ -625,6 +631,8 @@ class TestEnc(unittest.TestCase):
         ts = ts_enc.get_ts_encoding()
         bmc = BMC(ts_enc.helper, ts, ts_enc.error_prop)
         self.assertTrue(bmc.find_bug(2) is not None)
+        self.assertTrue(bmc.find_bug(2,True) is not None)
+
 
     def test_exception(self):
         """ Test the removal of exception from top-level callbacks
@@ -655,6 +663,7 @@ class TestEnc(unittest.TestCase):
         bmc = BMC(ts_enc.helper, ts, ts_enc.error_prop)
         # if the first callback is removed, m2 cannot be called anymore
         self.assertTrue(bmc.find_bug(2) is None)
+        self.assertTrue(bmc.find_bug(2,True) is None)
 
     def test_multiple(self):
         spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CB] [l] void m3(); SPEC FALSE[*] |- [CI] [l] void m4()")
@@ -686,6 +695,7 @@ class TestEnc(unittest.TestCase):
         error = ts_enc.error_prop
         bmc = BMC(ts_enc.helper, ts, error)
         cex = bmc.find_bug(2)
+        cex = bmc.find_bug(2, True)
         self.assertTrue(cex is None)
 
 
@@ -723,7 +733,7 @@ class TestEnc(unittest.TestCase):
         ts = ts_enc.get_ts_encoding()
         error = ts_enc.error_prop
         bmc = BMC(ts_enc.helper, ts, error)
-        cex = bmc.find_bug(2)
+        cex = bmc.find_bug(2, True)
         self.assertTrue(cex is None)
 
     def test_simplify_1(self):
@@ -796,3 +806,16 @@ class TestEnc(unittest.TestCase):
         ts_enc = TSEncoder(ctrace, spec_list, True)
 
         self.assertTrue(4 == ts_enc.trace.get_total_msg())
+
+
+    def test_simulation(self):
+        ts_enc = self._get_sample_trace()
+
+        ts = ts_enc.get_ts_encoding()
+        trace_enc = ts_enc.get_trace_encoding()
+
+        bmc = BMC(ts_enc.helper, ts, FALSE())
+        (step, trace) = bmc.simulate(trace_enc)
+
+        self.assertTrue(trace is None)
+

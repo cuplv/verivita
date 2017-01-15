@@ -257,7 +257,7 @@ class TSEncoder:
         """
 
         # the ts encoding should be built
-        get_ts_encoding()
+        self.get_ts_encoding()
 
         tl_cbs = []
         if tl_cb_ids is not None:
@@ -267,10 +267,11 @@ class TSEncoder:
                     raise Exception("Message id %d not found in the trace" % message_id)
             tl_cbs.append(cb)
         else:
-            tl_cbs = self.trace.children()
+            tl_cbs = self.trace.children
 
         # encode each callback
         trace_encoding = []
+        pc_name = TSEncoder._get_pc_name()
         for tl_cb in tl_cbs:
             stack = [tl_cb]
 
@@ -284,7 +285,11 @@ class TSEncoder:
                 msg_enc = self.mapback.get_trans2pc(msg)
                 assert(msg_enc is not None)
 
-                trace_encoding.append(msg_enc)
+                (current_state, next_state) = msg_enc
+                s0 = self.cenc.eq_val(pc_name, current_state)
+                s1 = self.cenc.eq_val(pc_name, next_state)
+
+                trace_encoding.append((s0,s1))
 
         return trace_encoding
 
@@ -754,6 +759,7 @@ class TSEncoder:
                                               error_state_id,
                                               msg,
                                               self.error_label)
+                    self.mapback.add_trans2pc(msg, current_state, error_state_id)
 
                 current_state = next_state
 

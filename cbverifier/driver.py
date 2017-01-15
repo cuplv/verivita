@@ -67,14 +67,14 @@ class Driver:
         return ground_specs
 
 
-    def run_bmc(self, depth):
+    def run_bmc(self, depth, inc):
         ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
 
         bmc = BMC(ts_enc.helper,
                   ts_enc.get_ts_encoding(),
                   ts_enc.error_prop)
 
-        cex = bmc.find_bug(depth)
+        cex = bmc.find_bug(depth, inc)
 
         return (cex, ts_enc.mapback)
 
@@ -191,7 +191,7 @@ def main(input_args=None):
         print_ground_spec(ground_specs)
 
     elif (opts.mode == "bmc"):
-        (cex, mapback) = driver.run_bmc(depth)
+        (cex, mapback) = driver.run_bmc(depth, opts.incremental)
 
         if (cex is not None):
             printer = CexPrinter(mapback, cex, sys.stdout)
