@@ -252,6 +252,48 @@ class TSEncoder:
         if (self.ts is None): self._encode()
         return self.ts
 
+    def get_trace_encoding(self, tl_cb_ids = None):
+        """ Returns the encoding of the trace formed by the callbacks
+        """
+
+        # the ts encoding should be built
+        self.get_ts_encoding()
+
+        tl_cbs = []
+        if tl_cb_ids is not None:
+            for message_id in tl_cb_ids:
+                cb = self.trace.get_tl_cb_from_id(message_id)
+                if cb is None:
+                    raise Exception("Message id %s not found in the trace" % message_id)
+            tl_cbs.append(cb)
+        else:
+            tl_cbs = self.trace.children
+
+        # encode each callback
+        trace_encoding = []
+        pc_name = TSEncoder._get_pc_name()
+        for tl_cb in tl_cbs:
+            stack = [tl_cb]
+
+            while (len(stack) != 0):
+                msg = stack.pop()
+
+                # Fill the stack in reverse order
+                for i in reversed(range(len(msg.children))):
+                    stack.append(msg.children[i])
+
+                msg_enc = self.mapback.get_trans2pc(msg)
+                assert(msg_enc is not None)
+
+                (current_state, next_state) = msg_enc
+                s0 = self.cenc.eq_val(pc_name, current_state)
+                s1 = self.cenc.eq_val(pc_name, next_state)
+
+                trace_encoding.append((s0,s1))
+
+        return trace_encoding
+
+
     def get_ground_spec(self):
         return self.ground_specs
 
@@ -688,6 +730,7 @@ class TSEncoder:
                 s0 = self.cenc.eq_val(pc_name, current_state)
                 self.mapback.add_pc2trace(current_state, next_state,
                                           msg, msg_key)
+                self.mapback.add_trans2pc(msg, current_state, next_state)
                 snext = self.cenc.eq_val(pc_name, next_state)
                 snext = self.helper.get_next_formula(ts.state_vars, snext)
                 single_trans = And([s0, label, snext])
@@ -716,6 +759,7 @@ class TSEncoder:
                                               error_state_id,
                                               msg,
                                               self.error_label)
+                    self.mapback.add_trans2pc(msg, current_state, error_state_id)
 
                 current_state = next_state
 
@@ -919,6 +963,8 @@ class TSMapback():
         self.vars2msg = {}
         self.pc2trace = {}
 
+        self.msg2trans = {}
+
         self.msg_ivar = msg_ivar
         self.pc_var = pc_var
         self.error_condition = None
@@ -967,6 +1013,9 @@ class TSMapback():
     def add_pc2trace(self, value, next_value, trace_msg, msg_key):
         assert self.pc_var is not None
         self.pc2trace[(self.pc_var, value, next_value, msg_key)] = trace_msg
+
+    def add_trans2pc(self, msg, current_state, next_state):
+        self.msg2trans[msg] = (current_state, next_state)
 
     def set_error_condition(self, error_condition):
         self.error_condition = error_condition
@@ -1077,6 +1126,9 @@ class TSMapback():
                 solver.add_assertion(Not(var))
 
         return solver.is_sat(self.error_condition)
+
+    def get_trans2pc(self, msg):
+        return self.msg2trans[msg]
 
     def add_state_vars(self, set_vars):
         self.state_vars.update(set_vars)
