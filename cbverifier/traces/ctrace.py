@@ -466,7 +466,7 @@ class CTraceSerializer:
                 # To be clarified with Shawn
                 trace.app_info = trace.app_info
             elif ignore_non_ui_threads and (not CTraceSerializer.is_on_ui_thread(recorded_message)):
-                logging.warning("Ignoring message executed on a non-UI thread...")
+                logging.debug("Ignoring message executed on a non-UI thread...")
                 if (logging.getLogger().getEffectiveLevel() >= logging.WARNING):
                     logging.debug("Ignored message:\n%s\n" % str(recorded_message))
             elif CTraceSerializer.is_entry_message(recorded_message):
@@ -541,8 +541,11 @@ class CTraceSerializer:
             trace_msg.thread_id = msg.thread_id
             trace_msg.class_name = ci.class_name
             trace_msg.method_name = ci.method_name
-            trace_msg.params = CTraceSerializer.get_params(ci.param_list)
+
+            (ret_type, param_types) = CTraceSerializer.get_method_types(trace_msg.method_name)
+            trace_msg.params = CTraceSerializer.get_params(ci.param_list, param_types)
             trace_msg.return_value = None
+
         elif (TraceMsgContainer.TraceMsg.CALLBACK_ENTRY == msg.type):
             trace_msg = CCallback()
             cb = msg.callbackEntry
@@ -551,6 +554,8 @@ class CTraceSerializer:
             trace_msg.thread_id = msg.thread_id
             trace_msg.class_name = cb.class_name
             trace_msg.method_name = cb.method_name
+
+            (ret_type, param_types) = CTraceSerializer.get_method_types(trace_msg.method_name)
             trace_msg.params = CTraceSerializer.get_params(cb.param_list)
             trace_msg.return_value = None
 
@@ -653,12 +658,15 @@ class CTraceSerializer:
             callinExit = msg.callinExit
             check_malformed_trace(trace_msg, callinExit, CCallin, "CALLIN_EXIT")
             if (callinExit.HasField("return_value")):
-                trace_msg.return_value = CTraceSerializer.read_value_msg(callinExit.return_value)
+
+                (ret_type, param_types) = CTraceSerializer.get_method_types(trace_msg.method_name)
+                trace_msg.return_value = CTraceSerializer.read_value_msg(callinExit.return_value, ret_type)
         elif (TraceMsgContainer.TraceMsg.CALLBACK_EXIT == msg.type):
             callbackExit = msg.callbackExit
             check_malformed_trace(trace_msg, callbackExit, CCallback, "CALLBACK_EXIT")
             if (callbackExit.HasField("return_value")):
-                trace_msg.return_value = CTraceSerializer.read_value_msg(callbackExit.return_value)
+                (ret_type, param_types) = CTraceSerializer.get_method_types(trace_msg.method_name)
+                trace_msg.return_value = CTraceSerializer.read_value_msg(callbackExit.return_value, ret_type)
         elif (TraceMsgContainer.TraceMsg.CALLIN_EXEPION  == msg.type):
             # check_malformed_trace_exception(trace_msg, msg.callinException, CCallin, "CALLIN_EXCEPTION")
             read_exception(trace_msg, msg.callinException)
@@ -671,16 +679,56 @@ class CTraceSerializer:
 
 
     @staticmethod
-    def get_params(param_list):
+    def get_params(param_list, types_list = None):
         new_param_list = []
+
+        # -1: ignore the receiver, that is not in the types types
+        assert types_list is None or len(types_list) == len(param_list) - 1
+        if types_list is not None:
+            types_list.reverse()
+            types_list.append(None) # receiver
+
         for param in param_list:
-            new_param_list.append(CTraceSerializer.read_value_msg(param))
+            if (types_list is not None):
+                param_type = types_list.pop()
+            else:
+                param_type = None
+
+            param_value = CTraceSerializer.read_value_msg(param, param_type)
+            new_param_list.append(param_value)
         return new_param_list
 
     @staticmethod
-    def read_value_msg(value_msg):
+    def read_value_msg(value_msg, value_type = None):
         value = CValue(value_msg)
+
+        if (value_type is not None):
+            value = TraceConverter.convert_traceval(value, value_type)
+
         return value
+
+
+    pattern = re.compile("([\w\.]+) ([\w\.]+)\(([^\)]+)", flags=0)
+
+    @staticmethod
+    def get_method_types(method_name):
+        ret_type = None
+        param_types = None
+
+        res = CTraceSerializer.pattern.match(method_name)
+
+        if res is not None:
+            groups = res.groups()
+            if (3 == len(groups)):
+                ret_type = groups[0]
+
+                types_string = groups[2].split(",")
+                param_types = []
+                for p_type in types_string:
+                    p_type = p_type.strip()
+                    param_types.append(p_type)
+
+        return (ret_type, param_types)
 
 
 class CTraceDelimitedReader(object):
@@ -785,4 +833,92 @@ class TraceProtoUtils:
             json.dump(json_msgs, jsonf)
             jsonf.flush()
             jsonf.close()
+
+
+class TraceConverter:
+    JAVA_INT_PRIMITIVE = "int"
+    JAVA_INT = "java.lang.Integer"
+    JAVA_FLOAT_PRIMITIVE = "float"
+    JAVA_FLOAT = "java.lang.Float"
+    JAVA_BOOLEAN_PRIMITIVE = "boolean"
+    JAVA_BOOLEAN = "java.lang.Boolean"
+    JAVA_STRING = "java.lang.String"
+
+    TRUE_CONSTANT = "true"
+    FALSE_CONSTANT = "false"
+
+    @staticmethod
+    def convert_traceval(trace_val, declared_type):
+        """ Convert the value found in the trace depending
+        on its decalred type.
+
+        For example, in the trace we may have an integer type parameter
+        with value 0 that is recorded instead of a boolean
+        value false.
+
+        The function also change the type of the parameter to its
+        declared type.
+        """
+        assert isinstance(trace_val, CValue)
+
+        # null
+        if trace_val.is_null is not None and trace_val.is_null:
+            trace_val.type = declared_type
+
+        # Boolean case
+        elif (declared_type == TraceConverter.JAVA_BOOLEAN_PRIMITIVE or
+              declared_type ==  TraceConverter.JAVA_BOOLEAN):
+            if trace_val.value is None:
+                raise Exception("Found None value for a primitive type!" \
+                                "The trace should contain a value in this " \
+                                "case.")
+            str_val = str(trace_val.value).strip()
+
+            if (str_val == "0"):
+                trace_val.value = TraceConverter.FALSE_CONSTANT
+            elif (str_val == "1"):
+                trace_val.value = TraceConverter.TRUE_CONSTANT
+            # A Boolean must be either TRUE or FALSE
+            assert (trace_val.value != TraceConverter.TRUE_CONSTANT or
+                    trace_val.value != TraceConverter.FALSE_CONSTANT)
+            trace_val.type = declared_type
+
+        # Integer case
+        elif (declared_type == TraceConverter.JAVA_INT_PRIMITIVE or
+              declared_type ==  TraceConverter.JAVA_INT):
+            if trace_val.value is None:
+                raise Exception("Found None value for a primitive type!" \
+                                "The trace should contain a value in this " \
+                                "case.")
+            try:
+                int_val = int(trace_val.value)
+                trace_val.value = str(int_val)
+            except ValueError as e:
+                raise Exception("Wrong integer value in message!")
+            trace_val.type = declared_type
+
+        # Float case
+        elif (declared_type == TraceConverter.JAVA_FLOAT_PRIMITIVE or
+              declared_type ==  TraceConverter.JAVA_FLOAT):
+            if trace_val.value is None:
+                raise Exception("Found None value for a primitive type!" \
+                                "The trace should contain a value in this " \
+                                "case.")
+            try:
+                # A bit brittle...
+                int_val = float(trace_val.value)
+                trace_val.value = float(int_val)
+            except ValueError as e:
+                raise Exception("Wrong float value in message!")
+            trace_val.type = declared_type
+
+        # String
+        elif declared_type == TraceConverter.JAVA_STRING:
+            if trace_val.value is None:
+                raise Exception("Found None value for a primitive type!" \
+                                "The trace should contain a value in this " \
+                                "case.")
+            trace_val.type = declared_type
+
+        return trace_val
 
