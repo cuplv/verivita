@@ -21,13 +21,19 @@ class DriverOptions:
                  spec_file_list,
                  simplify_trace,
                  debug,
-                 filter_msgs):
+                 filter_msgs,
+                 allow_exception=True):
         self.tracefile = tracefile
         self.traceformat = traceformat
         self.spec_file_list = spec_file_list
         self.simplify_trace = simplify_trace
         self.debug = debug
         self.filter_msgs = filter_msgs
+        self.allow_exception = allow_exception
+
+class NoDisableException(Exception):
+    def __init__(self,*args,**kwargs):
+        Exception.__init__(self,*args,**kwargs)
 
 
 class Driver:
@@ -37,7 +43,8 @@ class Driver:
         # Parse the trace
         try:
             self.trace = CTraceSerializer.read_trace_file_name(self.opts.tracefile,
-                                                               self.opts.traceformat == "json")
+                                                               self.opts.traceformat == "json",
+                                                               self.opts.allow_exception)
         except IOError as e:
             raise Exception("An error happened reading the trace in %s" % self.opts.tracefile)
 
@@ -97,6 +104,17 @@ def print_ground_spec(ground_specs, out=sys.stdout):
         spec.print_spec(out)
         out.write("\n")
 
+def check_disable(ground_specs):
+    has_disable = False
+    for spec in ground_specs:
+        has_disable = has_disable or spec.is_disable()
+        if has_disable:
+            break
+
+    if (not has_disable):
+        raise NoDisableException("No callins can be disabled in the "
+                                 "trace with the given specs")
+
 
 def main(input_args=None):
     p = optparse.OptionParser()
@@ -123,12 +141,13 @@ def main(input_args=None):
                  help="Output debug informations")
 
     p.add_option('-m', '--mode', type='choice',
-                 choices= ["bmc","check-files","to-smv","show-ground-specs","simulate"],
+                 choices= ["bmc","check-files","to-smv","show-ground-specs","simulate","check-trace-relevance"],
                  help=('bmc: run bmc on the trace; '
                        'check-files: check if the input files are well formed and prints them; ' 
                        'show-ground-specs: shows the specifications instantiateed by the given trace; ' 
                        'simulate: simulate the given trace with the existing specification; '
-                       'to-smv: prints the SMV file of the generated transition system.'),
+                       'to-smv: prints the SMV file of the generated transition system. '
+                       'check-trace-relevance: check if a trace is well formed, does not end with an exception and can instantiate a disable rule.'),
                  default = "bmc")
 
     # Bmc options
@@ -202,7 +221,8 @@ def main(input_args=None):
                                 spec_file_list,
                                 opts.simplify_trace,
                                 opts.debug,
-                                opts.filter)
+                                opts.filter,
+                                opts.mode != "check-trace-relevance")
 
     driver = Driver(driver_opts)
 
@@ -237,6 +257,10 @@ def main(input_args=None):
 
         return 0
 
+    elif (opts.mode == "check-trace-relevance"):
+        ground_specs = driver.get_ground_specs()
+
+        check_disable(ground_specs)
 
     elif (opts.mode == "to_smv"):
         assert False
