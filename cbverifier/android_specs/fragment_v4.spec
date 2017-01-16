@@ -13,6 +13,7 @@ SPEC TRUE[*];[CB] [f] void android.support.v4.app.Fragment.onAttach(# : android.
 SPEC TRUE[*];[CB] [f] void android.support.v4.app.Fragment.onCreate(# : android.os.Bundle) |+ [CI] [f] void android.support.v4.app.Fragment.startActivity(# : android.content.Intent);
 SPEC TRUE[*];[CB] [f] void android.support.v4.app.Fragment.onStart() |+ [CI] [f] void android.support.v4.app.Fragment.startActivity(# : android.content.Intent);
 SPEC TRUE[*];[CB] [f] void android.support.v4.app.Fragment.onResume() |+ [CI] [f] void android.support.v4.app.Fragment.startActivity(# : android.content.Intent);
+SPEC TRUE[*]; FALSE = [CI] [f] boolean android.support.v4.app.Fragment.isDetached() |+ [CI] [f] void android.support.v4.app.Fragment.startActivity(# : android.content.Intent);
 
 
 
