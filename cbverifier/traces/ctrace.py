@@ -44,9 +44,15 @@ class MessageFilter:
             else:
                 return False
         return typeFilter
+
 class MalformedTraceException(Exception):
     def __init__(self,*args,**kwargs):
         Exception.__init__(self,*args,**kwargs)
+
+class TraceEndsInErrorException(Exception):
+    def __init__(self,*args,**kwargs):
+        Exception.__init__(self,*args,**kwargs)
+
 
 class CMessage(object):
     """ Base class that represents a concrete message.
@@ -435,17 +441,25 @@ class CTraceSerializer:
     """
 
     @staticmethod
-    def read_trace_file_name(trace_file_name, is_json=False):
+    def read_trace_file_name(trace_file_name,
+                             is_json=False,
+                             allow_exception=True):
         if is_json:
             trace_file = open(trace_file_name, "r")
         else:
             trace_file = open(trace_file_name, "rb")
 
-        return CTraceSerializer.read_trace(trace_file, is_json)
+        return CTraceSerializer.read_trace(trace_file,
+                                           is_json,
+                                           True,
+                                           allow_exception)
 
 
     @staticmethod
-    def read_trace(trace_file, is_json=False, ignore_non_ui_threads=True):
+    def read_trace(trace_file,
+                   is_json=False,
+                   ignore_non_ui_threads=True,
+                   allow_exception = True):
         trace = CTrace()
 
         if is_json:
@@ -485,6 +499,12 @@ class CTraceSerializer:
                                                           recorded_message)
                 else:
                     assert (CTraceSerializer.is_exception_message(recorded_message))
+
+                    if (not allow_exception and len(message_stack) == 0):
+                        raise TraceEndsInErrorException("The trace raises an " \
+                                                        "exception inside a callback! "\
+                                                        "(the trace already reaches an error)")
+
                     CTraceSerializer.update_trace_message(trace_message,
                                                           recorded_message)
 
