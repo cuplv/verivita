@@ -1,0 +1,64 @@
+[
+{
+  "msg": {
+    "callbackEntry": {
+      "methodReturnType": "boolean", 
+      "callbackCallerClass": "", 
+      "methodName": "boolean methodName(boolean,other_type,boolean)", 
+      "class_name": "class_type", 
+      "paramList": [
+        {
+          "isNull": false, 
+          "value": "1", 
+          "type": "",
+          "fmwkType": ""
+        },
+        {
+          "isNull": false, 
+          "value": "1", 
+          "type": "wrong_type",
+          "fmwkType": ""
+        },
+        {
+          "isNull": false, 
+          "value": "1", 
+          "type": "other_type",
+          "fmwkType": ""
+        },
+        {
+          "isNull": false, 
+          "value": "0", 
+          "type": "wrong_type",
+          "fmwkType": ""
+        }
+      ],       
+      "callbackCallerMethod": "newInstance",
+      "methodParameterTypes": [], 
+      "receiverFirstFrameworkSuper": "class_type"
+    }, 
+    "threadId": "1", 
+    "isActivityThread" : true,
+    "type": "CALLBACK_ENTRY", 
+    "messageId": "0"
+  }
+},
+{
+  "msg": {
+    "threadId": "1", 
+    "isActivityThread" : true,
+    "type": "CALLBACK_EXIT", 
+    "callbackExit": {
+      "methodName": "methodName", 
+      "class_name": "class_type",
+      "return_value" : 
+        {
+          "isNull": false, 
+          "value": "0", 
+          "type": "wrong_type",
+          "fmwkType": ""
+        }
+    },
+    "messageId": "1"
+  }
+}
+]

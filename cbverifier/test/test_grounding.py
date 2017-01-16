@@ -34,7 +34,7 @@ class TestGrounding(unittest.TestCase):
     def _get_int(intValue):
         v = CValue()
         v.is_null = False
-        v.type = "java.lang.int"
+        v.type = TraceConverter.JAVA_INT
         v.value = intValue
         return v
 

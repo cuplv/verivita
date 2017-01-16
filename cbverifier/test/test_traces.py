@@ -19,7 +19,7 @@ from google.protobuf.internal import encoder
 import cbverifier.test.examples
 import cbverifier.traces.tracemsg_pb2 as tracemsg_pb2
 from  cbverifier.traces.tracemsg_pb2 import TraceMsgContainer
-from cbverifier.traces.ctrace import CTraceSerializer, MalformedTraceException, FrameworkOverride
+from cbverifier.traces.ctrace import CTraceSerializer, MalformedTraceException, FrameworkOverride, TraceConverter
 
 
 class TestTraces(unittest.TestCase):
@@ -319,3 +319,51 @@ class TestTraces(unittest.TestCase):
         cb = trace.children[0]
         self.assertTrue(len(cb.fmwk_overrides) == 1)
         self.assertTrue(cb.fmwk_overrides[0].class_name == "android.support.v7.app.AppCompatActivity")
+
+
+    def test_primitive_conversion_bool(self):
+        test_path = os.path.dirname(cbverifier.test.examples.__file__)
+        t1 = os.path.join(test_path, "trace_boolean.json")
+
+        trace = CTraceSerializer.read_trace_file_name(t1, True)
+        self.assertTrue(trace is not None)
+        self.assertTrue(len(trace.children) > 0)
+        cb = trace.children[0]
+
+        self.assertTrue(len(cb.params) == 4)
+
+        pa = cb.params[1]
+        self.assertTrue(pa.type == TraceConverter.JAVA_BOOLEAN_PRIMITIVE)
+        self.assertTrue(pa.value == TraceConverter.TRUE_CONSTANT)
+
+        pb = cb.params[3]
+        self.assertTrue(pb.type == TraceConverter.JAVA_BOOLEAN_PRIMITIVE)
+        self.assertTrue(pb.value == TraceConverter.FALSE_CONSTANT)
+
+        self.assertTrue(cb.return_value is not None)
+        self.assertTrue(cb.return_value.type == TraceConverter.JAVA_BOOLEAN_PRIMITIVE)
+        self.assertTrue(cb.return_value.value == TraceConverter.FALSE_CONSTANT)
+
+
+    def test_primitive_conversion_int(self):
+        test_path = os.path.dirname(cbverifier.test.examples.__file__)
+        t1 = os.path.join(test_path, "trace_int.json")
+
+        trace = CTraceSerializer.read_trace_file_name(t1, True)
+        self.assertTrue(trace is not None)
+        self.assertTrue(len(trace.children) > 0)
+        cb = trace.children[0]
+
+        self.assertTrue(len(cb.params) == 4)
+
+        pa = cb.params[1]
+        self.assertTrue(pa.type == TraceConverter.JAVA_INT_PRIMITIVE)
+        self.assertTrue(pa.value == "1")
+
+        pb = cb.params[3]
+        self.assertTrue(pb.type == TraceConverter.JAVA_INT_PRIMITIVE)
+        self.assertTrue(pb.value == "0")
+
+        self.assertTrue(cb.return_value is not None)
+        self.assertTrue(cb.return_value.type == TraceConverter.JAVA_INT_PRIMITIVE)
+        self.assertTrue(cb.return_value.value == "0")

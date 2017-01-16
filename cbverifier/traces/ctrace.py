@@ -556,7 +556,7 @@ class CTraceSerializer:
             trace_msg.method_name = cb.method_name
 
             (ret_type, param_types) = CTraceSerializer.get_method_types(trace_msg.method_name)
-            trace_msg.params = CTraceSerializer.get_params(cb.param_list)
+            trace_msg.params = CTraceSerializer.get_params(cb.param_list, param_types)
             trace_msg.return_value = None
 
             overrides = []
