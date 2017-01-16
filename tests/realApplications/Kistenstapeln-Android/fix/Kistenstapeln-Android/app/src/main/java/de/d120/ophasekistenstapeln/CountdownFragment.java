@@ -242,4 +242,9 @@ public class CountdownFragment extends Fragment {
         buttonCountdownStop.setEnabled(false);
         txtCountdown.clearAnimation();
     }
+    @Override
+    public void onDetach(){
+        if(countdown != null)
+            countdown.cancel();
+    }
 }
