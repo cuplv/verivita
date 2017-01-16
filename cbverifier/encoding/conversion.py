@@ -3,20 +3,9 @@ messages in the specification.
 """
 
 from cbverifier.specs.spec_ast import *
-from cbverifier.traces.ctrace import CValue
+from cbverifier.traces.ctrace import CValue, TraceConverter
 
 class TraceSpecConverter:
-
-    JAVA_INT_PRIMITIVE = "java.lang.int"
-    JAVA_INT = "java.lang.Integer"
-    JAVA_FLOAT_PRIMITIVE = "java.lang.float"
-    JAVA_FLOAT = "java.lang.Float"
-    JAVA_BOOLEAN_PRIMITIVE = "java.lang.boolean"
-    JAVA_BOOLEAN = "java.lang.Boolean"
-    JAVA_STRING = "java.lang.String"
-
-    TRUE_CONSTANT = 1
-    FALSE_CONSTANT = 0
 
     @staticmethod
     def traceval2specnode(trace_val):
@@ -26,29 +15,29 @@ class TraceSpecConverter:
         if trace_val.is_null is not None and trace_val.is_null:
             return new_null()
         elif trace_val.type is not None and trace_val.value is not None:
-            if (TraceSpecConverter.JAVA_INT_PRIMITIVE == trace_val.type or
-                TraceSpecConverter.JAVA_INT == trace_val.type):
+            if (TraceConverter.JAVA_INT_PRIMITIVE == trace_val.type or
+                TraceConverter.JAVA_INT == trace_val.type):
                 try:
                     return new_int(int(trace_val.value))
                 except ValueError as e:
                     raise Exception("Wrong integer value in message!")
-            elif (TraceSpecConverter.JAVA_FLOAT_PRIMITIVE == trace_val.type or
-                  TraceSpecConverter.JAVA_FLOAT == trace_val.type):
+            elif (TraceConverter.JAVA_FLOAT_PRIMITIVE == trace_val.type or
+                  TraceConverter.JAVA_FLOAT == trace_val.type):
                 try:
                     return new_float(float(trace_val.value))
                 except ValueError as e:
                     raise Exception("Wrong float value in message!")
-            elif (TraceSpecConverter.JAVA_BOOLEAN_PRIMITIVE == trace_val.type or
-                  TraceSpecConverter.JAVA_BOOLEAN == trace_val.type):
+            elif (TraceConverter.JAVA_BOOLEAN_PRIMITIVE == trace_val.type or
+                  TraceConverter.JAVA_BOOLEAN == trace_val.type):
                 enc_value = CValue.enc(trace_val.value)
 
-                if (str(enc_value) == str(TraceSpecConverter.TRUE_CONSTANT)):
+                if (str(enc_value) == str(TraceConverter.TRUE_CONSTANT)):
                     return new_true()
-                elif (str(enc_value) == str(TraceSpecConverter.FALSE_CONSTANT)):
+                elif (str(enc_value) == str(TraceConverter.FALSE_CONSTANT)):
                     return new_false()
                 else:
                     raise Exception("Wrong value for Boolean %s" % enc_value)
-            elif trace_val.type == TraceSpecConverter.JAVA_STRING:
+            elif trace_val.type == TraceConverter.JAVA_STRING:
                 enc_value = CValue.enc(trace_val.value)
                 return new_string(enc_value)
             else:
@@ -77,35 +66,35 @@ class TraceSpecConverter:
         elif TRUE == node_type:
             v = CValue()
             v.is_null = False
-            v.type = TraceSpecConverter.JAVA_BOOLEAN
-            v.value = TraceSpecConverter.TRUE_CONSTANT
+            v.type = TraceConverter.JAVA_BOOLEAN
+            v.value = TraceConverter.TRUE_CONSTANT
             v.object_id = None
             return v
         elif FALSE == node_type:
             v = CValue()
             v.is_null = False
-            v.type = TraceSpecConverter.JAVA_BOOLEAN
-            v.value = TraceSpecConverter.FALSE_CONSTANT
+            v.type = TraceConverter.JAVA_BOOLEAN
+            v.value = TraceConverter.FALSE_CONSTANT
             v.object_id = None
             return v
         elif STRING == node_type:
             v = CValue()
             v.is_null = False
-            v.type = TraceSpecConverter.JAVA_STRING
+            v.type = TraceConverter.JAVA_STRING
             v.value = get_id_val(spec_node)
             v.object_id = None
             return v
         elif INT == node_type:
             v = CValue()
             v.is_null = False
-            v.type = TraceSpecConverter.JAVA_INT
+            v.type = TraceConverter.JAVA_INT
             v.value = get_id_val(spec_node)
             v.object_id = None
             return v
         elif FLOAT == node_type:
             v = CValue()
             v.is_null = False
-            v.type = TraceSpecConverter.JAVA_FLOAT
+            v.type = TraceConverter.JAVA_FLOAT
             v.value = get_id_val(spec_node)
             v.object_id = None
             return v
