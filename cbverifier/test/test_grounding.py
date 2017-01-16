@@ -17,7 +17,7 @@ except ImportError:
 
 from cbverifier.encoding.grounding import GroundSpecs, Assignments, bottom_value, TraceSpecConverter
 from cbverifier.encoding.grounding import AssignmentsSet, TraceMap
-from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, FrameworkOverride, CValue
+from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, FrameworkOverride, CValue, TraceConverter
 from cbverifier.specs.spec_ast import *
 from cbverifier.specs.spec import Spec
 
@@ -34,7 +34,7 @@ class TestGrounding(unittest.TestCase):
     def _get_int(intValue):
         v = CValue()
         v.is_null = False
-        v.type = "java.lang.int"
+        v.type = TraceConverter.JAVA_INT
         v.value = intValue
         return v
 
@@ -58,16 +58,16 @@ class TestGrounding(unittest.TestCase):
     def _get_true():
         v = CValue()
         v.is_null = False
-        v.type = TraceSpecConverter.JAVA_BOOLEAN
-        v.value = TraceSpecConverter.TRUE_CONSTANT
+        v.type = TraceConverter.JAVA_BOOLEAN
+        v.value = TraceConverter.TRUE_CONSTANT
         return v
 
     @staticmethod
     def _get_false():
         v = CValue()
         v.is_null = False
-        v.type = TraceSpecConverter.JAVA_BOOLEAN
-        v.value = TraceSpecConverter.FALSE_CONSTANT
+        v.type = TraceConverter.JAVA_BOOLEAN
+        v.value = TraceConverter.FALSE_CONSTANT
         return v
 
 
@@ -507,26 +507,26 @@ class TestGrounding(unittest.TestCase):
 
     def test_boolean(self):
         trace = CTrace()
-        cb = CCallback(1, 1, "", "void m1(%s)" % TraceSpecConverter.JAVA_BOOLEAN,
+        cb = CCallback(1, 1, "", "void m1(%s)" % TraceConverter.JAVA_BOOLEAN,
                        [TestGrounding._get_null(), TestGrounding._get_true()], None,
-                       [TestGrounding._get_fmwkov("", "void m1(%s)" % TraceSpecConverter.JAVA_BOOLEAN, False)])
+                       [TestGrounding._get_fmwkov("", "void m1(%s)" % TraceConverter.JAVA_BOOLEAN, False)])
         trace.add_msg(cb)
-        cb = CCallback(1, 1, "", "void m2(%s)" % TraceSpecConverter.JAVA_BOOLEAN,
+        cb = CCallback(1, 1, "", "void m2(%s)" % TraceConverter.JAVA_BOOLEAN,
                        [TestGrounding._get_null(), TestGrounding._get_false()], None,
-                       [TestGrounding._get_fmwkov("", "void m2(%s)" % TraceSpecConverter.JAVA_BOOLEAN, False)])
+                       [TestGrounding._get_fmwkov("", "void m2(%s)" % TraceConverter.JAVA_BOOLEAN, False)])
         trace.add_msg(cb)
         gs = GroundSpecs(trace)
-        spec = Spec.get_spec_from_string("SPEC TRUE |- [CB] void m2(FALSE : %s)" % (TraceSpecConverter.JAVA_BOOLEAN))
+        spec = Spec.get_spec_from_string("SPEC TRUE |- [CB] void m2(FALSE : %s)" % (TraceConverter.JAVA_BOOLEAN))
         ground_specs = gs.ground_spec(spec)
         self.assertTrue(1 == len(ground_specs))
 
     def test_int(self):
         trace = CTrace()
-        cb = CCallback(1, 1, "", "void m1(%s)" % TraceSpecConverter.JAVA_INT,
+        cb = CCallback(1, 1, "", "void m1(%s)" % TraceConverter.JAVA_INT,
                        [TestGrounding._get_null(), TestGrounding._get_int(2)], None,
-                       [TestGrounding._get_fmwkov("", "void m1(%s)" % TraceSpecConverter.JAVA_INT, False)])
+                       [TestGrounding._get_fmwkov("", "void m1(%s)" % TraceConverter.JAVA_INT, False)])
         trace.add_msg(cb)
         gs = GroundSpecs(trace)
-        spec = Spec.get_spec_from_string("SPEC TRUE |- [CB] void m1(2 : %s)" % TraceSpecConverter.JAVA_INT)
+        spec = Spec.get_spec_from_string("SPEC TRUE |- [CB] void m1(2 : %s)" % TraceConverter.JAVA_INT)
         ground_specs = gs.ground_spec(spec)
         self.assertTrue(1 == len(ground_specs))
