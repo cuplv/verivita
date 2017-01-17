@@ -8,8 +8,7 @@ from os.path import isfile, join
 from ConfigParser import ConfigParser
 
 from utils.fsUtils import createPathIfEmpty, recreatePath, getFilesInPath
-from verifierChecks import isTruncatedTrace, isExceptionTrace, isUselessTrace
-
+from verifierChecks import runVerifierChecks, GOODTRACE, TRUNCTRACE, EXCEPTTRACE, USELESSTRACE, UNKNOWNTRACE
 
 def get(conf, section, option, default=None):
      if conf.has_option(section, option):
@@ -21,7 +20,7 @@ def splitClean(path, ls):
     return ':'.join( map(lambda x: "%s/%s" % (path,x.strip()), ls.split(',')) )
 
 # Extract configurations from config file.
-def getConfigs(iniFilePath='VerifierConfig.ini'):
+def getConfigs(iniFilePath='verifierConfig.ini'):
     conf = ConfigParser()
     conf.read(iniFilePath)
 
@@ -73,18 +72,25 @@ def checkTraces(inputPath, outputPath, verifierPath, specPaths):
     goodPath = outputPath + "/good"
     createPathIfEmpty(goodPath)
 
-    badPath = outputPath + "/bad"
-    createPathIfEmpty(badPath)
+    uselessPath = outputPath + "/useless"
+    createPathIfEmpty(uselessPath)
+
+    unknownPath = outputPath + "/unknown"
+    createPathIfEmpty(unknownPath)
 
     for tr in traces:
-        if isTruncatedTrace(tr, specPaths=specPaths, verifierPath=verifierPath):
-            shutil.copyfile(tr, truncPath + '/' + os.path.basename(tr))
-        elif isExceptionTrace(tr, specPaths=specPaths, verifierPath=verifierPath):
-            shutil.copyfile(tr, exceptPath + '/' + os.path.basename(tr))
-        elif isUselessTrace(tr, specPaths=specPaths, verifierPath=verifierPath):
-            shutil.copyfile(tr, badPath + '/' + os.path.basename(tr))
+        result = runVerifierChecks(tr, json=False, specPaths=specPaths, verifierPath=verifierPath)
+        if result == GOODTRACE:
+            basePath = goodPath
+        elif result == TRUNCTRACE:
+            basePath = truncPath
+        elif result == EXCEPTTRACE:
+            basePath = exceptPath
+        elif result == USELESSTRACE:
+            basePath = uselessPath
         else:
-            shutil.copyfile(tr, goodPath + '/' + os.path.basename(tr))
+            basePath = unknownPath
+        shutil.copyfile(tr, basePath + '/' + os.path.basename(tr)) 
 
 
 if __name__ == "__main__":
@@ -92,7 +98,7 @@ if __name__ == "__main__":
    if len(sys.argv) > 1:
        iniFilePath = sys.argv[1]
    else:
-       iniFilePath = 'VerifierConfig.ini'
+       iniFilePath = 'verifierConfig.ini'
   
    configs = getConfigs(iniFilePath)
 

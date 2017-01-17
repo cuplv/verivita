@@ -26,26 +26,52 @@ def runCmd(cmd):
    proc = Popen(cmd, stdout=PIPE, stderr=PIPE)
    (stdout, error) = proc.communicate()
    return { 'ret'    : proc.returncode
+          , 'haserr' : error == None
           , 'stdout' : stdout if stdout != None else ''
           , 'stderr' : error if error != None else '' }
 
-def checkCmdErrorExp(cmd, expStr):
+GOODTRACE    = 0
+TRUNCTRACE   = 1
+EXCEPTTRACE  = 2
+USELESSTRACE = 3
+UNKNOWNTRACE = 4
+
+def checkCmdErrorExp(cmd, expMap):
     outcome = runCmd(cmd)
 
     # print "Return code: %s" % outcome['ret'] + "\n============\n"
     # print "Stdout: %s" % outcome['stdout'] + "\n============\n"
     # print "Stderr: %s" % outcome['stderr'] + "\n============\n"
 
-    return expStr in outcome['stderr']        
+    for errExp,token in expMap.items():
+       if errExp in outcome['stderr']:
+           return token
+    return None
 
-def runVerifierChecks(tracePath, checkExp, json=False, specPaths=None, verifierPath=vPath):
+def runVerifierChecks(tracePath, json=False, specPaths=None, verifierPath=vPath):
     vscript = ['python',verifierPath+'/cbverifier/driver.py']
     if json:
        vscript += ['-f','json']
     if specPaths == None:
        specPaths = ':'.join(allSpecPaths)
     vscript += ['-t',tracePath,'-s',specPaths,'-m','check-trace-relevance']
-    return checkCmdErrorExp(vscript, checkExp)
+    outcome = runCmd(vscript)
+
+    expMap = { 'MalformedTraceException'   : TRUNCTRACE
+             , 'TraceEndsInErrorException' : EXCEPTTRACE
+             , 'NoDisableException'        : USELESSTRACE }
+
+    if not outcome['haserr']:
+       # No exceptions throw, return a good trace token
+       return GOODTRACE
+
+    for errExp,token in expMap.items():
+       if errExp in outcome['stderr']:
+           # Matched a known trace exception, return the corresponding token
+           return token
+
+    # Unknown exception thrown
+    return UNKNOWNTRACE
 
 # '-f','json'
 
@@ -58,36 +84,5 @@ def isExceptionTrace(tracePath, json=False, specPaths=None, verifierPath=vPath):
 def isUselessTrace(tracePath, json=False, specPaths=None, verifierPath=vPath):
     return runVerifierChecks(tracePath, "NoDisableException", json=json, specPaths=specPaths)
 
-
-testSpec = vPath+'/cbverifier/test/examples/spec2.spec'
-
-TruncTrace   = vPath + '/cbverifier/test/examples/trace_no_exit.json'
-ErrTrace     = vPath + '/cbverifier/test/examples/trace_exception.json'
-UselessTrace = vPath + '/cbverifier/test/examples/trace1.json'
-
-def test():
-    isTrunc  = isTruncatedTrace('/data/callback/output/KistenstapelnDistill/TraceCrash.out')
-    isExcept = isExceptionTrace('/data/callback/output/KistenstapelnDistill/TraceCrash.out')
-    isUseless = isUselessTrace('/data/callback/output/KistenstapelnDistill/TraceCrash.out')
-  
-    print "T:%s E:%s U:%s" % (isTrunc,isExcept,isUseless)
-
-    isTrunc  = isTruncatedTrace(TruncTrace, json=True, specPaths=testSpec)
-    isExcept = isExceptionTrace(TruncTrace, json=True, specPaths=testSpec)
-    isUseless = isUselessTrace(TruncTrace, json=True, specPaths=testSpec)
-
-    print "T:%s E:%s U:%s" % (isTrunc,isExcept,isUseless)
-
-    isTrunc  = isTruncatedTrace(ErrTrace, json=True, specPaths=testSpec)
-    isExcept = isExceptionTrace(ErrTrace, json=True, specPaths=testSpec)
-    isUseless = isUselessTrace(ErrTrace, json=True, specPaths=testSpec)
-
-    print "T:%s E:%s U:%s" % (isTrunc,isExcept,isUseless)
-
-    isTrunc  = isTruncatedTrace(UselessTrace, json=True, specPaths=testSpec)
-    isExcept = isExceptionTrace(UselessTrace, json=True, specPaths=testSpec)
-    isUseless = isUselessTrace(UselessTrace, json=True, specPaths=testSpec)
-
-    print "T:%s E:%s U:%s" % (isTrunc,isExcept,isUseless)
 
 
