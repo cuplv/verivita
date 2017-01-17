@@ -50,13 +50,13 @@ def runVerifierChecks(tracePath, checkExp, json=False, specPaths=None, verifierP
 # '-f','json'
 
 def isTruncatedTrace(tracePath, json=False, specPaths=None, verifierPath=vPath):
-    return runVerifierChecks(tracePath, "MalformedTraceException", json=json, specPaths=specPaths)
+    return runVerifierChecks(tracePath, "MalformedTraceException", json=json, specPaths=specPaths, verifierPath=verifierPath)
 
 def isExceptionTrace(tracePath, json=False, specPaths=None, verifierPath=vPath):
-    return runVerifierChecks(tracePath, "TraceEndsInErrorException", json=json, specPaths=specPaths)
+    return runVerifierChecks(tracePath, "TraceEndsInErrorException", json=json, specPaths=specPaths, verifierPath=verifierPath)
 
 def isUselessTrace(tracePath, json=False, specPaths=None, verifierPath=vPath):
-    return runVerifierChecks(tracePath, "NoDisableException", json=json, specPaths=specPaths)
+    return runVerifierChecks(tracePath, "NoDisableException", json=json, specPaths=specPaths, verifierPath=verifierPath)
 
 
 testSpec = vPath+'/cbverifier/test/examples/spec2.spec'
