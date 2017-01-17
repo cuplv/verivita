@@ -43,6 +43,8 @@ def getConfigs(iniFilePath='verifierConfig.ini'):
 
            appSpecPath = get(conf, vopts, 'specpath', default='')
            appSpecs = get(conf, vopts, 'specs', default=None)
+           appJson  = True if get(conf, vopts, 'json', default='False') == 'True' else False
+
            if appSpecs == None:
                appSpecs = splitClean(specPath, specs)
            else:
@@ -50,13 +52,14 @@ def getConfigs(iniFilePath='verifierConfig.ini'):
 
            apps[appName] = { 'input'  : '%s/%s' % (inputPath,appName) 
                            , 'output' : '%s/%s' % (outputPath,appName)
-                           , 'specs': appSpecs } 
+                           , 'json'   : appJson
+                           , 'specs'  : appSpecs } 
     configs['apps'] = apps
 
     return configs
 
 
-def checkTraces(inputPath, outputPath, verifierPath, specPaths):
+def checkTraces(inputPath, outputPath, json, verifierPath, specPaths):
     print "========\n"
     print "Checking traces in %s" % inputPath
 
@@ -79,7 +82,7 @@ def checkTraces(inputPath, outputPath, verifierPath, specPaths):
     createPathIfEmpty(unknownPath)
 
     for tr in traces:
-        result = runVerifierChecks(tr, json=False, specPaths=specPaths, verifierPath=verifierPath)
+        result = runVerifierChecks(tr, json=json, specPaths=specPaths, verifierPath=verifierPath)
         if result == GOODTRACE:
             basePath = goodPath
         elif result == TRUNCTRACE:
@@ -120,6 +123,6 @@ if __name__ == "__main__":
 
        # recreatePath( '%s/%s' % (app['output'],'monkeyTraces') )
 
-       checkTraces(app['input'], app['output'], configs['verifier'], app['specs'])   
-       checkTraces(app['input'] + "/monkeyTraces", app['output'] + "/monkeyTraces", configs['verifier'], app['specs'])
+       checkTraces(app['input'], app['output'], app['json'], configs['verifier'], app['specs'])   
+       checkTraces(app['input'] + "/monkeyTraces", app['output'] + "/monkeyTraces", app['json'], configs['verifier'], app['specs'])
 

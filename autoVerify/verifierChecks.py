@@ -25,8 +25,12 @@ allSpecPaths = [ specPath + '/activity.spec'
 def runCmd(cmd):
    proc = Popen(cmd, stdout=PIPE, stderr=PIPE)
    (stdout, error) = proc.communicate()
+
+   print "Stdout: %s" % stdout + "\n============\n"
+   print "Stderr: %s" % (error if error != None else '<None>') + "\n============\n"
+
    return { 'ret'    : proc.returncode
-          , 'haserr' : error == None
+          , 'haserr' : len(error) > 0 
           , 'stdout' : stdout if stdout != None else ''
           , 'stderr' : error if error != None else '' }
 
@@ -40,8 +44,8 @@ def checkCmdErrorExp(cmd, expMap):
     outcome = runCmd(cmd)
 
     # print "Return code: %s" % outcome['ret'] + "\n============\n"
-    # print "Stdout: %s" % outcome['stdout'] + "\n============\n"
-    # print "Stderr: %s" % outcome['stderr'] + "\n============\n"
+    print "Stdout: %s" % outcome['stdout'] + "\n============\n"
+    print "Stderr: %s" % outcome['stderr'] + "\n============\n"
 
     for errExp,token in expMap.items():
        if errExp in outcome['stderr']:
