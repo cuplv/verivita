@@ -12,7 +12,7 @@ from verifierChecks import runVerifierChecks, GOODTRACE, TRUNCTRACE, EXCEPTTRACE
 
 def get(conf, section, option, default=None):
      if conf.has_option(section, option):
-         return conf.get(section, option)
+         return conf.get(section, option).strip()
      else:
          return default
 
@@ -41,9 +41,11 @@ def getConfigs(iniFilePath='verifierConfig.ini'):
        if section.startswith("app:"):
            appName = section[4:]
 
-           appSpecPath = get(conf, vopts, 'specpath', default='')
-           appSpecs = get(conf, vopts, 'specs', default=None)
-           appJson  = True if get(conf, vopts, 'json', default='False') == 'True' else False
+           appSpecPath = get(conf, section, 'specpath', default='')
+           appSpecs = get(conf, section, 'specs', default=None)
+           appJson  = True if get(conf, section, 'json', default='False') == 'True' else False
+
+           print "$$$$$$$$$$$$$$$$$$$$$$$ %s" % appJson
 
            if appSpecs == None:
                appSpecs = splitClean(specPath, specs)
@@ -123,6 +125,7 @@ if __name__ == "__main__":
 
        # recreatePath( '%s/%s' % (app['output'],'monkeyTraces') )
 
-       checkTraces(app['input'], app['output'], app['json'], configs['verifier'], app['specs'])   
-       checkTraces(app['input'] + "/monkeyTraces", app['output'] + "/monkeyTraces", app['json'], configs['verifier'], app['specs'])
+       checkTraces(app['input'], app['output'], app['json'], configs['verifier'], app['specs'])  
+       if os.path.exists(app['input'] + "/monkeyTraces"): 
+           checkTraces(app['input'] + "/monkeyTraces", app['output'] + "/monkeyTraces", app['json'], configs['verifier'], app['specs'])
 
