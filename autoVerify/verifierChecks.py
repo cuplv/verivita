@@ -1,6 +1,6 @@
 
 import cbverifier.traces.ctrace as ct
-import matchMsg as mt
+# import matchMsg as mt
 
 from subprocess import Popen, PIPE
 
@@ -76,13 +76,13 @@ def runVerifierChecks(tracePath, json=False, specPaths=None, verifierPath=vPath)
 # '-f','json'
 
 def isTruncatedTrace(tracePath, json=False, specPaths=None, verifierPath=vPath):
-    return runVerifierChecks(tracePath, "MalformedTraceException", json=json, specPaths=specPaths)
+    return runVerifierChecks(tracePath, "MalformedTraceException", json=json, specPaths=specPaths, verifierPath=verifierPath)
 
 def isExceptionTrace(tracePath, json=False, specPaths=None, verifierPath=vPath):
-    return runVerifierChecks(tracePath, "TraceEndsInErrorException", json=json, specPaths=specPaths)
+    return runVerifierChecks(tracePath, "TraceEndsInErrorException", json=json, specPaths=specPaths, verifierPath=verifierPath)
 
 def isUselessTrace(tracePath, json=False, specPaths=None, verifierPath=vPath):
-    return runVerifierChecks(tracePath, "NoDisableException", json=json, specPaths=specPaths)
+    return runVerifierChecks(tracePath, "NoDisableException", json=json, specPaths=specPaths, verifierPath=verifierPath)
 
 
 

@@ -104,9 +104,9 @@ if __name__ == "__main__":
 
    print configs
 
-   onlyfiles = [f for f in os.listdir('/data/callback/output/KistenstapelnDistill') if isfile(join('/data/callback/output/KistenstapelnDistill', f))]
+   # onlyfiles = [f for f in os.listdir('/data/callback/output/KistenstapelnDistill') if isfile(join('/data/callback/output/KistenstapelnDistill', f))]
 
-   print onlyfiles
+   # print onlyfiles
 
    for name,app in configs['apps'].items():
         
