@@ -1,6 +1,6 @@
 
 import cbverifier.traces.ctrace as ct
-import matchMsg as mt
+# import matchMsg as mt
 
 from subprocess import Popen, PIPE
 
