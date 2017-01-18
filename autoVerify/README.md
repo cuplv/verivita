@@ -17,7 +17,7 @@ Staging Prototype at CU OpenStack 192.12.243.135 (Callback-Tracer). Project repo
 See the custom config file 'openstackFullSuiteConfig.ini' for configurations and also run the top-level script with it, i.e.:
 
 ```
-/data/cuplv/callback-verification-auto/callback-verification$ python autoVerify.py openstackFullSuiteConfig.ini
+/data/cuplv/callback-verification-auto/callback-verification$ python autoCheck.py openstackFullSuiteConfig.ini
 ```
 
 Configuring Auto Verifier
@@ -31,4 +31,4 @@ See 'openstackFullSuiteConfig.ini' for example. The main parameters of the scrip
  * specpath : Path to the list of specifications
  * specs : Comma seperated spec files
 
-Adding sections of the form [app:<AppName>] will inform autoVerify of traces of the app 'AppName' found at '<input>/AppName'. Each of these accept overrides to 'specpath' and 'specs', and additionally accepts the parameter 'json' to indicate if traces are in json (default is set to protobuf binary).
+Adding sections of the form [app:<AppName>] will inform autoCheck of traces of the app 'AppName' found at '<input>/AppName'. Each of these accept overrides to 'specpath' and 'specs', and additionally accepts the parameter 'json' to indicate if traces are in json (default is set to protobuf binary).
