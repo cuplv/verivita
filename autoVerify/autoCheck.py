@@ -45,8 +45,6 @@ def getConfigs(iniFilePath='verifierConfig.ini'):
            appSpecs = get(conf, section, 'specs', default=None)
            appJson  = True if get(conf, section, 'json', default='False') == 'True' else False
 
-           print "$$$$$$$$$$$$$$$$$$$$$$$ %s" % appJson
-
            if appSpecs == None:
                appSpecs = splitClean(specPath, specs)
            else:
