@@ -18,7 +18,7 @@ import cbverifier.android_specs
 
 
 class TestKnownTraces(unittest.TestCase):
-    allspecfiles = ["activity.spec","AppCompatActivity.spec","button_backup.spec"
+    allspecfiles = ["activity.spec","AppCompatActivity.spec"
         ,"button.spec","countdowntimer.spec","fragment.spec","mediaplayer.spec"]
     test_path = os.path.dirname(cbverifier.android_specs.__file__)
     s1 = [os.path.join(test_path, filename) for filename in allspecfiles]
