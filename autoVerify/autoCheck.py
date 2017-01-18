@@ -26,6 +26,7 @@ def getConfigs(iniFilePath='verifierConfig.ini'):
 
     vopts = 'verifierOptions'
 
+    verbose    = True if get(conf, vopts, 'verbose', default='False') == 'True' else False
     inputPath  = get(conf, vopts, 'input', default='/data/callback/output')
     outputPath = get(conf, vopts, 'output', default='/data/callback/curated')
 
@@ -33,7 +34,7 @@ def getConfigs(iniFilePath='verifierConfig.ini'):
     specPath = get(conf, vopts, 'specpath', default='')
     specs = get(conf, vopts, 'specs', default='activity.spec,button.spec,countdowntimer.spec,fragment.spec,mediaplayer.spec')
  
-    configs = { 'input':inputPath, 'output':outputPath, 'verifier':verifierPath
+    configs = { 'verbose':verbose, 'input':inputPath, 'output':outputPath, 'verifier':verifierPath
               , 'specs': splitClean(specPath, specs) }
 
     apps = {}
@@ -82,7 +83,7 @@ def checkTraces(inputPath, outputPath, json, verifierPath, specPaths):
     createPathIfEmpty(unknownPath)
 
     for tr in traces:
-        result = runVerifierChecks(tr, json=json, specPaths=specPaths, verifierPath=verifierPath)
+        result = runVerifierChecks(tr, json=json, specPaths=specPaths, verifierPath=verifierPath, verbose=configs['verbose'])
         if result == GOODTRACE:
             basePath = goodPath
         elif result == TRUNCTRACE:
