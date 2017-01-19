@@ -12,7 +12,7 @@ from configs import getConfigs
 
 from verify import runVerify
 
-def verifyTraces(checkedPath, verifiedPath, json, verifierPath, specs, verifyGroups, steps, verbose):
+def verifyTraces(checkedPath, verifiedPath, json, verifierPath, specs, verifyGroups, steps, verbose, timeout):
    
    for group in verifyGroups:
 
@@ -20,19 +20,23 @@ def verifyTraces(checkedPath, verifiedPath, json, verifierPath, specs, verifyGro
        gVerifiedPath = "%s/%s" % (verifiedPath,group)
        gBugPath = "%s/%s" % (gVerifiedPath,"bug")
        gOkPath  = "%s/%s" % (gVerifiedPath,"ok")
+       gTimedoutPath = "%s/%s" % (gVerifiedPath,"timedout")
 
        createPathIfEmpty( gVerifiedPath )
        createPathIfEmpty( gBugPath )
        createPathIfEmpty( gOkPath )
+       createPathIfEmpty( gTimedoutPath )
 
        print gCheckedPath
 
        for tracePath in getFilesInPath(gCheckedPath):
            print tracePath
  
-           outcome = runVerify(tracePath, specs, verifierPath, json=json, steps=steps, verbose=verbose)
+           outcome = runVerify(tracePath, specs, verifierPath, json=json, steps=steps, verbose=verbose, timeout=int(timeout))
            if outcome['bugfound']:
-               basePath = gBugPath           
+               basePath = gBugPath
+           elif outcome['timedout']:
+               basePath = gTimedoutPath           
            else:
                basePath = gOkPath
            outputPath = "%s/%s.res" % (basePath,os.path.basename(tracePath).split('.')[0])
@@ -64,9 +68,9 @@ if __name__ == "__main__":
 
    for name,app in configs['apps'].items():
       recreatePath(app['verified'])
-      verifyTraces(app['checked'], app['verified'], app['json'], configs['verifier'], app['specs'], app['verifygroups'], configs['verifysteps'], configs['verbose'])
+      verifyTraces(app['checked'], app['verified'], app['json'], configs['verifier'], app['specs'], app['verifygroups'], configs['verifysteps'], configs['verbose'], configs['timeout'])
       if os.path.exists(app['checked'] + "/monkeyTraces"): 
-          verifyTraces(app['checked'] + "/monkeyTraces", app['verified'] + "/monkeyTraces", app['json'], configs['verifier'], app['specs'], app['verifygroups'], configs['verifysteps'], configs['verbose'])
+          verifyTraces(app['checked'] + "/monkeyTraces", app['verified'] + "/monkeyTraces", app['json'], configs['verifier'], app['specs'], app['verifygroups'], configs['verifysteps'], configs['verbose'], configs['timeout'])
 
 
 

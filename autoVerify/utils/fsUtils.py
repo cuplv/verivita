@@ -6,6 +6,8 @@ from os.path import isfile, join
 
 from subprocess import Popen, PIPE
 
+from threading import Thread
+
 def createPathIfEmpty(path):
     if not os.path.exists(path):
        print "Creating directory: %s" % path
@@ -23,10 +25,16 @@ def recreatePath(path):
 def getFilesInPath(path):
     return [join(path, f) for f in os.listdir(path) if isfile(join(path, f))]
 
-def runCmd(cmd, verbose=False):
+def runCmd(cmd, verbose=False, timeout=None):
    print "Running command: %s" % (' '.join(cmd))
-   proc = Popen(cmd, stdout=PIPE, stderr=PIPE)
-   (stdout, error) = proc.communicate()
+   if timeout == None:
+       proc = Popen(cmd, stdout=PIPE, stderr=PIPE)
+       (stdout, error) = proc.communicate()
+       timedout = False
+       ret = proc.returncode
+   else:
+       command = Command(cmd)
+       (stdout, error, timedout, ret) = command.run(timeout)
 
    if verbose:
        print "=============== Stdout ==============="
@@ -43,8 +51,38 @@ def runCmd(cmd, verbose=False):
    # print "Stdout: %s" % stdout + "\n============\n"
    # print "Stderr: %s" % (error if error != None else '<None>') + "\n============\n"
 
-   return { 'ret'    : proc.returncode
-          , 'haserr' : len(error) > 0 
-          , 'stdout' : stdout if stdout != None else ''
-          , 'stderr' : error if error != None else '' }
+   return { 'ret'      : ret
+          , 'haserr'   : len(error) > 0 
+          , 'timedout' : timedout
+          , 'stdout'   : stdout if stdout != None else ''
+          , 'stderr'   : error if error != None else '' }
+
+class Command(object):
+    def __init__(self, cmd):
+        self.cmd = cmd
+        self.process = None
+        self.stdout = None
+        self.stderr = None
+
+    def run(self, timeout):
+        def target():
+            print 'Thread started with timeout at %s seconds' % timeout
+            self.process = Popen(self.cmd, stdout=PIPE, stderr=PIPE)
+            (stdout,stderr) = self.process.communicate()
+            self.stdout = stdout
+            self.stderr = stderr
+            print 'Thread finished'
+
+        thread = Thread(target=target)
+        thread.start()
+
+        thread.join(timeout)
+        timedout = False
+        if thread.is_alive():
+            print 'Terminating process'
+            self.process.terminate()
+            thread.join()
+            timedout = True
+            self.stdout = self.stdout + "\n *** Timedout ***" if self.stdout != None else "\n *** Timedout ***"   
+        return (self.stdout, self.stderr, timedout, self.process.returncode)
 

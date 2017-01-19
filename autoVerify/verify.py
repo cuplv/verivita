@@ -13,12 +13,12 @@ from verifierChecks import runVerifierChecks, GOODTRACE, TRUNCTRACE, EXCEPTTRACE
 
 # countdowntimer.spec:fragment.spec:button.spec:fragment_v4.spec:mediaplayer.spec:activity.spec:button_backup.spec
 
-def runVerify(tracePath, specPaths, verifierPath, json=False, technique='bmc', steps='40', verbose=True):
+def runVerify(tracePath, specPaths, verifierPath, json=False, technique='bmc', steps='40', verbose=True, timeout=180):
     vscript = ['python',verifierPath+'/cbverifier/driver.py']
     if json:
        vscript += ['-f','json']
     vscript += ['-t',tracePath,'-m',technique,'-s',specPaths,'-k',steps,'-z','-i']
-    outcome = runCmd(vscript, verbose=verbose)
+    outcome = runCmd(vscript, verbose=verbose, timeout=timeout)
     if 'Counterexample' in outcome['stdout']:
         outcome['bugfound'] = True
     else:

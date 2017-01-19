@@ -25,6 +25,7 @@ def getConfigs(iniFilePath='verifierConfig.ini'):
     inputPath  = get(conf, vopts, 'input', default='/data/callback/output')
     checkedPath = get(conf, vopts, 'checked', default='/data/callback/checked')
     verifiedPath = get(conf, vopts, 'verified', default='/data/callback/verified')
+    timeout = get(conf, vopts, 'timeout', default='300')
 
     verifierPath = get(conf, vopts, 'verifierpath', default='')
     specPath = get(conf, vopts, 'specpath', default='')
@@ -35,7 +36,7 @@ def getConfigs(iniFilePath='verifierConfig.ini'):
 
     configs = { 'verbose':verbose, 'input':inputPath, 'checked':checkedPath, 'verified':verifiedPath
               , 'verifier':verifierPath, 'specs':splitClean(specPath, specs), 'verifygroups':splitIt(verifyGroups)
-              , 'verifysteps':verifySteps }
+              , 'verifysteps':verifySteps, 'timeout':timeout }
 
     apps = {}
     for section in conf.sections():
