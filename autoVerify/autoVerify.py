@@ -69,9 +69,12 @@ if __name__ == "__main__":
    for name,app in configs['apps'].items():
       recreatePath(app['verified'])
       verifyTraces(app['checked'], app['verified'], app['json'], configs['verifier'], app['specs'], app['verifygroups'], configs['verifysteps'], configs['verbose'], configs['timeout'])
+
       if os.path.exists(app['checked'] + "/monkeyTraces"): 
           verifyTraces(app['checked'] + "/monkeyTraces", app['verified'] + "/monkeyTraces", app['json'], configs['verifier'], app['specs'], app['verifygroups'], configs['verifysteps'], configs['verbose'], configs['timeout'])
 
+      if os.path.exists(app['checked'] + "/manualTraces"): 
+          verifyTraces(app['checked'] + "/manualTraces", app['verified'] + "/manualTraces", app['json'], configs['verifier'], app['specs'], app['verifygroups'], configs['verifysteps'], configs['verbose'], configs['timeout'])
 
 
 

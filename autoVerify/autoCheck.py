@@ -64,6 +64,12 @@ if __name__ == "__main__":
        recreatePath(app['checked'])
 
        checkTraces(app['input'], app['checked'], app['json'], configs['verifier'], app['specs'])  
+
        if os.path.exists(app['input'] + "/monkeyTraces"): 
            checkTraces(app['input'] + "/monkeyTraces", app['checked'] + "/monkeyTraces", app['json'], configs['verifier'], app['specs'])
+
+       if os.path.exists(app['input'] + "/manualTraces"): 
+           checkTraces(app['input'] + "/manualTraces", app['checked'] + "/manualTraces", app['json'], configs['verifier'], app['specs'])
+
+
 
