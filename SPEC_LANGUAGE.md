@@ -78,19 +78,27 @@ conjunction and disjunction respectively.
 
 - Message
 
-A message represents a callin or a callback, it may predicates over
-the return value of the callin or callback and have free variables for
-the parameters.
+A message represents either the execution of the entry or exit of a callin or a callback.
+
+A message is identified by the name of the method and its parameters.
+In the case of an exit, it is also identified by the return value. All
+the parameters and return values used in the specification may be
+concrete values (e.g. 3 for an integer type paraemeter) or free
+variables (e.g. x).
 
 
 ```
-message : param = [method_type] method_call
-        | [method_type] method_call
+message : param = [method_type] [EXIT] method_call
+        | [method_type] [ENTRY] method_call
+        | [method_type] [EXIT] method_call
         | TRUE
         | FALSE
 
 method_type : CB
             | CI
+            
+entry_type  : ENTRY
+            | EXIT
 
 method_call : [param] inner_call
             | inner_call
@@ -117,14 +125,12 @@ integer = [1-9]*[0-9]+
 string_literal = c-like string
 ```
 
-A message can be either `TRUE`, `FALSE`, define a callin or a
-callback.
+A message can be either `TRUE`, `FALSE`, define a callin or a callback entry/exit.
 
-`TRUE` specifies the set of all the possible messages, while `FALSE`
-specifies the empty set of messages.
+`TRUE` specifies the set of all the possible messages, while `FALSE` specifies the empty set of messages.
 
 When the method call is prepended by `param = `, it means that the
-rules applies to the method call that returns a value `param`.
+rules applies to the exit of a method call that returns a value `param`.
 
 *NOTE* the rule with `param =` will not match any method that do not
 return any value (i.e. `void` return type), while the rule without
@@ -144,7 +150,6 @@ parameters (`param_list`).
 The name of the method is a `composed_id`, and specifies both the full
 class name (with the package) and the method name, separated by dots.
 
-
 The receiver is a `param` and the parameter list is either empty or a
 comma separated list of parameters (`param`).
 A parameter `param` can be a constant value, a free variable, or any
@@ -156,7 +161,6 @@ type is a `composed_id`.
 
 
 # Examples
-
 For example, we want to specify that the
 `android.widget.Button.setOnClickListener` callin called on a button
 `b` and with a click listener instance `l` as parameter enables the
@@ -165,34 +169,28 @@ as parameter.
 
 This is achieved with the following specification:
 ```
-SPEC [CI] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener) |+ [CB] [l] void onClick(b : android.widget.Button)
+SPEC [CI] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener) |+ [CB] [ENTRY] [l] void onClick(b : android.widget.Button)
 ```
 
-Note that the regular expression only matches an execution where the
-*first* callin called is `setOnClickListener`.
-To specify that, independently from the previous callins/callbacks,
-when the method `setOnClickListener` is executed then `onClick` is
-enabled, we have to match an unbounded number of letters before the
-method:
+Note that the regular expression only matches an execution where the *first* callin called is `setOnClickListener`.
+To specify that, independently from the previous callins/callbacks sequences,
+when the method `setOnClickListener` is executed then `onClick` is enabled, we have to match an unbounded number of letters before the method:
 
 ```
-SPEC TRUE[*]; [CI] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener) |+ [CB] [l] void onClick(b : android.widget.Button)
+SPEC TRUE[*]; [CI] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener) |+ [CB] [ENTRY] [l] void onClick(b : android.widget.Button)
 ```
 
-This specification tells that one can see any number of method calls
-before the `setOnClickListener`.
+This specification tells that one can see any number of method calls before the `setOnClickListener`.
 
 
 # Hints
 
-- Force an effect in the intial state of the system:
+- To force an effect in the intial state of the system one can use the `FALSE[*]` expression:
 ```
-SPEC FALSE[*] |- [CI] [l] void callin(b : Button)
+SPEC FALSE[*] |- [CI] [ENTRY] [l] void callin(b : Button)
 ```
 
-In this case the callin `void callin(b : Button)` will be disabled at
-the beginning of the execution (note that `FALSE[*]` accepts only the
-empty word).
+In this case the callin `void callin(b : Button)` will be disabled at the beginning of the execution (note that `FALSE[*]` accepts only the empty word).
 
 
 

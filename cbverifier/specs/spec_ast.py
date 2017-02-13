@@ -20,7 +20,7 @@ INT           =  3
 FLOAT         =  4
 PARAM_LIST    =  5
 NIL           =  6
-CALL          =  7
+CALL_ENTRY    =  7
 AND_OP        =  8
 OR_OP         =  9
 NOT_OP        = 10
@@ -35,6 +35,7 @@ STRING        = 18
 CI            = 19
 CB            = 20
 NULL          = 21
+CALL_EXIT     = 22
 
 inv_map = { 0 : "TRUE",
             1 : "FALSE",
@@ -43,21 +44,22 @@ inv_map = { 0 : "TRUE",
             4 : "FLOAT",
             5 : "PARAM_LIST",
             6 : "NIL",
-            7 : "CALL",
+            7 : "CALL_ENTRY",
             8 : "AND_OP",
             9 : "OR_OP",
-           10 : "NOT_OP",
-           11 : "SEQ_OP",
-           12 : "STAR_OP",
-           13 : "SPEC_SYMB",
-           14 : "ENABLE_OP",
-           15 : "DISABLE_OP",
-           16 : "SPEC_LIST",
-           17 : "DONTCARE",
-           18 : "STRING",
-           19 : "CI",
-           20 : "CB",
-           21 : "NULL"}
+            10 : "NOT_OP",
+            11 : "SEQ_OP",
+            12 : "STAR_OP",
+            13 : "SPEC_SYMB",
+            14 : "ENABLE_OP",
+            15 : "DISABLE_OP",
+            16 : "SPEC_LIST",
+            17 : "DONTCARE",
+            18 : "STRING",
+            19 : "CI",
+            20 : "CB",
+            21 : "NULL",
+            22 : "CALL_EXIT"}
 
 ################################################################################
 # Node creation
@@ -85,8 +87,12 @@ def new_param(param_name, param_type, tails):
 def new_ci(): return (CI,)
 def new_cb(): return (CB,)
 
-def new_call(assignee, call_type, receiver, method_name, params):
-    return (CALL, assignee, call_type, receiver, method_name, params)
+def new_call_entry(call_type, receiver, method_name, params):
+    return (CALL_ENTRY, call_type, receiver, method_name, params)
+
+def new_call_exit(assignee, call_type, receiver, method_name, params):
+    # assignee at the end: so the rest is like the entry
+    return (CALL_EXIT, call_type, receiver, method_name, params, assignee)
 
 def new_and(p1,p2): return (AND_OP, p1, p2)
 def new_or(p1,p2): return (OR_OP, p1, p2)
@@ -121,37 +127,43 @@ spec_nodes = (SPEC_SYMB,ENABLE_OP,DISABLE_OP)
 def get_id_val(node): return node[1]
 
 def get_call_assignee(node):
-    assert CALL == get_node_type(node)
-    assert node[1] is not None
-    return node[1]
-
-def get_call_type(node):
-    assert CALL == get_node_type(node)
-    assert node[2] is not None
-    return node[2]
-
-def get_call_receiver(node):
-    assert CALL == get_node_type(node)
-    assert node[3] is not None
-    return node[3]
-
-def get_call_method(node):
-    assert CALL == get_node_type(node)
-    assert node[4] is not None
-    return node[4]
-
-def get_call_params(node):
-    assert CALL == get_node_type(node)
+    assert CALL_EXIT == get_node_type(node)
     assert node[5] is not None
     return node[5]
 
-def get_call_signature(node):
-    assert CALL == get_node_type(node)
+def get_call_type(node):
+    assert (CALL_ENTRY == get_node_type(node) or
+            CALL_EXIT == get_node_type(node))
+    assert node[1] is not None
+    return node[1]
 
+def get_call_receiver(node):
+    assert (CALL_ENTRY == get_node_type(node) or
+            CALL_EXIT == get_node_type(node))
+    assert node[2] is not None
+    return node[2]
+
+def get_call_method(node):
+    assert (CALL_ENTRY == get_node_type(node) or
+            CALL_EXIT == get_node_type(node))
+    assert node[3] is not None
+    return node[3]
+
+def get_call_params(node):
+    assert (CALL_ENTRY == get_node_type(node) or
+            CALL_EXIT == get_node_type(node))
+    assert node[4] is not None
+    return node[4]
+
+# TODO: check where it is used
+def get_call_signature(node):
+    assert (CALL_ENTRY == get_node_type(node) or
+            CALL_EXIT == get_node_type(node))
     method_name = get_call_method(node)
 
     param_types = []
     app_node = get_call_params(node)
+
     while (NIL != get_node_type(app_node)):
         ptype = get_param_type(app_node)
         assert ID == get_node_type(ptype) or NIL == get_node_type(ptype)
@@ -196,7 +208,6 @@ def is_spec_disable(node):
     assert node[1] is not None
     return get_node_type(node[1]) == DISABLE_OP
 
-
 def get_param_name(node):
     assert PARAM_LIST == get_node_type(node)
     assert 4 == len(node)
@@ -237,11 +248,13 @@ def get_call_nodes(ast_node):
         elif (node_type == NOT_OP or
               node_type == STAR_OP):
             return _get_call_nodes_rec(ast_node[1], call_set)
-        elif (node_type == CALL):
+        elif (node_type == CALL_ENTRY or
+              node_type == CALL_EXIT):
             call_set.add(ast_node)
             return call_set
 
     return _get_call_nodes_rec(ast_node, set())
+
 
 def pretty_print(ast_node, out_stream=sys.stdout):
 
@@ -269,16 +282,22 @@ def pretty_print(ast_node, out_stream=sys.stdout):
             if (get_node_type(get_param_tail(node)) != NIL):
                 my_print(out_stream, ",")
                 pretty_print_aux(out_stream,get_param_tail(node),"")
-        elif (node_type == CALL):
-            assignee = get_call_assignee(node)
-            if (get_node_type(assignee) != NIL):
-                pretty_print_aux(out_stream, assignee,"")
-                my_print(out_stream, " = ")
+        elif (node_type == CALL_ENTRY or
+              node_type == CALL_EXIT):
+
+            if (node_type == CALL_EXIT):
+                assignee = get_call_assignee(node)
+                if (get_node_type(assignee) != NIL):
+                    pretty_print_aux(out_stream, assignee,"")
+                    my_print(out_stream, " = ")
 
             call_type = get_call_type(node)
             my_print(out_stream, "[")
             pretty_print_aux(out_stream, call_type, "")
             my_print(out_stream, "] ")
+
+            entry_type = "ENTRY" if node_type == CALL_ENTRY else "EXIT"
+            my_print(out_stream, "[%s] " % entry_type)
 
             receiver = get_call_receiver(node)
             if (get_node_type(receiver) != NIL):
