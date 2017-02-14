@@ -87,7 +87,9 @@ class CexPrinter:
             else:
                 self._print_step_header(i)
 
-                trace_msg = self._mapback.get_fired_trace_msg(prev_step, step)
+                # TODO: fix entry/exit
+
+                (is_entry, trace_msg) = self._mapback.get_fired_trace_msg(prev_step, step)
                 assert trace_msg is not None
                 msg = self._mapback.get_trans_label(prev_step)
                 assert msg is not None

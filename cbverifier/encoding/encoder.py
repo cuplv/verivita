@@ -49,7 +49,7 @@ sequence of fixed order).
 
 The result is a transition system.
 
-5.. Performs the product of the specifications' automata and the
+5. Performs the product of the specifications' automata and the
 transition system of the trace.
 
 Performs the syncrhonous product of all the transition systems to
@@ -203,6 +203,11 @@ class TSEncoder:
     Encodes the dynamic verification problem in a transition system.
 
     """
+
+    ENTRY = "ENTRY"
+    EXIT = "EXIT"
+
+
     def __init__(self, trace, specs, ignore_msgs = False):
         # copy the trace removing the top-level exception
         self.trace = trace.copy(True)
@@ -221,16 +226,17 @@ class TSEncoder:
         if (ignore_msgs):
             self.trace = TSEncoder._simplify_trace(self.trace,
                                                    self.ground_specs)
-
             print("\n---Simplified Trace---")
             self.trace.print_trace(sys.stdout)
             print("\n")
 
-        (trace_length, msgs, cb_set, ci_set) = self.get_trace_stats()
+        (trace_length, msgs, fmwk_contr, app_contr) = self.get_trace_stats()
         self.trace_length = trace_length
         self.msgs = msgs
-        self.cb_set = cb_set
-        self.ci_set = ci_set
+        # set of messages controlled by the framework
+        self.fmwk_contr = fmwk_contr
+        # set of messages controlled by the app
+        self.app_contr = app_contr
 
         self.pysmt_env = get_env()
         self.helper = Helper(self.pysmt_env)
@@ -255,7 +261,6 @@ class TSEncoder:
     def get_trace_encoding(self, tl_cb_ids = None):
         """ Returns the encoding of the trace formed by the callbacks
         """
-
         # the ts encoding should be built
         self.get_ts_encoding()
 
@@ -273,16 +278,17 @@ class TSEncoder:
         trace_encoding = []
         pc_name = TSEncoder._get_pc_name()
         for tl_cb in tl_cbs:
-            stack = [tl_cb]
+            stack = [(TSEncoder.ENTRY, tl_cb)]
 
             while (len(stack) != 0):
-                msg = stack.pop()
+                (is_entry, msg) = stack.pop()
 
                 # Fill the stack in reverse order
                 for i in reversed(range(len(msg.children))):
-                    stack.append(msg.children[i])
+                    stack.append((TSEncoder.ENTRY, msg.children[i]))
+                stack.append((TSEncoder.EXIT, msg))
 
-                msg_enc = self.mapback.get_trans2pc(msg)
+                msg_enc = self.mapback.get_trans2pc((is_entry, msg))
                 assert(msg_enc is not None)
 
                 (current_state, next_state) = msg_enc
@@ -330,10 +336,11 @@ class TSEncoder:
 
         The result is a new trace.
         """
-
         def simplify_msg(parent, trace_msg, spec_msg):
             for child in trace_msg.children:
-                if TSEncoder.get_key_from_msg(child) in spec_msg:
+                if (TSEncoder.get_key_from_msg(child, TSEncoder.ENTRY) in spec_msg or
+                    TSEncoder.get_key_from_msg(child, TSEncoder.EXIT) in spec_msg):
+                    # Keep both entry and exit for now
                     new_parent = copy.copy(child)
                     new_parent.children = []
                     parent.add_msg(new_parent)
@@ -357,7 +364,7 @@ class TSEncoder:
             parent.children = []
             simplify_msg(parent, cb, spec_msgs)
 
-            if (TSEncoder.get_key_from_msg(cb) in spec_msgs or
+            if (TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs or
                 len(parent.children) > 0):
                 new_trace.add_msg(parent)
 
@@ -381,11 +388,11 @@ class TSEncoder:
         self.ts.product(vars_ts)
 
         # 2. Specs ts
-        (spec_ts, disabled_ci, accepting) = self._encode_ground_specs()
+        (spec_ts, disabled_msg, accepting) = self._encode_ground_specs()
         self.ts.product(spec_ts)
 
         # 3. Encode the execution of the top-level callbacks
-        (cb_ts, errors) = self._encode_cbs(disabled_ci)
+        (cb_ts, errors) = self._encode_cbs(disabled_msg)
         self.ts.product(cb_ts)
         self.error_prop = FALSE_PYSMT()
         for e in errors:
@@ -399,31 +406,27 @@ class TSEncoder:
         """ Encode the set of ground specifications.
 
         Returns the transition system that encodes the effects of the
-        specification and the set of messages disabled_ci.
-        disabled_ci is the set
+        specification and the set of messages disabled_msg.
+        disabled_msg is the set
         of callin messages that can be disabled by some specification.
         """
 
         ts = TransitionSystem()
-
-        # TODO: now the ground spec may still contain wild cards
-        logging.warning("DONTCARE are still not handled " \
-                        "in the grounding of the specifications")
 
         # Accepting is a map from messages to set of states where the
         # message enabled status is changed (because the system matched
         # a regular expression in the specification).
         # In practice, these are the accepting states of the automaton.
         accepting = {}
-        disabled_ci = set()
+        disabled_msg = set()
         spec_id = 0
         for ground_spec in self.ground_specs:
             msg = get_spec_rhs(ground_spec.ast)
             key = TSEncoder.get_key_from_call(msg)
 
             if ground_spec.is_disable():
-                if key in self.ci_set:
-                    disabled_ci.add(key)
+                if key in self.app_contr:
+                    disabled_msg.add(key)
 
             if key not in accepting: accepting[key] = []
             gs_ts = self._get_ground_spec_ts(ground_spec,
@@ -473,7 +476,7 @@ class TSEncoder:
                                                  self.pysmt_env.formula_manager))
                 ts.trans = And(ts.trans, fc_msg)
 
-        return (ts, disabled_ci, accepting)
+        return (ts, disabled_msg, accepting)
 
 
     def _get_ground_spec_ts(self, ground_spec, spec_id, accepting):
@@ -644,7 +647,7 @@ class TSEncoder:
         return var_ts
 
 
-    def _encode_cbs(self, disabled_ci):
+    def _encode_cbs(self, disabled_msg):
         """ Encodes the callbacks.
 
         The system picks a top-level callback in the trace to execute.
@@ -666,6 +669,7 @@ class TSEncoder:
 
         # Create the pc variable
         tl_callback_count = len(self.trace.children)
+
         # Creates an additional error state
         #
         # The trace has self.trace_length messages, and
@@ -676,7 +680,11 @@ class TSEncoder:
         # Hence we remove tl_callback_count states and we add one
         # single initial state.
         # Then, we add an additional error state.
-        pc_size = self.trace_length - tl_callback_count + 1 + 1
+
+        # TODO: Fix the length of the trace, adding the exit messages!
+
+        pc_size = (self.trace_length * 2) - tl_callback_count + 1 + 1
+
         max_pc_value = pc_size - 1
         pc_name = TSEncoder._get_pc_name()
         self.cenc.add_var(pc_name, max_pc_value) # starts from 0
@@ -703,15 +711,18 @@ class TSEncoder:
             state_count = 0
             current_state = 0
 
-            stack = [tl_cb]
+            # (True, tl_cb)  -> True if it is the entry message
+            # (False, tl_cb) -> False if it is the exit message
+            stack = [(TSEncoder.ENTRY, tl_cb)]
             while (len(stack) != 0):
-                msg = stack.pop()
-                msg_key = TSEncoder.get_key_from_msg(msg)
+                (is_entry, msg) = stack.pop()
+                msg_key = TSEncoder.get_key_from_msg(msg, is_entry)
                 msg_enabled = TSEncoder._get_state_var(msg_key)
 
                 # Fill the stack in reverse order
                 for i in reversed(range(len(msg.children))):
-                    stack.append(msg.children[i])
+                    stack.append((TSEncoder.ENTRY, msg.children[i]))
+                stack.append((TSEncoder.EXIT, msg)) # enqueue the exit message
 
                 # encode the transition
                 if (len(stack) == 0):
@@ -728,8 +739,9 @@ class TSEncoder:
                 # Encode the enabled transition
                 label = And(self.r2a.get_msg_eq(msg_key), msg_enabled)
                 s0 = self.cenc.eq_val(pc_name, current_state)
-                self.mapback.add_pc2trace(current_state, next_state,
-                                          msg, msg_key)
+                self.mapback.add_pc2trace(current_state,
+                                          next_state,
+                                          (is_entry,msg), msg_key)
                 self.mapback.add_trans2pc(msg, current_state, next_state)
                 snext = self.cenc.eq_val(pc_name, next_state)
                 snext = self.helper.get_next_formula(ts.state_vars, snext)
@@ -739,7 +751,8 @@ class TSEncoder:
                 logging.debug("Trans: %d -> %d on %s" % (current_state, next_state, msg_key))
 
                 # encode the transition to the error state
-                if (msg_key in disabled_ci and isinstance(msg, CCallin)):
+                if (msg_key in disabled_msg and ((isinstance(msg, CCallin) and is_entry) or
+                                                 (isinstance(msg, CCallback) and not is_entry))):
                     logging.debug("Error condition: %s not enabled" % str(msg_enabled))
                     error_label = And(Not(msg_enabled),
                                       self.r2a.get_msg_eq(self.error_label))
@@ -751,19 +764,18 @@ class TSEncoder:
 
                     if error is None:
                         error = self.cenc.eq_val(pc_name, max_pc_value)
-                        #error_state_id
-                        # self.mapback.add_pc2trace(current_state,
-                        #                           self.error_label,
-                        #                           self.error_label)
+
                     self.mapback.add_pc2trace(current_state,
                                               error_state_id,
-                                              msg,
+                                              (is_entry,msg),
                                               self.error_label)
                     self.mapback.add_trans2pc(msg, current_state, error_state_id)
 
                 current_state = next_state
 
         # Add self loop on error state to avoid deadlocks
+        # WARNING: we can still have deadlocks due to internal callbacks that
+        # are disabled.
         error_label = And(self.r2a.get_msg_eq(self.error_label))
         error_state = self.cenc.eq_val(pc_name, error_state_id)
         snext_error = self.helper.get_next_formula(ts.state_vars,
@@ -821,7 +833,7 @@ class TSEncoder:
         assert method_name != ""
 
         assert call_type == "CI" or call_type == "CB"
-        assert entry_type == "ENTRY" or entry_type == "EXIT"
+        assert entry_type == TSEncoder.ENTRY or entry_type == TSEncoder.EXIT
 
         string_params = [str(f) for f in params]
 
@@ -839,9 +851,11 @@ class TSEncoder:
         return key
 
     @staticmethod
-    def get_key_from_msg(msg):
+    def get_key_from_msg(msg, entry_type):
         """ The input is a msg from a concrete trace.
         The output is the key to the message
+
+        The message must also be paired with the entry/exit information.
         """
 
         if isinstance(msg, CCallin):
@@ -862,7 +876,7 @@ class TSEncoder:
             params.append(p_value)
 
         full_msg_name = msg.get_full_msg_name()
-        return TSEncoder.get_key(retval, msg_type, full_msg_name, params)
+        return TSEncoder.get_key(retval, msg_type, entry_type, full_msg_name, params)
 
     @staticmethod
     def get_key_from_call(call_node):
@@ -888,7 +902,7 @@ class TSEncoder:
         else:
             assert False
 
-        entry_type = "ENTRY" if get_node_type(call_node) == CALL_ENTRY else "EXIT"
+        entry_type = TSEncoder.ENTRY if get_node_type(call_node) == CALL_ENTRY else TSEncoder.EXIT
 
         method_name_node = get_call_signature(call_node)
 
@@ -927,11 +941,13 @@ class TSEncoder:
         return value_repr
 
     def get_trace_stats(self):
-        # count the total number of messages
+        # count the total number of messages and returns the set of
+        # messages of the trace
         trace_length = 0
         msgs = set()
-        cb_set = set()
-        ci_set = set()
+
+        fmwk_contr = set()
+        app_contr = set()
 
         stack = []
         for msg in self.trace.children:
@@ -939,20 +955,24 @@ class TSEncoder:
 
         while (len(stack) != 0):
             msg = stack.pop()
-
             trace_length = trace_length + 1
-            key = TSEncoder.get_key_from_msg(msg)
 
+            # Add ENTRY
+            key = TSEncoder.get_key_from_msg(msg, TSEncoder.ENTRY)
             msgs.add(key)
-            if (isinstance(msg, CCallback)):
-                cb_set.add(key)
-            if (isinstance(msg, CCallin)):
-                ci_set.add(key)
+            if (isinstance(msg, CCallback)): fmwk_contr.add(key)
+            else: app_contr.add(key)
+
+            # Add EXIT
+            key = TSEncoder.get_key_from_msg(msg, TSEncoder.EXIT)
+            msgs.add(key)
+            if (isinstance(msg, CCallback)): app_contr.add(key)
+            else: fmwk_contr.add(key)
 
             for msg2 in msg.children:
                 stack.append(msg2)
 
-        return (trace_length, msgs, cb_set, ci_set)
+        return (trace_length, msgs, fmwk_contr, app_contr)
 
 
 class TSMapback():
@@ -1067,7 +1087,6 @@ class TSMapback():
         counter_enc = self.vars_encoders[self.pc_var]
         value = self._get_pc_value(self.pc_var, current_state)
         next_value = self._get_pc_value(self.pc_var, next_state)
-
 
         key = (self.pc_var, value, next_value, trans_label)
         if key in self.pc2trace:
