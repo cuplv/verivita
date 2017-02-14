@@ -412,10 +412,12 @@ class TestEnc(unittest.TestCase):
 
             return ctrace
 
-
         trace_tree = [(cb("cb1"), [(ci("ci1"),[])]),
                       (cb("cb2"), [(ci("ci2"),[])])]
         ctrace = new_trace(trace_tree)
+        print ""
+        ctrace.print_trace(sys.stdout)
+
         # ctrace.print_trace(sys.stdout)
         ts_enc = TSEncoder(ctrace, [])
         vars_ts = ts_enc._encode_vars()
@@ -424,11 +426,14 @@ class TestEnc(unittest.TestCase):
         ts.product(vars_ts)
         self.assertTrue(len(errors) == 0)
 
-        cb_1_seq = ["[CB]_cb1()", "[CI]_ci1()"]
-        cb_2_seq = ["[CB]_cb2()", "[CI]_ci2()"]
-        cb_11 = ["[CB]_cb1()", "[CI]_ci1()","[CB]_cb1()", "[CI]_ci1()"]
-        cb_12 = ["[CB]_cb1()", "[CI]_ci1()","[CB]_cb2()", "[CI]_ci2()"]
-        cb_22 = ["[CB]_cb2()", "[CI]_ci2()","[CB]_cb2()", "[CI]_ci2()"]
+        cb_1_seq = ["[CB]_[ENTRY]_cb1()", "[CI]_[ENTRY]_ci1()", "[CI]_[EXIT]_ci1()", "[CB]_[EXIT]_cb1()"]
+        cb_2_seq = ["[CB]_[ENTRY]_cb2()", "[CI]_[ENTRY]_ci2()","[CI]_[EXIT]_ci2()","[CB]_[EXIT]_cb2()"]
+        cb_11 = ["[CB]_[ENTRY]_cb1()", "[CI]_[ENTRY]_ci1()", "[CI]_[EXIT]_ci1()", "[CB]_[EXIT]_cb1()",
+                 "[CB]_[ENTRY]_cb1()", "[CI]_[ENTRY]_ci1()", "[CI]_[EXIT]_ci1()", "[CB]_[EXIT]_cb1()"]
+        cb_12 = ["[CB]_[ENTRY]_cb1()", "[CI]_[ENTRY]_ci1()", "[CI]_[EXIT]_ci1()", "[CB]_[EXIT]_cb1()",
+                 "[CB]_[ENTRY]_cb2()", "[CI]_[ENTRY]_ci2()","[CI]_[EXIT]_ci2()","[CB]_[EXIT]_cb2()"]
+        cb_22 = ["[CB]_[ENTRY]_cb2()", "[CI]_[ENTRY]_ci2()","[CI]_[EXIT]_ci2()","[CB]_[EXIT]_cb2()",
+                 "[CB]_[ENTRY]_cb2()", "[CI]_[ENTRY]_ci2()","[CI]_[EXIT]_ci2()","[CB]_[EXIT]_cb2()"]
 
         accepting_traces = [cb_1_seq, cb_2_seq,
                             cb_11, cb_12, cb_22]
@@ -436,30 +441,40 @@ class TestEnc(unittest.TestCase):
         for seq in accepting_traces:
             self.assertTrue(self._accept_word(ts_enc, ts, seq, TRUE()))
 
-        deadlock_traces = [["[CI]_ci1()"], ["[CI]_ci2()"],
-                           ["[CB]_cb1()", "[CI]_ci1()", "[CI]_ci2()"],
-                           ["[CB]_cb2()", "[CB]_cb1()", "[CI]_ci1()"]]
+
+        deadlock_traces = [["[CI]_[ENTRY]_ci1()"], ["[CI]_[ENTRY]_ci2()"],
+                           ["[CB]_[ENTRY]_cb1()", "[CI]_[ENTRY]_ci1()", "[CI]_[EXIT]_ci1()", "[CB]_[EXIT]_cb1()",
+                            "[CI]_[ENTRY]_ci2()", "[CI]_[EXIT]_ci2()"],
+                           ["[CB]_[ENTRY]_cb2()", "[CI]_[ENTRY]_ci1()", "[CB]_[EXIT]_cb1()"]]
         for seq in deadlock_traces:
             self.assertFalse(self._accept_word(ts_enc, ts, seq, TRUE()))
 
         ts_enc = TSEncoder(ctrace, [])
         vars_ts = ts_enc._encode_vars()
-        (ts, errors) = ts_enc._encode_cbs(set(["[CI]_ci1()"]))
+        (ts, errors) = ts_enc._encode_cbs(set(["[CI]_[ENTRY]_ci1()"]))
         ts.product(vars_ts)
         self.assertTrue(len(errors) == 1)
         self.assertTrue(is_sat(And(errors[0],
-                                   Not(TSEncoder._get_state_var("[CI]_ci1()")))))
+                                   Not(TSEncoder._get_state_var("[CI]_[ENTRY_]ci1()")))))
+
+        ts_enc = TSEncoder(ctrace, [])
+        vars_ts = ts_enc._encode_vars()
+        (ts, errors) = ts_enc._encode_cbs(set(["[CB]_[EXIT]_cb1()"]))
+        ts.product(vars_ts)
+        self.assertTrue(len(errors) == 1)
+        self.assertTrue(is_sat(And(errors[0],
+                                   Not(TSEncoder._get_state_var("[CB]_[EXIT]_cb1()")))))
 
 
         ts_enc = TSEncoder(ctrace, [])
         vars_ts = ts_enc._encode_vars()
-        (ts, errors) = ts_enc._encode_cbs(set(["[CI]_ci1()","[CI]_ci2()"]))
+        (ts, errors) = ts_enc._encode_cbs(set(["[CI]_[ENTRY]_ci1()","[CI]_[ENTRY]_ci2()"]))
         ts.product(vars_ts)
         self.assertTrue(len(errors) == 1)
 
         self.assertTrue(is_sat(And([errors[0],
-                                    Not(TSEncoder._get_state_var("[CI]_ci1()")),
-                                    Not(TSEncoder._get_state_var("[CI]_ci2()"))])))
+                                    Not(TSEncoder._get_state_var("[CI]_[ENTRY]_ci1()")),
+                                    Not(TSEncoder._get_state_var("[CI]_[ENTRY]_ci2()"))])))
 
 
     def test_mapback(self):
