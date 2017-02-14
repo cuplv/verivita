@@ -815,24 +815,27 @@ class TSEncoder:
         return Symbol(atom_name, BOOL)
 
     @staticmethod
-    def get_key(retval, call_type, method_name, params):
+    def get_key(retval, call_type, entry_type, method_name, params):
         assert method_name is not None
         assert params is not None
         assert method_name != ""
 
         assert call_type == "CI" or call_type == "CB"
+        assert entry_type == "ENTRY" or entry_type == "EXIT"
 
         string_params = [str(f) for f in params]
 
         if (retval != None):
-            key = "%s=[%s]_%s(%s)" % (retval,
-                                      call_type,
-                                      method_name,
-                                      ",".join(string_params))
+            key = "%s=[%s]_[%s]_%s(%s)" % (retval,
+                                           call_type,
+                                           entry_type,
+                                           method_name,
+                                           ",".join(string_params))
         else:
-            key = "[%s]_%s(%s)" % (call_type ,
-                                   method_name,
-                                   ",".join(string_params))
+            key = "[%s]_[%s]_%s(%s)" % (call_type ,
+                                        entry_type,
+                                        method_name,
+                                        ",".join(string_params))
         return key
 
     @staticmethod
@@ -864,12 +867,16 @@ class TSEncoder:
     @staticmethod
     def get_key_from_call(call_node):
         """ Works for grounded call node """
-        assert get_node_type(call_node) == CALL
+        assert (get_node_type(call_node) == CALL_ENTRY or
+                get_node_type(call_node) == CALL_EXIT)
 
-        node_retval = get_call_assignee(call_node)
-        if (new_nil() != node_retval):
-            retval_val = TraceSpecConverter.specnode2traceval(node_retval)
-            retval = TSEncoder.get_value_key(retval_val)
+        if (get_node_type(call_node) == CALL_EXIT):
+            node_retval = get_call_assignee(call_node)
+            if (new_nil() != node_retval):
+                retval_val = TraceSpecConverter.specnode2traceval(node_retval)
+                retval = TSEncoder.get_value_key(retval_val)
+            else:
+                retval = None
         else:
             retval = None
 
@@ -881,7 +888,8 @@ class TSEncoder:
         else:
             assert False
 
-        # method_name_node = get_call_method(call_node)
+        entry_type = "ENTRY" if get_node_type(call_node) == CALL_ENTRY else "EXIT"
+
         method_name_node = get_call_signature(call_node)
 
         assert (ID == get_node_type(method_name_node))
@@ -903,7 +911,7 @@ class TSEncoder:
             params.append(p_value)
             node_params = get_param_tail(node_params)
 
-        return TSEncoder.get_key(retval, call_type,
+        return TSEncoder.get_key(retval, call_type, entry_type,
                                  method_name, params)
 
 
@@ -1189,7 +1197,7 @@ class RegExpToAuto():
     def get_from_regexp_aux(self, regexp):
         node_type = get_node_type(regexp)
 
-        if (node_type in [TRUE,FALSE,CALL,AND_OP,OR_OP,NOT_OP]):
+        if (node_type in [TRUE,FALSE,CALL_ENTRY,CALL_EXIT,AND_OP,OR_OP,NOT_OP]):
             # base case
             # accept the atoms in the bexp
             formula = self.get_be(regexp)
@@ -1228,7 +1236,7 @@ class RegExpToAuto():
             return TRUE_PYSMT()
         elif (node_type == FALSE):
             return FALSE_PYSMT()
-        elif (node_type == CALL):
+        elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
             # generate a boolean atom for the call
             atom_var = self.get_atom_var(be_node)
             return atom_var
