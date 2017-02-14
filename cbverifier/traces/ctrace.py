@@ -110,10 +110,10 @@ class CMessage(object):
         else:
             exception = ""
 
-        stream.write("%s[%d] [%s] %s (" % (sep, self.message_id,
-                                           message_type,
-                                           message_sig))
-
+        stream.write("%s[%d] [%s] [ENTRY] %s (" % (sep,
+                                                   self.message_id,
+                                                   message_type,
+                                                   message_sig))
         for i in range(len(self.params)):
             if (i != 0): stream.write(",")
             stream.write("%s" % self.params[i].get_value())
@@ -129,6 +129,23 @@ class CMessage(object):
         if rec:
             for child in self.children:
                 child._print(stream, "  ", rec, debug_info, filter)
+
+        if self.return_value is None:
+            rv_string = ""
+        else:
+            rv_string = "%s = " % self.return_value.get_value()
+
+        stream.write("%s[%d] [%s] [EXIT] %s%s (" % (sep,
+                                                    self.message_id,
+                                                    message_type,
+                                                    rv_string,
+                                                    message_sig))
+        for i in range(len(self.params)):
+            if (i != 0): stream.write(",")
+            stream.write("%s" % self.params[i].get_value())
+        stream.write(") %s\n" % exception)
+
+
 
     @staticmethod
     def get_full_msg_name_static(class_name, method_name):
