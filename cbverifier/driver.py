@@ -63,7 +63,7 @@ class Driver:
         stream.write("\nTRACE:\n")
         if (self.opts.filter_msgs != None):
             self.trace.print_trace(stream, self.opts.debug,
-                              MessageFilter.typeFilterFrom(self.opts.filter_msgs))
+                                   MessageFilter.typeFilterFrom(self.opts.filter_msgs))
         else:
             self.trace.print_trace(stream, self.opts.debug)
         stream.write("\n")

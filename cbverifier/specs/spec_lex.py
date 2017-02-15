@@ -10,7 +10,7 @@ Lexer for the lifestate specifications
 import ply.lex as lex
 import ply.yacc as yacc
 
-keywords = ('TOK_SPEC','TOK_TRUE','TOK_FALSE','TOK_NULL','TOK_CB','TOK_CI')
+keywords = ('TOK_SPEC','TOK_TRUE','TOK_FALSE','TOK_NULL','TOK_CB','TOK_CI','TOK_ENTRY','TOK_EXIT')
 
 tokens = keywords + (
     'TOK_ID',

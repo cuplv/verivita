@@ -97,20 +97,18 @@ def p_bexp_paren(t):
     t[0] = t[2]
 
 
-def p_atom(t):
-    '''atom : param TOK_ASSIGN TOK_LSQUARE method_type TOK_RSQUARE method_call
-            | TOK_LSQUARE method_type TOK_RSQUARE method_call
+def p_atom_no_ret_val(t):
+    '''atom : TOK_LSQUARE method_type TOK_RSQUARE TOK_LSQUARE entry_type TOK_RSQUARE method_call
     '''
-    if (t[2] == '='):
-        assert len(t) == 7
-        assignee = t[1]
-        call_type = t[4]
-        method_call = t[6]
-    else:
-        assert len(t) == 5
-        assignee = new_nil()
-        call_type = t[2]
-        method_call = t[4]
+
+    # for i in range(len(t)):
+    #     print str(i) + ": " + str(t[i])
+
+    assert len(t) == 8
+    assignee = new_nil()
+    call_type = t[2]
+    entry_type = t[5]
+    method_call = t[7]
 
     receiver = method_call[0]
     inner_call = method_call[1]
@@ -124,20 +122,40 @@ def p_atom(t):
             get_node_type(method_name) == ID)
     method_name = new_id("%s %s" % (get_id_val(ret_type),
                                     get_id_val(method_name)))
-    # param_types = []
-    # app_node = method_param
-    # while (NIL != get_node_type(app_node)):
-    #     ptype = get_param_type(app_node)
-    #     assert ID == get_node_type(ptype)
-    #     param_types.append(get_id_val(ptype))
-    #     app_node = get_param_tail(app_node)
 
-    # method_name = new_id("%s %s(%s)" % (get_id_val(ret_type),
-    #                                     get_id_val(method_name),
-    #                                     ",".join(param_types)))
+    if (entry_type == "ENTRY"):
+        t[0] = new_call_entry(call_type, receiver, method_name, method_param)
+    elif (entry_type == "EXIT"):
+        t[0] = new_call_exit(assignee, call_type, receiver,
+                             method_name, method_param)
+    else:
+        print entry_type
+        assert False
 
-    t[0] = new_call(assignee, call_type, receiver,
-                    method_name, method_param)
+def p_atom_ret_val(t):
+    '''atom : param TOK_ASSIGN TOK_LSQUARE method_type TOK_RSQUARE TOK_LSQUARE TOK_EXIT TOK_RSQUARE method_call
+    '''
+    assert len(t) == 10
+    assignee = t[1]
+    call_type = t[4]
+    entry_type = t[7]
+    method_call = t[9]
+
+    receiver = method_call[0]
+    inner_call = method_call[1]
+    ret_type = inner_call[0]
+    method_name = inner_call[1]
+    method_param = inner_call[2]
+
+    # Method signature
+    # return_type method_name(type_p1, type_p2, ..., type_pn)
+    assert (get_node_type(ret_type) == ID and
+            get_node_type(method_name) == ID)
+    method_name = new_id("%s %s" % (get_id_val(ret_type),
+                                    get_id_val(method_name)))
+
+    t[0] = new_call_exit(assignee, call_type, receiver, method_name, method_param)
+
 
 def p_atom_const(t):
     '''atom : TOK_TRUE
@@ -223,6 +241,15 @@ def p_method_type(t):
         t[0] = new_ci()
     elif (t[1] == 'CB'):
         t[0] = new_cb()
+
+def p_entry_type(t):
+    ''' entry_type : TOK_ENTRY
+                   | TOK_EXIT
+    '''
+    if (t[1] == 'ENTRY'):
+        t[0] = 'ENTRY'
+    elif (t[1] == 'EXIT'):
+        t[0] = 'EXIT'
 
 
 
