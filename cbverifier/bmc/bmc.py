@@ -142,7 +142,6 @@ class BMC:
 
     def solve(self, solver, k):
         logging.debug("Finding bug up to %d steps..." % k)
-        res = solver.solve()
         if (solver.solve()):
             logging.debug("Found bug...")
             model = solver.get_model()
