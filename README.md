@@ -97,9 +97,5 @@ can be simulated according to the set of specifications.
 ```nosetests```
 
 
-
-# Current limitations - to be solved
-
-- DONTCARE are still not handled by the grounding
-
-- bitmask: add the bitmask to the encoding
+## Specification language
+The specification language is described in the file SPEC_LANGUAGE.md

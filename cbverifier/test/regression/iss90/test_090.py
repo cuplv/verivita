@@ -21,9 +21,9 @@ from cbverifier.test.test_grounding import TestGrounding
 class TestIss90(unittest.TestCase):
 
     def test_090_cb_name(self):
-        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CI] [l] void m4();" \
-                                               "SPEC FALSE[*] |- [CB] [l] void m3();" \
-                                               "SPEC [CB] [l1] void m1() |+ [CB] [l2] void m3()")
+        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CI] [ENTRY] [l] void m4();" \
+                                               "SPEC FALSE[*] |- [CB] [ENTRY][l] void m3();" \
+                                               "SPEC [CB] [ENTRY][l1] void m1() |+ [CB] [ENTRY] [l2] void m3()")
         assert spec_list is not None
 
         ctrace = CTrace()
@@ -69,17 +69,17 @@ class TestIss90(unittest.TestCase):
 
         io_string = stringio.getvalue()
 
-        self.assertTrue("[1] [CB] void m1()" in io_string)
-        self.assertTrue("[3] [CB] void m3()" in io_string or
-                        "[5] [CB] void m5()" in io_string)
-        self.assertTrue("[4] [CI] void m4()" in io_string or
-                        "[6] [CI] void m4()" in io_string)
+        self.assertTrue("[1] [CB] [ENTRY] void m1()" in io_string)
+        self.assertTrue("[3] [CB] [ENTRY] void m3()" in io_string or
+                        "[5] [CB] [ENTRY] void m5()" in io_string)
+        self.assertTrue("[4] [CI] [ENTRY] void m4()" in io_string or
+                        "[6] [CI] [ENTRY] void m4()" in io_string)
 
 
     def test_090_multiple_cbs(self):
-        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CI] [l] void m4();" \
-                                               "SPEC FALSE[*] |- [CB] [l] void m3();" \
-                                               "SPEC [CB] [l1] void m1() |+ [CB] [l2] void m3()")
+        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CI] [ENTRY] [l] void m4();" \
+                                               "SPEC FALSE[*] |- [CB] [ENTRY] [l] void m3();" \
+                                               "SPEC [CB] [ENTRY] [l1] void m1() |+ [CB] [ENTRY] [l2] void m3()")
         assert spec_list is not None
 
         ctrace = CTrace()
@@ -128,7 +128,7 @@ class TestIss90(unittest.TestCase):
 
         io_string = stringio.getvalue()
 
-        self.assertTrue("[4] [CB] void m1()" in io_string)
-        self.assertTrue("[5] [CI] void m2()" in io_string)
-        self.assertTrue("[6] [CB] void m3()" in io_string)
-        self.assertTrue("[7] [CI] void m4()" in io_string)
+        self.assertTrue("[4] [CB] [ENTRY] void m1()" in io_string)
+        self.assertTrue("[5] [CI] [ENTRY] void m2()" in io_string)
+        self.assertTrue("[6] [CB] [ENTRY] void m3()" in io_string)
+        self.assertTrue("[7] [CI] [ENTRY] void m4()" in io_string)

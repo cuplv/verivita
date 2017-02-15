@@ -1,2 +1,2 @@
 // Example specification
-SPEC [CB] [l] void m1() |- [CI] [l] void m2()
+SPEC [CB] [ENTRY] [l] void m1() |- [CI] [ENTRY] [l] void m2()
