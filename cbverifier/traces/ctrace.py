@@ -95,14 +95,12 @@ class CMessage(object):
     def __iter__(self):
         return iter(self.children)
 
-    def _print(self, stream, sep, rec=True, debug_info=False, filter = None):
+    def _print_entry(self, stream, sep, debug_info=False):
         message_sig = self.get_full_msg_name()
-
         if isinstance(self, CCallback):
             message_type = "CB"
         else:
             message_type = "CI"
-
 
         if self.exception is not None:
             exception = "(raises %s: %s)" % (self.exception.exc_type,
@@ -125,10 +123,19 @@ class CMessage(object):
                 for override in self.fmwk_overrides:
                     stream.write("%s%s\n" % (sep, str(override)))
 
+    def _print_exit(self, stream, sep, debug_info=False):
+        message_sig = self.get_full_msg_name()
 
-        if rec:
-            for child in self.children:
-                child._print(stream, "  ", rec, debug_info, filter)
+        if isinstance(self, CCallback):
+            message_type = "CB"
+        else:
+            message_type = "CI"
+
+        if self.exception is not None:
+            exception = "(raises %s: %s)" % (self.exception.exc_type,
+                                             self.exception.message)
+        else:
+            exception = ""
 
         if self.return_value is None:
             rv_string = ""
@@ -145,6 +152,15 @@ class CMessage(object):
             stream.write("%s" % self.params[i].get_value())
         stream.write(") %s\n" % exception)
 
+
+    def _print(self, stream, sep, rec=True, debug_info=False, filter = None):
+        self._print_entry(stream, sep, debug_info)
+
+        if rec:
+            for child in self.children:
+                child._print(stream, "  ", rec, debug_info, filter)
+
+        self._print_exit(stream, sep, debug_info)
 
 
     @staticmethod
