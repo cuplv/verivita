@@ -754,7 +754,7 @@ class TSEncoder:
                 self.mapback.add_pc2trace(current_state,
                                           next_state,
                                           (entry_type,msg), msg_key)
-                self.mapback.add_trans2pc(msg, current_state, next_state)
+                self.mapback.add_trans2pc((entry_type,msg), current_state, next_state)
 
                 snext = self.cenc.eq_val(pc_name, next_state)
                 snext = self.helper.get_next_formula(ts.state_vars, snext)
@@ -782,7 +782,7 @@ class TSEncoder:
                                               error_state_id,
                                               (entry_type,msg),
                                               self.error_label)
-                    self.mapback.add_trans2pc(msg, current_state, error_state_id)
+                    self.mapback.add_trans2pc((entry_type,msg), current_state, error_state_id)
 
                 current_state = next_state
 

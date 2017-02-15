@@ -415,7 +415,6 @@ class TestEnc(unittest.TestCase):
         trace_tree = [(cb("cb1"), [(ci("ci1"),[])]),
                       (cb("cb2"), [(ci("ci2"),[])])]
         ctrace = new_trace(trace_tree)
-        print ""
         ctrace.print_trace(sys.stdout)
 
         # ctrace.print_trace(sys.stdout)
@@ -519,8 +518,8 @@ class TestEnc(unittest.TestCase):
             all_vars.extend(cenc.get_counter_var(c))
 
         # Fake spec (it is not important to test the mapback)
-        specs = Spec.get_specs_from_string("SPEC [CB] [l] void m1() |- [CI] [l] void m2();" \
-                                           "SPEC [CB] [l] void m1() |- [CI] [l] void m2()")
+        specs = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [l] void m1() |- [CI] [ENTRY] [l] void m2();" \
+                                           "SPEC [CB] [ENTRY] [l] void m1() |- [CI] [ENTRY] [l] void m2()")
 
 
         mapback = TSMapback(pysmt_env, msg_ivar, pc_counter)
@@ -627,8 +626,40 @@ class TestEnc(unittest.TestCase):
         printer.print_cex()
 
         io_string = stringio.getvalue()
-        self.assertTrue("SPEC [CB] [1] void m1() |- [CI] [1] void m2()" in io_string)
+
+        self.assertTrue("SPEC [CB] [ENTRY] [1] void m1() |- [CI] [ENTRY] [1] void m2()" in io_string)
         self.assertTrue("Reached an error state in step 2" in io_string)
+
+    def test_cex_printer_exit(self):
+        spec_list = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [l] void m1() |- [CB] [EXIT] [l] void m1()")
+        assert spec_list is not None
+
+        ctrace = CTrace()
+        cb = CCallback(1, 1, "", "void m1()", [TestGrounding._get_obj(1,"string")],
+                       None,
+                       [TestGrounding._get_fmwkov("","void m1()", False)])
+        ctrace.add_msg(cb)
+        ci = CCallin(1, 1, "", "void m2()",
+                     [TestGrounding._get_obj(1,"string")],
+                     None)
+        cb.add_msg(ci)
+        ts_enc = TSEncoder(ctrace, spec_list)
+
+        ts = ts_enc.get_ts_encoding()
+        error = ts_enc.error_prop
+        bmc = BMC(ts_enc.helper, ts, error)
+        cex = bmc.find_bug(4)
+        cex = bmc.find_bug(4,True)
+
+        self.assertFalse(cex is None)
+
+        stringio = StringIO()
+        printer = CexPrinter(ts_enc.mapback, cex, stringio)
+        printer.print_cex()
+
+        io_string = stringio.getvalue()
+        self.assertTrue("SPEC [CB] [ENTRY] [1] void m1() |- [CB] [EXIT] [1] void m1()" in io_string)
+        self.assertTrue("Reached an error state in step 4" in io_string)
 
 
     def test_init_state(self):
@@ -637,7 +668,7 @@ class TestEnc(unittest.TestCase):
           - m2 is disabled in the initial state
           - the trace try to call m1 and then m2, causing an exception
         """
-        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CI] void m2()")
+        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CI] [ENTRY] void m2()")
 
         ctrace = CTrace()
 
@@ -657,7 +688,7 @@ class TestEnc(unittest.TestCase):
     def test_exception(self):
         """ Test the removal of exception from top-level callbacks
         """
-        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CI] void m2()")
+        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CI] [ENTRY] void m2()")
 
         ctrace = CTrace()
         cb1 = CCallback(1, 1, "", "void m1()", [TestGrounding._get_null()], None,
@@ -686,9 +717,8 @@ class TestEnc(unittest.TestCase):
         self.assertTrue(bmc.find_bug(2,True) is None)
 
     def test_multiple(self):
-        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CB] [l] void m3(); SPEC FALSE[*] |- [CI] [l] void m4()")
+        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CB] [ENTRY] [l] void m3(); SPEC FALSE[*] |- [CI] [ENTRY] [l] void m4()")
         assert spec_list is not None
-
 
         ctrace = CTrace()
         cb = CCallback(1, 1, "", "void m1()",
@@ -720,9 +750,8 @@ class TestEnc(unittest.TestCase):
 
 
     def test_multiple_single_cb(self):
-        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CB] [l] void m3(); SPEC FALSE[*] |- [CI] [l] void m4()")
+        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CB] [ENTRY] [l] void m3(); SPEC FALSE[*] |- [CI] [ENTRY] [l] void m4()")
         assert spec_list is not None
-
 
         ctrace = CTrace()
         cb = CCallback(1, 1, "", "void m1()",
@@ -757,7 +786,7 @@ class TestEnc(unittest.TestCase):
         self.assertTrue(cex is None)
 
     def test_simplify_1(self):
-        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CB] [l] void m3(); SPEC FALSE[*] |- [CI] [l] void m4()")
+        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CB] [ENTRY] [l] void m3(); SPEC FALSE[*] |- [CI] [ENTRY] [l] void m4()")
         assert spec_list is not None
 
         ctrace = CTrace()
@@ -791,7 +820,7 @@ class TestEnc(unittest.TestCase):
 
 
     def test_simplify_2(self):
-        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CB] [l] void m3(); SPEC FALSE[*] |- [CI] [l] void m4()")
+        spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CB] [ENTRY] [l] void m3(); SPEC FALSE[*] |- [CI] [ENTRY] [l] void m4()")
         assert spec_list is not None
 
         ctrace = CTrace()
@@ -829,12 +858,24 @@ class TestEnc(unittest.TestCase):
 
 
     def test_simulation(self):
-        ts_enc = self._get_sample_trace()
+        ctrace = CTrace()
+        cb = CCallback(1, 1, "", "void m1()", [TestGrounding._get_obj("1","string")],
+                       None,
+                       [TestGrounding._get_fmwkov("","void m1()", False)])
+        ctrace.add_msg(cb)
+        ci = CCallin(1, 1, "", "void m2()",
+                     [TestGrounding._get_obj("1","string")],
+                     None)
+        cb.add_msg(ci)
+        ts_enc = TSEncoder(ctrace, []) #spec_list)
 
         ts = ts_enc.get_ts_encoding()
         trace_enc = ts_enc.get_trace_encoding()
 
         bmc = BMC(ts_enc.helper, ts, FALSE())
+
+        print trace_enc
+
         (step, trace) = bmc.simulate(trace_enc)
 
         self.assertTrue(trace is not None)
