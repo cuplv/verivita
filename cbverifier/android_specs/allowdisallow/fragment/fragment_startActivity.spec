@@ -6,5 +6,5 @@ SPEC TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app
 //All back edges that lead to a running state re enable startActivity
 SPEC TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle) |+ [CI] [ENTRY] [f] void android.app.Fragment.startActivity(# : android.content.Intent);
 SPEC TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onStart() |+ [CI] [ENTRY] [f] void android.app.Fragment.startActivity(# : android.content.Intent);
-SPEC TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onResume() |+ [CI] [ENTRY] [f] void android.app.Fragment.startActivity(# : android.content.Intent);
+SPEC TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onResume() |+ [CI] [ENTRY] [f] void android.app.Fragment.startActivity(# : android.content.Intent)
 
