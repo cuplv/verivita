@@ -1,1 +1,1 @@
-SPEC [CB] [l] void android.app.Activity.m1("foobar" : string) |- [CI] [l] type m2()
+SPEC [CB] [ENTRY] [l] void android.app.Activity.m1("foobar" : string) |- [CI] [ENTRY] [l] type m2()
