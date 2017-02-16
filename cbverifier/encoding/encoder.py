@@ -365,7 +365,8 @@ class TSEncoder:
             parent.children = []
             simplify_msg(parent, cb, spec_msgs)
 
-            if (TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs or
+            if ((TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs or
+                 TSEncoder.get_key_from_msg(cb, TSEncoder.EXIT) in spec_msgs) or
                 len(parent.children) > 0):
                 new_trace.add_msg(parent)
 
@@ -850,7 +851,8 @@ class TSEncoder:
 
         string_params = [str(f) for f in params]
 
-        if (retval != None):
+        if (retval != None and entry_type == TSEncoder.EXIT):
+            # ADD return value only for EXIT
             key = "%s=[%s]_[%s]_%s(%s)" % (retval,
                                            call_type,
                                            entry_type,
