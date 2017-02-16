@@ -91,6 +91,9 @@ class TestSpecParser(unittest.TestCase):
         self._test_single_token(0, 'TOK_NULL',1,'NULL','NULL')
         self._test_single_token(0, 'TOK_CB', 1, 'CB', 'CB')
         self._test_single_token(0, 'TOK_CI', 1, 'CI', 'CI')
+        self._test_single_token(0, 'TOK_ENTRY', 1, 'ENTRY', 'ENTRY')
+        self._test_single_token(0, 'TOK_EXIT', 1, 'EXIT', 'EXIT')
+
         self._test_single_token(0, 'TOK_ASSIGN', 1, '=', '=')
 
         self._test_single_token(0, 'TOK_STRING_LITERAL', 1,
@@ -102,7 +105,6 @@ class TestSpecParser(unittest.TestCase):
 
         # test comment, ignore everything after //
         self._test_single_token(0, 'TOK_ASSIGN', 1, '=', '=//ciao')
-
         self._test_single_token(0, 'TOK_SPEC', 1, 'SPEC', 'SPEC')
 
 
@@ -125,6 +127,7 @@ class TestSpecParser(unittest.TestCase):
 
 
     def _test_parse(self, spec, same_out=True):
+        # print spec
         res = spec_parser.parse(spec)
         self.assertTrue(res is not None)
 
@@ -139,41 +142,42 @@ class TestSpecParser(unittest.TestCase):
         self.assertTrue(res is None)
 
     def test_parser(self):
-        correct_expr = ["SPEC [CB] [l] type l() |- [CB] [l] type l(b : type)",
-                        "SPEC [CB] [l] type l(l1 : type,l2 : type) |- [CB] [l] type l(b : type)",
-                        "SPEC [CB] [l] type l(l1 : type,l2 : type) |- [CI] [l] type l(b : type); SPEC [CB] [l] type l(l1 : type,l2 : type) |- [CI] [l] type l(b : type)",
-                        "SPEC ([CB] [l] type l(l1 : type,l2 : type)); ([CB] [l] type l(l1 : type,l2 : type)) |- [CI] [l] type l(b : type)",
-                        "SPEC ([CB] [l] type l(l1 : type,l2 : type))[*] |- [CI] [l] type l(b : type)",
-                        "SPEC ([CB] [l] type l(l1 : type,l2 : type))[*] |+ [CI] [l] type l(b : type)",
-                        "SPEC ([CB] [l] type l(l1 : type,l2 : type))[*] |- [CI] [l] type l(b : type)",
-                        "SPEC ([CB] [l] type b(l1 : type,l2 : type))[*] |- [CI] [l] type l(b : type)",
-                        "SPEC ([CB] [l] void <init>(l1 : type,l2 : type))[*] |- [CI] [l] type l(b : type)",
+        correct_expr = ["SPEC [CB] [ENTRY] [l] type l() |- [CB] [ENTRY] [l] type l(b : type)",
+                        "SPEC [CB] [ENTRY] [l] type l(l1 : type,l2 : type) |- [CB] [ENTRY] [l] type l(b : type)",
+                        "SPEC [CB] [ENTRY] [l] type l(l1 : type,l2 : type) |- [CI] [ENTRY] [l] type l(b : type); SPEC [CB] [ENTRY] [l] type l(l1 : type,l2 : type) |- [CI] [ENTRY] [l] type l(b : type)",
+                        "SPEC ([CB] [ENTRY] [l] type l(l1 : type,l2 : type)); ([CB] [ENTRY] [l] type l(l1 : type,l2 : type)) |- [CI] [ENTRY] [l] type l(b : type)",
+                        "SPEC ([CB] [ENTRY] [l] type l(l1 : type,l2 : type))[*] |- [CI] [ENTRY] [l] type l(b : type)",
+                        "SPEC ([CB] [ENTRY] [l] type l(l1 : type,l2 : type))[*] |+ [CI] [ENTRY] [l] type l(b : type)",
+                        "SPEC ([CB] [ENTRY] [l] type l(l1 : type,l2 : type))[*] |- [CI] [ENTRY] [l] type l(b : type)",
+                        "SPEC ([CB] [ENTRY] [l] type b(l1 : type,l2 : type))[*] |- [CI] [ENTRY] [l] type l(b : type)",
+                        "SPEC ([CB] [ENTRY] [l] void <init>(l1 : type,l2 : type))[*] |- [CI] [ENTRY] [l] type l(b : type)",
                         "SPEC TRUE |- TRUE",
                         "SPEC (TRUE)[*] |- TRUE",
-                        "SPEC ([CB] [l] type m1())[*] |- TRUE",
+                        "SPEC ([CB] [ENTRY] [l] type m1())[*] |- TRUE",
                         "SPEC (((TRUE & FALSE) | ! (FALSE)))[*] |- TRUE",
-                        "SPEC [CB] [l1] type methodName(TRUE : boolean) |- [CI] [l2] type methodName(bparam : type,TRUE : boolean)",
-                        "SPEC [CB] [l1] type methodName(# : boolean) |- [CI] [l2] type methodName(bparam : type,TRUE : boolean)",
-                        "SPEC foo = [CB] [l1] type methodName(# : boolean) |- [CI] [l2] type methodName(bparam : type,TRUE : boolean)",
-                        "SPEC (foo = [CB] [l1] type methodName(a : type)); (foo = [CB] [l1] type methodName(a : type)) |- [CI] [l2] type methodName(bparam : type,TRUE : boolean)",
-                        "SPEC 1 = [CB] [l1] type methodName(# : boolean) |- [CI] [l2] type methodName(bparam : type,TRUE : boolean)",
-                        "SPEC # = [CB] [l1] type methodName(# : boolean) |- [CI] [l2] type methodName(bparam : type,TRUE : boolean)",
-                        "SPEC TRUE = [CB] [l1] type methodName(# : boolean) |- [CI] [l2] type methodName(bparam : type,TRUE : boolean)",
-                        'SPEC ([CB] [l] type l(l1 : int,"foo" : string))[*] |- [CI] [l] type l(b : type)',
-                        "SPEC [CB] [l] type l(NULL : boolean) |- [CB] [l] type l(b : type)",
-                        "SPEC [CI] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener) |+ [CB] [l] void onClick(b : android.widget.Button)",
-                        "SPEC ((TRUE)[*]); ([CI] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener)) |+ [CB] [l] void onClick(b : android.widget.Button)"]
+                        "SPEC [CB] [ENTRY] [l1] type methodName(TRUE : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
+                        "SPEC [CB] [ENTRY] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
+                        "SPEC foo = [CB] [EXIT] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
+                        "SPEC (foo = [CB] [EXIT] [l1] type methodName(a : type)); (foo = [CB] [EXIT] [l1] type methodName(a : type)) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
+                        "SPEC 1 = [CB] [EXIT] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
+                        "SPEC # = [CB] [EXIT] [l1] type methodName(# : boolean) |- [CI] [EXIT] [l2] type methodName(bparam : type,TRUE : boolean)",
+                        "SPEC TRUE = [CB] [EXIT] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
+                        'SPEC ([CB] [ENTRY] [l] type l(l1 : int,"foo" : string))[*] |- [CI] [ENTRY] [l] type l(b : type)',
+                        "SPEC [CB] [ENTRY] [l] type l(NULL : boolean) |- [CB] [ENTRY] [l] type l(b : type)",
+                        "SPEC [CI] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener) |+ [CB] [ENTRY] [l] void onClick(b : android.widget.Button)",
+                        "SPEC ((TRUE)[*]); ([CI] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener)) |+ [CB] [ENTRY] [l] void onClick(b : android.widget.Button)"]
 
         for expr in correct_expr:
             self._test_parse(expr)
 
         # do not require the spec read from the parser to be printed
         # and be equal to the input spec
-        correct_expr_no_print = ["SPEC [CB] [l] type l() |- [CB] [l] type l(b : type)//foo"]
+        correct_expr_no_print = ["SPEC [CB] [ENTRY] [l] type l() |- [CB] [ENTRY] [l] type l(b : type)//foo"]
         for expr in correct_expr_no_print:
             self._test_parse(expr,False)
 
-        wrong_expr = ["SPEC TRUE "]
+        wrong_expr = ["SPEC TRUE ",
+                      "SPEC TRUE = [CB] [ENTRY] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)"]
         for expr in wrong_expr:
             self._test_parse_error(expr)
 
@@ -182,44 +186,44 @@ class TestSpecParser(unittest.TestCase):
             parse_res = spec_parser.parse(specs)
             self.assertTrue(parse_res == expected)
 
-        res = [("SPEC [CB] [l] void package.method_name() |- TRUE",
+        res = [("SPEC [CB] [ENTRY] [l] void package.method_name() |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (NIL,), (CB,), (ID,'l'), (ID, 'void package.method_name'), (NIL,)),
+                   (CALL_ENTRY, (CB,), (ID,'l'), (ID, 'void package.method_name'), (NIL,)),
                    (0,))), (NIL,))),
-               ("SPEC [CB] [l] void package.method_name() |- TRUE",
+               ("SPEC [CB] [ENTRY] [l] void package.method_name() |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (NIL,), (CB,), (ID,'l'), (ID, 'void package.method_name'), (NIL,)),
+                   (CALL_ENTRY, (CB,), (ID,'l'), (ID, 'void package.method_name'), (NIL,)),
                    (0,))), (NIL,))),
-               ("SPEC [CI] [l] void method_name(0 : int,1 : int,f : int) |- TRUE",
+               ("SPEC [CI] [ENTRY] [l] void method_name(0 : int,1 : int,f : int) |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (NIL,), (CI,), (ID,'l'), (ID, 'void method_name'),
+                   (CALL_ENTRY, (CI,), (ID,'l'), (ID, 'void method_name'),
                     (PARAM_LIST, (INT, 0), (ID, 'int'),
                      (PARAM_LIST, (INT, 1), (ID, 'int'),
                       (PARAM_LIST, (ID, 'f'), (ID, 'int'), (NIL,))))),
                    (0,))), (NIL,))),
-               ("SPEC var = [CI] [l] void method_name(0 : int,1 : int,f : int) |- TRUE",
+               ("SPEC var = [CI] [EXIT] [l] void method_name(0 : int,1 : int,f : int) |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'void method_name'),
+                   (CALL_EXIT, (CI,), (ID,'l'), (ID, 'void method_name'),
                     (PARAM_LIST, (INT, 0), (ID, 'int'),
                      (PARAM_LIST, (INT, 1), (ID, 'int'),
-                      (PARAM_LIST, (ID, 'f'), (ID, 'int'), (NIL,))))),
+                      (PARAM_LIST, (ID, 'f'), (ID, 'int'), (NIL,)))), (ID,'var')),
                    (0,))), (NIL,))),
-               ('SPEC var = [CI] [l] void method_name(NULL : string, "foobar" : string, f : int) |- TRUE',
+               ('SPEC var = [CI] [EXIT] [l] void method_name(NULL : string, "foobar" : string, f : int) |- TRUE',
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
-                   (CALL, (ID,'var'), (CI,), (ID,'l'), (ID, 'void method_name'),
+                   (CALL_EXIT, (CI,), (ID,'l'), (ID, 'void method_name'),
                     (PARAM_LIST, (NULL,), (ID, 'string'),
                      (PARAM_LIST, (STRING, '"foobar"'), (ID, 'string'),
-                      (PARAM_LIST, (ID, 'f'), (ID, 'int'), (NIL,))))),
+                      (PARAM_LIST, (ID, 'f'), (ID, 'int'), (NIL,)))), (ID,'var')),
                    (0,))), (NIL,)))]
 
         for r in res:
@@ -227,20 +231,20 @@ class TestSpecParser(unittest.TestCase):
 
 
     def test_spec_creation(self):
-        spec_list = Spec.get_specs_from_string("SPEC [CI] [l] void method_name() |- TRUE; " +
-                                               "SPEC [CI] [l] void method_name() |- TRUE;" +
-                                               "SPEC [CI] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [l] void onClick(b : type);" +
-                                               "SPEC TRUE[*]; [CI] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [l] void onClick(b : type)")
+        spec_list = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l] void method_name() |- TRUE; " +
+                                               "SPEC [CI] [EXIT] [l] void method_name() |- TRUE;" +
+                                               "SPEC [CI] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [ENTRY] [l] void onClick(b : type);" +
+                                               "SPEC TRUE[*]; [CI] [EXIT] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [ENTRY] [l] void onClick(b : type)")
         self.assertTrue(len(spec_list) == 4)
 
     def test_call_set(self):
-        spec_list = Spec.get_specs_from_string("SPEC [CI] [l] void method_name() |- TRUE; " +
-                                               "SPEC [CI] [l] void method_name() |- TRUE;" +
-                                               "SPEC [CI] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [l] void onClick(b : type);" +
-                                               "SPEC TRUE[*]; [CI] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [l] void onClick(b : type);" +
-                                               "SPEC [CI] [b] void android.widget.Button.setOnClickListener(l : type); " +
-                                               "[CB] [b] void android.widget.Button.setOnClickListener(l : type); " +
-                                               "[CI] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [l] void onClick(b : type)")
+        spec_list = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l] void method_name() |- TRUE; " +
+                                               "SPEC [CI] [ENTRY] [l] void method_name() |- TRUE;" +
+                                               "SPEC [CI] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [ENTRY] [l] void onClick(b : type);" +
+                                               "SPEC TRUE[*]; [CI] [EXIT] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [ENTRY] [l] void onClick(b : type);" +
+                                               "SPEC [CI] [EXIT] [b] void android.widget.Button.setOnClickListener(l : type); " +
+                                               "[CB] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : type); " +
+                                               "[CI] [EXIT] [b] void android.widget.Button.setOnClickListener(l : type) |+ [CB] [ENTRY] [l] void onClick(b : type)")
 
         self.assertTrue(len(spec_list) == 5)
         self.assertTrue(1 == len(spec_list[0].get_spec_calls()))

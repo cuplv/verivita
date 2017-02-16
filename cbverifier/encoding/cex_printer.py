@@ -8,7 +8,7 @@ import logging
 
 from cbverifier.specs.spec import Spec
 from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
-from cbverifier.encoding.encoder import TSMapback
+from cbverifier.encoding.encoder import TSMapback, TSEncoder
 
 
 
@@ -86,8 +86,14 @@ class CexPrinter:
                     self._print_error(i, [])
             else:
                 self._print_step_header(i)
+                val = self._mapback.get_fired_trace_msg(prev_step, step)
 
-                trace_msg = self._mapback.get_fired_trace_msg(prev_step, step)
+                if (type(val) == tuple):
+                    (is_entry, trace_msg) = val
+                else:
+                    is_entry = None
+                    trace_msg = val
+
                 assert trace_msg is not None
                 msg = self._mapback.get_trans_label(prev_step)
                 assert msg is not None
@@ -96,7 +102,10 @@ class CexPrinter:
                 if (isinstance(trace_msg, str)):
                     self.out_stream.write("[-] %s transition ---\n" % trace_msg)
                 else:
-                    trace_msg._print(self.out_stream, "", False)
+                   if (is_entry == TSEncoder.ENTRY):
+                       trace_msg._print_entry(self.out_stream, "", False)
+                   else:
+                       trace_msg._print_exit(self.out_stream, "", False)
 
                 # trace_desc = trace_msg.to_str()
                 # self.out_stream.write("From trace: %s\n" % trace_desc)

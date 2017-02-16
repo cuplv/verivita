@@ -107,12 +107,14 @@ class GroundSpecs(object):
 
             node_type = get_node_type(node)
             if (node_type in leaf_nodes): return node
-            elif (node_type == CALL):
+            elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
+                is_entry = True if node_type == CALL_ENTRY else False
 
                 # not found any message that can match the call
-                if not binding.has_key(node):
+                if not binding.has_key((is_entry, node)):
                     return new_false()
-                call_message = binding.get(node)
+
+                call_message = binding.get((is_entry,node))
                 if bottom_value == call_message:
                     return new_false()
 
@@ -123,16 +125,17 @@ class GroundSpecs(object):
                 # assigned to bottom. In that case, we did not find a
                 # message that can be substituted to this call and
                 # thus we replace it with false
-
+                #
+                no_bind_assignee = (not is_entry) and (not has_binding(get_call_assignee(node), binding))
                 if (not check_param_bindings(get_call_params(node), binding) or
-                    not has_binding(get_call_assignee(node), binding) or
+                    no_bind_assignee or
                     not has_binding(get_call_receiver(node), binding)):
                     # when the instantiation fails we replace the call node with
                     # false
                     new_call_node = new_false()
                 else:
                     param_types = get_param_types_list(get_call_params(node))
-                    new_call_node = GroundSpecs._msg_to_call_node(call_message, param_types)
+                    new_call_node = GroundSpecs._msg_to_call_node(is_entry, call_message, param_types)
                 return new_call_node
 
             elif (node_type == AND_OP):
@@ -195,8 +198,12 @@ class GroundSpecs(object):
         return new_spec_ast
 
     @staticmethod
-    def _msg_to_call_node(msg, param_types):
-        if (msg.return_value is None):
+    def _msg_to_call_node(is_entry, msg, param_types):
+        """ Builds a call node from a message.
+
+        is_entry determines if the call node must be an entry or an exit node.
+        """
+        if (is_entry or msg.return_value is None):
             new_assignee = new_nil()
         else:
             new_assignee = TraceSpecConverter.traceval2specnode(msg.return_value)
@@ -228,11 +235,17 @@ class GroundSpecs(object):
 
         new_call_method = new_id(msg.get_msg_no_params())
 
-        call_node = new_call(new_assignee,
-                             call_type,
-                             new_receiver,
-                             new_call_method,
-                             call_param_list)
+        if (is_entry):
+            call_node = new_call_entry(call_type,
+                                       new_receiver,
+                                       new_call_method,
+                                       call_param_list)
+        else:
+            call_node = new_call_exit(new_assignee,
+                                      call_type,
+                                      new_receiver,
+                                      new_call_method,
+                                      call_param_list)
         return call_node
 
     def _get_ground_bindings(self, spec):
@@ -283,7 +296,7 @@ class GroundSpecs(object):
         elif (node_type == STAR_OP or node_type == NOT_OP or
               node_type == SPEC_SYMB):
             return self._ground_bindings_rec(spec_node[1], bindings)
-        elif (node_type == CALL):
+        elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
             # get the set of all the possible assignments
             # TODO pass bindings to perform directly the
             # product intersection while doing the lookup
@@ -328,6 +341,7 @@ class Assignments(object):
     def add(self, variable, value, reassign=False):
         assert reassign or variable not in self.assignments
         assert self._is_frozen == False
+        assert type(value) != list
         self.assignments[variable] = value
 
     def contains(self, formal, actual):
@@ -509,6 +523,7 @@ class TraceMap(object):
       - the type of the call (callin or callback)
       - the name of the method
       - the arity of the method
+      - the type of the method (entry/exit)
       - if the method returns a value
 
     The class implements two lookup functions.
@@ -524,15 +539,18 @@ class TraceMap(object):
     method calls found in the trace.
     """
 
+    ENTRY_TYPE = "ENTRY"
+    EXIT_TYPE = "EXIT"
+
     def __init__(self, trace):
         # 3-level index with method name and arity of paramters
         self.trace_map = {}
         for child in trace.children:
             self.trace_map = self._fill_map(child, self.trace_map)
 
-        if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
-            logging.debug("--- Trace map --- ")
-            logging.debug(str(self.trace_map))
+        # if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
+        #     logging.debug("--- Trace map --- ")
+        #     logging.debug(str(self.trace_map))
 
 
     def _get_inner_elem(self, hash_map, key, default=None):
@@ -559,8 +577,7 @@ class TraceMap(object):
 
     def _fill_map(self, msg, trace_map):
         """ Given a message from the trace fill and a map
-        Creates the 2-level index formed by the message name,
-        and then the arity of the message to a list of messages.
+        Creates the n-level index.
         """
         if (isinstance(msg, CCallin)):
             msg_type = CI
@@ -568,8 +585,8 @@ class TraceMap(object):
             msg_type = CB
         else:
             assert False
-        has_retval = msg.return_value is not None
 
+        # 1. Type of the message
         message_name_map = self._get_inner_elem(trace_map, msg_type)
         assert (type(message_name_map) == type({}))
 
@@ -577,6 +594,8 @@ class TraceMap(object):
         #
         # In practice we insert in the index all the possible variants that may
         # match a rule, due to implemented interfaces and classes
+        #
+        # 2. Name of the method
         method_names = []
         if (isinstance(msg, CCallin)):
             method_name = msg.get_full_msg_name()
@@ -604,10 +623,26 @@ class TraceMap(object):
             assert False
 
 
+        has_retval = msg.return_value is not None
         for method_name in method_names:
+            # Arity of the method
             arity_map = self._get_inner_elem(message_name_map, method_name)
             assert (type(arity_map) == type({}))
-            ret_val_map = self._get_inner_elem(arity_map, len(msg.params))
+
+            # Type (entry/exit)
+            entry_map = self._get_inner_elem(arity_map, len(msg.params))
+            assert (type(entry_map) == type({}))
+
+            # Process ENTRY
+            ret_val_map = self._get_inner_elem(entry_map, TraceMap.ENTRY_TYPE)
+            assert (type(ret_val_map) == type({}))
+            method_list = []
+            # An entry does not have a return value
+            method_list = self._get_inner_elem(ret_val_map, False, method_list)
+            assert (type(method_list) == type([]))
+            method_list.append(msg)
+
+            ret_val_map = self._get_inner_elem(entry_map, TraceMap.EXIT_TYPE)
             assert (type(ret_val_map) == type({}))
             method_list = []
             method_list = self._get_inner_elem(ret_val_map, has_retval, method_list)
@@ -619,16 +654,21 @@ class TraceMap(object):
 
         return trace_map
 
-    def lookup_methods(self, msg_type_node, method_name, arity, has_retval):
-        """ Given the name of a method and its arity, returns the
-        list of messages in the trace that
-        match the method name and have the same number of
-        parameters,
+    def lookup_methods(self, is_entry, msg_type_node, method_name, arity, has_retval):
+        """ Find all the messages in the trace that match the above signature:
+          - is_entry (entry or exit message)
+          - msg_type_node (CI or CB)
+          - method_name
+          - aritity
+          - has_retval
         """
+        assert ((not has_retval) or (not is_entry))
+
         method_list = []
 
         msg_type = get_node_type(msg_type_node)
-        keys = [msg_type, method_name, arity, has_retval]
+        entry_val = TraceMap.ENTRY_TYPE if is_entry else TraceMap.EXIT_TYPE
+        keys = [msg_type, method_name, arity, entry_val, has_retval]
         current_map = self.trace_map
 
         key_index = 0
@@ -640,6 +680,7 @@ class TraceMap(object):
                 if lookupres is None:
                     break
                 else:
+                    key_index = key_index + 1
                     method_list = lookupres
             else:
                 key_index += 1
@@ -658,26 +699,21 @@ class TraceMap(object):
             elif key_index == 2:
                 stop_lookup = "arity"
             elif key_index == 3:
-                stop_lookup = "return value"
+                stop_lookup = "entry type"
             elif key_index == 4:
+                stop_lookup = "return value"
+            elif key_index == 5:
                 stop_lookup = None
 
-            if has_retval:
-                retval = "retval = "
-            else:
-                retval = ""
-
-            if stop_lookup is None:
-                logging.debug("Lookup succeded for %s" \
-                              "%s %s with arity %d: %s"
-                              % (retval,msg_type_node, method_name, arity,
-                                 ",".join(method_list)))
-            else:
-                logging.debug("Lookup failed for %s" \
-                              "%s %s with arity %d: %s"
-                              % (retval,msg_type_node, method_name, arity,
-                                 stop_lookup))
-
+            logging.debug("Lookup %s for %s" \
+                          "%s %s %s with arity %d: %s"
+                          % ("succeded" if stop_lookup is None else "failed",
+                             "retval = " if has_retval else "",
+                             msg_type_node,
+                             "ENTRY" if is_entry else "EXIT",
+                             method_name,
+                             arity,
+                             ",".join([str(m.message_id) for m in method_list])))
         return method_list
 
     def _get_formal_assignment(self, method_assignments, formal, actual):
@@ -718,16 +754,23 @@ class TraceMap(object):
 
         The method returns an AssignmentsSet object.
         """
-        assert (get_node_type(call_node) == CALL)
+        node_type = get_node_type(call_node)
+        assert (node_type == CALL_ENTRY or
+                node_type == CALL_EXIT)
 
         set_assignments = AssignmentsSet()
 
         # Build the list of formal parameters
-        # (CALL, retval, call_type, receiver, method_name, params)
-        retval = get_call_assignee(call_node)
+        if (node_type == CALL_EXIT):
+            is_entry = False
+            retval = get_call_assignee(call_node)
+        else:
+            assert node_type == CALL_ENTRY
+            is_entry = True
+            retval = None
+
         call_type = get_call_type(call_node)
         method_name_node = get_call_method(call_node)
-        # method_name = get_id_val(method_name_node)
         method_signature = get_id_val(get_call_signature(call_node))
         receiver = get_call_receiver(call_node)
         params = get_call_params(call_node)
@@ -748,9 +791,11 @@ class TraceMap(object):
             params = get_param_tail(params)
         arity = len(param_list)
 
-        matching_methods = self.lookup_methods(call_type, method_signature,
+        matching_methods = self.lookup_methods(is_entry,
+                                               call_type,
+                                               method_signature,
                                                arity,
-                                               retval != new_nil())
+                                               (retval is not None) and (retval != new_nil()))
         # For each method, find:
         #   - the assignments to the variables in params
         #   - the assignment to the return value
@@ -763,14 +808,15 @@ class TraceMap(object):
             # method message that was matched
             #
             # Track what methods have been found so far
-            method_assignments.add(call_node, method)
+            # Distinguish between entry and exit
+            method_assignments.add((is_entry, call_node), method)
 
             # parameters
             for formal, actual in zip(param_list, method.params):
                 match = match and self._get_formal_assignment(method_assignments,
                                                               formal, actual)
-            # return value
-            if match and retval != new_nil():
+            # return value (only for exit
+            if (not is_entry) and match and retval != new_nil():
                 match = match and self._get_formal_assignment(method_assignments,
                                                               retval,
                                                               method.return_value)
@@ -781,7 +827,7 @@ class TraceMap(object):
 
         if no_assignments:
             method_assignments = Assignments()
-            method_assignments.add(call_node, bottom_value)
+            method_assignments.add((is_entry, call_node), bottom_value)
             set_assignments.add(method_assignments)
 
         return set_assignments

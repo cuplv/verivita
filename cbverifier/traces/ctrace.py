@@ -95,14 +95,12 @@ class CMessage(object):
     def __iter__(self):
         return iter(self.children)
 
-    def _print(self, stream, sep, rec=True, debug_info=False, filter = None):
+    def _print_entry(self, stream, sep, debug_info=False):
         message_sig = self.get_full_msg_name()
-
         if isinstance(self, CCallback):
             message_type = "CB"
         else:
             message_type = "CI"
-
 
         if self.exception is not None:
             exception = "(raises %s: %s)" % (self.exception.exc_type,
@@ -110,10 +108,10 @@ class CMessage(object):
         else:
             exception = ""
 
-        stream.write("%s[%d] [%s] %s (" % (sep, self.message_id,
-                                           message_type,
-                                           message_sig))
-
+        stream.write("%s[%d] [%s] [ENTRY] %s (" % (sep,
+                                                   self.message_id,
+                                                   message_type,
+                                                   message_sig))
         for i in range(len(self.params)):
             if (i != 0): stream.write(",")
             stream.write("%s" % self.params[i].get_value())
@@ -125,10 +123,45 @@ class CMessage(object):
                 for override in self.fmwk_overrides:
                     stream.write("%s%s\n" % (sep, str(override)))
 
+    def _print_exit(self, stream, sep, debug_info=False):
+        message_sig = self.get_full_msg_name()
+
+        if isinstance(self, CCallback):
+            message_type = "CB"
+        else:
+            message_type = "CI"
+
+        if self.exception is not None:
+            exception = "(raises %s: %s)" % (self.exception.exc_type,
+                                             self.exception.message)
+        else:
+            exception = ""
+
+        if self.return_value is None:
+            rv_string = ""
+        else:
+            rv_string = "%s = " % self.return_value.get_value()
+
+        stream.write("%s[%d] [%s] [EXIT] %s%s (" % (sep,
+                                                    self.message_id,
+                                                    message_type,
+                                                    rv_string,
+                                                    message_sig))
+        for i in range(len(self.params)):
+            if (i != 0): stream.write(",")
+            stream.write("%s" % self.params[i].get_value())
+        stream.write(") %s\n" % exception)
+
+
+    def _print(self, stream, sep, rec=True, debug_info=False, filter = None):
+        self._print_entry(stream, sep, debug_info)
 
         if rec:
             for child in self.children:
                 child._print(stream, "  ", rec, debug_info, filter)
+
+        self._print_exit(stream, sep, debug_info)
+
 
     @staticmethod
     def get_full_msg_name_static(class_name, method_name):
