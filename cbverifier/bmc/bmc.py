@@ -36,6 +36,7 @@ class BMC:
     def find_bug_non_inc(self, k, trace_enc=None):
         solver = Solver(name='z3', logic=QF_BOOL)
         self.encode_up_to_k(solver, self.all_vars, k, trace_enc)
+        logging.info("Finding bugs UP TO step %d..." % i)
         res = self.solve(solver, k)
         return res
 
@@ -66,6 +67,8 @@ class BMC:
 
         res = None
         for i in range(k + 1):
+            logging.info("Finding bugs at step %d..." % i)
+
             f_at_i = self.get_ts_enc_at_i(i)
             solver.add_assertion(f_at_i)
 
@@ -141,7 +144,6 @@ class BMC:
         return tenc
 
     def solve(self, solver, k):
-        logging.debug("Finding bug up to %d steps..." % k)
         if (solver.solve()):
             logging.debug("Found bug...")
             model = solver.get_model()
