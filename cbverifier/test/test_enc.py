@@ -103,43 +103,43 @@ class TestEnc(unittest.TestCase):
     def test_get_key_from_msg(self):
         fmwk_over = TestGrounding._get_fmwkov("","doSomethingCb", False)
 
-        cb = CCallback(1, 1, "", "type doSomethingCb(int)",
+        cb = CCallback(1, 1, "", "type doSomethingCb",
                        [TestGrounding._get_obj("1","string")],
                        None,
                        [fmwk_over])
         res = TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY)
-        self.assertTrue("[CB]_[ENTRY]_type doSomethingCb(1)", res)
+        self.assertTrue("[CB]_[ENTRY]_type doSomethingCb(1)" == res)
         res = TSEncoder.get_key_from_msg(cb, TSEncoder.EXIT)
-        self.assertTrue("[CB]_[EXIT]_type doSomethingCb(1)", res)
+        self.assertTrue("[CB]_[EXIT]_type doSomethingCb(1)" == res)
 
 
-        cb = CCallback(1, 1, "", "void doSomethingCb(int)",
+        cb = CCallback(1, 1, "", "void doSomethingCb",
                        [TestGrounding._get_obj("1","string")],
                        TestGrounding._get_obj("1","string"),
                        [fmwk_over])
         res = TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY)
-        self.assertTrue("[CB]_[ENTRY]_void doSomethingCb(int)(1)", res)
+        self.assertTrue("[CB]_[ENTRY]_void doSomethingCb(1)" == res)
         res = TSEncoder.get_key_from_msg(cb, TSEncoder.EXIT)
-        self.assertTrue("1=[CB]_[EXIT]_void doSomethingCb(int)(1)", res)
+        self.assertTrue("1=[CB]_[EXIT]_void doSomethingCb(1)" == res)
 
-        cb = CCallback(1, 1, "pippo.Class", "void doSomethingCb(int, int)",
+        cb = CCallback(1, 1, "pippo.Class", "void doSomethingCb(int,int)",
                        [TestGrounding._get_obj("1","string"),
                         TestGrounding._get_int(1)],
-                       None, [fmwk_over])
+                       None, [TestGrounding._get_fmwkov("pippo.Class","doSomethingCb", False)])
         res = TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY)
-        self.assertTrue("[CB]_void pippo.Class.doSomethingCb(int,int)(1,1)", res)
+        self.assertTrue("[CB]_[ENTRY]_void pippo.Class.doSomethingCb(int,int)(1,1)" == res)
 
         ci = CCallin(1, 1, "a.Class", "void doSomethingCi(string)",
                      [TestGrounding._get_obj("1","string")],
                      None)
         res = TSEncoder.get_key_from_msg(ci, TSEncoder.ENTRY)
-        self.assertTrue("[CI]_void a.Class.doSomethingCi(string)(1)", res)
+        self.assertTrue("[CI]_[ENTRY]_void a.Class.doSomethingCi(string)(1)" == res)
 
-        ci = CCallin(1, 1, "", "doSomethingCi",
+        ci = CCallin(1, 1, "", "void doSomethingCi",
                      [],
                      None)
         res = TSEncoder.get_key_from_msg(ci, TSEncoder.ENTRY)
-        self.assertTrue("[CI]_doSomethingCi(1)", res)
+        self.assertTrue("[CI]_[ENTRY]_void doSomethingCi()" == res)
 
 
 
@@ -879,4 +879,3 @@ class TestEnc(unittest.TestCase):
         (step, trace) = bmc.simulate(trace_enc)
 
         self.assertTrue(trace is not None)
-

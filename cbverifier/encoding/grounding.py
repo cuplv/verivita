@@ -548,9 +548,9 @@ class TraceMap(object):
         for child in trace.children:
             self.trace_map = self._fill_map(child, self.trace_map)
 
-        if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
-            logging.debug("--- Trace map --- ")
-            logging.debug(str(self.trace_map))
+        # if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
+        #     logging.debug("--- Trace map --- ")
+        #     logging.debug(str(self.trace_map))
 
 
     def _get_inner_elem(self, hash_map, key, default=None):
@@ -711,8 +711,9 @@ class TraceMap(object):
                              "retval = " if has_retval else "",
                              msg_type_node,
                              "ENTRY" if is_entry else "EXIT",
-                             method_name, arity,
-                             ",".join(method_list)))
+                             method_name,
+                             arity,
+                             ",".join([str(m.message_id) for m in method_list])))
         return method_list
 
     def _get_formal_assignment(self, method_assignments, formal, actual):
