@@ -244,6 +244,7 @@ public class CountdownFragment extends Fragment {
     }
     @Override
     public void onDetach(){
+	super.onDetach();
         if(countdown != null)
             countdown.cancel();
     }
