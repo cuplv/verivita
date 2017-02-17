@@ -179,7 +179,7 @@ public class PrefsActivity extends AppActivity implements SharedPreferences.OnSh
             ){
 
                 StorageAccessStrategy newStrategy = StorageAccessStrategyFactory.createStrategy(storageOption);
-                if (needsUserPermission){
+                if (true){
                     Log.d(TAG, "Asking user for storage permissions");
                     final String finalStorageOption = storageOption;
                     final String finalPath = path;
