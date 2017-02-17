@@ -92,7 +92,8 @@ public class CountdownFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                startCountdown(3 * 60 * 1000);
+                // startCountdown(3 * 60 * 1000);
+                startCountdown(1000);
             }
         });
 
@@ -100,7 +101,8 @@ public class CountdownFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                startCountdown(10 * 1000);
+                // startCountdown(10 * 1000);
+                startCountdown(1000);
             }
         });
 
