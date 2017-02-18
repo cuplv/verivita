@@ -270,7 +270,7 @@ class TSEncoder:
                 cb = self.trace.get_tl_cb_from_id(message_id)
                 if cb is None:
                     raise Exception("Message id %s not found in the trace" % message_id)
-            tl_cbs.append(cb)
+                tl_cbs.append(cb)
         else:
             tl_cbs = self.trace.children
 

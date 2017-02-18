@@ -110,9 +110,10 @@ class BMC:
             solver.add_assertion(tenc_at_i)
 
             res = solver.solve()
-            if False:
+            if not res:
                 return (i, None)
             elif (i == k):
+                assert res
                 model = solver.get_model()
                 res = self._build_trace(model, i)
             logging.debug("The encoding is satisfiable...")
