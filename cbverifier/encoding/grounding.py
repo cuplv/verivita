@@ -51,31 +51,8 @@ class GroundSpecs(object):
 
     def ground_spec(self, spec):
         ground_specs = []
-
-        (sg, ground_formula) = self._get_ground_bindings_formula(spec.ast)
-
-        # TODO: hide the encoding in the sg object
-        # ALL SAT on assignments - the model is finite
-        # Move this to the symbolic ground
-        solver = sg.pysmt_env.factory.Solver(quantified=False,
-                                             name="z3",
-                                             logic=QF_BV)
-        solver.add_assertion(ground_formula)
-        while (solver.solve()):
-            model = solver.get_model()
-
-            to_cut = TRUE_PYSMT()
-            binding = Assignments()
-            for (fvar, enc_var) in sg.fvars2encvars.iteritems_a_b():
-                enc_value = model.get_value(enc_var, True)
-                (fvar1, fvalue) = sg.get_var_val(enc_var, enc_value)
-                assert fvar1 == fvar
-                binding.add(fvar, fvalue)
-                to_cut = Equals(enc_var, enc_value)
-            binding.make_frozen()
-
-            # TODO: Add map from bindings to call nodes/messages?
-
+        sg = SymbolicGrounding(self.trace_map)
+        for binding in sg.get_bindings(spec):
             new_spec_asts = GroundSpecs._substitute(spec, sg, binding)
             for new_spec_ast in new_spec_asts:
                 new_spec = Spec(new_spec_ast)
@@ -85,52 +62,8 @@ class GroundSpecs(object):
                     if (not new_spec.is_regexp_false()):
                         ground_specs.append(new_spec)
                         self.ground_to_spec[new_spec] = spec
-
-            solver.add_assertion(Not(to_cut))
-
         return ground_specs
 
-    # code used in the old instantiation
-    def ground_spec_old(self, spec):
-        ground_specs = []
-
-        bindings = self._get_ground_bindings(spec)
-
-        # DEBUG
-        i = 0
-        for binding in bindings:
-            i = i + 1
-            print "Binding %d" % i
-
-            assert (type(binding) == Assignments)
-
-            for (var, value) in binding.assignments.iteritems():
-                val_str = None
-                if (type(value) == AssignmentsBottom):
-                    val_str = "BOTTOM"
-                elif (type(value) == CCallback or type(value) == CCallin):
-                    val_str = "%s %s %s" % (value.message_id, value.method_name, value.params[0])
-                else:
-                    val_str = str(value)
-
-                print "%s = %s" % (var, val_str)
-            print "\n"
-
-
-
-        # instantiate the bindings
-        for binding in bindings:
-            new_spec_ast = GroundSpecs._substitute(spec, binding)
-            new_spec = Spec(new_spec_ast)
-
-            # skip the false specification on the rhs
-            if (not new_spec.is_spec_rhs_false()):
-                # optimization: skip the spec if the regexp is false:
-                if (not new_spec.is_regexp_false()):
-                    ground_specs.append(new_spec)
-                    self.ground_to_spec[new_spec] = spec
-
-        return ground_specs
 
     @staticmethod
     def _substitute(spec, sg, binding):
@@ -349,85 +282,212 @@ class GroundSpecs(object):
                                       call_param_list)
         return call_node
 
-    def _get_ground_bindings(self, spec):
-        """ Find all the ground specifications for spec.
+    def get_source_spec(self, ground_spec):
+        if ground_spec not in self.ground_to_spec:
+            return None
+        else:
+            return self.ground_to_spec[ground_spec]
 
-        The algorithm proceeds recursively on the structure of the
-        formula.
 
-        For each subformula, the algorithm keeps a set of sets of
-        assignment to variables.
+class SymbolicGrounding:
+    class BiMap:
+        def __init__(self):
+            self.a2b = {}
+            self.b2a = {}
 
-        The final result is this set of sets of assignments.
-        For each set of assignment, we have the instantiation of a
-        rule.
+        def add(self,a,b):
+            self.a2b[a] = b
+            self.b2a[b] = a
 
-        NOW: this is the dumbest possible implementation of the
-        grounding.
-        Possible improvements:
-          - as usual, memoize the results for subformulas (it seems an
-          effective strategies)
-          - use decision diagram like data structure to share the
-        common assignemnts to values.
+        def lookup_a(self,a):
+            return self.a2b[a]
 
-        """
+        def lookup_b(self,b):
+            return self.b2a[b]
 
-        all_bindings = AssignmentsSet()
-        all_assignments = Assignments()
-        all_bindings.add(all_assignments)
+        def iteritems_a_b(self):
+            return self.a2b.iteritems()
 
-        binding_set = self._ground_bindings_rec(spec.ast, all_bindings)
-        return binding_set
+    def __init__(self, trace_map):
+        self.pysmt_env = get_env()
+
+        self.trace_map = trace_map
+
+        self.fvars2encvars = SymbolicGrounding.BiMap()
+        self.fvars_maxval = {}
+        self.fvars2values = {}
+
+        self.init_val = 0
+
+        # Map from (entry_type, call_node) to (bindings, message)
+        self.binding2message = {}
+
+    def add_free_var(self, free_var):
+        # We create a BV variable
+        enc_val = FreshSymbol(BVType(32))
+        self.fvars2encvars.add(free_var, enc_val)
+
+        return enc_val
+
+    def add_val(self, free_var, val):
+        try:
+            current_val = self.fvars_maxval[free_var]
+            next_val = current_val + 1
+        except KeyError:
+            next_val = 0
+
+        self.fvars_maxval[free_var] = next_val
+
+        try:
+            fvals2encvalues = self.fvars2values[free_var]
+        except KeyError:
+            fvals2encvalues = SymbolicGrounding.BiMap()
+            self.fvars2values[free_var] = fvals2encvalues
+
+        enc_val = BV(next_val, 32)
+        fvals2encvalues.add(val, enc_val)
+
+        return enc_val
+
+    def process_assignments_formula(self, is_entry, call_node, asets):
+
+        all_formulas = FALSE_PYSMT()
+
+        for aset in asets:
+            aset_formula = TRUE_PYSMT()
+
+            message = None
+            bindings = set()
+
+            for (fvar, fval) in aset.assignments.iteritems():
+                if fval == bottom_value:
+                    # This is false, no matter what
+                    aset_formula = FALSE_PYSMT()
+                    message = None
+                    continue
+
+                if (get_node_type(fvar) == ID):
+                    try:
+                        enc_var = self.fvars2encvars.lookup_a(fvar)
+                    except KeyError:
+                        enc_var = self.add_free_var(fvar)
+
+                    try:
+                        fvals2enc = self.fvars2values[fvar]
+                        try:
+                            enc_val = fvals2enc.lookup_a(fval)
+                        except KeyError:
+                            enc_val = self.add_val(fvar,fval)
+                    except KeyError:
+                        enc_val = self.add_val(fvar,fval)
+
+                    bindings.add((fvar, fval))
+
+                    aset_formula = And(aset_formula, Equals(enc_var, enc_val))
+
+                elif (type(fvar) == tuple):
+                    assert (is_entry, call_node) == fvar
+                    message = fval
+
+            if message is not None:
+                # Assertion does not hold for nodes with don't care
+                # assert len(bindings) > 0
+
+                key = (is_entry, call_node)
+                if (key not in self.binding2message):
+                    nl = set()
+                    self.binding2message[key] = nl
+                else:
+                    nl = self.binding2message[key]
+                nl.add((frozenset(bindings), message))
+
+
+            all_formulas = Or(all_formulas, aset_formula)
+
+        return all_formulas
+
+    def get_messages(self, is_entry, node, bindings):
+        messages = []
+        try:
+            for res in self.binding2message[(is_entry, node)]:
+                (msg_bindings, message) = res
+
+                found = True
+                for (var, val) in msg_bindings:
+                    try:
+                        bind_val = bindings.get(var)
+                        if (not (bind_val == val)):
+                            found = False
+                            break
+                    except KeyError:
+                        found = False
+                        break
+
+                # if find one it is ok
+                if found:
+                    messages.append(message)
+
+            return messages
+        except KeyError:
+            return messages
+
+    def get_var_val(self, enc_var, enc_value):
+        fvar = self.fvars2encvars.lookup_b(enc_var)
+        fvals2encvalues = self.fvars2values[fvar]
+        fvalue = fvals2encvalues.lookup_b(enc_value)
+        return (fvar, fvalue)
+
+    def get_size(self, max_val):
+        bv_size = int(math.floor(math.log(max_val, 2))) + 1
+        return bv_size
+
+    def resize_bvs(self, formula):
+        # resize the bitvector variables wrt to the maximum domain size
+        subs_map = {}
+        for (fvar, max_value) in self.fvars_maxval.iteritems():
+            old_enc_var = self.fvars2encvars.lookup_a(fvar)
+            bv_size = self.get_size(max_value+1)
+            new_enc_var = FreshSymbol(BVType(bv_size))
+
+            self.fvars2encvars.add(fvar, new_enc_var)
+
+            val2val = self.fvars2values[fvar]
+
+            for i in range(max_value + 1):
+                old_value = BV(i,32)
+                new_value = BV(i, bv_size)
+
+                fval = val2val.lookup_b(old_value)
+                val2val.add(fval, new_value)
+
+                old_f = Equals(old_enc_var,  old_value)
+                new_f = Equals(new_enc_var,  new_value)
+                subs_map[old_f] = new_f
+
+        formula = substitute(formula, subs_map)
+        return formula
+
+    def get_domain_formula(self):
+        domain = TRUE_PYSMT()
+        for (fvar, max_value) in self.fvars_maxval.iteritems():
+            enc_var = self.fvars2encvars.lookup_a(fvar)
+            bv_size = self.get_size(max_value+1)
+            lb = GE(enc_var, BV(self.init_val, bv_size))
+            ub = LE(enc_var, BV(max_value, bv_size))
+
+            domain = And(domain, And(ub,lb))
+
+        return domain
 
     def _get_ground_bindings_formula(self, spec):
-        """ Find all the ground specifications for spec.
-        """
-        sg = SymbolicGrounding()
-        ground_enc = self._ground_bindings_formula_rec(sg, spec)
-        ground_enc = sg.resize_bvs(ground_enc)
-        ground_enc = And(ground_enc, sg.get_domain_formula())
+        ground_enc = self._ground_bindings_formula_rec(spec.ast)
+        ground_enc = self.resize_bvs(ground_enc)
+        ground_enc = And(ground_enc, self.get_domain_formula())
+        return ground_enc
 
-        return (sg, ground_enc)
-
-
-
-    def _ground_bindings_rec(self, spec_node, bindings):
-        assert bindings is not None
-        node_type = get_node_type(spec_node)
-        if (node_type in leaf_nodes):
-            # ground set do not change in these cases
-            return bindings
-        elif (node_type == AND_OP or
-            node_type == OR_OP or
-            node_type == SEQ_OP or
-            node_type == ENABLE_OP or
-            node_type == DISABLE_OP or
-            node_type == SPEC_LIST):
-            return self._ground_bindings_rec(spec_node[2],
-                                             self._ground_bindings_rec(spec_node[1],
-                                                                       bindings))
-        elif (node_type == STAR_OP or node_type == NOT_OP or
-              node_type == SPEC_SYMB):
-            return self._ground_bindings_rec(spec_node[1], bindings)
-        elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
-            # get the set of all the possible assignments
-            # TODO pass bindings to perform directly the
-            # product intersection while doing the lookup
-
-            spec_res = self.trace_map.lookup_assignments(spec_node)
-            assert spec_res is not None
-
-            res = bindings.combine(spec_res)
-            assert res is not None
-
-            return res
-        else:
-            raise UnexpectedSymbol(spec_node)
-
-    def _ground_bindings_formula_rec(self, sg, spec_node):
+    def _ground_bindings_formula_rec(self, spec_node):
         """ returns a formula """
         node_type = get_node_type(spec_node)
-
         if (node_type in leaf_nodes):
             # ground set do not change in these cases
             return TRUE_PYSMT()
@@ -435,31 +495,54 @@ class GroundSpecs(object):
             node_type == SEQ_OP or
             node_type == ENABLE_OP or
             node_type == DISABLE_OP):
-            return And(self._ground_bindings_formula_rec(sg, spec_node[2]),
-                       self._ground_bindings_formula_rec(sg, spec_node[1]))
+            return And(self._ground_bindings_formula_rec(spec_node[2]),
+                       self._ground_bindings_formula_rec(spec_node[1]))
         elif (node_type == STAR_OP or node_type == SPEC_SYMB):
-            return self._ground_bindings_formula_rec(sg, spec_node[1])
+            return self._ground_bindings_formula_rec(spec_node[1])
         elif (node_type == OR_OP):
-            return Or(self._ground_bindings_formula_rec(sg, spec_node[2]),
-                      self._ground_bindings_formula_rec(sg, spec_node[1]))
+            return Or(self._ground_bindings_formula_rec(spec_node[2]),
+                      self._ground_bindings_formula_rec(spec_node[1]))
         elif (node_type == NOT_OP):
-            return Not(self._ground_bindings_formula_rec(sg, spec_node[1]))
+            return Not(self._ground_bindings_formula_rec(spec_node[1]))
         elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
             spec_res = self.trace_map.lookup_assignments(spec_node)
             assert spec_res is not None
 
-            formula = sg.process_assignments_formula(node_type == CALL_ENTRY, spec_node, spec_res)
+            formula = self.process_assignments_formula(node_type == CALL_ENTRY, spec_node, spec_res)
             return formula
         else:
             # WARNING: we handle one spec at a time (node_type != SPEC_LIST)
             raise UnexpectedSymbol(spec_node)
 
 
-    def get_source_spec(self, ground_spec):
-        if ground_spec not in self.ground_to_spec:
-            return None
-        else:
-            return self.ground_to_spec[ground_spec]
+    def get_bindings(self, spec):
+        ground_formula = self._get_ground_bindings_formula(spec)
+
+        bindings = []
+
+        # ALL SAT on assignments - the model is finite
+        solver = self.pysmt_env.factory.Solver(quantified=False,
+                                               name="z3",
+                                               logic=QF_BV)
+        solver.add_assertion(ground_formula)
+        while (solver.solve()):
+            model = solver.get_model()
+
+            to_cut = TRUE_PYSMT()
+            binding = Assignments()
+            for (fvar, enc_var) in self.fvars2encvars.iteritems_a_b():
+                enc_value = model.get_value(enc_var, True)
+                (fvar1, fvalue) = self.get_var_val(enc_var, enc_value)
+                assert fvar1 == fvar
+                binding.add(fvar, fvalue)
+                to_cut = Equals(enc_var, enc_value)
+            binding.make_frozen()
+            bindings.append(binding)
+
+            # get the next assignmetn
+            solver.add_assertion(Not(to_cut))
+
+        return bindings
 
 
 class AssignmentsBottom(object):
@@ -981,194 +1064,4 @@ class TraceMap(object):
             set_assignments.add(method_assignments)
 
         return set_assignments
-
-
-class SymbolicGrounding:
-    class BiMap:
-        def __init__(self):
-            self.a2b = {}
-            self.b2a = {}
-
-        def add(self,a,b):
-            self.a2b[a] = b
-            self.b2a[b] = a
-
-        def lookup_a(self,a):
-            return self.a2b[a]
-
-        def lookup_b(self,b):
-            return self.b2a[b]
-
-        def iteritems_a_b(self):
-            return self.a2b.iteritems()
-
-    def __init__(self):
-        self.pysmt_env = get_env()
-
-        self.fvars2encvars = SymbolicGrounding.BiMap()
-        self.fvars_maxval = {}
-        self.fvars2values = {}
-
-        self.init_val = 0
-
-        # Map from (entry_type, call_node) to (bindings, message)
-        self.binding2message = {}
-
-    def add_free_var(self, free_var):
-        # We create a BV variable
-        enc_val = FreshSymbol(BVType(32))
-        self.fvars2encvars.add(free_var, enc_val)
-
-        return enc_val
-
-    def add_val(self, free_var, val):
-        try:
-            current_val = self.fvars_maxval[free_var]
-            next_val = current_val + 1
-        except KeyError:
-            next_val = 0
-
-        self.fvars_maxval[free_var] = next_val
-
-        try:
-            fvals2encvalues = self.fvars2values[free_var]
-        except KeyError:
-            fvals2encvalues = SymbolicGrounding.BiMap()
-            self.fvars2values[free_var] = fvals2encvalues
-
-        enc_val = BV(next_val, 32)
-        fvals2encvalues.add(val, enc_val)
-
-        return enc_val
-
-    def process_assignments_formula(self, is_entry, call_node, asets):
-
-        all_formulas = FALSE_PYSMT()
-
-        for aset in asets:
-            aset_formula = TRUE_PYSMT()
-
-            message = None
-            bindings = set()
-
-            for (fvar, fval) in aset.assignments.iteritems():
-                if fval == bottom_value:
-                    # This is false, no matter what
-                    aset_formula = FALSE_PYSMT()
-                    message = None
-                    continue
-
-                if (get_node_type(fvar) == ID):
-                    try:
-                        enc_var = self.fvars2encvars.lookup_a(fvar)
-                    except KeyError:
-                        enc_var = self.add_free_var(fvar)
-
-                    try:
-                        fvals2enc = self.fvars2values[fvar]
-                        try:
-                            enc_val = fvals2enc.lookup_a(fval)
-                        except KeyError:
-                            enc_val = self.add_val(fvar,fval)
-                    except KeyError:
-                        enc_val = self.add_val(fvar,fval)
-
-                    bindings.add((fvar, fval))
-
-                    aset_formula = And(aset_formula, Equals(enc_var, enc_val))
-
-                elif (type(fvar) == tuple):
-                    assert (is_entry, call_node) == fvar
-                    message = fval
-
-            if message is not None:
-                # Assertion does not hold for nodes with don't care
-                # assert len(bindings) > 0
-
-                key = (is_entry, call_node)
-                if (key not in self.binding2message):
-                    nl = set()
-                    self.binding2message[key] = nl
-                else:
-                    nl = self.binding2message[key]
-                nl.add((frozenset(bindings), message))
-
-
-            all_formulas = Or(all_formulas, aset_formula)
-
-        return all_formulas
-
-    def get_messages(self, is_entry, node, bindings):
-        messages = []
-        try:
-            for res in self.binding2message[(is_entry, node)]:
-                (msg_bindings, message) = res
-
-                found = True
-                for (var, val) in msg_bindings:
-                    try:
-                        bind_val = bindings.get(var)
-                        if (not (bind_val == val)):
-                            found = False
-                            break
-                    except KeyError:
-                        found = False
-                        break
-
-                # if find one it is ok
-                if found:
-                    messages.append(message)
-
-            return messages
-        except KeyError:
-            return messages
-
-    def get_var_val(self, enc_var, enc_value):
-        fvar = self.fvars2encvars.lookup_b(enc_var)
-        fvals2encvalues = self.fvars2values[fvar]
-        fvalue = fvals2encvalues.lookup_b(enc_value)
-        return (fvar, fvalue)
-
-    def get_size(self, max_val):
-        bv_size = int(math.floor(math.log(max_val, 2))) + 1
-        return bv_size
-
-    def resize_bvs(self, formula):
-        # resize the bitvector variables wrt to the maximum domain size
-        subs_map = {}
-        for (fvar, max_value) in self.fvars_maxval.iteritems():
-            old_enc_var = self.fvars2encvars.lookup_a(fvar)
-            bv_size = self.get_size(max_value+1)
-            new_enc_var = FreshSymbol(BVType(bv_size))
-
-            self.fvars2encvars.add(fvar, new_enc_var)
-
-            val2val = self.fvars2values[fvar]
-
-            for i in range(max_value + 1):
-                old_value = BV(i,32)
-                new_value = BV(i, bv_size)
-
-                fval = val2val.lookup_b(old_value)
-                val2val.add(fval, new_value)
-
-                old_f = Equals(old_enc_var,  old_value)
-                new_f = Equals(new_enc_var,  new_value)
-                subs_map[old_f] = new_f
-
-        formula = substitute(formula, subs_map)
-        return formula
-
-    def get_domain_formula(self):
-        domain = TRUE_PYSMT()
-        for (fvar, max_value) in self.fvars_maxval.iteritems():
-            enc_var = self.fvars2encvars.lookup_a(fvar)
-            bv_size = self.get_size(max_value+1)
-            lb = GE(enc_var, BV(self.init_val, bv_size))
-            ub = LE(enc_var, BV(max_value, bv_size))
-
-            domain = And(domain, And(ub,lb))
-
-        return domain
-
 
