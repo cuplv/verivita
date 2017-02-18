@@ -31,6 +31,7 @@ from pysmt.shortcuts import TRUE as TRUE_PYSMT
 from pysmt.shortcuts import FALSE as FALSE_PYSMT
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
 from pysmt.shortcuts import Equals, GE, LE
+from pysmt.shortcuts import BVULE, BVUGE
 
 import math
 
@@ -472,8 +473,9 @@ class SymbolicGrounding:
         for (fvar, max_value) in self.fvars_maxval.iteritems():
             enc_var = self.fvars2encvars.lookup_a(fvar)
             bv_size = self.get_size(max_value+1)
-            lb = GE(enc_var, BV(self.init_val, bv_size))
-            ub = LE(enc_var, BV(max_value, bv_size))
+            # WARNING: must use the unsigned comparison of bitvectors
+            lb = BVUGE(enc_var, BV(self.init_val, bv_size))
+            ub = BVULE(enc_var, BV(max_value, bv_size))
 
             domain = And(domain, And(ub,lb))
 
