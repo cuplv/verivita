@@ -19,7 +19,8 @@ from pysmt.logics import QF_BOOL
 
 class SmvTranslator:
     def __init__(self, env,
-                 state_vars, input_vars,
+                 state_vars,
+                 input_vars,
                  init, trans,
                  invarspec):
         self.state_vars = state_vars
