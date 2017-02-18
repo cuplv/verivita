@@ -467,7 +467,6 @@ class TestGrounding(unittest.TestCase):
         self.assertTrue(len(ground_specs) == 1)
 
 
-
     def test_method_assignment(self):
         trace = CTrace()
 
@@ -490,6 +489,59 @@ class TestGrounding(unittest.TestCase):
             [[new_id('l'), (True,cnode)],
              [TestGrounding._get_obj("1","android.widget.Button"),cb]]])
         self.assertTrue(res == res_2)
+
+    def test_iss131(self):
+        trace = CTrace()
+        cb1 = CCallback(1, 1, "", "void doA()",
+                        [TestGrounding._get_int(2)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doA()", False)])
+        trace.add_msg(cb1)
+        cb2 = CCallback(1, 1, "", "void doB()",
+                        [TestGrounding._get_int(1)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doB()", False)])
+        trace.add_msg(cb2)
+
+        cb3 = CCallback(1, 1, "", "void doC()",
+                        [TestGrounding._get_int(1)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doC()", False)])
+        trace.add_msg(cb3)
+
+        gs = GroundSpecs(trace)
+        spec = Spec.get_spec_from_string("SPEC !([CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l] void doB()")
+        bindings = gs._get_ground_bindings(spec)
+        ground_specs = gs.ground_spec(spec)
+        print ground_specs
+        self.assertTrue(len(ground_specs) == 1)
+
+    def test_iss131_2(self):
+        trace = CTrace()
+        cb1 = CCallback(1, 1, "", "void doA()",
+                        [TestGrounding._get_int(2)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doA()", False)])
+        trace.add_msg(cb1)
+        cb2 = CCallback(1, 1, "", "void doB()",
+                        [TestGrounding._get_int(1)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doB()", False)])
+        trace.add_msg(cb2)
+
+        cb3 = CCallback(1, 1, "", "void doC()",
+                        [TestGrounding._get_int(1)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doC()", False)])
+        trace.add_msg(cb3)
+
+        gs = GroundSpecs(trace)
+        spec = Spec.get_spec_from_string("SPEC ([CB] [ENTRY] [l] void doA() | [CB] [ENTRY] [l] void doB()) |- [CB] [ENTRY] [f] void doC()")
+        bindings = gs._get_ground_bindings(spec)
+        ground_specs = gs.ground_spec(spec)
+        self.assertTrue(len(ground_specs) == 2)
+
+
 
     def test_constants(self):
         trace = CTrace()
