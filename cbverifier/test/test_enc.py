@@ -15,7 +15,6 @@ except ImportError:
 from cbverifier.encoding.encoder import TSEncoder, TSMapback
 from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.encoding.counter_enc import CounterEnc
-from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceException
 from cbverifier.specs.spec_ast import *
 from cbverifier.specs.spec import Spec
@@ -144,9 +143,9 @@ class TestEnc(unittest.TestCase):
 
 
     def test_get_key_from_call(self):
-        spec_list = Spec.get_specs_from_string("SPEC TRUE |- [CI] [ENTRY] [l] void m1(); " +
-                                               "SPEC TRUE |- [CI] [ENTRY] [l] void m1(a : int,b : int,c : int);" +
-                                               "SPEC TRUE |- z = [CI] [EXIT] [l] void m1(a : int,b : int,c : int)")
+        spec_list = Spec.get_specs_from_string("SPEC TRUE |- [CI] [ENTRY] [1] void m1(); " +
+                                               "SPEC TRUE |- [CI] [ENTRY] [1] void m1(2 : int,1 : int,2 : int);" +
+                                               "SPEC TRUE |- 3 = [CI] [EXIT] [1] void m1(2 : int,1 : int,2 : int)")
         assert spec_list is not None
 
         ci1 = CCallin(1, 1, "", "void m1()",
@@ -164,26 +163,9 @@ class TestEnc(unittest.TestCase):
                        TestGrounding._get_int(2),],
                       TestGrounding._get_int(3))
 
-        base_var = [new_id('l'),new_id("a"),new_id("b"),new_id("c"),new_id("z")]
-        base_val = [TestGrounding._get_obj("1","string"),
-                    TestGrounding._get_int(2),
-                    TestGrounding._get_int(1),
-                    TestGrounding._get_int(2),
-                    TestGrounding._get_int(3)]
-
-        bindings = [
-            TestGrounding.newAssign(base_var + [(True, get_spec_rhs(spec_list[0].ast))],
-                                    base_val + [ci1]),
-            TestGrounding.newAssign(base_var + [(True,get_spec_rhs(spec_list[1].ast))],
-                                    base_val + [ci2]),
-            TestGrounding.newAssign(base_var + [(False, get_spec_rhs(spec_list[2].ast))],
-                                    base_val + [ci3])
-            ]
-
         calls_nodes = []
-        for (s,binding) in zip(spec_list, bindings):
-            ground_s = GroundSpecs._substitute(s, binding)
-            msg = get_spec_rhs(ground_s)
+        for s in spec_list:
+            msg = get_spec_rhs(s.ast)
             assert get_node_type(msg) == CALL_ENTRY or get_node_type(msg) == CALL_EXIT 
             calls_nodes.append(msg)
         assert (len(calls_nodes) == len(spec_list))
@@ -333,12 +315,7 @@ class TestEnc(unittest.TestCase):
                      None)
         cb.add_msg(ci)
 
-        binding = TestGrounding.newAssign([new_id('l'),
-                                           (True, get_regexp_node(spec_list[0].ast)),
-                                           (True, get_spec_rhs(spec_list[0].ast))],
-                                          [TestGrounding._get_obj("1","string"),
-                                           cb, ci])
-        ground_s = Spec(GroundSpecs._substitute(spec_list[0], binding))
+        ground_s = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [1] void m1() |- [CI] [ENTRY] [1] void m2()")[0]
 
         ts_enc = TSEncoder(ctrace,[])
         ts_var = ts_enc._encode_vars()

@@ -21,6 +21,8 @@ from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, FrameworkOverri
 from cbverifier.specs.spec_ast import *
 from cbverifier.specs.spec import Spec
 
+from cStringIO import StringIO
+
 class TestGrounding(unittest.TestCase):
 
     @staticmethod
@@ -229,8 +231,6 @@ class TestGrounding(unittest.TestCase):
                                                    "testClassName()", False)])
         trace.add_msg(cb7)
 
-        # trace.print_trace(sys.stdout, False)
-
         tmap = TraceMap(trace)
 
         assert (len(tmap.lookup_methods(True, new_ci(), "other()", 0, False)) == 0)
@@ -334,6 +334,31 @@ class TestGrounding(unittest.TestCase):
               cb6]]])
         assert (res == res_2)
 
+    def _eq_specs(self, specs1, specs2):
+        if (len(specs1) != len(specs2)):
+            return False
+
+        for s1 in specs1:
+            stringio = StringIO()
+            s1.print_spec(stringio)
+            s1_str = stringio.getvalue()
+
+            found = None
+            for s2 in specs2:
+                stringio = StringIO()
+                s2.print_spec(stringio)
+                s2_str = stringio.getvalue()
+
+                if s2_str == s1_str:
+                    found = s2
+                    break
+
+            specs2.remove(s2)
+            if found is None:
+                return False
+        return True
+
+
     def test_ground_bindings(self):
         trace = CTrace()
         cb1 = CCallback(1, 1, "", "void doSomethingCb()",
@@ -371,100 +396,46 @@ class TestGrounding(unittest.TestCase):
 
         gs = GroundSpecs(trace)
         spec = Spec.get_spec_from_string("SPEC [CI] [ENTRY] [l] void doSomethingCi(z : string) |- [CI] [ENTRY] [z] void otherCi(f  : string)")
-        something_node = get_regexp_node(spec.ast)
-        other_node = get_spec_rhs(spec.ast)
-        bindings = gs._get_ground_bindings(spec)
-        res = TestGrounding.newBinding([
-            [[new_id('l'), new_id('z') , new_id('f'),
-              (True, something_node),
-              (True, other_node)],
-             [TestGrounding._get_obj("1","string"),
-              TestGrounding._get_obj("4","string"),
-              TestGrounding._get_obj("1","string"),
-              ci3,
-              ci2]],
-            [[new_id('l'),
-              new_id('z'),
-              new_id('f'),
-              (True, something_node),
-              (True, other_node)],
-             [TestGrounding._get_obj("1","string"),
-              bottom_value,
-              TestGrounding._get_obj("1","string"),
-              ci1,
-              ci2]]
-        ])
-        self.assertTrue(bindings == res)
+        real_ground_spec = [Spec.get_spec_from_string("SPEC [CI] [ENTRY] [1] void doSomethingCi(4 : string) |- [CI] [ENTRY] [4] void otherCi(1  : string)")]
         ground_specs = gs.ground_spec(spec)
-        self.assertTrue(len(ground_specs) == 1)
+        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
 
         gs = GroundSpecs(trace)
         spec = Spec.get_spec_from_string("SPEC [CI] [ENTRY] [l] void doSomethingCi(# : string) |- [CI] [ENTRY] [#] void otherCi(# : string)")
-        something_node = get_regexp_node(spec.ast)
-        other_node = get_spec_rhs(spec.ast)
-        bindings = gs._get_ground_bindings(spec)
-        res = TestGrounding.newBinding([
-            [[new_id('l'),
-              (True, something_node), (True, other_node)],
-             [TestGrounding._get_obj("1","string"),
-              ci1, ci2]],
-            [[new_id('l'),
-             (True, something_node), (True, other_node)],
-            [TestGrounding._get_obj("1","string"),
-             ci3, ci2]]])
-        self.assertTrue(bindings == res)
+        real_ground_spec = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [1] void doSomethingCi(2 : string) |- [CI] [ENTRY] [4] void otherCi(1 : string);" +
+                                                      "SPEC [CI] [ENTRY] [1] void doSomethingCi(4 : string) |- [CI] [ENTRY] [4] void otherCi(1 : string)")
         ground_specs = gs.ground_spec(spec)
-        self.assertTrue(len(ground_specs) == 2)
+        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
 
         gs = GroundSpecs(trace)
         spec = Spec.get_spec_from_string("SPEC [CB] [ENTRY] [l] void doSomethingCb() |- [CI] [ENTRY] [#] void otherCi(l : string)")
-        something_node = get_regexp_node(spec.ast)
-        other_node = get_spec_rhs(spec.ast)
-        bindings = gs._get_ground_bindings(spec)
-        res = TestGrounding.newBinding([
-            [[new_id('l'), (True, something_node), (True, other_node)],
-             [TestGrounding._get_obj("1","string"),cb1, ci2]]])
-        self.assertTrue(bindings == res)
+        real_ground_spec = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [1] void doSomethingCb() |- [CI] [ENTRY] [4] void otherCi(1 : string)")
         ground_specs = gs.ground_spec(spec)
-        self.assertTrue(len(ground_specs) == 1)
+        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
 
         gs = GroundSpecs(trace)
         spec = Spec.get_spec_from_string("SPEC TRUE |- [CI] [ENTRY] [l1] void doSomethingCi(l1 : string)")
-        true_node= get_regexp_node(spec.ast)
-        something_node = get_spec_rhs(spec.ast)
-        bindings = gs._get_ground_bindings(spec)
-        res = TestGrounding.newBinding([[[(True,something_node)],[bottom_value]]])
+        ground_specs = gs.ground_spec(spec)
+        self.assertTrue(self._eq_specs(ground_specs, []))
+
 
         # doSomethingCi will be instantiated to FALSE
         gs = GroundSpecs(trace)
         spec = Spec.get_spec_from_string("SPEC [CI] [ENTRY] [l1] void doSomethingCi(l1 : string) |- [CI] [ENTRY] [z] void otherCi(l : string)")
-        bindings = gs._get_ground_bindings(spec)
         ground_specs = gs.ground_spec(spec)
-        self.assertTrue(len(ground_specs) == 0)
+        self.assertTrue(self._eq_specs(ground_specs, []))
 
         gs = GroundSpecs(trace)
         spec = Spec.get_spec_from_string("SPEC [CB] [EXIT] [l] void doSomethingCb() |- [CI] [EXIT] [#] void otherCi(l : string)")
-        something_node = get_regexp_node(spec.ast)
-        other_node = get_spec_rhs(spec.ast)
-        bindings = gs._get_ground_bindings(spec)
-        res = TestGrounding.newBinding([
-            [[new_id('l'), (False, something_node), (False, other_node)],
-             [TestGrounding._get_obj("1","string"),cb1, ci2]]])
-        self.assertTrue(bindings == res)
+        real_ground_spec = Spec.get_specs_from_string("SPEC [CB] [EXIT] [1] void doSomethingCb() |- [CI] [EXIT] [4] void otherCi(1 : string)")
         ground_specs = gs.ground_spec(spec)
-        self.assertTrue(len(ground_specs) == 1)
+        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
 
         gs = GroundSpecs(trace)
         spec = Spec.get_spec_from_string("SPEC m = [CB] [EXIT] [l] void doSomethingCb2() |- m = [CB] [EXIT] [l] void doSomethingCb2()")
-        something_node = get_regexp_node(spec.ast)
-        other_node = get_spec_rhs(spec.ast)
-        bindings = gs._get_ground_bindings(spec)
-        res = TestGrounding.newBinding([
-            [[new_id('l'), (False, something_node), new_id('m')],
-             [TestGrounding._get_obj("1","string"), cb2, TestGrounding._get_obj("1","string")]]])
-        self.assertTrue(bindings == res)
+        real_ground_spec = Spec.get_specs_from_string("SPEC 1 = [CB] [EXIT] [1] void doSomethingCb2() |- 1 = [CB] [EXIT] [1] void doSomethingCb2()")
         ground_specs = gs.ground_spec(spec)
-        self.assertTrue(len(ground_specs) == 1)
+        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
 
 
 
@@ -491,6 +462,60 @@ class TestGrounding(unittest.TestCase):
              [TestGrounding._get_obj("1","android.widget.Button"),cb]]])
         self.assertTrue(res == res_2)
 
+    def test_iss131(self):
+        trace = CTrace()
+        cb1 = CCallback(1, 1, "", "void doA()",
+                        [TestGrounding._get_int(2)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doA()", False)])
+        trace.add_msg(cb1)
+        cb2 = CCallback(1, 1, "", "void doB()",
+                        [TestGrounding._get_int(1)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doB()", False)])
+        trace.add_msg(cb2)
+
+        cb3 = CCallback(1, 1, "", "void doC()",
+                        [TestGrounding._get_int(1)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doC()", False)])
+        trace.add_msg(cb3)
+
+        gs = GroundSpecs(trace)
+        spec = Spec.get_spec_from_string("SPEC !([CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l] void doB()")
+        real_ground_spec = Spec.get_specs_from_string("SPEC TRUE |- [CB] [ENTRY] [1] void doB()")
+        ground_specs = gs.ground_spec(spec)
+        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+
+
+    def test_iss131_2(self):
+        trace = CTrace()
+        cb1 = CCallback(1, 1, "", "void doA()",
+                        [TestGrounding._get_int(2)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doA()", False)])
+        trace.add_msg(cb1)
+        cb2 = CCallback(1, 1, "", "void doB()",
+                        [TestGrounding._get_int(1)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doB()", False)])
+        trace.add_msg(cb2)
+
+        cb3 = CCallback(1, 1, "", "void doC()",
+                        [TestGrounding._get_int(1)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doC()", False)])
+        trace.add_msg(cb3)
+
+
+        gs = GroundSpecs(trace)
+        spec = Spec.get_spec_from_string("SPEC ([CB] [ENTRY] [l] void doA() | [CB] [ENTRY] [l] void doB()) |- [CB] [ENTRY] [f] void doC()")
+        real_ground_spec = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [2] void doA() |- [CB] [ENTRY] [1] void doC();" +
+                                                      "SPEC [CB] [ENTRY] [1] void doB() |- [CB] [ENTRY] [1] void doC()")
+        ground_specs = gs.ground_spec(spec)
+        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+
+
     def test_constants(self):
         trace = CTrace()
         cb = CCallback(1, 1,
@@ -503,23 +528,6 @@ class TestGrounding(unittest.TestCase):
                                                   False)])
         trace.add_msg(cb)
 
-        gs = GroundSpecs(trace)
-        spec = Spec.get_spec_from_string("SPEC ! ([CB] [ENTRY] void android.inheritedMethodA(3 : int)) |- [CB] [ENTRY] void android.inheritedMethod(2 : int)")
-        bindings = gs._get_ground_bindings(spec)
-        ground_specs = gs.ground_spec(spec)
-        self.assertTrue(len(ground_specs) == 1)
-
-
-        # add call with 3 as constant
-        cb = CCallback(1, 1,
-                       "edu.colorado.test",
-                       "void inheritedMethodMethod(int)",
-                       [TestGrounding._get_null(), TestGrounding._get_int(3)],
-                       None,
-                       [TestGrounding._get_fmwkov("android",
-                                                  "void inheritedMethod(int)",
-                                                  False)])
-        trace.add_msg(cb)
         gs = GroundSpecs(trace)
         spec = Spec.get_spec_from_string("SPEC ! ([CB] [ENTRY] void android.inheritedMethodA(3 : int)) |- [CB] [ENTRY] void android.inheritedMethod(2 : int)")
         ground_specs = gs.ground_spec(spec)
