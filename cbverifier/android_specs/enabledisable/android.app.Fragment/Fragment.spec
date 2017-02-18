@@ -17,7 +17,7 @@ SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android
 
 SPEC TRUE[*]; [CI] [ENTRY] [f] void android.app.Fragment.<init>() |+ [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity);
 
-SPEC TRUE[*]; cv = [CI] [EXIT] [f] void android.app.Fragment.<init>() |- cv = [CI] [EXIT] [f] void android.app.Fragment.<init>();
+SPEC TRUE[*]; [CI] [EXIT] [f] void android.app.Fragment.<init>() |- [CI] [EXIT] [f] void android.app.Fragment.<init>();
 
 
 
