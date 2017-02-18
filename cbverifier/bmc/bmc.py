@@ -36,7 +36,7 @@ class BMC:
     def find_bug_non_inc(self, k, trace_enc=None):
         solver = Solver(name='z3', logic=QF_BOOL)
         self.encode_up_to_k(solver, self.all_vars, k, trace_enc)
-        logging.info("Finding bugs UP TO step %d..." % i)
+        logging.info("Finding bugs UP TO step %d..." % k)
         res = self.solve(solver, k)
         return res
 
