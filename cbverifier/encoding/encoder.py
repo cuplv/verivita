@@ -270,11 +270,12 @@ class TSEncoder:
                 cb = self.trace.get_tl_cb_from_id(message_id)
                 if cb is None:
                     raise Exception("Message id %s not found in the trace" % message_id)
-            tl_cbs.append(cb)
+                tl_cbs.append(cb)
         else:
             tl_cbs = self.trace.children
 
         # encode each callback
+        # No trace constraints in the initial state
         trace_encoding = []
         pc_name = TSEncoder._get_pc_name()
         for tl_cb in tl_cbs:

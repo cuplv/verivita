@@ -109,14 +109,17 @@ class BMC:
             tenc_at_i = self.get_trace_enc_at_i(i, trace_enc)
             solver.add_assertion(tenc_at_i)
 
-            solver.push()
-
-            res = self.solve(solver, i)
-
-            if res is None:
+            res = solver.solve()
+            if not res:
                 return (i, None)
+            elif (i == k):
+                assert res
+                model = solver.get_model()
+                res = self._build_trace(model, i)
+            logging.debug("The encoding is satisfiable...")
 
-        return (k, res)
+        assert res is not None
+        return (i, res)
 
 
     def get_ts_enc_at_i(self, i):
@@ -146,7 +149,7 @@ class BMC:
 
         return tenc
 
-    def solve(self, solver, k):
+    def solve(self, solver, k, build_trace=True):
         if (solver.solve()):
             logging.debug("The encoding is satisfiable...")
             model = solver.get_model()
@@ -162,7 +165,11 @@ class BMC:
 
         vars_to_use = [self.ts.state_vars, self.ts.input_vars]
         cex = []
+
         for i in range(steps + 1):
+            if (i not in self.helper.time_memo):
+                self.helper.get_formula_at_i(self.all_vars, TRUE(), i)
+
             cex_i = {}
 
             # skip the input variables in the last step
