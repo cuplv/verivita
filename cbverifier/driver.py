@@ -13,7 +13,7 @@ from cbverifier.encoding.encoder import TSEncoder
 from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.bmc.bmc import BMC
 
-from tosmv import SmvTranslator
+from smv.tosmv import SmvTranslator, NuXmvDriver
 from pysmt.shortcuts import Not
 
 class DriverOptions:
@@ -101,6 +101,16 @@ class Driver:
             ts2smv.to_smv(f)
             f.close()
 
+    def run_ic3(self, nuxmv_path, ic3_frames):
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        ts = ts_enc.get_ts_encoding()
+
+        nuxmv_driver = NuXmvDriver(ts_enc.pysmt_env, ts, nuxmv_path)
+        result = nuxmv_driver.ic3(Not(ts_enc.error_prop),
+                                  ic3_frames)
+
+        return result
+
     def run_simulation(self, cb_sequence = None):
         ts_enc = TSEncoder(self.trace, self.spec_list,
                            self.opts.simplify_trace)
@@ -165,8 +175,9 @@ def main(input_args=None):
             string = string + "".join([" " for i in range(length - current)])
         return string
     p.add_option('-m', '--mode', type='choice',
-                 choices= ["bmc","check-files","to-smv","show-ground-specs","simulate","check-trace-relevance"],
+                 choices= ["bmc","ic3","check-files","to-smv","show-ground-specs","simulate","check-trace-relevance"],
                  help=(get_len('bmc: run bmc on the trace;', 53) +
+                       get_len('ic3: run ic3 on the trace;', 53) +
                        get_len('check-files: check if the input files are well formed and prints them; ', 53) +
                        get_len('show-ground-specs: shows the specifications instantiateed by the given trace; ', 53) +
                        get_len('simulate: simulate the given trace with the existing specification; ', 53) +
@@ -179,13 +190,22 @@ def main(input_args=None):
     p.add_option('-i', '--bmc_inc', action="store_true",
                  default=False, help="Incremental search")
 
+
+    # SMV options
     p.add_option('-o', '--smv_file', help="Output smv file")
-    p.add_option('-l', '--filter', help="When running check-files this will only: filter all messages to the ones"
-                                        "where type is matched")
+
+    # IC3 options
+    p.add_option('-n', '--nuxmv_path', help="Path to the nuXmv executable")
+    p.add_option('-q', '--ic3_frames', help="Maximum number of frames explored by IC3")
 
     # simulation options
     p.add_option("-w", '--cb_sequence', help="Sequence of callbacks " \
                  "(message ids) to be simulated.")
+
+    # Miscellaneous
+    p.add_option('-l', '--filter', help="When running check-files this will only: filter all messages to the ones"
+                                        "where type is matched")
+
 
     def usage(msg=""):
         if msg: print "----%s----\n" % msg
@@ -234,6 +254,20 @@ def main(input_args=None):
         if opts.smv_file:
             usage("%s options cannot use in mode " % ("", opts.mode))
 
+    if (opts.mode == "ic3"):
+        if (not opts.nuxmv_path):
+            usage("Path to the nuXmv executable not provided!")
+        if (not os.path.isfile(opts.nuxmv_path)):
+            usage("%s is not a valid path tp the nuXmv executable!" % opts.nuxmv_path)
+
+        if (not opts.ic3_frames): usage("Missing IC3 frames (--ic3_frames)")
+        try:
+            ic3_frames = int(opts.ic3_frames)
+        except:
+            usage("%s must be a natural number!" % opts.ic3_frames)
+        if (ic3_frames < 0): usage("%s must be positive!" % opts.ic3_frames)
+
+
     if (opts.debug):
         logging.basicConfig(level=logging.DEBUG)
     else:
@@ -280,6 +314,20 @@ def main(input_args=None):
         check_disable(ground_specs)
     elif (opts.mode == "to-smv"):
         driver.to_smv(opts.smv_file)
+        return 0
+    elif (opts.mode == "ic3"):
+        res = driver.run_ic3(opts.nuxmv_path, opts.ic3_frames)
+
+        if res is None:
+            print("An error occurred invoking ic3")
+        elif res == NuXmvDriver.UNKNOW:
+            print("The result is still unknown (e.g try to increment " +
+                  "the number of frames).")
+        elif res == NuXmvDriver.SAFE:
+            print("Teh trace is SAFE")
+        elif res == NuXmvDriver.UNSAFE:
+            print("The system can reach an error state.")
+
         return 0
 
 

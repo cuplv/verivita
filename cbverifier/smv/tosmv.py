@@ -16,13 +16,149 @@ from pysmt.shortcuts import Solver
 from pysmt.solvers.solver import Model
 from pysmt.logics import QF_BOOL
 
+from cStringIO import StringIO
+
+import logging
+import sys
+import os
+import tempfile
+from subprocess import Popen, PIPE
+
+class NuXmvDriver:
+    """ Call nuXmv via pipe.
+
+    Rough interface to the tool.
+
+    TODO: Ask AG about the python interface to msatic3.
+
+    """
+
+    SAFE = "SAFE"
+    UNSAFE = "UNSAFE"
+    UNKNOW = "UNSAFE"
+
+    def __init__(self, pysmt_env, ts, nuxmv):
+        self.pysmt_env = pysmt_env
+        if (not os.path.isfile(nuxmv)):
+            raise Exception("The nuXmv executable file %s does not exists " % nuXmv)
+        self.ts = ts
+        self.nuxmv = nuxmv
+        self.ts2smv = None
+
+    def get_tmp_file(self, file_suffix, to_delete=True):
+        """ Get a tmpfile that is deleted when closed.
+
+        WARNING: reading the file before it is closed works on UNIX
+        platform and not on windows
+
+        """
+
+        f = tempfile.NamedTemporaryFile(mode = 'w',
+                                        suffix = file_suffix,
+                                        delete = to_delete)
+
+        logging.debug("Creating temporary file %s " % f.name)
+
+        return f
+
+    @staticmethod
+    def _call_sub(args, result_cb, cwd=None):
+        """Call a subprocess.
+        """
+        logging.info("Executing %s" % " ".join(args))
+
+        # not pipe stdout - processes will hang
+        # Known limitation of Popen
+
+        proc = Popen(args, cwd=cwd, stdout=PIPE,  stderr=PIPE)
+        (stdout, stderr) = proc.communicate()
+
+        return_code = proc.returncode
+        if (return_code != 0):
+            err_msg = "Error code is %s\nCommand line is: %s\n%s" % (str(return_code), str(" ".join(args)),"\n")
+
+            logging.error("Error executing %s\n%s" % (" ".join(args), err_msg))
+
+        result = result_cb(stdout, stderr, return_code)
+        return result
+
+    def _run_nuxmv(self, cmds, invarspec, result_cb):
+        # 1. Writes the SMV model
+        self.ts2smv = SmvTranslator(self.pysmt_env,
+                                    self.ts.state_vars,
+                                    self.ts.input_vars,
+                                    self.ts.init,
+                                    self.ts.trans,
+                                    invarspec)
+
+        smv_file = self.get_tmp_file("smv")
+        self.ts2smv.to_smv(smv_file)
+        smv_file.flush()
+
+        # 2. Writes the CMD file
+        cmd_file = self.get_tmp_file("cmd")
+        # writes the cmd file
+        cmd_file.write(cmds)
+        cmd_file.flush()
+
+        # call nuXmv
+        args = [self.nuxmv, "-source", cmd_file.name, smv_file.name]
+        res = NuXmvDriver._call_sub(args, result_cb)
+        return res
+
+    def ic3(self, invarspec, max_frames):
+        """ Invokes IC3 on the safety property invarspec, and runs
+        nuXmv for a maximum of max_frames.
+
+        Return None if the TS |= invarspec or a counterexample.
+        """
+
+        def ic3_callback(stdout, stderr, res):
+            res = None
+            if (0 != res):
+                return None
+
+            found_success = False
+            result = NuXmvDriver.UNKNOW
+            for line in stdout.readline():
+                if (line.startswith("-- invariant ") and
+                    line.endswith("is true")):
+                    result = NuXmvDriver.SAFE
+                if (line.startswith("-- invariant ") and
+                    line.endswith("is false")):
+                    result = NuXmvDriver.UNSAFE
+                elif "SUCCESS" == line:
+                    found_success = True
+
+            if (not found_success):
+                return None
+            else:
+                return result
+
+        cmds = """
+set on_failure_script_quits "1"
+read_model
+flatten_hierarchy
+encode_variables -n
+build_boolean_model
+echo "Verifying property..."
+check_invar_ic3 -n 0 -k "%s"
+echo "%s"
+quit
+EOF
+        """ % (max_frames, "SUCCESS")
+
+        result = self._run_nuxmv(cmds, invarspec, ic3_callback)
+
+        return result
+
 
 class SmvTranslator:
     def __init__(self, env,
                  state_vars,
                  input_vars,
                  init, trans,
-                 invarspec):
+                 invarspec=None):
         self.state_vars = state_vars
         self.input_vars = input_vars
         self.init = init
@@ -38,8 +174,9 @@ class SmvTranslator:
         self.print_vars(stream, "VAR", self.state_vars)
         self.print_vars(stream, "IVAR", self.input_vars)
 
-        stream.write("INVARSPEC\n")
-        self.print_formula(stream, self.invarspec)
+        if (self.invarspec is not None):
+            stream.write("INVARSPEC\n")
+            self.print_formula(stream, self.invarspec)
         stream.write(";\nINIT\n")
         self.print_formula(stream, self.init)
         stream.write(";\nTRANS\n")
@@ -60,6 +197,9 @@ class SmvTranslator:
         for v in vars_set:
             stream.write(self.translator.translate(v))
             stream.write(" : boolean;\n")
+
+    def translate_formula(self, formula):
+        return self.translator.translate(formula)
 
     def print_formula(self, stream, formula):
         stream.write(self.translator.translate(formula))
