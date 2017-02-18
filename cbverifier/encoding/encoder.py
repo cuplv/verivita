@@ -275,6 +275,7 @@ class TSEncoder:
             tl_cbs = self.trace.children
 
         # encode each callback
+        # No trace constraints in the initial state
         trace_encoding = []
         pc_name = TSEncoder._get_pc_name()
         for tl_cb in tl_cbs:
