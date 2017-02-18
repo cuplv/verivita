@@ -295,7 +295,19 @@ class TSEncoder:
                 (current_state, next_state) = msg_enc
                 s0 = self.cenc.eq_val(pc_name, current_state)
                 s1 = self.cenc.eq_val(pc_name, next_state)
+                logging.debug("Simulation - transition from %s -> %s" % (current_state,next_state))
 
+                try:
+                    msg_error_enc = self.mapback.get_trans2pc((entry_type, msg, self.error_label))
+                    logging.debug("Simulation - transition from %s -> %s could not happen if msg is not enabled" % (current_state,next_state))
+                    if msg_error_enc is not None:
+                        # this is a possible error state
+                        msg_key = TSEncoder.get_key_from_msg(msg, entry_type)
+                        msg_enabled = TSEncoder._get_state_var(msg_key)
+                        # progress only if the message is enabled
+                        s0 = And(s0, msg_enabled)
+                except KeyError:
+                    pass
                 trace_encoding.append((s0,s1))
 
         return trace_encoding
@@ -383,26 +395,35 @@ class TSEncoder:
         3. Encode the execution of the top-level callbacks and the
         error conditions
         """
+        logging.info("Generating the encoding...")
+
+
         self.ts = TransitionSystem()
 
         # 1. Encode all the variables of the system
+        logging.info("Encoding the variables...")
         vars_ts = self._encode_vars()
         self.ts.product(vars_ts)
+        logging.info("Done encoding the variables.")
 
         # 2. Specs ts
+        logging.info("Encoding the specification...")
         (spec_ts, disabled_msg, accepting) = self._encode_ground_specs()
         self.ts.product(spec_ts)
+        logging.info("Done encoding the specification.")
 
         # 3. Encode the execution of the top-level callbacks
+        logging.info("Encoding the trace...")
         (cb_ts, errors) = self._encode_cbs(disabled_msg)
         self.ts.product(cb_ts)
         self.error_prop = FALSE_PYSMT()
         for e in errors:
             self.error_prop = Or(self.error_prop, e)
         self.mapback.set_error_condition(self.error_prop)
+        logging.info("Done encoding the trace.")
 
         self._encode_initial_conditions()
-
+        logging.info("Done generating the encoding.")
 
     def _encode_ground_specs(self):
         """ Encode the set of ground specifications.
@@ -774,6 +795,7 @@ class TSEncoder:
                     snext_error = self.helper.get_next_formula(ts.state_vars,
                                                                error_state)
                     single_trans = And([s0, error_label, snext_error])
+                    logging.debug("Error transition: %d -> %d on %s" % (current_state, error_state_id, error_label))
                     ts.trans = Or([ts.trans, single_trans])
 
                     if error is None:
@@ -783,7 +805,9 @@ class TSEncoder:
                                               error_state_id,
                                               (entry_type,msg),
                                               self.error_label)
-                    self.mapback.add_trans2pc((entry_type,msg), current_state, error_state_id)
+                    # self.mapback.add_trans2pc((entry_type,msg), current_state, error_state_id)
+                    # DEBUG
+                    self.mapback.add_trans2pc((entry_type,msg,self.error_label), current_state, error_state_id)
 
                 current_state = next_state
 

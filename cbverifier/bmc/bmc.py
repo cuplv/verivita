@@ -95,11 +95,14 @@ class BMC:
         """Simulate the trace
         """
 
+        logging.info("Simulating a trace with %d messages" % len(trace_enc))
+
         solver = Solver(name='z3', logic=QF_BOOL)
 
         res = None
         k = len(trace_enc)
         for i in range(k + 1):
+            logging.info("Simulating step %d/%d" % (i, k))
             f_at_i = self.get_ts_enc_at_i(i)
             solver.add_assertion(f_at_i)
 
@@ -145,7 +148,7 @@ class BMC:
 
     def solve(self, solver, k):
         if (solver.solve()):
-            logging.debug("Found bug...")
+            logging.debug("The encoding is satisfiable...")
             model = solver.get_model()
             trace = self._build_trace(model, k)
             return trace
