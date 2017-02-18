@@ -35,7 +35,7 @@ class NuXmvDriver:
 
     SAFE = "SAFE"
     UNSAFE = "UNSAFE"
-    UNKNOW = "UNSAFE"
+    UNKNOWN = "UNKNOWN"
 
     def __init__(self, pysmt_env, ts, nuxmv):
         self.pysmt_env = pysmt_env
@@ -91,12 +91,12 @@ class NuXmvDriver:
                                     self.ts.trans,
                                     invarspec)
 
-        smv_file = self.get_tmp_file("smv")
+        smv_file = self.get_tmp_file("smv", True)
         self.ts2smv.to_smv(smv_file)
         smv_file.flush()
 
         # 2. Writes the CMD file
-        cmd_file = self.get_tmp_file("cmd")
+        cmd_file = self.get_tmp_file("cmd", True)
         # writes the cmd file
         cmd_file.write(cmds)
         cmd_file.flush()
@@ -104,6 +104,7 @@ class NuXmvDriver:
         # call nuXmv
         args = [self.nuxmv, "-source", cmd_file.name, smv_file.name]
         res = NuXmvDriver._call_sub(args, result_cb)
+
         return res
 
     def ic3(self, invarspec, max_frames):
@@ -114,20 +115,21 @@ class NuXmvDriver:
         """
 
         def ic3_callback(stdout, stderr, res):
-            res = None
             if (0 != res):
                 return None
 
+            res = None
             found_success = False
-            result = NuXmvDriver.UNKNOW
-            for line in stdout.readline():
+            result = NuXmvDriver.UNKNOWN
+
+            for line in stdout.split("\n"):
                 if (line.startswith("-- invariant ") and
                     line.endswith("is true")):
                     result = NuXmvDriver.SAFE
                 if (line.startswith("-- invariant ") and
                     line.endswith("is false")):
                     result = NuXmvDriver.UNSAFE
-                elif "SUCCESS" == line:
+                elif line.startswith("SUCCESS"):
                     found_success = True
 
             if (not found_success):
@@ -289,5 +291,11 @@ class SmvFormulaTranslator(DagWalker):
         return (formula, res)
 
     def walk_bool_constant(self, formula, **kwargs):
-        res = formula.serialize()
+        if formula == TRUE():
+            res = "TRUE"
+        elif formula == FALSE():
+            res = "FALSE"
+        else:
+            res = formula.serialize()
+
         return (formula, res)

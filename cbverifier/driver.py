@@ -320,11 +320,11 @@ def main(input_args=None):
 
         if res is None:
             print("An error occurred invoking ic3")
-        elif res == NuXmvDriver.UNKNOW:
+        elif res == NuXmvDriver.UNKNOWN:
             print("The result is still unknown (e.g try to increment " +
                   "the number of frames).")
         elif res == NuXmvDriver.SAFE:
-            print("Teh trace is SAFE")
+            print("The trace is SAFE")
         elif res == NuXmvDriver.UNSAFE:
             print("The system can reach an error state.")
 
