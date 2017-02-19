@@ -13,6 +13,8 @@ from cbverifier.encoding.encoder import TSEncoder
 from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.bmc.bmc import BMC
 
+from smv.tosmv import SmvTranslator, NuXmvDriver
+from pysmt.shortcuts import Not
 
 class DriverOptions:
     def __init__(self,
@@ -85,13 +87,36 @@ class Driver:
 
         return (cex, ts_enc.mapback)
 
-    def run_simulation(self, cb_sequence = None):
-        ts_enc = TSEncoder(self.trace, self.spec_list,
-                           self.opts.simplify_trace)
+    def to_smv(self, smv_file_name):
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        ts = ts_enc.get_ts_encoding()
+        ts2smv = SmvTranslator(ts_enc.pysmt_env,
+                               ts.state_vars,
+                               ts.input_vars,
+                               ts.init,
+                               ts.trans,
+                               Not(ts_enc.error_prop))
 
+        with open(smv_file_name, "wt") as f:
+            ts2smv.to_smv(f)
+            f.close()
+
+    def run_ic3(self, nuxmv_path, ic3_frames):
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        ts = ts_enc.get_ts_encoding()
+
+        nuxmv_driver = NuXmvDriver(ts_enc.pysmt_env, ts, nuxmv_path)
+        result = nuxmv_driver.ic3(Not(ts_enc.error_prop),
+                                  ic3_frames)
+
+        return result
+
+    def run_simulation(self, cb_sequence = None): 
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
         bmc = BMC(ts_enc.helper,
                   ts_enc.get_ts_encoding(),
                   ts_enc.error_prop)
+
         trace_enc = ts_enc.get_trace_encoding(cb_sequence)
         (step, cex) = bmc.simulate(trace_enc)
 
@@ -118,6 +143,7 @@ def check_disable(ground_specs):
 
 def main(input_args=None):
     p = optparse.OptionParser()
+
     p.add_option('-t', '--tracefile',
                  help="File containing the concrete trace (protobuf format)")
 
@@ -140,14 +166,22 @@ def main(input_args=None):
                  default=False,
                  help="Output debug informations")
 
+    def get_len(string, length):
+        current = len(string)
+        while (current > length):
+            current = current - length
+        else:
+            string = string + "".join([" " for i in range(length - current)])
+        return string
     p.add_option('-m', '--mode', type='choice',
-                 choices= ["bmc","check-files","to-smv","show-ground-specs","simulate","check-trace-relevance"],
-                 help=('bmc: run bmc on the trace; '
-                       'check-files: check if the input files are well formed and prints them; ' 
-                       'show-ground-specs: shows the specifications instantiateed by the given trace; ' 
-                       'simulate: simulate the given trace with the existing specification; '
-                       'to-smv: prints the SMV file of the generated transition system. '
-                       'check-trace-relevance: check if a trace is well formed, does not end with an exception and can instantiate a disable rule.'),
+                 choices= ["bmc","ic3","check-files","to-smv","show-ground-specs","simulate","check-trace-relevance"],
+                 help=(get_len('bmc: run bmc on the trace;', 53) +
+                       get_len('ic3: run ic3 on the trace;', 53) +
+                       get_len('check-files: check if the input files are well formed and prints them; ', 53) +
+                       get_len('show-ground-specs: shows the specifications instantiateed by the given trace; ', 53) +
+                       get_len('simulate: simulate the given trace with the existing specification; ', 53) +
+                       get_len('to-smv: prints the SMV file of the generated transition system. ', 53) +
+                       get_len('check-trace-relevance: check if a trace is well formed, does not end with an exception and can instantiate a disable rule.', 53)),
                  default = "bmc")
 
     # Bmc options
@@ -155,13 +189,22 @@ def main(input_args=None):
     p.add_option('-i', '--bmc_inc', action="store_true",
                  default=False, help="Incremental search")
 
+
+    # SMV options
     p.add_option('-o', '--smv_file', help="Output smv file")
-    p.add_option('-l', '--filter', help="When running check-files this will only: filter all messages to the ones"
-                                        "where type is matched")
+
+    # IC3 options
+    p.add_option('-n', '--nuxmv_path', help="Path to the nuXmv executable")
+    p.add_option('-q', '--ic3_frames', help="Maximum number of frames explored by IC3")
 
     # simulation options
     p.add_option("-w", '--cb_sequence', help="Sequence of callbacks " \
                  "(message ids) to be simulated.")
+
+    # Miscellaneous
+    p.add_option('-l', '--filter', help="When running check-files this will only: filter all messages to the ones"
+                                        "where type is matched")
+
 
     def usage(msg=""):
         if msg: print "----%s----\n" % msg
@@ -204,12 +247,25 @@ def main(input_args=None):
         else:
             cb_sequence = None
 
-    if (opts.mode == "--smv_file"):
-        if (not opts.smv_file): usage("Destination smv file not specified!")
-        usage("SMV translation still not implemented")
+    if (opts.mode == "to-smv"):
+        if (not opts.smv_file): usage("Destination SMV file not specified!")
     else:
         if opts.smv_file:
             usage("%s options cannot use in mode " % ("", opts.mode))
+
+    if (opts.mode == "ic3"):
+        if (not opts.nuxmv_path):
+            usage("Path to the nuXmv executable not provided!")
+        if (not os.path.isfile(opts.nuxmv_path)):
+            usage("%s is not a valid path tp the nuXmv executable!" % opts.nuxmv_path)
+
+        if (not opts.ic3_frames): usage("Missing IC3 frames (--ic3_frames)")
+        try:
+            ic3_frames = int(opts.ic3_frames)
+        except:
+            usage("%s must be a natural number!" % opts.ic3_frames)
+        if (ic3_frames < 0): usage("%s must be positive!" % opts.ic3_frames)
+
 
     if (opts.debug):
         logging.basicConfig(level=logging.DEBUG)
@@ -229,11 +285,9 @@ def main(input_args=None):
     if (opts.mode == "check-files"):
         driver.check_files(sys.stdout)
         return 0
-
     elif (opts.mode == "show-ground-specs"):
         ground_specs = driver.get_ground_specs()
         print_ground_spec(ground_specs)
-
     elif (opts.mode == "bmc"):
         (cex, mapback) = driver.run_bmc(depth, opts.bmc_inc)
 
@@ -242,9 +296,7 @@ def main(input_args=None):
             printer.print_cex()
         else:
             print "No bugs found up to %d steps" % (depth)
-
         return 0
-
     elif (opts.mode == "simulate"):
         (steps, cex, mapback) = driver.run_simulation(cb_sequence)
 
@@ -256,15 +308,26 @@ def main(input_args=None):
             print "The trace cannot be simulated (it gets stuck after %d transition)" % (steps)
 
         return 0
-
     elif (opts.mode == "check-trace-relevance"):
         ground_specs = driver.get_ground_specs()
-
         check_disable(ground_specs)
+    elif (opts.mode == "to-smv"):
+        driver.to_smv(opts.smv_file)
+        return 0
+    elif (opts.mode == "ic3"):
+        res = driver.run_ic3(opts.nuxmv_path, opts.ic3_frames)
 
-    elif (opts.mode == "to_smv"):
-        assert False
-        return 1
+        if res is None:
+            print("An error occurred invoking ic3")
+        elif res == NuXmvDriver.UNKNOWN:
+            print("The result is still unknown (e.g try to increment " +
+                  "the number of frames).")
+        elif res == NuXmvDriver.SAFE:
+            print("The trace is SAFE")
+        elif res == NuXmvDriver.UNSAFE:
+            print("The system can reach an error state.")
+
+        return 0
 
 
 
