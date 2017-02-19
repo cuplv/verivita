@@ -91,7 +91,10 @@ class NuXmvDriver:
                                     self.ts.trans,
                                     invarspec)
 
-        DELETE_FILES = True
+        if (logging.getLogger().getEffectiveLevel() >= logging.DEBUG):
+            DELETE_FILES = False
+        else:
+            DELETE_FILES = True
 
         smv_file = self.get_tmp_file("smv", DELETE_FILES)
         self.ts2smv.to_smv(smv_file)
