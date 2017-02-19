@@ -398,7 +398,6 @@ class TSEncoder:
         """
         logging.info("Generating the encoding...")
 
-
         self.ts = TransitionSystem()
 
         # 1. Encode all the variables of the system
@@ -425,6 +424,15 @@ class TSEncoder:
 
         self._encode_initial_conditions()
         logging.info("Done generating the encoding.")
+
+        logging.info("Miscellaneous stats:")
+        logging.info("Trace length: %d" % (self.trace_length))
+        logging.info("Total messages: %d" % (len(self.msgs)))
+        logging.info("Top-level callbacks: %d" % (len(self.trace.children)))
+        logging.info("Ground specs: %d" % (len(self.ground_specs)))
+        logging.info("State variables: %d" % (len(self.ts.state_vars)))
+        logging.info("Input variables: %d" % (len(self.ts.input_vars)))
+
 
     def _encode_ground_specs(self):
         """ Encode the set of ground specifications.
@@ -1251,7 +1259,8 @@ class RegExpToAuto():
     def get_from_regexp(self, regexp):
         """ Return a DETERMINISTIC automaton """
         res = self.get_from_regexp_aux(regexp)
-        return res.determinize()
+        deterministic = res.determinize()
+        return deterministic
 
     def get_from_regexp_aux(self, regexp):
         node_type = get_node_type(regexp)
