@@ -140,6 +140,7 @@ from pysmt.shortcuts import Solver
 from pysmt.shortcuts import TRUE as TRUE_PYSMT
 from pysmt.shortcuts import FALSE as FALSE_PYSMT
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
+from pysmt.shortcuts import simplify
 
 from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
@@ -436,6 +437,9 @@ class TSEncoder:
         logging.info("State variables: %d" % (len(self.ts.state_vars)))
         logging.info("Input variables: %d" % (len(self.ts.input_vars)))
 
+        self.ts.init = simplify(self.ts.init)
+        self.ts.trans = simplify(self.ts.trans)
+
 
     def _encode_ground_specs(self):
         """ Encode the set of ground specifications.
@@ -683,7 +687,6 @@ class TSEncoder:
                                   ground_spec,
                                   accepting_formula,
                                   spec)
-
         return ts
 
 
