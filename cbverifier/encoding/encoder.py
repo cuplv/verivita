@@ -513,29 +513,22 @@ class TSEncoder:
         return (ts, disabled_msg, accepting)
 
 
-    def _get_ground_spec_ts(self, ground_spec, spec_id, accepting):
-        """ Given a ground specification, returns the transition
-        system that encodes the updates implied by the specification.
 
+
+
+    def _get_regexp_ts(self, regexp, spec_id):
+        """ Builds the ts for the automaton.
         It returns the ts that encode the acceptance of the language.
 
-        It has side effects on accepting.
-
-
-        Resulting transition system
+        Resulting transition system (initial are the init state of the auto,
+        trans(s) is the list of transition (s', label) from s)
 
         VAR pc : {0, ... num_states -1 };
         INIT:= \bigvee{s in initial} pc = s;
         TRANS
           \bigwedge{s in states}
             pc = s -> ( \bigvee{(dst,label) \in trans(s)} label and (pc' = dst) )
-
-        TRANS
-          \bigwedge{s in final}
-            (pc' = s ->  enable_msg/not enable_msg)
-
-        enable_msg is the message in the rhs of the spec. It is negated if
-        the spec disables it.
+        This allow to re-use the same automaton across the same regexp.
         """
         def _get_pc_value(auto2ts_map, current_pc_val, auto_state):
             if not auto_state in auto2ts_map:
@@ -546,15 +539,12 @@ class TSEncoder:
                 state_id = auto2ts_map[auto_state]
             return (current_pc_val, state_id)
 
-        assert isinstance(ground_spec, Spec)
-
         ts = TransitionSystem()
 
         # map from ids of automaton states to the value used in the
         # counter for the transition system
         auto2ts_map = {}
 
-        regexp = get_regexp_node(ground_spec.ast)
         auto = self.r2a.get_from_regexp(regexp)
 
         # if (not regexp in self.regexp2ts):
@@ -605,8 +595,48 @@ class TSEncoder:
                 s_trans = Or(s_trans, t)
 
             s_trans = Implies(eq_current, s_trans)
-
             ts.trans = And(ts.trans, s_trans)
+
+        final_states_ts = []
+        for a_s in auto.final_states:
+            ts_s = auto2ts_map[a_s]
+            final_states_ts.append(ts_s)
+
+        return (auto_pc, final_states_ts, ts)
+
+
+    def _get_ground_spec_ts(self, ground_spec, spec_id, accepting):
+        """ Given a ground specification, returns the transition
+        system that encodes the updates implied by the specification.
+
+        It has side effects on accepting.
+
+        Resulting transition system is the transition system of the regexp and
+        the effects  on the disable/enable.
+
+        Note that we reuse the same automaton across the same regexp.
+
+        This is the ts that encodes the effects.
+
+        INIT:= (pc' = s ->  enable_msg/not enable_msg)
+        TRANS
+          \bigwedge{s in final}
+            (pc' = s ->  enable_msg/not enable_msg)
+
+        enable_msg is the message in the rhs of the spec. It is negated if
+        the spec disables it.
+        """
+
+        assert isinstance(ground_spec, Spec)
+
+
+        regexp = get_regexp_node(ground_spec.ast)
+        (auto_pc, final_states, ts_auto) = self._get_regexp_ts(regexp, spec_id)
+
+        ts = TransitionSystem()
+        ts.product(ts_auto)
+        # ts.state_vars = ts_auto.state_vars
+        # ts.input_vars = ts_auto.input_vars
 
         # Record the final states - on these states the value of the
         # rhs of the specifications change
@@ -616,8 +646,7 @@ class TSEncoder:
         msg_enabled = TSEncoder._get_state_var(key)
         all_vars = set(ts.state_vars)
         all_vars.add(msg_enabled)
-        for a_s in auto.final_states:
-            ts_s = auto2ts_map[a_s]
+        for ts_s in final_states:
             eq_current = self.cenc.eq_val(auto_pc, ts_s)
 
             # add the current state to the accepting states
