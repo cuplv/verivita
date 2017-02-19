@@ -417,6 +417,11 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                 len(parent.children) > 0):
                 new_trace.add_msg(parent)
 
+                # print spec_msgs
+                # print TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs
+                # print TSEncoder.get_key_from_msg(cb, TSEncoder.EXIT) in spec_msgs
+                # print len(parent.children) > 0
+
                 if ( ( not TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs) and
                      len(parent.children) > 0):
                     # CB included by its children
