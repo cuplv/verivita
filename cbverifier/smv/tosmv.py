@@ -91,12 +91,14 @@ class NuXmvDriver:
                                     self.ts.trans,
                                     invarspec)
 
-        smv_file = self.get_tmp_file("smv", True)
+        DELETE_FILES = True
+
+        smv_file = self.get_tmp_file("smv", DELETE_FILES)
         self.ts2smv.to_smv(smv_file)
         smv_file.flush()
 
         # 2. Writes the CMD file
-        cmd_file = self.get_tmp_file("cmd", True)
+        cmd_file = self.get_tmp_file("cmd", DELETE_FILES)
         # writes the cmd file
         cmd_file.write(cmds)
         cmd_file.flush()
@@ -144,7 +146,7 @@ flatten_hierarchy
 encode_variables -n
 build_boolean_model
 echo "Verifying property..."
-check_invar_ic3 -n 0 -k "%s"
+check_invar_ic3 -n 0 -k %s -g
 echo "%s"
 quit
 EOF
