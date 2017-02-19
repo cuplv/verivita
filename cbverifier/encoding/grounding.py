@@ -187,8 +187,24 @@ class GroundSpecs(object):
                             res.append(create_node(node_type, [lhs, rhs]))
                 return res
 
-            elif (node_type == SEQ_OP or
-                  node_type == ENABLE_OP or
+            elif (node_type == SEQ_OP):
+                lhs_l = substitute_rec(node[1], sg, binding)
+                rhs_l = substitute_rec(node[2], sg, binding)
+
+                res = []
+                for lhs in lhs_l:
+                    for rhs in rhs_l:
+                        if (get_node_type(lhs) != FALSE and
+                            get_node_type(rhs) != FALSE):
+                            # skip if at least one is FALSE
+                            res.append(create_node(node_type, [lhs, rhs]))
+
+                if (len(res) == 0):
+                    res = [new_false()]
+                return res
+
+
+            elif (node_type == ENABLE_OP or
                   node_type == DISABLE_OP or
                   node_type == SPEC_LIST):
                 lhs_l = substitute_rec(node[1], sg, binding)
