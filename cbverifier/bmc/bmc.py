@@ -32,9 +32,12 @@ class BMC:
         else:
             return self.find_bug_inc(k, None)
 
+    def _get_solver(self):
+        solver = Solver(name='z3', logic=QF_BOOL)
+        return solver
 
     def find_bug_non_inc(self, k, trace_enc=None):
-        solver = Solver(name='z3', logic=QF_BOOL)
+        solver = self._get_solver()
         self.encode_up_to_k(solver, self.all_vars, k, trace_enc)
         logging.info("Finding bugs UP TO step %d..." % k)
         res = self.solve(solver, k)
@@ -63,7 +66,7 @@ class BMC:
 
 
     def find_bug_inc(self, k, trace_enc=None):
-        solver = Solver(name='z3', logic=QF_BOOL)
+        solver = self._get_solver()
 
         res = None
         for i in range(k + 1):
@@ -97,7 +100,7 @@ class BMC:
 
         logging.info("Simulating a trace with %d messages" % len(trace_enc))
 
-        solver = Solver(name='z3', logic=QF_BOOL)
+        solver = self._get_solver()
 
         res = None
         k = len(trace_enc)
