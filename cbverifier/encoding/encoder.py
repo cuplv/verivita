@@ -212,7 +212,6 @@ class TSEncoder:
     def __init__(self, trace, specs, ignore_msgs = False):
         # copy the trace removing the top-level exception
         self.trace = trace.copy(True)
-
         self.specs = specs
         self.ts = None
         self.error_prop = None
@@ -225,11 +224,20 @@ class TSEncoder:
         # WARNING: the simplification is UNSOUND - added to make
         # progresses in the verification.
         if (ignore_msgs):
+            # collect the calls appearing in the ground specs
+            self.spec_msgs = set()
+            for spec in self.ground_specs:
+                for call in spec.get_spec_calls():
+                    self.spec_msgs.add(TSEncoder.get_key_from_call(call))
+
             self.trace = TSEncoder._simplify_trace(self.trace,
-                                                   self.ground_specs)
+                                                   self.spec_msgs)
+            self._is_msg_visible = self._is_msg_visible_simpl
             print("\n---Simplified Trace---")
             self.trace.print_trace(sys.stdout)
             print("\n")
+        else:
+            self._is_msg_visible = self._is_msg_visible_all
 
         (trace_length, msgs, fmwk_contr, app_contr) = self.get_trace_stats()
         self.trace_length = trace_length
@@ -273,8 +281,15 @@ class TSEncoder:
         if tl_cb_ids is not None:
             for message_id in tl_cb_ids:
                 cb = self.trace.get_tl_cb_from_id(message_id)
+
                 if cb is None:
                     raise Exception("Message id %s not found in the trace" % message_id)
+
+                msg_enc = self.mapback.get_trans2pc((entry_type, msg))
+                key = TSEncoder.get_key_from_msg((entry_type, msg))
+                if not self._is_msg_visible(key):
+                    raise Exception("Message id %s not found in the (simplified) trace" % message_id)
+
                 tl_cbs.append(cb)
         else:
             tl_cbs = self.trace.children
@@ -295,23 +310,35 @@ class TSEncoder:
                         stack.append((TSEncoder.EXIT, msg.children[i]))
                         stack.append((TSEncoder.ENTRY, msg.children[i]))
 
+                msg_key = TSEncoder.get_key_from_msg(msg, entry_type)
+                if not self._is_msg_visible(msg_key):
+                    continue
+
                 msg_enc = self.mapback.get_trans2pc((entry_type, msg))
                 assert(msg_enc is not None)
 
                 (current_state, next_state) = msg_enc
                 s0 = self.cenc.eq_val(pc_name, current_state)
+                # strengthen s0 - progress only if the message is enabled
+                msg_enabled = TSEncoder._get_state_var(msg_key)
+                s0 = And(s0, msg_enabled)
                 s1 = self.cenc.eq_val(pc_name, next_state)
-                logging.debug("Simulation - transition from %s -> %s" % (current_state,next_state))
 
+                current_step = str(len(trace_encoding) + 1)
+                logging.info("SIMULATION: step %s on %s" % (current_step, msg_key))
+                logging.debug("Simulation debug - transition from %s -> %s" % (current_state,next_state))
                 try:
                     msg_error_enc = self.mapback.get_trans2pc((entry_type, msg, self.error_label))
-                    logging.debug("Simulation - transition from %s -> %s could not happen if msg is not enabled" % (current_state,next_state))
-                    if msg_error_enc is not None:
-                        # this is a possible error state
-                        msg_key = TSEncoder.get_key_from_msg(msg, entry_type)
-                        msg_enabled = TSEncoder._get_state_var(msg_key)
-                        # progress only if the message is enabled
-                        s0 = And(s0, msg_enabled)
+                    info_msg = """SIMULATION - transition at step %s could not happen if %s is not allowed (%s -> %s in the encoding).
+Simulation only executes the nominal trace and disregards errors.
+If simulation iterrupts here, it could be due to the bug""" % (current_step, msg_key, str(current_state), str(next_state))
+                    logging.info(info_msg)
+                    # if msg_error_enc is not None:
+                    #     # this is a possible error state
+                    #     msg_key = TSEncoder.get_key_from_msg(msg, entry_type)
+                    #     msg_enabled = TSEncoder._get_state_var(msg_key)
+                    #     # progress only if the message is enabled
+                    #     s0 = And(s0, msg_enabled)
                 except KeyError:
                     pass
                 trace_encoding.append((s0,s1))
@@ -338,8 +365,14 @@ class TSEncoder:
         return ground_specs
 
 
+    def _is_msg_visible_all(self, msg_key):
+        return True
+
+    def _is_msg_visible_simpl(self, msg_key):
+        return msg_key in self.spec_msgs
+
     @staticmethod
-    def _simplify_trace(trace, ground_specs):
+    def _simplify_trace(trace, spec_msgs):
         """ Collect all the symbols appearing in the ground
         specifications
 
@@ -349,6 +382,8 @@ class TSEncoder:
         Caveat: we still keep the top-level callbacks even if
         they are not in the set but they contain a messsage that
         is included.
+
+        Side effect on spec_msgs
 
         WARNING: the simplification is UNSOUND
 
@@ -369,12 +404,6 @@ class TSEncoder:
 
         logging.warning("The simplification of the trace is UNSOUND")
 
-        # collect the calls appearing in the ground specs
-        spec_msgs = set()
-        for spec in ground_specs:
-            for call in spec.get_spec_calls():
-                spec_msgs.add(TSEncoder.get_key_from_call(call))
-
         # reconstruct the trace ignoring symbols not in spec_calls
         new_trace = CTrace()
         for cb in trace.children:
@@ -382,10 +411,22 @@ class TSEncoder:
             parent.children = []
             simplify_msg(parent, cb, spec_msgs)
 
+            # always add the ENTRY of the tl callback
             if ((TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs or
                  TSEncoder.get_key_from_msg(cb, TSEncoder.EXIT) in spec_msgs) or
                 len(parent.children) > 0):
                 new_trace.add_msg(parent)
+
+                # print spec_msgs
+                # print TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs
+                # print TSEncoder.get_key_from_msg(cb, TSEncoder.EXIT) in spec_msgs
+                # print len(parent.children) > 0
+
+                if ( ( not TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs) and
+                     len(parent.children) > 0):
+                    # CB included by its children
+                    msg_key = TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY)
+                    spec_msgs.add(msg_key)
 
         return new_trace
 
@@ -430,7 +471,7 @@ class TSEncoder:
         logging.info("Done generating the encoding.")
 
         logging.info("Miscellaneous stats:")
-        logging.info("Trace length: %d" % (self.trace_length))
+        logging.info("Trace length (entry and exits): %d" % (self.trace_length))
         logging.info("Total messages: %d" % (len(self.msgs)))
         logging.info("Top-level callbacks: %d" % (len(self.trace.children)))
         logging.info("Ground specs: %d" % (len(self.ground_specs)))
@@ -758,7 +799,7 @@ class TSEncoder:
 
         # TODO: Fix the length of the trace, adding the exit messages!
 
-        pc_size = (self.trace_length * 2) - tl_callback_count + 1 + 1
+        pc_size = (self.trace_length) - tl_callback_count + 1 + 1
 
         max_pc_value = pc_size - 1
 
@@ -784,6 +825,16 @@ class TSEncoder:
         ts.init = self.cenc.eq_val(pc_name, 0)
         logging.debug("Init state: %d" % (0))
 
+
+        def add_msgs_to_stack(stack, msg):
+            exit_key = TSEncoder.get_key_from_msg(msg, TSEncoder.EXIT)
+            if self._is_msg_visible(exit_key):
+                stack.append((TSEncoder.EXIT, msg))
+
+            entry_key = TSEncoder.get_key_from_msg(msg, TSEncoder.ENTRY)
+            if self._is_msg_visible(entry_key):
+                stack.append((TSEncoder.ENTRY, msg))
+
         offset = 0
         ts.trans = FALSE_PYSMT() # disjunction of transitions
         # encode each cb
@@ -794,21 +845,20 @@ class TSEncoder:
 
             # (True, tl_cb)  -> True if it is the entry message
             # (False, tl_cb) -> False if it is the exit message
-            stack = [(TSEncoder.EXIT, tl_cb), (TSEncoder.ENTRY, tl_cb)]
+            stack = []
+            add_msgs_to_stack(stack, tl_cb)
             while (len(stack) != 0):
                 (entry_type, msg) = stack.pop()
-
                 msg_key = TSEncoder.get_key_from_msg(msg, entry_type)
                 msg_enabled = TSEncoder._get_state_var(msg_key)
-
-                # print "%s/%s"% (entry_type, msg_key)
+                assert self._is_msg_visible(msg_key)
 
                 # Fill the stack in reverse order
                 # Add the child only if pre-visit
                 if (entry_type == TSEncoder.ENTRY):
                     for i in reversed(range(len(msg.children))):
-                        stack.append((TSEncoder.EXIT, msg.children[i]))
-                        stack.append((TSEncoder.ENTRY, msg.children[i]))
+                        msg_i = msg.children[i]
+                        add_msgs_to_stack(stack, msg_i)
 
                 # encode the transition
                 if (len(stack) == 0):
@@ -1046,19 +1096,22 @@ class TSEncoder:
 
         while (len(stack) != 0):
             msg = stack.pop()
-            trace_length = trace_length + 1
 
             # Add ENTRY
             key = TSEncoder.get_key_from_msg(msg, TSEncoder.ENTRY)
-            msgs.add(key)
-            if (isinstance(msg, CCallback)): fmwk_contr.add(key)
-            else: app_contr.add(key)
+            if self._is_msg_visible(key):
+                trace_length = trace_length + 1
+                msgs.add(key)
+                if (isinstance(msg, CCallback)): fmwk_contr.add(key)
+                else: app_contr.add(key)
 
             # Add EXIT
             key = TSEncoder.get_key_from_msg(msg, TSEncoder.EXIT)
-            msgs.add(key)
-            if (isinstance(msg, CCallback)): app_contr.add(key)
-            else: fmwk_contr.add(key)
+            if self._is_msg_visible(key):
+                trace_length = trace_length + 1
+                msgs.add(key)
+                if (isinstance(msg, CCallback)): app_contr.add(key)
+                else: fmwk_contr.add(key)
 
             for msg2 in msg.children:
                 stack.append(msg2)

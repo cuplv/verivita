@@ -204,7 +204,7 @@ class TestEnc(unittest.TestCase):
         cb = CCallback(1, 1, "", "doSomethingCb", [], None, [fmwk_over])
         trace.add_msg(cb)
         ts_enc = TSEncoder(trace, [])
-        _test_eq(ts_enc, 1,
+        _test_eq(ts_enc, 2,
                  set(["[CB]_[ENTRY]_doSomethingCb()", "[CB]_[EXIT]_doSomethingCb()"]),
                  set(["[CB]_[ENTRY]_doSomethingCb()"]),
                  set(["[CB]_[EXIT]_doSomethingCb()"]))
@@ -220,7 +220,7 @@ class TestEnc(unittest.TestCase):
         cb.add_msg(ci)
 
         ts_enc = TSEncoder(trace, [])
-        _test_eq(ts_enc, 4,
+        _test_eq(ts_enc, 8,
                  set(["[CB]_[ENTRY]_doSomethingCb()","[CB]_[EXIT]_doSomethingCb()",
                       "[CI]_[ENTRY]_doSomethingCi()","[CI]_[EXIT]_doSomethingCi()"]),
                  set(["[CB]_[ENTRY]_doSomethingCb()","[CI]_[EXIT]_doSomethingCi()"]),
@@ -245,7 +245,7 @@ class TestEnc(unittest.TestCase):
         trace.add_msg(cb)
 
         ts_enc = TSEncoder(trace, [])
-        _test_eq(ts_enc, 6,
+        _test_eq(ts_enc, 12,
                  set(["[CB]_[ENTRY]_cb()","[CB]_[EXIT]_cb()",
                       "[CB]_[ENTRY]_cb1()","[CB]_[EXIT]_cb1()",
                       "[CI]_[ENTRY]_ci()","[CI]_[EXIT]_ci()"]),
@@ -850,9 +850,97 @@ class TestEnc(unittest.TestCase):
         trace_enc = ts_enc.get_trace_encoding()
 
         bmc = BMC(ts_enc.helper, ts, FALSE())
-
-        print trace_enc
-
         (step, trace) = bmc.simulate(trace_enc)
 
         self.assertTrue(trace is not None)
+
+    def test_simplify_entry(self):
+        spec_list = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [l] void m1() |- [CB] [ENTRY] [l] void m1()")
+        assert spec_list is not None
+
+        ctrace = CTrace()
+        cb = CCallback(1, 1, "", "void m1()",
+                       [TestGrounding._get_obj("1","string")],
+                       None,
+                       [TestGrounding._get_fmwkov("","void m1()", False)])
+        ctrace.add_msg(cb)
+        cb2 = CCallback(1, 1, "", "void m2()",
+                        [TestGrounding._get_obj("1","string")],
+                        None,
+                        [TestGrounding._get_fmwkov("","void m2()", False)])
+        ctrace.add_msg(cb2)
+
+        ts_enc = TSEncoder(ctrace, spec_list,True)
+        ts_enc.trace.print_trace(sys.stdout)
+
+        self.assertTrue(1 == ts_enc.trace_length)
+
+        ts = ts_enc.get_ts_encoding()
+        trace_enc = ts_enc.get_trace_encoding()
+        self.assertTrue(len(trace_enc) == 1)
+        bmc = BMC(ts_enc.helper, ts, FALSE())
+        (step, cex) = bmc.simulate(trace_enc)
+        self.assertTrue(cex is not None)
+
+    def test_simplify_exit(self):
+        spec_list = Spec.get_specs_from_string("SPEC [CB] [EXIT] [l] void m1() |- [CB] [EXIT] [l] void m1()")
+        assert spec_list is not None
+
+        ctrace = CTrace()
+        cb = CCallback(1, 1, "", "void m1()",
+                       [TestGrounding._get_obj("1","string")],
+                       None,
+                       [TestGrounding._get_fmwkov("","void m1()", False)])
+        ctrace.add_msg(cb)
+        cb2 = CCallback(1, 1, "", "void m2()",
+                        [TestGrounding._get_obj("1","string")],
+                        None,
+                        [TestGrounding._get_fmwkov("","void m2()", False)])
+        ctrace.add_msg(cb2)
+
+        ts_enc = TSEncoder(ctrace, spec_list,True)
+        ts_enc.trace.print_trace(sys.stdout)
+        self.assertTrue(1 == ts_enc.trace_length)
+
+        ts = ts_enc.get_ts_encoding()
+        trace_enc = ts_enc.get_trace_encoding()
+        self.assertTrue(len(trace_enc) == 1)
+        bmc = BMC(ts_enc.helper, ts, FALSE())
+        (step, cex) = bmc.simulate(trace_enc)
+        self.assertTrue(cex is not None)
+
+    def test_simplify_exit_callin(self):
+        spec_list = Spec.get_specs_from_string("SPEC [CB] [EXIT] [l] void m1() |- [CI] [ENTRY] [l] void m3()")
+        assert spec_list is not None
+
+        ctrace = CTrace()
+        cb = CCallback(1, 1, "", "void m1()",
+                       [TestGrounding._get_obj("1","string")],
+                       None,
+                       [TestGrounding._get_fmwkov("","void m1()", False)])
+        ctrace.add_msg(cb)
+        ci = CCallin(1, 1, "", "void m3()",
+                     [TestGrounding._get_obj("1","string")],
+                     None)
+        cb.add_msg(ci)
+
+        cb2 = CCallback(1, 1, "", "void m2()",
+                        [TestGrounding._get_obj("1","string")],
+                        None,
+                        [TestGrounding._get_fmwkov("","void m2()", False)])
+        ctrace.add_msg(cb2)
+
+        ts_enc = TSEncoder(ctrace, spec_list,True)
+        ts_enc.trace.print_trace(sys.stdout)
+        self.assertTrue(3 == ts_enc.trace_length)
+
+        ts = ts_enc.get_ts_encoding()
+        trace_enc = ts_enc.get_trace_encoding()
+        print trace_enc
+        self.assertTrue(len(trace_enc) == 3)
+        bmc = BMC(ts_enc.helper, ts, FALSE())
+        (step, cex) = bmc.simulate(trace_enc)
+        self.assertTrue(cex is not None)
+
+
+
