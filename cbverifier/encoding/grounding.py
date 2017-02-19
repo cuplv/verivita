@@ -65,7 +65,6 @@ class GroundSpecs(object):
                         self.ground_to_spec[new_spec] = spec
         return ground_specs
 
-
     @staticmethod
     def _substitute(spec, sg, binding):
         # TODO: add memoization
@@ -204,16 +203,17 @@ class GroundSpecs(object):
                 return res
 
 
-            elif (node_type == ENABLE_OP or
-                  node_type == DISABLE_OP or
-                  node_type == SPEC_LIST):
+            elif (node_type == ENABLE_OP or node_type == DISABLE_OP):
                 lhs_l = substitute_rec(node[1], sg, binding)
                 rhs_l = substitute_rec(node[2], sg, binding)
 
                 res = []
                 for lhs in lhs_l:
                     for rhs in rhs_l:
-                        res.append(create_node(node_type, [lhs, rhs]))
+                        if (get_node_type(rhs) != FALSE):
+                            res.append(create_node(node_type, [lhs, rhs]))
+                if (len(res) == 0):
+                    res = [new_false()]
                 return res
 
             elif (node_type == NOT_OP):

@@ -326,10 +326,10 @@ class TSEncoder:
         Return a list of ground specifications.
         """
 
-        ground_specs = []
+        ground_specs = set()
         for spec in specs:
             tmp = gs.ground_spec(spec)
-            ground_specs.extend(tmp)
+            ground_specs.update(set(tmp))
 
         return ground_specs
 
