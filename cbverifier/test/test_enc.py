@@ -204,7 +204,7 @@ class TestEnc(unittest.TestCase):
         cb = CCallback(1, 1, "", "doSomethingCb", [], None, [fmwk_over])
         trace.add_msg(cb)
         ts_enc = TSEncoder(trace, [])
-        _test_eq(ts_enc, 1,
+        _test_eq(ts_enc, 2,
                  set(["[CB]_[ENTRY]_doSomethingCb()", "[CB]_[EXIT]_doSomethingCb()"]),
                  set(["[CB]_[ENTRY]_doSomethingCb()"]),
                  set(["[CB]_[EXIT]_doSomethingCb()"]))
@@ -220,7 +220,7 @@ class TestEnc(unittest.TestCase):
         cb.add_msg(ci)
 
         ts_enc = TSEncoder(trace, [])
-        _test_eq(ts_enc, 4,
+        _test_eq(ts_enc, 8,
                  set(["[CB]_[ENTRY]_doSomethingCb()","[CB]_[EXIT]_doSomethingCb()",
                       "[CI]_[ENTRY]_doSomethingCi()","[CI]_[EXIT]_doSomethingCi()"]),
                  set(["[CB]_[ENTRY]_doSomethingCb()","[CI]_[EXIT]_doSomethingCi()"]),
@@ -245,7 +245,7 @@ class TestEnc(unittest.TestCase):
         trace.add_msg(cb)
 
         ts_enc = TSEncoder(trace, [])
-        _test_eq(ts_enc, 6,
+        _test_eq(ts_enc, 12,
                  set(["[CB]_[ENTRY]_cb()","[CB]_[EXIT]_cb()",
                       "[CB]_[ENTRY]_cb1()","[CB]_[EXIT]_cb1()",
                       "[CI]_[ENTRY]_ci()","[CI]_[EXIT]_ci()"]),
