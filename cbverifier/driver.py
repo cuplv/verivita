@@ -111,13 +111,12 @@ class Driver:
 
         return result
 
-    def run_simulation(self, cb_sequence = None):
-        ts_enc = TSEncoder(self.trace, self.spec_list,
-                           self.opts.simplify_trace)
-
+    def run_simulation(self, cb_sequence = None): 
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
         bmc = BMC(ts_enc.helper,
                   ts_enc.get_ts_encoding(),
                   ts_enc.error_prop)
+
         trace_enc = ts_enc.get_trace_encoding(cb_sequence)
         (step, cex) = bmc.simulate(trace_enc)
 

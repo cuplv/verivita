@@ -32,9 +32,12 @@ class BMC:
         else:
             return self.find_bug_inc(k, None)
 
+    def _get_solver(self):
+        solver = Solver(name='z3', logic=QF_BOOL)
+        return solver
 
     def find_bug_non_inc(self, k, trace_enc=None):
-        solver = Solver(name='z3', logic=QF_BOOL)
+        solver = self._get_solver()
         self.encode_up_to_k(solver, self.all_vars, k, trace_enc)
         logging.info("Finding bugs UP TO step %d..." % k)
         res = self.solve(solver, k)
@@ -63,7 +66,7 @@ class BMC:
 
 
     def find_bug_inc(self, k, trace_enc=None):
-        solver = Solver(name='z3', logic=QF_BOOL)
+        solver = self._get_solver()
 
         res = None
         for i in range(k + 1):
@@ -97,7 +100,7 @@ class BMC:
 
         logging.info("Simulating a trace with %d messages" % len(trace_enc))
 
-        solver = Solver(name='z3', logic=QF_BOOL)
+        solver = self._get_solver()
 
         res = None
         k = len(trace_enc)
@@ -109,14 +112,17 @@ class BMC:
             tenc_at_i = self.get_trace_enc_at_i(i, trace_enc)
             solver.add_assertion(tenc_at_i)
 
-            solver.push()
-
-            res = self.solve(solver, i)
-
-            if res is None:
+            res = solver.solve()
+            if not res:
                 return (i, None)
+            elif (i == k):
+                assert res
+                model = solver.get_model()
+                res = self._build_trace(model, i)
+            logging.debug("The encoding is satisfiable...")
 
-        return (k, res)
+        assert res is not None
+        return (i, res)
 
 
     def get_ts_enc_at_i(self, i):
@@ -146,7 +152,7 @@ class BMC:
 
         return tenc
 
-    def solve(self, solver, k):
+    def solve(self, solver, k, build_trace=True):
         if (solver.solve()):
             logging.debug("The encoding is satisfiable...")
             model = solver.get_model()
@@ -162,7 +168,11 @@ class BMC:
 
         vars_to_use = [self.ts.state_vars, self.ts.input_vars]
         cex = []
+
         for i in range(steps + 1):
+            if (i not in self.helper.time_memo):
+                self.helper.get_formula_at_i(self.all_vars, TRUE(), i)
+
             cex_i = {}
 
             # skip the input variables in the last step

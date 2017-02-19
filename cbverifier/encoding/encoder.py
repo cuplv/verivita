@@ -140,6 +140,7 @@ from pysmt.shortcuts import Solver
 from pysmt.shortcuts import TRUE as TRUE_PYSMT
 from pysmt.shortcuts import FALSE as FALSE_PYSMT
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
+from pysmt.shortcuts import simplify
 
 from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
@@ -240,7 +241,8 @@ class TSEncoder:
 
         self.pysmt_env = get_env()
         self.helper = Helper(self.pysmt_env)
-        self.auto_env = AutoEnv(self.pysmt_env)
+        # With True we use BDDs
+        self.auto_env = AutoEnv(self.pysmt_env, False)
         self.cenc = CounterEnc(self.pysmt_env)
         self.mapback = TSMapback(self.pysmt_env, None, None)
 
@@ -250,6 +252,9 @@ class TSEncoder:
         self.r2a = RegExpToAuto(self.cenc, letters,
                                 self.mapback, self.auto_env)
 
+
+        # Map from regular expression to the correspondent automata, pc and final states
+        self.regexp2ts = {}
 
     def get_ts_encoding(self):
         """ Returns the transition system encoding of the dynamic
@@ -270,11 +275,12 @@ class TSEncoder:
                 cb = self.trace.get_tl_cb_from_id(message_id)
                 if cb is None:
                     raise Exception("Message id %s not found in the trace" % message_id)
-            tl_cbs.append(cb)
+                tl_cbs.append(cb)
         else:
             tl_cbs = self.trace.children
 
         # encode each callback
+        # No trace constraints in the initial state
         trace_encoding = []
         pc_name = TSEncoder._get_pc_name()
         for tl_cb in tl_cbs:
@@ -325,11 +331,10 @@ class TSEncoder:
         Return a list of ground specifications.
         """
 
-        ground_specs = []
+        ground_specs = set()
         for spec in specs:
             tmp = gs.ground_spec(spec)
-            ground_specs.extend(tmp)
-
+            ground_specs.update(set(tmp))
         return ground_specs
 
 
@@ -397,7 +402,6 @@ class TSEncoder:
         """
         logging.info("Generating the encoding...")
 
-
         self.ts = TransitionSystem()
 
         # 1. Encode all the variables of the system
@@ -424,6 +428,18 @@ class TSEncoder:
 
         self._encode_initial_conditions()
         logging.info("Done generating the encoding.")
+
+        logging.info("Miscellaneous stats:")
+        logging.info("Trace length: %d" % (self.trace_length))
+        logging.info("Total messages: %d" % (len(self.msgs)))
+        logging.info("Top-level callbacks: %d" % (len(self.trace.children)))
+        logging.info("Ground specs: %d" % (len(self.ground_specs)))
+        logging.info("State variables: %d" % (len(self.ts.state_vars)))
+        logging.info("Input variables: %d" % (len(self.ts.input_vars)))
+
+        self.ts.init = simplify(self.ts.init)
+        self.ts.trans = simplify(self.ts.trans)
+
 
     def _encode_ground_specs(self):
         """ Encode the set of ground specifications.
@@ -502,29 +518,22 @@ class TSEncoder:
         return (ts, disabled_msg, accepting)
 
 
-    def _get_ground_spec_ts(self, ground_spec, spec_id, accepting):
-        """ Given a ground specification, returns the transition
-        system that encodes the updates implied by the specification.
 
+
+
+    def _get_regexp_ts(self, regexp, spec_id):
+        """ Builds the ts for the automaton.
         It returns the ts that encode the acceptance of the language.
 
-        It has side effects on accepting.
-
-
-        Resulting transition system
+        Resulting transition system (initial are the init state of the auto,
+        trans(s) is the list of transition (s', label) from s)
 
         VAR pc : {0, ... num_states -1 };
         INIT:= \bigvee{s in initial} pc = s;
         TRANS
           \bigwedge{s in states}
             pc = s -> ( \bigvee{(dst,label) \in trans(s)} label and (pc' = dst) )
-
-        TRANS
-          \bigwedge{s in final}
-            (pc' = s ->  enable_msg/not enable_msg)
-
-        enable_msg is the message in the rhs of the spec. It is negated if
-        the spec disables it.
+        This allow to re-use the same automaton across the same regexp.
         """
         def _get_pc_value(auto2ts_map, current_pc_val, auto_state):
             if not auto_state in auto2ts_map:
@@ -535,18 +544,19 @@ class TSEncoder:
                 state_id = auto2ts_map[auto_state]
             return (current_pc_val, state_id)
 
-        assert isinstance(ground_spec, Spec)
-
         ts = TransitionSystem()
 
         # map from ids of automaton states to the value used in the
         # counter for the transition system
         auto2ts_map = {}
 
-        # TODO: ensure to prune the unreachable states in the
-        # automaton
-        regexp = get_regexp_node(ground_spec.ast)
         auto = self.r2a.get_from_regexp(regexp)
+
+        # if (not regexp in self.regexp2ts):
+        #     self.regexp2ts[regexp] = 1
+        # else:
+        #     print "DUPLICATE"
+        #     #pretty_print(regexp)
 
         # program counter of the automaton
         auto_pc = "spec_pc_%d" % spec_id
@@ -590,8 +600,52 @@ class TSEncoder:
                 s_trans = Or(s_trans, t)
 
             s_trans = Implies(eq_current, s_trans)
-
             ts.trans = And(ts.trans, s_trans)
+
+        final_states_ts = []
+        for a_s in auto.final_states:
+            ts_s = auto2ts_map[a_s]
+            final_states_ts.append(ts_s)
+
+        return (auto_pc, final_states_ts, ts)
+
+
+    def _get_ground_spec_ts(self, ground_spec, spec_id, accepting):
+        """ Given a ground specification, returns the transition
+        system that encodes the updates implied by the specification.
+
+        It has side effects on accepting.
+
+        Resulting transition system is the transition system of the regexp and
+        the effects  on the disable/enable.
+
+        Note that we reuse the same automaton across the same regexp.
+
+        This is the ts that encodes the effects.
+
+        INIT:= (pc' = s ->  enable_msg/not enable_msg)
+        TRANS
+          \bigwedge{s in final}
+            (pc' = s ->  enable_msg/not enable_msg)
+
+        enable_msg is the message in the rhs of the spec. It is negated if
+        the spec disables it.
+        """
+
+        assert isinstance(ground_spec, Spec)
+
+        ts = TransitionSystem()
+        regexp = get_regexp_node(ground_spec.ast)
+        if (regexp in self.regexp2ts):
+            (auto_pc, final_states, ts_auto) = self.regexp2ts[regexp]
+
+            # Do not compute the product twice!
+            ts.state_vars = ts_auto.state_vars
+            ts.input_vars = ts_auto.input_vars
+        else:
+            (auto_pc, final_states, ts_auto) = self._get_regexp_ts(regexp, spec_id)
+            self.regexp2ts[regexp] = (auto_pc, final_states, ts_auto)
+            ts.product(ts_auto)
 
         # Record the final states - on these states the value of the
         # rhs of the specifications change
@@ -601,8 +655,7 @@ class TSEncoder:
         msg_enabled = TSEncoder._get_state_var(key)
         all_vars = set(ts.state_vars)
         all_vars.add(msg_enabled)
-        for a_s in auto.final_states:
-            ts_s = auto2ts_map[a_s]
+        for ts_s in final_states:
             eq_current = self.cenc.eq_val(auto_pc, ts_s)
 
             # add the current state to the accepting states
@@ -634,7 +687,6 @@ class TSEncoder:
                                   ground_spec,
                                   accepting_formula,
                                   spec)
-
         return ts
 
 
@@ -1250,7 +1302,9 @@ class RegExpToAuto():
     def get_from_regexp(self, regexp):
         """ Return a DETERMINISTIC automaton """
         res = self.get_from_regexp_aux(regexp)
-        return res.determinize()
+        #deterministic = res.determinize()
+        deterministic = res.minimize()
+        return deterministic
 
     def get_from_regexp_aux(self, regexp):
         node_type = get_node_type(regexp)
@@ -1260,7 +1314,7 @@ class RegExpToAuto():
             # accept the atoms in the bexp
             formula = self.get_be(regexp)
             label = self.auto_env.new_label(formula)
-            automaton = Automaton.get_singleton(label)
+            automaton = Automaton.get_singleton(label, self.auto_env)
             return automaton
         elif (node_type == SEQ_OP):
             lhs = self.get_from_regexp_aux(regexp[1])
