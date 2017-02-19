@@ -251,7 +251,7 @@ class TSEncoder:
                                 self.mapback, self.auto_env)
 
 
-        # Map from regular expression to the ts of the correspondent automata
+        # Map from regular expression to the correspondent automata, pc and final states
         self.regexp2ts = {}
 
     def get_ts_encoding(self):
@@ -629,14 +629,18 @@ class TSEncoder:
 
         assert isinstance(ground_spec, Spec)
 
-
-        regexp = get_regexp_node(ground_spec.ast)
-        (auto_pc, final_states, ts_auto) = self._get_regexp_ts(regexp, spec_id)
-
         ts = TransitionSystem()
-        ts.product(ts_auto)
-        # ts.state_vars = ts_auto.state_vars
-        # ts.input_vars = ts_auto.input_vars
+        regexp = get_regexp_node(ground_spec.ast)
+        if (regexp in self.regexp2ts):
+            (auto_pc, final_states, ts_auto) = self.regexp2ts[regexp]
+
+            # Do not compute the product twice!
+            ts.state_vars = ts_auto.state_vars
+            ts.input_vars = ts_auto.input_vars
+        else:
+            (auto_pc, final_states, ts_auto) = self._get_regexp_ts(regexp, spec_id)
+            self.regexp2ts[regexp] = (auto_pc, final_states, ts_auto)
+            ts.product(ts_auto)
 
         # Record the final states - on these states the value of the
         # rhs of the specifications change
