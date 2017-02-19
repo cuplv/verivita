@@ -240,7 +240,8 @@ class TSEncoder:
 
         self.pysmt_env = get_env()
         self.helper = Helper(self.pysmt_env)
-        self.auto_env = AutoEnv(self.pysmt_env)
+        # With True we use BDDs
+        self.auto_env = AutoEnv(self.pysmt_env, False)
         self.cenc = CounterEnc(self.pysmt_env)
         self.mapback = TSMapback(self.pysmt_env, None, None)
 
@@ -1298,7 +1299,8 @@ class RegExpToAuto():
     def get_from_regexp(self, regexp):
         """ Return a DETERMINISTIC automaton """
         res = self.get_from_regexp_aux(regexp)
-        deterministic = res.determinize()
+        #deterministic = res.determinize()
+        deterministic = res.minimize()
         return deterministic
 
     def get_from_regexp_aux(self, regexp):
@@ -1309,7 +1311,7 @@ class RegExpToAuto():
             # accept the atoms in the bexp
             formula = self.get_be(regexp)
             label = self.auto_env.new_label(formula)
-            automaton = Automaton.get_singleton(label)
+            automaton = Automaton.get_singleton(label, self.auto_env)
             return automaton
         elif (node_type == SEQ_OP):
             lhs = self.get_from_regexp_aux(regexp[1])

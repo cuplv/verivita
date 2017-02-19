@@ -4,6 +4,8 @@ Dynamic verification using callbacks.
 
 # External Dependencies
 - PySMT
+  - Install PySMT (e.g. pip install pysmt)
+  - Install z3 and the CUDD support (pysmt-install --z3 --bdd, then pysmt-install --env, and use the output to extend the PYTHONPATH)
 - TraceRunner
 - Google protobuf 3.0
 
