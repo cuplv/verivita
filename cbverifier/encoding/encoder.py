@@ -251,6 +251,9 @@ class TSEncoder:
                                 self.mapback, self.auto_env)
 
 
+        # Map from regular expression to the ts of the correspondent automata
+        self.regexp2ts = {}
+
     def get_ts_encoding(self):
         """ Returns the transition system encoding of the dynamic
         verification problem.
@@ -330,7 +333,6 @@ class TSEncoder:
         for spec in specs:
             tmp = gs.ground_spec(spec)
             ground_specs.update(set(tmp))
-
         return ground_specs
 
 
@@ -552,10 +554,14 @@ class TSEncoder:
         # counter for the transition system
         auto2ts_map = {}
 
-        # TODO: ensure to prune the unreachable states in the
-        # automaton
         regexp = get_regexp_node(ground_spec.ast)
         auto = self.r2a.get_from_regexp(regexp)
+
+        # if (not regexp in self.regexp2ts):
+        #     self.regexp2ts[regexp] = 1
+        # else:
+        #     print "DUPLICATE"
+        #     #pretty_print(regexp)
 
         # program counter of the automaton
         auto_pc = "spec_pc_%d" % spec_id
