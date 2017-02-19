@@ -44,10 +44,11 @@ SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onResume() |- [CB] [ENT
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onResume() |+ [CB] [ENTRY] [f] void android.app.Fragment.onPause();
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onPause() |- [CB] [ENTRY] [f] void android.app.Fragment.onPause();
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onPause() |+ [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle);
+SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onPause() |+ [CB] [ENTRY] [f] void android.app.Fragment.onStop();
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onPause() |+ [CB] [ENTRY] [f] void android.app.Fragment.onResume();
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onResume() |- [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle);
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle) |- [CB] [ENTRY] [f] void android.app.Fragment.onResume();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStop();
+//SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStop();
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle) |- [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle);
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStop() |- [CB] [ENTRY] [f] void android.app.Fragment.onStop();
 
