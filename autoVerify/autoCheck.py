@@ -11,7 +11,7 @@ from verifierChecks import runVerifierChecks, GOODTRACE, TRUNCTRACE, EXCEPTTRACE
 from configs import getConfigs
 
 
-def checkTraces(inputPath, outputPath, json, verifierPath, specPaths):
+def checkTraces(inputPath, outputPath, json, verifierPath, specPaths, processPath=None):
     print "========\n"
     print "Checking traces in %s" % inputPath
 
@@ -47,6 +47,9 @@ def checkTraces(inputPath, outputPath, json, verifierPath, specPaths):
             basePath = unknownPath
         shutil.copyfile(tr, basePath + '/' + os.path.basename(tr)) 
 
+        if processPath != None:
+            shutil.copyfile(tr, processPath + '/' + os.path.basename(tr))
+
 
 if __name__ == "__main__":
 
@@ -61,15 +64,22 @@ if __name__ == "__main__":
 
    for name,app in configs['apps'].items():
         
-       recreatePath(app['checked'])
+       createPathIfEmpty(app['checked'])
 
-       checkTraces(app['input'], app['checked'], app['json'], configs['verifier'], app['specs'])  
+       createPathIfEmpty(app['processed'])
+
+       checkTraces(app['input'], app['checked'], app['json'], configs['verifier'], app['specs'], processPath=app['processed'])  
 
        if os.path.exists(app['input'] + "/monkeyTraces"): 
-           checkTraces(app['input'] + "/monkeyTraces", app['checked'] + "/monkeyTraces", app['json'], configs['verifier'], app['specs'])
+           checkTraces(app['input'] + "/monkeyTraces", app['checked'] + "/monkeyTraces", app['json'], configs['verifier'], app['specs']
+                      ,processPath=app['processed'])
 
        if os.path.exists(app['input'] + "/manualTraces"): 
-           checkTraces(app['input'] + "/manualTraces", app['checked'] + "/manualTraces", app['json'], configs['verifier'], app['specs'])
+           checkTraces(app['input'] + "/manualTraces", app['checked'] + "/manualTraces", app['json'], configs['verifier'], app['specs']
+                      ,processPath=app['processed'])
 
+       recreatePath( app['input'] )
+
+       
 
 
