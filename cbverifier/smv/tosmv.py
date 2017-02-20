@@ -91,12 +91,14 @@ class NuXmvDriver:
                                     self.ts.trans,
                                     invarspec)
 
-        smv_file = self.get_tmp_file("smv", True)
+        DELETE_FILES = True
+
+        smv_file = self.get_tmp_file("smv", DELETE_FILES)
         self.ts2smv.to_smv(smv_file)
         smv_file.flush()
 
         # 2. Writes the CMD file
-        cmd_file = self.get_tmp_file("cmd", True)
+        cmd_file = self.get_tmp_file("cmd", DELETE_FILES)
         # writes the cmd file
         cmd_file.write(cmds)
         cmd_file.flush()
@@ -144,7 +146,7 @@ flatten_hierarchy
 encode_variables -n
 build_boolean_model
 echo "Verifying property..."
-check_invar_ic3 -n 0 -k "%s"
+check_invar_ic3 -n 0 -k %s -g
 echo "%s"
 quit
 EOF
@@ -166,24 +168,28 @@ class SmvTranslator:
         self.init = init
         self.trans = trans
         self.invarspec = invarspec
-
-        self.translator = None
+        self.translator = SmvFormulaTranslator(env)
         self.env = env
 
     def to_smv(self, stream):
-        self.translator = SmvFormulaTranslator(self.env, stream)
+
         stream.write("MODULE main\n")
         self.print_vars(stream, "VAR", self.state_vars)
         self.print_vars(stream, "IVAR", self.input_vars)
 
         if (self.invarspec is not None):
             stream.write("INVARSPEC\n")
-            self.print_formula(stream, self.invarspec)
-        stream.write(";\nINIT\n")
-        self.print_formula(stream, self.init)
-        stream.write(";\nTRANS\n")
-        self.print_formula(stream, self.trans)
+            self._print_formula(stream, self.invarspec)
 
+        stream.write(";\nINIT\n")
+        self._print_formula(stream, self.init)
+        stream.write(";\nTRANS\n")
+        self._print_formula(stream, self.trans)
+        stream.write(";\n")
+
+        for (f, define) in self.translator.defines.iteritems():
+            (def_name, def_def) = define
+            stream.write("DEFINE %s := %s;\n" % (def_name, def_def));
 
         self.translator = None
 
@@ -203,61 +209,77 @@ class SmvTranslator:
     def translate_formula(self, formula):
         return self.translator.translate(formula)
 
-    def print_formula(self, stream, formula):
+    def _print_formula(self, stream, formula):
         stream.write(self.translator.translate(formula))
 
 class SmvFormulaTranslator(DagWalker):
-    def __init__(self, env, stream, short_names=True):
+    def __init__(self, env, short_names=True):
         DagWalker.__init__(self, env, None)
 
         self.short_names = short_names
         self.symb_map = {}
+
         self.counter = 0
+        self.def_counter = 0;
+
+        # Map from formulas to define
+        # We explore and build the DAG of the formula
+        self.defines = {}
 
         self.mgr = self.env.formula_manager
-        self.stream = stream
-        self.write = self.stream.write
 
     def translate(self, formula):
-        (f, s) = self.walk(formula)
+        s = self.walk(formula)
         return s
 
-    # def _get_key(self, formula, **kwargs):
-    #     if len(kwargs) == 0:
-    #         return formula
-    #     raise NotImplementedError("DagWalker should redefine '_get_key'" +
-    #                               " when using keywords arguments")
+    def _get_key(self, formula, **kwargs):
+        return formula
+
+    USE_DEF = True
+    def _insert_def(self, formula, res):
+        if SmvFormulaTranslator.USE_DEF:
+            self.def_counter = self.def_counter + 1
+            def_var = "define_%d" % self.def_counter
+            self.defines[formula] = (def_var, res)
+            return def_var
+        else:
+            return res
+
 
     def _my_binary(self, formula, op_str, **kwargs):
         res = "("
         list_args = kwargs['args']
-        for (f, s) in list_args[:-1]:
+        for s in list_args[:-1]:
             assert type(s) == type("")
-            res = "%s%s %s " % (res,s,op_str)
-        (f,s) = kwargs['args'][-1]
+            res = "%s%s %s " % (res, s, op_str)
+        s = kwargs['args'][-1]
         res = res + s + ")"
+
+        res = self._insert_def(formula, res)
+
         return res
 
     def walk_or(self, formula, **kwargs):
         res = self._my_binary(formula, "|", **kwargs)
-        return (formula, res)
+        return res
 
     def walk_and(self, formula, **kwargs):
         res = self._my_binary(formula, "&", **kwargs)
-        return (formula, res)
+        return res
 
     def walk_implies(self, formula, **kwargs):
         res = self._my_binary(formula, "->", **kwargs)
-        return (formula, res)
+        return res
 
     def walk_iff(self, formula, **kwargs):
         res = self._my_binary(formula, "<->", **kwargs)
-        return (formula, res)
+        return res
 
     def walk_not(self, formula, **kwargs):
-        (l, s) = kwargs['args'][0]
-        res = "(! %s)" % s
-        return (formula, res)
+        s = kwargs['args'][0]
+        res = self._insert_def(formula, "(! %s)" % s)
+
+        return res
 
     def walk_symbol(self, formula, **kwargs):
         def _get_symbol_symbol_key(formula):
@@ -278,8 +300,8 @@ class SmvFormulaTranslator(DagWalker):
                 if not self.short_names:
                     res = "\"%s\"" % key
                 else:
-                    res = "var_%d" % self.counter
                     self.counter = self.counter + 1
+                    res = "var_%d" % self.counter
                 self.symb_map[key] = res
 
             # add next to the variable
@@ -288,7 +310,7 @@ class SmvFormulaTranslator(DagWalker):
         else:
             assert False
 
-        return (formula, res)
+        return res
 
     def walk_bool_constant(self, formula, **kwargs):
         if formula == TRUE():
@@ -298,4 +320,4 @@ class SmvFormulaTranslator(DagWalker):
         else:
             res = formula.serialize()
 
-        return (formula, res)
+        return res
