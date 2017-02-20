@@ -245,7 +245,7 @@ public class CountdownFragment extends Fragment {
         txtCountdown.clearAnimation();
     }
     @Override
-    public void onDetach(){
+    public void onPause(){ //TODO: shawn
 	super.onDetach();
         if(countdown != null)
             countdown.cancel();
