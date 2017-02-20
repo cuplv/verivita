@@ -142,6 +142,7 @@ class NuXmvDriver:
             else:
                 return result
 
+# TODO: add "set default_trace_plugin 4" to print the xml trace, and read it back
         cmds = """
 set on_failure_script_quits "1"
 read_model
