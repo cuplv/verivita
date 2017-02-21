@@ -17,3 +17,8 @@ SPEC TRUE[*];
 
 // onClick is initially disabled
 SPEC FALSE[*] |- [CB] [ENTRY] [l] void android.view.View$OnClickListener.onClick(b : android.view.View)
+
+//Disable onClick if attached fragment pauses
+SPEC TRUE[*]; view = [CI] [EXIT] [f] android.app.Fragment.getView();
+
+//TODO: enable onClick if attached fragment resumes
