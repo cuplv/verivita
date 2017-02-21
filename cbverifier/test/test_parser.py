@@ -127,13 +127,16 @@ class TestSpecParser(unittest.TestCase):
 
 
     def _test_parse(self, spec, same_out=True):
-        # print spec
+        print "---"
+        print spec
         res = spec_parser.parse(spec)
         self.assertTrue(res is not None)
 
         # test the printing of the spec ast
         stringio = StringIO()
         pretty_print(res, stringio)
+        pretty_print(res, sys.stdout)
+        print ""
         self.assertTrue((not same_out) or stringio.getvalue() == spec)
 
 
@@ -145,7 +148,7 @@ class TestSpecParser(unittest.TestCase):
         correct_expr = ["SPEC [CB] [ENTRY] [l] type l() |- [CB] [ENTRY] [l] type l(b : type)",
                         "SPEC [CB] [ENTRY] [l] type l(l1 : type,l2 : type) |- [CB] [ENTRY] [l] type l(b : type)",
                         "SPEC [CB] [ENTRY] [l] type l(l1 : type,l2 : type) |- [CI] [ENTRY] [l] type l(b : type); SPEC [CB] [ENTRY] [l] type l(l1 : type,l2 : type) |- [CI] [ENTRY] [l] type l(b : type)",
-                        "SPEC ([CB] [ENTRY] [l] type l(l1 : type,l2 : type)); ([CB] [ENTRY] [l] type l(l1 : type,l2 : type)) |- [CI] [ENTRY] [l] type l(b : type)",
+                        "SPEC ([CB] [ENTRY] [l] type l(l1 : type,l2 : type); [CB] [ENTRY] [l] type l(l1 : type,l2 : type)) |- [CI] [ENTRY] [l] type l(b : type)",
                         "SPEC ([CB] [ENTRY] [l] type l(l1 : type,l2 : type))[*] |- [CI] [ENTRY] [l] type l(b : type)",
                         "SPEC ([CB] [ENTRY] [l] type l(l1 : type,l2 : type))[*] |+ [CI] [ENTRY] [l] type l(b : type)",
                         "SPEC ([CB] [ENTRY] [l] type l(l1 : type,l2 : type))[*] |- [CI] [ENTRY] [l] type l(b : type)",
@@ -158,14 +161,17 @@ class TestSpecParser(unittest.TestCase):
                         "SPEC [CB] [ENTRY] [l1] type methodName(TRUE : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
                         "SPEC [CB] [ENTRY] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
                         "SPEC foo = [CB] [EXIT] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
-                        "SPEC (foo = [CB] [EXIT] [l1] type methodName(a : type)); (foo = [CB] [EXIT] [l1] type methodName(a : type)) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
+                        "SPEC (foo = [CB] [EXIT] [l1] type methodName(a : type); foo = [CB] [EXIT] [l1] type methodName(a : type)) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
                         "SPEC 1 = [CB] [EXIT] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
                         "SPEC # = [CB] [EXIT] [l1] type methodName(# : boolean) |- [CI] [EXIT] [l2] type methodName(bparam : type,TRUE : boolean)",
                         "SPEC TRUE = [CB] [EXIT] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
                         'SPEC ([CB] [ENTRY] [l] type l(l1 : int,"foo" : string))[*] |- [CI] [ENTRY] [l] type l(b : type)',
                         "SPEC [CB] [ENTRY] [l] type l(NULL : boolean) |- [CB] [ENTRY] [l] type l(b : type)",
                         "SPEC [CI] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener) |+ [CB] [ENTRY] [l] void onClick(b : android.widget.Button)",
-                        "SPEC ((TRUE)[*]); ([CI] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener)) |+ [CB] [ENTRY] [l] void onClick(b : android.widget.Button)"]
+                        "SPEC ((TRUE)[*]; [CI] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener)) |+ [CB] [ENTRY] [l] void onClick(b : android.widget.Button)",
+                        "SPEC (([CB] [ENTRY] [l] type l(); [CB] [ENTRY] [l] type l()) & [CB] [ENTRY] [l] type l()) |- [CB] [ENTRY] [l] type l(b : type)",
+                        "SPEC (([CB] [ENTRY] [l] type l(); [CB] [ENTRY] [l] type l()) & ([CB] [ENTRY] [l] type l(); [CB] [ENTRY] [l] type l())) |- [CB] [ENTRY] [l] type l(b : type)",
+                        "SPEC (([CB] [ENTRY] [l1] type l(); [CB] [ENTRY] [l2] type l()) | ([CB] [ENTRY] [l] type l(); [CB] [ENTRY] [l] type l())) |- [CB] [ENTRY] [l] type l(b : type)"]
 
         for expr in correct_expr:
             self._test_parse(expr)

@@ -587,3 +587,24 @@ class TestGrounding(unittest.TestCase):
         spec = Spec.get_spec_from_string("SPEC TRUE |- [CB] [ENTRY] void m1(2 : %s)" % TraceConverter.JAVA_INT)
         ground_specs = gs.ground_spec(spec)
         self.assertTrue(1 == len(ground_specs))
+
+
+    def test_full_regexp(self):
+        trace = CTrace()
+        cb = CCallback(1, 1, "", "void m1()", [TestGrounding._get_null()], None,
+                       [TestGrounding._get_fmwkov("", "void m1()", False)])
+        ci1 = CCallin(1, 1, "", "void m2()", [TestGrounding._get_null()], None)
+        ci2 = CCallin(1, 1, "", "void m2()", [TestGrounding._get_null()], None)
+        ci3 = CCallin(1, 1, "", "void m2()", [TestGrounding._get_null()], None)
+        cb.add_msg(ci1)
+        cb.add_msg(ci2)
+        cb.add_msg(ci3)
+        trace.add_msg(cb)
+
+        gs = GroundSpecs(trace)
+        spec = Spec.get_spec_from_string("SPEC ([CB] [ENTRY] [l] void doA() | [CB] [ENTRY] [l] void doB()) |- [CB] [ENTRY] [f] void doC()")
+        real_ground_spec = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [2] void doA() |- [CB] [ENTRY] [1] void doC();" +
+                                                      "SPEC [CB] [ENTRY] [1] void doB() |- [CB] [ENTRY] [1] void doC()")
+        ground_specs = gs.ground_spec(spec)
+        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+
