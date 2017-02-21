@@ -31,6 +31,41 @@ class Spec:
     def is_enable(self):
         return is_spec_enable(self.ast)
 
+    # TODO: replace ALIASES
+    @staticmethod
+    def _solve_aliases(spec_ast):
+        def alias_rec(aliases_list, subs_map, aliased_specs):
+            if len(aliases_list) == 0:
+                aliased_spec = subs_alias(spec_ast, subs_map)
+                aliased_specs.append(aliased_spec)
+            else:
+                copy = list(aliases_list)
+                (old, new_list)  = copy.pop()
+
+                for new in new_list:
+                    new_subs_map = subs_map.copy()
+                    new_subs_map[old] = new
+                    alias_rec(copy, new_subs_map, aliased_specs)
+
+        aliases = get_spec_aliases(spec_ast)
+
+        if new_nil() == aliases:
+            return [spec_ast]
+
+        # collect all the aliases in a list
+        aliases_list = []
+        while new_nil() != aliases:
+            old = get_alias_old(aliases)
+            new_list = get_alias_new(aliases)
+            aliases_list.append((old, new_list))
+            aliases = get_alias_tail(aliases)
+
+        aliased_specs = []
+        alias_rec(aliases_list, {}, aliased_specs)
+
+        return aliased_specs
+
+
     @staticmethod
     def get_specs_from_string(spec_list_string, spec_list=None):
         spec_list_ast = spec_parser.parse(spec_list_string)
@@ -41,8 +76,11 @@ class Spec:
             while (spec_list_ast != new_nil()):
                 spec_ast = spec_list_ast[1]
                 assert get_node_type(spec_ast) == SPEC_SYMB
-                spec = Spec(spec_ast)
-                spec_list.append(spec)
+
+                # Process all the aliases
+                for spec_ast_2 in Spec._solve_aliases(spec_ast):
+                    spec = Spec(spec_ast_2)
+                    spec_list.append(spec)
 
                 spec_list_ast = spec_list_ast[2]
 
@@ -55,7 +93,7 @@ class Spec:
     def get_spec_from_string(spec_string):
         spec_list = []
         spec_list = Spec.get_specs_from_string(spec_string, spec_list)
-        return spec_list[0]
+        return spec_list
 
     @staticmethod
     def get_specs_from_file(spec_file, spec_list=None):

@@ -29,6 +29,8 @@ specifications.
 ```
 spec : SPEC regexp |- message
      | SPEC regexp |+ message
+     | SPEC regexp |- message ALIAS aliases
+     | SPEC regexp |+ message ALIAS aliases
 ```
 
 A specification is formed by a regular expression `regexp`, the
@@ -158,6 +160,44 @@ value, specifified with the reserved keyword `#`.
 Each parameters in `param_list` must be followed by their type (the
 one that corresponds to the types found in the method signature). The
 type is a `composed_id`.
+
+
+- Aliases
+Aliases can be used to rename name of the method used in a message.
+
+As an example, in the specification:
+```
+SPEC [CI] [ENTRY] [l] void method_name() |- TRUE ALIASES method_name = [subs1,subs2]
+```
+the alias tells to change all the messages that have `method_name` as method name with `subs1` and with `subs2`
+
+This results in specifying two different specifications:
+```
+SPEC [CI] [ENTRY] [l] void subs1() |- TRUE
+SPEC [CI] [ENTRY] [l] void subs2() |- TRUE
+```
+
+One can obtain all the possible substitutions defined by the aliases. For example:
+```
+SPEC [CI] [ENTRY] [l] void method_name() |- [CI] [ENTRY] [l] void method_name2() 
+    ALIASES method_name = [subs1, subs2], method_name2 = [subs3, subs4]
+```
+Is expanded as 4 different specifications as:
+```
+SPEC [CI] [ENTRY] [l] void subs1() |- [CI] [ENTRY] [l] void subs3()
+SPEC [CI] [ENTRY] [l] void subs1() |- [CI] [ENTRY] [l] void subs4()
+SPEC [CI] [ENTRY] [l] void subs2() |- [CI] [ENTRY] [l] void subs3()
+SPEC [CI] [ENTRY] [l] void subs2() |- [CI] [ENTRY] [l] void subs4()
+```
+
+```
+aliases : composed_id = [alias_list]
+        | composed_id = [alias_list], aliases
+        
+alias_list : composed_id
+           | composed_id, alias_list
+```
+
 
 
 # Examples
