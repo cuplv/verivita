@@ -1,8 +1,8 @@
 //*** Enable Disable Rules ***
 //Initial disable rules
 SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle) ALIASES android.app.Fragment.onCreate = [android.app.Fragment.onCreate, android.support.v4.app.Fragment.onCreate]; 
-SPEC FALSE[*] |-  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle);
-SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle);
+SPEC FALSE[*] |-  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle)ALIASES android.app.Fragment.onCreateView = [android.app.Fragment.onCreateView, android.support.v4.app.Fragment.onCreateView]; 
+SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle) ALIASES android.app.Fragment.onViewCreated = [android.app.Fragment.onViewCreated] //TODO: you were here
 SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onStart();
 SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onResume();
 SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onPause();
@@ -21,10 +21,12 @@ SPEC TRUE[*]; [CI] [EXIT] [f] void android.app.Fragment.<init>() |- [CI] [EXIT] 
 
 
 
-SPEC TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |- [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |+ [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
+SPEC TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |- [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) 
+	ALIASES android.app.Fragment.onAttach = [android.support.v4.app.Fragment.onAttach,android.app.Fragment.onAttach];
+SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |+ [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle) ALIASES android.app.Fragment.onCreate = [android.app.Fragment.onCreate, android.support.v4.app.Fragment.onCreate], android.app.Fragment.onAttach = [android.app.Fragment.onAttach,android.support.v4.app.Fragment.onAttach]; 
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle) |- [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle) |+  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle);
+SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle) |+  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle) 
+	ALIASES android.app.Fragment.onCreate = [android.app.Fragment.onCreate, android.support.v4.app.Fragment.onCreate], android.app.Fragment.onCreateView = [android.app.Fragment.onCreateView, android.support.v4.app.Fragment.onCreateView, android.support.v4.app.ListFragment.onCreateView];
 SPEC TRUE[*];  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle) |-  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle);
 SPEC TRUE[*];  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle) |+ [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle);
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle) |- [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle);
