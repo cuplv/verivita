@@ -36,6 +36,8 @@ CI            = 19
 CB            = 20
 NULL          = 21
 CALL_EXIT     = 22
+ALIASES       = 23
+ALIASES_LIST  = 24
 
 inv_map = { 0 : "TRUE",
             1 : "FALSE",
@@ -59,7 +61,9 @@ inv_map = { 0 : "TRUE",
             19 : "CI",
             20 : "CB",
             21 : "NULL",
-            22 : "CALL_EXIT"}
+            22 : "CALL_EXIT",
+            23 : "ALIASES",
+            24 : "ALsIASES_LIST"}
 
 ################################################################################
 # Node creation
@@ -101,11 +105,14 @@ def new_not(p1): return (NOT_OP, p1)
 def new_seq(p1,p2): return (SEQ_OP, p1, p2)
 def new_star(p1): return (STAR_OP, p1)
 
-def new_enable_spec(regexp, atom):
-    return (SPEC_SYMB, (ENABLE_OP, regexp, atom))
+def new_alias(alias_elem, tails):
+    return (ALIASES_LIST, alias_elem, tails)
 
-def new_disable_spec(regexp, atom):
-    return (SPEC_SYMB, (DISABLE_OP, regexp, atom))
+def new_enable_spec(regexp, atom, aliases):
+    return (SPEC_SYMB, (ENABLE_OP, regexp, atom), aliases)
+
+def new_disable_spec(regexp, atom, aliases):
+    return (SPEC_SYMB, (DISABLE_OP, regexp, atom), aliases)
 
 def new_spec_list(spec, rest):
     return (SPEC_LIST, spec, rest)
@@ -197,6 +204,12 @@ def get_spec_rhs(node):
     rhs = (node[1])[2]
     assert rhs is not None
     return rhs
+
+def get_spec_aliases(node):
+    assert SPEC_SYMB == get_node_type(node)
+    assert node[2] is not None
+
+    return node[2]
 
 def is_spec_enable(node):
     assert SPEC_SYMB == get_node_type(node)
@@ -345,6 +358,24 @@ def pretty_print(ast_node, out_stream=sys.stdout):
         elif (node_type == SPEC_SYMB):
             my_print(out_stream, "SPEC ")
             pretty_print_aux(out_stream ,node[1], "")
+
+            # Print Aliases
+            aliases = get_spec_aliases(node)
+            if (NIL != get_node_type(aliases)):
+                my_print(out_stream, " ALIASES ")
+                pretty_print_aux(out_stream, aliases, "")
+
+        elif (node_type == ALIASES_LIST):
+            (old, new) = node[1]
+            pretty_print_aux(out_stream, old, "")
+            my_print(out_stream, " = ")
+            pretty_print_aux(out_stream, new, "")
+
+            alias_tail = node[2]
+            if (get_node_type(alias_tail) != NIL):
+                my_print(out_stream, ",")
+                pretty_print_aux(out_stream, alias_tail,"")
+
         elif (node_type == ENABLE_OP or
               node_type == DISABLE_OP):
 
@@ -358,6 +389,7 @@ def pretty_print(ast_node, out_stream=sys.stdout):
                 raise Exception("Unknown type of spec")
 
             pretty_print_aux(out_stream,node[2],"")
+
         elif (node_type == SPEC_LIST):
             pretty_print_aux(out_stream,node[1],"")
             if (get_node_type(node[2]) != NIL):

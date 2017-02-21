@@ -20,6 +20,7 @@ import ply.yacc as yacc
 
 precedence = (
     ('left','TOK_SPEC'),
+    ('left','TOK_ALIASES'),
     ('left','TOK_ENABLE','TOK_DISABLE'),
     ('left','TOK_SEQUENCE'),
     ('left','TOK_STAR'),
@@ -42,14 +43,37 @@ def p_specs(t):
 def p_spec(t):
     '''spec : TOK_SPEC regexp TOK_DISABLE atom
             | TOK_SPEC regexp TOK_ENABLE atom
+            | TOK_SPEC regexp TOK_DISABLE atom TOK_ALIASES aliases
+            | TOK_SPEC regexp TOK_ENABLE atom TOK_ALIASES aliases
     '''
+
+    if (len(t) >= 6):
+        aliases = t[6]
+    else:
+        aliases = new_nil()
+
     if '|-' == t[3]:
-        t[0] = new_disable_spec(t[2], t[4])
+        t[0] = new_disable_spec(t[2], t[4], aliases)
     elif '|+' == t[3]:
-        t[0] = new_enable_spec(t[2], t[4])
+        t[0] = new_enable_spec(t[2], t[4], aliases)
     else:
         p_error(t)
 
+def p_aliases(t):
+    '''aliases : alias
+               | alias TOK_COMMA aliases
+    '''
+    # return a list of aliases
+    if (len(t) == 4):
+        t[0] = new_alias(t[1], t[3])
+    else:
+        t[0] = new_alias(t[1], new_nil())
+
+
+def p_alias(t):
+    '''alias : composed_id TOK_ASSIGN composed_id
+    '''
+    t[0] = (t[1], t[3])
 
 def p_regexp(t):
     '''regexp : bexp

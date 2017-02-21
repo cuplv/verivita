@@ -95,6 +95,7 @@ class TestSpecParser(unittest.TestCase):
         self._test_single_token(0, 'TOK_EXIT', 1, 'EXIT', 'EXIT')
 
         self._test_single_token(0, 'TOK_ASSIGN', 1, '=', '=')
+        self._test_single_token(0, 'TOK_ALIASES', 1, 'ALIASES', 'ALIASES')
 
         self._test_single_token(0, 'TOK_STRING_LITERAL', 1,
                                 '"dita nel naso"',
@@ -127,13 +128,16 @@ class TestSpecParser(unittest.TestCase):
 
 
     def _test_parse(self, spec, same_out=True):
-        # print spec
+        #print "---"
+        #print spec
         res = spec_parser.parse(spec)
         self.assertTrue(res is not None)
 
         # test the printing of the spec ast
         stringio = StringIO()
         pretty_print(res, stringio)
+
+        #pretty_print(res, sys.stdout)
         self.assertTrue((not same_out) or stringio.getvalue() == spec)
 
 
@@ -152,6 +156,8 @@ class TestSpecParser(unittest.TestCase):
                         "SPEC ([CB] [ENTRY] [l] type b(l1 : type,l2 : type))[*] |- [CI] [ENTRY] [l] type l(b : type)",
                         "SPEC ([CB] [ENTRY] [l] void <init>(l1 : type,l2 : type))[*] |- [CI] [ENTRY] [l] type l(b : type)",
                         "SPEC TRUE |- TRUE",
+                        "SPEC (TRUE)[*] |- TRUE ALIASES old = new",
+                        "SPEC (TRUE)[*] |- TRUE ALIASES old1 = new1,old2 = new2",
                         "SPEC (TRUE)[*] |- TRUE",
                         "SPEC ([CB] [ENTRY] [l] type m1())[*] |- TRUE",
                         "SPEC (((TRUE & FALSE) | ! (FALSE)))[*] |- TRUE",
