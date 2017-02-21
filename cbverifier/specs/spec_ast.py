@@ -208,7 +208,6 @@ def get_spec_rhs(node):
 def get_spec_aliases(node):
     assert SPEC_SYMB == get_node_type(node)
     assert node[2] is not None
-
     return node[2]
 
 def is_spec_enable(node):
@@ -235,6 +234,23 @@ def get_param_tail(node):
     assert PARAM_LIST == get_node_type(node)
     assert 4 == len(node)
     return node[3]
+
+def get_alias_old(node):
+    assert ALIASES_LIST == get_node_type(node)
+    assert 3 == len(node)
+    (old, new) = node[1]
+    return old
+
+def get_alias_new(node):
+    assert ALIASES_LIST == get_node_type(node)
+    assert 3 == len(node)
+    (old, new) = node[1]
+    return new
+
+def get_alias_tail(node):
+    assert ALIASES_LIST == get_node_type(node)
+    assert 3 == len(node)
+    return node[2]
 
 
 ################################################################################
@@ -366,12 +382,21 @@ def pretty_print(ast_node, out_stream=sys.stdout):
                 pretty_print_aux(out_stream, aliases, "")
 
         elif (node_type == ALIASES_LIST):
-            (old, new) = node[1]
+            old = get_alias_old(node)
+            new = get_alias_new(node)
             pretty_print_aux(out_stream, old, "")
-            my_print(out_stream, " = ")
-            pretty_print_aux(out_stream, new, "")
+            my_print(out_stream, " = [")
 
-            alias_tail = node[2]
+            first = True
+            for n in new:
+                if not first:
+                    my_print(out_stream, ",")
+                first = False
+                pretty_print_aux(out_stream, n, "")
+
+            my_print(out_stream, "]")
+
+            alias_tail = get_alias_tail(node)
             if (get_node_type(alias_tail) != NIL):
                 my_print(out_stream, ",")
                 pretty_print_aux(out_stream, alias_tail,"")

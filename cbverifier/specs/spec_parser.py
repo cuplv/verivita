@@ -71,9 +71,21 @@ def p_aliases(t):
 
 
 def p_alias(t):
-    '''alias : composed_id TOK_ASSIGN composed_id
+    '''alias : composed_id TOK_ASSIGN TOK_LSQUARE cid_list TOK_RSQUARE
     '''
-    t[0] = (t[1], t[3])
+    assert t[4] is not None
+
+    t[0] = (t[1], t[4])
+
+def p_cid_list(t):
+    ''' cid_list : composed_id
+                 | composed_id TOK_COMMA cid_list
+    '''
+    if (len(t) == 2):
+        t[0] = [t[1]]
+    else:
+        t[0] = [t[1]]
+        t[0].extend(t[3])
 
 def p_regexp(t):
     '''regexp : bexp
