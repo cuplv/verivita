@@ -239,7 +239,7 @@ class GroundSpecs(object):
                 lhs_l = substitute_rec(node[1], sg, binding)
                 res = []
                 for lhs in lhs_l:
-                    res.append(create_node(SPEC_SYMB, [lhs]))
+                    res.append(create_node(SPEC_SYMB, [lhs, new_nil()]))
                 return res
             else:
                 raise UnexpectedSymbol(node)
