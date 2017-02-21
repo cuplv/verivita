@@ -27,6 +27,8 @@ except ImportError as e:
 # Read a message from Java's writeDelimitedTo:
 import google.protobuf.internal.decoder as decoder
 
+from google.protobuf import message
+
 import tracemsg_pb2
 
 class MessageFilter:
@@ -550,9 +552,13 @@ class CTraceSerializer:
                     last_message.add_msg(trace_message)
 
         if len(message_stack) != 0:
-            raise MalformedTraceException("The number of entry messages does " \
-                                          "match the number of exit/exception " \
-                                          "messages.")
+            if is_json or not reader.isTruncated():
+               raise MalformedTraceException("The number of entry messages does " \
+                                             "match the number of exit/exception " \
+                                             "messages.")
+            else:
+               # print "ProtoBuf is truncated.. discarded last top-level Callback block."
+               pass
         return trace
 
 
@@ -810,6 +816,7 @@ class CTraceDelimitedReader(object):
         self.data = trace_file.read()
         self.size = len(self.data)
         self.position = 0
+        self.protoTruncated = False
 
     def __iter__(self):
         return self
@@ -831,12 +838,20 @@ class CTraceDelimitedReader(object):
         self.position = self.position + size
 
         trace_msg_container = tracemsg_pb2.TraceMsgContainer()
-        trace_msg_container.ParseFromString(raw_data)
+        try:
+           trace_msg_container.ParseFromString(raw_data)
+        except message.DecodeError as e:
+           print "Protobuf is truncated... parsing terminated."
+           self.protoTruncated = True
+           trace_msg_container == None
 
         if trace_msg_container == None:
             raise StopIteration()
         else:
             return trace_msg_container
+
+    def isTruncated(self):
+        return self.protoTruncated
 
 class CTraceJsonReader(object):
     """
