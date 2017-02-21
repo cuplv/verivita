@@ -7,7 +7,9 @@ import optparse
 import logging
 
 
-from cbverifier.traces.ctrace import CTraceSerializer, CCallin, CCallback, MessageFilter
+from cbverifier.traces.ctrace import CTraceSerializer, CCallin
+from cbverifier.traces.ctrace import CCallback, MessageFilter
+from cbverifier.traces.ctrace import MalformedTraceException, TraceEndsInErrorException
 from cbverifier.specs.spec import Spec
 from cbverifier.encoding.encoder import TSEncoder
 from cbverifier.encoding.cex_printer import CexPrinter
@@ -47,8 +49,14 @@ class Driver:
             self.trace = CTraceSerializer.read_trace_file_name(self.opts.tracefile,
                                                                self.opts.traceformat == "json",
                                                                self.opts.allow_exception)
-        except IOError as e:
-            raise Exception("An error happened reading the trace in %s" % self.opts.tracefile)
+        except MalformedTraceException as e:
+            raise
+        except TraceEndsInErrorException as e:
+            raise
+        except Exception as e:
+            raise Exception("An error happened reading the trace in %s (%s)" % (self.opts.tracefile,
+                                                                                e.message))
+
 
         # Parse the specs
         self.spec_list = Spec.get_specs_from_files(self.opts.spec_file_list)

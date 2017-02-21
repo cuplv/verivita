@@ -502,6 +502,25 @@ class CTraceSerializer:
         else:
             reader = CTraceDelimitedReader(trace_file)
 
+        try:
+            CTraceSerializer.read_trace_inner(trace,reader,
+                                              ignore_non_ui_threads,
+                                              allow_exception)
+        except message.DecodeError as e:
+            if len(trace.children) > 0:
+                # The trace is truncated, but we still read some data
+                logging.warning("Protobuf is truncated... parsing terminated.")
+            else:
+                # This is a non-recoverable error that must be propagated
+                raise
+
+        return trace
+
+    @staticmethod
+    def read_trace_inner(trace,
+                         reader,
+                         ignore_non_ui_threads=True,
+                         allow_exception = True):
         message_stack = []
         for tm_container in reader:
             assert None != tm_container
@@ -552,14 +571,9 @@ class CTraceSerializer:
                     last_message.add_msg(trace_message)
 
         if len(message_stack) != 0:
-            if is_json or not reader.isTruncated():
-               raise MalformedTraceException("The number of entry messages does " \
-                                             "match the number of exit/exception " \
-                                             "messages.")
-            else:
-               # print "ProtoBuf is truncated.. discarded last top-level Callback block."
-               pass
-        return trace
+            raise MalformedTraceException("The number of entry messages does " \
+                                          "match the number of exit/exception " \
+                                          "messages.")
 
 
     @staticmethod
@@ -816,7 +830,6 @@ class CTraceDelimitedReader(object):
         self.data = trace_file.read()
         self.size = len(self.data)
         self.position = 0
-        self.protoTruncated = False
 
     def __iter__(self):
         return self
@@ -839,19 +852,15 @@ class CTraceDelimitedReader(object):
 
         trace_msg_container = tracemsg_pb2.TraceMsgContainer()
         try:
-           trace_msg_container.ParseFromString(raw_data)
+            trace_msg_container.ParseFromString(raw_data)
         except message.DecodeError as e:
-           print "Protobuf is truncated... parsing terminated."
-           self.protoTruncated = True
-           trace_msg_container == None
+            trace_msg_container == None
+            raise
 
         if trace_msg_container == None:
             raise StopIteration()
         else:
             return trace_msg_container
-
-    def isTruncated(self):
-        return self.protoTruncated
 
 class CTraceJsonReader(object):
     """
