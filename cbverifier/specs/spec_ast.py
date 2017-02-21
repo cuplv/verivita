@@ -285,6 +285,79 @@ def get_call_nodes(ast_node):
     return _get_call_nodes_rec(ast_node, set())
 
 
+def subs_alias(node, subs_map):
+    node_type = get_node_type(node)
+
+    if (node_type == TRUE): return node
+    elif (node_type == FALSE): return node
+    elif (node_type == NULL): return node
+    elif (node_type == DONTCARE): return node
+    elif (node_type == CI): return node
+    elif (node_type == CB): return node
+    elif (node_type == ID):
+        # Perform the substitution
+        if (node in subs_map):
+            return subs_map[node]
+        else:
+            return node
+    elif (node_type == INT or
+          node_type == FLOAT or node_type == STRING):
+        return node
+    elif (node_type == PARAM_LIST):
+        return node
+    elif (node_type == CALL_ENTRY or
+          node_type == CALL_EXIT):
+        call_type = get_call_type(node)
+        receiver = get_call_receiver(node)
+
+
+        # now method name is void method
+        mn = get_id_val(get_call_method(node))
+        mn_splitted = mn.split(" ")
+        if (len(mn_splitted) == 2):
+            new = subs_alias(new_id(mn_splitted[1]), subs_map)
+            method_name = new_id(mn_splitted[0] + " " +
+                                 get_id_val(new))
+        else:
+            method_name = subs_alias(method_name, subs_map)
+
+        params = get_call_params(node)
+
+        if (CALL_EXIT == node_type):
+            assignee = get_call_assignee(node)
+            return new_call_exit(assignee, call_type, receiver, method_name, params)
+        else:
+            return new_call_entry(call_type, receiver, method_name, params)
+
+    elif (node_type == AND_OP):
+        return new_and(subs_alias(node[1], subs_map),
+                       subs_alias(node[2], subs_map))
+    elif (node_type == OR_OP):
+        return new_or(subs_alias(node[1], subs_map),
+                      subs_alias(node[2], subs_map))
+    elif (node_type == NOT_OP):
+        return new_not(subs_alias(node[1], subs_map))
+    elif (node_type == SEQ_OP):
+        return new_seq(subs_alias(node[1], subs_map),
+                       subs_alias(node[2], subs_map))
+    elif (node_type == STAR_OP):
+        return new_star(subs_alias(node[1], subs_map))
+    elif (node_type == SPEC_SYMB):
+        regexp = subs_alias(get_regexp_node(node), subs_map)
+        spec_rhs = subs_alias(get_spec_rhs(node), subs_map)
+
+        if (is_spec_enable(node)):
+            return new_enable_spec(regexp, spec_rhs, new_nil())
+        else:
+            return new_disable_spec(regexp, spec_rhs, new_nil())
+    elif (node_type == SPEC_LIST):
+        return new_spec_list(subs_alias(node[1], subs_map),
+                             subs_alias(node[2], subs_map))
+    else:
+        raise UnexpectedSymbol(node)
+
+
+
 def pretty_print(ast_node, out_stream=sys.stdout):
 
     def pretty_print_aux(out_stream, node, sep):

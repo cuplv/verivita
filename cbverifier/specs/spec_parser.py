@@ -165,7 +165,6 @@ def p_atom_no_ret_val(t):
         t[0] = new_call_exit(assignee, call_type, receiver,
                              method_name, method_param)
     else:
-        print entry_type
         assert False
 
 def p_atom_ret_val(t):

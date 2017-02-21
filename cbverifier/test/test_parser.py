@@ -198,13 +198,13 @@ class TestSpecParser(unittest.TestCase):
                  (SPEC_SYMB,
                   (DISABLE_OP,
                    (CALL_ENTRY, (CB,), (ID,'l'), (ID, 'void package.method_name'), (NIL,)),
-                   (0,))), (NIL,))),
+                   (0,)), (NIL,)), (NIL,))),
                ("SPEC [CB] [ENTRY] [l] void package.method_name() |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
                   (DISABLE_OP,
                    (CALL_ENTRY, (CB,), (ID,'l'), (ID, 'void package.method_name'), (NIL,)),
-                   (0,))), (NIL,))),
+                   (0,)), (NIL,)), (NIL,))),
                ("SPEC [CI] [ENTRY] [l] void method_name(0 : int,1 : int,f : int) |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
@@ -213,7 +213,7 @@ class TestSpecParser(unittest.TestCase):
                     (PARAM_LIST, (INT, 0), (ID, 'int'),
                      (PARAM_LIST, (INT, 1), (ID, 'int'),
                       (PARAM_LIST, (ID, 'f'), (ID, 'int'), (NIL,))))),
-                   (0,))), (NIL,))),
+                   (0,)), (NIL,)), (NIL,))),
                ("SPEC var = [CI] [EXIT] [l] void method_name(0 : int,1 : int,f : int) |- TRUE",
                 (SPEC_LIST,
                  (SPEC_SYMB,
@@ -222,7 +222,7 @@ class TestSpecParser(unittest.TestCase):
                     (PARAM_LIST, (INT, 0), (ID, 'int'),
                      (PARAM_LIST, (INT, 1), (ID, 'int'),
                       (PARAM_LIST, (ID, 'f'), (ID, 'int'), (NIL,)))), (ID,'var')),
-                   (0,))), (NIL,))),
+                   (0,)), (NIL,)), (NIL,))),
                ('SPEC var = [CI] [EXIT] [l] void method_name(NULL : string, "foobar" : string, f : int) |- TRUE',
                 (SPEC_LIST,
                  (SPEC_SYMB,
@@ -231,7 +231,7 @@ class TestSpecParser(unittest.TestCase):
                     (PARAM_LIST, (NULL,), (ID, 'string'),
                      (PARAM_LIST, (STRING, '"foobar"'), (ID, 'string'),
                       (PARAM_LIST, (ID, 'f'), (ID, 'int'), (NIL,)))), (ID,'var')),
-                   (0,))), (NIL,)))]
+                   (0,)), (NIL,)), (NIL,)))]
 
         for r in res:
             test_ast_inner(r[0], r[1])
@@ -259,5 +259,56 @@ class TestSpecParser(unittest.TestCase):
         self.assertTrue(2 == len(spec_list[2].get_spec_calls()))
         self.assertTrue(2 == len(spec_list[3].get_spec_calls()))
         self.assertTrue(3 == len(spec_list[4].get_spec_calls()))
+
+
+    def test_aliasing(self):
+        def get_str(spec):
+            stringio = StringIO()
+            pretty_print(spec.ast, stringio)
+            res = stringio.getvalue()
+
+            return res
+
+
+        spec_list = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l] void method_name() |- TRUE ALIASES method_name = [subs1]")
+        res = "SPEC [CI] [ENTRY] [l] void subs1() |- TRUE"
+        self.assertTrue(len(spec_list) == 1)
+        self.assertTrue(get_str(spec_list[0]) == res)
+
+
+        spec_list = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l] void method_name2(); " +
+                                               "     [CI] [ENTRY] [l] void method_name(); " +
+                                               "     [CI] [ENTRY] [l] void method_name()  " +
+                                               "     |- [CI] [ENTRY] [l] void method_name() " +
+                                               "ALIASES method_name = [subs1]")
+        res = ["SPEC (([CI] [ENTRY] [l] void method_name2()); " +
+               "([CI] [ENTRY] [l] void subs1())); ([CI] [ENTRY] [l] void subs1()) " +
+               "|- [CI] [ENTRY] [l] void subs1()"]
+        self.assertTrue(len(spec_list) == len(res))
+        for i in range(len(res)): self.assertTrue(get_str(spec_list[i]) in res)
+
+
+        spec_list = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l] void method_name() |- TRUE " +
+                                               "ALIASES method_name = [subs1, subs2]")
+        res = ["SPEC [CI] [ENTRY] [l] void subs1() |- TRUE",
+               "SPEC [CI] [ENTRY] [l] void subs2() |- TRUE"]
+        self.assertTrue(len(spec_list) == len(res))
+        for i in range(len(res)): self.assertTrue(get_str(spec_list[i]) in res)
+
+
+        spec_list = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l] void method_name() |- " +
+                                               "[CI] [ENTRY] [l] void method_name2() " +
+                                               "ALIASES method_name = [subs1, subs2], method_name2 = [subs3, subs4]")
+
+
+        res = ["SPEC [CI] [ENTRY] [l] void subs1() |- [CI] [ENTRY] [l] void subs3()",
+               "SPEC [CI] [ENTRY] [l] void subs1() |- [CI] [ENTRY] [l] void subs4()",
+               "SPEC [CI] [ENTRY] [l] void subs2() |- [CI] [ENTRY] [l] void subs3()",
+               "SPEC [CI] [ENTRY] [l] void subs2() |- [CI] [ENTRY] [l] void subs4()"]
+
+        self.assertTrue(len(spec_list) == len(res))
+        for i in range(len(res)): self.assertTrue(get_str(spec_list[i]) in res)
+
+
 
 
