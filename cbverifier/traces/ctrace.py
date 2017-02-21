@@ -27,6 +27,8 @@ except ImportError as e:
 # Read a message from Java's writeDelimitedTo:
 import google.protobuf.internal.decoder as decoder
 
+from google.protobuf import message
+
 import tracemsg_pb2
 
 class MessageFilter:
@@ -500,6 +502,25 @@ class CTraceSerializer:
         else:
             reader = CTraceDelimitedReader(trace_file)
 
+        try:
+            CTraceSerializer.read_trace_inner(trace,reader,
+                                              ignore_non_ui_threads,
+                                              allow_exception)
+        except message.DecodeError as e:
+            if len(trace.children) > 0:
+                # The trace is truncated, but we still read some data
+                logging.warning("Protobuf is truncated... parsing terminated.")
+            else:
+                # This is a non-recoverable error that must be propagated
+                raise
+
+        return trace
+
+    @staticmethod
+    def read_trace_inner(trace,
+                         reader,
+                         ignore_non_ui_threads=True,
+                         allow_exception = True):
         message_stack = []
         for tm_container in reader:
             assert None != tm_container
@@ -553,7 +574,6 @@ class CTraceSerializer:
             raise MalformedTraceException("The number of entry messages does " \
                                           "match the number of exit/exception " \
                                           "messages.")
-        return trace
 
 
     @staticmethod
@@ -831,7 +851,11 @@ class CTraceDelimitedReader(object):
         self.position = self.position + size
 
         trace_msg_container = tracemsg_pb2.TraceMsgContainer()
-        trace_msg_container.ParseFromString(raw_data)
+        try:
+            trace_msg_container.ParseFromString(raw_data)
+        except message.DecodeError as e:
+            trace_msg_container == None
+            raise
 
         if trace_msg_container == None:
             raise StopIteration()
