@@ -2,11 +2,33 @@ from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
 import argparse
 
-aliasMap = {
-    "android.app.Fragment.onCreate": ["android.support.v4.app.Fragment.onCreate"]
+#Note: DO NOT USE THIS SCRIPT FOR ANYTHING WHICH IS NEGATED!!!
+#aliases of negation must be moved inside the clause and conjuncted
+# eg: a;.*;!b |-c ALIAS b=b,t results in two rules a;.*;!t |-c and a;.*;!b|-c
+# meaning that we effectively have a;.*;TRUE|-c
+# instead a;.*;(!t & !b) |-c is needed
 
-}
+combinations = [
 
+    ({"onStart","onResume", "onPause","onSaveInstanceState","onDestroy","onDetach",
+      "onCreateView","onViewCreated","onDestroyView", "<init>","onStop","onCreate","onAttach", "onActivityCreated"},
+        {"android.support.v4.app.Fragment", "android.support.v4.app.ListFragment","android.app.ListFragment",
+           "android.support.v4.app.DialogFragment"})]
+
+aliasMap = {}
+
+base = "android.app.Fragment"
+
+for combination in combinations:
+    for method in combination[0]:
+        subslist = []
+        basemethod = base + "." + method
+        for object in combination[1]:
+            subslist.append(object + "." + method)
+        aliasMap[basemethod] = subslist
+
+
+print ""
 
 def get_aliases_for_spec(spec):
     node_regexp = get_regexp_node(spec)
@@ -21,6 +43,7 @@ def get_aliases_for_spec(spec):
             mrp = split[1]
         else:
             mrp = mr
+        a = aliasMap
         if mrp in aliasMap:
             mr_ = aliasMap[mrp]
             mr_.append(mrp)
@@ -54,10 +77,11 @@ def cycle_lines(in_file, out_file):
                 assert(len(parsedspec) == 1)
                 spec = parsedspec[0].ast
                 aliasList = get_aliases_for_spec(spec)
+                assert(len(aliasList) > 0)
                 for alias in aliasList:
-                    spec2 = add_alias(spec, alias[0],alias[1])
-                print ""
-                pretty_print(spec2)
+                    spec = add_alias(spec, alias[0],alias[1])
+                pretty_print(spec)
+                print ";"
 
 def add_alias(spec, name, substitutions):
     node_regexp = get_regexp_node(spec)
@@ -83,7 +107,7 @@ def add_alias_to_chain(aliases, name, substitutions):
     new = get_alias_new(aliases)
     old = get_alias_old(aliases)
     tail = get_alias_tail(aliases)
-    return new_alias(old,new,add_alias_to_chain(tail))
+    return new_alias((old,new),add_alias_to_chain(tail,name,substitutions))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Print human readable data from protobuf trace')
