@@ -2,9 +2,43 @@ from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
 import argparse
 
-aliasList = {
-    "android.app.Fragment.onCreate": [""]
+aliasMap = {
+    "android.app.Fragment.onCreate": ["android.support.v4.app.Fragment.onCreate"]
+
 }
+
+
+def get_aliases_for_spec(spec):
+    node_regexp = get_regexp_node(spec)
+    mr1 = getMethodRefs(node_regexp)
+    atom = get_spec_rhs(spec)
+    mr1 = mr1.union(getMethodRefs(atom))
+
+    aliases = []
+    for mr in mr1:
+        split = mr.split(" ")
+        if(len(split) == 2):
+            mrp = split[1]
+        else:
+            mrp = mr
+        if mrp in aliasMap:
+            mr_ = aliasMap[mrp]
+            mr_.append(mrp)
+            aliases.append((mrp,mr_))
+
+    return aliases
+
+def getMethodRefs(node):
+    if(node[0] == ID):
+        assert(isinstance(node[1],basestring))
+        return {node[1]}
+    else:
+        out = set()
+        for i in xrange(2,len(node)):
+            out = out.union(getMethodRefs(node[i]))
+        return out
+
+
 
 def cycle_lines(in_file, out_file):
     with open(in_file, 'r') as f:
@@ -19,8 +53,9 @@ def cycle_lines(in_file, out_file):
                 parsedspec = Spec.get_spec_from_string(trimedLine)
                 assert(len(parsedspec) == 1)
                 spec = parsedspec[0].ast
-
-                spec2 = add_alias(spec, "foo", ["bar","baz"])
+                aliasList = get_aliases_for_spec(spec)
+                for alias in aliasList:
+                    spec2 = add_alias(spec, alias[0],alias[1])
                 print ""
                 pretty_print(spec2)
 
