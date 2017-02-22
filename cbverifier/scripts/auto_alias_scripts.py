@@ -2,11 +2,20 @@ from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
 import argparse
 
+aliasList = {
+    "android.app.Fragment.onCreate": [""]
+}
+
 def cycle_lines(in_file, out_file):
     with open(in_file, 'r') as f:
         for line in f:
-            if len(line) > 0 and line[0] != '/':
-                trimedLine = line.split(";")[0]
+            if line is not None and len(line) > 2 and line[0] != '/':
+
+                line2 = line.strip()
+                if line2[-1] == ";":
+                    trimedLine = line2[:-1]
+                else:
+                    trimedLine = line2
                 parsedspec = Spec.get_spec_from_string(trimedLine)
                 assert(len(parsedspec) == 1)
                 spec = parsedspec[0].ast
