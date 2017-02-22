@@ -9,7 +9,37 @@ def cycle_lines(in_file, out_file):
                 trimedLine = line.split(";")[0]
                 parsedspec = Spec.get_spec_from_string(trimedLine)
                 assert(len(parsedspec) == 1)
-                print pretty_print(parsedspec[0].ast)
+                spec = parsedspec[0].ast
+
+                spec2 = add_alias(spec, "foo", ["bar","baz"])
+                print ""
+                pretty_print(spec2)
+
+def add_alias(spec, name, substitutions):
+    node_regexp = get_regexp_node(spec)
+    atom = get_spec_rhs(spec)
+    aliases = get_spec_aliases(spec)
+
+
+    newaliases = add_alias_to_chain(aliases,name,substitutions)
+    if is_spec_enable(spec):
+        return new_enable_spec(node_regexp,atom, newaliases)
+    elif is_spec_disable(spec):
+        return new_disable_spec(node_regexp,atom,newaliases)
+    else:
+        raise Exception()
+
+def add_alias_to_chain(aliases, name, substitutions):
+    node_type = get_node_type(aliases)
+    if(node_type == NIL):
+        id_substitutions = []
+        for substitution in substitutions:
+            id_substitutions.append(new_id(substitution))
+        return new_alias((new_id(name),id_substitutions),new_nil())
+    new = get_alias_new(aliases)
+    old = get_alias_old(aliases)
+    tail = get_alias_tail(aliases)
+    return new_alias(old,new,add_alias_to_chain(tail))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Print human readable data from protobuf trace')
