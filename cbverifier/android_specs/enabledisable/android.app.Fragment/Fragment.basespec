@@ -37,7 +37,12 @@ SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : a
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStart() |- [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle);
 
 
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStart();
+//following rule was commented out, we are overaproximating onViewCreated as it depends on the return value of onCreateView sometimes, this can be modeled precisely but not needed yet
+//SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStart();
+SPEC TRUE[*]; [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStart();
+SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStart() |- [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle);
+
+
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStart() |- [CB] [ENTRY] [f] void android.app.Fragment.onStart();
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStart() |+ [CB] [ENTRY] [f] void android.app.Fragment.onResume();
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onResume() |- [CB] [ENTRY] [f] void android.app.Fragment.onResume();
