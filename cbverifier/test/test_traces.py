@@ -367,3 +367,33 @@ class TestTraces(unittest.TestCase):
         self.assertTrue(cb.return_value is not None)
         self.assertTrue(cb.return_value.type == TraceConverter.JAVA_INT_PRIMITIVE)
         self.assertTrue(cb.return_value.value == "0")
+
+    def test_truncated(self):
+        test_path = os.path.dirname(cbverifier.test.examples.__file__)
+
+        t1 = os.path.join(test_path, "trace_truncated_recoverable")
+        trace = CTraceSerializer.read_trace_file_name(t1, False)
+        self.assertTrue(len(trace.children) == 3)
+
+        with self.assertRaises(Exception):
+            t2 = os.path.join(test_path, "trace_truncated_non_recoverable")
+            trace = CTraceSerializer.read_trace_file_name(t2, False)
+
+    def test_missing_return(self):
+        test_path = os.path.dirname(cbverifier.test.examples.__file__)
+
+        t1 = os.path.join(test_path, "trace_missing_return.json")
+        trace = CTraceSerializer.read_trace_file_name(t1, True)
+        self.assertTrue(len(trace.children) == 1)
+        cb = trace.children[0]
+
+        self.assertTrue(cb.return_value is not None and
+                        cb.return_value.is_null)
+
+        t1 = os.path.join(test_path, "trace_missing_return_void.json")
+        trace = CTraceSerializer.read_trace_file_name(t1, True)
+        self.assertTrue(len(trace.children) == 1)
+        cb = trace.children[0]
+
+        self.assertTrue(cb.return_value is None)
+
