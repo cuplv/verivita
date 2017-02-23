@@ -17,6 +17,7 @@ from pysmt.solvers.solver import Model
 from pysmt.logics import QF_BOOL
 
 from cStringIO import StringIO
+import xml.etree.ElementTree as ET # for traces
 
 import logging
 import sys
@@ -44,6 +45,7 @@ class NuXmvDriver:
         self.ts = ts
         self.nuxmv = nuxmv
         self.ts2smv = None
+        self.parse_trace = True
 
     def get_tmp_file(self, file_suffix, to_delete=True):
         """ Get a tmpfile that is deleted when closed.
@@ -126,6 +128,8 @@ class NuXmvDriver:
             res = None
             found_success = False
             result = NuXmvDriver.UNKNOWN
+            reading_xml_trace = False
+            xml_trace = None
 
             for line in stdout.split("\n"):
                 if (line.startswith("-- invariant ") and
@@ -136,15 +140,35 @@ class NuXmvDriver:
                     result = NuXmvDriver.UNSAFE
                 elif line.startswith("SUCCESS"):
                     found_success = True
+                elif self.parse_trace and line.startswith('<?xml version="1.0" encoding="UTF-8"?>'):
+                    reading_xml_trace = True
+                    assert xml_trace is None
+                    xml_trace = StringIO()
+                    xml_trace.write(line)
+                    xml_trace.write("\n")
+                elif self.parse_trace and reading_xml_trace and line.startswith("</counter-example>"):
+                    assert xml_trace is not None
+                    xml_trace.write(line)
+                    xml_trace.write("\n")
+                    reading_xml_trace = False
+                elif reading_xml_trace:
+                    assert xml_trace is not None
+                    xml_trace.write(line)
+                    xml_trace.write("\n")
 
             if (not found_success):
-                return None
+                return (None, None)
             else:
-                return result
+                if xml_trace is not None:
+                    trace = self.read_trace(xml_trace)
 
-# TODO: add "set default_trace_plugin 4" to print the xml trace, and read it back
+                return (result, trace)
+
         cmds = """
 set on_failure_script_quits "1"
+set default_trace_plugin 4
+set traces_show_defines "0"
+set traces_show_defines_with_next "0"
 read_model
 flatten_hierarchy
 encode_variables -n
@@ -160,6 +184,46 @@ EOF
 
         return result
 
+    def read_trace(self, xml_trace_stream):
+        def get_tf(str_val):
+            if str_val == "TRUE":
+                return True
+            if str_val == "FALSE":
+                return False
+            assert False
+
+        trace = [] # as done in bmc.py
+        root = ET.fromstring(xml_trace_stream.getvalue())
+
+        for child in root:
+            if child.tag != "node":
+                continue # skip loop section
+
+            cex_i = {}
+            for node_child in child:
+                if node_child.tag == "state":
+                    # process state vars
+                    for value in node_child:
+                        if value.tag != "value":
+                            continue
+                        var_name = value.get("variable")
+                        var_value = get_tf(value.text)
+                        real_var = self.ts2smv.get_var(var_name)
+                        cex_i[real_var] = var_value
+
+                if node_child.tag == "input":
+                    for value in node_child:
+                        if value.tag != "value":
+                            continue
+
+                        var_name = value.get("variable")
+                        var_value = get_tf(value.text)
+                        real_var = self.ts2smv.get_var(var_name)
+                        cex_i[real_var] = var_value
+
+            trace.append(cex_i)
+
+        return trace
 
 class SmvTranslator:
     def __init__(self, env,
@@ -174,6 +238,10 @@ class SmvTranslator:
         self.invarspec = invarspec
         self.translator = SmvFormulaTranslator(env)
         self.env = env
+
+    def get_var(self, smv_var_name):
+        assert self.translator is not None
+        return self.translator.get_var(smv_var_name)
 
     def to_smv(self, stream):
 
@@ -194,8 +262,6 @@ class SmvTranslator:
         for (f, define) in self.translator.defines.iteritems():
             (def_name, def_def) = define
             stream.write("DEFINE %s := %s;\n" % (def_name, def_def));
-
-        self.translator = None
 
     def print_vars(self, stream, var_type, vars_set):
         if len(vars_set) == 0: return
@@ -222,6 +288,7 @@ class SmvFormulaTranslator(DagWalker):
 
         self.short_names = short_names
         self.symb_map = {}
+        self.reverse_map = {}
 
         self.counter = 0
         self.def_counter = 0;
@@ -231,6 +298,11 @@ class SmvFormulaTranslator(DagWalker):
         self.defines = {}
 
         self.mgr = self.env.formula_manager
+
+    def get_var(self, smv_var_name):
+        """ Mapback from a smv variable to the original variable """
+        return self.reverse_map[smv_var_name]
+
 
     def translate(self, formula):
         s = self.walk(formula)
@@ -307,6 +379,8 @@ class SmvFormulaTranslator(DagWalker):
                     self.counter = self.counter + 1
                     res = "var_%d" % self.counter
                 self.symb_map[key] = res
+                if not (is_next):
+                    self.reverse_map[res] = formula
 
             # add next to the variable
             if is_next:

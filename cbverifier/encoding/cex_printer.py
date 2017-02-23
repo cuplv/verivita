@@ -57,7 +57,6 @@ class CexPrinter:
             s_val = step[s]
             self.out_stream.write("  %s := %s\n" %  (s, s_val))
 
-
         if (i < (len(self._cex)-1)):
             s = self._mapback.msg_ivar
             s_val = self._mapback._get_pc_value(s, step)
