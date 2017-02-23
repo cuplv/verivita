@@ -11,7 +11,7 @@ import argparse
 combinations = [
 
     ({"onStart","onResume", "onPause","onSaveInstanceState","onDestroy","onDetach",
-      "onCreateView","onViewCreated","onDestroyView", "<init>","onStop","onCreate","onAttach", "onActivityCreated"},
+      "onCreateView","onViewCreated","onDestroyView", "<init>","onStop","onCreate","onAttach", "onActivityCreated", "isDetached"},
         {"android.support.v4.app.Fragment", "android.support.v4.app.ListFragment","android.app.ListFragment",
            "android.support.v4.app.DialogFragment"})]
 
@@ -82,6 +82,8 @@ def cycle_lines(in_file, out_file):
                     spec = add_alias(spec, alias[0],alias[1])
                 pretty_print(spec)
                 print ";"
+            else:
+                print line
 
 def add_alias(spec, name, substitutions):
     node_regexp = get_regexp_node(spec)

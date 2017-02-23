@@ -15,11 +15,13 @@ SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# 
 SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity);
 
 
+//Initialization
+
 SPEC TRUE[*]; [CI] [ENTRY] [f] void android.app.Fragment.<init>() |+ [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity);
 
 SPEC TRUE[*]; [CI] [EXIT] [f] void android.app.Fragment.<init>() |- [CI] [EXIT] [f] void android.app.Fragment.<init>();
 
-
+//Lifecycle
 
 SPEC TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |- [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity);
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |+ [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
@@ -81,4 +83,11 @@ SPEC TRUE[*];  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateV
 
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDestroy() |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroy();
 SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDestroy() |+ [CB] [ENTRY] [f] void android.app.Fragment.onDetach();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDetach() |+ [CB] [ENTRY] [f] void android.app.Fragment.onDetach()
+SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDetach() |+ [CB] [ENTRY] [f] void android.app.Fragment.onDetach();
+
+//Callin return value ordering constraints
+SPEC FALSE[*] |- false = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
+SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDetach() |- false = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
+SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDetach() |+ true = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
+SPEC TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |+ false = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
+SPEC TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |- true = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
