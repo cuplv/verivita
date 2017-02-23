@@ -144,6 +144,7 @@ class TestSpecParser(unittest.TestCase):
 
     def _test_parse_error(self, specs):
         res = spec_parser.parse(specs)
+
         self.assertTrue(res is None)
 
     def test_parser(self):
@@ -284,11 +285,15 @@ class TestSpecParser(unittest.TestCase):
                                                "     [CI] [ENTRY] [l] void method_name()  " +
                                                "     |- [CI] [ENTRY] [l] void method_name() " +
                                                "ALIASES method_name = [subs1]")
-        res = ["SPEC (([CI] [ENTRY] [l] void method_name2()); " +
-               "([CI] [ENTRY] [l] void subs1())); ([CI] [ENTRY] [l] void subs1()) " +
-               "|- [CI] [ENTRY] [l] void subs1()"]
+
+        res = ["SPEC (([CI] [ENTRY] [l] void method_name2(); " +
+               "[CI] [ENTRY] [l] void subs1()); [CI] [ENTRY] [l] void subs1()) |- " +
+               "[CI] [ENTRY] [l] void subs1()"]
         self.assertTrue(len(spec_list) == len(res))
-        for i in range(len(res)): self.assertTrue(get_str(spec_list[i]) in res)
+        for i in range(len(res)):
+            print get_str(spec_list[i])
+            print res
+            self.assertTrue(get_str(spec_list[i]) in res)
 
 
         spec_list = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l] void method_name() |- TRUE " +
