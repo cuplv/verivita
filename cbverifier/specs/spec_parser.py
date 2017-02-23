@@ -104,11 +104,6 @@ def p_regexp_sequence(t):
 def p_regexp_not(t):
     '''regexp : TOK_NOT atom
     '''
-
-    if (node_get_type(t[2]) != ID):
-        raise ParserError, u'Negation is only allowed for atoms: ' + groupitem[0]
-
-
     t[0] = new_not(t[2])
 
 def p_regexp_binary(t):
@@ -120,6 +115,11 @@ def p_regexp_binary(t):
         t[0] = new_or(t[1], t[3])
     else:
         t[0] = new_and(t[1], t[3])
+
+def p_atom_paren(t):
+    '''atom : TOK_LPAREN atom TOK_RPAREN
+    '''
+    t[0] = t[2]
 
 def p_regexp_paren(t):
     '''regexp : TOK_LPAREN regexp TOK_RPAREN
