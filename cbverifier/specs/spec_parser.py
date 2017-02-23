@@ -23,13 +23,12 @@ precedence = (
     ('left','TOK_ALIASES'),
     ('left','TOK_ENABLE','TOK_DISABLE'),
     ('left','TOK_SEQUENCE'),
-    ('left','TOK_STAR'),
     ('left','TOK_AND','TOK_OR'),
+    ('left','TOK_STAR'),
     ('right','TOK_NOT'),
     ('left','TOK_TRUE'),
     ('left','TOK_FALSE'),
     )
-
 
 def p_specs(t):
     '''specs : spec
@@ -88,12 +87,12 @@ def p_cid_list(t):
         t[0].extend(t[3])
 
 def p_regexp(t):
-    '''regexp : bexp
+    '''regexp : atom
     '''
     t[0] = t[1]
 
 def p_regexp_star(t):
-    '''regexp : bexp TOK_LSQUARE TOK_STAR TOK_RSQUARE
+    '''regexp : regexp TOK_LSQUARE TOK_STAR TOK_RSQUARE
     '''
     t[0] = new_star(t[1])
 
@@ -102,24 +101,14 @@ def p_regexp_sequence(t):
     '''
     t[0] = new_seq(t[1], t[3])
 
-def p_regexp_paren(t):
-    '''regexp : TOK_LPAREN regexp TOK_RPAREN
-    '''
-    t[0] = t[2]
-
-def p_bexp(t):
-    '''bexp : atom
-    '''
-    t[0] = t[1]
-
-def p_bexp_unary(t):
-    '''bexp : TOK_NOT bexp
+def p_regexp_not(t):
+    '''regexp : TOK_NOT atom
     '''
     t[0] = new_not(t[2])
 
-def p_bexp_binary(t):
-    '''bexp : bexp TOK_AND bexp
-            | bexp TOK_OR bexp
+def p_regexp_binary(t):
+    '''regexp : regexp TOK_AND regexp
+              | regexp TOK_OR regexp
     '''
 
     if (t[2] == '|'):
@@ -127,8 +116,13 @@ def p_bexp_binary(t):
     else:
         t[0] = new_and(t[1], t[3])
 
-def p_bexp_paren(t):
-    '''bexp : TOK_LPAREN bexp TOK_RPAREN
+def p_atom_paren(t):
+    '''atom : TOK_LPAREN atom TOK_RPAREN
+    '''
+    t[0] = t[2]
+
+def p_regexp_paren(t):
+    '''regexp : TOK_LPAREN regexp TOK_RPAREN
     '''
     t[0] = t[2]
 

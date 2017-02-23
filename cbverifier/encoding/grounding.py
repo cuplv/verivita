@@ -1,4 +1,3 @@
-
 """ Implements the function that ground the free variables contained
 in a set of rules given a concrete trace.
 
@@ -53,6 +52,7 @@ class GroundSpecs(object):
     def ground_spec(self, spec):
         ground_specs = []
         sg = SymbolicGrounding(self.trace_map)
+
         for binding in sg.get_bindings(spec):
             new_spec_asts = GroundSpecs._substitute(spec, sg, binding)
             for new_spec_ast in new_spec_asts:
@@ -158,7 +158,7 @@ class GroundSpecs(object):
                 for lhs in lhs_l:
                     for rhs in rhs_l:
                         if (get_node_type(lhs) == FALSE or
-                            get_node_type(lhs) == FALSE):
+                            get_node_type(rhs) == FALSE):
                             res.append(new_false())
                         elif (get_node_type(lhs) == TRUE):
                             res.append(rhs)
@@ -176,7 +176,7 @@ class GroundSpecs(object):
                 for lhs in lhs_l:
                     for rhs in rhs_l:
                         if (get_node_type(lhs) == TRUE or
-                            get_node_type(lhs) == TRUE):
+                            get_node_type(rhs) == TRUE):
                             res.append(new_true())
                         elif (get_node_type(lhs) == FALSE):
                             res.append(rhs)
