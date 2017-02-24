@@ -9,7 +9,7 @@ SPEC, TRUE, FALSE, CB, CI, #, NULL
 
 - Operators
 ```
-=, !, &, |, ;, [*], |-, |+,
+=, !, &, |, ;, [*], |-, |+
 ```
 
 - Comments
@@ -49,33 +49,28 @@ enable/allow `message`.
 
 - Regular expressions
 ```
-regexp : bexp
-       | bexp[*]
+regexp : message
+       | regexp[*]
        | regexp; regepx
+       | regexp & regexp
+       | regepx | regexp
+       | ! regexp
        | (regexp)
 ```
 
-The regular expressions are defined over Boolean expressions of
-messages. In these settings, a `bexp` describes a set of possible
-messages.
+The regular expressions are defined over messages.
 
-`[*]` is the Kleene star operator that can be applied only to a
-`bexp`, a Boolean combination of messages.
-The `;` operator is the concatenation operator.
+`[*]` is the Kleene star  operator, `;` is the sequence, `|` is the
+union, `&` intersection and `!` the complement.
 
-
-- Boolean expressions
-```
-bexp : message
-     | ! bexp
-     | bexp & bexp
-     | bexp | bexp
-     | (bexp)
-```
-
-`bexp` defines the Boolean expressions where the atoms are messages.
-The operators `!`, `&` and `|` are the standard Boolean negation,
-conjunction and disjunction respectively.
+*NOTE*: at the end we do not have Boolean expressions as in PSL, since
+ the message is not really a Boolean variable. We really have regular
+ expressions.
+ 
+The optimization where we represent sets of transitions with multiple
+labels symbolically is in the representation used to process the
+specs (for example, we represents the set of all the transitions
+different from `a` as `! a`, instead of enumerating them).
 
 
 - Message
