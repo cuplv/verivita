@@ -161,6 +161,8 @@ class NuXmvDriver:
             else:
                 if xml_trace is not None:
                     trace = self.read_trace(xml_trace)
+                else:
+                    trace = None
 
                 return (result, trace)
 
