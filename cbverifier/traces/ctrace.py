@@ -27,6 +27,8 @@ except ImportError as e:
 # Read a message from Java's writeDelimitedTo:
 import google.protobuf.internal.decoder as decoder
 
+from google.protobuf import message
+
 import tracemsg_pb2
 
 class MessageFilter:
@@ -500,6 +502,25 @@ class CTraceSerializer:
         else:
             reader = CTraceDelimitedReader(trace_file)
 
+        try:
+            CTraceSerializer.read_trace_inner(trace,reader,
+                                              ignore_non_ui_threads,
+                                              allow_exception)
+        except message.DecodeError as e:
+            if len(trace.children) > 0:
+                # The trace is truncated, but we still read some data
+                logging.warning("Protobuf is truncated... parsing terminated.")
+            else:
+                # This is a non-recoverable error that must be propagated
+                raise
+
+        return trace
+
+    @staticmethod
+    def read_trace_inner(trace,
+                         reader,
+                         ignore_non_ui_threads=True,
+                         allow_exception = True):
         message_stack = []
         for tm_container in reader:
             assert None != tm_container
@@ -553,7 +574,6 @@ class CTraceSerializer:
             raise MalformedTraceException("The number of entry messages does " \
                                           "match the number of exit/exception " \
                                           "messages.")
-        return trace
 
 
     @staticmethod
@@ -720,6 +740,21 @@ class CTraceSerializer:
             if (callbackExit.HasField("return_value")):
                 (ret_type, param_types) = CTraceSerializer.get_method_types(trace_msg.method_name)
                 trace_msg.return_value = CTraceSerializer.read_value_msg(callbackExit.return_value, ret_type)
+            else:
+                # HACK FOR ISSUE # OF TRACERUNNER
+                # Tracerunner does not record the return value of a callback if it is NULL.
+                # We can infer this from the fact that:
+                #   - The CALLBACK ENTRY has a non-void return type
+                #   - There is no return value in the CALLBACK EXIT message
+                #
+                (ret_type, param_types) = CTraceSerializer.get_method_types(trace_msg.method_name)
+                if (ret_type != "void"):
+                    v = CValue()
+                    v.is_null = True
+                    v.type = ret_type
+                    v.value = None
+                    trace_msg.return_value = v
+
         elif (TraceMsgContainer.TraceMsg.CALLIN_EXEPION  == msg.type):
             # check_malformed_trace_exception(trace_msg, msg.callinException, CCallin, "CALLIN_EXCEPTION")
             read_exception(trace_msg, msg.callinException)
@@ -736,6 +771,8 @@ class CTraceSerializer:
         new_param_list = []
 
         # -1: ignore the receiver, that is not in the types types
+        # If this assertion fails, the trace is probably malformed.
+        # TODO: raise the exception
         assert types_list is None or len(types_list) == len(param_list) - 1
         if types_list is not None:
             types_list.reverse()
@@ -761,8 +798,7 @@ class CTraceSerializer:
         return value
 
 
-    pattern = re.compile("([\w\.]+) ([\w\.]+)\(([^\)]+)", flags=0)
-
+    pattern = re.compile("([\w\.]+) ([\w\.]+)\(([^\)]*)", flags=0)
     @staticmethod
     def get_method_types(method_name):
         ret_type = None
@@ -775,11 +811,12 @@ class CTraceSerializer:
             if (3 == len(groups)):
                 ret_type = groups[0]
 
-                types_string = groups[2].split(",")
-                param_types = []
-                for p_type in types_string:
-                    p_type = p_type.strip()
-                    param_types.append(p_type)
+                if (len(groups[2]) > 0):
+                    types_string = groups[2].split(",")
+                    param_types = []
+                    for p_type in types_string:
+                        p_type = p_type.strip()
+                        param_types.append(p_type)
 
         return (ret_type, param_types)
 
@@ -831,7 +868,11 @@ class CTraceDelimitedReader(object):
         self.position = self.position + size
 
         trace_msg_container = tracemsg_pb2.TraceMsgContainer()
-        trace_msg_container.ParseFromString(raw_data)
+        try:
+            trace_msg_container.ParseFromString(raw_data)
+        except message.DecodeError as e:
+            trace_msg_container == None
+            raise
 
         if trace_msg_container == None:
             raise StopIteration()

@@ -251,6 +251,7 @@ class TSEncoder:
         self.helper = Helper(self.pysmt_env)
         # With True we use BDDs
         self.auto_env = AutoEnv(self.pysmt_env, False)
+        #self.auto_env = AutoEnv(self.pysmt_env, True)
         self.cenc = CounterEnc(self.pysmt_env)
         self.mapback = TSMapback(self.pysmt_env, None, None)
 
@@ -285,8 +286,8 @@ class TSEncoder:
                 if cb is None:
                     raise Exception("Message id %s not found in the trace" % message_id)
 
-                msg_enc = self.mapback.get_trans2pc((entry_type, msg))
-                key = TSEncoder.get_key_from_msg((entry_type, msg))
+                msg_enc = self.mapback.get_trans2pc((TSEncoder.ENTRY, cb))
+                key = TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY)
                 if not self._is_msg_visible(key):
                     raise Exception("Message id %s not found in the (simplified) trace" % message_id)
 

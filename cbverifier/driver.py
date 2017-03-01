@@ -7,7 +7,9 @@ import optparse
 import logging
 
 
-from cbverifier.traces.ctrace import CTraceSerializer, CCallin, CCallback, MessageFilter
+from cbverifier.traces.ctrace import CTraceSerializer, CCallin
+from cbverifier.traces.ctrace import CCallback, MessageFilter
+from cbverifier.traces.ctrace import MalformedTraceException, TraceEndsInErrorException
 from cbverifier.specs.spec import Spec
 from cbverifier.encoding.encoder import TSEncoder
 from cbverifier.encoding.cex_printer import CexPrinter
@@ -47,8 +49,14 @@ class Driver:
             self.trace = CTraceSerializer.read_trace_file_name(self.opts.tracefile,
                                                                self.opts.traceformat == "json",
                                                                self.opts.allow_exception)
-        except IOError as e:
-            raise Exception("An error happened reading the trace in %s" % self.opts.tracefile)
+        except MalformedTraceException as e:
+            raise
+        except TraceEndsInErrorException as e:
+            raise
+        except Exception as e:
+            raise Exception("An error happened reading the trace in %s (%s)" % (self.opts.tracefile,
+                                                                                e.message))
+
 
         # Parse the specs
         self.spec_list = Spec.get_specs_from_files(self.opts.spec_file_list)
@@ -106,10 +114,10 @@ class Driver:
         ts = ts_enc.get_ts_encoding()
 
         nuxmv_driver = NuXmvDriver(ts_enc.pysmt_env, ts, nuxmv_path)
-        result = nuxmv_driver.ic3(Not(ts_enc.error_prop),
-                                  ic3_frames)
+        (result, trace) = nuxmv_driver.ic3(Not(ts_enc.error_prop),
+                                           ic3_frames)
 
-        return result
+        return (result, trace, ts_enc.mapback)
 
     def run_simulation(self, cb_sequence = None): 
         ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
@@ -315,7 +323,7 @@ def main(input_args=None):
         driver.to_smv(opts.smv_file)
         return 0
     elif (opts.mode == "ic3"):
-        res = driver.run_ic3(opts.nuxmv_path, opts.ic3_frames)
+        (res, cex, mapback) = driver.run_ic3(opts.nuxmv_path, opts.ic3_frames)
 
         if res is None:
             print("An error occurred invoking ic3")
@@ -326,6 +334,11 @@ def main(input_args=None):
             print("The trace is SAFE")
         elif res == NuXmvDriver.UNSAFE:
             print("The system can reach an error state.")
+
+            if (cex is not None):
+                printer = CexPrinter(mapback, cex, sys.stdout)
+                printer.print_cex()
+
 
         return 0
 

@@ -20,15 +20,15 @@ import ply.yacc as yacc
 
 precedence = (
     ('left','TOK_SPEC'),
+    ('left','TOK_ALIASES'),
     ('left','TOK_ENABLE','TOK_DISABLE'),
     ('left','TOK_SEQUENCE'),
-    ('left','TOK_STAR'),
     ('left','TOK_AND','TOK_OR'),
+    ('left','TOK_STAR'),
     ('right','TOK_NOT'),
     ('left','TOK_TRUE'),
     ('left','TOK_FALSE'),
     )
-
 
 def p_specs(t):
     '''specs : spec
@@ -42,22 +42,57 @@ def p_specs(t):
 def p_spec(t):
     '''spec : TOK_SPEC regexp TOK_DISABLE atom
             | TOK_SPEC regexp TOK_ENABLE atom
+            | TOK_SPEC regexp TOK_DISABLE atom TOK_ALIASES aliases
+            | TOK_SPEC regexp TOK_ENABLE atom TOK_ALIASES aliases
     '''
+
+    if (len(t) >= 6):
+        aliases = t[6]
+    else:
+        aliases = new_nil()
+
     if '|-' == t[3]:
-        t[0] = new_disable_spec(t[2], t[4])
+        t[0] = new_disable_spec(t[2], t[4], aliases)
     elif '|+' == t[3]:
-        t[0] = new_enable_spec(t[2], t[4])
+        t[0] = new_enable_spec(t[2], t[4], aliases)
     else:
         p_error(t)
 
+def p_aliases(t):
+    '''aliases : alias
+               | alias TOK_COMMA aliases
+    '''
+    # return a list of aliases
+    if (len(t) == 4):
+        t[0] = new_alias(t[1], t[3])
+    else:
+        t[0] = new_alias(t[1], new_nil())
+
+
+def p_alias(t):
+    '''alias : composed_id TOK_ASSIGN TOK_LSQUARE cid_list TOK_RSQUARE
+    '''
+    assert t[4] is not None
+
+    t[0] = (t[1], t[4])
+
+def p_cid_list(t):
+    ''' cid_list : composed_id
+                 | composed_id TOK_COMMA cid_list
+    '''
+    if (len(t) == 2):
+        t[0] = [t[1]]
+    else:
+        t[0] = [t[1]]
+        t[0].extend(t[3])
 
 def p_regexp(t):
-    '''regexp : bexp
+    '''regexp : atom
     '''
     t[0] = t[1]
 
 def p_regexp_star(t):
-    '''regexp : bexp TOK_LSQUARE TOK_STAR TOK_RSQUARE
+    '''regexp : regexp TOK_LSQUARE TOK_STAR TOK_RSQUARE
     '''
     t[0] = new_star(t[1])
 
@@ -66,24 +101,14 @@ def p_regexp_sequence(t):
     '''
     t[0] = new_seq(t[1], t[3])
 
-def p_regexp_paren(t):
-    '''regexp : TOK_LPAREN regexp TOK_RPAREN
-    '''
-    t[0] = t[2]
-
-def p_bexp(t):
-    '''bexp : atom
-    '''
-    t[0] = t[1]
-
-def p_bexp_unary(t):
-    '''bexp : TOK_NOT bexp
+def p_regexp_not(t):
+    '''regexp : TOK_NOT atom
     '''
     t[0] = new_not(t[2])
 
-def p_bexp_binary(t):
-    '''bexp : bexp TOK_AND bexp
-            | bexp TOK_OR bexp
+def p_regexp_binary(t):
+    '''regexp : regexp TOK_AND regexp
+              | regexp TOK_OR regexp
     '''
 
     if (t[2] == '|'):
@@ -91,8 +116,13 @@ def p_bexp_binary(t):
     else:
         t[0] = new_and(t[1], t[3])
 
-def p_bexp_paren(t):
-    '''bexp : TOK_LPAREN bexp TOK_RPAREN
+def p_atom_paren(t):
+    '''atom : TOK_LPAREN atom TOK_RPAREN
+    '''
+    t[0] = t[2]
+
+def p_regexp_paren(t):
+    '''regexp : TOK_LPAREN regexp TOK_RPAREN
     '''
     t[0] = t[2]
 
@@ -129,7 +159,6 @@ def p_atom_no_ret_val(t):
         t[0] = new_call_exit(assignee, call_type, receiver,
                              method_name, method_param)
     else:
-        print entry_type
         assert False
 
 def p_atom_ret_val(t):
