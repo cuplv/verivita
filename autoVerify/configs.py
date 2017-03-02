@@ -73,7 +73,7 @@ def getConfigs(iniFilePath='verifierConfig.ini'):
               , 'specs': ':'.join(enSpecPaths + alSpecPaths) # splitClean(specPath, specs)
               , 'enspecs': ':'.join(enSpecPaths), 'alspecs': ':'.join(alSpecPaths)
               , 'verifygroups':splitIt(verifyGroups), 'verifysteps':verifySteps, 'timeout':timeout
-              , 'revertgroups':revertgroups, 'nuxmv':nuxmvPath }
+              , 'revertgroups':revertgroups, 'nuxmv':nuXmvPath }
 
     apps = {}
     for section in conf.sections():
