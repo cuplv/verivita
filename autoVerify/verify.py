@@ -13,13 +13,16 @@ from verifierChecks import runVerifierChecks, GOODTRACE, TRUNCTRACE, EXCEPTTRACE
 
 # countdowntimer.spec:fragment.spec:button.spec:fragment_v4.spec:mediaplayer.spec:activity.spec:button_backup.spec
 
-def runVerify(tracePath, specPaths, verifierPath, json=False, technique='bmc', steps='40', verbose=True, timeout=180):
+def runVerify(tracePath, specPaths, verifierPath, json=False, technique='bmc', steps='40', verbose=True, timeout=180, nuXMVPath=None):
     vscript = ['python',verifierPath+'/cbverifier/driver.py']
     if json:
        vscript += ['-f','json']
-    vscript += ['-t',tracePath,'-m',technique,'-s',specPaths,'-k',steps,'-z','-i']
+    if nuXMVPath == None:
+       vscript += ['-t',tracePath,'-m',technique,'-s',specPaths,'-k',steps,'-z','-i']
+    else:
+       vscript += ['-t',tracePath,'-s',specPaths,'-m','ic3','--ic3_frames','50','-z','-n',nuXMVPath]
     outcome = runCmd(vscript, verbose=verbose, timeout=timeout)
-    if 'Counterexample' in outcome['stdout']:
+    if 'Counterexample' in outcome['stdout'] or 'Reached an error' in outcome['stdout']:
         outcome['bugfound'] = True
     else:
         outcome['bugfound'] = False

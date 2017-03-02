@@ -48,7 +48,8 @@ def checkTraces(inputPath, outputPath, json, verifierPath, specPaths, processPat
         shutil.copyfile(tr, basePath + '/' + os.path.basename(tr)) 
 
         if processPath != None:
-            shutil.copyfile(tr, processPath + '/' + os.path.basename(tr))
+           createPathIfEmpty(processPath)  
+           shutil.copyfile(tr, processPath + '/' + os.path.basename(tr))
 
 
 if __name__ == "__main__":
@@ -68,15 +69,15 @@ if __name__ == "__main__":
 
        createPathIfEmpty(app['processed'])
 
-       checkTraces(app['input'], app['checked'], app['json'], configs['verifier'], app['specs'], processPath=app['processed'])  
+       checkTraces(app['input'], app['checked'], app['json'], configs['verifier'], app['alspecs'], processPath=app['processed'])  
 
        if os.path.exists(app['input'] + "/monkeyTraces"): 
-           checkTraces(app['input'] + "/monkeyTraces", app['checked'] + "/monkeyTraces", app['json'], configs['verifier'], app['specs']
-                      ,processPath=app['processed'])
+           checkTraces(app['input'] + "/monkeyTraces", app['checked'] + "/monkeyTraces", app['json'], configs['verifier'], app['alspecs']
+                      ,processPath=app['processed'] + "/monkeyTraces")
 
        if os.path.exists(app['input'] + "/manualTraces"): 
-           checkTraces(app['input'] + "/manualTraces", app['checked'] + "/manualTraces", app['json'], configs['verifier'], app['specs']
-                      ,processPath=app['processed'])
+           checkTraces(app['input'] + "/manualTraces", app['checked'] + "/manualTraces", app['json'], configs['verifier'], app['alspecs']
+                      ,processPath=app['processed'] + "/manualTraces")
 
        recreatePath( app['input'] )
 
