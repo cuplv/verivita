@@ -51,6 +51,7 @@ def getConfigs(iniFilePath='verifierConfig.ini'):
     verifiedPath = get(conf, vopts, 'verified', default='/data/callback/verified')
     timeout = get(conf, vopts, 'timeout', default='300')
     verifierPath = get(conf, vopts, 'verifierpath', default='')
+    nuXmvPath = get(conf, vopts, 'nuxmvpath', default=None)
 
     enSpecPath,enSpecs,enSpecPaths = retrieveSpecParams(conf, vopts, 'enablespecpath', 'enablespecs')
     alSpecPath,alSpecs,alSpecPaths = retrieveSpecParams(conf, vopts, 'allowspecpath', 'allowspecs')
@@ -61,11 +62,18 @@ def getConfigs(iniFilePath='verifierConfig.ini'):
     verifyGroups = get(conf, vopts, 'verifygroups', default='good,useless')
     verifySteps  = get(conf, vopts, 'verifysteps', default='40')
 
+    ropts = 'revertOptions'
+
+    revertgroups = splitIt( get(conf, ropts, 'groups', default='good') )
+    if 'ALL' in revertgroups:
+       revertgroups = ['truncated','exception','good','useless','unknown']
+    
     configs = { 'verbose':verbose, 'input':inputPath, 'processed':processedPath 
               , 'checked':checkedPath, 'verified':verifiedPath, 'verifier':verifierPath
               , 'specs': ':'.join(enSpecPaths + alSpecPaths) # splitClean(specPath, specs)
               , 'enspecs': ':'.join(enSpecPaths), 'alspecs': ':'.join(alSpecPaths)
-              , 'verifygroups':splitIt(verifyGroups), 'verifysteps':verifySteps, 'timeout':timeout }
+              , 'verifygroups':splitIt(verifyGroups), 'verifysteps':verifySteps, 'timeout':timeout
+              , 'revertgroups':revertgroups, 'nuxmv':nuxmvPath }
 
     apps = {}
     for section in conf.sections():
@@ -94,6 +102,8 @@ def getConfigs(iniFilePath='verifierConfig.ini'):
                appVerifyGroups = splitIt(verifyGroups)
            else:
                appVerifyGroups = splitIt(appVerifyGroups)
+
+           
 
            apps[appName] = { 'input'  : '%s/%s' % (inputPath,appName) 
                            , 'processed' : '%s/%s' % (processedPath,appName)

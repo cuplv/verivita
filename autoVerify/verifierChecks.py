@@ -64,7 +64,7 @@ def runVerifierChecks(tracePath, json=False, specPaths=None, verifierPath=vPath,
        if errExp in outcome['stderr']:
            # Matched a known trace exception, return the corresponding token
            if verbose:
-               print "MalformedTraceException found in Trace."
+               print "%s found in Trace." % errExp
            return token
 
     # Unknown exception thrown

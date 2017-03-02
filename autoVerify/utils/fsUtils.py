@@ -52,7 +52,7 @@ def runCmd(cmd, verbose=False, timeout=None):
    # print "Stderr: %s" % (error if error != None else '<None>') + "\n============\n"
 
    return { 'ret'      : ret
-          , 'haserr'   : len(error) > 0 
+          , 'haserr'   : error != None and ('ERROR' in error or 'Traceback (most recent call last)' in error) 
           , 'timedout' : timedout
           , 'stdout'   : stdout if stdout != None else ''
           , 'stderr'   : error if error != None else '' }
