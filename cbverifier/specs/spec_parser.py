@@ -222,7 +222,8 @@ def p_paramlist_param(t):
         t[0] = new_param(t[1], t[3], t[5])
 
 def p_param_id(t):
-    '''param : TOK_ID '''
+    '''param : TOK_ID
+             | TOK_ID_ADDRESS '''
     t[0] = new_id(t[1])
 
 def p_param_true(t):
