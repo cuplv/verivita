@@ -138,6 +138,7 @@ class TestSpecParser(unittest.TestCase):
         # print "---"
         # print spec
         # pretty_print(res, sys.stdout)
+        # print "\n---"
 
         self.assertTrue((not same_out) or stringio.getvalue() == spec)
 
@@ -176,7 +177,9 @@ class TestSpecParser(unittest.TestCase):
                         "SPEC ((TRUE)[*]; [CI] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener)) |+ [CB] [ENTRY] [l] void onClick(b : android.widget.Button)",
                         "SPEC (([CB] [ENTRY] [l] type l(); [CB] [ENTRY] [l] type l()) & [CB] [ENTRY] [l] type l()) |- [CB] [ENTRY] [l] type l(b : type)",
                         "SPEC (([CB] [ENTRY] [l] type l(); [CB] [ENTRY] [l] type l()) & ([CB] [ENTRY] [l] type l(); [CB] [ENTRY] [l] type l())) |- [CB] [ENTRY] [l] type l(b : type)",
-                        "SPEC (([CB] [ENTRY] [l1] type l(); [CB] [ENTRY] [l2] type l()) | ([CB] [ENTRY] [l] type l(); [CB] [ENTRY] [l] type l())) |- [CB] [ENTRY] [l] type l(b : type)"]
+                        "SPEC (([CB] [ENTRY] [l1] type l(); [CB] [ENTRY] [l2] type l()) | ([CB] [ENTRY] [l] type l(); [CB] [ENTRY] [l] type l())) |- [CB] [ENTRY] [l] type l(b : type)",
+                        "SPEC [CB] [ENTRY] [l] type[] l() |- [CB] [ENTRY] [l] type[][] l(b : type)",
+                        "SPEC [CB] [ENTRY] [l] type[] l(p1 : type1[][],p2 : type2[][]) |- [CB] [ENTRY] [l] type[][] l(b : type)"]
 
         for expr in correct_expr:
             self._test_parse(expr)
@@ -291,8 +294,6 @@ class TestSpecParser(unittest.TestCase):
                "[CI] [ENTRY] [l] void subs1()"]
         self.assertTrue(len(spec_list) == len(res))
         for i in range(len(res)):
-            print get_str(spec_list[i])
-            print res
             self.assertTrue(get_str(spec_list[i]) in res)
 
 
