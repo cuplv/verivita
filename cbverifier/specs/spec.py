@@ -105,6 +105,7 @@ class Spec:
 
     @staticmethod
     def get_specs_from_files(files_list, spec_list=None):
+        assert type(files_list) == list
         for spec_file in files_list:
             spec_list = Spec.get_specs_from_file(spec_file, spec_list)
 

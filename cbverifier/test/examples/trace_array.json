@@ -1,0 +1,85 @@
+[
+{
+  "msg": {
+    "callbackEntry": {
+      "methodReturnType": "void", 
+      "callbackCallerClass": "", 
+      "methodName": "void m1()", 
+      "class_name": "android.app.Activity", 
+      "paramList": [
+        {
+          "isNull": false, 
+          "value": "1", 
+          "type": "",
+          "fmwkType": ""
+        }
+      ], 
+      "callbackCallerMethod": "newInstance", 
+      "frameworkOverrides": [{"class_name" : "", "method" : "void m1()", "is_interface" : false}], 
+      "methodParameterTypes": [], 
+      "receiverFirstFrameworkSuper": "android.app.Activity"
+    }, 
+    "threadId": "1", 
+    "isActivityThread" : true,
+    "type": "CALLBACK_ENTRY", 
+    "messageId": "0"
+  }
+},
+{
+  "msg": {
+    "callinEntry": {
+      "methodName": "java.lang.String getString(int,java.lang.Object[],java.lang.Test[][])", 
+      "paramList": [
+        {
+          "isNull": false, 
+          "value": "1", 
+          "type": "edu.colorado.plv.apps.topeka.activity.CategorySelectionActivity", 
+          "fmwkType": "",
+          "object_id": "2e9ba67"
+        },
+        {
+          "type": "java.lang.Integer",
+          "object_id": "e21e6b8",
+          "value": "2131427336"
+        },
+        {
+          "type": "[Ljava.lang.Object;",
+          "object_id": "4fe67f6"
+        },
+        {
+          "type": "[[Ljava.lang.Test;",
+          "object_id": "efe45f6"
+        }
+      ], 
+      "class_name": "android.app.Activity"
+    }, 
+    "threadId": "1", 
+    "isActivityThread" : true,
+    "type": "CALLIN_ENTRY", 
+    "messageId": "1"
+  }
+},
+{
+  "msg": {
+    "callinExit": {
+      "methodName": "java.lang.String getString(int,java.lang.Object[],java.lang.Test[][])", 
+      "class_name": "android.app.Activity"
+    }, 
+    "threadId": "1", 
+    "isActivityThread" : true,
+    "type": "CALLIN_EXIT", 
+    "messageId": "2"
+  }
+},
+{
+  "msg": {
+    "threadId": "1", 
+    "isActivityThread" : true,
+    "type": "CALLBACK_EXIT", 
+    "callbackExit": {
+      "methodName": "void m1()", 
+      "class_name": "android.app.Activity"
+    },
+    "messageId": "3"
+  }
+}]
