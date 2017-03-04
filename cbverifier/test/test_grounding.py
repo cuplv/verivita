@@ -5,6 +5,7 @@
 import sys
 import logging
 import unittest
+import os
 
 from ply.lex import LexToken
 import ply.yacc as yacc
@@ -15,11 +16,15 @@ try:
 except ImportError:
     import unittest
 
+import cbverifier.test.examples
 from cbverifier.encoding.grounding import GroundSpecs, Assignments, bottom_value, TraceSpecConverter
 from cbverifier.encoding.grounding import AssignmentsSet, TraceMap
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, FrameworkOverride, CValue, TraceConverter
 from cbverifier.specs.spec_ast import *
-from cbverifier.specs.spec import Spec
+from cbverifier.specs.spec import Spec, spec_parser
+
+from cbverifier.traces.ctrace import CTraceSerializer
+
 
 from cStringIO import StringIO
 
@@ -343,11 +348,14 @@ class TestGrounding(unittest.TestCase):
             s1.print_spec(stringio)
             s1_str = stringio.getvalue()
 
+#            print "S1: " + s1_str
+
             found = None
             for s2 in specs2:
                 stringio = StringIO()
                 s2.print_spec(stringio)
                 s2_str = stringio.getvalue()
+#                print "S2: " + s2_str
 
                 if s2_str == s1_str:
                     found = s2
@@ -643,4 +651,27 @@ class TestGrounding(unittest.TestCase):
         real_ground_spec = Spec.get_specs_from_string("SPEC ([CI] [ENTRY] [1] void doA() & [CI] [ENTRY] [1] void doB()) |- [CI] [ENTRY] [2] void doC()")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+
+    def test_array_types(self):
+        test_path = os.path.dirname(cbverifier.test.examples.__file__)
+
+        t1 = os.path.join(test_path, "trace_array.json")
+        trace = CTraceSerializer.read_trace_file_name(t1, True)
+        self.assertTrue(trace is not None)
+
+        spec_file_path = os.path.join(test_path, "spec_array.spec")
+        specs = Spec.get_specs_from_files([spec_file_path])
+        self.assertTrue(specs is not None)
+        self.assertTrue(len(specs) == 1)
+
+        real_ground_spec = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [1] java.lang.String android.app.Activity.getString(2131427336 : int,4fe67f6 : java.lang.Object[],efe45f6 : java.lang.Test[][]) |- [CI] [ENTRY] [1] java.lang.String android.app.Activity.getString(2131427336 : int, 4fe67f6 : java.lang.Object[],efe45f6 : java.lang.Test[][])")
+        self.assertTrue(real_ground_spec is not None)
+
+        gs = GroundSpecs(trace)
+        ground_specs = gs.ground_spec(specs[0])
+        self.assertTrue(ground_specs is not None)
+        self.assertTrue(1 == len(ground_specs))
+        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+
+
 
