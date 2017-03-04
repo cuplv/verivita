@@ -8,16 +8,25 @@ import argparse
 # meaning that we effectively have a;.*;TRUE|-c
 # instead a;.*;(!t & !b) |-c is needed
 
-combinations = [
+if(False):
+    combinations = [
 
-    ({"onStart","onResume", "onPause","onSaveInstanceState","onDestroy","onDetach",
-      "onCreateView","onViewCreated","onDestroyView", "<init>","onStop","onCreate","onAttach", "onActivityCreated", "isDetached"},
-        {"android.support.v4.app.Fragment", "android.support.v4.app.ListFragment","android.app.ListFragment",
-           "android.support.v4.app.DialogFragment"})]
+        ({"onStart","onResume", "onPause","onSaveInstanceState","onDestroy","onDetach",
+          "onCreateView","onViewCreated","onDestroyView", "<init>","onStop","onCreate","onAttach", "onActivityCreated", "isDetached"},
+            {"android.support.v4.app.Fragment", "android.support.v4.app.ListFragment","android.app.ListFragment",
+               "android.support.v4.app.DialogFragment"})]
+    base = "android.app.Fragment"
+
+if(True):
+    combinations = [
+        ({"getFragmentManager","onDestroy"},
+         {"android.support.v7.app.AppCompatActivity"})
+    ]
+    base = "android.app.Activity"
 
 aliasMap = {}
 
-base = "android.app.Fragment"
+
 
 for combination in combinations:
     for method in combination[0]:
