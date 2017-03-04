@@ -46,7 +46,7 @@ def t_TOK_ID(t):
 # Allows also numbers in the first character
 # It is needed to parse object addresses
 def t_TOK_ID_ADDRESS(t):
-    r'[a-zA-Z0-9_$<>][a-zA-Z0-9_$<>]*'
+    r'[a-zA-Z0-9_$<>][a-zA-Z0-9_$<>]+'
     if "TOK_" + t.value in keywords:
         t.type = "TOK_" + t.value
     return t
