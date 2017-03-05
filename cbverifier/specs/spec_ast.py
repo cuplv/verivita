@@ -442,9 +442,9 @@ def pretty_print(ast_node, out_stream=sys.stdout):
             pretty_print_aux(out_stream,node[2],"")
             my_print(out_stream, ")")
         elif (node_type == STAR_OP):
-            my_print(out_stream, "(")
+            my_print(out_stream, "((")
             pretty_print_aux(out_stream,node[1],"")
-            my_print(out_stream, ")[*]")
+            my_print(out_stream, ")[*])")
         elif (node_type == SPEC_SYMB):
             my_print(out_stream, "SPEC ")
             pretty_print_aux(out_stream ,node[1], "")

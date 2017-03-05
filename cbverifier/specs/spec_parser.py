@@ -92,7 +92,7 @@ def p_regexp(t):
     t[0] = t[1]
 
 def p_regexp_star(t):
-    '''regexp : regexp TOK_LSQUARE TOK_STAR TOK_RSQUARE
+    '''regexp : regexp TOK_STAR
     '''
     t[0] = new_star(t[1])
 
