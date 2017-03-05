@@ -23,13 +23,12 @@ precedence = (
     ('left','TOK_ALIASES'),
     ('left','TOK_ENABLE','TOK_DISABLE'),
     ('left','TOK_SEQUENCE'),
-    ('left','TOK_STAR'),
     ('left','TOK_AND','TOK_OR'),
+    ('left','TOK_STAR'),
     ('right','TOK_NOT'),
     ('left','TOK_TRUE'),
     ('left','TOK_FALSE'),
     )
-
 
 def p_specs(t):
     '''specs : spec
@@ -88,12 +87,12 @@ def p_cid_list(t):
         t[0].extend(t[3])
 
 def p_regexp(t):
-    '''regexp : bexp
+    '''regexp : atom
     '''
     t[0] = t[1]
 
 def p_regexp_star(t):
-    '''regexp : bexp TOK_LSQUARE TOK_STAR TOK_RSQUARE
+    '''regexp : regexp TOK_LSQUARE TOK_STAR TOK_RSQUARE
     '''
     t[0] = new_star(t[1])
 
@@ -102,24 +101,14 @@ def p_regexp_sequence(t):
     '''
     t[0] = new_seq(t[1], t[3])
 
-def p_regexp_paren(t):
-    '''regexp : TOK_LPAREN regexp TOK_RPAREN
-    '''
-    t[0] = t[2]
-
-def p_bexp(t):
-    '''bexp : atom
-    '''
-    t[0] = t[1]
-
-def p_bexp_unary(t):
-    '''bexp : TOK_NOT bexp
+def p_regexp_not(t):
+    '''regexp : TOK_NOT atom
     '''
     t[0] = new_not(t[2])
 
-def p_bexp_binary(t):
-    '''bexp : bexp TOK_AND bexp
-            | bexp TOK_OR bexp
+def p_regexp_binary(t):
+    '''regexp : regexp TOK_AND regexp
+              | regexp TOK_OR regexp
     '''
 
     if (t[2] == '|'):
@@ -127,8 +116,13 @@ def p_bexp_binary(t):
     else:
         t[0] = new_and(t[1], t[3])
 
-def p_bexp_paren(t):
-    '''bexp : TOK_LPAREN bexp TOK_RPAREN
+def p_atom_paren(t):
+    '''atom : TOK_LPAREN atom TOK_RPAREN
+    '''
+    t[0] = t[2]
+
+def p_regexp_paren(t):
+    '''regexp : TOK_LPAREN regexp TOK_RPAREN
     '''
     t[0] = t[2]
 
@@ -211,16 +205,16 @@ def p_method_call(t):
         t[0] = (new_nil(), t[1])
 
 def p_inner_call(t):
-    '''inner_call : composed_id composed_id TOK_LPAREN paramlist TOK_RPAREN
-                  | composed_id composed_id TOK_LPAREN TOK_RPAREN'''
+    '''inner_call : type_id composed_id TOK_LPAREN paramlist TOK_RPAREN
+                  | type_id composed_id TOK_LPAREN TOK_RPAREN'''
     if (t[4] != ')'):
         t[0] = (t[1], t[2], t[4])
     else:
         t[0] = (t[1], t[2], new_nil())
 
 def p_paramlist_param(t):
-    '''paramlist : param TOK_COLON composed_id
-                 | param TOK_COLON composed_id TOK_COMMA paramlist
+    '''paramlist : param TOK_COLON type_id
+                 | param TOK_COLON type_id TOK_COMMA paramlist
     '''
     if (len(t) == 4):
         t[0] = new_param(t[1], t[3], new_nil())
@@ -228,7 +222,8 @@ def p_paramlist_param(t):
         t[0] = new_param(t[1], t[3], t[5])
 
 def p_param_id(t):
-    '''param : TOK_ID '''
+    '''param : TOK_ID
+             | TOK_ID_ADDRESS '''
     t[0] = new_id(t[1])
 
 def p_param_true(t):
@@ -258,6 +253,17 @@ def p_param_dontcare(t):
 def p_param_string(t):
     '''param : TOK_STRING_LITERAL'''
     t[0] = new_string(t[1])
+
+def p_type_id(t):
+    '''type_id : composed_id
+               | type_id TOK_LSQUARE TOK_RSQUARE'''
+    if (len(t) == 2):
+        t[0] = t[1]
+    else:
+        assert (len(t) == 4)
+        assert (t[2] == '[' and t[3] == ']')
+        assert (get_node_type(t[1]) == ID)
+        t[0] = new_id("%s[]" % get_id_val(t[1]))
 
 def p_composed_id(t):
     '''composed_id : TOK_ID

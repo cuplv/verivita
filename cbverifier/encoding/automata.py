@@ -286,7 +286,7 @@ class Automaton(object):
 
         return new_auto
 
-    def intersection(self, other):
+    def _intersection_dumb(self, other):
         """ Returns the automaton that accepts the language accepted
         by the intersection of self and other.
 
@@ -294,6 +294,8 @@ class Automaton(object):
 
         TODO: implement the synchronous product (it is used for
         testing now and not  in the real algorithm)
+
+        WARNING: do not use, to be removed
         """
         self_c = self.complement()
         other_c = other.complement()
@@ -303,6 +305,58 @@ class Automaton(object):
         intersection = union.complement()
 
         return intersection
+
+    def intersection(self, other):
+        """ Returns the automaton that accepts the language accepted
+        by the intersection of self and other.
+
+        Implement the synchronous product of self and other.
+
+        """
+        def get_state(res, state_map, s1, s2):
+            if (s1,s2) not in state_map:
+                is_initial = self.is_initial(s1) and other.is_initial(s2)
+                is_final = self.is_final(s1) and other.is_final(s2)
+                s = res._add_new_state(is_initial, is_final)
+                state_map[(s1,s2)] = s
+            else:
+                s = state_map[(s1,s2)]
+            return s
+
+        # map from (s1,s2) to s, where s1 \in self, s2 \in other, s \in res
+        state_map = {}
+
+        res = Automaton(self.env)
+
+        # Creates the initial states of the automaton
+        stack = []
+        for s1 in self.initial_states:
+            for s2 in other.initial_states:
+                s = get_state(res, state_map, s1, s2)
+                stack.append((s1,s2,s))
+
+        # perform the synchronous product
+        visited = set()
+        while (len(stack) > 0):
+            (s1,s2,s) = stack.pop()
+
+            # Skip visited states
+            if s in visited: continue
+            visited.add(s)
+
+            # Synchronous product of all the outgoing transitions from s1,s2
+            for (s1_dst, s1_label) in self.trans[s1]:
+                for (s2_dst, s2_label) in other.trans[s2]:
+                    s_dst = get_state(res, state_map, s1_dst, s2_dst)
+                    s_label = s1_label.intersect(s2_label)
+                    if (s_label.is_sat()):
+                        res._add_trans(s, s_dst, s_label)
+                        stack.append((s1_dst,s2_dst,s_dst))
+
+        # prune the unreachable states
+        pruned_auto = res.copy_reachable()
+
+        return pruned_auto
 
     def is_contained(self, other):
         """ Returns true if the language pf self is a.
