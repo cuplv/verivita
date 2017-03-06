@@ -153,17 +153,17 @@ class TestSpecParser(unittest.TestCase):
                         "SPEC [CB] [ENTRY] [l] type l(l1 : type,l2 : type) |- [CB] [ENTRY] [l] type l(b : type)",
                         "SPEC [CB] [ENTRY] [l] type l(l1 : type,l2 : type) |- [CI] [ENTRY] [l] type l(b : type); SPEC [CB] [ENTRY] [l] type l(l1 : type,l2 : type) |- [CI] [ENTRY] [l] type l(b : type)",
                         "SPEC ([CB] [ENTRY] [l] type l(l1 : type,l2 : type); [CB] [ENTRY] [l] type l(l1 : type,l2 : type)) |- [CI] [ENTRY] [l] type l(b : type)",
-                        "SPEC ([CB] [ENTRY] [l] type l(l1 : type,l2 : type))[*] |- [CI] [ENTRY] [l] type l(b : type)",
-                        "SPEC ([CB] [ENTRY] [l] type l(l1 : type,l2 : type))[*] |+ [CI] [ENTRY] [l] type l(b : type)",
-                        "SPEC ([CB] [ENTRY] [l] type l(l1 : type,l2 : type))[*] |- [CI] [ENTRY] [l] type l(b : type)",
-                        "SPEC ([CB] [ENTRY] [l] type b(l1 : type,l2 : type))[*] |- [CI] [ENTRY] [l] type l(b : type)",
-                        "SPEC ([CB] [ENTRY] [l] void <init>(l1 : type,l2 : type))[*] |- [CI] [ENTRY] [l] type l(b : type)",
+                        "SPEC (([CB] [ENTRY] [l] type l(l1 : type,l2 : type))[*]) |- [CI] [ENTRY] [l] type l(b : type)",
+                        "SPEC (([CB] [ENTRY] [l] type l(l1 : type,l2 : type))[*]) |+ [CI] [ENTRY] [l] type l(b : type)",
+                        "SPEC (([CB] [ENTRY] [l] type l(l1 : type,l2 : type))[*]) |- [CI] [ENTRY] [l] type l(b : type)",
+                        "SPEC (([CB] [ENTRY] [l] type b(l1 : type,l2 : type))[*]) |- [CI] [ENTRY] [l] type l(b : type)",
+                        "SPEC (([CB] [ENTRY] [l] void <init>(l1 : type,l2 : type))[*]) |- [CI] [ENTRY] [l] type l(b : type)",
                         "SPEC TRUE |- TRUE",
-                        "SPEC (TRUE)[*] |- TRUE ALIASES old = [new]",
-                        "SPEC (TRUE)[*] |- TRUE ALIASES old1 = [new1],old2 = [new2,new22]",
-                        "SPEC (TRUE)[*] |- TRUE",
-                        "SPEC ([CB] [ENTRY] [l] type m1())[*] |- TRUE",
-                        "SPEC (((TRUE & FALSE) | ! (FALSE)))[*] |- TRUE",
+                        "SPEC ((TRUE)[*]) |- TRUE ALIASES old = [new]",
+                        "SPEC ((TRUE)[*]) |- TRUE ALIASES old1 = [new1],old2 = [new2,new22]",
+                        "SPEC ((TRUE)[*]) |- TRUE",
+                        "SPEC (([CB] [ENTRY] [l] type m1())[*]) |- TRUE",
+                        "SPEC ((((TRUE & FALSE) | ! (FALSE)))[*]) |- TRUE",
                         "SPEC [CB] [ENTRY] [l1] type methodName(TRUE : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
                         "SPEC [CB] [ENTRY] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
                         "SPEC foo = [CB] [EXIT] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
@@ -171,10 +171,10 @@ class TestSpecParser(unittest.TestCase):
                         "SPEC 1 = [CB] [EXIT] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
                         "SPEC # = [CB] [EXIT] [l1] type methodName(# : boolean) |- [CI] [EXIT] [l2] type methodName(bparam : type,TRUE : boolean)",
                         "SPEC TRUE = [CB] [EXIT] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)",
-                        'SPEC ([CB] [ENTRY] [l] type l(l1 : int,"foo" : string))[*] |- [CI] [ENTRY] [l] type l(b : type)',
+                        'SPEC (([CB] [ENTRY] [l] type l(l1 : int,"foo" : string))[*]) |- [CI] [ENTRY] [l] type l(b : type)',
                         "SPEC [CB] [ENTRY] [l] type l(NULL : boolean) |- [CB] [ENTRY] [l] type l(b : type)",
                         "SPEC [CI] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener) |+ [CB] [ENTRY] [l] void onClick(b : android.widget.Button)",
-                        "SPEC ((TRUE)[*]; [CI] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener)) |+ [CB] [ENTRY] [l] void onClick(b : android.widget.Button)",
+                        "SPEC (((TRUE)[*]); [CI] [ENTRY] [b] void android.widget.Button.setOnClickListener(l : View.OnClickListener)) |+ [CB] [ENTRY] [l] void onClick(b : android.widget.Button)",
                         "SPEC (([CB] [ENTRY] [l] type l(); [CB] [ENTRY] [l] type l()) & [CB] [ENTRY] [l] type l()) |- [CB] [ENTRY] [l] type l(b : type)",
                         "SPEC (([CB] [ENTRY] [l] type l(); [CB] [ENTRY] [l] type l()) & ([CB] [ENTRY] [l] type l(); [CB] [ENTRY] [l] type l())) |- [CB] [ENTRY] [l] type l(b : type)",
                         "SPEC (([CB] [ENTRY] [l1] type l(); [CB] [ENTRY] [l2] type l()) | ([CB] [ENTRY] [l] type l(); [CB] [ENTRY] [l] type l())) |- [CB] [ENTRY] [l] type l(b : type)",
@@ -318,6 +318,31 @@ class TestSpecParser(unittest.TestCase):
         self.assertTrue(len(spec_list) == len(res))
         for i in range(len(res)): self.assertTrue(get_str(spec_list[i]) in res)
 
+
+    def test_bug_156(self):
+        # Parse [*] with true
+        specs = [("SPEC TRUE[*]; [CI] [ENTRY] [f] type Class.method(); TRUE[*] |- [CI] [EXIT] [f] type Class.method()",
+                  "SPEC ((((TRUE)[*]); [CI] [ENTRY] [f] type Class.method()); ((TRUE)[*])) |- [CI] [EXIT] [f] type Class.method()"),
+                 ("SPEC TRUE[*]; (! [CI] [ENTRY] [f] type Class.method())[*] |- [CI] [EXIT] [f] type Class.method()",
+                  "SPEC (((TRUE)[*]); ((! ([CI] [ENTRY] [f] type Class.method()))[*])) |- [CI] [EXIT] [f] type Class.method()"),
+                 ("SPEC TRUE; ([CI] [ENTRY] [f] type Class.method() & TRUE)[*] |- [CI] [EXIT] [f] type Class.method()",
+                  "SPEC (TRUE; ((([CI] [ENTRY] [f] type Class.method() & TRUE))[*])) |- [CI] [EXIT] [f] type Class.method()")]
+
+        for t in specs:
+            (s,r) = t
+            res = spec_parser.parse(s)
+            self.assertTrue(res is not None)
+
+            # test the printing of the spec ast
+            stringio = StringIO()
+            pretty_print(res, stringio)
+
+            print "Found"
+            print stringio.getvalue()
+            print "Expected"
+            print r
+
+            self.assertTrue(stringio.getvalue() == r)
 
 
 
