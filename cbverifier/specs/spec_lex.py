@@ -14,6 +14,7 @@ keywords = ('TOK_SPEC','TOK_TRUE','TOK_FALSE','TOK_NULL','TOK_CB','TOK_CI','TOK_
 
 tokens = keywords + (
     'TOK_ID',
+    'TOK_ID_ADDRESS',
     'TOK_INT',
     'TOK_FLOAT',
     'TOK_NOT',
@@ -38,6 +39,14 @@ tokens = keywords + (
 # Tokens
 def t_TOK_ID(t):
     r'[a-zA-Z_$<>][a-zA-Z0-9_$<>]*'
+    if "TOK_" + t.value in keywords:
+        t.type = "TOK_" + t.value
+    return t
+
+# Allows also numbers in the first character
+# It is needed to parse object addresses
+def t_TOK_ID_ADDRESS(t):
+    r'[a-zA-Z0-9_$<>][a-zA-Z0-9_$<>]+'
     if "TOK_" + t.value in keywords:
         t.type = "TOK_" + t.value
     return t
@@ -72,7 +81,7 @@ t_TOK_NOT = r"\!"
 t_TOK_AND = r"\&"
 t_TOK_OR = r"\|"
 t_TOK_SEQUENCE=r";"
-t_TOK_STAR=r"\*"
+t_TOK_STAR=r"\[\*\]"
 t_TOK_ENABLE = r"\|\+"
 t_TOK_DISABLE = r"\|-"
 t_TOK_DOT = r"\."

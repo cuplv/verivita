@@ -92,7 +92,7 @@ def p_regexp(t):
     t[0] = t[1]
 
 def p_regexp_star(t):
-    '''regexp : regexp TOK_LSQUARE TOK_STAR TOK_RSQUARE
+    '''regexp : regexp TOK_STAR
     '''
     t[0] = new_star(t[1])
 
@@ -205,16 +205,16 @@ def p_method_call(t):
         t[0] = (new_nil(), t[1])
 
 def p_inner_call(t):
-    '''inner_call : composed_id composed_id TOK_LPAREN paramlist TOK_RPAREN
-                  | composed_id composed_id TOK_LPAREN TOK_RPAREN'''
+    '''inner_call : type_id composed_id TOK_LPAREN paramlist TOK_RPAREN
+                  | type_id composed_id TOK_LPAREN TOK_RPAREN'''
     if (t[4] != ')'):
         t[0] = (t[1], t[2], t[4])
     else:
         t[0] = (t[1], t[2], new_nil())
 
 def p_paramlist_param(t):
-    '''paramlist : param TOK_COLON composed_id
-                 | param TOK_COLON composed_id TOK_COMMA paramlist
+    '''paramlist : param TOK_COLON type_id
+                 | param TOK_COLON type_id TOK_COMMA paramlist
     '''
     if (len(t) == 4):
         t[0] = new_param(t[1], t[3], new_nil())
@@ -222,7 +222,8 @@ def p_paramlist_param(t):
         t[0] = new_param(t[1], t[3], t[5])
 
 def p_param_id(t):
-    '''param : TOK_ID '''
+    '''param : TOK_ID
+             | TOK_ID_ADDRESS '''
     t[0] = new_id(t[1])
 
 def p_param_true(t):
@@ -252,6 +253,17 @@ def p_param_dontcare(t):
 def p_param_string(t):
     '''param : TOK_STRING_LITERAL'''
     t[0] = new_string(t[1])
+
+def p_type_id(t):
+    '''type_id : composed_id
+               | type_id TOK_LSQUARE TOK_RSQUARE'''
+    if (len(t) == 2):
+        t[0] = t[1]
+    else:
+        assert (len(t) == 4)
+        assert (t[2] == '[' and t[3] == ']')
+        assert (get_node_type(t[1]) == ID)
+        t[0] = new_id("%s[]" % get_id_val(t[1]))
 
 def p_composed_id(t):
     '''composed_id : TOK_ID
