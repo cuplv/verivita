@@ -252,8 +252,7 @@ class TSEncoder:
         self.pysmt_env = get_env()
         self.helper = Helper(self.pysmt_env)
         # With True we use BDDs
-        #self.auto_env = AutoEnv(self.pysmt_env, False)
-        self.auto_env = AutoEnv(self.pysmt_env, True)
+        self.auto_env = AutoEnv(self.pysmt_env, False)
         self.cenc = CounterEnc(self.pysmt_env)
         self.mapback = TSMapback(self.pysmt_env, None, None)
 
