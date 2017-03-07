@@ -4,7 +4,7 @@ SPEC FALSE[*] |- [CB] [ENTRY] [l] void android.view.View$OnClickListener.onClick
 
 //Fragment onResume enable
 SPEC TRUE[*];
-     container = [CI] [EXIT] [f] android.view.View android.app.Fragment.getView();
+     (container = [CI] [EXIT] [f] android.view.View android.app.Fragment.getView()| [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(container : android.view.View, # : android.os.Bundle));
      TRUE[*];
      b = [CI] [EXIT] [container] android.view.View android.view.View.findViewById(_ : int);
      TRUE[*];
@@ -14,7 +14,7 @@ SPEC TRUE[*];
 
 //Fragment onPause disable
 SPEC TRUE[*];
-     container = [CI] [EXIT] [f] android.view.View android.app.Fragment.getView();
+     (container = [CI] [EXIT] [f] android.view.View android.app.Fragment.getView()| [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(container : android.view.View, # : android.os.Bundle));
      TRUE[*];
      b = [CI] [EXIT] [container] android.view.View android.view.View.findViewById(_ : int);
      TRUE[*];
