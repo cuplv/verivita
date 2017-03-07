@@ -249,13 +249,29 @@ class TestAuto(unittest.TestCase):
     def test_seq(self):
         env = AutoEnv.get_global_auto_env()
 
-        a_label = env.new_label('a')
-        b_label = env.new_label('b')
-        c_label = env.new_label('c')
+        a_label = env.new_label(Symbol('a'))
+        b_label = env.new_label(Symbol('b'))
+        c_label = env.new_label(Symbol('c'))
 
-        auto_a = Automaton.get_singleton(TRUE())
+        auto_a = Automaton.get_singleton(env.new_label(TRUE()))
         auto_b = auto_a.klenee_star()
         auto_c = Automaton.get_singleton(a_label)
         auto_d = auto_b.concatenate(auto_c)
 
         self.assertFalse(auto_d.accept([]))
+
+    def test_seq_2(self):
+        env = AutoEnv.get_global_auto_env()
+
+        a_label = env.new_label(Symbol('a'))
+        b_label = env.new_label(Symbol('b'))
+        c_label = env.new_label(Symbol('c'))
+
+        auto_true_star = Automaton.get_singleton(env.new_label(TRUE())).klenee_star()
+        auto_do_a = Automaton.get_singleton(a_label)
+        auto_ts_a  = auto_true_star.concatenate(auto_do_a)
+        auto_ts_a_ts = auto_ts_a.concatenate(auto_true_star)
+
+        self.assertTrue(auto_ts_a_ts.accept([a_label]))
+        self.assertFalse(auto_ts_a_ts.accept([]))
+
