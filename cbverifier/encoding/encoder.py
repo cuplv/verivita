@@ -152,6 +152,8 @@ from cbverifier.encoding.conversion import TraceSpecConverter
 
 from cbverifier.helpers import Helper
 
+DEBUG_AUTO = False
+
 class TransitionSystem:
     """ (symbolic) Transition system"""
     def __init__(self):
@@ -250,8 +252,8 @@ class TSEncoder:
         self.pysmt_env = get_env()
         self.helper = Helper(self.pysmt_env)
         # With True we use BDDs
-        self.auto_env = AutoEnv(self.pysmt_env, False)
-        #self.auto_env = AutoEnv(self.pysmt_env, True)
+        #self.auto_env = AutoEnv(self.pysmt_env, False)
+        self.auto_env = AutoEnv(self.pysmt_env, True)
         self.cenc = CounterEnc(self.pysmt_env)
         self.mapback = TSMapback(self.pysmt_env, None, None)
 
@@ -556,7 +558,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                              Helper.get_next_var(msg_enabled,
                                                  self.pysmt_env.formula_manager))
                 ts.trans = And(ts.trans, fc_msg)
-
         return (ts, disabled_msg, accepting)
 
 
@@ -594,16 +595,17 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         auto = self.r2a.get_from_regexp(regexp)
 
-        # if (not regexp in self.regexp2ts):
-        #     self.regexp2ts[regexp] = 1
-        # else:
-        #     print "DUPLICATE"
-        #     #pretty_print(regexp)
-
         # program counter of the automaton
         auto_pc = "spec_pc_%d" % spec_id
         self.cenc.add_var(auto_pc, auto.count_state() - 1) # -1 since it starts from 0
         for v in self.cenc.get_counter_var(auto_pc): ts.add_var(v)
+
+        # Rude debugging of the automaton encoding
+        # Leave it here for now.
+        if DEBUG_AUTO:
+            pretty_print(regexp, sys.stdout)
+            auto.to_dot(sys.stdout)
+            print auto_pc
 
         # initial states
         # Initially we are in one of the initial states
@@ -620,6 +622,11 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
             eq_current = self.cenc.eq_val(auto_pc, s_id)
             ts.init = Or(ts.init, eq_current)
+
+            if DEBUG_AUTO:
+                print "INIT: %s = %d" % (auto_pc, s_id)
+
+
 
         # automata transitions
         for a_s in auto.states:
@@ -641,6 +648,9 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                 t = And([eq_next, label.get_formula()])
                 s_trans = Or(s_trans, t)
 
+                if DEBUG_AUTO:
+                    print "TRANS - %s: %d -> %d" % (auto_pc, ts_s, ts_dst)
+
             s_trans = Implies(eq_current, s_trans)
             ts.trans = And(ts.trans, s_trans)
 
@@ -648,6 +658,10 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         for a_s in auto.final_states:
             ts_s = auto2ts_map[a_s]
             final_states_ts.append(ts_s)
+
+            if DEBUG_AUTO:
+                print "FINAL - %s: %d\n" % (auto_pc, ts_s)
+
 
         return (auto_pc, final_states_ts, ts)
 
@@ -803,11 +817,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         pc_size = (self.trace_length) - tl_callback_count + 1 + 1
 
         max_pc_value = pc_size - 1
-
-        # print self.trace_length
-        # print tl_callback_count
-        # print "MAX"
-        # print max_pc_value
 
         pc_name = TSEncoder._get_pc_name()
         self.cenc.add_var(pc_name, max_pc_value) # starts from 0

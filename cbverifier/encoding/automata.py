@@ -119,6 +119,9 @@ class Automaton(object):
 
     def _add_trans(self, src, dst, label):
         """ Add a transition """
+        # TODO: add map on dst transition
+        # If there is already a transition from src to dst
+        # we just need to union the labels.
         self.trans[src].append((dst,label))
 
     def is_initial(self, state):
@@ -211,6 +214,9 @@ class Automaton(object):
                 for other_init in other.initial_states:
                     for (other_dst, other_label) in other.trans[other_init]:
                         trans.append((other_dst, other_label))
+                    if other_init in other.final_states:
+                        new_auto.final_states.add(new_s)
+
 
         return new_auto
 
@@ -568,8 +574,15 @@ class Automaton(object):
             label_formula = TRUE()
             for i in range(len(res)):
 
-                label_formula = And(label_formula, res[i])
-                label_formula = simplify(label_formula)
+                if (label_formula == res[i]):
+                    label_formula = label_formula
+                elif (label_formula == TRUE()):
+                    label_formula = res[i]
+                elif (res[i] == TRUE()):
+                    label_formula = label_formula
+                else:
+                    label_formula = And(label_formula, res[i])
+                    label_formula = simplify(label_formula)
 
                 if (res[i] == labels[i].get_formula()):
                     # same label, goes to the state with this label
@@ -721,6 +734,7 @@ class Automaton(object):
 
     @staticmethod
     def get_singleton(label, env=None):
+        assert isinstance(label, Label)
         aut = Automaton(env)
         init = aut._add_new_state(True, False)
         final = aut._add_new_state(False, True)
