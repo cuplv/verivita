@@ -46,7 +46,7 @@ def getConfigs(iniFilePath='verifierConfig.ini'):
 
     verbose    = True if get(conf, vopts, 'verbose', default='False') == 'True' else False
     inputPath  = get(conf, vopts, 'input', default='/data/callback/output')
-    processedPath = get(conf, vopts, 'process', default='/data/callback/processed')
+    processedPath = get(conf, vopts, 'processed', default='/data/callback/processed')
     checkedPath = get(conf, vopts, 'checked', default='/data/callback/checked')
     verifiedPath = get(conf, vopts, 'verified', default='/data/callback/verified')
     timeout = get(conf, vopts, 'timeout', default='300')
