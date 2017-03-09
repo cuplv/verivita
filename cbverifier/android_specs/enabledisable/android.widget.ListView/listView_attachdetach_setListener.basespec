@@ -3,15 +3,12 @@ SPEC FALSE[*] |- [CB] [ENTRY] [l] void android.widget.AdapterView$OnItemClickLis
 
 
 ////Fragment onResume enable
-SPEC 
-((TRUE[*];
-     (listview = [CI] [EXIT] [f] android.widget.ListView android.support.v4.app.ListFragment.getListView() | [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(listview : android.view.View, # : android.os.Bundle);
-     TRUE[*]))&
-     (TRUE[*];
-     [CI] [ENTRY] [listview] void android.widget.AdapterView.setOnItemClickListener( l : android.widget.AdapterView$OnItemClickListener); TRUE[*]));
-//     (( ! [CI] [ENTRY] [listview] void android.widget.AdapterView.setOnItemClickListener( l2 : android.widget.AdapterView$OnItemClickListener))  [*]); //TODO: issue #161
-     [CB] [ENTRY] [f] void android.app.Fragment.onResume()  |+ [CB] [ENTRY] [l] void android.widget.AdapterView$OnItemClickListener.onItemClick(listview : android.widget.AdapterView, # : android.view.View, # : int, # : long) ALIASES android.app.Fragment.onViewCreated = [android.support.v4.app.Fragment.onViewCreated,android.app.Fragment.onViewCreated],android.app.Fragment.onResume = [android.support.v4.app.Fragment.onResume,android.app.Fragment.onResume];
-
+SPEC TRUE[*];
+     listview = [CI] [EXIT] [f] android.widget.ListView android.support.v4.app.ListFragment.getListView();
+     TRUE[*];
+     [CI] [ENTRY] [listview] void android.widget.AdapterView.setOnItemClickListener( l : android.widget.AdapterView$OnItemClickListener);
+     ( ! [CI] [ENTRY] [listview] void android.widget.AdapterView.setOnItemClickListener( l2 : android.widget.AdapterView$OnItemClickListener) ) [*];
+     [CB] [ENTRY] [f] void android.support.v4.app.Fragment.onResume()  |+ [CB] [ENTRY] [l] void android.widget.AdapterView$OnItemClickListener.onItemClick(listview : android.widget.AdapterView, # : android.view.View, # : int, # : long);
 
 ////Fragment onDetach disable (This will be a common source of bugs as the listview being detached does not prevent the click from happening)
 SPEC TRUE[*];
