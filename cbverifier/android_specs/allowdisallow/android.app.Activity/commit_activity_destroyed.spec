@@ -1,0 +1,2 @@
+SPEC TRUE[*]; fragman = [CI] [EXIT] [act] android.app.FragmentManager android.app.Activity.getFragmentManager(); TRUE[*]; fragtran = [CI] [EXIT] [fragman] android.app.FragmentTransaction android.app.FragmentManager.beginTransaction(); TRUE[*]; [CB] [ENTRY] [act] void android.app.Activity.onDestroy() |- [CI] [ENTRY] [fragtran] int android.app.FragmentTransaction.commit() ALIASES android.app.Activity.onDestroy = [android.support.v7.app.AppCompatActivity.onDestroy,android.app.Activity.onDestroy]
+
