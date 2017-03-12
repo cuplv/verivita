@@ -7,8 +7,7 @@ import logging
 import unittest
 import os
 
-from ply.lex import LexToken
-import ply.yacc as yacc
+
 
 
 try:
@@ -16,9 +15,8 @@ try:
 except ImportError:
     import unittest
 
-import cbverifier.test.examples
-from cbverifier.encoding.grounding import GroundSpecs, Assignments, bottom_value, TraceSpecConverter
-from cbverifier.encoding.grounding import AssignmentsSet, TraceMap
+from cbverifier.driver import i_slice
+
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, FrameworkOverride, CValue, TraceConverter
 from cbverifier.specs.spec_ast import *
 from cbverifier.specs.spec import Spec, spec_parser
@@ -34,7 +32,7 @@ class TestSlice(unittest.TestCase):
         v = CValue()
         v.is_null = False
         v.type = objType
-        v.value = objId
+        v.object_id = objId
         return v
     @staticmethod
     def _get_fmwkov(cname, mname, is_int):
@@ -53,11 +51,17 @@ class TestSlice(unittest.TestCase):
                         None, [self._get_fmwkov("","doSomethingCb()",False)])
         trace.add_msg(cb1)
         ci1 = CCallin(7, 1, "", "doSomethingCi()",
-                      [self._get_obj("1","string"), self._get_obj('2','string')],
+                      [self._get_obj("1","string"), self._get_obj('3','string')],
                       None)
         cb1.add_msg(ci1)
-        ci2 = CCallin(8, 1, "", "doSomethingCi(int)",
+        ci2 = CCallin(9, 1, "", "doSomethingCi(string)",
                       [self._get_obj("1","string"),
-                      self._get_int(2)],
+                      self._get_obj('2',"string")],
                       None)
         cb1.add_msg(ci2)
+        cb2 = CCallback(10,1,"","meh()", [self._get_obj('00','string')])
+        trace.add_msg(cb2)
+        i_slice(trace,"3")
+        assert(cb1 in trace.children)
+        assert(ci2 not in trace.children[0].children)
+        assert(cb2 not in trace.children)
