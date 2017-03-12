@@ -150,6 +150,18 @@ def i_slice(c_obj, object_id):
                 if param.object_id == obj_id:
                     contains = contains or True
 
+        if isinstance(item,CCallback):
+            for obj_id in object_id:
+                contains = contains or \
+                           ((item.return_value is not None) and \
+                           item.return_value.object_id == obj_id)
+        elif isinstance(item,CCallin):
+            for obj_id in object_id:
+                contains = contains or \
+                           ((item.return_value is not None) and \
+                           item.return_value.object_id == obj_id)
+        else:
+            raise Exception("Malformed trace")
         if contains or (len(item.children) > 0):
             #item does not contain object ref so remove
             new_children.append(item)
