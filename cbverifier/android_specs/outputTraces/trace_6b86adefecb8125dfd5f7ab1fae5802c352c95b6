@@ -1,0 +1,575 @@
+/usr/bin/python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/s/Documents/source/scratch/callback-verification/tests/realApplications/Kistenstapeln-Android/bug/trace_150117_0 -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/button.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_getString.spec -k 60 -i -z
+WARNING:root:The simplification of the trace is UNSOUND
+
+---Simplified Trace---
+[48] [CB] [ENTRY] void de.d120.ophasekistenstapeln.MainActivity.onCreate(android.os.Bundle) (a4b42a1,NULL) 
+  [1747] [CI] [ENTRY] void android.app.Fragment.<init>() (f7337f2) 
+  [1747] [CI] [EXIT] void android.app.Fragment.<init>() (f7337f2) 
+  [1762] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onAttach(android.app.Activity) (f7337f2,a4b42a1) 
+  [1762] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onAttach(android.app.Activity) (f7337f2,a4b42a1) 
+  [1770] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreate(android.os.Bundle) (f7337f2,NULL) 
+  [1801] [CI] [ENTRY] void android.app.Fragment.<init>() (a168cd6) 
+  [1801] [CI] [EXIT] void android.app.Fragment.<init>() (a168cd6) 
+  [1770] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreate(android.os.Bundle) (f7337f2,NULL) 
+  [1878] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f7337f2,a6b18bd,NULL,NULL) 
+  [2009] [CI] [ENTRY] java.lang.String android.app.Fragment.getString(int) (f7337f2,2131034136) 
+  [2009] [CI] [EXIT] Countdown = java.lang.String android.app.Fragment.getString(int) (f7337f2,2131034136) 
+  [2015] [CI] [ENTRY] java.lang.String android.app.Fragment.getString(int) (f7337f2,2131034135) 
+  [2015] [CI] [EXIT] Punktzahl berechnen = java.lang.String android.app.Fragment.getString(int) (f7337f2,2131034135) 
+  [2021] [CI] [ENTRY] java.lang.String android.app.Fragment.getString(int) (f7337f2,2131034137) 
+  [2021] [CI] [EXIT] Highscore = java.lang.String android.app.Fragment.getString(int) (f7337f2,2131034137) 
+  [1878] [CB] [EXIT] 85a2e20 = android.view.View de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f7337f2,a6b18bd,NULL,NULL) 
+  [2042] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onViewCreated(android.view.View,android.os.Bundle) (f7337f2,85a2e20,NULL) 
+  [2042] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onViewCreated(android.view.View,android.os.Bundle) (f7337f2,85a2e20,NULL) 
+[48] [CB] [EXIT] void de.d120.ophasekistenstapeln.MainActivity.onCreate(android.os.Bundle) (a4b42a1,NULL) 
+[2212] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onActivityCreated(android.os.Bundle) (f7337f2,NULL) 
+[2212] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onActivityCreated(android.os.Bundle) (f7337f2,NULL) 
+[2250] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (a168cd6,a4b42a1) 
+[2250] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (a168cd6,a4b42a1) 
+[2258] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (a168cd6,NULL) 
+[2258] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (a168cd6,NULL) 
+[2286] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a168cd6,a6b18bd,7c4edc8,NULL) 
+[2286] [CB] [EXIT] 8a866b7 = android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a168cd6,a6b18bd,7c4edc8,NULL) 
+[2770] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (a168cd6,8a866b7,NULL) 
+[2770] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (a168cd6,8a866b7,NULL) 
+[2774] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (a168cd6,NULL) 
+[2774] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (a168cd6,NULL) 
+[2824] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onStart() (f7337f2) 
+[2824] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onStart() (f7337f2) 
+[2828] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (a168cd6) 
+[2828] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (a168cd6) 
+[2848] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onResume() (f7337f2) 
+[2848] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onResume() (f7337f2) 
+[2852] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (a168cd6) 
+[2852] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (a168cd6) 
+[5048] [CB] [ENTRY] boolean de.d120.ophasekistenstapeln.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (a4b42a1,ce1f5de) 
+  [5112] [CI] [ENTRY] void android.app.Fragment.<init>() (a634044) 
+  [5112] [CI] [EXIT] void android.app.Fragment.<init>() (a634044) 
+[5048] [CB] [EXIT] true = boolean de.d120.ophasekistenstapeln.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (a4b42a1,ce1f5de) 
+[5280] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (a168cd6) 
+[5280] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (a168cd6) 
+[5284] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (a168cd6) 
+[5284] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (a168cd6) 
+[5292] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (a168cd6) 
+[5292] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (a168cd6) 
+[5300] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (a168cd6) 
+[5300] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (a168cd6) 
+[5304] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (a168cd6) 
+[5304] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (a168cd6) 
+[5308] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (a634044,a4b42a1) 
+[5308] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (a634044,a4b42a1) 
+[5316] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (a634044,NULL) 
+[5316] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (a634044,NULL) 
+[5344] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a634044,a6b18bd,7c4edc8,NULL) 
+[5344] [CB] [EXIT] 5195dff = android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a634044,a6b18bd,7c4edc8,NULL) 
+[5816] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (a634044,5195dff,NULL) 
+[5816] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (a634044,5195dff,NULL) 
+[5820] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (a634044,NULL) 
+  [5845] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (34bd93c,5d05058) 
+  [5845] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (34bd93c,5d05058) 
+[5820] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (a634044,NULL) 
+[5866] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (a634044) 
+[5866] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (a634044) 
+[5870] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (a634044) 
+[5870] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (a634044) 
+[6500] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$2.onClick(android.view.View) (5d05058,34bd93c) 
+  [6517] [CI] [ENTRY] android.os.CountDownTimer android.os.CountDownTimer.start() (c2fd244) 
+  [6517] [CI] [EXIT] c2fd244 = android.os.CountDownTimer android.os.CountDownTimer.start() (c2fd244) 
+[6500] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$2.onClick(android.view.View) (5d05058,34bd93c) 
+[6530] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9968) 
+[6530] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9968) 
+[6652] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9854) 
+[6652] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9854) 
+[6782] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9718) 
+[6782] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9718) 
+[6904] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9597) 
+[6904] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9597) 
+[7026] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9465) 
+[7026] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9465) 
+[7148] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9390) 
+[7148] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9390) 
+[7270] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9268) 
+[7270] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9268) 
+[7392] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9152) 
+[7392] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9152) 
+[7514] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9056) 
+[7514] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,9056) 
+[7636] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8938) 
+[7636] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8938) 
+[7758] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8817) 
+[7758] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8817) 
+[7880] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8691) 
+[7880] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8691) 
+[8002] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8562) 
+[8002] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8562) 
+[8124] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8415) 
+[8124] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8415) 
+[8246] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8289) 
+[8246] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8289) 
+[8368] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8176) 
+[8368] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8176) 
+[8490] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8061) 
+[8490] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,8061) 
+[8612] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7921) 
+[8612] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7921) 
+[8734] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7801) 
+[8734] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7801) 
+[8856] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7697) 
+[8856] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7697) 
+[8978] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7585) 
+[8978] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7585) 
+[9100] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7438) 
+[9100] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7438) 
+[9222] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7312) 
+[9222] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7312) 
+[9344] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7176) 
+[9344] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7176) 
+[9466] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7070) 
+[9466] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,7070) 
+[9588] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6973) 
+[9588] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6973) 
+[9710] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6855) 
+[9710] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6855) 
+[9832] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6735) 
+[9832] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6735) 
+[9954] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6635) 
+[9954] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6635) 
+[10076] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6485) 
+[10076] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6485) 
+[10198] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6365) 
+[10198] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6365) 
+[10320] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6264) 
+[10320] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6264) 
+[10442] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6135) 
+[10442] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6135) 
+[10564] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6006) 
+[10564] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,6006) 
+[10686] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5918) 
+[10686] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5918) 
+[10808] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5826) 
+[10808] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5826) 
+[10930] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5725) 
+[10930] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5725) 
+[11052] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5642) 
+[11052] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5642) 
+[11174] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5532) 
+[11174] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5532) 
+[11296] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5395) 
+[11296] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5395) 
+[11418] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5306) 
+[11418] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5306) 
+[11540] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5186) 
+[11540] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5186) 
+[11662] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5051) 
+[11662] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,5051) 
+[11784] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4927) 
+[11784] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4927) 
+[11906] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4823) 
+[11906] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4823) 
+[12028] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4719) 
+[12028] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4719) 
+[12150] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4634) 
+[12150] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4634) 
+[12272] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4531) 
+[12272] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4531) 
+[12394] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4419) 
+[12394] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4419) 
+[12516] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4307) 
+[12516] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4307) 
+[12638] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4182) 
+[12638] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4182) 
+[12760] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4079) 
+[12760] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,4079) 
+[12882] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3971) 
+[12882] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3971) 
+[13004] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3871) 
+[13004] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3871) 
+[13126] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3760) 
+[13126] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3760) 
+[13248] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3621) 
+[13248] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3621) 
+[13370] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3530) 
+[13370] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3530) 
+[13492] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3413) 
+[13492] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3413) 
+[13614] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3285) 
+[13614] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3285) 
+[13736] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3185) 
+[13736] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3185) 
+[13858] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3100) 
+[13858] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,3100) 
+[13980] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2973) 
+[13980] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2973) 
+[14102] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2877) 
+[14102] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2877) 
+[14224] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2781) 
+[14224] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2781) 
+[14346] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2671) 
+[14346] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2671) 
+[14468] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2546) 
+[14468] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2546) 
+[14590] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2447) 
+[14590] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2447) 
+[14712] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2344) 
+[14712] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2344) 
+[14834] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2225) 
+[14834] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2225) 
+[14956] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2117) 
+[14956] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2117) 
+[15078] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2014) 
+[15078] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,2014) 
+[15200] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1929) 
+[15200] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1929) 
+[15322] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1820) 
+[15322] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1820) 
+[15444] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1714) 
+[15444] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1714) 
+[15566] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1555) 
+[15566] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1555) 
+[15688] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1356) 
+[15688] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1356) 
+[15810] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1187) 
+[15810] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1187) 
+[15932] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1085) 
+[15932] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,1085) 
+[16054] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,990) 
+[16054] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,990) 
+[16176] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,907) 
+[16176] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,907) 
+[16298] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,788) 
+[16298] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,788) 
+[16420] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,703) 
+[16420] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,703) 
+[16542] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,580) 
+[16542] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,580) 
+[16664] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,480) 
+[16664] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,480) 
+[16786] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,381) 
+[16786] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,381) 
+[16908] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,245) 
+[16908] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,245) 
+[17030] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,145) 
+[17030] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,145) 
+[17152] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,26) 
+[17152] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(long) (c2fd244,26) 
+[17274] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish() (c2fd244) 
+  [17275] [CI] [ENTRY] java.lang.String android.app.Fragment.getString(int) (a634044,2131034115) 
+  [17275] [CI] [EXIT] 00:00:00 = java.lang.String android.app.Fragment.getString(int) (a634044,2131034115) 
+[17274] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish() (c2fd244) 
+[18086] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (d8419e,85a2e20,4613c04,1,1) 
+  [18121] [CI] [ENTRY] void android.app.Fragment.<init>() (610e3e8) 
+  [18121] [CI] [EXIT] void android.app.Fragment.<init>() (610e3e8) 
+[18086] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (d8419e,85a2e20,4613c04,1,1) 
+[18294] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (a634044) 
+[18294] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (a634044) 
+[18298] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (a634044) 
+[18298] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (a634044) 
+[18306] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (a634044) 
+[18306] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (a634044) 
+[18314] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (a634044) 
+[18314] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (a634044) 
+[18318] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (a634044) 
+[18318] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (a634044) 
+[18322] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(android.app.Activity) (610e3e8,a4b42a1) 
+[18322] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(android.app.Activity) (610e3e8,a4b42a1) 
+[18330] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(android.os.Bundle) (610e3e8,NULL) 
+[18330] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(android.os.Bundle) (610e3e8,NULL) 
+[18358] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (610e3e8,a6b18bd,7c4edc8,NULL) 
+[18358] [CB] [EXIT] 8097398 = android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (610e3e8,a6b18bd,7c4edc8,NULL) 
+[20794] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(android.view.View,android.os.Bundle) (610e3e8,8097398,NULL) 
+[20794] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(android.view.View,android.os.Bundle) (610e3e8,8097398,NULL) 
+[20798] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(android.os.Bundle) (610e3e8,NULL) 
+[20798] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(android.os.Bundle) (610e3e8,NULL) 
+[20906] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onStart() (610e3e8) 
+[20906] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onStart() (610e3e8) 
+[20910] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onResume() (610e3e8) 
+[20910] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onResume() (610e3e8) 
+[22816] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onPause() (f7337f2) 
+[22816] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onPause() (f7337f2) 
+[22820] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onPause() (610e3e8) 
+[22820] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onPause() (610e3e8) 
+[22870] [CB] [ENTRY] void de.d120.ophasekistenstapeln.MainActivity.onSaveInstanceState(android.os.Bundle) (a4b42a1,e3bfdb7) 
+  [22872] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onSaveInstanceState(android.os.Bundle) (f7337f2,e688390) 
+  [22872] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onSaveInstanceState(android.os.Bundle) (f7337f2,e688390) 
+  [22878] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onSaveInstanceState(android.os.Bundle) (610e3e8,4fecbc1) 
+  [22878] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onSaveInstanceState(android.os.Bundle) (610e3e8,4fecbc1) 
+[22870] [CB] [EXIT] void de.d120.ophasekistenstapeln.MainActivity.onSaveInstanceState(android.os.Bundle) (a4b42a1,e3bfdb7) 
+[22910] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onStop() (f7337f2) 
+[22910] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onStop() (f7337f2) 
+[22914] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onStop() (610e3e8) 
+[22914] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onStop() (610e3e8) 
+
+
+INFO:root:Finding bugs at step 0...
+INFO:root:Finding bugs at step 1...
+INFO:root:Finding bugs at step 2...
+INFO:root:Finding bugs at step 3...
+INFO:root:Finding bugs at step 4...
+INFO:root:Finding bugs at step 5...
+INFO:root:Finding bugs at step 6...
+INFO:root:Finding bugs at step 7...
+INFO:root:Finding bugs at step 8...
+INFO:root:Finding bugs at step 9...
+INFO:root:Finding bugs at step 10...
+INFO:root:Finding bugs at step 11...
+INFO:root:Finding bugs at step 12...
+INFO:root:Finding bugs at step 13...
+INFO:root:Finding bugs at step 14...
+INFO:root:Finding bugs at step 15...
+INFO:root:Finding bugs at step 16...
+INFO:root:Finding bugs at step 17...
+INFO:root:Finding bugs at step 18...
+INFO:root:Finding bugs at step 19...
+INFO:root:Finding bugs at step 20...
+INFO:root:Finding bugs at step 21...
+INFO:root:Finding bugs at step 22...
+INFO:root:Finding bugs at step 23...
+INFO:root:Finding bugs at step 24...
+INFO:root:Finding bugs at step 25...
+INFO:root:Finding bugs at step 26...
+INFO:root:Finding bugs at step 27...
+INFO:root:Finding bugs at step 28...
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[5048] [CB] [ENTRY] boolean de.d120.ophasekistenstapeln.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (a4b42a1,ce1f5de) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[5112] [CI] [ENTRY] void android.app.Fragment.<init>() (a634044) 
+    Matched specifications:
+    SPEC ((TRUE)[*]); ([CI] [ENTRY] [a634044] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(a4b42a1 : android.app.Activity)
+    SPEC ((TRUE)[*]); ([CI] [ENTRY] [a634044] void android.app.Fragment.<init>()) |- [CI] [ENTRY] [a634044] java.lang.String android.app.Fragment.getString(2131034115 : int)
+----------------------------------------
+Step: 3
+----------------------------------------
+[5112] [CI] [EXIT] void android.app.Fragment.<init>() (a634044) 
+    Matched specifications:
+    SPEC ((TRUE)[*]); ([CI] [EXIT] [a634044] void android.app.Fragment.<init>()) |- [CI] [EXIT] [a634044] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 4
+----------------------------------------
+[5048] [CB] [EXIT] true = boolean de.d120.ophasekistenstapeln.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (a4b42a1,ce1f5de) 
+----------------------------------------
+Step: 5
+----------------------------------------
+[5308] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (a634044,a4b42a1) 
+    Matched specifications:
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(a4b42a1 : android.app.Activity)) |- [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(a4b42a1 : android.app.Activity)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(a4b42a1 : android.app.Activity)) |+ [CI] [ENTRY] [a634044] java.lang.String android.app.Fragment.getString(2131034115 : int)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(a4b42a1 : android.app.Activity)) |+ [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 6
+----------------------------------------
+[5308] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (a634044,a4b42a1) 
+----------------------------------------
+Step: 7
+----------------------------------------
+[5316] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (a634044,NULL) 
+    Matched specifications:
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a634044] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(a6b18bd : android.view.LayoutInflater,7c4edc8 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 8
+----------------------------------------
+[5316] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (a634044,NULL) 
+----------------------------------------
+Step: 9
+----------------------------------------
+[5344] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a634044,a6b18bd,7c4edc8,NULL) 
+    Matched specifications:
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(a6b18bd : android.view.LayoutInflater,7c4edc8 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [a634044] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(a6b18bd : android.view.LayoutInflater,7c4edc8 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(a6b18bd : android.view.LayoutInflater,7c4edc8 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(a6b18bd : android.view.LayoutInflater,7c4edc8 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(5195dff : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 10
+----------------------------------------
+[5344] [CB] [EXIT] 5195dff = android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a634044,a6b18bd,7c4edc8,NULL) 
+----------------------------------------
+Step: 11
+----------------------------------------
+[5820] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (a634044,NULL) 
+    Matched specifications:
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 12
+----------------------------------------
+[5845] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (34bd93c,5d05058) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((TRUE)[*])); ([CI] [ENTRY] [34bd93c] void android.view.View.setOnClickListener(5d05058 : android.view.View$OnClickListener)) |+ [CB] [ENTRY] [5d05058] void de.d120.ophasekistenstapeln.CountdownFragment$2.onClick(34bd93c : android.view.View)
+----------------------------------------
+Step: 13
+----------------------------------------
+[5845] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (34bd93c,5d05058) 
+----------------------------------------
+Step: 14
+----------------------------------------
+[5820] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (a634044,NULL) 
+----------------------------------------
+Step: 15
+----------------------------------------
+[6500] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$2.onClick(android.view.View) (5d05058,34bd93c) 
+----------------------------------------
+Step: 16
+----------------------------------------
+[6517] [CI] [ENTRY] android.os.CountDownTimer android.os.CountDownTimer.start() (c2fd244) 
+    Matched specifications:
+    SPEC ((TRUE)[*]); ([CI] [ENTRY] [c2fd244] android.os.CountDownTimer android.os.CountDownTimer.start()) |+ [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()
+----------------------------------------
+Step: 17
+----------------------------------------
+[6517] [CI] [EXIT] c2fd244 = android.os.CountDownTimer android.os.CountDownTimer.start() (c2fd244) 
+----------------------------------------
+Step: 18
+----------------------------------------
+[6500] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment$2.onClick(android.view.View) (5d05058,34bd93c) 
+----------------------------------------
+Step: 19
+----------------------------------------
+[5816] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (a634044,5195dff,NULL) 
+    Matched specifications:
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(5195dff : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(5195dff : android.view.View,NULL : android.os.Bundle)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(5195dff : android.view.View,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+----------------------------------------
+Step: 20
+----------------------------------------
+[5816] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (a634044,5195dff,NULL) 
+----------------------------------------
+Step: 21
+----------------------------------------
+[5866] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (a634044) 
+    Matched specifications:
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |- [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |+ [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+----------------------------------------
+Step: 22
+----------------------------------------
+[5866] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (a634044) 
+----------------------------------------
+Step: 23
+----------------------------------------
+[5870] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (a634044) 
+    Matched specifications:
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()) |- [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()) |+ [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()
+----------------------------------------
+Step: 24
+----------------------------------------
+[5870] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (a634044) 
+----------------------------------------
+Step: 25
+----------------------------------------
+[18294] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (a634044) 
+    Matched specifications:
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()) |+ [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()) |- [CI] [ENTRY] [a634044] java.lang.String android.app.Fragment.getString(2131034115 : int)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()) |- [CB] [ENTRY] [a634044] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()
+----------------------------------------
+Step: 26
+----------------------------------------
+[18294] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (a634044) 
+----------------------------------------
+Step: 27
+----------------------------------------
+[17274] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish() (c2fd244) 
+    Matched specifications:
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(8061 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(2671 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(6635 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(7801 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(5642 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(2344 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(703 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(6135 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(3100 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(6006 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(3413 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(7070 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(1714 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(480 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(6264 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(4927 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(7176 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(7921 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(1085 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(9597 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(8938 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(3871 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(5918 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(5532 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(2447 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(7438 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(5826 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(1555 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(9056 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(6855 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(7312 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(9152 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(580 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(1187 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(2117 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(5725 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(1356 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(990 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(26 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(381 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(6735 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(5395 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(7585 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(8415 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(4079 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(5306 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(8562 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(3621 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(2973 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(3971 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(3530 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(4719 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(6365 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(3185 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(2546 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(2225 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(9390 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(9268 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(4823 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(3285 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(4307 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(4182 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(4634 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(907 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(6485 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(8691 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(9854 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(8176 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(9718 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(9968 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(5186 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(6973 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(1820 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(2877 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(8817 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(4531 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(5051 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(8289 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(788 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(145 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(245 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(9465 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(2014 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(4419 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(3760 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(2781 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(1929 : long)
+    SPEC ((TRUE)[*]); ([CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onFinish()) |- [CB] [ENTRY] [c2fd244] void de.d120.ophasekistenstapeln.CountdownFragment$4.onTick(7697 : long)
+----------------------------------------
+Step: 28
+----------------------------------------
+[17275] [CI] [ENTRY] java.lang.String android.app.Fragment.getString(int) (a634044,2131034115) 
+    Reached an error state in step 28!
+----------------------------------------
+
+Process finished with exit code 0
+

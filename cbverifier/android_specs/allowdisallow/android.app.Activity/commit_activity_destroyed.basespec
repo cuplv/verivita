@@ -1,0 +1,9 @@
+//;[CB] [ENTRY] [act] void android.support.v7.app.AppCompatActivity.onDestroy()
+//;[CB] [ENTRY] [act] void android.app.Activity.onDestroy()
+//SPEC TRUE[*];fragman = [CI] [EXIT] [act] android.app.FragmentManager android.support.v7.app.AppCompatActivity.getFragmentManager();TRUE[*] |- [CI] [ENTRY] [fragman] int android.app.FragmentTransaction.commit();
+//SPEC TRUE[*];fragman = [CI] [EXIT] [act] android.app.FragmentManager android.app.Activity.getFragmentManager();TRUE[*] |- [CI] [ENTRY] [fragman] int android.app.FragmentTransaction.commit();
+
+//SPEC TRUE[*]; fragman = [CI] [EXIT] [act] android.app.FragmentManager android.support.v7.app.AppCompatActivity.getFragmentManager(); TRUE[*] ;fragtran = [CI] [EXIT] [fragman] android.app.FragmentTransaction android.app.FragmentManager.beginTransaction()|- [CI] [ENTRY] [fragtran] int android.app.FragmentTransaction.commit();
+
+
+SPEC TRUE[*]; fragman = [CI] [EXIT] [act] android.app.FragmentManager android.app.Activity.getFragmentManager(); TRUE[*] ;fragtran = [CI] [EXIT] [fragman] android.app.FragmentTransaction android.app.FragmentManager.beginTransaction(); TRUE[*]; [CB] [ENTRY] [act] void android.app.Activity.onDestroy()|- [CI] [ENTRY] [fragtran] int android.app.FragmentTransaction.commit()
