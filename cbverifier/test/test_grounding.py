@@ -348,14 +348,11 @@ class TestGrounding(unittest.TestCase):
             s1.print_spec(stringio)
             s1_str = stringio.getvalue()
 
-#            print "S1: " + s1_str
-
             found = None
             for s2 in specs2:
                 stringio = StringIO()
                 s2.print_spec(stringio)
                 s2_str = stringio.getvalue()
-#                print "S2: " + s2_str
 
                 if s2_str == s1_str:
                     found = s2
@@ -673,5 +670,37 @@ class TestGrounding(unittest.TestCase):
         self.assertTrue(1 == len(ground_specs))
         self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
 
+
+    def test_iss161(self):
+        trace = CTrace()
+        cb1 = CCallback(1, 1, "", "void doA()",
+                        [TestGrounding._get_int(2)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doA()", False)])
+        trace.add_msg(cb1)
+        cb2 = CCallback(1, 1, "", "void doB()",
+                        [TestGrounding._get_int(1)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doB()", False)])
+        trace.add_msg(cb2)
+        cb3 = CCallback(1, 1, "", "void doA()",
+                        [TestGrounding._get_int(3)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doA()", False)])
+        trace.add_msg(cb3)
+
+        gs = GroundSpecs(trace)
+        #specs = Spec.get_spec_from_string("SPEC [CB] [ENTRY] [l] void doA(); (! [CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l2] void doB()")
+        specs = Spec.get_spec_from_string("SPEC [CB] [ENTRY] [l] void doA(); [CB] [ENTRY] [l] void doA() |- [CB] [ENTRY] [l2] void doB()")
+        real_ground_spec = Spec.get_spec_from_string("SPEC [CB] [ENTRY] [l] void doA(); (! [CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l] void doB()")
+        ground_specs = gs.ground_spec(specs[0])
+
+        for g in ground_specs:
+            g.print_spec(sys.stdout)
+            print ""
+
+
+        aaa
+        # self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
 
 
