@@ -33,6 +33,7 @@ from pysmt.shortcuts import Solver
 from pysmt.shortcuts import simplify
 from pysmt.solvers.solver import Model
 from pysmt.logics import QF_BOOL
+from pysmt.logics import BOOL as BOOL_LOGIC
 
 
 
@@ -46,32 +47,37 @@ class AutoEnv(object):
 
     auto_env = None
 
-    def __init__(self, pysmt_env = None):
+    def __init__(self, pysmt_env = None, use_bdds = False):
 
         if pysmt_env is None:
             self.pysmt_env = get_env()
         else:
             self.pysmt_env = pysmt_env
 
-        # sat solver instance
-        # For now use z3, we can switch to picosat if needed
-        self.sat_solver = self.pysmt_env.factory.Solver(quantified=False,
-                                                        name="z3",
-                                                        logic=QF_BOOL)
-        # TODO: add the bdd type of labels.
-        # With our problem bdds should not explode and be fairly
-        # efficient
-        self.bdd_package = None
+        self.use_bdds = use_bdds
+
+        if (not self.use_bdds):
+            # sat solver instance
+            # For now use z3, we can switch to picosat if needed
+            self.sat_solver = self.pysmt_env.factory.Solver(quantified=False,
+                                                            name="z3",
+                                                            logic=QF_BOOL)
+        else:
+            self.bdd_solver = Solver(self.pysmt_env, name='bdd')
+
 
     def new_label(self, formula):
-        # assume SAT labels
-        # Here we can do memoization baed on the formula
-        return SatLabel(formula)
+        if (self.use_bdds):
+            return BddLabel(formula, self)
+        else:
+            # assume SAT labels
+            # Here we can do memoization baed on the formula
+            return SatLabel(formula, self)
 
     @staticmethod
-    def get_global_auto_env():
+    def get_global_auto_env(use_bdds=False):
         if AutoEnv.auto_env is None:
-            AutoEnv.auto_env = AutoEnv()
+            AutoEnv.auto_env = AutoEnv(get_env(), use_bdds)
         return AutoEnv.auto_env
 
 
@@ -113,6 +119,9 @@ class Automaton(object):
 
     def _add_trans(self, src, dst, label):
         """ Add a transition """
+        # TODO: add map on dst transition
+        # If there is already a transition from src to dst
+        # we just need to union the labels.
         self.trans[src].append((dst,label))
 
     def is_initial(self, state):
@@ -128,7 +137,7 @@ class Automaton(object):
         """ Copy the reachable state of self in a new automaton """
 
         if copy is None:
-            copy = Automaton()
+            copy = Automaton(self.env)
 
         stack = []
         visited = set()
@@ -160,6 +169,10 @@ class Automaton(object):
     def concatenate(self, other):
         """ Returns the automaton that recognize the concatenation
         of the language of self with the language of other_auto
+
+        Algorithm:
+          - copy the other automaton, removing its initial states
+          -
         """
 
         # copy the other automaton
@@ -170,12 +183,15 @@ class Automaton(object):
         visited = set()
         self_to_new = {}
 
+        # copy in new_auto the initial states of self.
+        # If the initial state is final in self, it should not be final in
+        # new_auto (the word is accepted only after the concatenation
         for s in self.initial_states:
-            new_s = new_auto._add_new_state(True,
-                                            self.is_final(s))
+            new_s = new_auto._add_new_state(True, False)
             self_to_new[s] = new_s
             stack.append(s)
 
+        # copy all self
         while (len(stack) != 0):
             s = stack.pop()
             visited.add(s)
@@ -198,8 +214,33 @@ class Automaton(object):
                 for other_init in other.initial_states:
                     for (other_dst, other_label) in other.trans[other_init]:
                         trans.append((other_dst, other_label))
+                    if other_init in other.final_states:
+                        new_auto.final_states.add(new_s)
+
 
         return new_auto
+
+    def reverse(self):
+        """ Return the automaton that recognize the reversed language."""
+        copy = Automaton(self.env)
+
+        copy.current_id = self.current_id
+        for s in self.states:
+            copy.states.add(s)
+            copy.trans[s] = []
+
+        # invert initial and final states
+        for s in self.final_states:
+            copy.initial_states.add(s)
+        for s in self.initial_states:
+            copy.final_states.add(s)
+
+        for (src, dst_trans) in self.trans.iteritems():
+            for (dst, label) in dst_trans:
+                copy._add_trans(dst, src, label)
+
+        result = copy.copy_reachable()
+        return result
 
 
     def klenee_star(self):
@@ -209,7 +250,7 @@ class Automaton(object):
 
         # corner case - no initial states
         if len(self.initial_states) == 0:
-            res = Automaton()
+            res = Automaton(self.env)
             res._add_new_state(True,True)
             return res
 
@@ -251,11 +292,16 @@ class Automaton(object):
 
         return new_auto
 
-    def intersection(self, other):
+    def _intersection_dumb(self, other):
         """ Returns the automaton that accepts the language accepted
         by the intersection of self and other.
 
         Compute A \cap B as \neg (\neg A \cub \neg B)
+
+        TODO: implement the synchronous product (it is used for
+        testing now and not  in the real algorithm)
+
+        WARNING: do not use, to be removed
         """
         self_c = self.complement()
         other_c = other.complement()
@@ -265,6 +311,58 @@ class Automaton(object):
         intersection = union.complement()
 
         return intersection
+
+    def intersection(self, other):
+        """ Returns the automaton that accepts the language accepted
+        by the intersection of self and other.
+
+        Implement the synchronous product of self and other.
+
+        """
+        def get_state(res, state_map, s1, s2):
+            if (s1,s2) not in state_map:
+                is_initial = self.is_initial(s1) and other.is_initial(s2)
+                is_final = self.is_final(s1) and other.is_final(s2)
+                s = res._add_new_state(is_initial, is_final)
+                state_map[(s1,s2)] = s
+            else:
+                s = state_map[(s1,s2)]
+            return s
+
+        # map from (s1,s2) to s, where s1 \in self, s2 \in other, s \in res
+        state_map = {}
+
+        res = Automaton(self.env)
+
+        # Creates the initial states of the automaton
+        stack = []
+        for s1 in self.initial_states:
+            for s2 in other.initial_states:
+                s = get_state(res, state_map, s1, s2)
+                stack.append((s1,s2,s))
+
+        # perform the synchronous product
+        visited = set()
+        while (len(stack) > 0):
+            (s1,s2,s) = stack.pop()
+
+            # Skip visited states
+            if s in visited: continue
+            visited.add(s)
+
+            # Synchronous product of all the outgoing transitions from s1,s2
+            for (s1_dst, s1_label) in self.trans[s1]:
+                for (s2_dst, s2_label) in other.trans[s2]:
+                    s_dst = get_state(res, state_map, s1_dst, s2_dst)
+                    s_label = s1_label.intersect(s2_label)
+                    if (s_label.is_sat()):
+                        res._add_trans(s, s_dst, s_label)
+                        stack.append((s1_dst,s2_dst,s_dst))
+
+        # prune the unreachable states
+        pruned_auto = res.copy_reachable()
+
+        return pruned_auto
 
     def is_contained(self, other):
         """ Returns true if the language pf self is a.
@@ -285,7 +383,7 @@ class Automaton(object):
         language accepted by self """
 
         if (len(self.initial_states) == 0 or len(self.final_states) == 0):
-            res = Automaton()
+            res = Automaton(self.env)
             state_id = res._add_new_state(True,True)
             res._add_trans(state_id, state_id, self.env.new_label(TRUE()))
         else:
@@ -399,7 +497,7 @@ class Automaton(object):
 
         """
 
-        dfa = Automaton()
+        dfa = Automaton(self.env)
         sc_map = SubsConsMap()
 
         is_final = False
@@ -422,6 +520,7 @@ class Automaton(object):
 
             q_set = sc_map.lookup_set(q)
             next_trans = self._sc_enum_trans(q_set)
+
             for (nfa_states, comb_label) in next_trans:
                 q_next = sc_map.lookup_state(nfa_states)
 
@@ -443,11 +542,19 @@ class Automaton(object):
         set of states in the NFA and a label.
         """
 
+        if (self.env.use_bdds):
+            return self._sc_enum_trans_bdd(q_set)
+        else:
+            return self._sc_enum_trans_sat(q_set)
+
+    def _sc_enum_trans_sat(self, q_set):
+        assert not self.env.use_bdds
         # collect the set of labels
         label_to_states = {}
         labels_set = set()
         for q_nfa in q_set:
             for (dst_state, label) in self.trans[q_nfa]:
+                assert not label.env.use_bdds
                 try:
                     states_set = label_to_states[label]
                 except KeyError:
@@ -458,7 +565,7 @@ class Automaton(object):
 
         labels = list(labels_set) # works on list from now on
         # enumerate the set of the possible outgoing transitions
-        trans = Automaton.enum_trans(labels, self.env.sat_solver)
+        trans = Automaton.enum_trans_sat(labels, self.env.sat_solver)
 
         # construct the list formed by dst_set and labels
         results = []
@@ -467,8 +574,15 @@ class Automaton(object):
             label_formula = TRUE()
             for i in range(len(res)):
 
-                label_formula = And(label_formula, res[i])
-                label_formula = simplify(label_formula)
+                if (label_formula == res[i]):
+                    label_formula = label_formula
+                elif (label_formula == TRUE()):
+                    label_formula = res[i]
+                elif (res[i] == TRUE()):
+                    label_formula = label_formula
+                else:
+                    label_formula = And(label_formula, res[i])
+                    label_formula = simplify(label_formula)
 
                 if (res[i] == labels[i].get_formula()):
                     # same label, goes to the state with this label
@@ -478,7 +592,7 @@ class Automaton(object):
 
 
     @staticmethod
-    def enum_trans(labels, solver):
+    def enum_trans_sat(labels, solver):
         """ labels is a list of labels, solver is an instance of a sat
         solver (the procedure is specific for sat, instead of BDDs.
 
@@ -524,6 +638,76 @@ class Automaton(object):
 
         return results
 
+    def _sc_enum_trans_bdd(self, q_set):
+        """ Given a set of NFA states, the function returns a list of
+        possible successors in the DFA.
+
+        The result is a list of pairs, where each pair contains a
+        set of states in the NFA and a label.
+        """
+
+        assert self.env.use_bdds
+
+        # list of pairs, state and label
+        ls_set_list = []
+        for q_nfa in q_set:
+            for (dst_state, label) in self.trans[q_nfa]:
+                assert label.env.use_bdds
+                ls_set_list.append((label, dst_state))
+
+
+        results = []
+        if (0 == len(ls_set_list)):
+            elem = (frozenset(), self.env.new_label(TRUE()))
+            results.append(elem)
+        else:
+            Automaton._sc_enum_bdd_rec(ls_set_list, results,
+                                       (None, None))
+
+        return results
+
+    @staticmethod
+    def _sc_enum_bdd_rec(ls_set_list, result, current_res):
+        (current_label, current_states) = current_res
+        if (len(ls_set_list) == 0):
+            assert current_label is not None
+            assert current_states is not None
+            result.append((frozenset(current_states), current_label))
+        else:
+            (label, state) = ls_set_list.pop()
+
+            # right recursion
+            rhs_label = label.complement()
+            if (current_label is not None):
+                rhs_label = rhs_label.intersect(current_label)
+                rhs_states = set(current_states)
+            else:
+                assert current_states is None
+                rhs_states = set()
+            if (rhs_label.is_sat()):
+                # prune unsat combination
+                Automaton._sc_enum_bdd_rec(ls_set_list, result,
+                                           (rhs_label,rhs_states))
+
+            # left recursion
+            if current_label is not None:
+                lhs_label = label.intersect(current_label)
+                lhs_states = set(current_states)
+            else:
+                lhs_label = BddLabel(None, label.env, label.bdd)
+                lhs_states = set()
+            lhs_states.add(state)
+            if (lhs_label.is_sat()):
+                Automaton._sc_enum_bdd_rec(ls_set_list, result,
+                                           (lhs_label,lhs_states))
+
+            ls_set_list.append((label, state))
+
+    def minimize(self):
+        """ Implements Brzozowski algorithm for minimization
+        det(rev(det(rev(A1))))
+        """
+        return (((self.reverse()).determinize()).reverse()).determinize()
 
     def to_dot(self, stream):
         stream.write("digraph {\n  " \
@@ -550,6 +734,7 @@ class Automaton(object):
 
     @staticmethod
     def get_singleton(label, env=None):
+        assert isinstance(label, Label)
         aut = Automaton(env)
         init = aut._add_new_state(True, False)
         final = aut._add_new_state(False, True)
@@ -640,6 +825,67 @@ class SatLabel(Label):
 
     def __eq__(self, other):
         return self.formula == other.formula
+
+class BddLabel(Label):
+    """ Represent a label as a BDD.
+
+    The BDD should not allow to simplify the representation of the
+    formula.
+    """
+    def __init__(self, formula, env=None, bdd=None):
+        if env is None:
+            env = AutoEnv.get_global_auto_env(True)
+        self.env = env
+        assert(self.env.use_bdds)
+        self.solver = env.bdd_solver
+        self.bddconverter = self.solver.converter
+        self.ddmanager = self.solver.ddmanager
+
+        # NOTE: now formula is a BDD
+        if formula is not None:
+            self.bdd = self.bddconverter.convert(formula)
+        else:
+            assert bdd is not None
+            self.bdd = bdd
+
+    def intersect(self, other):
+        new_bdd = self.ddmanager.And(self.bdd, other.bdd)
+        return BddLabel(None, self.env, new_bdd)
+
+    def complement(self):
+        new_bdd = self.ddmanager.Not(self.bdd)
+        return BddLabel(None, self.env, new_bdd)
+
+    def union(self, other):
+        new_bdd = self.ddmanager.Or(self.bdd, other.bdd)
+        return BddLabel(None, self.env, new_bdd)
+
+    def is_sat(self):
+        return self.bdd != self.ddmanager.Zero()
+
+    def is_valid(self):
+        return self.bdd == self.ddmanager.One()
+
+    def is_contained(self, other):
+        # self -> other
+        implies = self.ddmanager.Or(self.bdd.Not(), other.bdd)
+        return implies == self.ddmanager.One()
+
+    def is_intersecting(self, other):
+        and_bdd = self.ddmanager.And(self.bdd, other.bdd)
+        return and_bdd != self.ddmanager.Zero()
+
+    def get_formula(self):
+        return self.bddconverter.back(self.bdd)
+
+    def __repr__(self):
+        return str(self.get_formula())
+
+    def __hash__(self):
+        return hash(self.bdd)
+
+    def __eq__(self, other):
+        return self.bdd == other.bdd
 
 
 class SubsConsMap:

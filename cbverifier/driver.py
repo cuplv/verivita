@@ -7,18 +7,190 @@ import optparse
 import logging
 
 
-from cbverifier.traces.ctrace import CTraceSerializer
+from cbverifier.traces.ctrace import CTraceSerializer, CCallin
+from cbverifier.traces.ctrace import CCallback, MessageFilter
+from cbverifier.traces.ctrace import MalformedTraceException, TraceEndsInErrorException
 from cbverifier.specs.spec import Spec
 from cbverifier.encoding.encoder import TSEncoder
+from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.bmc.bmc import BMC
+
+from smv.tosmv import SmvTranslator, NuXmvDriver
+from pysmt.shortcuts import Not
+
+class DriverOptions:
+    def __init__(self,
+                 tracefile,
+                 traceformat,
+                 spec_file_list,
+                 simplify_trace,
+                 debug,
+                 filter_msgs,
+                 allow_exception=True):
+        self.tracefile = tracefile
+        self.traceformat = traceformat
+        self.spec_file_list = spec_file_list
+        self.simplify_trace = simplify_trace
+        self.debug = debug
+        self.filter_msgs = filter_msgs
+        self.allow_exception = allow_exception
+
+class NoDisableException(Exception):
+    def __init__(self,*args,**kwargs):
+        Exception.__init__(self,*args,**kwargs)
+
+
+class Driver:
+    def __init__(self, opts):
+        self.opts = opts
+
+        # Parse the trace
+        try:
+            self.trace = CTraceSerializer.read_trace_file_name(self.opts.tracefile,
+                                                               self.opts.traceformat == "json",
+                                                               self.opts.allow_exception)
+        except MalformedTraceException as e:
+            raise
+        except TraceEndsInErrorException as e:
+            raise
+        except Exception as e:
+            raise Exception("An error happened reading the trace in %s (%s)" % (self.opts.tracefile,
+                                                                                e.message))
+
+
+        # Parse the specs
+        self.spec_list = Spec.get_specs_from_files(self.opts.spec_file_list)
+        if self.spec_list is None:
+            raise Exception("Error parsing the specification file!")
+
+
+    def check_files(self, stream):
+        stream.write("SPECIFICATIONS:\n")
+        for spec in self.spec_list:
+            spec.print_spec(stream)
+            stream.write("\n")
+
+        stream.write("\nTRACE:\n")
+        if (self.opts.filter_msgs != None):
+            self.trace.print_trace(stream, self.opts.debug,
+                                   MessageFilter.typeFilterFrom(self.opts.filter_msgs))
+        else:
+            self.trace.print_trace(stream, self.opts.debug)
+        stream.write("\n")
+
+    def get_ground_specs(self):
+        ts_enc = TSEncoder(self.trace, self.spec_list)
+        ground_specs = ts_enc.get_ground_spec()
+        return ground_specs
+
+
+    def run_bmc(self, depth, inc=False):
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+
+        bmc = BMC(ts_enc.helper,
+                  ts_enc.get_ts_encoding(),
+                  ts_enc.error_prop)
+
+        cex = bmc.find_bug(depth, inc)
+
+        return (cex, ts_enc.mapback)
+
+    def to_smv(self, smv_file_name):
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        ts = ts_enc.get_ts_encoding()
+        ts2smv = SmvTranslator(ts_enc.pysmt_env,
+                               ts.state_vars,
+                               ts.input_vars,
+                               ts.init,
+                               ts.trans,
+                               Not(ts_enc.error_prop))
+
+        with open(smv_file_name, "wt") as f:
+            ts2smv.to_smv(f)
+            f.close()
+
+    def run_ic3(self, nuxmv_path, ic3_frames):
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        ts = ts_enc.get_ts_encoding()
+
+        nuxmv_driver = NuXmvDriver(ts_enc.pysmt_env, ts, nuxmv_path)
+        (result, trace) = nuxmv_driver.ic3(Not(ts_enc.error_prop),
+                                           ic3_frames)
+
+        return (result, trace, ts_enc.mapback)
+
+    def run_simulation(self, cb_sequence = None): 
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        bmc = BMC(ts_enc.helper,
+                  ts_enc.get_ts_encoding(),
+                  ts_enc.error_prop)
+
+        trace_enc = ts_enc.get_trace_encoding(cb_sequence)
+        (step, cex) = bmc.simulate(trace_enc)
+
+        return (step, cex, ts_enc.mapback)
+    def slice(self, object_id, stream):
+        if object_id is not None:
+            sliced = i_slice(self.trace,object_id)
+            self.trace.print_trace(stream, self.opts.debug,
+                       None)
+        else:
+            raise Exception("object id cannot be none")
+
+def i_slice(c_obj, object_id):
+    new_children = []
+    for item in c_obj.children:
+        i_slice(item, object_id).children
+
+        # if not any(e for e in list[item].params if e.object_id == object_id ):
+
+        contains = False
+        for param in item.params:
+            for obj_id in object_id:
+                if param.object_id == obj_id:
+                    contains = contains or True
+
+        if isinstance(item,CCallback):
+            for obj_id in object_id:
+                contains = contains or \
+                           ((item.return_value is not None) and \
+                           item.return_value.object_id == obj_id)
+        elif isinstance(item,CCallin):
+            for obj_id in object_id:
+                contains = contains or \
+                           ((item.return_value is not None) and \
+                           item.return_value.object_id == obj_id)
+        else:
+            raise Exception("Malformed trace")
+        if contains or (len(item.children) > 0):
+            #item does not contain object ref so remove
+            new_children.append(item)
+    c_obj.children = new_children
+
+    return c_obj
+
+
+def print_ground_spec(ground_specs, out=sys.stdout):
+    out.write("List of ground specifications:\n")
+    for spec in ground_specs:
+        spec.print_spec(out)
+        out.write("\n")
+
+def check_disable(ground_specs):
+    has_disable = False
+    for spec in ground_specs:
+        has_disable = has_disable or spec.is_disable()
+        if has_disable:
+            break
+
+    if (not has_disable):
+        raise NoDisableException("No callins can be disabled in the "
+                                 "trace with the given specs")
 
 
 def main(input_args=None):
-    # Common to all modes
-    # logging.basicConfig(level=logging.DEBUG)
-    logging.basicConfig(level=logging.INFO)
-
     p = optparse.OptionParser()
+
     p.add_option('-t', '--tracefile',
                  help="File containing the concrete trace (protobuf format)")
 
@@ -34,14 +206,30 @@ def main(input_args=None):
     p.add_option('-c', '--enc_coi', action="store_true",
                  default=False, help="Apply cone of influence")
 
-    p.add_option('-d', '--debugenc', action="store_true",
-                 default=False,help="Use the debug encoding")
+    p.add_option('-z', '--simplify_trace', action="store_true",
+                 default=False, help="Simplify the trace (possibly unsound)")
 
+    p.add_option('-d', '--debug', action="store_true",
+                 default=False,
+                 help="Output debug informations")
+
+    def get_len(string, length):
+        current = len(string)
+        while (current > length):
+            current = current - length
+        else:
+            string = string + "".join([" " for i in range(length - current)])
+        return string
     p.add_option('-m', '--mode', type='choice',
-                 choices= ["bmc","check-files","to-smv"],
-                 help=('bmc: run bmc on the trace; '
-                       'check-files: check if the input files are well formed and prints them; ' 
-                       'to-smv: prints the SMV file of the generated transition system.'),
+                 choices= ["bmc","ic3","check-files","to-smv","show-ground-specs","simulate","check-trace-relevance","slice"],
+                 help=(get_len('bmc: run bmc on the trace;', 53) +
+                       get_len('ic3: run ic3 on the trace;', 53) +
+                       get_len('check-files: check if the input files are well formed and prints them; ', 53) +
+                       get_len('show-ground-specs: shows the specifications instantiateed by the given trace; ', 53) +
+                       get_len('simulate: simulate the given trace with the existing specification; ', 53) +
+                       get_len('to-smv: prints the SMV file of the generated transition system. ', 53) +
+                       get_len('check-trace-relevance: check if a trace is well formed, does not end with an exception and can instantiate a disable rule.', 53)) +
+                       get_len('slice: slice a trace for relevant transitions with object or transition id', 53),
                  default = "bmc")
 
     # Bmc options
@@ -49,7 +237,23 @@ def main(input_args=None):
     p.add_option('-i', '--bmc_inc', action="store_true",
                  default=False, help="Incremental search")
 
+
+    # SMV options
     p.add_option('-o', '--smv_file', help="Output smv file")
+
+    # IC3 options
+    p.add_option('-n', '--nuxmv_path', help="Path to the nuXmv executable")
+    p.add_option('-q', '--ic3_frames', help="Maximum number of frames explored by IC3")
+
+    # simulation options
+    p.add_option("-w", '--cb_sequence', help="Sequence of callbacks " \
+                 "(message ids) to be simulated.")
+
+    # Miscellaneous
+    p.add_option('-l', '--filter', help="When running check-files this will only: filter all messages to the ones"
+                                        "where type is matched")
+
+    p.add_option('-j', '--object_id', help="When running slice this is a concrete object to target")
 
 
     def usage(msg=""):
@@ -85,86 +289,102 @@ def main(input_args=None):
             if opt:
                 usage("%s options cannot use in mode %s\n" % (desc, opts.mode))
 
-    if (opts.mode == "--smv_file"):
-        if (not opts.smv_file): usage("Destination smv file not specified!")
-        usage("SMV translation still not implemented")
+    if (opts.mode == "simulate"):
+        if (opts.cb_sequence):
+            cb_sequence = []
+            for n in opts.cb_sequence.split(":"):
+                cb_sequence.append(int(n))
+        else:
+            cb_sequence = None
+
+    if (opts.mode == "to-smv"):
+        if (not opts.smv_file): usage("Destination SMV file not specified!")
     else:
         if opts.smv_file:
             usage("%s options cannot use in mode " % ("", opts.mode))
 
+    if (opts.mode == "ic3"):
+        if (not opts.nuxmv_path):
+            usage("Path to the nuXmv executable not provided!")
+        if (not os.path.isfile(opts.nuxmv_path)):
+            usage("%s is not a valid path tp the nuXmv executable!" % opts.nuxmv_path)
+
+        if (not opts.ic3_frames): usage("Missing IC3 frames (--ic3_frames)")
+        try:
+            ic3_frames = int(opts.ic3_frames)
+        except:
+            usage("%s must be a natural number!" % opts.ic3_frames)
+        if (ic3_frames < 0): usage("%s must be positive!" % opts.ic3_frames)
 
 
-    # Parse the trace
-    try:
-        trace = CTraceSerializer.read_trace_file_name(opts.tracefile,
-                                                      opts.traceformat == "json")
-    except IOError as e:
-        print("An error happened reading the trace in %s" % opts.tracefile)
-        sys.exit(1)
+    if (opts.debug):
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
 
-    # Parse the specs
-    spec_list = Spec.get_specs_from_files(spec_file_list)
+    driver_opts = DriverOptions(opts.tracefile,
+                                opts.traceformat,
+                                spec_file_list,
+                                opts.simplify_trace,
+                                opts.debug,
+                                opts.filter,
+                                opts.mode != "check-trace-relevance")
+
+    driver = Driver(driver_opts)
 
     if (opts.mode == "check-files"):
-
-        sys.stdout.write("SPECIFICATIONS:\n")
-        for spec in spec_list:
-            spec.print_spec(sys.stdout)
-
-        sys.stdout.write("\nTRACE:\n")
-        trace.print_trace(sys.stdout)
-        sys.stdout.write("\n")
-
+        driver.check_files(sys.stdout)
+        return 0
+    elif (opts.mode == "show-ground-specs"):
+        ground_specs = driver.get_ground_specs()
+        print_ground_spec(ground_specs)
     elif (opts.mode == "bmc"):
-        ts_enc = TSEncoder(trace, spec_list)
+        (cex, mapback) = driver.run_bmc(depth, opts.bmc_inc)
 
-        bmc = BMC(ts_enc.helper,
-                  ts_enc.get_ts_encoding(),
-                  ts_enc.error_prop)
-
-        cex = bmc.find_bug(depth)
-
-        if (cex is None):
-            print "Found bug"
-            print "Model still not available"
+        if (cex is not None):
+            printer = CexPrinter(mapback, cex, sys.stdout)
+            printer.print_cex()
         else:
             print "No bugs found up to %d steps" % (depth)
+        return 0
+    elif (opts.mode == "simulate"):
+        (steps, cex, mapback) = driver.run_simulation(cb_sequence)
 
-    elif (opts.mode == "to_smv"):
-        assert False
+        if (cex is not None):
+            print "\nThe trace can be simulated in %d steps." % steps
+            printer = CexPrinter(mapback, cex, sys.stdout)
+            printer.print_cex()
+        else:
+            print "The trace cannot be simulated (it gets stuck after %d transition)" % (steps)
+
+        return 0
+    elif (opts.mode == "check-trace-relevance"):
+        ground_specs = driver.get_ground_specs()
+        check_disable(ground_specs)
+    elif (opts.mode == "to-smv"):
+        driver.to_smv(opts.smv_file)
+        return 0
+    elif (opts.mode == "ic3"):
+        (res, cex, mapback) = driver.run_ic3(opts.nuxmv_path, opts.ic3_frames)
+
+        if res is None:
+            print("An error occurred invoking ic3")
+        elif res == NuXmvDriver.UNKNOWN:
+            print("The result is still unknown (e.g try to increment " +
+                  "the number of frames).")
+        elif res == NuXmvDriver.SAFE:
+            print("The trace is SAFE")
+        elif res == NuXmvDriver.UNSAFE:
+            print("The system can reach an error state.")
+
+            if (cex is not None):
+                printer = CexPrinter(mapback, cex, sys.stdout)
+                printer.print_cex()
 
 
-        # # Call the verifier
-        # verifier = Verifier(ctrace, specs_map["specs"],
-        #                     specs_map["bindings"],
-        #                     opts.debugenc,
-        #                     opts.coi)
-        # if (opts.mode == "bmc"):
-        #     try:
-        #         if (not opts.inc):
-        #             cex = verifier.find_bug(depth)
-        #         else:
-        #             cex = verifier.find_bug_inc(depth)
-        #     finally:
-        #         if (logging.getLogger().getEffectiveLevel() >= logging.INFO):
-        #             ctrace.print_trace()
-        #             if verifier.debug_encoding:
-        #                 verifier.msgs.print_info()
-
-        #     if None != cex:
-        #         print "Found bug"
-        #         printer = EventCexPrinter(verifier, cex)
-        #         printer.print_cex(True, True)
-        #     else:
-        #         print "No bugs found up to %d steps" % (depth)
-
-        # elif (opts.mode == "to-smv"):
-        #     with open(opts.smv_file, 'w') as smvfile:
-        #         verifier.to_smv(smvfile)
-        #         smvfile.close()
-        # else:
-        #     assert False
-
+        return 0
+    elif(opts.mode == "slice"):
+        driver.slice(opts.object_id.split(':'), sys.stdout)
 
 
 

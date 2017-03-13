@@ -9,13 +9,13 @@ try:
 except ImportError:
     import unittest
 
-from cbverifier.encoding.automata import SatLabel, Automaton, AutoEnv
+from cbverifier.encoding.automata import SatLabel, BddLabel, Automaton, AutoEnv
 
 
 import sys
 
 from pysmt.typing import BOOL
-from pysmt.shortcuts import Symbol, TRUE, FALSE
+from pysmt.shortcuts import Symbol, TRUE, FALSE, get_env
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
 
 
@@ -41,32 +41,46 @@ class TestAuto(unittest.TestCase):
 
         symbols = [Symbol(chr(i), BOOL) for i in range(ord('a'),ord('z')+1)]
 
+        bdd_env = AutoEnv(get_env(), True)
+
         # just try some formulas
         labels = [SatLabel(And(symbols[0], symbols[1])),
                   SatLabel(Or(symbols[1], symbols[1])),
                   SatLabel(Not(And(symbols[0], symbols[1]))),
-                  SatLabel(And(Not(symbols[0]), symbols[1]))]
+                  SatLabel(And(Not(symbols[0]), symbols[1])),
+                  BddLabel(And(symbols[0], symbols[1]), bdd_env),
+                  BddLabel(Or(symbols[1], symbols[1]), bdd_env),
+                  BddLabel(Not(And(symbols[0], symbols[1])), bdd_env),
+                  BddLabel(And(Not(symbols[0]), symbols[1]), bdd_env)]
 
         for l in labels:
             _check_tautologies(l)
 
 
     def test_auto(self):
+        sat_env = AutoEnv(get_env(), False)
+        self._test_auto_aux(sat_env)
 
+        bdd_env = AutoEnv(get_env(), True)
+        self._test_auto_aux(bdd_env)
+
+    def _test_auto_aux(self, auto_env):
         def _check_auto_tautologies(auto):
             self.assertTrue(auto.is_equivalent(auto))
             self.assertTrue(auto.is_equivalent(auto.copy_reachable()))
             self.assertTrue(auto.is_equivalent(auto.determinize()))
             self.assertTrue(auto.is_equivalent(auto.union(auto)))
+            self.assertTrue(auto.is_equivalent((auto.reverse()).reverse()))
+            self.assertTrue(auto.is_equivalent(auto.minimize()))
 
         symbols = [Symbol(chr(i), BOOL) for i in range(ord('a'),ord('z')+1)]
 
-        a = SatLabel(symbols[0])
-        b = SatLabel(symbols[1])
-        c = SatLabel(symbols[2])
+        a = auto_env.new_label(symbols[0])
+        b = auto_env.new_label(symbols[1])
+        c = auto_env.new_label(symbols[2])
 
         # test copy
-        auto_a = Automaton.get_singleton(a)
+        auto_a = Automaton.get_singleton(a, auto_env)
         self.assertTrue(auto_a.is_equivalent(auto_a))
 
         copy_1 = auto_a.copy_reachable()
@@ -113,7 +127,7 @@ class TestAuto(unittest.TestCase):
             _check_auto_tautologies(auto)
 
         # TRUE
-        aut_true = Automaton.get_singleton(SatLabel(TRUE()))
+        aut_true = Automaton.get_singleton(auto_env.new_label(TRUE()), auto_env)
         twice_neg = aut_true.complement().complement()
         det = aut_true.determinize()
         for auto in [aut_true, det, twice_neg]:
@@ -140,7 +154,7 @@ class TestAuto(unittest.TestCase):
 
         a = Automaton()
         self.assertTrue(a.is_empty())
-        a = Automaton.get_empty()
+        a = Automaton.get_empty(auto_env)
         self.assertTrue(a.is_empty())
 
     def test_enum_trans(self):
@@ -232,5 +246,32 @@ class TestAuto(unittest.TestCase):
 
         self.assertTrue(_compare(solver, res, expected))
 
+    def test_seq(self):
+        env = AutoEnv.get_global_auto_env()
 
+        a_label = env.new_label(Symbol('a'))
+        b_label = env.new_label(Symbol('b'))
+        c_label = env.new_label(Symbol('c'))
+
+        auto_a = Automaton.get_singleton(env.new_label(TRUE()))
+        auto_b = auto_a.klenee_star()
+        auto_c = Automaton.get_singleton(a_label)
+        auto_d = auto_b.concatenate(auto_c)
+
+        self.assertFalse(auto_d.accept([]))
+
+    def test_seq_2(self):
+        env = AutoEnv.get_global_auto_env()
+
+        a_label = env.new_label(Symbol('a'))
+        b_label = env.new_label(Symbol('b'))
+        c_label = env.new_label(Symbol('c'))
+
+        auto_true_star = Automaton.get_singleton(env.new_label(TRUE())).klenee_star()
+        auto_do_a = Automaton.get_singleton(a_label)
+        auto_ts_a  = auto_true_star.concatenate(auto_do_a)
+        auto_ts_a_ts = auto_ts_a.concatenate(auto_true_star)
+
+        self.assertTrue(auto_ts_a_ts.accept([a_label]))
+        self.assertFalse(auto_ts_a_ts.accept([]))
 

@@ -4,23 +4,23 @@
     "callbackEntry": {
       "methodReturnType": "void", 
       "callbackCallerClass": "", 
-      "methodName": "m1", 
-      "signature": "m1", 
+      "methodName": "void m1()", 
+      "class_name": "android.app.Activity", 
       "paramList": [
         {
           "isNull": false, 
-          "value": "", 
-          "type": "", 
-          "fmwkType": "", 
-          "objectId": "1"
+          "value": "1", 
+          "type": "",
+          "fmwkType": ""
         }
       ], 
       "callbackCallerMethod": "newInstance", 
-      "frameworkOverrides": [], 
+      "frameworkOverrides": [{"class_name" : "", "method" : "void m1()", "is_interface" : false}], 
       "methodParameterTypes": [], 
       "receiverFirstFrameworkSuper": "android.app.Activity"
     }, 
     "threadId": "1", 
+    "isActivityThread" : true,
     "type": "CALLBACK_ENTRY", 
     "messageId": "0"
   }
@@ -28,19 +28,19 @@
 {
   "msg": {
     "callinEntry": {
-      "methodName": "m2", 
+      "methodName": "void m2()", 
       "paramList": [
         {
           "isNull": false, 
-          "value": "", 
+          "value": "1", 
           "type": "", 
-          "fmwkType": "", 
-          "objectId": "1"
+          "fmwkType": ""
         }
       ], 
-      "signature": "m2"
+      "class_name": ""
     }, 
     "threadId": "1", 
+    "isActivityThread" : true,
     "type": "CALLIN_ENTRY", 
     "messageId": "1"
   }
@@ -48,17 +48,11 @@
 {
   "msg": {
     "callinExit": {
-      "methodName": "m2", 
-      "returnValue": {
-        "isNull": true, 
-        "value": "", 
-        "type": "", 
-        "fmwkType": "", 
-        "objectId": ""
-      }, 
-      "signature": "m2"
+      "methodName": "void m2()", 
+      "class_name": ""
     }, 
     "threadId": "1", 
+    "isActivityThread" : true,
     "type": "CALLIN_EXIT", 
     "messageId": "2"
   }
@@ -66,11 +60,12 @@
 {
   "msg": {
     "threadId": "1", 
+    "isActivityThread" : true,
     "type": "CALLBACK_EXIT", 
     "callbackExit": {
-      "methodName": "m1", 
-      "signature": "m1"
-    }, 
+      "methodName": "void m1()", 
+      "class_name": "android.app.Activity"
+    },
     "messageId": "3"
   }
 }]

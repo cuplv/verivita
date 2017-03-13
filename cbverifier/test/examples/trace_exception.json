@@ -1,0 +1,72 @@
+[
+{
+  "msg": {
+    "callbackEntry": {
+      "methodReturnType": "void", 
+      "callbackCallerClass": "", 
+      "methodName": "void m1()", 
+      "class_name": "android.app.Activity", 
+      "paramList": [
+        {
+          "isNull": false, 
+          "value": "1", 
+          "type": "",
+          "fmwkType": ""
+        }
+      ], 
+      "callbackCallerMethod": "newInstance", 
+      "frameworkOverrides": [{"class_name" : "", "method" : "void m1()", "is_interface" : false}], 
+      "methodParameterTypes": [], 
+      "receiverFirstFrameworkSuper": "android.app.Activity"
+    }, 
+    "threadId": "1", 
+    "isActivityThread" : true,
+    "type": "CALLBACK_ENTRY", 
+    "messageId": "0"
+  }
+},
+{
+  "msg": {
+    "callinEntry": {
+      "methodName": "void m2()", 
+      "paramList": [
+        {
+          "isNull": false, 
+          "value": "1", 
+          "type": "", 
+          "fmwkType": ""
+        }
+      ], 
+      "class_name": ""
+    }, 
+    "threadId": "1", 
+    "isActivityThread" : true,
+    "type": "CALLIN_ENTRY", 
+    "messageId": "1"
+  }
+},
+{
+  "msg": {
+    "callinExit": {
+      "methodName": "void m2()", 
+      "class_name": ""
+    }, 
+    "threadId": "1", 
+    "isActivityThread" : true,
+    "type": "CALLIN_EXIT", 
+    "messageId": "2"
+  }
+},
+{
+  "msg": {
+    "threadId": "1", 
+    "isActivityThread" : true,
+    "type": "CALLBACK_EXCEPTION", 
+    "callbackException": {
+      "throwing_class_name": "android.app.Activity", 
+      "throwing_method_name": "void m1()",
+      "type": "ExceptionType"
+    },
+    "messageId": "3"
+  }
+}]
