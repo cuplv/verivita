@@ -129,6 +129,45 @@ class Driver:
         (step, cex) = bmc.simulate(trace_enc)
 
         return (step, cex, ts_enc.mapback)
+    def slice(self, object_id, stream):
+        if object_id is not None:
+            sliced = i_slice(self.trace,object_id)
+            self.trace.print_trace(stream, self.opts.debug,
+                       None)
+        else:
+            raise Exception("object id cannot be none")
+
+def i_slice(c_obj, object_id):
+    new_children = []
+    for item in c_obj.children:
+        i_slice(item, object_id).children
+
+        # if not any(e for e in list[item].params if e.object_id == object_id ):
+
+        contains = False
+        for param in item.params:
+            for obj_id in object_id:
+                if param.object_id == obj_id:
+                    contains = contains or True
+
+        if isinstance(item,CCallback):
+            for obj_id in object_id:
+                contains = contains or \
+                           ((item.return_value is not None) and \
+                           item.return_value.object_id == obj_id)
+        elif isinstance(item,CCallin):
+            for obj_id in object_id:
+                contains = contains or \
+                           ((item.return_value is not None) and \
+                           item.return_value.object_id == obj_id)
+        else:
+            raise Exception("Malformed trace")
+        if contains or (len(item.children) > 0):
+            #item does not contain object ref so remove
+            new_children.append(item)
+    c_obj.children = new_children
+
+    return c_obj
 
 
 def print_ground_spec(ground_specs, out=sys.stdout):
@@ -182,14 +221,15 @@ def main(input_args=None):
             string = string + "".join([" " for i in range(length - current)])
         return string
     p.add_option('-m', '--mode', type='choice',
-                 choices= ["bmc","ic3","check-files","to-smv","show-ground-specs","simulate","check-trace-relevance"],
+                 choices= ["bmc","ic3","check-files","to-smv","show-ground-specs","simulate","check-trace-relevance","slice"],
                  help=(get_len('bmc: run bmc on the trace;', 53) +
                        get_len('ic3: run ic3 on the trace;', 53) +
                        get_len('check-files: check if the input files are well formed and prints them; ', 53) +
                        get_len('show-ground-specs: shows the specifications instantiateed by the given trace; ', 53) +
                        get_len('simulate: simulate the given trace with the existing specification; ', 53) +
                        get_len('to-smv: prints the SMV file of the generated transition system. ', 53) +
-                       get_len('check-trace-relevance: check if a trace is well formed, does not end with an exception and can instantiate a disable rule.', 53)),
+                       get_len('check-trace-relevance: check if a trace is well formed, does not end with an exception and can instantiate a disable rule.', 53)) +
+                       get_len('slice: slice a trace for relevant transitions with object or transition id', 53),
                  default = "bmc")
 
     # Bmc options
@@ -212,6 +252,8 @@ def main(input_args=None):
     # Miscellaneous
     p.add_option('-l', '--filter', help="When running check-files this will only: filter all messages to the ones"
                                         "where type is matched")
+
+    p.add_option('-j', '--object_id', help="When running slice this is a concrete object to target")
 
 
     def usage(msg=""):
@@ -341,6 +383,8 @@ def main(input_args=None):
 
 
         return 0
+    elif(opts.mode == "slice"):
+        driver.slice(opts.object_id.split(':'), sys.stdout)
 
 
 
