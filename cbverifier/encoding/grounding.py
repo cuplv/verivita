@@ -19,7 +19,8 @@ from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
 from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
 from cbverifier.encoding.conversion import TraceSpecConverter
-from cbverifier.helpers import Helper
+from cbverifier.utils.bimap import BiMap
+
 
 from pysmt.logics import QF_BV
 from pysmt.environment import get_env
@@ -305,32 +306,14 @@ class GroundSpecs(object):
         else:
             return self.ground_to_spec[ground_spec]
 
-
 class SymbolicGrounding:
-    class BiMap:
-        def __init__(self):
-            self.a2b = {}
-            self.b2a = {}
-
-        def add(self,a,b):
-            self.a2b[a] = b
-            self.b2a[b] = a
-
-        def lookup_a(self,a):
-            return self.a2b[a]
-
-        def lookup_b(self,b):
-            return self.b2a[b]
-
-        def iteritems_a_b(self):
-            return self.a2b.iteritems()
 
     def __init__(self, trace_map):
         self.pysmt_env = get_env()
 
         self.trace_map = trace_map
 
-        self.fvars2encvars = SymbolicGrounding.BiMap()
+        self.fvars2encvars = BiMap()
         self.fvars_maxval = {}
         self.fvars2values = {}
 
@@ -358,7 +341,7 @@ class SymbolicGrounding:
         try:
             fvals2encvalues = self.fvars2values[free_var]
         except KeyError:
-            fvals2encvalues = SymbolicGrounding.BiMap()
+            fvals2encvalues = BiMap()
             self.fvars2values[free_var] = fvals2encvalues
 
         enc_val = BV(next_val, 32)
@@ -367,7 +350,6 @@ class SymbolicGrounding:
         return enc_val
 
     def process_assignments_formula(self, is_entry, call_node, asets):
-
         all_formulas = FALSE_PYSMT()
 
         for aset in asets:
