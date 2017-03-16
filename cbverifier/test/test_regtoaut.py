@@ -17,13 +17,14 @@ from cbverifier.specs.spec_ast import *
 from cbverifier.traces.ctrace import CCallback, CCallin
 
 from pysmt.typing import BOOL
-from pysmt.shortcuts import Symbol, TRUE, FALSE
+from pysmt.shortcuts import Symbol, TRUE, FALSE, get_env
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
 
 class TestRegExpToAuto(unittest.TestCase):
 
     def test_regexptoauto(self):
-        auto_env = AutoEnv.get_global_auto_env()
+        # auto_env = AutoEnv.get_global_auto_env()
+        auto_env = AutoEnv(get_env(), True)
         cenc = CounterEnc(auto_env.pysmt_env)
         alphabet = set(["[CB]_[ENTRY]_void m1()(1)","[CI]_[ENTRY]_void m2()(1)",
                         "[CB]_[ENTRY]_void m3()(1)"])
@@ -42,47 +43,58 @@ class TestRegExpToAuto(unittest.TestCase):
                                                "SPEC ([CB] [ENTRY] [1] void m1() | [CI] [ENTRY] [1] void m2()) |- TRUE; " +
                                                "SPEC (! [CB] [ENTRY] [1] void m1()) |- TRUE; " +
                                                "SPEC [CB] [ENTRY] [1] void m1(); [CI] [ENTRY] [1] void m2() |- TRUE; " +
-                                               "SPEC [CB] [ENTRY] [1] void m1()[*] |- TRUE")
+                                               "SPEC [CB] [ENTRY] [1] void m1()[*] |- TRUE;" +
+                                               "SPEC ([CB] [ENTRY] [1] void m1() & ([CI] [ENTRY] [1] void m2(); [CB] [ENTRY] [1] void m3())) |- TRUE ")
         assert spec_list is not None
 
         # Test l.m1()
         regexp = get_regexp_node(spec_list[0].ast)
         auto = r2a.get_from_regexp(regexp)
-        res = Automaton.get_singleton(env.new_label(l1))
+        label = env.new_label(l1)
+        res = Automaton.get_singleton(label, auto_env)
         self.assertTrue(auto.is_equivalent(res))
 
         # Test l.m1() and l.m2()
         regexp = get_regexp_node(spec_list[1].ast)
         auto = r2a.get_from_regexp(regexp)
-        res = Automaton.get_singleton(env.new_label(And(l1, l2)))
+        res = Automaton.get_singleton(env.new_label(And(l1, l2)), auto_env)
         self.assertTrue(auto.is_equivalent(res))
 
         # Test l.m1() or l.m2()
         regexp = get_regexp_node(spec_list[2].ast)
         auto = r2a.get_from_regexp(regexp)
-        res = Automaton.get_singleton(env.new_label(Or(l1, l2)))
+        res = Automaton.get_singleton(env.new_label(Or(l1, l2)), auto_env)
         self.assertTrue(auto.is_equivalent(res))
 
         # Test not l.m1()
         regexp = get_regexp_node(spec_list[3].ast)
         auto = r2a.get_from_regexp(regexp)
-        res = Automaton.get_singleton(env.new_label(Not(l1)))
+        l1_aut = Automaton.get_singleton(env.new_label(l1), auto_env)
+        res = l1_aut.complement()
+
         self.assertTrue(auto.is_equivalent(res))
 
         # Test l.m1(); l.m1()
         regexp = get_regexp_node(spec_list[4].ast)
         auto = r2a.get_from_regexp(regexp)
-        r1 = Automaton.get_singleton(env.new_label(l1))
-        r2 = Automaton.get_singleton(env.new_label(l2))
+        r1 = Automaton.get_singleton(env.new_label(l1), auto_env)
+        r2 = Automaton.get_singleton(env.new_label(l2), auto_env)
         res = r1.concatenate(r2)
         self.assertTrue(auto.is_equivalent(res))
 
         # Test l.m1()[*]
         regexp = get_regexp_node(spec_list[5].ast)
         auto = r2a.get_from_regexp(regexp)
-        r1 = Automaton.get_singleton(env.new_label(l1))
+        r1 = Automaton.get_singleton(env.new_label(l1), auto_env)
         res = r1.klenee_star()
         self.assertTrue(auto.is_equivalent(res))
+
+        # intersection of different regexpes
+        regexp = get_regexp_node(spec_list[6].ast)
+        auto = r2a.get_from_regexp(regexp)
+        res = Automaton.get_singleton(env.new_label(FALSE()), auto_env)
+        self.assertTrue(auto.is_equivalent(res))
+
 
     def test_regexptoauto_exit(self):
         auto_env = AutoEnv.get_global_auto_env()
