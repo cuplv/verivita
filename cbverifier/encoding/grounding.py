@@ -54,10 +54,12 @@ class GroundSpecs(object):
         ground_specs = []
         sg = SymbolicGrounding(self.trace_map)
 
-        for binding in sg.get_bindings(spec):
-            new_spec_asts = GroundSpecs._substitute(spec, sg, binding)
+        for substitution in sg.get_substitutions(spec):
+            new_spec_asts = GroundSpecs._substitute(spec, substitution)
+
             for new_spec_ast in new_spec_asts:
                 new_spec = Spec(new_spec_ast)
+
                 # skip the false specification on the rhs
                 if (not new_spec.is_spec_rhs_false()):
                     # optimization: skip the spec if the regexp is false:
@@ -67,46 +69,10 @@ class GroundSpecs(object):
         return ground_specs
 
     @staticmethod
-    def _substitute(spec, sg, binding):
+    def _substitute(spec, substitution):
         # TODO: add memoization
 
-        def substitute_rec(node, sg, binding):
-
-            def has_binding(leaf, binding):
-                """ Given a leaf node, substitute it """
-
-                leaf_type = get_node_type(leaf)
-
-                if (leaf_type == DONTCARE):
-                    # Leave the DONTCARE in the node
-                    return True
-                elif (leaf_type == ID):
-                    # Replace the free variables
-                    if binding.has_key(leaf):
-                        bind_value = binding.get(leaf)
-                        return bind_value != bottom_value
-                else:
-                    # constant
-                    return True
-
-            def check_param_bindings(param_node, binding):
-                """ Check that all the parameters have a binding.
-                """
-                all_bind = True
-
-                node_type = get_node_type(param_node)
-                if (node_type == PARAM_LIST):
-                    formal_param = get_param_name(param_node)
-                    p_type = get_param_type(param_node)
-                    res = has_binding(formal_param, binding)
-                    assert res is not None
-
-                    return (res and
-                            check_param_bindings(get_param_tail(param_node), binding))
-                else:
-                    assert node_type == NIL
-                    return True
-
+        def substitute_rec(node, substitution):
             def get_param_types_list(node):
                 types_list = []
                 app = node
@@ -121,39 +87,28 @@ class GroundSpecs(object):
                 is_entry = True if node_type == CALL_ENTRY else False
 
                 res = []
-                if len(res) == 0:
+                call_var = (is_entry, node)
+                if call_var not in substitution:
                     res.append(new_false())
+                else:
+                    for call_message in substitution[call_var]:
+                        if call_message is bottom_value:
+                            res.append(new_false())
+                            continue
 
-                for call_message in sg.get_messages(is_entry, node, binding):
-                    if call_message is None:
-                        res.append(new_false())
-                        continue
+                        assert call_message is not None
 
-                    # reconstruct the call node,
-                    # finding the assignments to the free variables
-                    #
-                    # At this point we may have that a free variable is
-                    # assigned to bottom. In that case, we did not find a
-                    # message that can be substituted to this call and
-                    # thus we replace it with false
-                    #
-                    no_bind_assignee = (not is_entry) and (not has_binding(get_call_assignee(node), binding))
-                    if (not check_param_bindings(get_call_params(node), binding) or
-                        no_bind_assignee or
-                        not has_binding(get_call_receiver(node), binding)):
-                        # when the instantiation fails we replace the call node with
-                        # false
-                        new_call_node = new_false()
-                    else:
+                        # reconstruct the call node from the node in the trace
+                        # TODO: Move it in SymbolicGrounding
                         param_types = get_param_types_list(get_call_params(node))
                         new_call_node = GroundSpecs._msg_to_call_node(is_entry, call_message, param_types)
-                    res.append(new_call_node)
+                        res.append(new_call_node)
 
                 return res
 
             elif (node_type == AND_OP):
-                lhs_l = substitute_rec(node[1], sg, binding)
-                rhs_l = substitute_rec(node[2], sg, binding)
+                lhs_l = substitute_rec(node[1], substitution)
+                rhs_l = substitute_rec(node[2], substitution)
 
                 res = []
                 for lhs in lhs_l:
@@ -170,8 +125,8 @@ class GroundSpecs(object):
                 return res
 
             elif (node_type == OR_OP):
-                lhs_l = substitute_rec(node[1], sg, binding)
-                rhs_l = substitute_rec(node[2], sg, binding)
+                lhs_l = substitute_rec(node[1], substitution)
+                rhs_l = substitute_rec(node[2], substitution)
 
                 res = []
                 for lhs in lhs_l:
@@ -188,8 +143,8 @@ class GroundSpecs(object):
                 return res
 
             elif (node_type == SEQ_OP):
-                lhs_l = substitute_rec(node[1], sg, binding)
-                rhs_l = substitute_rec(node[2], sg, binding)
+                lhs_l = substitute_rec(node[1], substitution)
+                rhs_l = substitute_rec(node[2], substitution)
 
                 res = []
                 for lhs in lhs_l:
@@ -205,8 +160,8 @@ class GroundSpecs(object):
 
 
             elif (node_type == ENABLE_OP or node_type == DISABLE_OP):
-                lhs_l = substitute_rec(node[1], sg, binding)
-                rhs_l = substitute_rec(node[2], sg, binding)
+                lhs_l = substitute_rec(node[1], substitution)
+                rhs_l = substitute_rec(node[2], substitution)
 
                 res = []
                 for lhs in lhs_l:
@@ -214,11 +169,11 @@ class GroundSpecs(object):
                         if (get_node_type(rhs) != FALSE):
                             res.append(create_node(node_type, [lhs, rhs]))
                 if (len(res) == 0):
-                    res = [new_false()]
+                    res = [create_node(node_type, [lhs, rhs])]
                 return res
 
             elif (node_type == NOT_OP):
-                lhs_l = substitute_rec(node[1], sg, binding)
+                lhs_l = substitute_rec(node[1], substitution)
 
                 res = []
                 for lhs in lhs_l:
@@ -231,13 +186,13 @@ class GroundSpecs(object):
                 return res
 
             elif (node_type == STAR_OP):
-                lhs_l = substitute_rec(node[1], sg, binding)
+                lhs_l = substitute_rec(node[1], substitution)
                 res = []
                 for lhs in lhs_l:
                     res.append(create_node(node_type, [lhs]))
                 return res
             elif (node_type == SPEC_SYMB):
-                lhs_l = substitute_rec(node[1], sg, binding)
+                lhs_l = substitute_rec(node[1], substitution)
                 res = []
                 for lhs in lhs_l:
                     res.append(create_node(SPEC_SYMB, [lhs, new_nil()]))
@@ -245,7 +200,7 @@ class GroundSpecs(object):
             else:
                 raise UnexpectedSymbol(node)
 
-        new_spec_asts = substitute_rec(spec.ast, sg, binding)
+        new_spec_asts = substitute_rec(spec.ast, substitution)
 
         return new_spec_asts
 
@@ -308,104 +263,159 @@ class GroundSpecs(object):
 
 class SymbolicGrounding:
 
+    # Maximum dimension for the bitvector
+    # Practically we do not expect to have more values for a variable.
+    MAX_BV=32
+
     def __init__(self, trace_map):
         self.pysmt_env = get_env()
 
         self.trace_map = trace_map
 
+        # Bidireactional map (trace symbol, var in the encoding)
         self.fvars2encvars = BiMap()
+        # Map from trace symbols to their maximum value in the encoding
         self.fvars_maxval = {}
+        # Map from trace symbol to a bidirectional map (trace value, encoding value)
         self.fvars2values = {}
+        # set of fvar that represents call nodes
+        self.fvar_is_call = set()
 
+        # standard initial value
         self.init_val = 0
 
         # Map from (entry_type, call_node) to (bindings, message)
         self.binding2message = {}
 
-    def add_free_var(self, free_var):
-        # We create a BV variable
-        enc_val = FreshSymbol(BVType(32))
-        self.fvars2encvars.add(free_var, enc_val)
 
+    def add_free_var(self, free_var):
+        """ Creates the encoding for free_var """
+        # We create a BV variable
+        enc_val = FreshSymbol(BVType(SymbolicGrounding.MAX_BV))
+        self.fvars2encvars.add(free_var, enc_val)
         return enc_val
 
     def add_val(self, free_var, val):
-        try:
+        """ Add val to free_var """
+        # Update the maximum value
+        if free_var in self.fvars_maxval:
             current_val = self.fvars_maxval[free_var]
             next_val = current_val + 1
-        except KeyError:
+        else:
             next_val = 0
-
         self.fvars_maxval[free_var] = next_val
 
-        try:
+        # Update the variable encoding map
+        if free_var in self.fvars2values:
             fvals2encvalues = self.fvars2values[free_var]
-        except KeyError:
+        else:
             fvals2encvalues = BiMap()
             self.fvars2values[free_var] = fvals2encvalues
-
-        enc_val = BV(next_val, 32)
+        enc_val = BV(next_val, SymbolicGrounding.MAX_BV)
         fvals2encvalues.add(val, enc_val)
 
         return enc_val
 
+    def find_or_add_var(self, fvar):
+        """ Finds or add the encoding for fvar """
+        try:
+            enc_var = self.fvars2encvars.lookup_a(fvar)
+        except KeyError:
+            enc_var = self.add_free_var(fvar)
+
+        return enc_var
+
+    def find_or_add_val(self, fvar, fval):
+        """ Finds or add the value to the variable encoding """
+        try:
+            fvals2enc = self.fvars2values[fvar]
+            try:
+                enc_val = fvals2enc.lookup_a(fval)
+            except KeyError:
+                enc_val = self.add_val(fvar,fval)
+        except KeyError:
+            enc_val = self.add_val(fvar,fval)
+        return enc_val
+
+
     def process_assignments_formula(self, is_entry, call_node, asets):
-        all_formulas = FALSE_PYSMT()
+        """
+        For each call node and for each concrete assignment creates the label
+        that must be used in the regular expression.
 
+        Each assignment to the formula represent an assignment to the free
+        variables and the set of symbols in the trace that must be recognized by
+        the regular expression.
+        """
+
+        # Group the messages by the same variable assigment
+        a_map = {}
         for aset in asets:
-            aset_formula = TRUE_PYSMT()
-
+            complete_assignment = True
             message = None
-            bindings = set()
+            bindings_set = set()
 
             for (fvar, fval) in aset.assignments.iteritems():
                 if fval == bottom_value:
-                    # This is false, no matter what
-                    aset_formula = FALSE_PYSMT()
-                    message = None
-                    continue
+                    complete_assignment = False
+                elif (get_node_type(fvar) == ID):
+                    # ensure to add the bottom value for the variable
+                    self.find_or_add_var(fvar)
+                    self.find_or_add_val(fvar, bottom_value)
 
-                if (get_node_type(fvar) == ID):
-                    try:
-                        enc_var = self.fvars2encvars.lookup_a(fvar)
-                    except KeyError:
-                        enc_var = self.add_free_var(fvar)
-
-                    try:
-                        fvals2enc = self.fvars2values[fvar]
-                        try:
-                            enc_val = fvals2enc.lookup_a(fval)
-                        except KeyError:
-                            enc_val = self.add_val(fvar,fval)
-                    except KeyError:
-                        enc_val = self.add_val(fvar,fval)
-
-                    bindings.add((fvar, fval))
-
-                    aset_formula = And(aset_formula, Equals(enc_var, enc_val))
-
+                    bindings_set.add((fvar, fval))
                 elif (type(fvar) == tuple):
                     assert (is_entry, call_node) == fvar
+                    call_var = (is_entry, call_node)
+
+                    call_var_enc = self.find_or_add_var(call_var)
+                    self.fvar_is_call.add(call_var)
+                    self.find_or_add_val(call_var, frozenset([bottom_value]))
+
                     message = fval
 
-            if message is not None:
-                # Assertion does not hold for nodes with don't care
-                # assert len(bindings) > 0
+            if complete_assignment and message is not None:
+                bindings_set = frozenset(bindings_set)
+                if bindings_set not in a_map:
+                    a_map[bindings_set] = set()
+                a_map[bindings_set].add(message)
 
-                key = (is_entry, call_node)
-                if (key not in self.binding2message):
-                    nl = set()
-                    self.binding2message[key] = nl
-                else:
-                    nl = self.binding2message[key]
-                nl.add((frozenset(bindings), message))
+        # Skip non-existing mappings
+        # This is the case for constants calls that do not exist
+        # in the original trace
+        if (len(a_map) == 0):
+            return TRUE_PYSMT()
 
+        # Creates the formula that represents the assignment
+        call_var = (is_entry, call_node)
+        call_var_enc = self.find_or_add_var(call_var)
+        call_encoding = TRUE_PYSMT()
+        complement = TRUE_PYSMT()
+        for (bindings_set, messages) in a_map.iteritems():
+            antecedent = TRUE_PYSMT()
+            for (fvar, fval) in bindings_set:
+                # Get or add the variable encoding
+                enc_var = self.find_or_add_var(fvar)
+                # Find or add the value to the variable encoding
+                enc_val = self.find_or_add_val(fvar, fval)
+                antecedent = And(antecedent, Equals(enc_var, enc_val))
 
-            all_formulas = Or(all_formulas, aset_formula)
+            complement = And(complement, Not(antecedent))
+            msg_set_val = self.find_or_add_val(call_var,
+                                               frozenset(messages))
+            call_encoding = And(call_encoding,
+                                Implies(antecedent,
+                                        Equals(call_var_enc, msg_set_val)))
 
-        return all_formulas
+        # add the complement
+        call_bottom_val_enc = self.find_or_add_val(call_var, frozenset([bottom_value]))
+        call_encoding = And(call_encoding,
+                            Implies(complement,
+                                    Equals(call_var_enc, call_bottom_val_enc)))
+        return call_encoding
 
     def get_messages(self, is_entry, node, bindings):
+        # TODO: REMOVE
         messages = []
         try:
             for res in self.binding2message[(is_entry, node)]:
@@ -431,17 +441,22 @@ class SymbolicGrounding:
             return messages
 
     def get_var_val(self, enc_var, enc_value):
+        """ Returns the trace value given an (encoding) variable and an encoding
+        value"""
         fvar = self.fvars2encvars.lookup_b(enc_var)
         fvals2encvalues = self.fvars2values[fvar]
         fvalue = fvals2encvalues.lookup_b(enc_value)
         return (fvar, fvalue)
 
     def get_size(self, max_val):
+        """ Returns the bv_size needed to represent values in the range
+        [0...max_val]
+        """
         bv_size = int(math.floor(math.log(max_val, 2))) + 1
         return bv_size
 
     def resize_bvs(self, formula):
-        # resize the bitvector variables wrt to the maximum domain size
+        """ Resize the bitvector variables wrt to the maximum domain size """
         subs_map = {}
         for (fvar, max_value) in self.fvars_maxval.iteritems():
             old_enc_var = self.fvars2encvars.lookup_a(fvar)
@@ -453,7 +468,7 @@ class SymbolicGrounding:
             val2val = self.fvars2values[fvar]
 
             for i in range(max_value + 1):
-                old_value = BV(i,32)
+                old_value = BV(i, SymbolicGrounding.MAX_BV)
                 new_value = BV(i, bv_size)
 
                 fval = val2val.lookup_b(old_value)
@@ -467,6 +482,11 @@ class SymbolicGrounding:
         return formula
 
     def get_domain_formula(self):
+        """ Returns the formula that encodes the domains of each
+        variable in the encoding.
+
+        Note: the size of the BV is not enough.
+        """
         domain = TRUE_PYSMT()
         for (fvar, max_value) in self.fvars_maxval.iteritems():
             enc_var = self.fvars2encvars.lookup_a(fvar)
@@ -480,45 +500,56 @@ class SymbolicGrounding:
         return domain
 
     def _get_ground_bindings_formula(self, spec):
-        ground_enc = self._ground_bindings_formula_rec(spec.ast)
+        ground_enc = self._ground_bindings_formula_rec(spec.ast, {})
         ground_enc = self.resize_bvs(ground_enc)
         ground_enc = And(ground_enc, self.get_domain_formula())
         return ground_enc
 
-    def _ground_bindings_formula_rec(self, spec_node):
-        """ returns a formula """
+    def _ground_bindings_formula_rec(self, spec_node, memo):
+        """ Returns a formula that encodes the set of all the possible bindings
+        and assignments to CALL nodes
+        """
+
+        if (spec_node in memo):
+            return memo[spec_node]
+
         node_type = get_node_type(spec_node)
         if (node_type in leaf_nodes):
             # ground set do not change in these cases
-            return TRUE_PYSMT()
+            res = TRUE_PYSMT()
         elif (node_type == AND_OP or
             node_type == SEQ_OP or
             node_type == ENABLE_OP or
-            node_type == DISABLE_OP):
-            return And(self._ground_bindings_formula_rec(spec_node[2]),
-                       self._ground_bindings_formula_rec(spec_node[1]))
-        elif (node_type == STAR_OP or node_type == SPEC_SYMB):
-            return self._ground_bindings_formula_rec(spec_node[1])
-        elif (node_type == OR_OP):
-            return Or(self._ground_bindings_formula_rec(spec_node[2]),
-                      self._ground_bindings_formula_rec(spec_node[1]))
-        elif (node_type == NOT_OP):
-            return Not(self._ground_bindings_formula_rec(spec_node[1]))
+            node_type == DISABLE_OP or
+            node_type == OR_OP):
+
+            # create the global constraints
+            res = And(self._ground_bindings_formula_rec(spec_node[2], memo),
+                      self._ground_bindings_formula_rec(spec_node[1], memo))
+        elif (node_type == STAR_OP or node_type == SPEC_SYMB or
+              node_type == NOT_OP):
+            res = self._ground_bindings_formula_rec(spec_node[1], memo)
         elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
             spec_res = self.trace_map.lookup_assignments(spec_node)
             assert spec_res is not None
 
-            formula = self.process_assignments_formula(node_type == CALL_ENTRY, spec_node, spec_res)
-            return formula
+            res = self.process_assignments_formula(node_type == CALL_ENTRY, spec_node, spec_res)
         else:
             # WARNING: we handle one spec at a time (node_type != SPEC_LIST)
             raise UnexpectedSymbol(spec_node)
 
+        memo[spec_node] = res
+        return res
 
-    def get_bindings(self, spec):
+
+    def get_substitutions(self, spec):
+        """ Returns the list of all the possible substitutions for the
+        CALL nodes.
+        """
+
         ground_formula = self._get_ground_bindings_formula(spec)
 
-        bindings = []
+        substitutions = []
 
         # ALL SAT on assignments - the model is finite
         solver = self.pysmt_env.factory.Solver(quantified=False,
@@ -528,21 +559,23 @@ class SymbolicGrounding:
         while (solver.solve()):
             model = solver.get_model()
 
+            # Cut all the models that produces the same substitutions
             to_cut = TRUE_PYSMT()
-            binding = Assignments()
+            substitution = {}
             for (fvar, enc_var) in self.fvars2encvars.iteritems_a_b():
-                enc_value = model.get_value(enc_var, True)
-                (fvar1, fvalue) = self.get_var_val(enc_var, enc_value)
-                assert fvar1 == fvar
-                binding.add(fvar, fvalue)
-                to_cut = Equals(enc_var, enc_value)
-            binding.make_frozen()
-            bindings.append(binding)
+                if (fvar in self.fvar_is_call):
+                    enc_value = model.get_value(enc_var, True)
+                    (fvar1, fvalue) = self.get_var_val(enc_var, enc_value)
+                    assert fvar1 == fvar
+                    assert frozenset == type(fvalue)
+                    substitution[fvar] = fvalue
+                    to_cut = Equals(enc_var, enc_value)
+            substitutions.append(substitution)
 
-            # get the next assignmetn
+            # rule out the current assignment
             solver.add_assertion(Not(to_cut))
 
-        return bindings
+        return substitutions
 
 
 class AssignmentsBottom(object):
