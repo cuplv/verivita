@@ -1371,12 +1371,31 @@ class RegExpToAuto():
     def get_from_regexp_aux(self, regexp):
         node_type = get_node_type(regexp)
 
-        if (node_type in [TRUE,FALSE,CALL_ENTRY,CALL_EXIT,AND_OP,OR_OP,NOT_OP]):
+        if (node_type in [TRUE,FALSE,CALL_ENTRY,CALL_EXIT]):
             # base case
             # accept the atoms in the bexp
             formula = self.get_be(regexp)
             label = self.auto_env.new_label(formula)
             automaton = Automaton.get_singleton(label, self.auto_env)
+            return automaton
+        elif (node_type == AND_OP):
+            lhs = self.get_from_regexp_aux(regexp[1])
+            rhs = self.get_from_regexp_aux(regexp[2])
+            automaton = lhs.intersection(rhs)
+            lhs = None
+            rhs = None
+            return automaton
+        elif (node_type == OR_OP):
+            lhs = self.get_from_regexp_aux(regexp[1])
+            rhs = self.get_from_regexp_aux(regexp[2])
+            automaton = lhs.union(rhs)
+            lhs = None
+            rhs = None
+            return automaton
+        elif (node_type == NOT_OP):
+            lhs = self.get_from_regexp_aux(regexp[1])
+            automaton = lhs.complement()
+            lhs = None
             return automaton
         elif (node_type == SEQ_OP):
             lhs = self.get_from_regexp_aux(regexp[1])
@@ -1414,14 +1433,6 @@ class RegExpToAuto():
             # generate a boolean atom for the call
             atom_var = self.get_atom_var(be_node)
             return atom_var
-        elif (node_type == AND_OP):
-            return And(self.get_be(be_node[1]),
-                       self.get_be(be_node[2]))
-        elif (node_type == OR_OP):
-            return Or(self.get_be(be_node[1]),
-                      self.get_be(be_node[2]))
-        elif (node_type == NOT_OP):
-            return Not(self.get_be(be_node[1]))
         else:
             raise UnexpectedSymbol(be_node)
 
