@@ -408,7 +408,9 @@ class TestSpecParser(unittest.TestCase):
                  simplify_and(atom1, true) == atom1, # 3
                  simplify_and(true, atom1) == atom1,
                  simplify_and(r1, true_star) == r1, # 4
-                 simplify_and(true_star, r1) == r1]
+                 simplify_and(true_star, r1) == r1,
+                 simplify_and(atom1, new_not(atom1)) == false, #5
+                 simplify_and(r1, new_not(r1)) == false]
         for l in tests: self.assertTrue(True == l)
 
         # OR_OP
@@ -431,7 +433,9 @@ class TestSpecParser(unittest.TestCase):
                  simplify_or(atom1, true) == true, # 3
                  simplify_or(true, atom1) == true,
                  simplify_or(r1, true_star) == true_star, # 4
-                 simplify_or(true_star, r1) == true_star]
+                 simplify_or(true_star, r1) == true_star,
+                 simplify_or(atom1, new_not(atom1)) == true_star, #5
+                 simplify_or(r1, new_not(r1)) == true_star]
         for l in tests: self.assertTrue(True == l)
 
         # SEQ_OP

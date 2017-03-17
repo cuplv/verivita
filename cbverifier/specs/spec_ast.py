@@ -524,21 +524,26 @@ def simplify_and(lhs, rhs):
     2. regex & FALSE => FALSE
     3. a & TRUE => a
     4. regexp & TRUE[*] => regexp
+    5. regexp & ! regexp => FALSE
     """
     true_star = new_star(new_true())
 
-    # 1. regexp & regexp => regexp
+    # 1.
     if (lhs == rhs): return lhs
-    # 2. regex & FALSE => FALSE
+    # 2.
     if (get_node_type(lhs) == FALSE or get_node_type(rhs) == FALSE):
         return new_false()
-    # 3. a & TRUE => a
+    # 3.
     f_3 = lambda lhs,rhs : get_node_type(lhs) == TRUE and get_node_type(rhs) in [CALL_ENTRY, CALL_EXIT]
     if (f_3(lhs,rhs)): return rhs
     if (f_3(rhs,lhs)): return lhs
-    # 4. regexp & TRUE[*] => regexp
+    # 4.
     if (rhs == true_star): return lhs
     if (lhs == true_star): return rhs
+    # 5.
+    f_5 = lambda lhs,rhs : get_node_type(rhs) == NOT_OP and lhs == rhs[1]
+    if (f_5(lhs,rhs)): return new_false()
+    if (f_5(rhs,lhs)): return new_false()
 
     return new_and(lhs,rhs)
 
@@ -548,6 +553,7 @@ def simplify_or(lhs, rhs):
     2. regexp | FALSE => regexp
     3. a | TRUE => TRUE
     4. regexp | TRUE[*] => TRUE[*]
+    5. regexp | ! regexp => TRUE[*]
     """
     true_star = new_star(new_true())
 
@@ -563,6 +569,10 @@ def simplify_or(lhs, rhs):
     if (f_3(rhs,lhs)): return new_true()
     # 4. regexp & TRUE[*] => regexp
     if (lhs == true_star or rhs == true_star): return true_star
+    # 5.
+    f_5 = lambda lhs,rhs : get_node_type(rhs) == NOT_OP and lhs == rhs[1]
+    if (f_5(lhs,rhs)): return true_star
+    if (f_5(rhs,lhs)): return true_star
 
     return new_or(lhs,rhs)
 
