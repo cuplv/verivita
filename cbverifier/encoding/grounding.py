@@ -51,19 +51,29 @@ class GroundSpecs(object):
 
 
     def ground_spec(self, spec):
+        ast_set = set() # avoid duplicate specs - memo works at ast level
         ground_specs = []
         sg = SymbolicGrounding(self.trace_map)
 
         for substitution in sg.get_substitutions(spec):
             new_spec_ast = GroundSpecs._substitute(spec, substitution)
+
+            # skip duplicates
+            if new_spec_ast in ast_set:
+                continue
+            else:
+                ast_set.add(new_spec_ast)
+
             new_spec = Spec(new_spec_ast)
 
-            # skip the false specification on the rhs
-            if (not new_spec.is_spec_rhs_false()):
-                # optimization: skip the spec if the regexp is false:
-                if (not new_spec.is_regexp_false()):
-                    ground_specs.append(new_spec)
-                    self.ground_to_spec[new_spec] = spec
+            is_rhs_false = new_spec.is_spec_rhs_false()
+            is_lhs_false = new_spec.is_regexp_false()
+            # skip the specification if
+            #   - the rhs is false
+            #   - the regexp is false
+            if ((not is_rhs_false) and (not is_lhs_false)):
+                ground_specs.append(new_spec)
+                self.ground_to_spec[new_spec] = spec
         return ground_specs
 
     @staticmethod
@@ -510,7 +520,7 @@ class SymbolicGrounding:
                     assert fvar1 == fvar
                     assert frozenset == type(fvalue)
                     substitution[fvar] = fvalue
-                    to_cut = Equals(enc_var, enc_value)
+                    to_cut = And(to_cut,Equals(enc_var, enc_value))
             substitutions.append(substitution)
 
             # rule out the current assignment
