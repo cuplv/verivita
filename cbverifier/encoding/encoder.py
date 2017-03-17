@@ -359,7 +359,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         Return a list of ground specifications.
         """
-
         ground_specs = set()
         for spec in specs:
             tmp = gs.ground_spec(spec)
