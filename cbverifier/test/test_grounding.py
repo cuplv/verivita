@@ -801,9 +801,8 @@ class TestGrounding(unittest.TestCase):
                  #
                  ("SPEC FALSE |- FALSE", "doA()", ""),
                  #
-                 ("SPEC TRUE |- TRUE", "", "SPEC TRUE |- TRUE"),
-                 #
-                 ("SPEC TRUE |- TRUE", "doA()", "SPEC TRUE |- TRUE"),
+                 ("SPEC TRUE |- [CB] [ENTRY] [1] void doA(1 : int)", "doA(1)",
+                  "SPEC TRUE |- [CB] [ENTRY] [1] void doA(1 : int)"),
                  #
                  ("SPEC [CB] [ENTRY] [1] void doA(1 : int) |- [CB] [ENTRY] [1] void doA(1 : int)",
                   "doA(1)",
