@@ -55,17 +55,15 @@ class GroundSpecs(object):
         sg = SymbolicGrounding(self.trace_map)
 
         for substitution in sg.get_substitutions(spec):
-            new_spec_asts = GroundSpecs._substitute(spec, substitution)
+            new_spec_ast = GroundSpecs._substitute(spec, substitution)
+            new_spec = Spec(new_spec_ast)
 
-            for new_spec_ast in new_spec_asts:
-                new_spec = Spec(new_spec_ast)
-
-                # skip the false specification on the rhs
-                if (not new_spec.is_spec_rhs_false()):
-                    # optimization: skip the spec if the regexp is false:
-                    if (not new_spec.is_regexp_false()):
-                        ground_specs.append(new_spec)
-                        self.ground_to_spec[new_spec] = spec
+            # skip the false specification on the rhs
+            if (not new_spec.is_spec_rhs_false()):
+                # optimization: skip the spec if the regexp is false:
+                if (not new_spec.is_regexp_false()):
+                    ground_specs.append(new_spec)
+                    self.ground_to_spec[new_spec] = spec
         return ground_specs
 
     @staticmethod
@@ -82,18 +80,19 @@ class GroundSpecs(object):
                 return types_list
 
             node_type = get_node_type(node)
-            if (node_type in leaf_nodes): return [node]
+            if (node_type in leaf_nodes): return node
             elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
                 is_entry = True if node_type == CALL_ENTRY else False
 
-                res = []
+                res = None
                 call_var = (is_entry, node)
                 if call_var not in substitution:
-                    res.append(new_false())
+                    res = new_false()
                 else:
                     for call_message in substitution[call_var]:
                         if call_message is bottom_value:
-                            res.append(new_false())
+                            if res is None:
+                                res = new_false()
                             continue
 
                         assert call_message is not None
@@ -102,101 +101,43 @@ class GroundSpecs(object):
                         # TODO: Move it in SymbolicGrounding
                         param_types = get_param_types_list(get_call_params(node))
                         new_call_node = GroundSpecs._msg_to_call_node(is_entry, call_message, param_types)
-                        res.append(new_call_node)
-
+                        if res is None:
+                            res = new_call_node
+                        else:
+                            res = new_or(res, new_call_node)
                 return res
-
             elif (node_type == AND_OP):
-                lhs_l = substitute_rec(node[1], substitution)
-                rhs_l = substitute_rec(node[2], substitution)
+                lhs = substitute_rec(node[1], substitution)
+                rhs = substitute_rec(node[2], substitution)
 
-                res = []
-                for lhs in lhs_l:
-                    for rhs in rhs_l:
-                        if (get_node_type(lhs) == FALSE or
-                            get_node_type(rhs) == FALSE):
-                            res.append(new_false())
-                        elif (get_node_type(lhs) == TRUE):
-                            res.append(rhs)
-                        elif (get_node_type(rhs) == TRUE):
-                            res.append(lhs)
-                        else:
-                            res.append(create_node(node_type, [lhs, rhs]))
+                res = simplify_and(lhs, rhs)
                 return res
-
             elif (node_type == OR_OP):
-                lhs_l = substitute_rec(node[1], substitution)
-                rhs_l = substitute_rec(node[2], substitution)
-
-                res = []
-                for lhs in lhs_l:
-                    for rhs in rhs_l:
-                        if (get_node_type(lhs) == TRUE or
-                            get_node_type(rhs) == TRUE):
-                            res.append(new_true())
-                        elif (get_node_type(lhs) == FALSE):
-                            res.append(rhs)
-                        elif (get_node_type(rhs) == FALSE):
-                            res.append(lhs)
-                        else:
-                            res.append(create_node(node_type, [lhs, rhs]))
+                lhs = substitute_rec(node[1], substitution)
+                rhs = substitute_rec(node[2], substitution)
+                res = simplify_or(lhs, rhs)
                 return res
 
             elif (node_type == SEQ_OP):
-                lhs_l = substitute_rec(node[1], substitution)
-                rhs_l = substitute_rec(node[2], substitution)
-
-                res = []
-                for lhs in lhs_l:
-                    for rhs in rhs_l:
-                        if (get_node_type(lhs) != FALSE and
-                            get_node_type(rhs) != FALSE):
-                            # skip if at least one is FALSE
-                            res.append(create_node(node_type, [lhs, rhs]))
-
-                if (len(res) == 0):
-                    res = [new_false()]
+                lhs = substitute_rec(node[1], substitution)
+                rhs = substitute_rec(node[2], substitution)
+                res = simplify_seq(lhs, rhs)
                 return res
-
-
-            elif (node_type == ENABLE_OP or node_type == DISABLE_OP):
-                lhs_l = substitute_rec(node[1], substitution)
-                rhs_l = substitute_rec(node[2], substitution)
-
-                res = []
-                for lhs in lhs_l:
-                    for rhs in rhs_l:
-                        if (get_node_type(rhs) != FALSE):
-                            res.append(create_node(node_type, [lhs, rhs]))
-                if (len(res) == 0):
-                    res = [create_node(node_type, [lhs, rhs])]
-                return res
-
             elif (node_type == NOT_OP):
-                lhs_l = substitute_rec(node[1], substitution)
-
-                res = []
-                for lhs in lhs_l:
-                    if (get_node_type(lhs) == FALSE):
-                        res.append(new_true())
-                    elif (get_node_type(lhs) == TRUE):
-                        res.append(new_false())
-                    else:
-                        res.append(create_node(node_type, [lhs]))
+                lhs = substitute_rec(node[1], substitution)
+                res = simplify_not(lhs)
                 return res
-
             elif (node_type == STAR_OP):
-                lhs_l = substitute_rec(node[1], substitution)
-                res = []
-                for lhs in lhs_l:
-                    res.append(create_node(node_type, [lhs]))
+                lhs = substitute_rec(node[1], substitution)
+                res = simplify_star(lhs)
                 return res
+            elif (node_type == ENABLE_OP or node_type == DISABLE_OP):
+                lhs = substitute_rec(node[1], substitution)
+                rhs = substitute_rec(node[2], substitution)
+                return create_node(node_type, [lhs, rhs])
             elif (node_type == SPEC_SYMB):
-                lhs_l = substitute_rec(node[1], substitution)
-                res = []
-                for lhs in lhs_l:
-                    res.append(create_node(SPEC_SYMB, [lhs, new_nil()]))
-                return res
+                lhs = substitute_rec(node[1], substitution)
+                return create_node(SPEC_SYMB, [lhs, new_nil()])
             else:
                 raise UnexpectedSymbol(node)
 
