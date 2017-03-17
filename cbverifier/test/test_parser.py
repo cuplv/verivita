@@ -344,5 +344,93 @@ class TestSpecParser(unittest.TestCase):
 
             self.assertTrue(stringio.getvalue() == r)
 
+    def test_simpl(self):
+        def t_same_un(l, simplify, op):
+            for lhs in l:
+                # print "INIT"
+                # print lhs
+                # print "--- simplify"
+                # print simplify(lhs)
+                # print "--- OP"
+                # print create_node(op, [lhs])
+                # print "---"
+                self.assertTrue(simplify(lhs) ==
+                                create_node(op, [lhs]))
 
+        def t_same_bin(l, simplify, op):
+            for (lhs,rhs) in l:
+                # print "INIT"
+                # print lhs
+                # print rhs
+                # print "--- simplify"
+                # print simplify(lhs, rhs)
+                # print "--- OP"
+                # print create_node(op, [lhs, rhs])
+                # print "---"
+
+                self.assertTrue(simplify(lhs, rhs) ==
+                                create_node(op, [lhs, rhs]))
+
+        true = new_true()
+        false = new_false()
+        true_star = new_star(new_true())
+        atom1 = new_call_entry("ENTRY", new_id("1"), new_id("m1"), new_nil())
+        atom2 = new_call_entry("ENTRY", new_id("1"), new_id("m2"), new_nil())
+        r1 = new_and(atom1, atom2)
+
+        # NOT_OP
+        no_simp = [atom1, r1, atom2, true]
+        t_same_un(no_simp, simplify_not, NOT_OP)
+
+        tests = [simplify_not(new_not(r1)) == r1, # 1
+                 simplify_not(new_not(atom1)) == atom1,
+                 simplify_not(false) == true_star,
+                 simplify_not(true_star) == false]
+        for l in tests: self.assertTrue(True == l)
+
+        # AND_OP
+        no_simp = [(atom1, atom2),
+                   (r1, atom2),
+                   (r1, true)]
+        t_same_bin(no_simp, simplify_and, AND_OP)
+
+        tests = [simplify_and(atom1, atom1) == atom1, # 1
+                 simplify_and(r1, r1) == r1,
+                 simplify_and(false, false) == false,
+                 simplify_and(true, true) == true,
+                 simplify_and(true_star, true_star) == true_star,
+                 simplify_and(atom1, false) == false, # 2
+                 simplify_and(false, atom1) == false,
+                 simplify_and(r1, false) == false,
+                 simplify_and(false, r1) == false,
+                 simplify_and(true, false) == false,
+                 simplify_and(false, true) == false,
+                 simplify_and(atom1, true) == atom1, # 3
+                 simplify_and(true, atom1) == atom1,
+                 simplify_and(r1, true_star) == r1, # 4
+                 simplify_and(true_star, r1) == r1]
+        for l in tests: self.assertTrue(True == l)
+
+        # OR_OP
+        no_simp = [(atom1, atom2),
+                   (r1, atom2),
+                   (r1, true)]
+        t_same_bin(no_simp, simplify_or, OR_OP)
+
+        tests = [simplify_or(atom1, atom1) == atom1, # 1
+                 simplify_or(r1, r1) == r1,
+                 simplify_or(false, false) == false,
+                 simplify_or(true, true) == true,
+                 simplify_or(true_star, true_star) == true_star,
+                 simplify_or(atom1, false) == atom1, # 2
+                 simplify_or(false, atom1) == atom1,
+                 simplify_or(r1, false) == r1,
+                 simplify_or(false, r1) == r1,
+                 simplify_or(true, false) == true,
+                 simplify_or(false, true) == true,
+                 simplify_or(atom1, true) == true, # 3
+                 simplify_or(true, atom1) == true,
+                 simplify_or(r1, true_star) == true_star, # 4
+                 simplify_or(true_star, r1) == true_star]
+        for l in tests: self.assertTrue(True == l)
 
