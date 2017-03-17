@@ -356,6 +356,9 @@ class TestGrounding(unittest.TestCase):
                     stream.write("\n")
             stream.write("---\n")
 
+        if specs1 is None: specs1 = []
+        if specs2 is None: specs2 = []
+
         if (len(specs1) != len(specs2)):
             logging.debug("Different lengths: %d != %d" % (len(specs1),len(specs2)))
             if PRINT_SPEC_COMPARISON:
@@ -424,12 +427,18 @@ class TestGrounding(unittest.TestCase):
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
+        # WARNING: the results is sensitive to the order of the atoms in the OR
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC [CI] [ENTRY] [l] void doSomethingCi(# : string) |- [CI] [ENTRY] [#] void otherCi(# : string)")
-        real_ground_spec = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [1] void doSomethingCi(2 : string) |- [CI] [ENTRY] [4] void otherCi(1 : string);" +
-                                                      "SPEC [CI] [ENTRY] [1] void doSomethingCi(4 : string) |- [CI] [ENTRY] [4] void otherCi(1 : string)")
+        real_ground_spec_1 = Spec.get_specs_from_string("SPEC ([CI] [ENTRY] [1] void doSomethingCi(4 : string) | " +
+                                                        "[CI] [ENTRY] [1] void doSomethingCi(2 : string)) " +
+                                                        "|- [CI] [ENTRY] [4] void otherCi(1 : string)")
+        real_ground_spec_2 = Spec.get_specs_from_string("SPEC ([CI] [ENTRY] [1] void doSomethingCi(2 : string) | " +
+                                                        "[CI] [ENTRY] [1] void doSomethingCi(4 : string)) " +
+                                                        "|- [CI] [ENTRY] [4] void otherCi(1 : string)")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
+        self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec_1) or
+                        TestGrounding._eq_specs(ground_specs, real_ground_spec_2))
 
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC [CB] [ENTRY] [l] void doSomethingCb() |- [CI] [ENTRY] [#] void otherCi(l : string)")
@@ -507,7 +516,7 @@ class TestGrounding(unittest.TestCase):
 
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC !([CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l] void doB()")
-        real_ground_spec = Spec.get_specs_from_string("SPEC TRUE |- [CB] [ENTRY] [1] void doB()")
+        real_ground_spec = Spec.get_specs_from_string("SPEC TRUE[*] |- [CB] [ENTRY] [1] void doB()")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
@@ -573,13 +582,13 @@ class TestGrounding(unittest.TestCase):
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC [CI] [ENTRY] void m2() |- [CB] [EXIT] void m1()")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(3 == len(ground_specs))
+        self.assertTrue(1 == len(ground_specs))
 
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC ! ([CB] [ENTRY] void m3()) |- [CB] [ENTRY] void m1()")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(1 == len(ground_specs))
-        self.assertTrue(new_true() == get_regexp_node(ground_specs[0].ast))
+        self.assertTrue(new_star(new_true()) == get_regexp_node(ground_specs[0].ast))
 
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC [CB] [ENTRY] void m3() |- [CB] [ENTRY] void m1()")
@@ -753,7 +762,10 @@ class TestGrounding(unittest.TestCase):
                     p_values.append(TestGrounding._get_int(x))
                     signature = "%s%s" % (signature, "int")
                 except:
-                    p_values.append(new_id(p))
+                    if (p == "#"):
+                        p_values.append(new_dontcare())
+                    else:
+                        p_values.append(new_id(p))
                     signature = "%s%s" % (signature, "int")
 
             signature = "%s)" % signature
@@ -846,8 +858,6 @@ class TestGrounding(unittest.TestCase):
                      "SPEC TRUE[*] |- [CB] [ENTRY] [1] void doB(1 : int)")]
         for test in negation: TestGrounding.check_sg(test)
 
-
-        sys.stderr.write("multiv\n")
         multiv = [("SPEC [CB] [ENTRY] [1] void doA(x : int); [CB] [ENTRY] [1] void doA(y : int) |- [CB] [ENTRY] [1] void doB(1 : int)",
                    "doA(1);doA(2);doB(1)",
                    "SPEC [CB] [ENTRY] [1] void doA(1 : int); [CB] [ENTRY] [1] void doA(1 : int) |- [CB] [ENTRY] [1] void doB(1 : int);" +
