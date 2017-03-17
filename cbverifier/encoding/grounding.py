@@ -58,22 +58,60 @@ class GroundSpecs(object):
         for substitution in sg.get_substitutions(spec):
             new_spec_ast = GroundSpecs._substitute(spec, substitution)
 
-            # skip duplicates
-            if new_spec_ast in ast_set:
-                continue
-            else:
-                ast_set.add(new_spec_ast)
-
-            new_spec = Spec(new_spec_ast)
-
-            is_rhs_false = new_spec.is_spec_rhs_false()
-            is_lhs_false = new_spec.is_regexp_false()
+            # WORKAROUND:
+            #
+            # The grounding produce a disjunction in the rhs of the SPEC if
+            # there are multiple messages there.
+            #
+            # However, The downstream toolchain expects to have only one message
+            # in the rhs.
+            #
+            # If this is the case, we duplicate the spec for each disjunct
+            #
+            regexp = get_regexp_node(new_spec_ast)
+            rhs = get_spec_rhs(new_spec_ast)
+            is_lhs_false = FALSE == get_node_type(regexp)
             # skip the specification if
-            #   - the rhs is false
+            #   - the rhs is false (or)
             #   - the regexp is false
-            if ((not is_rhs_false) and (not is_lhs_false)):
-                ground_specs.append(new_spec)
-                self.ground_to_spec[new_spec] = spec
+            if (is_lhs_false): continue
+
+            # loop on the disjunctions in the rhs
+            atoms_rhs = []
+            rhs_stack = [rhs]
+            while (len(rhs_stack) != 0):
+                current = rhs_stack.pop()
+
+                # Skip false
+                is_current_false = FALSE == get_node_type(current)
+                if is_current_false: continue
+
+                # requirement on the RHS
+                assert (OR_OP == get_node_type(current) or
+                        CALL_ENTRY == get_node_type(current) or
+                        CALL_EXIT == get_node_type(current))
+
+                if (get_node_type(current) != OR_OP):
+                    atoms_rhs.append(current)
+                else:
+                    rhs_stack.append(current[1])
+                    rhs_stack.append(current[2])
+            for atom_rhs in atoms_rhs:
+                assert get_node_type(new_spec_ast) == SPEC_SYMB
+                assert (ENABLE_OP == get_node_type(new_spec_ast[1]) or
+                        DISABLE_OP == get_node_type(new_spec_ast[1]))
+
+                op_node = create_node(get_node_type(new_spec_ast[1]),
+                                      [regexp, atom_rhs])
+
+                split_spec_ast = create_node(SPEC_SYMB, [op_node, new_nil()])
+
+                # skip duplicates
+                if split_spec_ast not in ast_set:
+                    ast_set.add(split_spec_ast)
+                    new_spec = Spec(split_spec_ast)
+                    ground_specs.append(new_spec)
+                    self.ground_to_spec[new_spec] = spec
         return ground_specs
 
     @staticmethod
