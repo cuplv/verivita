@@ -36,7 +36,7 @@ class TestGrounding(unittest.TestCase):
     @staticmethod
     def newAssign(variables, values):
         assert len(values) == len(variables)
-        a = Assignmentwrs()
+        a = Assignments()
         for v,l in zip(variables, values): a.add(v,l)
         return a
 
