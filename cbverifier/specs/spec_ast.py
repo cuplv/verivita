@@ -566,6 +566,33 @@ def simplify_or(lhs, rhs):
 
     return new_or(lhs,rhs)
 
+def simplify_seq(lhs, rhs):
+    """ Syntactic simplification rules for the concatenation
+    1. FALSE; regexp => FALSE
+    2. regexp[*]; regexp[*] => regexp[*]
+    """
+
+    # 1.
+    if (get_node_type(lhs) == FALSE or get_node_type(rhs) == FALSE):
+        return new_false()
+    # 2.
+    if (lhs == rhs and
+        get_node_type(lhs) == STAR_OP and
+        get_node_type(rhs) == STAR_OP):
+        return lhs
+
+    return new_seq(lhs,rhs)
+
+def simplify_star(lhs):
+    """ Syntactic simplification rules for the kleene star
+    1. (regexp[*])[*]
+    """
+
+    # 1.
+    if (get_node_type(lhs) == STAR_OP): return lhs[1]
+
+    return new_star(lhs)
+
 
 
 class UnexpectedSymbol(Exception):

@@ -434,3 +434,38 @@ class TestSpecParser(unittest.TestCase):
                  simplify_or(true_star, r1) == true_star]
         for l in tests: self.assertTrue(True == l)
 
+        # SEQ_OP
+        r2 = new_and(atom2, atom1)
+        r1_star = new_star(r1)
+        r2_star = new_star(r2)
+        false_star = new_star(new_false())
+        no_simp = [(atom1, atom2),
+                   (r1, atom2),
+                   (r1, true),
+                   (r1,r2),
+                   (true, false_star),
+                   (true, true),
+                   (r1_star, r2_star)]
+        t_same_bin(no_simp, simplify_seq, SEQ_OP)
+
+        tests = [simplify_seq(false, r1) == false, # 1
+                 simplify_seq(false, atom1) == false,
+                 simplify_seq(false, true_star) == false,
+                 simplify_seq(false, r1_star) == false,
+                 simplify_seq(r1, false) == false,
+                 simplify_seq(atom1, false) == false,
+                 simplify_seq(true_star, false) == false,
+                 simplify_seq(r1_star, false) == false,
+                 simplify_seq(r1_star, r1_star) == r1_star] # 2
+
+        for l in tests: self.assertTrue(True == l)
+
+        # NOTE: element of no_simp are the args to new_star
+        # that is applied inside t_same_un
+        no_simp = [atom1, atom2, r1, r2,true, false]
+        t_same_un(no_simp, simplify_star, STAR_OP)
+
+        tests = [simplify_star(r1_star) == r1,
+                 simplify_star(true_star) == true,
+                 simplify_star(false_star) == false]
+        for l in tests: self.assertTrue(True == l)
