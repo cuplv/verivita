@@ -17,16 +17,19 @@ except ImportError:
     import unittest
 
 import cbverifier.test.examples
-from cbverifier.encoding.grounding import GroundSpecs, Assignments, bottom_value, TraceSpecConverter
+from cbverifier.encoding.grounding import GroundSpecs, Assignments, bottom_value
+from cbverifier.encoding.grounding import TraceSpecConverter
 from cbverifier.encoding.grounding import AssignmentsSet, TraceMap
+from cbverifier.encoding.grounding import SymbolicGrounding
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, FrameworkOverride, CValue, TraceConverter
 from cbverifier.specs.spec_ast import *
 from cbverifier.specs.spec import Spec, spec_parser
 
 from cbverifier.traces.ctrace import CTraceSerializer
 
-
 from cStringIO import StringIO
+
+PRINT_SPEC_COMPARISON = False
 
 class TestGrounding(unittest.TestCase):
 
@@ -339,24 +342,40 @@ class TestGrounding(unittest.TestCase):
               cb6]]])
         assert (res == res_2)
 
-    def _eq_specs(self, specs1, specs2):
-        if (len(specs1) != len(specs2)):
-            return False
+    @staticmethod
+    def _eq_specs(specs1, specs2):
+        def print_lists(specs1, specs2, stream):
+            if len(specs1) > 0 or len(specs2) > 0:
+                stream.write("Specs1\n")
+                for s in specs1:
+                    s.print_spec(stream)
+                    stream.write("\n")
+                stream.write("Specs2\n")
+                for s in specs2:
+                    s.print_spec(stream)
+                    stream.write("\n")
+            stream.write("---\n")
 
+        if specs1 is None: specs1 = []
+        if specs2 is None: specs2 = []
+
+        if (len(specs1) != len(specs2)):
+            logging.debug("Different lengths: %d != %d" % (len(specs1),len(specs2)))
+            if PRINT_SPEC_COMPARISON:
+                print_lists(specs1, specs2, sys.stderr)
+            return False
+        if PRINT_SPEC_COMPARISON:
+            print_lists(specs1, specs2, sys.stderr)
         for s1 in specs1:
             stringio = StringIO()
             s1.print_spec(stringio)
             s1_str = stringio.getvalue()
-
-#            print "S1: " + s1_str
 
             found = None
             for s2 in specs2:
                 stringio = StringIO()
                 s2.print_spec(stringio)
                 s2_str = stringio.getvalue()
-#                print "S2: " + s2_str
-
                 if s2_str == s1_str:
                     found = s2
                     break
@@ -406,44 +425,50 @@ class TestGrounding(unittest.TestCase):
         specs = Spec.get_spec_from_string("SPEC [CI] [ENTRY] [l] void doSomethingCi(z : string) |- [CI] [ENTRY] [z] void otherCi(f  : string)")
         real_ground_spec = Spec.get_spec_from_string("SPEC [CI] [ENTRY] [1] void doSomethingCi(4 : string) |- [CI] [ENTRY] [4] void otherCi(1  : string)")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+        self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
+        # WARNING: the results is sensitive to the order of the atoms in the OR
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC [CI] [ENTRY] [l] void doSomethingCi(# : string) |- [CI] [ENTRY] [#] void otherCi(# : string)")
-        real_ground_spec = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [1] void doSomethingCi(2 : string) |- [CI] [ENTRY] [4] void otherCi(1 : string);" +
-                                                      "SPEC [CI] [ENTRY] [1] void doSomethingCi(4 : string) |- [CI] [ENTRY] [4] void otherCi(1 : string)")
+        real_ground_spec_1 = Spec.get_specs_from_string("SPEC ([CI] [ENTRY] [1] void doSomethingCi(4 : string) | " +
+                                                        "[CI] [ENTRY] [1] void doSomethingCi(2 : string)) " +
+                                                        "|- [CI] [ENTRY] [4] void otherCi(1 : string)")
+        real_ground_spec_2 = Spec.get_specs_from_string("SPEC ([CI] [ENTRY] [1] void doSomethingCi(2 : string) | " +
+                                                        "[CI] [ENTRY] [1] void doSomethingCi(4 : string)) " +
+                                                        "|- [CI] [ENTRY] [4] void otherCi(1 : string)")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+        self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec_1) or
+                        TestGrounding._eq_specs(ground_specs, real_ground_spec_2))
 
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC [CB] [ENTRY] [l] void doSomethingCb() |- [CI] [ENTRY] [#] void otherCi(l : string)")
         real_ground_spec = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [1] void doSomethingCb() |- [CI] [ENTRY] [4] void otherCi(1 : string)")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+        self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC TRUE |- [CI] [ENTRY] [l1] void doSomethingCi(l1 : string)")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(self._eq_specs(ground_specs, []))
+        self.assertTrue(TestGrounding._eq_specs(ground_specs, []))
 
 
         # doSomethingCi will be instantiated to FALSE
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC [CI] [ENTRY] [l1] void doSomethingCi(l1 : string) |- [CI] [ENTRY] [z] void otherCi(l : string)")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(self._eq_specs(ground_specs, []))
+        self.assertTrue(TestGrounding._eq_specs(ground_specs, []))
 
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC [CB] [EXIT] [l] void doSomethingCb() |- [CI] [EXIT] [#] void otherCi(l : string)")
         real_ground_spec = Spec.get_specs_from_string("SPEC [CB] [EXIT] [1] void doSomethingCb() |- [CI] [EXIT] [4] void otherCi(1 : string)")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+        self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC m = [CB] [EXIT] [l] void doSomethingCb2() |- m = [CB] [EXIT] [l] void doSomethingCb2()")
         real_ground_spec = Spec.get_specs_from_string("SPEC 1 = [CB] [EXIT] [1] void doSomethingCb2() |- 1 = [CB] [EXIT] [1] void doSomethingCb2()")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+        self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
 
 
@@ -491,9 +516,9 @@ class TestGrounding(unittest.TestCase):
 
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC !([CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l] void doB()")
-        real_ground_spec = Spec.get_specs_from_string("SPEC TRUE |- [CB] [ENTRY] [1] void doB()")
+        real_ground_spec = Spec.get_specs_from_string("SPEC TRUE[*] |- [CB] [ENTRY] [1] void doB()")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+        self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
 
     def test_iss131_2(self):
@@ -521,7 +546,7 @@ class TestGrounding(unittest.TestCase):
         real_ground_spec = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [2] void doA() |- [CB] [ENTRY] [1] void doC();" +
                                                       "SPEC [CB] [ENTRY] [1] void doB() |- [CB] [ENTRY] [1] void doC()")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+        self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
 
     def test_constants(self):
@@ -557,13 +582,13 @@ class TestGrounding(unittest.TestCase):
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC [CI] [ENTRY] void m2() |- [CB] [EXIT] void m1()")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(3 == len(ground_specs))
+        self.assertTrue(1 == len(ground_specs))
 
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC ! ([CB] [ENTRY] void m3()) |- [CB] [ENTRY] void m1()")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(1 == len(ground_specs))
-        self.assertTrue(new_true() == get_regexp_node(ground_specs[0].ast))
+        self.assertTrue(new_star(new_true()) == get_regexp_node(ground_specs[0].ast))
 
         gs = GroundSpecs(trace)
         specs = Spec.get_spec_from_string("SPEC [CB] [ENTRY] void m3() |- [CB] [ENTRY] void m1()")
@@ -614,7 +639,7 @@ class TestGrounding(unittest.TestCase):
         real_ground_spec = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [1] void doA() |- [CI] [ENTRY] [2] void doC();" +
                                                       "SPEC [CI] [ENTRY] [2] void doB() |- [CI] [ENTRY] [2] void doC()")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+        self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
 
     def test_regexp_and_empty(self):
@@ -650,7 +675,7 @@ class TestGrounding(unittest.TestCase):
         specs = Spec.get_spec_from_string("SPEC ([CI] [ENTRY] [l] void doA() & [CI] [ENTRY] [l] void doB()) |- [CI] [ENTRY] [f] void doC()")
         real_ground_spec = Spec.get_specs_from_string("SPEC ([CI] [ENTRY] [1] void doA() & [CI] [ENTRY] [1] void doB()) |- [CI] [ENTRY] [2] void doC()")
         ground_specs = gs.ground_spec(specs[0])
-        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+        self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
     def test_array_types(self):
         test_path = os.path.dirname(cbverifier.test.examples.__file__)
@@ -671,7 +696,179 @@ class TestGrounding(unittest.TestCase):
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(ground_specs is not None)
         self.assertTrue(1 == len(ground_specs))
-        self.assertTrue(self._eq_specs(ground_specs, real_ground_spec))
+        self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
 
+    def test_iss161(self):
+        trace = CTrace()
+        cb1 = CCallback(1, 1, "", "void doA()",
+                        [TestGrounding._get_int(2)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doA()", False)])
+        trace.add_msg(cb1)
+        cb2 = CCallback(1, 1, "", "void doB()",
+                        [TestGrounding._get_int(1)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doB()", False)])
+        trace.add_msg(cb2)
+        cb3 = CCallback(1, 1, "", "void doA()",
+                        [TestGrounding._get_int(3)],
+                        None,
+                        [TestGrounding._get_fmwkov("", "void doA()", False)])
+        trace.add_msg(cb3)
+
+        gs = GroundSpecs(trace)
+        #specs = Spec.get_spec_from_string("SPEC [CB] [ENTRY] [l] void doA(); (! [CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l2] void doB()")
+        specs = Spec.get_spec_from_string("SPEC [CB] [ENTRY] [l] void doA(); [CB] [ENTRY] [l] void doA() |- [CB] [ENTRY] [l2] void doB()")
+        real_ground_spec = Spec.get_spec_from_string("SPEC [CB] [ENTRY] [l] void doA(); (! [CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l] void doB()")
+        ground_specs = gs.ground_spec(specs[0])
+
+        for g in ground_specs:
+            g.print_spec(sys.stdout)
+            print ""
+
+        # self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
+
+
+
+        # New tests:
+        # - no concrete values, ! used on message (e.g. ! m(x))
+        # - no concrete value for a specific message (e.g. m(x) & ! m2(x), in trace just m(1)
+
+
+
+    @staticmethod
+    def get_trace(trace_str):
+        trace = CTrace()
+
+        index = 0
+        for cb in trace_str.split(";"):
+            if not cb:
+                continue
+            index = index + 1
+            cb_name = cb[:cb.index("(")]
+            cb_params = cb[cb.index("(")+1:cb.index(")")].split(",")
+
+            p_values = []
+            signature = "void %s(" % cb_name
+            first = True
+            p_values.append(TestGrounding._get_int("1"))
+            for p in cb_params:
+                if not first:
+                    signature = "%s," % signature
+                first = False
+                try:
+                    x = int(p)
+                    p_values.append(TestGrounding._get_int(x))
+                    signature = "%s%s" % (signature, "int")
+                except:
+                    if (p == "#"):
+                        p_values.append(new_dontcare())
+                    else:
+                        p_values.append(new_id(p))
+                    signature = "%s%s" % (signature, "int")
+
+            signature = "%s)" % signature
+
+            cb = CCallback(index, 1, "",
+                           signature,
+                           p_values,
+                           None,
+                           [TestGrounding._get_fmwkov("", signature, False)])
+
+            trace.add_msg(cb)
+
+        return trace
+
+    @staticmethod
+    def check_sg(test):
+        (r, t, expected_specs_str) = test
+
+        trace = TestGrounding.get_trace(t)
+
+        gs = GroundSpecs(trace)
+        specs = Spec.get_spec_from_string(r)
+        ground_specs = gs.ground_spec(specs[0])
+
+        expected_ground_specs = Spec.get_specs_from_string(expected_specs_str)
+
+        if expected_ground_specs is None:
+            expected_ground_specs = []
+        assert(TestGrounding._eq_specs(ground_specs, expected_ground_specs))
+
+    def test_sg(self):
+        simple = [("SPEC FALSE |- FALSE", "", ""),
+                 #
+                 ("SPEC FALSE |- FALSE", "doA()", ""),
+                 #
+                 ("SPEC TRUE |- [CB] [ENTRY] [1] void doA(1 : int)", "doA(1)",
+                  "SPEC TRUE |- [CB] [ENTRY] [1] void doA(1 : int)"),
+                 #
+                 ("SPEC [CB] [ENTRY] [1] void doA(1 : int) |- [CB] [ENTRY] [1] void doA(1 : int)",
+                  "doA(1)",
+                  "SPEC [CB] [ENTRY] [1] void doA(1 : int) |- [CB] [ENTRY] [1] void doA(1 : int)"),
+                 #
+                 ("SPEC [CB] [ENTRY] [1] void doA(1 : int) |- [CB] [ENTRY] [1] void doA(1 : int)", "",""),
+                 #
+                 ("SPEC [CB] [ENTRY] [1] void doA(x : int) |- [CB] [ENTRY] [1] void doA(x : int)","",""),
+                 #
+                 ("SPEC [CB] [ENTRY] [1] void doA(x : int) |- [CB] [ENTRY] [1] void doA(x : int)",
+                  "doA(1)",
+                  "SPEC [CB] [ENTRY] [1] void doA(1 : int) |- [CB] [ENTRY] [1] void doA(1 : int)"),
+                 #
+                 ("SPEC [CB] [ENTRY] [1] void doB(x : int, y : int) |- [CB] [ENTRY] [1] void doB(x : int,y : int)", "", ""),
+                 #
+                 ("SPEC [CB] [ENTRY] [1] void doB(x : int, y : int) |- [CB] [ENTRY] [1] void doB(x : int,y : int)",
+                  "doB(1,2)",
+                  "SPEC [CB] [ENTRY] [1] void doB(1 : int,2:int) |- [CB] [ENTRY] [1] void doB(1 : int,2 : int)"),
+                 #
+                 ("SPEC [CB] [ENTRY] [1] void doB(x : int, y : int) |- [CB] [ENTRY] [1] void doB(x : int,y : int)",
+                  "doB(1,2);doB(2,3)",
+                  "SPEC [CB] [ENTRY] [1] void doB(1 : int, 2:int) |- [CB] [ENTRY] [1] void doB(1 : int, 2 : int);" +
+                  "SPEC [CB] [ENTRY] [1] void doB(2 : int, 3:int) |- [CB] [ENTRY] [1] void doB(2 : int, 3 : int)")]
+
+        for test in simple: TestGrounding.check_sg(test)
+
+        negation = [("SPEC ! ([CB] [ENTRY] [1] void doA(x : int)) |- [CB] [ENTRY] [1] void doB(1 : int)",
+                     "doB(1)",
+                     "SPEC TRUE[*] |- [CB] [ENTRY] [1] void doB(1 : int)"),
+                    ("SPEC ! ([CB] [ENTRY] [1] void doA(x : int)) |- [CB] [ENTRY] [1] void doB(1 : int)",
+                     "doA(1);doB(1)",
+                     "SPEC ! ([CB] [ENTRY] [1] void doA(1 : int)) |- [CB] [ENTRY] [1] void doB(1 : int); " +
+                     "SPEC TRUE[*] |- [CB] [ENTRY] [1] void doB(1 : int)"),
+                    ("SPEC ([CB] [ENTRY] [1] void doA(x : int)); ! ([CB] [ENTRY] [1] void doA(x : int)) |- [CB] [ENTRY] [1] void doB(1 : int)",
+                     "doB(1)", ""),
+                    ("SPEC ([CB] [ENTRY] [1] void doA(x : int)); ! ([CB] [ENTRY] [1] void doA(x : int)) |- [CB] [ENTRY] [1] void doB(1 : int)",
+                     "doA(1);doB(1)",
+                     "SPEC ([CB] [ENTRY] [1] void doA(1 : int)); ! ([CB] [ENTRY] [1] void doA(1 : int)) |- [CB] [ENTRY] [1] void doB(1 : int)"),
+                    ("SPEC ([CB] [ENTRY] [1] void doA(x : int)); ! ([CB] [ENTRY] [1] void doA(x : int)) |- [CB] [ENTRY] [1] void doB(1 : int)",
+                     "doA(1);doA(2);doB(1)",
+                     "SPEC ([CB] [ENTRY] [1] void doA(1 : int)); ! ([CB] [ENTRY] [1] void doA(1 : int)) |- [CB] [ENTRY] [1] void doB(1 : int);" +
+                     "SPEC ([CB] [ENTRY] [1] void doA(2 : int)); ! ([CB] [ENTRY] [1] void doA(2 : int)) |- [CB] [ENTRY] [1] void doB(1 : int)"),
+                    ("SPEC ([CB] [ENTRY] [1] void doA(x : int)) & ! ([CB] [ENTRY] [1] void doA(x : int)) |- [CB] [ENTRY] [1] void doB(1 : int)",
+                     "doB(1)", ""),
+                    ("SPEC ([CB] [ENTRY] [1] void doA(x : int)) & ! ([CB] [ENTRY] [1] void doA(x : int)) |- [CB] [ENTRY] [1] void doB(1 : int)",
+                     "doA(1);doB(1)",
+                     ""),
+                    ("SPEC ([CB] [ENTRY] [1] void doA(x : int)) | ! ([CB] [ENTRY] [1] void doA(x : int)) |- [CB] [ENTRY] [1] void doB(1 : int)",
+                     "doB(1)", "SPEC TRUE[*] |- [CB] [ENTRY] [1] void doB(1 : int)"),
+                    ("SPEC ([CB] [ENTRY] [1] void doA(x : int)) | ! ([CB] [ENTRY] [1] void doA(x : int)) |- [CB] [ENTRY] [1] void doB(1 : int)",
+                     "doA(1);doB(1)",
+                     "SPEC TRUE[*] |- [CB] [ENTRY] [1] void doB(1 : int)")]
+        for test in negation: TestGrounding.check_sg(test)
+
+        multiv = [("SPEC [CB] [ENTRY] [1] void doA(x : int); [CB] [ENTRY] [1] void doA(y : int) |- [CB] [ENTRY] [1] void doB(1 : int)",
+                   "doA(1);doA(2);doB(1)",
+                   "SPEC [CB] [ENTRY] [1] void doA(1 : int); [CB] [ENTRY] [1] void doA(1 : int) |- [CB] [ENTRY] [1] void doB(1 : int);" +
+                   "SPEC [CB] [ENTRY] [1] void doA(1 : int); [CB] [ENTRY] [1] void doA(2 : int) |- [CB] [ENTRY] [1] void doB(1 : int);" +
+                   "SPEC [CB] [ENTRY] [1] void doA(2 : int); [CB] [ENTRY] [1] void doA(2 : int) |- [CB] [ENTRY] [1] void doB(1 : int);" +
+                   "SPEC [CB] [ENTRY] [1] void doA(2 : int); [CB] [ENTRY] [1] void doA(1 : int) |- [CB] [ENTRY] [1] void doB(1 : int)"),
+                  ("SPEC [CB] [ENTRY] [1] void doA(x : int); [CB] [ENTRY] [1] void doC(x : int) |- [CB] [ENTRY] [1] void doB(1 : int)",
+                   "doA(1);doC(1);doB(1)",
+                   "SPEC [CB] [ENTRY] [1] void doA(1 : int); [CB] [ENTRY] [1] void doC(1 : int) |- [CB] [ENTRY] [1] void doB(1 : int)"),
+                  ("SPEC [CB] [ENTRY] [1] void doA(x : int); [CB] [ENTRY] [1] void doC(x : int) |- [CB] [ENTRY] [1] void doB(1 : int)",
+                   "doA(1);doC(2);doB(1)",
+                   "")]
+
+        for test in multiv: TestGrounding.check_sg(test)
 

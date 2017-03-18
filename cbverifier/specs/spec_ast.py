@@ -500,6 +500,111 @@ def pretty_print(ast_node, out_stream=sys.stdout):
     pretty_print_aux(out_stream, ast_node, "")
 
 
+# Simplification functions for regexp
+
+
+def simplify_not(lhs):
+    """ Syntactic simplification rules for the complement of regexp
+    1. ! (! regexp) => regexp
+    2. ! False => True[*]
+    3. ! True[*] => False
+
+    """
+    true_star = new_star(new_true())
+
+    if (get_node_type(lhs) == NOT_OP): return lhs[1]
+    if (get_node_type(lhs) == FALSE): return true_star
+    if (lhs == true_star): return new_false()
+
+    return new_not(lhs)
+
+def simplify_and(lhs, rhs):
+    """ Syntactic simplification rules for the intersection
+    1. regexp & regexp => regexp
+    2. regex & FALSE => FALSE
+    3. a & TRUE => a
+    4. regexp & TRUE[*] => regexp
+    5. regexp & ! regexp => FALSE
+    """
+    true_star = new_star(new_true())
+
+    # 1.
+    if (lhs == rhs): return lhs
+    # 2.
+    if (get_node_type(lhs) == FALSE or get_node_type(rhs) == FALSE):
+        return new_false()
+    # 3.
+    f_3 = lambda lhs,rhs : get_node_type(lhs) == TRUE and get_node_type(rhs) in [CALL_ENTRY, CALL_EXIT]
+    if (f_3(lhs,rhs)): return rhs
+    if (f_3(rhs,lhs)): return lhs
+    # 4.
+    if (rhs == true_star): return lhs
+    if (lhs == true_star): return rhs
+    # 5.
+    f_5 = lambda lhs,rhs : get_node_type(rhs) == NOT_OP and lhs == rhs[1]
+    if (f_5(lhs,rhs)): return new_false()
+    if (f_5(rhs,lhs)): return new_false()
+
+    return new_and(lhs,rhs)
+
+def simplify_or(lhs, rhs):
+    """ Syntactic simplification rules for the intersection
+    1. regexp | regexp => regexp
+    2. regexp | FALSE => regexp
+    3. a | TRUE => TRUE
+    4. regexp | TRUE[*] => TRUE[*]
+    5. regexp | ! regexp => TRUE[*]
+    """
+    true_star = new_star(new_true())
+
+    # 1.
+    if (lhs == rhs): return lhs
+    # 2.
+    f_2 = lambda lhs,rhs : get_node_type(lhs) == FALSE
+    if (f_2(lhs,rhs)): return rhs
+    if (f_2(rhs,lhs)): return lhs
+    # 3.
+    f_3 = lambda lhs,rhs : get_node_type(lhs) == TRUE and get_node_type(rhs) in [CALL_ENTRY, CALL_EXIT]
+    if (f_3(lhs,rhs)): return new_true()
+    if (f_3(rhs,lhs)): return new_true()
+    # 4. regexp & TRUE[*] => regexp
+    if (lhs == true_star or rhs == true_star): return true_star
+    # 5.
+    f_5 = lambda lhs,rhs : get_node_type(rhs) == NOT_OP and lhs == rhs[1]
+    if (f_5(lhs,rhs)): return true_star
+    if (f_5(rhs,lhs)): return true_star
+
+    return new_or(lhs,rhs)
+
+def simplify_seq(lhs, rhs):
+    """ Syntactic simplification rules for the concatenation
+    1. FALSE; regexp => FALSE
+    2. regexp[*]; regexp[*] => regexp[*]
+    """
+
+    # 1.
+    if (get_node_type(lhs) == FALSE or get_node_type(rhs) == FALSE):
+        return new_false()
+    # 2.
+    if (lhs == rhs and
+        get_node_type(lhs) == STAR_OP and
+        get_node_type(rhs) == STAR_OP):
+        return lhs
+
+    return new_seq(lhs,rhs)
+
+def simplify_star(lhs):
+    """ Syntactic simplification rules for the kleene star
+    1. (regexp[*])[*]
+    """
+
+    # 1.
+    if (get_node_type(lhs) == STAR_OP): return lhs[1]
+
+    return new_star(lhs)
+
+
+
 class UnexpectedSymbol(Exception):
     def __init__(self, node):
         self.node = node

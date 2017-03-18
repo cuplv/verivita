@@ -131,3 +131,9 @@ class Spec:
     def get_spec_calls(self):
         """ Returns a set of all the call atoms used in the spec """
         return get_call_nodes(self.ast)
+
+    def  __hash__(self):
+        return hash(self.ast)
+
+    def  __eq__(self, other):
+        return self.ast == other.ast
