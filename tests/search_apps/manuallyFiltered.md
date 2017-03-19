@@ -45,3 +45,21 @@
 	briandorey/manualpickandplacecontroller
 
 
+**execute**
+	scala-android/sbt-android
+	OceanLabs/Android-Print-SDK
+	imhotep/MapsPluginExample
+	PingPlusPlus/pingpp-android
+	warmshowers/wsandroid
+	nowlauncher/now-launcher
+	china-ece/Gaia
+	altchen/mopoo-android
+	FoamyGuy/StackSites
+	poliva/WifiStaticArp
+
+
+**execute method does not exist**
+	spicavigo/onlinesms_android
+	TakahikoKawasaki/TwitterOAuthView
+
+
