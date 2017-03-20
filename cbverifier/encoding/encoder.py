@@ -218,8 +218,10 @@ class TSEncoder:
         self.ts = None
         self.error_prop = None
 
+        logging.info("Total number of specs (before grounding): %d" % (len(specs)))
         self.gs = GroundSpecs(self.trace)
         self.ground_specs = TSEncoder._compute_ground_spec(self.gs, self.specs)
+        logging.info("Total specs after grounding: %d" % (len(self.ground_specs)))
 
         # Remove all the messages in the trace that do not
         # appear in the specification.
@@ -697,6 +699,11 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             ts.state_vars = ts_auto.state_vars
             ts.input_vars = ts_auto.input_vars
         else:
+            # # DEBUG
+            # stringio = StringIO()
+            # pretty_print(regexp, stringio)
+            # logging.info("Creating automata for spec: %s\n" % (stringio.getvalue()))
+
             (auto_pc, final_states, ts_auto) = self._get_regexp_ts(regexp, spec_id)
             self.regexp2ts[regexp] = (auto_pc, final_states, ts_auto)
             ts.product(ts_auto)
@@ -1320,6 +1327,7 @@ class RegExpToAuto():
     TODO: all the recursive functions should become iterative
 
     """
+
     def __init__(self, cenc, alphabet, mapback, auto_env=None):
         if auto_env is None:
             auto_env = AutoEnv.get_global_auto_env()
@@ -1380,32 +1388,41 @@ class RegExpToAuto():
         elif (node_type == AND_OP):
             lhs = self.get_from_regexp_aux(regexp[1])
             rhs = self.get_from_regexp_aux(regexp[2])
+
             automaton = lhs.intersection(rhs)
+
             lhs = None
             rhs = None
             return automaton
         elif (node_type == OR_OP):
             lhs = self.get_from_regexp_aux(regexp[1])
             rhs = self.get_from_regexp_aux(regexp[2])
+
             automaton = lhs.union(rhs)
+
             lhs = None
             rhs = None
             return automaton
         elif (node_type == NOT_OP):
             lhs = self.get_from_regexp_aux(regexp[1])
+
             automaton = lhs.complement()
+
             lhs = None
             return automaton
         elif (node_type == SEQ_OP):
             lhs = self.get_from_regexp_aux(regexp[1])
             rhs = self.get_from_regexp_aux(regexp[2])
+
             automaton = lhs.concatenate(rhs)
             lhs = None
             rhs = None
             return automaton
         elif (node_type == STAR_OP):
             lhs = self.get_from_regexp_aux(regexp[1])
+
             automaton = lhs.klenee_star()
+
             lhs = None
             return automaton
         else:
