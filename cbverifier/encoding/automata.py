@@ -93,6 +93,7 @@ class Automaton(object):
         self.states = set()
         # map from an id to a list of ids
         self.trans = {}
+        self.trans_count = 0
         self.initial_states = set()
         self.final_states = set()
 
@@ -122,7 +123,13 @@ class Automaton(object):
         # TODO: add map on dst transition
         # If there is already a transition from src to dst
         # we just need to union the labels.
-        self.trans[src].append((dst,label))
+        self._add_trans_dst(self.trans[src],
+                            dst, label)
+
+    def _add_trans_dst(self, src_trans_list, dst, label):
+        src_trans_list.append((dst,label))
+        self.trans_count = self.trans_count + 1
+
 
     def is_initial(self, state):
         return state in self.initial_states
@@ -161,7 +168,7 @@ class Automaton(object):
                     stack.append(dst)
 
                 trans = copy.trans[copy_s]
-                trans.append((copy_dst,label))
+                copy._add_trans_dst(trans, copy_dst,label)
 
         return copy
 
@@ -206,14 +213,14 @@ class Automaton(object):
                     stack.append(dst)
                 else:
                     new_dst = self_to_new[dst]
-                trans.append((new_dst,label))
+                new_auto._add_trans_dst(trans, new_dst, label)
 
             # add transition from final state to all the states
             # reachable from an initial state  in other
             if (self.is_final(s)):
                 for other_init in other.initial_states:
                     for (other_dst, other_label) in other.trans[other_init]:
-                        trans.append((other_dst, other_label))
+                        new_auto._add_trans_dst(trans, other_dst, other_label)
                     if other_init in other.final_states:
                         new_auto.final_states.add(new_s)
 
@@ -257,13 +264,21 @@ class Automaton(object):
         # copy the other automaton
         new_auto = self.copy_reachable()
 
+        new_trans = []
         for final in new_auto.final_states:
             trans = new_auto.trans[final]
+            new_trans_list = []
+
             for initial in new_auto.initial_states:
                 for (dst, label) in new_auto.trans[initial]:
                     # Add a transition from the final state to the
                     # states reached by the initial states
-                    trans.append((dst, label))
+                    new_trans_list.append((dst,label))
+            new_trans.append((trans, new_trans_list))
+
+        for (trans, trans_list) in new_trans:
+            for (dst,label) in trans_list:
+                new_auto._add_trans_dst(trans, dst, label)
 
         # make all the initial also accepting
         for initial in new_auto.initial_states:

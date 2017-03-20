@@ -275,3 +275,20 @@ class TestAuto(unittest.TestCase):
         self.assertTrue(auto_ts_a_ts.accept([a_label]))
         self.assertFalse(auto_ts_a_ts.accept([]))
 
+    def test_iss171(self):
+        auto_env = AutoEnv(get_env(), True)
+        auto = Automaton(auto_env)
+
+        s0 = auto._add_new_state(True, True)
+        s1 = auto._add_new_state(False, False)
+        s2 = auto._add_new_state(False, True)
+
+        l1 = auto_env.new_label(Symbol('l1'))
+        true_label = auto_env.new_label(TRUE())
+
+        auto._add_trans(s0, s1, l1)
+        auto._add_trans(s0, s2, l1)
+        auto._add_trans(s1, s2, true_label)
+        auto._add_trans(s1, s2, true_label)
+
+        auto.klenee_star()
