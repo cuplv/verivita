@@ -1,6 +1,6 @@
 // onClick is initially disabled
 //TODO:
-//SPEC FALSE[*] |- [CB] [ENTRY] [l] void android.widget.AdapterView$OnItemClickListener.onItemClick(# : android.widget.AdapterView,# : android.view.View, # : int, # : long);
+SPEC FALSE[*] |- [CB] [ENTRY] [l] void android.widget.AdapterView$OnItemClickListener.onItemClick(# : android.widget.AdapterView,# : android.view.View, # : int, # : long);
 
 
 ////Fragment onResume enable
@@ -15,6 +15,16 @@ SPEC
 
      );
      [CB] [ENTRY] [f] void android.app.Fragment.onResume()  |+ [CB] [ENTRY] [l] void android.widget.AdapterView$OnItemClickListener.onItemClick(listview : android.widget.AdapterView, # : android.view.View, # : int, # : long)
+     ALIASES android.app.Fragment.onViewCreated = [android.support.v4.app.Fragment.onViewCreated,android.app.Fragment.onViewCreated],android.app.Fragment.onResume = [android.support.v4.app.Fragment.onResume,android.app.Fragment.onResume];
+
+SPEC 
+     (
+     (TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(listview2 : android.view.View, # : android.os.Bundle);TRUE[*])
+     &
+     (TRUE[*];[CI] [ENTRY] [listview] void android.widget.AdapterView.setOnItemClickListener( l : android.widget.AdapterView$OnItemClickListener);TRUE[*])
+
+     );
+     [CB] [ENTRY] [f] void android.app.Fragment.onDetach()  |- [CB] [ENTRY] [l] void android.widget.AdapterView$OnItemClickListener.onItemClick(listview : android.widget.AdapterView, # : android.view.View, # : int, # : long)
      ALIASES android.app.Fragment.onViewCreated = [android.support.v4.app.Fragment.onViewCreated,android.app.Fragment.onViewCreated],android.app.Fragment.onResume = [android.support.v4.app.Fragment.onResume,android.app.Fragment.onResume]
 
 
