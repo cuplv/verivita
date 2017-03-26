@@ -68,7 +68,7 @@ class GroundSpecs(object):
 
         (spec, ast_set, ground_specs) = data
 
-        new_spec_ast = GroundSpecs._substitute(spec, substitution, self.learn_conflicts)
+        (new_spec_ast, conflict) = GroundSpecs._substitute(spec, substitution)
 
         # WORKAROUND:
         #
@@ -87,7 +87,7 @@ class GroundSpecs(object):
         #   - the rhs is false (or)
         #   - the regexp is false
         if (is_lhs_false):
-            return None
+            return conflict
 
         # loop on the disjunctions in the rhs
         atoms_rhs = []
@@ -127,11 +127,18 @@ class GroundSpecs(object):
                 ground_specs.append(new_spec)
                 self.ground_to_spec[new_spec] = spec
 
-        return None
+        return conflict
 
     @staticmethod
-    def _substitute(spec, substitution, learn_conflicts):
-        def substitute_rec(node, substitution, learn_conflicts):
+    def _substitute(spec, substitution):
+        """ Returns the AST of the spec obtained by substituting the assignments
+        inside substitution to spec.
+
+        It also returns a subset of the variables assigned in substitution
+        that are sufficient to make the spec inconsistent
+        """
+
+        def substitute_rec(node, substitution):
             def get_param_types_list(node):
                 types_list = []
                 app = node
@@ -173,58 +180,58 @@ class GroundSpecs(object):
                             res = new_or(res, new_call_node)
                 return (res, conflict)
             elif (node_type == AND_OP):
-                (lhs, lconflict) = substitute_rec(node[1], substitution, learn_conflicts)
-                (rhs, rconflict) = substitute_rec(node[2], substitution, learn_conflicts)
+                (lhs, lconflict) = substitute_rec(node[1], substitution)
+                (rhs, rconflict) = substitute_rec(node[2], substitution)
 
                 res = simplify_and(lhs, rhs)
                 conflict = GroundSpecs._merge_conflicts(lconflict, rconflict)
 
                 return (res, conflict)
             elif (node_type == OR_OP):
-                (lhs, lconflict) = substitute_rec(node[1], substitution, learn_conflicts)
-                (rhs, rconflict) = substitute_rec(node[2], substitution, learn_conflicts)
+                (lhs, lconflict) = substitute_rec(node[1], substitution)
+                (rhs, rconflict) = substitute_rec(node[2], substitution)
 
                 res = simplify_or(lhs, rhs)
                 conflict = GroundSpecs._merge_conflicts(lconflict, rconflict)
 
                 return (res, conflict)
             elif (node_type == SEQ_OP):
-                (lhs, lconflict) = substitute_rec(node[1], substitution, learn_conflicts)
-                (rhs, rconflict) = substitute_rec(node[2], substitution, learn_conflicts)
+                (lhs, lconflict) = substitute_rec(node[1], substitution)
+                (rhs, rconflict) = substitute_rec(node[2], substitution)
 
                 res = simplify_seq(lhs, rhs)
                 conflict = GroundSpecs._merge_conflicts(lconflict, rconflict)
 
                 return (res, conflict)
             elif (node_type == NOT_OP):
-                (lhs, conflict) = substitute_rec(node[1], substitution, learn_conflicts)
+                (lhs, conflict) = substitute_rec(node[1], substitution)
                 res = simplify_not(lhs)
 
                 return (res,conflict)
             elif (node_type == STAR_OP):
-                (lhs, conflict) = substitute_rec(node[1], substitution, learn_conflicts)
+                (lhs, conflict) = substitute_rec(node[1], substitution)
                 res = simplify_star(lhs)
 
                 return (res,conflict)
             elif (node_type == ENABLE_OP or node_type == DISABLE_OP):
-                (lhs, lconflict) = substitute_rec(node[1], substitution, learn_conflicts)
-                (rhs, rconflict) = substitute_rec(node[2], substitution, learn_conflicts)
+                (lhs, lconflict) = substitute_rec(node[1], substitution)
+                (rhs, rconflict) = substitute_rec(node[2], substitution)
 
                 res = create_node(node_type, [lhs, rhs])
                 conflict = GroundSpecs._merge_conflicts(lconflict, rconflict)
 
                 return (res, conflict)
             elif (node_type == SPEC_SYMB):
-                (lhs, conflict) = substitute_rec(node[1], substitution, learn_conflicts)
+                (lhs, conflict) = substitute_rec(node[1], substitution)
                 res = create_node(SPEC_SYMB, [lhs, new_nil()])
 
                 return (res,conflict)
             else:
                 raise UnexpectedSymbol(node)
 
-        (new_spec_asts, conflict) = substitute_rec(spec.ast, substitution, learn_conflicts)
+        (new_spec_asts, conflict) = substitute_rec(spec.ast, substitution)
 
-        return new_spec_asts
+        return (new_spec_asts, conflict)
 
     @staticmethod
     def _msg_to_call_node(is_entry, msg, param_types):
@@ -623,7 +630,20 @@ class SymbolicGrounding:
                     substitution[fvar] = fvalue
                     to_cut = And(to_cut,Equals(enc_var, enc_value))
 
-            unsat_assigns = process_subs(data, substitution)
+            conflict = process_subs(data, substitution)
+            if (len(conflict) > 0):
+                unsat_assignment = TRUE_PYSMT()
+                for fvar in conflict:
+                    fval = substitution[fvar]
+                    enc_var = self.fvars2encvars.lookup_a(fvar)
+
+                    fvals2enc = self.fvars2values[fvar]
+                    enc_value = fvals2enc.lookup_a(fval)
+
+                    unsat_assignment = And(unsat_assignment,
+                                           equals(enc_var, enc_value))
+                # remove assignment from the search
+                solver.add_assertion(Not(unsat_assignment))
 
             # rule out the current assignment
             solver.add_assertion(Not(to_cut))
