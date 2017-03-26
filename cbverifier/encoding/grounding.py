@@ -44,10 +44,14 @@ class GroundSpecs(object):
     Return a list of ground specifications.
     """
 
-    def __init__(self, trace):
+    def __init__(self, trace, learn_conflicts = True):
         self.trace = trace
         self.trace_map = TraceMap(self.trace)
         self.ground_to_spec = {}
+
+        # Learn the conjunction of assignments that leads
+        # to a FALSE specification
+        self.learn_conflicts = learn_conflicts
 
 
     def ground_spec(self, spec):
@@ -64,7 +68,7 @@ class GroundSpecs(object):
 
         (spec, ast_set, ground_specs) = data
 
-        new_spec_ast = GroundSpecs._substitute(spec, substitution)
+        new_spec_ast = GroundSpecs._substitute(spec, substitution, self.learn_conflicts)
 
         # WORKAROUND:
         #
@@ -126,10 +130,8 @@ class GroundSpecs(object):
         return None
 
     @staticmethod
-    def _substitute(spec, substitution):
-        # TODO: add memoization
-
-        def substitute_rec(node, substitution):
+    def _substitute(spec, substitution, learn_conflicts):
+        def substitute_rec(node, substitution, learn_conflicts):
             def get_param_types_list(node):
                 types_list = []
                 app = node
@@ -139,7 +141,8 @@ class GroundSpecs(object):
                 return types_list
 
             node_type = get_node_type(node)
-            if (node_type in leaf_nodes): return node
+            if (node_type in leaf_nodes):
+                return (node, set())
             elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
                 is_entry = True if node_type == CALL_ENTRY else False
 
@@ -147,7 +150,9 @@ class GroundSpecs(object):
                 call_var = (is_entry, node)
                 if call_var not in substitution:
                     res = new_false()
+                    conflict = set()
                 else:
+                    conflict = set()
                     for call_message in substitution[call_var]:
                         if call_message is bottom_value:
                             if res is None:
@@ -161,46 +166,63 @@ class GroundSpecs(object):
                         param_types = get_param_types_list(get_call_params(node))
                         new_call_node = GroundSpecs._msg_to_call_node(is_entry, call_message, param_types)
                         if res is None:
+                            conflict = set()
                             res = new_call_node
                         else:
+                            conflict = GroundSpecs._get_conflict(new_call_node, substitution)
                             res = new_or(res, new_call_node)
-                return res
+                return (res, conflict)
             elif (node_type == AND_OP):
-                lhs = substitute_rec(node[1], substitution)
-                rhs = substitute_rec(node[2], substitution)
+                (lhs, lconflict) = substitute_rec(node[1], substitution, learn_conflicts)
+                (rhs, rconflict) = substitute_rec(node[2], substitution, learn_conflicts)
 
                 res = simplify_and(lhs, rhs)
-                return res
-            elif (node_type == OR_OP):
-                lhs = substitute_rec(node[1], substitution)
-                rhs = substitute_rec(node[2], substitution)
-                res = simplify_or(lhs, rhs)
-                return res
+                conflict = GroundSpecs._merge_conflicts(lconflict, rconflict)
 
+                return (res, conflict)
+            elif (node_type == OR_OP):
+                (lhs, lconflict) = substitute_rec(node[1], substitution, learn_conflicts)
+                (rhs, rconflict) = substitute_rec(node[2], substitution, learn_conflicts)
+
+                res = simplify_or(lhs, rhs)
+                conflict = GroundSpecs._merge_conflicts(lconflict, rconflict)
+
+                return (res, conflict)
             elif (node_type == SEQ_OP):
-                lhs = substitute_rec(node[1], substitution)
-                rhs = substitute_rec(node[2], substitution)
+                (lhs, lconflict) = substitute_rec(node[1], substitution, learn_conflicts)
+                (rhs, rconflict) = substitute_rec(node[2], substitution, learn_conflicts)
+
                 res = simplify_seq(lhs, rhs)
-                return res
+                conflict = GroundSpecs._merge_conflicts(lconflict, rconflict)
+
+                return (res, conflict)
             elif (node_type == NOT_OP):
-                lhs = substitute_rec(node[1], substitution)
+                (lhs, conflict) = substitute_rec(node[1], substitution, learn_conflicts)
                 res = simplify_not(lhs)
-                return res
+
+                return (res,conflict)
             elif (node_type == STAR_OP):
-                lhs = substitute_rec(node[1], substitution)
+                (lhs, conflict) = substitute_rec(node[1], substitution, learn_conflicts)
                 res = simplify_star(lhs)
-                return res
+
+                return (res,conflict)
             elif (node_type == ENABLE_OP or node_type == DISABLE_OP):
-                lhs = substitute_rec(node[1], substitution)
-                rhs = substitute_rec(node[2], substitution)
-                return create_node(node_type, [lhs, rhs])
+                (lhs, lconflict) = substitute_rec(node[1], substitution, learn_conflicts)
+                (rhs, rconflict) = substitute_rec(node[2], substitution, learn_conflicts)
+
+                res = create_node(node_type, [lhs, rhs])
+                conflict = GroundSpecs._merge_conflicts(lconflict, rconflict)
+
+                return (res, conflict)
             elif (node_type == SPEC_SYMB):
-                lhs = substitute_rec(node[1], substitution)
-                return create_node(SPEC_SYMB, [lhs, new_nil()])
+                (lhs, conflict) = substitute_rec(node[1], substitution, learn_conflicts)
+                res = create_node(SPEC_SYMB, [lhs, new_nil()])
+
+                return (res,conflict)
             else:
                 raise UnexpectedSymbol(node)
 
-        new_spec_asts = substitute_rec(spec.ast, substitution)
+        (new_spec_asts, conflict) = substitute_rec(spec.ast, substitution, learn_conflicts)
 
         return new_spec_asts
 
@@ -254,6 +276,35 @@ class GroundSpecs(object):
                                       new_call_method,
                                       call_param_list)
         return call_node
+
+    @staticmethod
+    def _get_conflict(call_node, substitution):
+        plist = []
+
+        params = get_call_params(call_node)
+        while (get_node_type(params) == PARAM_LIST):
+            plist.append(get_param_name(params))
+            params = get_param_tail(params)
+        receiver = get_call_receiver(call_node)
+        if (get_node_type(receiver) != NIL):
+            plist.append(receiver)
+
+        if (get_node_type(call_node) == CALL_EXIT):
+            retval = get_call_assignee(call_node)
+            if (get_node_type(retval) != NIL):
+                plist.append(retval)
+
+        conflict = set()
+        for p in plist:
+            if p in substitution:
+                conflict.add(p)
+
+        return conflict
+
+    @staticmethod
+    def _merge_conflicts(c1, c2):
+        return c1.intersection(c2)
+
 
     def get_source_spec(self, ground_spec):
         if ground_spec not in self.ground_to_spec:
