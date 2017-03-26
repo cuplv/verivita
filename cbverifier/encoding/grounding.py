@@ -110,6 +110,9 @@ class GroundSpecs(object):
                 if split_spec_ast not in ast_set:
                     ast_set.add(split_spec_ast)
                     new_spec = Spec(split_spec_ast)
+
+                    print "Adding spec"
+
                     ground_specs.append(new_spec)
                     self.ground_to_spec[new_spec] = spec
         return ground_specs
@@ -327,7 +330,7 @@ class SymbolicGrounding:
         return enc_val
 
 
-    def process_assignments_formula(self, is_entry, call_node, asets):
+    def process_assignments_formula(self, is_entry, call_node, asets, must_bind):
         """
         For each call node and for each concrete assignment creates the label
         that must be used in the regular expression.
@@ -398,36 +401,23 @@ class SymbolicGrounding:
 
         # add the complement
         call_bottom_val_enc = self.find_or_add_val(call_var, frozenset([bottom_value]))
+        # if variables must be bind, remove the complement
         call_encoding = And(call_encoding,
                             Implies(complement,
                                     Equals(call_var_enc, call_bottom_val_enc)))
+        # if must_bind:
+        #     # cannot bind with bottom
+        #     call_encoding = And(call_encoding, Not(complement))
+        #     call_encoding = And(call_encoding, Not(Equals(call_var_enc, call_bottom_val_enc)))
+
+
+        if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
+            print("GROUNDING - ASSIGNMENTS:")
+            pretty_print(call_node, sys.stdout)
+            print asets
+            print("\n")
+
         return call_encoding
-
-    def get_messages(self, is_entry, node, bindings):
-        # TODO: REMOVE
-        messages = []
-        try:
-            for res in self.binding2message[(is_entry, node)]:
-                (msg_bindings, message) = res
-
-                found = True
-                for (var, val) in msg_bindings:
-                    try:
-                        bind_val = bindings.get(var)
-                        if (not (bind_val == val)):
-                            found = False
-                            break
-                    except KeyError:
-                        found = False
-                        break
-
-                # if find one it is ok
-                if found:
-                    messages.append(message)
-
-            return messages
-        except KeyError:
-            return messages
 
     def get_var_val(self, enc_var, enc_value):
         """ Returns the trace value given an (encoding) variable and an encoding
@@ -489,14 +479,21 @@ class SymbolicGrounding:
         return domain
 
     def _get_ground_bindings_formula(self, spec):
-        ground_enc = self._ground_bindings_formula_rec(spec.ast, {})
+        ground_enc = self._ground_bindings_formula_rec(spec.ast, {}, True)
         ground_enc = self.resize_bvs(ground_enc)
         ground_enc = And(ground_enc, self.get_domain_formula())
+
         return ground_enc
 
-    def _ground_bindings_formula_rec(self, spec_node, memo):
+    def _ground_bindings_formula_rec(self, spec_node, memo, must_bind):
         """ Returns a formula that encodes the set of all the possible bindings
-        and assignments to CALL nodes
+        and assignments to CALL nodes.
+
+        if must_bind is True it means that all the free variables of a a method
+        call MUST have an assignment (i.e. they cannot be bottom).
+
+        This is the case for the RHS of a specification or for the top-level
+        atoms.
         """
 
         if (spec_node in memo):
@@ -512,17 +509,23 @@ class SymbolicGrounding:
             node_type == DISABLE_OP or
             node_type == OR_OP):
 
+            must_bind = must_bind and (node_type != OR_OP)
+
             # create the global constraints
-            res = And(self._ground_bindings_formula_rec(spec_node[2], memo),
-                      self._ground_bindings_formula_rec(spec_node[1], memo))
+            res = And(self._ground_bindings_formula_rec(spec_node[2], memo, must_bind),
+                      self._ground_bindings_formula_rec(spec_node[1], memo, must_bind))
         elif (node_type == STAR_OP or node_type == SPEC_SYMB or
               node_type == NOT_OP):
-            res = self._ground_bindings_formula_rec(spec_node[1], memo)
+            must_bind = must_bind and node_type == SPEC_SYMB
+
+            res = self._ground_bindings_formula_rec(spec_node[1], memo, must_bind)
         elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
             spec_res = self.trace_map.lookup_assignments(spec_node)
             assert spec_res is not None
 
-            res = self.process_assignments_formula(node_type == CALL_ENTRY, spec_node, spec_res)
+            res = self.process_assignments_formula(node_type == CALL_ENTRY,
+                                                   spec_node, spec_res,
+                                                   must_bind)
         else:
             # WARNING: we handle one spec at a time (node_type != SPEC_LIST)
             raise UnexpectedSymbol(spec_node)
