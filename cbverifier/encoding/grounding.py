@@ -55,67 +55,75 @@ class GroundSpecs(object):
         ground_specs = []
         sg = SymbolicGrounding(self.trace_map)
 
-        for substitution in sg.get_substitutions(spec):
-            new_spec_ast = GroundSpecs._substitute(spec, substitution)
+        data = (spec, ast_set, ground_specs)
+        sg.process_substitutions(spec, self, self._process_sub, data)
 
-            # WORKAROUND:
-            #
-            # The grounding produce a disjunction in the rhs of the SPEC if
-            # there are multiple messages there.
-            #
-            # However, The downstream toolchain expects to have only one message
-            # in the rhs.
-            #
-            # If this is the case, we duplicate the spec for each disjunct
-            #
-            regexp = get_regexp_node(new_spec_ast)
-            rhs = get_spec_rhs(new_spec_ast)
-            is_lhs_false = FALSE == get_node_type(regexp)
-            # skip the specification if
-            #   - the rhs is false (or)
-            #   - the regexp is false
-            if (is_lhs_false): continue
-
-            # loop on the disjunctions in the rhs
-            atoms_rhs = []
-            rhs_stack = [rhs]
-            while (len(rhs_stack) != 0):
-                current = rhs_stack.pop()
-
-                # Skip false
-                is_current_false = FALSE == get_node_type(current)
-                if is_current_false: continue
-
-                # requirement on the RHS
-                assert (OR_OP == get_node_type(current) or
-                        CALL_ENTRY == get_node_type(current) or
-                        CALL_EXIT == get_node_type(current))
-
-                if (get_node_type(current) != OR_OP):
-                    atoms_rhs.append(current)
-                else:
-                    rhs_stack.append(current[1])
-                    rhs_stack.append(current[2])
-            for atom_rhs in atoms_rhs:
-                assert get_node_type(new_spec_ast) == SPEC_SYMB
-                assert (ENABLE_OP == get_node_type(new_spec_ast[1]) or
-                        DISABLE_OP == get_node_type(new_spec_ast[1]))
-
-                op_node = create_node(get_node_type(new_spec_ast[1]),
-                                      [regexp, atom_rhs])
-
-                split_spec_ast = create_node(SPEC_SYMB, [op_node, new_nil()])
-
-                # skip duplicates
-                if split_spec_ast not in ast_set:
-                    ast_set.add(split_spec_ast)
-                    new_spec = Spec(split_spec_ast)
-
-                    print "Adding spec"
-
-                    ground_specs.append(new_spec)
-                    self.ground_to_spec[new_spec] = spec
         return ground_specs
+
+    def _process_sub(self, data, substitution):
+
+        (spec, ast_set, ground_specs) = data
+
+        new_spec_ast = GroundSpecs._substitute(spec, substitution)
+
+        # WORKAROUND:
+        #
+        # The grounding produce a disjunction in the rhs of the SPEC if
+        # there are multiple messages there.
+        #
+        # However, The downstream toolchain expects to have only one message
+        # in the rhs.
+        #
+        # If this is the case, we duplicate the spec for each disjunct
+        #
+        regexp = get_regexp_node(new_spec_ast)
+        rhs = get_spec_rhs(new_spec_ast)
+        is_lhs_false = FALSE == get_node_type(regexp)
+        # skip the specification if
+        #   - the rhs is false (or)
+        #   - the regexp is false
+        if (is_lhs_false):
+            return None
+
+        # loop on the disjunctions in the rhs
+        atoms_rhs = []
+        rhs_stack = [rhs]
+        while (len(rhs_stack) != 0):
+            current = rhs_stack.pop()
+
+            # Skip false
+            is_current_false = FALSE == get_node_type(current)
+            if is_current_false: continue
+
+            # requirement on the RHS
+            assert (OR_OP == get_node_type(current) or
+                    CALL_ENTRY == get_node_type(current) or
+                    CALL_EXIT == get_node_type(current))
+
+            if (get_node_type(current) != OR_OP):
+                atoms_rhs.append(current)
+            else:
+                rhs_stack.append(current[1])
+                rhs_stack.append(current[2])
+        for atom_rhs in atoms_rhs:
+            assert get_node_type(new_spec_ast) == SPEC_SYMB
+            assert (ENABLE_OP == get_node_type(new_spec_ast[1]) or
+                    DISABLE_OP == get_node_type(new_spec_ast[1]))
+
+            op_node = create_node(get_node_type(new_spec_ast[1]),
+                                  [regexp, atom_rhs])
+
+            split_spec_ast = create_node(SPEC_SYMB, [op_node, new_nil()])
+
+            # skip duplicates
+            if split_spec_ast not in ast_set:
+                ast_set.add(split_spec_ast)
+                new_spec = Spec(split_spec_ast)
+
+                ground_specs.append(new_spec)
+                self.ground_to_spec[new_spec] = spec
+
+        return None
 
     @staticmethod
     def _substitute(spec, substitution):
@@ -534,14 +542,15 @@ class SymbolicGrounding:
         return res
 
 
-    def get_substitutions(self, spec):
-        """ Returns the list of all the possible substitutions for the
-        CALL nodes.
+    def process_substitutions(self, spec, parent, process_subs, data):
+        """ Generates all the possible substitutions
+        for the CALL nodes.
+
+        The caller implements what to do using the process_subs callback,
+        that is invoked every time a new substitution is found.
         """
 
         ground_formula = self._get_ground_bindings_formula(spec)
-
-        substitutions = []
 
         # ALL SAT on assignments - the model is finite
         solver = self.pysmt_env.factory.Solver(quantified=False,
@@ -562,12 +571,11 @@ class SymbolicGrounding:
                     assert frozenset == type(fvalue)
                     substitution[fvar] = fvalue
                     to_cut = And(to_cut,Equals(enc_var, enc_value))
-            substitutions.append(substitution)
+
+            unsat_assigns = process_subs(data, substitution)
 
             # rule out the current assignment
             solver.add_assertion(Not(to_cut))
-
-        return substitutions
 
 
 class AssignmentsBottom(object):
