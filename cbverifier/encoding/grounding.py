@@ -413,10 +413,10 @@ class SymbolicGrounding:
         call_encoding = And(call_encoding,
                             Implies(complement,
                                     Equals(call_var_enc, call_bottom_val_enc)))
-        # if must_bind:
-        #     # cannot bind with bottom
-        #     call_encoding = And(call_encoding, Not(complement))
-        #     call_encoding = And(call_encoding, Not(Equals(call_var_enc, call_bottom_val_enc)))
+        if must_bind:
+            # cannot bind with bottom
+            call_encoding = And(call_encoding, Not(complement))
+            call_encoding = And(call_encoding, Not(Equals(call_var_enc, call_bottom_val_enc)))
 
 
         if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
