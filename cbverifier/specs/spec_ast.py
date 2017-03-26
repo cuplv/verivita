@@ -358,7 +358,7 @@ def subs_alias(node, subs_map):
 
 
 
-def pretty_print(ast_node, out_stream=sys.stdout):
+def pretty_print(ast_node, out_stream=sys.stdout, sep=""):
 
     def pretty_print_aux(out_stream, node, sep):
         def my_print(out_stream, string):
@@ -497,7 +497,7 @@ def pretty_print(ast_node, out_stream=sys.stdout):
         else:
             raise UnexpectedSymbol(node)
 
-    pretty_print_aux(out_stream, ast_node, "")
+    pretty_print_aux(out_stream, ast_node, sep)
 
 
 # Simplification functions for regexp
