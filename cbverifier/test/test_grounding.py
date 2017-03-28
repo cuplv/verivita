@@ -26,7 +26,6 @@ from cbverifier.specs.spec_ast import *
 from cbverifier.specs.spec import Spec, spec_parser
 
 from cbverifier.traces.ctrace import CTraceSerializer
-
 from cStringIO import StringIO
 
 PRINT_SPEC_COMPARISON = False

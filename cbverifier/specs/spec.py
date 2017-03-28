@@ -9,6 +9,7 @@ import logging
 
 from cbverifier.specs.spec_parser import spec_parser
 from cbverifier.specs.spec_ast import *
+from cStringIO import StringIO
 
 class Spec:
     def __init__(self, spec_ast):
@@ -131,6 +132,12 @@ class Spec:
     def get_spec_calls(self):
         """ Returns a set of all the call atoms used in the spec """
         return get_call_nodes(self.ast)
+
+    def __repr__(self):
+        stringio = StringIO()
+        self.print_spec(stringio)
+        return stringio.getvalue()
+
 
     def  __hash__(self):
         return hash(self.ast)

@@ -363,6 +363,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         """
         ground_specs = set()
         for spec in specs:
+            logging.info("Grounding spec: %s" % str(spec))
             tmp = gs.ground_spec(spec)
             ground_specs.update(set(tmp))
         return ground_specs
