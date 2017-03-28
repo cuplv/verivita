@@ -54,20 +54,21 @@ class GroundSpecs(object):
         #
         # The conjunction is used to rule out a set of assignments
         # from their explicit enumeration
+        # self.learn_reasons = learn_reasons
         self.learn_reasons = learn_reasons
 
 
     def ground_spec(self, spec):
         ast_set = set() # avoid duplicate specs - memo works at ast level
         ground_specs = []
-        sg = SymbolicGrounding(self.trace_map)
+        sg = SymbolicGrounding(self.trace_map, self.learn_reasons)
 
         data = (spec, ast_set, ground_specs)
-        sg.process_substitutions(spec, self, self._process_sub, data)
+        sg.process_substitutions(spec, self, self._process_subs, data)
 
         return ground_specs
 
-    def _process_sub(self, data, substitution):
+    def _process_subs(self, data, substitution):
         (spec, ast_set, ground_specs) = data
         (new_spec_ast, reason) = GroundSpecs._substitute(spec, substitution)
 
@@ -386,10 +387,10 @@ class SymbolicGrounding:
     # Practically we do not expect to have more values for a variable.
     MAX_BV=32
 
-    def __init__(self, trace_map):
+    def __init__(self, trace_map, learn_reasons = True):
         self.pysmt_env = get_env()
-
         self.trace_map = trace_map
+        self.learn_reasons = learn_reasons
 
         # Bidireactional map (trace symbol, var in the encoding)
         self.fvars2encvars = BiMap()
@@ -685,20 +686,24 @@ class SymbolicGrounding:
             to_cut = TRUE_PYSMT()
             substitution = {}
             for (fvar, enc_var) in self.fvars2encvars.iteritems_a_b():
+                fvar_is_call = fvar in self.fvar_is_call
 
-                enc_value = model.get_value(enc_var, True)
-                (fvar1, fvalue) = self.get_var_val(enc_var, enc_value)
-                assert fvar1 == fvar
+                if (fvar_is_call or self.learn_reasons):
+                    enc_value = model.get_value(enc_var, True)
+                    (fvar1, fvalue) = self.get_var_val(enc_var, enc_value)
+                    assert fvar1 == fvar
 
-                substitution[fvar] = fvalue
-                if (fvar in self.fvar_is_call):
+                    substitution[fvar] = fvalue
+
+                if fvar_is_call:
                     to_cut = And(to_cut,Equals(enc_var, enc_value))
 
             reason = process_subs(data, substitution)
-            if (len(reason) > 0):
+
+
+            if (len(reason) > 0 and self.learn_reasons):
                 # DEBUG
                 # print "C/S = %d/%d" % (len(reason), len(substitution))
-
                 unsat_assignment = TRUE_PYSMT()
                 for fvar in reason:
                     fval = substitution[fvar]
