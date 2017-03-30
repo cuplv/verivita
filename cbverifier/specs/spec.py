@@ -67,31 +67,55 @@ class Spec:
 
         return aliased_specs
 
+    @staticmethod
+    def _solve_named_regexp(list_of_list_of_spec_asts):
+        """ substitute each named regexp inside a specification """
+        res_spec_ast = []
+
+        # build a map of named regexp
+        # (name, arity) -> regexp
+        named_regexp_map = {}
+        spec_ast_list = []
+        for iter_list_of_specs in list_of_list_of_spec_asts:
+            while (iter_list_of_specs != new_nil()):
+                spec_ast = iter_list_of_specs[1]
+                if (get_node_type(spec_ast) == SPEC_SYMB):
+                    spec_ast_list.append(spec_ast)
+                elif (get_node_type(spec_ast) == NAMED_REGEXP):
+                    rid = get_named_regexp_id(spec_ast)
+                    rvars = get_named_regexp_vars(spec_ast)
+                    named_regexp_map[(rid,len(rvars))] = spec_ast
+
+                iter_list_of_specs = iter_list_of_specs[2]
+
+        for spec_ast in spec_ast_list:
+            # bv = get_bound_vars(spec_ast)
+            # replaced_ast = subs_named_regexp_inst(spec_ast, bv)
+            replaced_ast = spec_ast
+            res_spec_ast.append(replaced_ast)
+
+        return res_spec_ast
+
+    @staticmethod
+    def process_ast_list(list_spec_asts):
+        # 1. Instantiate all the named regular expression
+        spec_list = []
+        solved_spec_list = Spec._solve_named_regexp(list_spec_asts)
+
+        for spec_ast in solved_spec_list:
+            # 2. Instantiate the specifications for each possible alias combination
+            for spec_ast_2 in Spec._solve_aliases(spec_ast):
+                spec = Spec(spec_ast_2)
+                spec_list.append(spec)
+
+        return spec_list
 
     @staticmethod
     def get_specs_from_string(spec_list_string, spec_list=None):
         spec_list_ast = spec_parser.parse(spec_list_string)
 
-        # 1. Istantiate all the named regular expression
-
-        # 2. Instantiate the specifications for each possible alias combination
         if None != spec_list_ast:
-            assert get_node_type(spec_list_ast) == SPEC_LIST
-
-            if spec_list is None: spec_list = []
-            while (spec_list_ast != new_nil()):
-                spec_ast = spec_list_ast[1]
-                assert get_node_type(spec_ast) == SPEC_SYMB
-
-                # Process all the aliases
-                for spec_ast_2 in Spec._solve_aliases(spec_ast):
-                    spec = Spec(spec_ast_2)
-                    spec_list.append(spec)
-
-                spec_list_ast = spec_list_ast[2]
-
-            return spec_list
-
+            return Spec.process_ast_list([spec_list_ast])
         else:
             return None
 
@@ -102,25 +126,29 @@ class Spec:
         return spec_list
 
     @staticmethod
-    def get_specs_from_file(spec_file, spec_list=None):
-        with open(spec_file, "r") as f:
-            data = f.read()
-            spec_list = Spec.get_specs_from_string(data,spec_list)
-            f.close()
-        return spec_list
+    def get_specs_from_file(spec_file):
+        return get_specs_from_files([spec_file])
 
     @staticmethod
-    def get_specs_from_files(files_list, spec_list=None):
+    def get_specs_from_files(files_list):
         assert type(files_list) == list
+
+        spec_ast_list = []
+
+        # parse all the files
         for spec_file in files_list:
-            spec_list = Spec.get_specs_from_file(spec_file, spec_list)
+            with open(spec_file, "r") as f:
+                data = f.read()
+                spec_ast = spec_parser.parse(data)
+                # Fail if at least one spec file fails
+                if spec_ast == None:
+                    logging.error("Error parsing the specification " \
+                                  "file %s" % spec_file)
+                    return None
+                spec_ast_list.append(spec_ast)
 
-            # Fail if at least one spec file fails
-            if spec_list == None:
-                logging.error("Error parsing the specification " \
-                              "file %s" % spec_file)
-
-                return None
+        # process all the specs
+        spec_list = Spec.process_ast_list(spec_ast_list)
 
         return spec_list
 
