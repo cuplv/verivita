@@ -21,9 +21,11 @@ All the symbols on a line that follows the sequence `//` are comments, and they 
 ```
 specs : spec
       | spec; specs
+      | named_regexp
+      | named_regexp; specs
 ```
 The specification file contains a semicolon separated list of
-specifications.
+specifications or named regular expressions
 
 - Specification
 ```
@@ -193,7 +195,31 @@ alias_list : composed_id
            | composed_id, alias_list
 ```
 
+- Named regular expressions
 
+The language allow to define templates for regular expressions that can be used in different places.
+
+```
+named_regexp : REGEXP id(var_list) = regexp
+```
+where `var_list` is a list of identifiers:
+```
+var_list : identifier
+         | identifier, var_list
+```
+
+A named regular expression can be used in a spec or in another named regular expression (avoiding circular definitions).
+The named regular expression is insereted by using its name and passing the correspondent parameters (e.g. they can be other variables or concrete values).
+
+All the bounded variables of the regular expressions (i.e. the one that appear in the `var_list`) are substituted in a concrete instantiation of the named by name.
+
+When substituting all the variables that are not bounded (free), we substitute them with a free variable that is not present in the containing expression to avoid variable capture.
+
+For example we can define the `PRED1` regular expression and reuse it in a `SPEC` as follows:
+```
+NAMED_EXPR PRED1(l,v) := [CB] [ENTRY] [l] void view.onClick(v : View)
+SPEC PRED(l,v); [CI] [ENTRY] [b] boolean view.setVisible(true) |- 
+```
 
 # Examples
 For example, we want to specify that the

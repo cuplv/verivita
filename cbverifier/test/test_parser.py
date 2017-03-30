@@ -106,7 +106,9 @@ class TestSpecParser(unittest.TestCase):
 
         # test comment, ignore everything after //
         self._test_single_token(0, 'TOK_ASSIGN', 1, '=', '=//ciao')
+
         self._test_single_token(0, 'TOK_SPEC', 1, 'SPEC', 'SPEC')
+        self._test_single_token(0, 'TOK_REGEXP', 1, 'REGEXP', 'REGEXP')
 
 
         # TestSpecParser.new_tok(lexpos,tok_type,lineno,value)
@@ -194,6 +196,16 @@ class TestSpecParser(unittest.TestCase):
                       "SPEC TRUE = [CB] [ENTRY] [l1] type methodName(# : boolean) |- [CI] [ENTRY] [l2] type methodName(bparam : type,TRUE : boolean)"]
         for expr in wrong_expr:
             self._test_parse_error(expr)
+
+    def test_parser_2(self):
+        correct_expr = ["REGEXP cavallo(x) = [CB] [ENTRY] [l1] type methodName(# : boolean)",
+                        "REGEXP cavallo(x,y) = [CB] [ENTRY] [l1] type methodName(# : boolean)",
+                        "REGEXP cavallo() = [CB] [ENTRY] [l1] type methodName(# : boolean)",
+                        "REGEXP cavallo() = ([CB] [ENTRY] [l1] type methodName(# : boolean); [CB] [ENTRY] [l1] type methodName(# : boolean))",
+                        "REGEXP cavallo() = pollo()"]
+
+        for expr in correct_expr:
+            self._test_parse(expr)
 
     def test_ast(self):
         def test_ast_inner(specs, expected):
@@ -337,10 +349,10 @@ class TestSpecParser(unittest.TestCase):
             stringio = StringIO()
             pretty_print(res, stringio)
 
-            print "Found"
-            print stringio.getvalue()
-            print "Expected"
-            print r
+            # print "Found"
+            # print stringio.getvalue()
+            # print "Expected"
+            # print r
 
             self.assertTrue(stringio.getvalue() == r)
 

@@ -20,6 +20,7 @@ import ply.yacc as yacc
 
 precedence = (
     ('left','TOK_SPEC'),
+    ('left','TOK_REGEXP'),
     ('left','TOK_ALIASES'),
     ('left','TOK_ENABLE','TOK_DISABLE'),
     ('left','TOK_SEQUENCE'),
@@ -32,7 +33,9 @@ precedence = (
 
 def p_specs(t):
     '''specs : spec
+             | named_expr
              | spec TOK_SEQUENCE specs
+             | named_expr TOK_SEQUENCE specs
     '''
     if (len(t) == 2):
         t[0] = new_spec_list(t[1], new_nil())
@@ -57,6 +60,19 @@ def p_spec(t):
         t[0] = new_enable_spec(t[2], t[4], aliases)
     else:
         p_error(t)
+
+def p_named_expr(t):
+    ''' named_expr : TOK_REGEXP TOK_ID TOK_LPAREN varlist TOK_RPAREN TOK_ASSIGN regexp
+                   | TOK_REGEXP TOK_ID TOK_LPAREN TOK_RPAREN TOK_ASSIGN regexp
+    '''
+    if len(t) == 8:
+        vlist = t[4]
+        regexp = t[7]
+    else:
+        vlist = []
+        regexp = t[6]
+
+    t[0] = new_named_regexp(new_id(t[2]), vlist, regexp)
 
 def p_aliases(t):
     '''aliases : alias
@@ -125,6 +141,14 @@ def p_regexp_paren(t):
     '''regexp : TOK_LPAREN regexp TOK_RPAREN
     '''
     t[0] = t[2]
+
+def p_atom_named_regexp(t):
+    '''atom : TOK_ID TOK_LPAREN paramlist TOK_RPAREN
+            | TOK_ID TOK_LPAREN TOK_RPAREN'''
+    if (len(t) == 5):
+        t[0] = new_named_regexp_inst(new_id(t[1]),t[3])
+    else:
+        t[0] = new_named_regexp_inst(new_id(t[1]),[])
 
 
 def p_atom_no_ret_val(t):
@@ -220,6 +244,17 @@ def p_paramlist_param(t):
         t[0] = new_param(t[1], t[3], new_nil())
     else:
         t[0] = new_param(t[1], t[3], t[5])
+
+def p_varlist(t):
+    '''varlist : TOK_ID
+               | TOK_ID TOK_COMMA varlist
+    '''
+    v = new_id(t[1])
+    if (len(t) == 2):
+        t[0] = [v]
+    else:
+        t[0] = [v]
+        t[0].extend(t[3])
 
 def p_param_id(t):
     '''param : TOK_ID

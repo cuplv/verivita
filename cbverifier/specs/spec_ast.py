@@ -38,6 +38,8 @@ NULL          = 21
 CALL_EXIT     = 22
 ALIASES       = 23
 ALIASES_LIST  = 24
+NAMED_REGEXP  = 25
+REGEXP_INST   = 26
 
 inv_map = { 0 : "TRUE",
             1 : "FALSE",
@@ -63,7 +65,9 @@ inv_map = { 0 : "TRUE",
             21 : "NULL",
             22 : "CALL_EXIT",
             23 : "ALIASES",
-            24 : "ALsIASES_LIST"}
+            24 : "ALIASES_LIST",
+            25 : "REGEXP",
+            26 : "REGEXP_INST"}
 
 ################################################################################
 # Node creation
@@ -98,6 +102,9 @@ def new_call_exit(assignee, call_type, receiver, method_name, params):
     # assignee at the end: so the rest is like the entry
     return (CALL_EXIT, call_type, receiver, method_name, params, assignee)
 
+def new_named_regexp_inst(name, bound_vars):
+    return (REGEXP_INST, name, bound_vars)
+
 def new_and(p1,p2): return (AND_OP, p1, p2)
 def new_or(p1,p2): return (OR_OP, p1, p2)
 def new_not(p1): return (NOT_OP, p1)
@@ -113,6 +120,9 @@ def new_enable_spec(regexp, atom, aliases):
 
 def new_disable_spec(regexp, atom, aliases):
     return (SPEC_SYMB, (DISABLE_OP, regexp, atom), aliases)
+
+def new_named_regexp(name, bound_vars, regexp):
+    return (NAMED_REGEXP, name, bound_vars, regexp)
 
 def new_spec_list(spec, rest):
     return (SPEC_LIST, spec, rest)
@@ -251,6 +261,35 @@ def get_alias_tail(node):
     assert ALIASES_LIST == get_node_type(node)
     assert 3 == len(node)
     return node[2]
+
+
+def get_named_regexp_id(node):
+    assert NAMED_REGEXP == get_node_type(node)
+    assert 4 == len(node)
+    return node[1]
+
+def get_named_regexp_vars(node):
+    assert NAMED_REGEXP == get_node_type(node)
+    assert 4 == len(node)
+    return node[2]
+
+def get_named_regexp_regexp(node):
+    assert NAMED_REGEXP == get_node_type(node)
+    assert 4 == len(node)
+    return node[3]
+
+def new_named_regexp_inst_name(node):
+    assert REGEXP_INST == get_node_type(node)
+    assert 3 == len(node)
+    return node[1]
+
+def new_named_regexp_inst_vars(node):
+    assert REGEXP_INST == get_node_type(node)
+    assert 3 == len(node)
+    return node[2]
+
+def new_named_regexp(name, bound_vars, regexp):
+    return (NAMED_REGEXP, name, bound_vars, regexp)
 
 
 ################################################################################
@@ -417,6 +456,22 @@ def pretty_print(ast_node, out_stream=sys.stdout, sep=""):
                 pretty_print_aux(out_stream, param_list, "") # params
 
             my_print(out_stream, ")")
+
+        elif (node_type == REGEXP_INST):
+            name = new_named_regexp_inst_name(node)
+            vars_list = new_named_regexp_inst_vars(node)
+
+            pretty_print_aux(out_stream,name,"")
+            my_print(out_stream, "(")
+            first = True
+            for v in vars_list:
+                if first:
+                    first = False
+                else:
+                    my_print(out_stream, ",")
+                pretty_print_aux(out_stream,v,"")
+            my_print(out_stream, ")")
+
         elif (node_type == AND_OP):
             my_print(out_stream, "(")
             pretty_print_aux(out_stream,node[1],"")
@@ -488,6 +543,25 @@ def pretty_print(ast_node, out_stream=sys.stdout, sep=""):
                 raise Exception("Unknown type of spec")
 
             pretty_print_aux(out_stream,node[2],"")
+
+        elif (node_type == NAMED_REGEXP):
+            my_print(out_stream, "REGEXP ")
+
+            rid = get_named_regexp_id(node)
+            rvars = get_named_regexp_vars(node)
+            rregexp = get_named_regexp_regexp(node)
+
+            pretty_print_aux(out_stream , rid, "")
+            my_print(out_stream, "(")
+            first = True
+            for v in rvars:
+                if first:
+                    first = False
+                else:
+                    my_print(out_stream, ",")
+                pretty_print_aux(out_stream , v, "")
+            my_print(out_stream, ") = ")
+            pretty_print_aux(out_stream , rregexp, "")
 
         elif (node_type == SPEC_LIST):
             pretty_print_aux(out_stream,node[1],"")
