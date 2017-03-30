@@ -421,14 +421,14 @@ class TestGrounding(unittest.TestCase):
 
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC [CI] [ENTRY] [l] void doSomethingCi(z : string) |- [CI] [ENTRY] [z] void otherCi(f  : string)")
-        real_ground_spec = Spec.get_spec_from_string("SPEC [CI] [ENTRY] [1] void doSomethingCi(4 : string) |- [CI] [ENTRY] [4] void otherCi(1  : string)")
+        specs = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l] void doSomethingCi(z : string) |- [CI] [ENTRY] [z] void otherCi(f  : string)")
+        real_ground_spec = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [1] void doSomethingCi(4 : string) |- [CI] [ENTRY] [4] void otherCi(1  : string)")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
         # WARNING: the results is sensitive to the order of the atoms in the OR
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC [CI] [ENTRY] [l] void doSomethingCi(# : string) |- [CI] [ENTRY] [#] void otherCi(# : string)")
+        specs = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l] void doSomethingCi(# : string) |- [CI] [ENTRY] [#] void otherCi(# : string)")
         real_ground_spec_1 = Spec.get_specs_from_string("SPEC ([CI] [ENTRY] [1] void doSomethingCi(4 : string) | " +
                                                         "[CI] [ENTRY] [1] void doSomethingCi(2 : string)) " +
                                                         "|- [CI] [ENTRY] [4] void otherCi(1 : string)")
@@ -440,31 +440,31 @@ class TestGrounding(unittest.TestCase):
                         TestGrounding._eq_specs(ground_specs, real_ground_spec_2))
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC [CB] [ENTRY] [l] void doSomethingCb() |- [CI] [ENTRY] [#] void otherCi(l : string)")
+        specs = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [l] void doSomethingCb() |- [CI] [ENTRY] [#] void otherCi(l : string)")
         real_ground_spec = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [1] void doSomethingCb() |- [CI] [ENTRY] [4] void otherCi(1 : string)")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC TRUE |- [CI] [ENTRY] [l1] void doSomethingCi(l1 : string)")
+        specs = Spec.get_specs_from_string("SPEC TRUE |- [CI] [ENTRY] [l1] void doSomethingCi(l1 : string)")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(TestGrounding._eq_specs(ground_specs, []))
 
 
         # doSomethingCi will be instantiated to FALSE
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC [CI] [ENTRY] [l1] void doSomethingCi(l1 : string) |- [CI] [ENTRY] [z] void otherCi(l : string)")
+        specs = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l1] void doSomethingCi(l1 : string) |- [CI] [ENTRY] [z] void otherCi(l : string)")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(TestGrounding._eq_specs(ground_specs, []))
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC [CB] [EXIT] [l] void doSomethingCb() |- [CI] [EXIT] [#] void otherCi(l : string)")
+        specs = Spec.get_specs_from_string("SPEC [CB] [EXIT] [l] void doSomethingCb() |- [CI] [EXIT] [#] void otherCi(l : string)")
         real_ground_spec = Spec.get_specs_from_string("SPEC [CB] [EXIT] [1] void doSomethingCb() |- [CI] [EXIT] [4] void otherCi(1 : string)")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC m = [CB] [EXIT] [l] void doSomethingCb2() |- m = [CB] [EXIT] [l] void doSomethingCb2()")
+        specs = Spec.get_specs_from_string("SPEC m = [CB] [EXIT] [l] void doSomethingCb2() |- m = [CB] [EXIT] [l] void doSomethingCb2()")
         real_ground_spec = Spec.get_specs_from_string("SPEC 1 = [CB] [EXIT] [1] void doSomethingCb2() |- 1 = [CB] [EXIT] [1] void doSomethingCb2()")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
@@ -514,7 +514,7 @@ class TestGrounding(unittest.TestCase):
         trace.add_msg(cb3)
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC !([CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l] void doB()")
+        specs = Spec.get_specs_from_string("SPEC !([CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l] void doB()")
         real_ground_spec = Spec.get_specs_from_string("SPEC TRUE[*] |- [CB] [ENTRY] [1] void doB()")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
@@ -541,7 +541,7 @@ class TestGrounding(unittest.TestCase):
 
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC ([CB] [ENTRY] [l] void doA() | [CB] [ENTRY] [l] void doB()) |- [CB] [ENTRY] [f] void doC()")
+        specs = Spec.get_specs_from_string("SPEC ([CB] [ENTRY] [l] void doA() | [CB] [ENTRY] [l] void doB()) |- [CB] [ENTRY] [f] void doC()")
         real_ground_spec = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [2] void doA() |- [CB] [ENTRY] [1] void doC();" +
                                                       "SPEC [CB] [ENTRY] [1] void doB() |- [CB] [ENTRY] [1] void doC()")
         ground_specs = gs.ground_spec(specs[0])
@@ -561,7 +561,7 @@ class TestGrounding(unittest.TestCase):
         trace.add_msg(cb)
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC ! ([CB] [ENTRY] void android.inheritedMethodA(3 : int)) |- [CB] [ENTRY] void android.inheritedMethod(2 : int)")
+        specs = Spec.get_specs_from_string("SPEC ! ([CB] [ENTRY] void android.inheritedMethodA(3 : int)) |- [CB] [ENTRY] void android.inheritedMethod(2 : int)")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(len(ground_specs) == 1)
 
@@ -579,18 +579,18 @@ class TestGrounding(unittest.TestCase):
         trace.add_msg(cb)
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC [CI] [ENTRY] void m2() |- [CB] [EXIT] void m1()")
+        specs = Spec.get_specs_from_string("SPEC [CI] [ENTRY] void m2() |- [CB] [EXIT] void m1()")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(1 == len(ground_specs))
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC ! ([CB] [ENTRY] void m3()) |- [CB] [ENTRY] void m1()")
+        specs = Spec.get_specs_from_string("SPEC ! ([CB] [ENTRY] void m3()) |- [CB] [ENTRY] void m1()")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(1 == len(ground_specs))
         self.assertTrue(new_star(new_true()) == get_regexp_node(ground_specs[0].ast))
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC [CB] [ENTRY] void m3() |- [CB] [ENTRY] void m1()")
+        specs = Spec.get_specs_from_string("SPEC [CB] [ENTRY] void m3() |- [CB] [ENTRY] void m1()")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(0 == len(ground_specs))
 
@@ -605,7 +605,7 @@ class TestGrounding(unittest.TestCase):
                        [TestGrounding._get_fmwkov("", "void m2(%s)" % TraceConverter.JAVA_BOOLEAN, False)])
         trace.add_msg(cb)
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC TRUE |- [CB] [ENTRY] void m2(FALSE : %s)" % (TraceConverter.JAVA_BOOLEAN))
+        specs = Spec.get_specs_from_string("SPEC TRUE |- [CB] [ENTRY] void m2(FALSE : %s)" % (TraceConverter.JAVA_BOOLEAN))
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(1 == len(ground_specs))
 
@@ -616,7 +616,7 @@ class TestGrounding(unittest.TestCase):
                        [TestGrounding._get_fmwkov("", "void m1(%s)" % TraceConverter.JAVA_INT, False)])
         trace.add_msg(cb)
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC TRUE |- [CB] [ENTRY] void m1(2 : %s)" % TraceConverter.JAVA_INT)
+        specs = Spec.get_specs_from_string("SPEC TRUE |- [CB] [ENTRY] void m1(2 : %s)" % TraceConverter.JAVA_INT)
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(1 == len(ground_specs))
 
@@ -634,7 +634,7 @@ class TestGrounding(unittest.TestCase):
         trace.add_msg(cb)
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC ([CI] [ENTRY] [l] void doA() | [CI] [ENTRY] [l] void doB()) |- [CI] [ENTRY] [f] void doC()")
+        specs = Spec.get_specs_from_string("SPEC ([CI] [ENTRY] [l] void doA() | [CI] [ENTRY] [l] void doB()) |- [CI] [ENTRY] [f] void doC()")
         real_ground_spec = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [1] void doA() |- [CI] [ENTRY] [2] void doC();" +
                                                       "SPEC [CI] [ENTRY] [2] void doB() |- [CI] [ENTRY] [2] void doC()")
         ground_specs = gs.ground_spec(specs[0])
@@ -654,7 +654,7 @@ class TestGrounding(unittest.TestCase):
         trace.add_msg(cb)
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC ([CI] [ENTRY] [l] void doA() & [CI] [ENTRY] [l] void doB()) |- [CI] [ENTRY] [f] void doC()")
+        specs = Spec.get_specs_from_string("SPEC ([CI] [ENTRY] [l] void doA() & [CI] [ENTRY] [l] void doB()) |- [CI] [ENTRY] [f] void doC()")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(0 == len(ground_specs))
 
@@ -671,7 +671,7 @@ class TestGrounding(unittest.TestCase):
         trace.add_msg(cb)
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string("SPEC ([CI] [ENTRY] [l] void doA() & [CI] [ENTRY] [l] void doB()) |- [CI] [ENTRY] [f] void doC()")
+        specs = Spec.get_specs_from_string("SPEC ([CI] [ENTRY] [l] void doA() & [CI] [ENTRY] [l] void doB()) |- [CI] [ENTRY] [f] void doC()")
         real_ground_spec = Spec.get_specs_from_string("SPEC ([CI] [ENTRY] [1] void doA() & [CI] [ENTRY] [1] void doB()) |- [CI] [ENTRY] [2] void doC()")
         ground_specs = gs.ground_spec(specs[0])
         self.assertTrue(TestGrounding._eq_specs(ground_specs, real_ground_spec))
@@ -717,9 +717,9 @@ class TestGrounding(unittest.TestCase):
         trace.add_msg(cb3)
 
         gs = GroundSpecs(trace)
-        #specs = Spec.get_spec_from_string("SPEC [CB] [ENTRY] [l] void doA(); (! [CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l2] void doB()")
-        specs = Spec.get_spec_from_string("SPEC [CB] [ENTRY] [l] void doA(); [CB] [ENTRY] [l] void doA() |- [CB] [ENTRY] [l2] void doB()")
-        real_ground_spec = Spec.get_spec_from_string("SPEC [CB] [ENTRY] [l] void doA(); (! [CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l] void doB()")
+        #specs = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [l] void doA(); (! [CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l2] void doB()")
+        specs = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [l] void doA(); [CB] [ENTRY] [l] void doA() |- [CB] [ENTRY] [l2] void doB()")
+        real_ground_spec = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [l] void doA(); (! [CB] [ENTRY] [l] void doA()) |- [CB] [ENTRY] [l] void doB()")
         ground_specs = gs.ground_spec(specs[0])
 
         for g in ground_specs:
@@ -786,7 +786,7 @@ class TestGrounding(unittest.TestCase):
         trace = TestGrounding.get_trace(t)
 
         gs = GroundSpecs(trace)
-        specs = Spec.get_spec_from_string(r)
+        specs = Spec.get_specs_from_string(r)
         ground_specs = gs.ground_spec(specs[0])
 
         expected_ground_specs = Spec.get_specs_from_string(expected_specs_str)

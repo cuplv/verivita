@@ -395,6 +395,70 @@ def subs_alias(node, subs_map):
     else:
         raise UnexpectedSymbol(node)
 
+def get_expr_vars(node):
+    # Get the variables contained in the spec
+
+    def get_expr_vars_rec(node, used_vars):
+
+        node_type = get_node_type(node)
+
+        if (node_type == TRUE): return node
+        elif (node_type == FALSE): return node
+        elif (node_type == NULL): return node
+        elif (node_type == DONTCARE): return node
+        elif (node_type == CI): return node
+        elif (node_type == CB): return node
+        elif (node_type == ID):
+            used_vars.add(node)
+        elif (node_type == INT or
+              node_type == FLOAT or node_type == STRING):
+            return node
+        elif (node_type == PARAM_LIST):
+            get_expr_vars_rec(get_param_name(node), used_vars)
+            return node
+        elif (node_type == CALL_ENTRY or
+              node_type == CALL_EXIT):
+            receiver = get_call_receiver(node)
+            if (new_nil() != receiver):
+                get_expr_vars_rec(receiver, used_vars)
+
+            params = get_call_params(node)
+            if (new_nil() != params):
+                get_expr_vars_rec(params, used_vars)
+
+            if (CALL_EXIT == node_type):
+                assignee = get_call_assignee(node)
+                if (new_nil() != assignee):
+                    get_expr_vars_rec(assignee, used_vars)
+        elif (node_type == REGEXP_INST):
+            name = new_named_regexp_inst_name(node)
+            vars_list = new_named_regexp_inst_vars(node)
+
+            for v in vars_list:
+                get_expr_vars_rec(v, used_vars)
+
+        elif (node_type == AND_OP or
+              node_type == OR_OP or
+              node_type == SEQ_OP or
+              node_type == SPEC_LIST):
+            get_expr_vars_rec(node[1], used_vars)
+            get_expr_vars_rec(node[2], used_vars)
+
+        elif (node_type == NOT_OP or
+              node_type == STAR_OP):
+            get_expr_vars_rec(node[1], used_vars)
+
+        elif (node_type == SPEC_SYMB):
+            get_expr_vars_rec(get_regexp_node(node), used_vars)
+            get_expr_vars_rec(get_spec_rhs(node), used_vars)
+        else:
+            raise UnexpectedSymbol(node)
+
+    used_vars = set()
+    get_expr_vars_rec(node, used_vars)
+    return used_vars
+
+
 def subs_named_regexp(node, subs_map):
     node_type = get_node_type(node)
 

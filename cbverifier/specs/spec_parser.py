@@ -143,7 +143,7 @@ def p_regexp_paren(t):
     t[0] = t[2]
 
 def p_atom_named_regexp(t):
-    '''atom : TOK_ID TOK_LPAREN paramlist TOK_RPAREN
+    '''atom : TOK_ID TOK_LPAREN untyped_paramlist TOK_RPAREN
             | TOK_ID TOK_LPAREN TOK_RPAREN'''
     if (len(t) == 5):
         t[0] = new_named_regexp_inst(new_id(t[1]),t[3])
@@ -244,6 +244,15 @@ def p_paramlist_param(t):
         t[0] = new_param(t[1], t[3], new_nil())
     else:
         t[0] = new_param(t[1], t[3], t[5])
+
+def p_untyped_paramlist_param(t):
+    '''untyped_paramlist : param
+                         | param TOK_COMMA untyped_paramlist
+    '''
+    t[0] = [t[1]]
+    if (len(t) > 2):
+        t[0].extend(t[3])
+
 
 def p_varlist(t):
     '''varlist : TOK_ID

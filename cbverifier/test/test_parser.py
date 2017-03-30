@@ -144,6 +144,8 @@ class TestSpecParser(unittest.TestCase):
 
         self.assertTrue((not same_out) or stringio.getvalue() == spec)
 
+        Spec.get_specs_from_string(stringio.getvalue())
+
 
     def _test_parse_error(self, specs):
         res = spec_parser.parse(specs)
@@ -202,7 +204,8 @@ class TestSpecParser(unittest.TestCase):
                         "REGEXP cavallo(x,y) = [CB] [ENTRY] [l1] type methodName(# : boolean)",
                         "REGEXP cavallo() = [CB] [ENTRY] [l1] type methodName(# : boolean)",
                         "REGEXP cavallo() = ([CB] [ENTRY] [l1] type methodName(# : boolean); [CB] [ENTRY] [l1] type methodName(# : boolean))",
-                        "REGEXP cavallo() = pollo()"]
+                        "REGEXP cavallo() = pollo()",
+                        "SPEC pollo(1,2) |- pollo(x,y)"]
 
         for expr in correct_expr:
             self._test_parse(expr)

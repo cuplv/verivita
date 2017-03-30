@@ -13,6 +13,8 @@ from cStringIO import StringIO
 
 class Spec:
     def __init__(self, spec_ast):
+        # TODO: check that the spec_ast does not contain
+        # aliases and named regexp
         self.ast = spec_ast
 
     # TODO: we need to fill the spec with fields and methods from the AST
@@ -79,17 +81,17 @@ class Spec:
         for iter_list_of_specs in list_of_list_of_spec_asts:
             while (iter_list_of_specs != new_nil()):
                 spec_ast = iter_list_of_specs[1]
+                print spec_ast
                 if (get_node_type(spec_ast) == SPEC_SYMB):
                     spec_ast_list.append(spec_ast)
                 elif (get_node_type(spec_ast) == NAMED_REGEXP):
                     rid = get_named_regexp_id(spec_ast)
                     rvars = get_named_regexp_vars(spec_ast)
                     named_regexp_map[(rid,len(rvars))] = spec_ast
-
                 iter_list_of_specs = iter_list_of_specs[2]
 
         for spec_ast in spec_ast_list:
-            # bv = get_bound_vars(spec_ast)
+            bv = get_expr_vars(spec_ast)
             # replaced_ast = subs_named_regexp_inst(spec_ast, bv)
             replaced_ast = spec_ast
             res_spec_ast.append(replaced_ast)
@@ -111,19 +113,13 @@ class Spec:
         return spec_list
 
     @staticmethod
-    def get_specs_from_string(spec_list_string, spec_list=None):
-        spec_list_ast = spec_parser.parse(spec_list_string)
+    def get_specs_from_string(spec_string, spec_list=None):
+        spec_list_ast = spec_parser.parse(spec_string)
 
         if None != spec_list_ast:
             return Spec.process_ast_list([spec_list_ast])
         else:
             return None
-
-    @staticmethod
-    def get_spec_from_string(spec_string):
-        spec_list = []
-        spec_list = Spec.get_specs_from_string(spec_string, spec_list)
-        return spec_list
 
     @staticmethod
     def get_specs_from_file(spec_file):
