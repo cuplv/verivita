@@ -32,9 +32,10 @@ class Spec:
     def is_enable(self):
         return is_spec_enable(self.ast)
 
-    # TODO: replace ALIASES
     @staticmethod
     def _solve_aliases(spec_ast):
+        """ Given a specification creates n specification, one
+        for each possible instantiation of the aliases"""
         def alias_rec(aliases_list, subs_map, aliased_specs):
             if len(aliases_list) == 0:
                 aliased_spec = subs_alias(spec_ast, subs_map)
@@ -70,6 +71,10 @@ class Spec:
     @staticmethod
     def get_specs_from_string(spec_list_string, spec_list=None):
         spec_list_ast = spec_parser.parse(spec_list_string)
+
+        # 1. Istantiate all the named regular expression
+
+        # 2. Instantiate the specifications for each possible alias combination
         if None != spec_list_ast:
             assert get_node_type(spec_list_ast) == SPEC_LIST
 
