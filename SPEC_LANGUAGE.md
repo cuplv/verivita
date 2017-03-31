@@ -200,7 +200,7 @@ alias_list : composed_id
 The language allow to define templates for regular expressions that can be used in different places.
 
 ```
-named_regexp : REGEXP id(var_list) = regexp
+named_regexp : REGEXP id(var_list) = [regexp]
 ```
 where `var_list` is a list of identifiers:
 ```
@@ -217,7 +217,7 @@ When substituting all the variables that are not bounded (free), we substitute t
 
 For example we can define the `PRED1` regular expression and reuse it in a `SPEC` as follows:
 ```
-NAMED_EXPR PRED1(l,v) := [CB] [ENTRY] [l] void view.onClick(v : View)
+NAMED_EXPR PRED1(l,v) = [[CB] [ENTRY] [l] void view.onClick(v : View)];
 SPEC PRED(l,v); [CI] [ENTRY] [b] boolean view.setVisible(true) |- 
 ```
 
