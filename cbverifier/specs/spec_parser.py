@@ -62,15 +62,15 @@ def p_spec(t):
         p_error(t)
 
 def p_named_expr(t):
-    ''' named_expr : TOK_REGEXP TOK_ID TOK_LPAREN varlist TOK_RPAREN TOK_ASSIGN regexp
-                   | TOK_REGEXP TOK_ID TOK_LPAREN TOK_RPAREN TOK_ASSIGN regexp
+    ''' named_expr : TOK_REGEXP TOK_ID TOK_LPAREN varlist TOK_RPAREN TOK_ASSIGN TOK_LSQUARE regexp TOK_RSQUARE
+                   | TOK_REGEXP TOK_ID TOK_LPAREN TOK_RPAREN TOK_ASSIGN TOK_LSQUARE regexp TOK_RSQUARE
     '''
-    if len(t) == 8:
+    if len(t) == 10:
         vlist = t[4]
-        regexp = t[7]
+        regexp = t[8]
     else:
         vlist = []
-        regexp = t[6]
+        regexp = t[7]
 
     t[0] = new_named_regexp(new_id(t[2]), vlist, regexp)
 

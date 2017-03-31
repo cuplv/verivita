@@ -200,12 +200,15 @@ class TestSpecParser(unittest.TestCase):
             self._test_parse_error(expr)
 
     def test_parser_2(self):
-        correct_expr = ["REGEXP cavallo(x) = [CB] [ENTRY] [l1] type methodName(# : boolean)",
-                        "REGEXP cavallo(x,y) = [CB] [ENTRY] [l1] type methodName(# : boolean)",
-                        "REGEXP cavallo() = [CB] [ENTRY] [l1] type methodName(# : boolean)",
-                        "REGEXP cavallo() = ([CB] [ENTRY] [l1] type methodName(# : boolean); [CB] [ENTRY] [l1] type methodName(# : boolean))",
-                        "REGEXP cavallo() = pollo()",
-                        "SPEC pollo(1,2) |- pollo(x,y)"]
+        correct_expr = ["REGEXP cavallo(x) = [[CB] [ENTRY] [l1] type methodName(# : boolean)]",
+                        "REGEXP cavallo(x,y) = [[CB] [ENTRY] [l1] type methodName(# : boolean)]",
+                        "REGEXP cavallo() = [[CB] [ENTRY] [l1] type methodName(# : boolean)]",
+                        "REGEXP cavallo() = [([CB] [ENTRY] [l1] type methodName(# : boolean); [CB] [ENTRY] [l1] type methodName(# : boolean))]",
+                        "REGEXP pollo() = [TRUE]",
+                        "REGEXP cavallo() = [pollo()]",
+                        "REGEXP pollo() = [TRUE]; REGEXP cavallo() = [pollo()]",
+                        "REGEXP pollo(x,y) = [[CB] [ENTRY] [x] type methodName(y : boolean)]; SPEC pollo(1,2) |- pollo(x,y)"]
+
 
         for expr in correct_expr:
             self._test_parse(expr)
@@ -284,18 +287,10 @@ class TestSpecParser(unittest.TestCase):
 
 
     def test_aliasing(self):
-        def get_str(spec):
-            stringio = StringIO()
-            pretty_print(spec.ast, stringio)
-            res = stringio.getvalue()
-
-            return res
-
-
         spec_list = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l] void method_name() |- TRUE ALIASES method_name = [subs1]")
         res = "SPEC [CI] [ENTRY] [l] void subs1() |- TRUE"
         self.assertTrue(len(spec_list) == 1)
-        self.assertTrue(get_str(spec_list[0]) == res)
+        self.assertTrue(str(spec_list[0]) == res)
 
 
         spec_list = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l] void method_name2(); " +
@@ -309,7 +304,7 @@ class TestSpecParser(unittest.TestCase):
                "[CI] [ENTRY] [l] void subs1()"]
         self.assertTrue(len(spec_list) == len(res))
         for i in range(len(res)):
-            self.assertTrue(get_str(spec_list[i]) in res)
+            self.assertTrue(str(spec_list[i]) in res)
 
 
         spec_list = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l] void method_name() |- TRUE " +
@@ -317,7 +312,7 @@ class TestSpecParser(unittest.TestCase):
         res = ["SPEC [CI] [ENTRY] [l] void subs1() |- TRUE",
                "SPEC [CI] [ENTRY] [l] void subs2() |- TRUE"]
         self.assertTrue(len(spec_list) == len(res))
-        for i in range(len(res)): self.assertTrue(get_str(spec_list[i]) in res)
+        for i in range(len(res)): self.assertTrue(str(spec_list[i]) in res)
 
 
         spec_list = Spec.get_specs_from_string("SPEC [CI] [ENTRY] [l] void method_name() |- " +
@@ -331,7 +326,7 @@ class TestSpecParser(unittest.TestCase):
                "SPEC [CI] [ENTRY] [l] void subs2() |- [CI] [ENTRY] [l] void subs4()"]
 
         self.assertTrue(len(spec_list) == len(res))
-        for i in range(len(res)): self.assertTrue(get_str(spec_list[i]) in res)
+        for i in range(len(res)): self.assertTrue(str(spec_list[i]) in res)
 
 
     def test_bug_156(self):
@@ -488,3 +483,36 @@ class TestSpecParser(unittest.TestCase):
                  simplify_star(true_star) == true,
                  simplify_star(false_star) == false]
         for l in tests: self.assertTrue(True == l)
+
+    def test_instantiate_regexp(self):
+        spec_string = "REGEXP pollo(x,y) = [[CB] [ENTRY] [x] type methodName(y : boolean)]; SPEC pollo(1,2) |- pollo(x,y)"
+        res = "SPEC [CB] [ENTRY] [1] type methodName(2 : boolean) |- [CB] [ENTRY] [x] type methodName(y : boolean)"
+        specs = Spec.get_specs_from_string(spec_string)
+        self.assertTrue(len(specs) == 1)
+        self.assertTrue(str(specs[0]) == res)
+
+        spec_string = "REGEXP pollo(x,y) = [[CB] [ENTRY] [x] type methodName(z : boolean)]; SPEC pollo(1,2) |- pollo(x,y)"
+        res = "SPEC [CB] [ENTRY] [1] type methodName(z : boolean) |- [CB] [ENTRY] [x] type methodName(z : boolean)"
+        specs = Spec.get_specs_from_string(spec_string)
+        self.assertTrue(len(specs) == 1)
+        self.assertTrue(str(specs[0]) == res)
+
+        spec_string = """REGEXP pollo1(x,y) = [[CB] [ENTRY] [x] type methodName1(y : boolean)]; 
+REGEXP pollo2(x,y) = [[CB] [ENTRY] [x] type methodName2(y : boolean)];
+SPEC pollo1(1,2) |- pollo2(x,y)"""
+        res = "SPEC [CB] [ENTRY] [1] type methodName1(2 : boolean) |- [CB] [ENTRY] [x] type methodName2(y : boolean)"
+        specs = Spec.get_specs_from_string(spec_string)
+        self.assertTrue(len(specs) == 1)
+        self.assertTrue(str(specs[0]) == res)
+
+        with self.assertRaises(Exception):
+            # pollo with 1 arguments is not declared
+            spec_string = "REGEXP pollo(x) = [[CB] [ENTRY] [x] type methodName(z : boolean)]; SPEC pollo(1,2) |- pollo(x)"
+            specs = Spec.get_specs_from_string(spec_string)
+
+        spec_list = Spec.get_specs_from_string("""
+REGEXP pollo(x) = [[CI] [ENTRY] [x] void method_name()];
+SPEC pollo(l) |- TRUE ALIASES method_name = [subs1]""")
+        res = "SPEC [CI] [ENTRY] [l] void subs1() |- TRUE"
+        self.assertTrue(len(spec_list) == 1)
+        self.assertTrue(str(spec_list[0]) == res)

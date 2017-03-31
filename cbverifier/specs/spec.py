@@ -81,7 +81,6 @@ class Spec:
         for iter_list_of_specs in list_of_list_of_spec_asts:
             while (iter_list_of_specs != new_nil()):
                 spec_ast = iter_list_of_specs[1]
-                print spec_ast
                 if (get_node_type(spec_ast) == SPEC_SYMB):
                     spec_ast_list.append(spec_ast)
                 elif (get_node_type(spec_ast) == NAMED_REGEXP):
@@ -91,9 +90,8 @@ class Spec:
                 iter_list_of_specs = iter_list_of_specs[2]
 
         for spec_ast in spec_ast_list:
-            bv = get_expr_vars(spec_ast)
-            # replaced_ast = subs_named_regexp_inst(spec_ast, bv)
-            replaced_ast = spec_ast
+            replaced_ast = subs_named_regexp(spec_ast,
+                                             named_regexp_map)
             res_spec_ast.append(replaced_ast)
 
         return res_spec_ast
