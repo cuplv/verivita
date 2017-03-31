@@ -38,6 +38,8 @@ NULL          = 21
 CALL_EXIT     = 22
 ALIASES       = 23
 ALIASES_LIST  = 24
+NAMED_REGEXP  = 25
+REGEXP_INST   = 26
 
 inv_map = { 0 : "TRUE",
             1 : "FALSE",
@@ -63,7 +65,9 @@ inv_map = { 0 : "TRUE",
             21 : "NULL",
             22 : "CALL_EXIT",
             23 : "ALIASES",
-            24 : "ALsIASES_LIST"}
+            24 : "ALIASES_LIST",
+            25 : "REGEXP",
+            26 : "REGEXP_INST"}
 
 ################################################################################
 # Node creation
@@ -98,6 +102,9 @@ def new_call_exit(assignee, call_type, receiver, method_name, params):
     # assignee at the end: so the rest is like the entry
     return (CALL_EXIT, call_type, receiver, method_name, params, assignee)
 
+def new_named_regexp_inst(name, bound_vars):
+    return (REGEXP_INST, name, bound_vars)
+
 def new_and(p1,p2): return (AND_OP, p1, p2)
 def new_or(p1,p2): return (OR_OP, p1, p2)
 def new_not(p1): return (NOT_OP, p1)
@@ -113,6 +120,9 @@ def new_enable_spec(regexp, atom, aliases):
 
 def new_disable_spec(regexp, atom, aliases):
     return (SPEC_SYMB, (DISABLE_OP, regexp, atom), aliases)
+
+def new_named_regexp(name, bound_vars, regexp):
+    return (NAMED_REGEXP, name, bound_vars, regexp)
 
 def new_spec_list(spec, rest):
     return (SPEC_LIST, spec, rest)
@@ -253,6 +263,35 @@ def get_alias_tail(node):
     return node[2]
 
 
+def get_named_regexp_id(node):
+    assert NAMED_REGEXP == get_node_type(node)
+    assert 4 == len(node)
+    return node[1]
+
+def get_named_regexp_vars(node):
+    assert NAMED_REGEXP == get_node_type(node)
+    assert 4 == len(node)
+    return node[2]
+
+def get_named_regexp_regexp(node):
+    assert NAMED_REGEXP == get_node_type(node)
+    assert 4 == len(node)
+    return node[3]
+
+def new_named_regexp_inst_name(node):
+    assert REGEXP_INST == get_node_type(node)
+    assert 3 == len(node)
+    return node[1]
+
+def new_named_regexp_inst_vars(node):
+    assert REGEXP_INST == get_node_type(node)
+    assert 3 == len(node)
+    return node[2]
+
+def new_named_regexp(name, bound_vars, regexp):
+    return (NAMED_REGEXP, name, bound_vars, regexp)
+
+
 ################################################################################
 # End - Node creation
 ################################################################################
@@ -356,7 +395,222 @@ def subs_alias(node, subs_map):
     else:
         raise UnexpectedSymbol(node)
 
+def get_expr_vars(node):
+    # Get the variables contained in the spec
 
+    def get_expr_vars_rec(node, used_vars):
+
+        node_type = get_node_type(node)
+
+        if (node_type == TRUE): return node
+        elif (node_type == FALSE): return node
+        elif (node_type == NULL): return node
+        elif (node_type == DONTCARE): return node
+        elif (node_type == CI): return node
+        elif (node_type == CB): return node
+        elif (node_type == ID):
+            used_vars.add(node)
+        elif (node_type == INT or
+              node_type == FLOAT or node_type == STRING):
+            return node
+        elif (node_type == PARAM_LIST):
+            get_expr_vars_rec(get_param_name(node), used_vars)
+            return node
+        elif (node_type == CALL_ENTRY or
+              node_type == CALL_EXIT):
+            receiver = get_call_receiver(node)
+            if (new_nil() != receiver):
+                get_expr_vars_rec(receiver, used_vars)
+
+            params = get_call_params(node)
+            if (new_nil() != params):
+                get_expr_vars_rec(params, used_vars)
+
+            if (CALL_EXIT == node_type):
+                assignee = get_call_assignee(node)
+                if (new_nil() != assignee):
+                    get_expr_vars_rec(assignee, used_vars)
+        elif (node_type == REGEXP_INST):
+            name = new_named_regexp_inst_name(node)
+            vars_list = new_named_regexp_inst_vars(node)
+
+            for v in vars_list:
+                get_expr_vars_rec(v, used_vars)
+
+        elif (node_type == AND_OP or
+              node_type == OR_OP or
+              node_type == SEQ_OP or
+              node_type == SPEC_LIST):
+            get_expr_vars_rec(node[1], used_vars)
+            get_expr_vars_rec(node[2], used_vars)
+
+        elif (node_type == NOT_OP or
+              node_type == STAR_OP):
+            get_expr_vars_rec(node[1], used_vars)
+
+        elif (node_type == SPEC_SYMB):
+            get_expr_vars_rec(get_regexp_node(node), used_vars)
+            get_expr_vars_rec(get_spec_rhs(node), used_vars)
+        else:
+            raise UnexpectedSymbol(node)
+
+    used_vars = set()
+    get_expr_vars_rec(node, used_vars)
+    return used_vars
+
+
+def subs_named_regexp_rec(node, named_regexp_map, bound_vars, subs_map):
+    node_type = get_node_type(node)
+
+    if (node_type == TRUE): return node
+    elif (node_type == FALSE): return node
+    elif (node_type == NULL): return node
+    elif (node_type == DONTCARE): return node
+    elif (node_type == CI): return node
+    elif (node_type == CB): return node
+    elif (node_type == ID):
+        (prev_expr_var, myvar) = bound_vars
+        assert prev_expr_var is not None
+
+        if (node in subs_map):
+            return subs_map[node]
+        elif (node in prev_expr_var):
+            # Avoid capture of variables
+            tmp_id = len(bound_vars)
+            new_var = new_id("tmp_%d" % tmp_id)
+            while new_var in bound_vars:
+                tmp_id = tmp_id + 1
+                new_var = new_id("tmp_%d" % tmp_id)
+            bound_vars.add(new_var)
+            return new_var
+        else:
+            return node
+    elif (node_type == INT or
+          node_type == FLOAT or node_type == STRING):
+        return node
+    elif (node_type == PARAM_LIST):
+
+        param = subs_named_regexp_rec(get_param_name(node),
+                                      named_regexp_map,
+                                      bound_vars,
+                                      subs_map)
+        tail = get_param_tail(node)
+        if (new_nil() != tail):
+            tail = subs_named_regexp_rec(tail,
+                                         named_regexp_map,
+                                         bound_vars,
+                                         subs_map)
+        return new_param(param, get_param_type(node), tail)
+
+    elif (node_type == CALL_ENTRY or
+          node_type == CALL_EXIT):
+        call_type = get_call_type(node)
+        method_name = get_call_method(node)
+        receiver = get_call_receiver(node)
+        if (new_nil() != receiver):
+            receiver = subs_named_regexp_rec(receiver,
+                                             named_regexp_map,
+                                             bound_vars,
+                                             subs_map)
+        params = get_call_params(node)
+        if (new_nil() != params):
+            params = subs_named_regexp_rec(params,
+                                           named_regexp_map,
+                                           bound_vars,
+                                           subs_map)
+        if (CALL_EXIT == node_type):
+            assignee = get_call_assignee(node)
+            if (new_nil() != assignee):
+                assignee = subs_named_regexp_rec(assignee,
+                                                 named_regexp_map,
+                                                 bound_vars,
+                                                 subs_map)
+
+            return new_call_exit(assignee, call_type, receiver, method_name, params)
+        else:
+            return new_call_entry(call_type, receiver, method_name, params)
+
+    elif (node_type == REGEXP_INST):
+        # Recursively call the substitution on the
+        # regexp template.
+        name = new_named_regexp_inst_name(node)
+        vars_list = new_named_regexp_inst_vars(node)
+
+        key = (name, len(vars_list))
+        if (key not in named_regexp_map):
+            raise Exception("REGEXP alias %s(%s) not declared in the spec!" %
+                            (name, [get_id_val(v) for v in vars_list]))
+        named_regexp = named_regexp_map[key]
+        formal_list = get_named_regexp_vars(named_regexp)
+        assert(len(vars_list) == len(vars_list))
+
+        new_subs_map = {}
+        for a,f in zip(vars_list, formal_list):
+            new_subs_map[f] = a
+
+        regexp_template = get_named_regexp_regexp(named_regexp)
+        sub_var = get_expr_vars(regexp_template)
+        (prev_expr_var, myvar) = bound_vars
+        assert prev_expr_var is not None
+        assert myvar is not None
+
+        new_prev = set(prev_expr_var)
+        assert new_prev is not None
+        new_prev.update(myvar)
+        assert new_prev is not None
+        assert sub_var is not None
+        new_bound_vars = (new_prev, sub_var)
+
+        res = subs_named_regexp_rec(regexp_template,
+                                    named_regexp_map,
+                                    new_bound_vars,
+                                    new_subs_map)
+        return res
+
+    elif (node_type == AND_OP):
+        return new_and(subs_named_regexp_rec(node[1], named_regexp_map,
+                                             bound_vars, subs_map),
+                       subs_named_regexp_rec(node[2], named_regexp_map,
+                                             bound_vars, subs_map))
+    elif (node_type == OR_OP):
+        return new_or(subs_named_regexp_rec(node[1], named_regexp_map,
+                                            bound_vars, subs_map),
+                      subs_named_regexp_rec(node[2], named_regexp_map,
+                                            bound_vars, subs_map))
+    elif (node_type == NOT_OP):
+        return new_not(subs_named_regexp_rec(node[1], named_regexp_map,
+                                             bound_vars, subs_map))
+    elif (node_type == SEQ_OP):
+        return new_seq(subs_named_regexp_rec(node[1], named_regexp_map,
+                                             bound_vars, subs_map),
+                       subs_named_regexp_rec(node[2], named_regexp_map,
+                                             bound_vars, subs_map))
+    elif (node_type == STAR_OP):
+        return new_star(subs_named_regexp_rec(node[1], named_regexp_map,
+                                              bound_vars, subs_map))
+    elif (node_type == SPEC_SYMB):
+        regexp = subs_named_regexp_rec(get_regexp_node(node), named_regexp_map,
+                                       bound_vars, subs_map)
+        spec_rhs = subs_named_regexp_rec(get_spec_rhs(node), named_regexp_map,
+                                         bound_vars, subs_map)
+        aliases = get_spec_aliases(node)
+
+        if (is_spec_enable(node)):
+            return new_enable_spec(regexp, spec_rhs, aliases)
+        else:
+            return new_disable_spec(regexp, spec_rhs, aliases)
+    elif (node_type == SPEC_LIST):
+        return new_spec_list(subs_named_regexp_rec(node[1], named_regexp_map,
+                                                   bound_vars, subs_map),
+                             subs_named_regexp_rec(node[2], named_regexp_map,
+                                                   bound_vars, subs_map))
+    else:
+        raise UnexpectedSymbol(node)
+
+def subs_named_regexp(node, named_regexp_map):
+    exprvar = get_expr_vars(node)
+    return subs_named_regexp_rec(node, named_regexp_map,
+                                 (set(), exprvar), {})
 
 def pretty_print(ast_node, out_stream=sys.stdout, sep=""):
 
@@ -417,6 +671,22 @@ def pretty_print(ast_node, out_stream=sys.stdout, sep=""):
                 pretty_print_aux(out_stream, param_list, "") # params
 
             my_print(out_stream, ")")
+
+        elif (node_type == REGEXP_INST):
+            name = new_named_regexp_inst_name(node)
+            vars_list = new_named_regexp_inst_vars(node)
+
+            pretty_print_aux(out_stream,name,"")
+            my_print(out_stream, "(")
+            first = True
+            for v in vars_list:
+                if first:
+                    first = False
+                else:
+                    my_print(out_stream, ",")
+                pretty_print_aux(out_stream,v,"")
+            my_print(out_stream, ")")
+
         elif (node_type == AND_OP):
             my_print(out_stream, "(")
             pretty_print_aux(out_stream,node[1],"")
@@ -489,6 +759,25 @@ def pretty_print(ast_node, out_stream=sys.stdout, sep=""):
 
             pretty_print_aux(out_stream,node[2],"")
 
+        elif (node_type == NAMED_REGEXP):
+            my_print(out_stream, "REGEXP ")
+
+            rid = get_named_regexp_id(node)
+            rvars = get_named_regexp_vars(node)
+            rregexp = get_named_regexp_regexp(node)
+
+            pretty_print_aux(out_stream , rid, "")
+            my_print(out_stream, "(")
+            first = True
+            for v in rvars:
+                if first:
+                    first = False
+                else:
+                    my_print(out_stream, ",")
+                pretty_print_aux(out_stream , v, "")
+            my_print(out_stream, ") = [")
+            pretty_print_aux(out_stream , rregexp, "")
+            my_print(out_stream, "]")
         elif (node_type == SPEC_LIST):
             pretty_print_aux(out_stream,node[1],"")
             if (get_node_type(node[2]) != NIL):
