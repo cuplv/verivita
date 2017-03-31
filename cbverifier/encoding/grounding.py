@@ -44,79 +44,126 @@ class GroundSpecs(object):
     Return a list of ground specifications.
     """
 
-    def __init__(self, trace):
+    def __init__(self, trace, learn_reasons = True):
         self.trace = trace
         self.trace_map = TraceMap(self.trace)
         self.ground_to_spec = {}
+
+        # Learn the conjunction of assignments that is sufficient
+        # to determine the value of the grounded regexp.
+        #
+        # The conjunction is used to rule out a set of assignments
+        # from their explicit enumeration
+        # self.learn_reasons = learn_reasons
+        self.learn_reasons = learn_reasons
 
 
     def ground_spec(self, spec):
         ast_set = set() # avoid duplicate specs - memo works at ast level
         ground_specs = []
-        sg = SymbolicGrounding(self.trace_map)
+        sg = SymbolicGrounding(self.trace_map, self.learn_reasons)
 
-        for substitution in sg.get_substitutions(spec):
-            new_spec_ast = GroundSpecs._substitute(spec, substitution)
+        data = (spec, ast_set, ground_specs)
+        sg.process_substitutions(spec, self, self._process_subs, data)
 
-            # WORKAROUND:
-            #
-            # The grounding produce a disjunction in the rhs of the SPEC if
-            # there are multiple messages there.
-            #
-            # However, The downstream toolchain expects to have only one message
-            # in the rhs.
-            #
-            # If this is the case, we duplicate the spec for each disjunct
-            #
-            regexp = get_regexp_node(new_spec_ast)
-            rhs = get_spec_rhs(new_spec_ast)
-            is_lhs_false = FALSE == get_node_type(regexp)
-            # skip the specification if
-            #   - the rhs is false (or)
-            #   - the regexp is false
-            if (is_lhs_false): continue
-
-            # loop on the disjunctions in the rhs
-            atoms_rhs = []
-            rhs_stack = [rhs]
-            while (len(rhs_stack) != 0):
-                current = rhs_stack.pop()
-
-                # Skip false
-                is_current_false = FALSE == get_node_type(current)
-                if is_current_false: continue
-
-                # requirement on the RHS
-                assert (OR_OP == get_node_type(current) or
-                        CALL_ENTRY == get_node_type(current) or
-                        CALL_EXIT == get_node_type(current))
-
-                if (get_node_type(current) != OR_OP):
-                    atoms_rhs.append(current)
-                else:
-                    rhs_stack.append(current[1])
-                    rhs_stack.append(current[2])
-            for atom_rhs in atoms_rhs:
-                assert get_node_type(new_spec_ast) == SPEC_SYMB
-                assert (ENABLE_OP == get_node_type(new_spec_ast[1]) or
-                        DISABLE_OP == get_node_type(new_spec_ast[1]))
-
-                op_node = create_node(get_node_type(new_spec_ast[1]),
-                                      [regexp, atom_rhs])
-
-                split_spec_ast = create_node(SPEC_SYMB, [op_node, new_nil()])
-
-                # skip duplicates
-                if split_spec_ast not in ast_set:
-                    ast_set.add(split_spec_ast)
-                    new_spec = Spec(split_spec_ast)
-                    ground_specs.append(new_spec)
-                    self.ground_to_spec[new_spec] = spec
         return ground_specs
+
+    def _process_subs(self, data, substitution):
+        (spec, ast_set, ground_specs) = data
+        (new_spec_ast, reason) = GroundSpecs._substitute(spec, substitution)
+
+        # WORKAROUND:
+        #
+        # The grounding produce a disjunction in the rhs of the SPEC if
+        # there are multiple messages there.
+        #
+        # However, The downstream toolchain expects to have only one message
+        # in the rhs.
+        #
+        # If this is the case, we duplicate the spec for each disjunct
+        #
+        regexp = get_regexp_node(new_spec_ast)
+        rhs = get_spec_rhs(new_spec_ast)
+        is_lhs_false = FALSE == get_node_type(regexp)
+
+        # # DEBUG
+        # if is_lhs_false and not len(reason) > 0:
+        #     print "LHS is false, no reasons!"
+        #     print substitution
+        #     pretty_print(spec.ast, sys.stdout)
+        #     pretty_print(regexp, sys.stdout)
+        #     sys.exit(0)
+        # # DEBUG
+        # if len(reason) == len(substitution) and is_lhs_false:
+        #     print "NO IMPROVEMENT"
+        # # DEBUG
+        # if len(reason) == 0 and is_lhs_false:
+        #     print "EMPTY"
+
+        if len(reason) > 0 and not is_lhs_false:
+            reason = set()
+        if len(reason) == len(substitution) and len(substitution) > 0:
+            reason = set()
+
+        # skip the specification if
+        #   - the rhs is false (or)
+        #   - the regexp is false
+        if (is_lhs_false):
+            return reason
+
+        # loop on the disojunctions in the rhs
+        atoms_rhs = []
+        rhs_stack = [rhs]
+        while (len(rhs_stack) != 0):
+            current = rhs_stack.pop()
+
+            # Skip false
+            is_current_false = FALSE == get_node_type(current)
+            if is_current_false: continue
+
+            # requirement on the RHS
+            assert (OR_OP == get_node_type(current) or
+                    CALL_ENTRY == get_node_type(current) or
+                    CALL_EXIT == get_node_type(current))
+
+            if (get_node_type(current) != OR_OP):
+                atoms_rhs.append(current)
+            else:
+                rhs_stack.append(current[1])
+                rhs_stack.append(current[2])
+        for atom_rhs in atoms_rhs:
+            assert get_node_type(new_spec_ast) == SPEC_SYMB
+            assert (ENABLE_OP == get_node_type(new_spec_ast[1]) or
+                    DISABLE_OP == get_node_type(new_spec_ast[1]))
+
+            op_node = create_node(get_node_type(new_spec_ast[1]),
+                                  [regexp, atom_rhs])
+
+            split_spec_ast = create_node(SPEC_SYMB, [op_node, new_nil()])
+
+            # skip duplicates
+            if split_spec_ast not in ast_set:
+                ast_set.add(split_spec_ast)
+                new_spec = Spec(split_spec_ast)
+
+                ground_specs.append(new_spec)
+                self.ground_to_spec[new_spec] = spec
+            # else:
+                # There can be duplicate: different assignments, same results
+                # DEBUG
+                # print "Duplicate..."
+
+
+        return reason
 
     @staticmethod
     def _substitute(spec, substitution):
-        # TODO: add memoization
+        """ Returns the AST of the spec obtained by substituting the assignments
+        inside substitution to spec.
+
+        It also returns a subset of the variables assigned in substitution
+        that are sufficient to make the spec inconsistent
+        """
 
         def substitute_rec(node, substitution):
             def get_param_types_list(node):
@@ -128,11 +175,15 @@ class GroundSpecs(object):
                 return types_list
 
             node_type = get_node_type(node)
-            if (node_type in leaf_nodes): return node
+            if (node_type in leaf_nodes):
+                # reason is empty: no matter what substitution,
+                # we always get the same resul
+                return (node, set())
             elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
                 is_entry = True if node_type == CALL_ENTRY else False
 
                 res = None
+                reason = GroundSpecs._get_reason(is_entry, node, substitution)
                 call_var = (is_entry, node)
                 if call_var not in substitution:
                     res = new_false()
@@ -153,45 +204,86 @@ class GroundSpecs(object):
                             res = new_call_node
                         else:
                             res = new_or(res, new_call_node)
-                return res
+                return (res, reason)
             elif (node_type == AND_OP):
-                lhs = substitute_rec(node[1], substitution)
-                rhs = substitute_rec(node[2], substitution)
+                (lhs, lreason) = substitute_rec(node[1], substitution)
+                (rhs, rreason) = substitute_rec(node[2], substitution)
 
                 res = simplify_and(lhs, rhs)
-                return res
-            elif (node_type == OR_OP):
-                lhs = substitute_rec(node[1], substitution)
-                rhs = substitute_rec(node[2], substitution)
-                res = simplify_or(lhs, rhs)
-                return res
 
+                if (get_node_type(lhs) == FALSE):
+                    reason = lreason
+                elif (get_node_type(rhs) == FALSE):
+                    reason = rreason
+                else:
+                    reason = GroundSpecs._merge_reasons(lreason,
+                                                        rreason)
+                return (res, reason)
+            elif (node_type == OR_OP):
+                (lhs, lreason) = substitute_rec(node[1], substitution)
+                (rhs, rreason) = substitute_rec(node[2], substitution)
+
+                res = simplify_or(lhs, rhs)
+
+                if (get_node_type(lhs) == TRUE):
+                    reason = lreason
+                elif (get_node_type(rhs) == TRUE):
+                    reason = rreason
+                else:
+                    reason = GroundSpecs._merge_reasons(lreason,
+                                                        rreason)
+
+                return (res, reason)
             elif (node_type == SEQ_OP):
-                lhs = substitute_rec(node[1], substitution)
-                rhs = substitute_rec(node[2], substitution)
+                (lhs, lreason) = substitute_rec(node[1], substitution)
+                (rhs, rreason) = substitute_rec(node[2], substitution)
+
                 res = simplify_seq(lhs, rhs)
-                return res
+
+                if (get_node_type(lhs) == FALSE):
+                    reason = lreason
+                elif (get_node_type(rhs) == FALSE):
+                    reason = rreason
+                else:
+                    reason = GroundSpecs._merge_reasons(lreason,
+                                                        rreason)
+
+                return (res, reason)
             elif (node_type == NOT_OP):
-                lhs = substitute_rec(node[1], substitution)
+                (lhs, reason) = substitute_rec(node[1], substitution)
                 res = simplify_not(lhs)
-                return res
+
+                return (res,reason)
             elif (node_type == STAR_OP):
-                lhs = substitute_rec(node[1], substitution)
+                (lhs, reason) = substitute_rec(node[1], substitution)
                 res = simplify_star(lhs)
-                return res
+
+                return (res,reason)
             elif (node_type == ENABLE_OP or node_type == DISABLE_OP):
-                lhs = substitute_rec(node[1], substitution)
-                rhs = substitute_rec(node[2], substitution)
-                return create_node(node_type, [lhs, rhs])
+                (lhs, lreason) = substitute_rec(node[1], substitution)
+                (rhs, rreason) = substitute_rec(node[2], substitution)
+
+                res = create_node(node_type, [lhs, rhs])
+
+                if (get_node_type(rhs) == FALSE):
+                    reason = rreason
+                elif (get_node_type(lhs) == FALSE):
+                    reason = lreason
+                else:
+                    reason = GroundSpecs._merge_reasons(lreason,
+                                                        rreason)
+                return (res, reason)
             elif (node_type == SPEC_SYMB):
-                lhs = substitute_rec(node[1], substitution)
-                return create_node(SPEC_SYMB, [lhs, new_nil()])
+                (lhs, reason) = substitute_rec(node[1], substitution)
+                res = create_node(SPEC_SYMB, [lhs, new_nil()])
+
+                return (res,reason)
             else:
                 raise UnexpectedSymbol(node)
 
-        new_spec_asts = substitute_rec(spec.ast, substitution)
+        (new_spec_asts, reason) = substitute_rec(spec.ast, substitution)
 
-        return new_spec_asts
+        return (new_spec_asts, reason)
 
     @staticmethod
     def _msg_to_call_node(is_entry, msg, param_types):
@@ -244,6 +336,45 @@ class GroundSpecs(object):
                                       call_param_list)
         return call_node
 
+    @staticmethod
+    def _get_reason(is_entry, call_node, substitution):
+        """ Finds the "reason" (set of variables of substitution)
+        That are sufficient to justify the results for call_node.
+
+        In practice, these are the common variables of call_node and
+        substitution.
+        """
+        plist = []
+
+        # plist.append((is_entry, call_node))
+
+        params = get_call_params(call_node)
+        while (get_node_type(params) == PARAM_LIST):
+            p = get_param_name(params)
+            plist.append(p)
+            params = get_param_tail(params)
+
+        receiver = get_call_receiver(call_node)
+        if (get_node_type(receiver) != NIL):
+            plist.append(receiver)
+
+        if (get_node_type(call_node) == CALL_EXIT):
+            retval = get_call_assignee(call_node)
+            if (get_node_type(retval) != NIL):
+                plist.append(retval)
+
+        reason = set()
+        for p in plist:
+            if p in substitution:
+                reason.add(p)
+
+        return reason
+
+    @staticmethod
+    def _merge_reasons(c1, c2):
+        return c1.union(c2)
+
+
     def get_source_spec(self, ground_spec):
         if ground_spec not in self.ground_to_spec:
             return None
@@ -256,10 +387,10 @@ class SymbolicGrounding:
     # Practically we do not expect to have more values for a variable.
     MAX_BV=32
 
-    def __init__(self, trace_map):
+    def __init__(self, trace_map, learn_reasons = True):
         self.pysmt_env = get_env()
-
         self.trace_map = trace_map
+        self.learn_reasons = learn_reasons
 
         # Bidireactional map (trace symbol, var in the encoding)
         self.fvars2encvars = BiMap()
@@ -327,7 +458,7 @@ class SymbolicGrounding:
         return enc_val
 
 
-    def process_assignments_formula(self, is_entry, call_node, asets):
+    def process_assignments_formula(self, is_entry, call_node, asets, must_bind):
         """
         For each call node and for each concrete assignment creates the label
         that must be used in the regular expression.
@@ -398,36 +529,22 @@ class SymbolicGrounding:
 
         # add the complement
         call_bottom_val_enc = self.find_or_add_val(call_var, frozenset([bottom_value]))
+        # if variables must be bind, remove the complement
         call_encoding = And(call_encoding,
                             Implies(complement,
                                     Equals(call_var_enc, call_bottom_val_enc)))
+        if must_bind:
+            # cannot bind with bottom
+            call_encoding = And(call_encoding, Not(complement))
+            call_encoding = And(call_encoding, Not(Equals(call_var_enc, call_bottom_val_enc)))
+
+
+        if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
+            print("GROUNDING - ASSIGNMENTS:")
+            pretty_print(call_node, sys.stderr)
+            sys.stderr.write("%s\n" % str(asets))
+
         return call_encoding
-
-    def get_messages(self, is_entry, node, bindings):
-        # TODO: REMOVE
-        messages = []
-        try:
-            for res in self.binding2message[(is_entry, node)]:
-                (msg_bindings, message) = res
-
-                found = True
-                for (var, val) in msg_bindings:
-                    try:
-                        bind_val = bindings.get(var)
-                        if (not (bind_val == val)):
-                            found = False
-                            break
-                    except KeyError:
-                        found = False
-                        break
-
-                # if find one it is ok
-                if found:
-                    messages.append(message)
-
-            return messages
-        except KeyError:
-            return messages
 
     def get_var_val(self, enc_var, enc_value):
         """ Returns the trace value given an (encoding) variable and an encoding
@@ -489,14 +606,21 @@ class SymbolicGrounding:
         return domain
 
     def _get_ground_bindings_formula(self, spec):
-        ground_enc = self._ground_bindings_formula_rec(spec.ast, {})
+        ground_enc = self._ground_bindings_formula_rec(spec.ast, {}, True)
         ground_enc = self.resize_bvs(ground_enc)
         ground_enc = And(ground_enc, self.get_domain_formula())
+
         return ground_enc
 
-    def _ground_bindings_formula_rec(self, spec_node, memo):
+    def _ground_bindings_formula_rec(self, spec_node, memo, must_bind):
         """ Returns a formula that encodes the set of all the possible bindings
-        and assignments to CALL nodes
+        and assignments to CALL nodes.
+
+        if must_bind is True it means that all the free variables of a a method
+        call MUST have an assignment (i.e. they cannot be bottom).
+
+        This is the case for the RHS of a specification or for the top-level
+        atoms.
         """
 
         if (spec_node in memo):
@@ -512,17 +636,23 @@ class SymbolicGrounding:
             node_type == DISABLE_OP or
             node_type == OR_OP):
 
+            must_bind = must_bind and (node_type != OR_OP)
+
             # create the global constraints
-            res = And(self._ground_bindings_formula_rec(spec_node[2], memo),
-                      self._ground_bindings_formula_rec(spec_node[1], memo))
+            res = And(self._ground_bindings_formula_rec(spec_node[2], memo, must_bind),
+                      self._ground_bindings_formula_rec(spec_node[1], memo, must_bind))
         elif (node_type == STAR_OP or node_type == SPEC_SYMB or
               node_type == NOT_OP):
-            res = self._ground_bindings_formula_rec(spec_node[1], memo)
+            must_bind = must_bind and node_type == SPEC_SYMB
+
+            res = self._ground_bindings_formula_rec(spec_node[1], memo, must_bind)
         elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
             spec_res = self.trace_map.lookup_assignments(spec_node)
             assert spec_res is not None
 
-            res = self.process_assignments_formula(node_type == CALL_ENTRY, spec_node, spec_res)
+            res = self.process_assignments_formula(node_type == CALL_ENTRY,
+                                                   spec_node, spec_res,
+                                                   must_bind)
         else:
             # WARNING: we handle one spec at a time (node_type != SPEC_LIST)
             raise UnexpectedSymbol(spec_node)
@@ -531,41 +661,66 @@ class SymbolicGrounding:
         return res
 
 
-    def get_substitutions(self, spec):
-        """ Returns the list of all the possible substitutions for the
-        CALL nodes.
+    def process_substitutions(self, spec, parent, process_subs, data):
+        """ Generates all the possible substitutions
+        for the CALL nodes.
+
+        The caller implements what to do using the process_subs callback,
+        that is invoked every time a new substitution is found.
         """
 
         ground_formula = self._get_ground_bindings_formula(spec)
-
-        substitutions = []
 
         # ALL SAT on assignments - the model is finite
         solver = self.pysmt_env.factory.Solver(quantified=False,
                                                name="z3",
                                                logic=QF_BV)
+        count_models = 0
         solver.add_assertion(ground_formula)
         while (solver.solve()):
+            count_models = count_models + 1
+
             model = solver.get_model()
 
             # Cut all the models that produces the same substitutions
             to_cut = TRUE_PYSMT()
             substitution = {}
             for (fvar, enc_var) in self.fvars2encvars.iteritems_a_b():
-                if (fvar in self.fvar_is_call):
+                fvar_is_call = fvar in self.fvar_is_call
+
+                if (fvar_is_call or self.learn_reasons):
                     enc_value = model.get_value(enc_var, True)
                     (fvar1, fvalue) = self.get_var_val(enc_var, enc_value)
                     assert fvar1 == fvar
-                    assert frozenset == type(fvalue)
+
                     substitution[fvar] = fvalue
+
+                if fvar_is_call:
                     to_cut = And(to_cut,Equals(enc_var, enc_value))
-            substitutions.append(substitution)
+
+            reason = process_subs(data, substitution)
+
+
+            if (len(reason) > 0 and self.learn_reasons):
+                # DEBUG
+                # print "C/S = %d/%d" % (len(reason), len(substitution))
+                unsat_assignment = TRUE_PYSMT()
+                for fvar in reason:
+                    fval = substitution[fvar]
+                    enc_var = self.fvars2encvars.lookup_a(fvar)
+
+                    fvals2enc = self.fvars2values[fvar]
+                    enc_value = fvals2enc.lookup_a(fval)
+
+                    unsat_assignment = And(unsat_assignment,
+                                           Equals(enc_var, enc_value))
+                # remove assignment from the search
+                solver.add_assertion(Not(unsat_assignment))
 
             # rule out the current assignment
             solver.add_assertion(Not(to_cut))
 
-        return substitutions
-
+        logging.debug("Processed %d models" % count_models)
 
 class AssignmentsBottom(object):
     """ Object used to represent the bottom value inside Assignemnts """
