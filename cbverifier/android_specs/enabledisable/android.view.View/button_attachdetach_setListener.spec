@@ -1,43 +1,48 @@
+//view set on click listener
+//TODO: following is overapproximation assuming any registered listener can be clicked, we may want to later refine this to replacement which is the actual behavior
+REGEXP view_onClick_listener_set_just(view,listener) = [TRUE[*];[CI] [ENTRY] [view] void android.view.View.setOnClickListener(listener : android.view.View$OnClickListener)];
+REGEXP view_onClick_listener_set_has(view,listener) = [view_onClick_listener_set_just(view,listener);TRUE[*]];
+
+//view setEnabled
+//TODO
+
+
 // onClick is initially disabled
-SPEC FALSE[*] |- [CB] [ENTRY] [l] void android.view.View$OnClickListener.onClick(b : android.view.View);
+SPEC FALSE[*] |- [CB] [ENTRY] [l] void android.view.View$OnClickListener.onClick(view : android.view.View);
 
-//Old view attachment detection
-//TRUE[*];
-//     (
-//         b = [CI] [EXIT] [container] android.view.View android.view.View.findViewById(_ : int) |
-//         (b1 = [CI] [EXIT] [container] android.view.View android.view.View.findViewById(_ : int);
-//             b = [CI] [EXIT] [#] android.view.View android.view.LayoutInflater.inflate(_ : int,b1 : android.view.ViewGroup,false : boolean) )|
-//         (b1 = [CI] [EXIT] [container] android.view.View android.view.View.findViewById(_ : int);
-//             b2 = [CI] [EXIT] [#] android.view.View android.view.LayoutInflater.inflate(_ : int,b1 : android.view.ViewGroup,false : boolean);
-//             b = [CI] [EXIT] [b2] android.view.View android.view.View.findViewById(_ : int))
-//
-//     );
 //Fragment onResume enable
-SPEC TRUE[*];
-     (container = [CI] [EXIT] [f] android.view.View android.app.Fragment.getView()| [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(container : android.view.View, # : android.os.Bundle));
-     //Attachment chain len 1
-     (
-         b = [CI] [EXIT] [container] android.view.View android.view.View.findViewById(_ : int) | b = [CI] [EXIT] android.view.View android.view.LayoutInflater.inflate(# : int,container : android.view.ViewGroup,false : boolean) 
-     )| 
 
-     //Attach chain len 2
-     (
-         (container2 = [CI] [EXIT] [container] android.view.View android.view.View.findViewById(_ : int) | container2 = [CI] [EXIT] android.view.View android.view.LayoutInflater.inflate(# : int,container : android.view.ViewGroup,false : boolean));
-         (b = [CI] [EXIT] [container2] android.view.View android.view.View.findViewById(_ : int) | b = [CI] [EXIT] android.view.View android.view.LayoutInflater.inflate(# : int,container2 : android.view.ViewGroup,false : boolean))
-     );
-     //Attach chain len 3
-     (
-         (container2 = [CI] [EXIT] [container] android.view.View android.view.View.findViewById(_ : int) | container2 = [CI] [EXIT] android.view.View android.view.LayoutInflater.inflate(# : int,container : android.view.ViewGroup,false : boolean));
-         (container3 = [CI] [EXIT] [container2] android.view.View android.view.View.findViewById(_ : int) | container3 = [CI] [EXIT] android.view.View android.view.LayoutInflater.inflate(# : int,container2 : android.view.ViewGroup,false : boolean));
-         (b = [CI] [EXIT] [container3] android.view.View android.view.View.findViewById(_ : int) | b = [CI] [EXIT] android.view.View android.view.LayoutInflater.inflate(# : int,container3 : android.view.ViewGroup,false : boolean))
-     );
-     TRUE[*];
-     [CI] [ENTRY] [b] void android.view.View.setOnClickListener(l : android.view.View$OnClickListener);
-     ( ! [CI] [ENTRY] [b] void android.view.View.setOnClickListener(l2 : android.view.View$OnClickListener) ) [*];
-     [CB] [ENTRY] [f] void android.app.Fragment.onResume()  |+ [CB] [ENTRY] [l] void android.view.View$OnClickListener.onClick(b : android.view.View) 
+SPEC view_onClick_listener_set_has(view,listener) 
+	& attached_fragment_is_resumed_just(fragment,view) 
+	|+ [CB] [ENTRY] [listener] void android.view.View$OnClickListener.onClick(view : android.view.View);
+
+//Activity onResume enable
+
+
+//setOnClickListener enable
+SPEC attached_fragment_is_resumed_has(fragment,view) & view_onClick_listener_set_just(view,listener) |+ [CB] [ENTRY] [listener] void android.view.View$OnClickListener.onClick(view : android.view.View)
      ALIASES android.app.Fragment.getView = [android.appFragment.getView,android.support.v4.app.Fragment.getView],
      android.app.Fragment.onViewCreated = [android.support.v4.app.Fragment.onViewCreated,android.app.Fragment.onViewCreated],
      android.app.Fragment.onResume = [android.support.v4.app.Fragment.onResume,android.app.Fragment.onResume]
+
+
+
+
+
+//** old pre REGEXP specs
+//Fragment onResume enable
+//SPEC TRUE[*];
+//     (container = [CI] [EXIT] [f] android.view.View android.app.Fragment.getView()| [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(container : android.view.View, # : android.os.Bundle)); 
+//     TRUE[*];
+//     //view_is_attached(container,b);
+//     b = [CI] [EXIT] [container] android.view.View android.view.View.findViewById(_ : int);
+//     TRUE[*];
+//     [CI] [ENTRY] [b] void android.view.View.setOnClickListener(l : android.view.View$OnClickListener);
+//     ( ! [CI] [ENTRY] [b] void android.view.View.setOnClickListener(l2 : android.view.View$OnClickListener) ) [*];
+//     [CB] [ENTRY] [f] void android.app.Fragment.onResume()  |+ [CB] [ENTRY] [l] void android.view.View$OnClickListener.onClick(b : android.view.View) 
+//     ALIASES android.app.Fragment.getView = [android.appFragment.getView,android.support.v4.app.Fragment.getView],
+//     android.app.Fragment.onViewCreated = [android.support.v4.app.Fragment.onViewCreated,android.app.Fragment.onViewCreated],
+//     android.app.Fragment.onResume = [android.support.v4.app.Fragment.onResume,android.app.Fragment.onResume]
 //
 ////Fragment onPause disable
 //SPEC TRUE[*];
