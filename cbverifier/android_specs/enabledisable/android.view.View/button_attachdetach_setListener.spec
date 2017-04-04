@@ -1,8 +1,3 @@
-//view set on click listener
-//TODO: following is overapproximation assuming any registered listener can be clicked, we may want to later refine this to replacement which is the actual behavior
-REGEXP view_onClick_listener_set_just(view,listener) = [TRUE[*];[CI] [ENTRY] [view] void android.view.View.setOnClickListener(listener : android.view.View$OnClickListener)];
-REGEXP view_onClick_listener_set_has(view,listener) = [view_onClick_listener_set_just(view,listener);TRUE[*]];
-
 //view setEnabled
 //TODO
 
@@ -28,6 +23,8 @@ SPEC may_attached_fragment_is_resumed_has(fragment,view) & view_onClick_listener
      ALIASES android.app.Fragment.getView = [android.appFragment.getView,android.support.v4.app.Fragment.getView],
      android.app.Fragment.onViewCreated = [android.support.v4.app.Fragment.onViewCreated,android.app.Fragment.onViewCreated],
      android.app.Fragment.onResume = [android.support.v4.app.Fragment.onResume,android.app.Fragment.onResume]
+
+//
 
 
 
