@@ -32,7 +32,7 @@ from pysmt.shortcuts import FALSE as FALSE_PYSMT
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
 from pysmt.shortcuts import Equals, GE, LE
 from pysmt.shortcuts import BVULE, BVUGE
-
+from pysmt.shortcuts import simplify
 import math
 
 
@@ -104,16 +104,32 @@ class GroundSpecs(object):
             reasons = set()
 
         # remove unuseful reasons
-        new_reasons = []
+        new_reasons = set()
         for reason in reasons:
             if not (len(reason) == len(substitution) and len(substitution) > 0):
-                new_reasons.append(reason)
+                new_reasons.add(reason)
             reasons = new_reasons
 
         # skip the specification if
         #   - the rhs is false (or)
         #   - the regexp is false
         if (is_lhs_false):
+
+            # # DEBUG
+            # shared = 0
+            # tot = 0
+            # i = 0
+            # for r1 in reasons:
+            #     j = 0
+            #     for r2 in reasons:
+            #         if j <= i: continue
+            #         if r1 == r2: shared += 1
+            #         j += 1
+            #     i += 1
+            # assert shared == 0
+            # print "%d,%d = (reasons,shared)" % (len(reasons),shared)
+            # # DEBUG
+
             return reasons
 
         # loop on the disojunctions in the rhs
@@ -183,16 +199,12 @@ class GroundSpecs(object):
             if (node_type in leaf_nodes):
                 # reasons is empty: no matter what substitution,
                 # we always get the same resul
-                return (node, [])
+                return (node, GroundSpecs._get_empty_reason())
             elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
                 is_entry = True if node_type == CALL_ENTRY else False
 
                 res = None
                 reasons = GroundSpecs._get_reason(is_entry, node, substitution)
-
-                # DEBUG
-                assert (type(reasons) == list)
-                assert (len(reasons) <= 0 or type(next(iter(reasons))) == set)
 
                 call_var = (is_entry, node)
                 if call_var not in substitution:
@@ -220,7 +232,6 @@ class GroundSpecs(object):
                 (rhs, rreasons) = substitute_rec(node[2], substitution)
 
                 res = simplify_and(lhs, rhs)
-
 
                 if (get_node_type(lhs) == FALSE and
                     get_node_type(rhs) == FALSE):
@@ -364,6 +375,12 @@ class GroundSpecs(object):
         return call_node
 
     @staticmethod
+    def _get_empty_reason():
+        res = set()
+        GroundSpecs._check_reasons(res)
+        return res
+
+    @staticmethod
     def _get_reason(is_entry, call_node, substitution):
         """ Finds the "reason" (set of variables of substitution)
         That are sufficient to justify the results for call_node.
@@ -396,21 +413,31 @@ class GroundSpecs(object):
                 reason.add(p)
 
         # singleton of reasons
-        return [set(reason)]
+        res = set([frozenset(reason)])
+        GroundSpecs._check_reasons(res)
+        return res
+
+    @staticmethod
+    def _check_reasons(reasons):
+        pass
+        # assert (type(reasons) == set)
+        # assert (len(reasons) <= 0 or type(next(iter(reasons))) == frozenset)
 
     @staticmethod
     def _union_reasons(reasons1, reasons2):
         """ Perform the union of two reasons
         Side effect on reasons1 and reasons2
         """
-        assert (type(reasons1) == list)
-        assert (len(reasons1) <= 0 or type(next(iter(reasons1))) == set)
-        assert (type(reasons2) == list)
-        assert (len(reasons2) <= 0 or type(next(iter(reasons2))) == set)
+        # DEBUG
+        GroundSpecs._check_reasons(reasons1)
+        GroundSpecs._check_reasons(reasons2)
 
-        reasons1.extend(reasons2)
+        res = reasons1.union(reasons2)
+        reasons1 = None
         reasons2 = None
-        return reasons1
+
+        GroundSpecs._check_reasons(res)
+        return res
 
 
     # TODO: fix for sets
@@ -418,26 +445,21 @@ class GroundSpecs(object):
     def _merge_reasons(reasons1, reasons2):
         """ Side effects on reasons1 and
         reasons2"""
+        # DEBUG
+        GroundSpecs._check_reasons(reasons1)
+        GroundSpecs._check_reasons(reasons2)
 
-        assert (type(reasons1) == list)
-        assert (len(reasons1) <= 0 or type(next(iter(reasons1))) == set)
-        assert (type(reasons2) == list)
-        assert (len(reasons2) <= 0 or type(next(iter(reasons2))) == set)
-
-        res = []
+        res = set()
         for c1 in reasons1:
-            assert type(c1) == set
+            assert type(c1) == frozenset
             for c2 in reasons2:
-                assert type(c2) == set
-                c1.union(c2)
-                res.append(c1)
+                assert type(c2) == frozenset
+                res.add(frozenset(c1.union(c2)))
         reasons1 = None
         reasons2 = None
 
+        GroundSpecs._check_reasons(res)
         return res
-
-
-
 
     def get_source_spec(self, ground_spec):
         if ground_spec not in self.ground_to_spec:
@@ -564,15 +586,25 @@ class SymbolicGrounding:
                     a_map[bindings_set] = set()
                 a_map[bindings_set].add(message)
 
-        # Skip non-existing mappings
-        # This is the case for constants calls that do not exist
-        # in the original trace
-        if (len(a_map) == 0):
-            return TRUE_PYSMT()
-
-        # Creates the formula that represents the assignment
         call_var = (is_entry, call_node)
         call_var_enc = self.find_or_add_var(call_var)
+
+        # There is no mapping.
+        # This is the case for constants calls that do not exist
+        # in the original trace.
+        # In that case, the mapping must be false.
+        if (len(a_map) == 0):
+            call_bottom_val_enc = self.find_or_add_val(call_var, frozenset([bottom_value]))
+            call_eq_bottom = Equals(call_var_enc, call_bottom_val_enc)
+
+            if must_bind:
+                mbc = Not(Equals(call_var_enc, call_bottom_val_enc))
+            else:
+                mbc = TRUE_PYSMT()
+
+            return (call_eq_bottom, mbc)
+
+        # Creates the formula that represents the assignment
         call_encoding = TRUE_PYSMT()
         complement = TRUE_PYSMT()
         for (bindings_set, messages) in a_map.iteritems():
@@ -597,18 +629,22 @@ class SymbolicGrounding:
         call_encoding = And(call_encoding,
                             Implies(complement,
                                     Equals(call_var_enc, call_bottom_val_enc)))
-        if must_bind:
-            # cannot bind with bottom
-            call_encoding = And(call_encoding, Not(complement))
-            call_encoding = And(call_encoding, Not(Equals(call_var_enc, call_bottom_val_enc)))
 
+        must_bind_formula = TRUE_PYSMT()
+        if must_bind:
+            # Cannot assign bottom as value to the node CALL
+            # I.e. the node must ground, no matter what
+            mbc = And(Not(complement),
+                      Not(Equals(call_var_enc, call_bottom_val_enc)))
+        else:
+            mbc = TRUE_PYSMT()
 
         if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
             print("GROUNDING - ASSIGNMENTS:")
             pretty_print(call_node, sys.stderr)
             sys.stderr.write("%s\n" % str(asets))
 
-        return call_encoding
+        return (call_encoding, mbc)
 
     def get_var_val(self, enc_var, enc_value):
         """ Returns the trace value given an (encoding) variable and an encoding
@@ -671,7 +707,13 @@ class SymbolicGrounding:
 
     def _get_ground_bindings_formula(self, spec):
         logging.debug("Build encoding for grounding...")
-        ground_enc = self._ground_bindings_formula_rec(spec.ast, {}, True)
+        (ground_enc, mbc) = self._ground_bindings_formula_rec(spec.ast, {}, True)
+
+        # DEBUG
+        ground_enc = simplify(ground_enc)
+        # print (simplify(mbc).serialize())
+
+        ground_enc = And(ground_enc, mbc)
         logging.debug("Resizing BVs...")
         ground_enc = self.resize_bvs(ground_enc)
         ground_enc = And(ground_enc, self.get_domain_formula())
@@ -689,42 +731,58 @@ class SymbolicGrounding:
         atoms.
         """
 
+        def myOr(op1, op2):
+            if (op1 == FALSE_PYSMT()): return op2
+            if (op2 == FALSE_PYSMT()): return op1
+            elif (op1 == TRUE_PYSMT() or op2 == TRUE_PYSMT()): return TRUE_PYSMT()
+            return Or(op1, op2)
+        def myAnd(op1, op2):
+            if (op1 == TRUE_PYSMT()): return op2
+            if (op2 == TRUE_PYSMT()): return op1
+            elif (op1 == FALSE_PYSMT() or op2 == FALSE_PYSMT()): return FALSE_PYSMT()
+            return And(op1, op2)
+
         if ((spec_node,must_bind) in memo):
             return memo[spec_node,must_bind]
 
         node_type = get_node_type(spec_node)
         if (node_type in leaf_nodes):
             # ground set do not change in these cases
-            res = TRUE_PYSMT()
+            (res, mbc) = (TRUE_PYSMT(), TRUE_PYSMT())
         elif (node_type == AND_OP or
             node_type == SEQ_OP or
             node_type == ENABLE_OP or
             node_type == DISABLE_OP or
             node_type == OR_OP):
 
-            must_bind = must_bind and (node_type != OR_OP)
-
             # create the global constraints
-            res = And(self._ground_bindings_formula_rec(spec_node[2], memo, must_bind),
-                      self._ground_bindings_formula_rec(spec_node[1], memo, must_bind))
+            (r_res, r_mbc) = self._ground_bindings_formula_rec(spec_node[2], memo, must_bind)
+            (l_res, l_mbc) = self._ground_bindings_formula_rec(spec_node[1], memo, must_bind)
+
+            if (node_type == OR_OP):
+                # disjuncts the two mbcs
+                (res, mbc) = (myAnd(l_res, r_res), myOr(l_mbc, r_mbc))
+            else:
+                (res, mbc) = (myAnd(l_res, r_res), myAnd(l_mbc, r_mbc))
+
         elif (node_type == STAR_OP or node_type == SPEC_SYMB or
               node_type == NOT_OP):
             must_bind = must_bind and node_type == SPEC_SYMB
 
-            res = self._ground_bindings_formula_rec(spec_node[1], memo, must_bind)
+            (res, mbc) = self._ground_bindings_formula_rec(spec_node[1], memo, must_bind)
         elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
             spec_res = self.trace_map.lookup_assignments(spec_node)
             assert spec_res is not None
 
-            res = self.process_assignments_formula(node_type == CALL_ENTRY,
-                                                   spec_node, spec_res,
-                                                   must_bind)
+            (res, mbc) = self.process_assignments_formula(node_type == CALL_ENTRY,
+                                                          spec_node, spec_res,
+                                                          must_bind)
         else:
             # WARNING: we handle one spec at a time (node_type != SPEC_LIST)
             raise UnexpectedSymbol(spec_node)
 
-        memo[spec_node,must_bind] = res
-        return res
+        memo[spec_node,must_bind] = (res, mbc)
+        return (res, mbc)
 
 
     def process_substitutions(self, spec, parent, _process_subs, data):
@@ -1203,12 +1261,6 @@ class TraceMap(object):
 
         assert formal_type in leaf_nodes
         assert formal_type != NIL
-
-        # print TraceSpecConverter.traceval2specnode(actual)
-        # print type(actual)
-        # print formal
-        # print type(formal)
-        # print ""
 
         if (formal_type == DONTCARE):
             return True
