@@ -70,7 +70,7 @@ class GroundSpecs(object):
 
     def _process_subs(self, data, substitution):
         (spec, ast_set, ground_specs) = data
-        (new_spec_ast, reason) = GroundSpecs._substitute(spec, substitution)
+        (new_spec_ast, reasons) = GroundSpecs._substitute(spec, substitution)
 
         # WORKAROUND:
         #
@@ -100,16 +100,21 @@ class GroundSpecs(object):
         # if len(reason) == 0 and is_lhs_false:
         #     print "EMPTY"
 
-        if len(reason) > 0 and not is_lhs_false:
-            reason = set()
-        if len(reason) == len(substitution) and len(substitution) > 0:
-            reason = set()
+        if len(reasons) > 0 and not is_lhs_false:
+            reasons = set()
+
+        # remove unuseful reasons
+        new_reasons = []
+        for reason in reasons:
+            if not (len(reason) == len(substitution) and len(substitution) > 0):
+                new_reasons.append(reason)
+            reasons = new_reasons
 
         # skip the specification if
         #   - the rhs is false (or)
         #   - the regexp is false
         if (is_lhs_false):
-            return reason
+            return reasons
 
         # loop on the disojunctions in the rhs
         atoms_rhs = []
@@ -154,7 +159,7 @@ class GroundSpecs(object):
                 # print "Duplicate..."
 
 
-        return reason
+        return reasons
 
     @staticmethod
     def _substitute(spec, substitution):
@@ -176,14 +181,19 @@ class GroundSpecs(object):
 
             node_type = get_node_type(node)
             if (node_type in leaf_nodes):
-                # reason is empty: no matter what substitution,
+                # reasons is empty: no matter what substitution,
                 # we always get the same resul
-                return (node, set())
+                return (node, [])
             elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
                 is_entry = True if node_type == CALL_ENTRY else False
 
                 res = None
-                reason = GroundSpecs._get_reason(is_entry, node, substitution)
+                reasons = GroundSpecs._get_reason(is_entry, node, substitution)
+
+                # DEBUG
+                assert (type(reasons) == list)
+                assert (len(reasons) <= 0 or type(next(iter(reasons))) == set)
+
                 call_var = (is_entry, node)
                 if call_var not in substitution:
                     res = new_false()
@@ -204,86 +214,103 @@ class GroundSpecs(object):
                             res = new_call_node
                         else:
                             res = new_or(res, new_call_node)
-                return (res, reason)
+                return (res, reasons)
             elif (node_type == AND_OP):
-                (lhs, lreason) = substitute_rec(node[1], substitution)
-                (rhs, rreason) = substitute_rec(node[2], substitution)
+                (lhs, lreasons) = substitute_rec(node[1], substitution)
+                (rhs, rreasons) = substitute_rec(node[2], substitution)
 
                 res = simplify_and(lhs, rhs)
 
-                if (get_node_type(lhs) == FALSE):
-                    reason = lreason
+
+                if (get_node_type(lhs) == FALSE and
+                    get_node_type(rhs) == FALSE):
+                    reasons = GroundSpecs._union_reasons(lreasons,
+                                                         rreasons)
+                elif (get_node_type(lhs) == FALSE):
+                    reasons = lreasons
                 elif (get_node_type(rhs) == FALSE):
-                    reason = rreason
+                    reasons = rreasons
                 else:
-                    reason = GroundSpecs._merge_reasons(lreason,
-                                                        rreason)
-                return (res, reason)
+                    reasons = GroundSpecs._merge_reasons(lreasons,
+                                                         rreasons)
+                return (res, reasons)
             elif (node_type == OR_OP):
-                (lhs, lreason) = substitute_rec(node[1], substitution)
-                (rhs, rreason) = substitute_rec(node[2], substitution)
+                (lhs, lreasons) = substitute_rec(node[1], substitution)
+                (rhs, rreasons) = substitute_rec(node[2], substitution)
 
                 res = simplify_or(lhs, rhs)
 
-                if (get_node_type(lhs) == TRUE):
-                    reason = lreason
+                if (get_node_type(lhs) == TRUE and
+                    get_node_type(rhs) == TRUE):
+                    reasons = GroundSpecs._union_reasons(lreasons,
+                                                         rreasons)
+                elif (get_node_type(lhs) == TRUE):
+                    reasons = lreasons
                 elif (get_node_type(rhs) == TRUE):
-                    reason = rreason
+                    reasons = rreasons
                 else:
-                    reason = GroundSpecs._merge_reasons(lreason,
-                                                        rreason)
+                    reasons = GroundSpecs._merge_reasons(lreasons,
+                                                         rreasons)
 
-                return (res, reason)
+                return (res, reasons)
             elif (node_type == SEQ_OP):
-                (lhs, lreason) = substitute_rec(node[1], substitution)
-                (rhs, rreason) = substitute_rec(node[2], substitution)
+                (lhs, lreasons) = substitute_rec(node[1], substitution)
+                (rhs, rreasons) = substitute_rec(node[2], substitution)
 
                 res = simplify_seq(lhs, rhs)
 
-                if (get_node_type(lhs) == FALSE):
-                    reason = lreason
+                if (get_node_type(lhs) == FALSE and
+                    get_node_type(rhs) == FALSE):
+                    reasons = GroundSpecs._union_reasons(lreasons,
+                                                         rreasons)
+                elif (get_node_type(lhs) == FALSE):
+                    reasons = lreasons
                 elif (get_node_type(rhs) == FALSE):
-                    reason = rreason
+                    reasons = rreasons
                 else:
-                    reason = GroundSpecs._merge_reasons(lreason,
-                                                        rreason)
+                    reasons = GroundSpecs._merge_reasons(lreasons,
+                                                         rreasons)
 
-                return (res, reason)
+                return (res, reasons)
             elif (node_type == NOT_OP):
-                (lhs, reason) = substitute_rec(node[1], substitution)
+                (lhs, reasons) = substitute_rec(node[1], substitution)
                 res = simplify_not(lhs)
 
-                return (res,reason)
+                return (res,reasons)
             elif (node_type == STAR_OP):
-                (lhs, reason) = substitute_rec(node[1], substitution)
+                (lhs, reasons) = substitute_rec(node[1], substitution)
                 res = simplify_star(lhs)
 
-                return (res,reason)
+                return (res,reasons)
             elif (node_type == ENABLE_OP or node_type == DISABLE_OP):
-                (lhs, lreason) = substitute_rec(node[1], substitution)
-                (rhs, rreason) = substitute_rec(node[2], substitution)
+                (lhs, lreasons) = substitute_rec(node[1], substitution)
+                (rhs, rreasons) = substitute_rec(node[2], substitution)
 
                 res = create_node(node_type, [lhs, rhs])
 
-                if (get_node_type(rhs) == FALSE):
-                    reason = rreason
+                if (get_node_type(lhs) == FALSE and
+                    get_node_type(rhs) == FALSE):
+                    reasons = GroundSpecs._union_reasons(lreasons,
+                                                         rreasons)
+                elif (get_node_type(rhs) == FALSE):
+                    reasons = rreasons
                 elif (get_node_type(lhs) == FALSE):
-                    reason = lreason
+                    reasons = lreasons
                 else:
-                    reason = GroundSpecs._merge_reasons(lreason,
-                                                        rreason)
-                return (res, reason)
+                    reasons = GroundSpecs._merge_reasons(lreasons,
+                                                         rreasons)
+                return (res, reasons)
             elif (node_type == SPEC_SYMB):
-                (lhs, reason) = substitute_rec(node[1], substitution)
+                (lhs, reasons) = substitute_rec(node[1], substitution)
                 res = create_node(SPEC_SYMB, [lhs, new_nil()])
 
-                return (res,reason)
+                return (res,reasons)
             else:
                 raise UnexpectedSymbol(node)
 
-        (new_spec_asts, reason) = substitute_rec(spec.ast, substitution)
+        (new_spec_asts, reasons) = substitute_rec(spec.ast, substitution)
 
-        return (new_spec_asts, reason)
+        return (new_spec_asts, reasons)
 
     @staticmethod
     def _msg_to_call_node(is_entry, msg, param_types):
@@ -368,11 +395,48 @@ class GroundSpecs(object):
             if p in substitution:
                 reason.add(p)
 
-        return reason
+        # singleton of reasons
+        return [set(reason)]
 
     @staticmethod
-    def _merge_reasons(c1, c2):
-        return c1.union(c2)
+    def _union_reasons(reasons1, reasons2):
+        """ Perform the union of two reasons
+        Side effect on reasons1 and reasons2
+        """
+        assert (type(reasons1) == list)
+        assert (len(reasons1) <= 0 or type(next(iter(reasons1))) == set)
+        assert (type(reasons2) == list)
+        assert (len(reasons2) <= 0 or type(next(iter(reasons2))) == set)
+
+        reasons1.extend(reasons2)
+        reasons2 = None
+        return reasons1
+
+
+    # TODO: fix for sets
+    @staticmethod
+    def _merge_reasons(reasons1, reasons2):
+        """ Side effects on reasons1 and
+        reasons2"""
+
+        assert (type(reasons1) == list)
+        assert (len(reasons1) <= 0 or type(next(iter(reasons1))) == set)
+        assert (type(reasons2) == list)
+        assert (len(reasons2) <= 0 or type(next(iter(reasons2))) == set)
+
+        res = []
+        for c1 in reasons1:
+            assert type(c1) == set
+            for c2 in reasons2:
+                assert type(c2) == set
+                c1.union(c2)
+                res.append(c1)
+        reasons1 = None
+        reasons2 = None
+
+        return res
+
+
 
 
     def get_source_spec(self, ground_spec):
@@ -606,7 +670,9 @@ class SymbolicGrounding:
         return domain
 
     def _get_ground_bindings_formula(self, spec):
+        logging.debug("Build encoding for grounding...")
         ground_enc = self._ground_bindings_formula_rec(spec.ast, {}, True)
+        logging.debug("Resizing BVs...")
         ground_enc = self.resize_bvs(ground_enc)
         ground_enc = And(ground_enc, self.get_domain_formula())
 
@@ -623,8 +689,8 @@ class SymbolicGrounding:
         atoms.
         """
 
-        if (spec_node in memo):
-            return memo[spec_node]
+        if ((spec_node,must_bind) in memo):
+            return memo[spec_node,must_bind]
 
         node_type = get_node_type(spec_node)
         if (node_type in leaf_nodes):
@@ -657,15 +723,15 @@ class SymbolicGrounding:
             # WARNING: we handle one spec at a time (node_type != SPEC_LIST)
             raise UnexpectedSymbol(spec_node)
 
-        memo[spec_node] = res
+        memo[spec_node,must_bind] = res
         return res
 
 
-    def process_substitutions(self, spec, parent, process_subs, data):
+    def process_substitutions(self, spec, parent, _process_subs, data):
         """ Generates all the possible substitutions
         for the CALL nodes.
 
-        The caller implements what to do using the process_subs callback,
+        The caller implements what to do using the _process_subs callback,
         that is invoked every time a new substitution is found.
         """
 
@@ -675,10 +741,17 @@ class SymbolicGrounding:
         solver = self.pysmt_env.factory.Solver(quantified=False,
                                                name="z3",
                                                logic=QF_BV)
+
+        logging.debug("Starting the enumeration of the assignments...")
         count_models = 0
         solver.add_assertion(ground_formula)
         while (solver.solve()):
             count_models = count_models + 1
+
+            if (0 == count_models % 1000):
+                # DEBUG
+                # logging.debug("Enumerated %d assignments so far..." % count_models)
+                logging.info("Enumerated %d assignments so far..." % count_models)
 
             model = solver.get_model()
 
@@ -698,29 +771,33 @@ class SymbolicGrounding:
                 if fvar_is_call:
                     to_cut = And(to_cut,Equals(enc_var, enc_value))
 
-            reason = process_subs(data, substitution)
+            reasons = _process_subs(data, substitution)
 
+            # remove all the reasons for unfeasibility
+            if (len(reasons) > 0 and self.learn_reasons):
+                for reason in reasons:
+                    # DEBUG
+                    # print "C/S = %d/%d" % (len(reason), len(substitution))
 
-            if (len(reason) > 0 and self.learn_reasons):
-                # DEBUG
-                # print "C/S = %d/%d" % (len(reason), len(substitution))
-                unsat_assignment = TRUE_PYSMT()
-                for fvar in reason:
-                    fval = substitution[fvar]
-                    enc_var = self.fvars2encvars.lookup_a(fvar)
+                    unsat_assignment = TRUE_PYSMT()
+                    for fvar in reason:
+                        fval = substitution[fvar]
+                        enc_var = self.fvars2encvars.lookup_a(fvar)
 
-                    fvals2enc = self.fvars2values[fvar]
-                    enc_value = fvals2enc.lookup_a(fval)
+                        fvals2enc = self.fvars2values[fvar]
+                        enc_value = fvals2enc.lookup_a(fval)
 
-                    unsat_assignment = And(unsat_assignment,
-                                           Equals(enc_var, enc_value))
-                # remove assignment from the search
-                solver.add_assertion(Not(unsat_assignment))
+                        unsat_assignment = And(unsat_assignment,
+                                               Equals(enc_var, enc_value))
+                    # remove assignment from the search
+                    solver.add_assertion(Not(unsat_assignment))
 
             # rule out the current assignment
             solver.add_assertion(Not(to_cut))
 
-        logging.debug("Processed %d models" % count_models)
+        # DEBUG
+        # logging.debug("Processed %d models" % count_models)
+        logging.info("Processed %d models" % count_models)
 
 class AssignmentsBottom(object):
     """ Object used to represent the bottom value inside Assignemnts """
