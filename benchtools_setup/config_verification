@@ -1,0 +1,18 @@
+[environment]
+db_uri = db
+delay_notifications = true
+create_db = true
+scheduler=make
+dump_scheduler_script = output_scheduler_local.txt
+num_cores = 2
+
+[group_verify]
+executable =./scripts/verify.sh
+parameters=/home/sergio/works/projects/muse/repos/callback-verification;/home/sergio/works/projects/muse/repos/callback-verification/cbverifier/test/examples/spec1.spec:/home/sergio/works/projects/muse/repos/callback-verification/cbverifier/test/examples/spec2.spec
+basedir=/home/sergio/works/projects/muse/repos/callback-verification/cbverifier/test/examples
+instances_file=./trace_to_verify.txt
+time_limit=60
+mem_limit=4000000
+tarball=./results/verification.tar.bz2
+email=
+disabled=false
