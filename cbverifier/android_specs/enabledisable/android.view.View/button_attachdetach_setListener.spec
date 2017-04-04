@@ -13,14 +13,18 @@ SPEC FALSE[*] |- [CB] [ENTRY] [l] void android.view.View$OnClickListener.onClick
 //Fragment onResume enable
 
 SPEC view_onClick_listener_set_has(view,listener) 
-	& attached_fragment_is_resumed_just(fragment,view) 
-	|+ [CB] [ENTRY] [listener] void android.view.View$OnClickListener.onClick(view : android.view.View);
+	& may_attached_fragment_is_resumed_just(fragment,view) 
+	|+ [CB] [ENTRY] [listener] void android.view.View$OnClickListener.onClick(view : android.view.View)
+	ALIASES android.app.Fragment.getView = [android.appFragment.getView,android.support.v4.app.Fragment.getView],
+	android.app.Fragment.onViewCreated = [android.support.v4.app.Fragment.onViewCreated,android.app.Fragment.onViewCreated],
+	android.app.Fragment.onResume = [android.support.v4.app.Fragment.onResume,android.app.Fragment.onResume];
+
 
 //Activity onResume enable
 
 
 //setOnClickListener enable
-SPEC attached_fragment_is_resumed_has(fragment,view) & view_onClick_listener_set_just(view,listener) |+ [CB] [ENTRY] [listener] void android.view.View$OnClickListener.onClick(view : android.view.View)
+SPEC may_attached_fragment_is_resumed_has(fragment,view) & view_onClick_listener_set_just(view,listener) |+ [CB] [ENTRY] [listener] void android.view.View$OnClickListener.onClick(view : android.view.View)
      ALIASES android.app.Fragment.getView = [android.appFragment.getView,android.support.v4.app.Fragment.getView],
      android.app.Fragment.onViewCreated = [android.support.v4.app.Fragment.onViewCreated,android.app.Fragment.onViewCreated],
      android.app.Fragment.onResume = [android.support.v4.app.Fragment.onResume,android.app.Fragment.onResume]
