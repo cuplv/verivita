@@ -365,6 +365,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         for spec in specs:
             logging.info("Grounding spec: %s" % str(spec))
             tmp = gs.ground_spec(spec)
+            logging.info("Found %d concrete specs" % len(tmp))
             ground_specs.update(set(tmp))
         return ground_specs
 
