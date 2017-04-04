@@ -554,6 +554,30 @@ class SymbolicGrounding:
         the regular expression.
         """
 
+        # DEBUG
+        if (True or logging.getLogger().getEffectiveLevel() == logging.DEBUG):
+            print("GROUNDING - ASSIGNMENTS:")
+            pretty_print(call_node, sys.stderr)
+            sys.stderr.write("\n")
+            for aset in asets:
+                res = ""
+                for (fvar, fval) in aset.assignments.iteritems():
+                    if (get_node_type(fvar) == ID):
+                        res = "%s %s = %s" % (res,str(get_id_val(fvar)), str(fval))
+                    elif (type(fvar) == tuple):
+                        from cStringIO import StringIO
+                        assert (is_entry, call_node) == fvar
+                        stringio = StringIO()
+                        pretty_print(call_node, stringio)
+                        res = "%s %s" % (stringio.getvalue(),res)
+
+                    # else:
+                    #     print fval
+                    #     # sys.stderr.write("  ")
+                    #     # pretty_print(fval, sys.stderr)
+                sys.stderr.write("%s\n" % res)
+
+
         # Group the messages by the same variable assigment
         a_map = {}
         for aset in asets:
@@ -638,11 +662,6 @@ class SymbolicGrounding:
                       Not(Equals(call_var_enc, call_bottom_val_enc)))
         else:
             mbc = TRUE_PYSMT()
-
-        if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
-            print("GROUNDING - ASSIGNMENTS:")
-            pretty_print(call_node, sys.stderr)
-            sys.stderr.write("%s\n" % str(asets))
 
         return (call_encoding, mbc)
 
