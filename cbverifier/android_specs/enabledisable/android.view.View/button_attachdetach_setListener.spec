@@ -14,6 +14,12 @@ SPEC view_onClick_listener_set_has(view,listener)
 	android.app.Fragment.onViewCreated = [android.support.v4.app.Fragment.onViewCreated,android.app.Fragment.onViewCreated],
 	android.app.Fragment.onResume = [android.support.v4.app.Fragment.onResume,android.app.Fragment.onResume];
 
+//Fragment onPause disable
+SPEC view_onClick_listener_set_has(view,listener) & must_attached_fragment_is_paused_just(fragment,view) |-[CB] [ENTRY] [listener] void android.view.View$OnClickListener.onClick(view : android.view.View)
+	ALIASES android.app.Fragment.getView = [android.appFragment.getView,android.support.v4.app.Fragment.getView],
+	android.app.Fragment.onViewCreated = [android.support.v4.app.Fragment.onViewCreated,android.app.Fragment.onViewCreated],
+	android.app.Fragment.onResume = [android.support.v4.app.Fragment.onResume,android.app.Fragment.onResume];
+
 
 //Activity onResume enable
 

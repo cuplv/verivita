@@ -5,13 +5,14 @@
 
 //*** Fragment resume/pause/destroy
 
-REGEXP may_attached_fragment_is_resumed_just(fragment,view) = [TRUE[*];container_on_fragment_has(fragment,container);(view_attached_chain_has(container,view) | view_lose_precision(view)); [CB] [ENTRY] [fragment] void android.app.Fragment.onResume()];
+REGEXP may_attached_fragment_is_resumed_just(fragment,view) = [((container_on_fragment_has(fragment,container)&view_attached_chain_has(container,view)) | view_lose_precision(view)); [CB] [ENTRY] [fragment] void android.app.Fragment.onResume()];
 
 
 
 REGEXP may_attached_fragment_is_resumed_has(fragment,view) = [(TRUE[*];[CB] [ENTRY] [fragment] void android.app.Fragment.onResume();(![CB] [ENTRY] [fragment] void android.app.Fragment.onPause())[*]) & ((container_on_fragment_has(fragment,continer); view_attached_chain_has(container,view)) | view_lose_precision(view) )];
 
-//REGEXP must_attached_fragment_is_paused_just(fragment,view) = 
+REGEXP must_attached_fragment_is_paused_just(fragment,view) = [((container_on_fragment_has(fragment,container)&view_attached_chain_has(container,view))); [CB] [ENTRY] [fragment] void android.app.Fragment.onPause()];
+
 
 
 
