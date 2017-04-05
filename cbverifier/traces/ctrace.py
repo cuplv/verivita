@@ -14,6 +14,8 @@ import re
 
 import copy
 
+import StringIO
+
 import cbverifier.traces.tracemsg_pb2
 from  cbverifier.traces.tracemsg_pb2 import TraceMsgContainer
 
@@ -420,12 +422,17 @@ class CTrace:
     def __iter__(self):
         return iter(self.children)
 
-    def copy(self, remove_exception=False):
+    def copy(self, remove_exception=False, callback_bound = None):
         """ Copy the trace, eventually removing the top-level
         callbacks that ends in an exception. """
         new_trace = CTrace()
         copy.app_info = copy.deepcopy(self.app_info)
-        for child in self.children:
+
+        maximum = len(self.children)
+        if callback_bound is not None:
+            maximum = int(callback_bound)
+        for ichild in xrange(maximum):
+            child = self.children[ichild]
             if not (remove_exception and
                     child.exception is not None):
                 new_trace.children.append(copy.deepcopy(child))
@@ -512,6 +519,11 @@ class CTraceSerializer:
                 logging.warning("Protobuf is truncated... parsing terminated.")
             else:
                 # This is a non-recoverable error that must be propagated
+                raise
+        except cbverifier.traces.ctrace.MalformedTraceException as e:
+            if len(trace.children) > 0:
+                logging.warning("Last callback truncated")
+            else:
                 raise
 
         return trace

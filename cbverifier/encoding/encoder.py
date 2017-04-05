@@ -211,9 +211,9 @@ class TSEncoder:
     EXIT = "EXIT"
 
 
-    def __init__(self, trace, specs, ignore_msgs = False):
+    def __init__(self, trace, specs, ignore_msgs = False, limit = None):
         # copy the trace removing the top-level exception
-        self.trace = trace.copy(True)
+        self.trace = trace.copy(True, limit)
         self.specs = specs
         self.ts = None
         self.error_prop = None

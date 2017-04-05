@@ -26,7 +26,8 @@ class DriverOptions:
                  simplify_trace,
                  debug,
                  filter_msgs,
-                 allow_exception=True):
+                 allow_exception=True,
+                 trace_limit=None):
         self.tracefile = tracefile
         self.traceformat = traceformat
         self.spec_file_list = spec_file_list
@@ -34,6 +35,7 @@ class DriverOptions:
         self.debug = debug
         self.filter_msgs = filter_msgs
         self.allow_exception = allow_exception
+        self.trace_limit = trace_limit
 
 class NoDisableException(Exception):
     def __init__(self,*args,**kwargs):
@@ -79,13 +81,13 @@ class Driver:
         stream.write("\n")
 
     def get_ground_specs(self):
-        ts_enc = TSEncoder(self.trace, self.spec_list)
+        ts_enc = TSEncoder(self.trace, self.spec_list, limit=self.opts.trace_limit)
         ground_specs = ts_enc.get_ground_spec()
         return ground_specs
 
 
     def run_bmc(self, depth, inc=False):
-        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace, self.opts.trace_limit)
 
         bmc = BMC(ts_enc.helper,
                   ts_enc.get_ts_encoding(),
@@ -96,7 +98,7 @@ class Driver:
         return (cex, ts_enc.mapback)
 
     def to_smv(self, smv_file_name):
-        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace, self.opts.trace_limit)
         ts = ts_enc.get_ts_encoding()
         ts2smv = SmvTranslator(ts_enc.pysmt_env,
                                ts.state_vars,
@@ -110,7 +112,7 @@ class Driver:
             f.close()
 
     def run_ic3(self, nuxmv_path, ic3_frames):
-        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace, self.opts.trace_limit)
         ts = ts_enc.get_ts_encoding()
 
         nuxmv_driver = NuXmvDriver(ts_enc.pysmt_env, ts, nuxmv_path)
@@ -120,7 +122,7 @@ class Driver:
         return (result, trace, ts_enc.mapback)
 
     def run_simulation(self, cb_sequence = None): 
-        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace, self.opts.trace_limit)
         bmc = BMC(ts_enc.helper,
                   ts_enc.get_ts_encoding(),
                   ts_enc.error_prop)
@@ -255,6 +257,8 @@ def main(input_args=None):
 
     p.add_option('-j', '--object_id', help="When running slice this is a concrete object to target")
 
+    p.add_option('-a', '--trace_limit', help="truncate trace longer than some number of top level callbacks (happens before simplification)")
+
 
     def usage(msg=""):
         if msg: print "----%s----\n" % msg
@@ -328,7 +332,8 @@ def main(input_args=None):
                                 opts.simplify_trace,
                                 opts.debug,
                                 opts.filter,
-                                opts.mode != "check-trace-relevance")
+                                opts.mode != "check-trace-relevance",
+                                opts.trace_limit)
 
     driver = Driver(driver_opts)
 
