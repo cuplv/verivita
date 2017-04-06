@@ -25,6 +25,9 @@ They *CANNOT* be redistributed or reused for other projects.
 - run the simulation
 python ${BENCHTOOLS_PATH}/exec/run_group.py config_simulation
 
+- run things in background
+bash ~/Tools/benchtools/exec/schedule_at_group.sh config_simulation
+
 - collect the results
 python ${BENCHTOOLS_PATH}/analyze/extract_log.py -p -f filters/simulate.py -o simulate_res.txt ./results_simulation/simulation.tar.bz2 
 
