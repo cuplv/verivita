@@ -15,5 +15,5 @@ echo ${SPECS}
 
 
 
-echo "python ${CB_PATH}/cbverifier/driver.py -m simulate -f -t ${BENCHTOOLS_INSTANCE} -s ${SPECS} -z"
-python "${CB_PATH}/cbverifier/driver.py" -m simulate -f -t ${BENCHTOOLS_INSTANCE} -s "${SPECS} -z"
+echo "python ${CB_PATH}/cbverifier/driver.py -m simulate -z -t ${BENCHTOOLS_INSTANCE} -s ${SPECS}"
+python "${CB_PATH}/cbverifier/driver.py" -m simulate -z -t ${BENCHTOOLS_INSTANCE} -s "${SPECS}"
