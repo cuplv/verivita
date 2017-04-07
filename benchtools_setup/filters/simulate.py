@@ -24,6 +24,10 @@ def do_filter(iterable):
 
             if (app):
                 steps = app.groups(1)
+            else:
+                app = re.match("The trace can be simulated in (\d+) steps", line)
+		if(app):
+                    steps = app.groups(1)
 
         if line.startswith('The trace cannot be simulated (it gets stuck after'):
             result = 'Block'
