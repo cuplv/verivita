@@ -94,7 +94,7 @@ class BMC:
 
         return res
 
-    def simulate(self, trace_enc):
+    def simulate(self, trace_enc, debug = False):
         """Simulate the trace
         """
 
@@ -112,17 +112,18 @@ class BMC:
             tenc_at_i = self.get_trace_enc_at_i(i, trace_enc)
             solver.add_assertion(tenc_at_i)
 
-            res = solver.solve()
-            if not res:
-                return (i, None)
-            elif (i == k):
-                assert res
+            solver_res = solver.solve()
+            if not solver_res:
+                return (i, None, res)
+            elif (i == k) or debug:
+                assert solver_res
                 model = solver.get_model()
                 res = self._build_trace(model, i)
+
             logging.debug("The encoding is satisfiable...")
 
         assert res is not None
-        return (i, res)
+        return (i, res, None)
 
 
     def get_ts_enc_at_i(self, i):
