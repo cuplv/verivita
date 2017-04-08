@@ -128,7 +128,11 @@ class Driver:
                   ts_enc.error_prop)
 
         trace_enc = ts_enc.get_trace_encoding(cb_sequence)
-        (step, cex) = bmc.simulate(trace_enc)
+        (step, cex, prev_check) = bmc.simulate(trace_enc, self.opts.debug)
+        if self.opts.debug:
+            if prev_check is not None:
+                printer = CexPrinter(ts_enc.mapback, prev_check, sys.stdout)
+                printer.print_cex()
 
         return (step, cex, ts_enc.mapback)
     def slice(self, object_id, stream):
