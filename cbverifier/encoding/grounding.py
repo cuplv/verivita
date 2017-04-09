@@ -556,9 +556,9 @@ class SymbolicGrounding:
 
         # DEBUG
         if (True or logging.getLogger().getEffectiveLevel() == logging.DEBUG):
-            print("GROUNDING - ASSIGNMENTS:")
-            pretty_print(call_node, sys.stderr)
-            sys.stderr.write("\n")
+            # print("GROUNDING - ASSIGNMENTS:")
+            # pretty_print(call_node, sys.stderr)
+            # sys.stderr.write("\n")
             for aset in asets:
                 res = ""
                 for (fvar, fval) in aset.assignments.iteritems():
@@ -568,14 +568,14 @@ class SymbolicGrounding:
                         from cStringIO import StringIO
                         assert (is_entry, call_node) == fvar
                         stringio = StringIO()
-                        pretty_print(call_node, stringio)
+                        # pretty_print(call_node, stringio)
                         res = "%s %s" % (stringio.getvalue(),res)
 
                     # else:
                     #     print fval
                     #     # sys.stderr.write("  ")
                     #     # pretty_print(fval, sys.stderr)
-                sys.stderr.write("%s\n" % res)
+                #sys.stderr.write("%s\n" % res)
 
 
         # Group the messages by the same variable assigment
@@ -872,9 +872,8 @@ class SymbolicGrounding:
             # rule out the current assignment
             solver.add_assertion(Not(to_cut))
 
-        # DEBUG
-        # logging.debug("Processed %d models" % count_models)
-        logging.info("Processed %d models" % count_models)
+        logging.debug("Processed %d models" % count_models)
+        # logging.info("Processed %d models" % count_models)
 
 class AssignmentsBottom(object):
     """ Object used to represent the bottom value inside Assignemnts """
