@@ -102,7 +102,7 @@ class BMC:
 
         solver = self._get_solver()
 
-        res = None
+        sim_trace = None
         k = len(trace_enc)
         for i in range(k + 1):
             logging.info("Simulating step %d/%d" % (i, k))
@@ -112,17 +112,21 @@ class BMC:
             tenc_at_i = self.get_trace_enc_at_i(i, trace_enc)
             solver.add_assertion(tenc_at_i)
 
-            res = solver.solve()
-            if not res:
-                return (i, None)
+            solver_res = solver.solve()
+            if not solver_res:
+                return (i, None, sim_trace)
             elif (i == k):
-                assert res
-                model = solver.get_model()
-                res = self._build_trace(model, i)
-            logging.debug("The encoding is satisfiable...")
+                assert solver_res
+            logging.debug("Simulation encoding is satisfiable at step %d..." % (i+1))
 
-        assert res is not None
-        return (i, res)
+            # TODO
+            # assert the last step of the model in the encoding
+            # just read the last step
+            model = solver.get_model()
+            sim_trace = self._build_trace(model, i)
+
+        assert sim_trace is not None
+        return (i+1, sim_trace, None)
 
 
     def get_ts_enc_at_i(self, i):

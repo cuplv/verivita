@@ -126,9 +126,10 @@ class Driver:
                   ts_enc.error_prop)
 
         trace_enc = ts_enc.get_trace_encoding(cb_sequence)
-        (step, cex) = bmc.simulate(trace_enc)
+        (step, trace, last_trace) = bmc.simulate(trace_enc)
 
-        return (step, cex, ts_enc.mapback)
+        return (step, trace, last_trace, ts_enc.mapback)
+
     def slice(self, object_id, stream):
         if object_id is not None:
             sliced = i_slice(self.trace,object_id)
@@ -348,14 +349,24 @@ def main(input_args=None):
             print "No bugs found up to %d steps" % (depth)
         return 0
     elif (opts.mode == "simulate"):
-        (steps, cex, mapback) = driver.run_simulation(cb_sequence)
+        (steps, cex, last_cex, mapback) = driver.run_simulation(cb_sequence)
 
         if (cex is not None):
             print "\nThe trace can be simulated in %d steps." % steps
             printer = CexPrinter(mapback, cex, sys.stdout)
             printer.print_cex()
         else:
-            print "The trace cannot be simulated (it gets stuck after %d transition)" % (steps)
+            print("The trace cannot be simulated (it gets stuck after " +
+                  "%d transition)" % (steps))
+
+            if last_cex is None:
+                print("Cannot simulate the first event!")
+            else:
+                print("Last simulable trace:")
+                printer = CexPrinter(mapback, last_cex, sys.stdout)
+                printer.print_cex()
+
+                print("\n--- WARNING: the trace *CANNOT* be simulated! ---")
 
         return 0
     elif (opts.mode == "check-trace-relevance"):
