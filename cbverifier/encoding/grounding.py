@@ -86,20 +86,6 @@ class GroundSpecs(object):
         rhs = get_spec_rhs(new_spec_ast)
         is_lhs_false = FALSE == get_node_type(regexp)
 
-        # # DEBUG
-        # if is_lhs_false and not len(reason) > 0:
-        #     print "LHS is false, no reasons!"
-        #     print substitution
-        #     pretty_print(spec.ast, sys.stdout)
-        #     pretty_print(regexp, sys.stdout)
-        #     sys.exit(0)
-        # # DEBUG
-        # if len(reason) == len(substitution) and is_lhs_false:
-        #     print "NO IMPROVEMENT"
-        # # DEBUG
-        # if len(reason) == 0 and is_lhs_false:
-        #     print "EMPTY"
-
         if len(reasons) > 0 and not is_lhs_false:
             reasons = set()
 
@@ -114,22 +100,6 @@ class GroundSpecs(object):
         #   - the rhs is false (or)
         #   - the regexp is false
         if (is_lhs_false):
-
-            # # DEBUG
-            # shared = 0
-            # tot = 0
-            # i = 0
-            # for r1 in reasons:
-            #     j = 0
-            #     for r2 in reasons:
-            #         if j <= i: continue
-            #         if r1 == r2: shared += 1
-            #         j += 1
-            #     i += 1
-            # assert shared == 0
-            # print "%d,%d = (reasons,shared)" % (len(reasons),shared)
-            # # DEBUG
-
             return reasons
 
         # loop on the disojunctions in the rhs
@@ -169,10 +139,6 @@ class GroundSpecs(object):
 
                 ground_specs.append(new_spec)
                 self.ground_to_spec[new_spec] = spec
-            # else:
-                # There can be duplicate: different assignments, same results
-                # DEBUG
-                # print "Duplicate..."
 
 
         return reasons
@@ -554,30 +520,6 @@ class SymbolicGrounding:
         the regular expression.
         """
 
-        # DEBUG
-        if (True or logging.getLogger().getEffectiveLevel() == logging.DEBUG):
-            print("GROUNDING - ASSIGNMENTS:")
-            pretty_print(call_node, sys.stderr)
-            sys.stderr.write("\n")
-            for aset in asets:
-                res = ""
-                for (fvar, fval) in aset.assignments.iteritems():
-                    if (get_node_type(fvar) == ID):
-                        res = "%s %s = %s" % (res,str(get_id_val(fvar)), str(fval))
-                    elif (type(fvar) == tuple):
-                        from cStringIO import StringIO
-                        assert (is_entry, call_node) == fvar
-                        stringio = StringIO()
-                        pretty_print(call_node, stringio)
-                        res = "%s %s" % (stringio.getvalue(),res)
-
-                    # else:
-                    #     print fval
-                    #     # sys.stderr.write("  ")
-                    #     # pretty_print(fval, sys.stderr)
-                sys.stderr.write("%s\n" % res)
-
-
         # Group the messages by the same variable assigment
         a_map = {}
         for aset in asets:
@@ -727,11 +669,6 @@ class SymbolicGrounding:
     def _get_ground_bindings_formula(self, spec):
         logging.debug("Build encoding for grounding...")
         (ground_enc, mbc) = self._ground_bindings_formula_rec(spec.ast, {}, True)
-
-        # DEBUG
-        ground_enc = simplify(ground_enc)
-        # print (simplify(mbc).serialize())
-
         ground_enc = And(ground_enc, mbc)
         logging.debug("Resizing BVs...")
         ground_enc = self.resize_bvs(ground_enc)
@@ -826,9 +763,7 @@ class SymbolicGrounding:
             count_models = count_models + 1
 
             if (0 == count_models % 1000):
-                # DEBUG
-                # logging.debug("Enumerated %d assignments so far..." % count_models)
-                logging.info("Enumerated %d assignments so far..." % count_models)
+                logging.debug("Enumerated %d assignments so far..." % count_models)
 
             model = solver.get_model()
 
@@ -853,9 +788,6 @@ class SymbolicGrounding:
             # remove all the reasons for unfeasibility
             if (len(reasons) > 0 and self.learn_reasons):
                 for reason in reasons:
-                    # DEBUG
-                    # print "C/S = %d/%d" % (len(reason), len(substitution))
-
                     unsat_assignment = TRUE_PYSMT()
                     for fvar in reason:
                         fval = substitution[fvar]
@@ -872,9 +804,7 @@ class SymbolicGrounding:
             # rule out the current assignment
             solver.add_assertion(Not(to_cut))
 
-        # DEBUG
-        # logging.debug("Processed %d models" % count_models)
-        logging.info("Processed %d models" % count_models)
+        logging.debug("Processed %d models" % count_models)
 
 class AssignmentsBottom(object):
     """ Object used to represent the bottom value inside Assignemnts """
@@ -1105,10 +1035,6 @@ class TraceMap(object):
         self.trace_map = {}
         for child in trace.children:
             self.trace_map = self._fill_map(child, self.trace_map)
-
-        # if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
-        #     logging.debug("--- Trace map --- ")
-        #     logging.debug(str(self.trace_map))
 
 
     def _get_inner_elem(self, hash_map, key, default=None):
