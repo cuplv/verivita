@@ -1,0 +1,21 @@
+[environment]
+db_uri = db
+delay_notifications = true
+create_db = true
+scheduler=make
+dump_scheduler_script = output_scheduler_local.txt
+num_cores = 2
+
+[group_verify]
+executable =./scripts/verify.sh
+parameters=/Users/s/Documents/source/callback-verification;/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_getString.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+
+
+
+basedir=/home/sergio/works/projects/muse/repos/callback-verification/cbverifier/test/examples
+instances_file=experiments/execute_verify/traces_with_AsyncTask_execute.txt
+time_limit=60
+mem_limit=4000000
+tarball=./results/verification.tar.bz2
+email=
+disabled=false
