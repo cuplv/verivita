@@ -363,9 +363,9 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         """
         ground_specs = set()
         for spec in specs:
-            logging.info("Grounding spec: %s" % str(spec))
+            logging.debug("Grounding spec: %s" % str(spec))
             tmp = gs.ground_spec(spec)
-            logging.info("Found %d concrete specs" % len(tmp))
+            logging.debug("Found %d concrete specs" % len(tmp))
             ground_specs.update(set(tmp))
         return ground_specs
 
@@ -561,10 +561,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                                                  self.pysmt_env.formula_manager))
                 ts.trans = And(ts.trans, fc_msg)
         return (ts, disabled_msg, accepting)
-
-
-
-
 
     def _get_regexp_ts(self, regexp, spec_id):
         """ Builds the ts for the automaton.
