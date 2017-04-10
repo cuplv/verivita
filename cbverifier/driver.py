@@ -56,6 +56,8 @@ class Driver:
         except TraceEndsInErrorException as e:
             raise
         except Exception as e:
+            import traceback
+            traceback.print_exc()
             raise Exception("An error happened reading the trace in %s (%s)" % (self.opts.tracefile,
                                                                                 e.message))
 
@@ -128,13 +130,12 @@ class Driver:
                   ts_enc.error_prop)
 
         trace_enc = ts_enc.get_trace_encoding(cb_sequence)
-        (step, cex, prev_check) = bmc.simulate(trace_enc, self.opts.debug)
-        if self.opts.debug:
-            if prev_check is not None:
-                printer = CexPrinter(ts_enc.mapback, prev_check, sys.stdout)
-                printer.print_cex()
 
-        return (step, cex, ts_enc.mapback)
+        (step, trace, last_trace) = bmc.simulate(trace_enc)
+
+        return (step, trace, last_trace, ts_enc.mapback)
+
+
     def slice(self, object_id, stream):
         if object_id is not None:
             sliced = i_slice(self.trace,object_id)
@@ -357,14 +358,26 @@ def main(input_args=None):
             print "No bugs found up to %d steps" % (depth)
         return 0
     elif (opts.mode == "simulate"):
-        (steps, cex, mapback) = driver.run_simulation(cb_sequence)
+        (steps, cex, last_cex, mapback) = driver.run_simulation(cb_sequence)
 
         if (cex is not None):
             print "\nThe trace can be simulated in %d steps." % steps
             printer = CexPrinter(mapback, cex, sys.stdout)
             printer.print_cex()
         else:
-            print "The trace cannot be simulated (it gets stuck after %d transition)" % (steps)
+            print("The trace cannot be simulated (it gets stuck at the " +
+                  "%d-th transition)" % (steps))
+
+
+            if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
+                if steps == 1:
+                    print("Cannot simulate the first event!")
+                else:
+                    print("Last simulable trace:")
+                    printer = CexPrinter(mapback, last_cex, sys.stdout)
+                    printer.print_cex()
+
+                    print("\n--- WARNING: the trace *CANNOT* be simulated! ---")
 
         return 0
     elif (opts.mode == "check-trace-relevance"):

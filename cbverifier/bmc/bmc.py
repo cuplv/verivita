@@ -102,10 +102,14 @@ class BMC:
 
         solver = self._get_solver()
 
-        res = None
+        sim_trace = None
+        app_trace = None
         k = len(trace_enc)
         for i in range(k + 1):
-            logging.info("Simulating step %d/%d" % (i, k))
+            if (i == 0):
+                logging.info("Simulating initial state")
+            else:
+                logging.info("Simulating step %d/%d" % (i, k))
             f_at_i = self.get_ts_enc_at_i(i)
             solver.add_assertion(f_at_i)
 
@@ -114,16 +118,23 @@ class BMC:
 
             solver_res = solver.solve()
             if not solver_res:
-                return (i, None, res)
-            elif (i == k) or debug:
+                return (i, None, app_trace)
+            elif (i == k):
                 assert solver_res
+                # TODO
+                # assert the last step of the model in the encoding?
+
                 model = solver.get_model()
-                res = self._build_trace(model, i)
+                sim_trace = self._build_trace(model, i)
+            if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
+                # read the partial model only in debug mode
+                model = solver.get_model()
+                app_trace = self._build_trace(model, i)
 
-            logging.debug("The encoding is satisfiable...")
+            logging.debug("Simulation encoding is satisfiable at step %d..." % (i))
 
-        assert res is not None
-        return (i, res, None)
+        assert sim_trace is not None
+        return (i, sim_trace, app_trace)
 
 
     def get_ts_enc_at_i(self, i):
@@ -163,6 +174,35 @@ class BMC:
             # No bugs found
             logging.debug("No bugs found up to %d steps" % k)
             return None
+
+    def _trace_add_step(self, cex, model, i, steps):
+        """Extract the trace from the satisfying assignment."""
+
+        vars_to_use = [self.ts.state_vars, self.ts.input_vars]
+        cex = []
+
+        if (len(cex) < i):
+#            assert i == 0
+            cex_i = {}
+            cex.append(cex_i)
+        else:
+            cex_i = {}
+
+        if (i not in self.helper.time_memo):
+            self.helper.get_formula_at_i(self.all_vars, TRUE(), i)
+
+        # skip the input variables in the last step
+        if (i >= steps):
+            vars_to_use = [self.ts.state_vars]
+
+        for vs in vars_to_use:
+            for var in vs:
+                assert var is not None
+                var_i = self.helper.get_var_at_time(var, i)
+                assert var_i is not None
+                cex_i[var] = model.get_py_value(var_i, True)
+
+        return cex
 
     def _build_trace(self, model, steps):
         """Extract the trace from the satisfying assignment."""
