@@ -1,1 +1,2 @@
-SPEC [CI] [ENTRY] [a] android.os.AsyncTask android.os.AsyncTask.execute(# : java.lang.Object[]) |- [CI] [ENTRY] [a] android.os.AsyncTask android.os.AsyncTask.execute(# : java.lang.Object[])
+SPEC TRUE[*];[CI] [ENTRY] [a] android.os.AsyncTask android.os.AsyncTask.execute(# : java.lang.Object[]) |- [CI] [ENTRY] [a] android.os.AsyncTask android.os.AsyncTask.execute(# : java.lang.Object[]);
+SPEC TRUE[*];[CI] [ENTRY] [a] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) |- [CI] [ENTRY] [a] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[])
