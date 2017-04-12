@@ -1,22 +1,22 @@
 """ Performs the runtime verification.
 """
 
-import sys
-import os
-import optparse
 import logging
+import optparse
+import os
+import sys
 
-
-from cbverifier.traces.ctrace import CTraceSerializer, CCallin
-from cbverifier.traces.ctrace import CCallback, MessageFilter
-from cbverifier.traces.ctrace import MalformedTraceException, TraceEndsInErrorException
-from cbverifier.specs.spec import Spec
-from cbverifier.encoding.encoder import TSEncoder
-from cbverifier.encoding.cex_printer import CexPrinter
-from cbverifier.bmc.bmc import BMC
-
-from smv.tosmv import SmvTranslator, NuXmvDriver
 from pysmt.shortcuts import Not
+
+from cbverifier.bmc.bmc import BMC
+from cbverifier.encoding.cex_printer import CexPrinter
+from cbverifier.encoding.encoder import TSEncoder
+from cbverifier.specs.spec import Spec
+from cbverifier.traces.ctrace import CCallback, MessageFilter
+from cbverifier.traces.ctrace import CTraceSerializer, CCallin
+from cbverifier.traces.ctrace import MalformedTraceException, TraceEndsInErrorException
+from smv.tosmv import SmvTranslator, NuXmvDriver
+
 
 class DriverOptions:
     def __init__(self,
