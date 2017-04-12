@@ -4,10 +4,12 @@ SPEC FALSE[*] |- [CB] [ENTRY] [a] void android.app.Activity.onResume();
 SPEC FALSE[*] |- [CB] [ENTRY] [a] void android.app.Activity.onPause();
 SPEC FALSE[*] |- [CB] [ENTRY] [a] void android.app.Activity.onStop();
 SPEC FALSE[*] |- [CB] [ENTRY] [a] void android.app.Activity.onDestroy();
+SPEC FALSE[*] |- [CB] [ENTRY] [a] void android.app.Activity.onStart();
 
 
 //create start and resume chain
 SPEC TRUE[*];[CB] [ENTRY] [a] void android.app.Activity.<init>() |+ [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
+SPEC TRUE[*];[CB] [ENTRY] [a] void android.app.Activity.<init>() |- [CB] [ENTRY] [a] void android.app.Activity.<init>();
 SPEC TRUE[*];[CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle) |- [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
 SPEC TRUE[*];[CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle) |+ [CB] [ENTRY] [a] void android.app.Activity.onStart();
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStart() |-  [CB] [ENTRY] [a] void android.app.Activity.onStart();
