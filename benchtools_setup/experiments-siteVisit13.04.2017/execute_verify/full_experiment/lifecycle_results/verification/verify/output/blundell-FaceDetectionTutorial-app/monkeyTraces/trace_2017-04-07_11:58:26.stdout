@@ -1,0 +1,22 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/s/Documents/data/monkey_traces/output/blundell-FaceDetectionTutorial-app/monkeyTraces/trace_2017-04-07_11:58:26
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/s/Documents/data/monkey_traces/output/blundell-FaceDetectionTutorial-app/monkeyTraces/trace_2017-04-07_11:58:26 -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/s/software/nuXmv-1.1.1-Linux/bin/nuXmv
+
+---Simplified Trace---
+[2] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.<init>() (682de57) 
+[2] [CB] [EXIT] NULL = void com.blundell.tutorial.MainActivity.<init>() (682de57) 
+[46] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onCreate(android.os.Bundle) (682de57,NULL) 
+[46] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onCreate(android.os.Bundle) (682de57,NULL) 
+[1782] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onStart() (682de57) 
+[1782] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onStart() (682de57) 
+[1800] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onResume() (682de57) 
+  [1805] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (e06ed99,c1b810c,85d3c6a) 
+  [1805] [CI] [EXIT] e06ed99 = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (e06ed99,c1b810c,85d3c6a) 
+[1800] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onResume() (682de57) 
+
+
+The trace is SAFE

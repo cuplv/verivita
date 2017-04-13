@@ -1,0 +1,72 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/s/Documents/data/monkey_traces/output/yangtzeu-yangtzeu-app-main/monkeyTraces/trace_2017-04-07_16:50:57
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/s/Documents/data/monkey_traces/output/yangtzeu-yangtzeu-app-main/monkeyTraces/trace_2017-04-07_16:50:57 -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/s/software/nuXmv-1.1.1-Linux/bin/nuXmv
+
+---Simplified Trace---
+[286] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.<init>() (a5f63f4) 
+[286] [CB] [EXIT] NULL = void com.rex.yangtzeu.ui.Welcome.<init>() (a5f63f4) 
+[330] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onCreate(android.os.Bundle) (a5f63f4,NULL) 
+[330] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onCreate(android.os.Bundle) (a5f63f4,NULL) 
+[1474] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onStart() (a5f63f4) 
+[1474] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onStart() (a5f63f4) 
+[1490] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onResume() (a5f63f4) 
+[1490] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onResume() (a5f63f4) 
+[2290] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome$1.onAnimationEnd(android.view.animation.Animation) (8b9d776,9b008d9) 
+  [2293] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (1f7a0da,faafa01) 
+  [2293] [CI] [EXIT] 1f7a0da = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (1f7a0da,faafa01) 
+[2290] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome$1.onAnimationEnd(android.view.animation.Animation) (8b9d776,9b008d9) 
+[3568] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onPause() (a5f63f4) 
+[3568] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onPause() (a5f63f4) 
+[3684] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.<init>() (29abaf1) 
+[3684] [CB] [EXIT] NULL = void com.rex.yangtzeu.ui.Main.<init>() (29abaf1) 
+[3728] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onCreate(android.os.Bundle) (29abaf1,NULL) 
+[3728] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onCreate(android.os.Bundle) (29abaf1,NULL) 
+[6714] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onStart() (29abaf1) 
+[6714] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onStart() (29abaf1) 
+[6730] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onResume() (29abaf1) 
+[6730] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onResume() (29abaf1) 
+[8792] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onStop() (a5f63f4) 
+[8792] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onStop() (a5f63f4) 
+[8796] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onDestroy() (a5f63f4) 
+[8796] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onDestroy() (a5f63f4) 
+[9132] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onPause() (29abaf1) 
+[9132] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onPause() (29abaf1) 
+[9148] [CB] [ENTRY] void com.rex.yangtzeu.ui.Setting.<init>() (8d0d4d3) 
+[9148] [CB] [EXIT] NULL = void com.rex.yangtzeu.ui.Setting.<init>() (8d0d4d3) 
+[9192] [CB] [ENTRY] void com.rex.yangtzeu.ui.Setting.onCreate(android.os.Bundle) (8d0d4d3,NULL) 
+[9192] [CB] [EXIT] void com.rex.yangtzeu.ui.Setting.onCreate(android.os.Bundle) (8d0d4d3,NULL) 
+[10900] [CB] [ENTRY] void com.rex.yangtzeu.ui.Setting.onStart() (8d0d4d3) 
+[10900] [CB] [EXIT] void com.rex.yangtzeu.ui.Setting.onStart() (8d0d4d3) 
+[10916] [CB] [ENTRY] void com.rex.yangtzeu.ui.Setting.onResume() (8d0d4d3) 
+[10916] [CB] [EXIT] void com.rex.yangtzeu.ui.Setting.onResume() (8d0d4d3) 
+[12536] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onStop() (29abaf1) 
+[12536] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onStop() (29abaf1) 
+
+
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[2290] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome$1.onAnimationEnd(android.view.animation.Animation) (8b9d776,9b008d9) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[2293] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (1f7a0da,faafa01) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [1f7a0da] android.os.AsyncTask android.os.AsyncTask.execute(faafa01 : java.lang.Object[])) |- [CI] [ENTRY] [1f7a0da] android.os.AsyncTask android.os.AsyncTask.execute(faafa01 : java.lang.Object[])
+----------------------------------------
+Step: 3
+----------------------------------------
+[2290] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome$1.onAnimationEnd(android.view.animation.Animation) (8b9d776,9b008d9) 
+----------------------------------------
+Step: 4
+----------------------------------------
+[2293] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (1f7a0da,faafa01) 
+    Reached an error state in step 4!
+----------------------------------------

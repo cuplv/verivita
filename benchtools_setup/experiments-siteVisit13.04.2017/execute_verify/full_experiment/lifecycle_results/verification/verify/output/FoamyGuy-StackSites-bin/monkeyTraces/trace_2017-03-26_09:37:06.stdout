@@ -1,0 +1,22 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/s/Documents/data/monkey_traces/output/FoamyGuy-StackSites-bin/monkeyTraces/trace_2017-03-26_09:37:06
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/s/Documents/data/monkey_traces/output/FoamyGuy-StackSites-bin/monkeyTraces/trace_2017-03-26_09:37:06 -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/s/software/nuXmv-1.1.1-Linux/bin/nuXmv
+
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.<init>() (7d2c890) 
+[0] [CB] [EXIT] NULL = void com.makemyandroidapp.example.stacksites.MainActivity.<init>() (7d2c890) 
+[44] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onCreate(android.os.Bundle) (7d2c890,NULL) 
+  [1843] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (e91efb2,a2358b9) 
+  [1843] [CI] [EXIT] e91efb2 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (e91efb2,a2358b9) 
+[44] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onCreate(android.os.Bundle) (7d2c890,NULL) 
+[1864] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onStart() (7d2c890) 
+[1864] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onStart() (7d2c890) 
+[1880] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onResume() (7d2c890) 
+[1880] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onResume() (7d2c890) 
+
+
+The trace is SAFE
