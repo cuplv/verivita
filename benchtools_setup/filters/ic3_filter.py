@@ -28,7 +28,7 @@ def do_filter(iterable):
         # no bug found - unknown result
         if line.startswith("KeyboardInterrupt"):
             to = True
-            time = "?"
+            time = "Timeout"
             result = "?"
 
     return 'result %s time %s steps %s %s' % (result, time, steps, " ".join(extra))
