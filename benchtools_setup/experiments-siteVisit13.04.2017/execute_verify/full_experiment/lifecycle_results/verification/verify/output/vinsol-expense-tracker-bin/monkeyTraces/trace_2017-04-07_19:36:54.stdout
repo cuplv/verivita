@@ -1,0 +1,118 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/s/Documents/data/monkey_traces/output/vinsol-expense-tracker-bin/monkeyTraces/trace_2017-04-07_19:36:54
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/s/Documents/data/monkey_traces/output/vinsol-expense-tracker-bin/monkeyTraces/trace_2017-04-07_19:36:54 -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/s/software/nuXmv-1.1.1-Linux/bin/nuXmv
+
+---Simplified Trace---
+[146] [CB] [ENTRY] void com.vinsol.expensetracker.Home.<init>() (5427838) 
+[146] [CB] [EXIT] NULL = void com.vinsol.expensetracker.Home.<init>() (5427838) 
+[190] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onCreate(android.os.Bundle) (5427838,NULL) 
+[190] [CB] [EXIT] void com.vinsol.expensetracker.Home.onCreate(android.os.Bundle) (5427838,NULL) 
+[2766] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onStart() (5427838) 
+[2766] [CB] [EXIT] void com.vinsol.expensetracker.Home.onStart() (5427838) 
+[3300] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onResume() (5427838) 
+  [3671] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (d6ebb5e,4cda955) 
+  [3671] [CI] [EXIT] d6ebb5e = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (d6ebb5e,4cda955) 
+  [3677] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (ae4d332,a3140a4) 
+  [3677] [CI] [EXIT] ae4d332 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (ae4d332,a3140a4) 
+[3300] [CB] [EXIT] void com.vinsol.expensetracker.Home.onResume() (5427838) 
+[7460] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onPause() (5427838) 
+[7460] [CB] [EXIT] void com.vinsol.expensetracker.Home.onPause() (5427838) 
+[7524] [CB] [ENTRY] void com.vinsol.expensetracker.expenselisting.ExpenseListing.onCreate(android.os.Bundle) (44a8969,NULL) 
+  [11096] [CB] [ENTRY] void com.vinsol.expensetracker.expenselisting.ThisWeek.<init>() (bcf8927) 
+  [11096] [CB] [EXIT] NULL = void com.vinsol.expensetracker.expenselisting.ThisWeek.<init>() (bcf8927) 
+  [11148] [CB] [ENTRY] void com.vinsol.expensetracker.expenselisting.TabLayoutListingAbstract.onCreate(android.os.Bundle) (bcf8927,NULL) 
+  [11148] [CB] [EXIT] void com.vinsol.expensetracker.expenselisting.TabLayoutListingAbstract.onCreate(android.os.Bundle) (bcf8927,NULL) 
+  [12126] [CB] [ENTRY] void com.vinsol.expensetracker.expenselisting.ListingAbstract.onStart() (bcf8927) 
+  [12126] [CB] [EXIT] void com.vinsol.expensetracker.expenselisting.ListingAbstract.onStart() (bcf8927) 
+[7524] [CB] [EXIT] void com.vinsol.expensetracker.expenselisting.ExpenseListing.onCreate(android.os.Bundle) (44a8969,NULL) 
+[12918] [CB] [ENTRY] void com.vinsol.expensetracker.expenselisting.ExpenseListing.onStart() (44a8969) 
+[12918] [CB] [EXIT] void com.vinsol.expensetracker.expenselisting.ExpenseListing.onStart() (44a8969) 
+[12946] [CB] [ENTRY] void com.vinsol.expensetracker.expenselisting.ExpenseListing.onResume() (44a8969) 
+  [12948] [CB] [ENTRY] void com.vinsol.expensetracker.expenselisting.ThisWeek.onResume() (bcf8927) 
+  [12948] [CB] [EXIT] void com.vinsol.expensetracker.expenselisting.ThisWeek.onResume() (bcf8927) 
+  [13011] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (1401cc9,ca11dfc) 
+  [13011] [CI] [EXIT] 1401cc9 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (1401cc9,ca11dfc) 
+[12946] [CB] [EXIT] void com.vinsol.expensetracker.expenselisting.ExpenseListing.onResume() (44a8969) 
+[16338] [CB] [ENTRY] void com.vinsol.expensetracker.expenselisting.ExpenseListing.onPause() (44a8969) 
+  [16344] [CB] [ENTRY] void com.vinsol.expensetracker.expenselisting.TabLayoutListingAbstract.onPause() (bcf8927) 
+  [16344] [CB] [EXIT] void com.vinsol.expensetracker.expenselisting.TabLayoutListingAbstract.onPause() (bcf8927) 
+[16338] [CB] [EXIT] void com.vinsol.expensetracker.expenselisting.ExpenseListing.onPause() (44a8969) 
+[17086] [CB] [ENTRY] void com.vinsol.expensetracker.entry.CameraEntry.<init>() (cd7b4d0) 
+[17086] [CB] [EXIT] NULL = void com.vinsol.expensetracker.entry.CameraEntry.<init>() (cd7b4d0) 
+
+
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[17086] [CB] [ENTRY] void com.vinsol.expensetracker.entry.CameraEntry.<init>() (cd7b4d0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cd7b4d0] void com.vinsol.expensetracker.entry.CameraEntry.<init>()) |- [CB] [ENTRY] [cd7b4d0] void com.vinsol.expensetracker.entry.CameraEntry.<init>()
+----------------------------------------
+Step: 2
+----------------------------------------
+[146] [CB] [ENTRY] void com.vinsol.expensetracker.Home.<init>() (5427838) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.<init>()) |+ [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.<init>()) |- [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.<init>()
+----------------------------------------
+Step: 3
+----------------------------------------
+[190] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onCreate(android.os.Bundle) (5427838,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onStart()
+----------------------------------------
+Step: 4
+----------------------------------------
+[2766] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onStart() (5427838) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onStart()) |+ [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onStart()) |- [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onStart()
+----------------------------------------
+Step: 5
+----------------------------------------
+[3300] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onResume() (5427838) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onResume()) |- [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onResume()) |+ [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onPause()
+----------------------------------------
+Step: 6
+----------------------------------------
+[3671] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (d6ebb5e,4cda955) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [d6ebb5e] android.os.AsyncTask android.os.AsyncTask.execute(4cda955 : java.lang.Object[])) |- [CI] [ENTRY] [d6ebb5e] android.os.AsyncTask android.os.AsyncTask.execute(4cda955 : java.lang.Object[])
+----------------------------------------
+Step: 7
+----------------------------------------
+[3677] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (ae4d332,a3140a4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [ae4d332] android.os.AsyncTask android.os.AsyncTask.execute(a3140a4 : java.lang.Object[])) |- [CI] [ENTRY] [ae4d332] android.os.AsyncTask android.os.AsyncTask.execute(a3140a4 : java.lang.Object[])
+----------------------------------------
+Step: 8
+----------------------------------------
+[7460] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onPause() (5427838) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onPause()) |+ [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onPause()) |+ [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onPause()) |- [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onPause()
+----------------------------------------
+Step: 9
+----------------------------------------
+[3300] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onResume() (5427838) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onResume()) |- [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onResume()) |- [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onResume()) |+ [CB] [ENTRY] [5427838] void com.vinsol.expensetracker.Home.onPause()
+----------------------------------------
+Step: 10
+----------------------------------------
+[3671] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (d6ebb5e,4cda955) 
+    Reached an error state in step 10!
+----------------------------------------

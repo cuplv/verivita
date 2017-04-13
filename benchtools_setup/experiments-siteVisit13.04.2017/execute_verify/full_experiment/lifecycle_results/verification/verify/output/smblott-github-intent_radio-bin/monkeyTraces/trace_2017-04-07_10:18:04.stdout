@@ -1,0 +1,22 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/s/Documents/data/monkey_traces/output/smblott-github-intent_radio-bin/monkeyTraces/trace_2017-04-07_10:18:04
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/s/Documents/data/monkey_traces/output/smblott-github-intent_radio-bin/monkeyTraces/trace_2017-04-07_10:18:04 -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/s/software/nuXmv-1.1.1-Linux/bin/nuXmv
+
+---Simplified Trace---
+[2] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio.<init>() (682de57) 
+[2] [CB] [EXIT] NULL = void org.smblott.intentradio.IntentRadio.<init>() (682de57) 
+[26] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio.onCreate(android.os.Bundle) (682de57,NULL) 
+  [1345] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (e667ac3,5762d2a) 
+  [1345] [CI] [EXIT] e667ac3 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (e667ac3,5762d2a) 
+[26] [CB] [EXIT] void org.smblott.intentradio.IntentRadio.onCreate(android.os.Bundle) (682de57,NULL) 
+[1365] [CB] [ENTRY] void org.smblott.intentradio.PreferenceActivity.onStart() (682de57) 
+[1365] [CB] [EXIT] void org.smblott.intentradio.PreferenceActivity.onStart() (682de57) 
+[1393] [CB] [ENTRY] void org.smblott.intentradio.PreferenceActivity.onResume() (682de57) 
+[1393] [CB] [EXIT] void org.smblott.intentradio.PreferenceActivity.onResume() (682de57) 
+
+
+The trace is SAFE

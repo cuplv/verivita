@@ -1,0 +1,220 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/s/Documents/data/monkey_traces/output/nowlauncher-now-launcher-NowLauncher/monkeyTraces/trace_2017-03-30_11:46:44
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/s/Documents/data/monkey_traces/output/nowlauncher-now-launcher-NowLauncher/monkeyTraces/trace_2017-03-30_11:46:44 -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/s/software/nuXmv-1.1.1-Linux/bin/nuXmv
+
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.<init>() (f123bd6) 
+[0] [CB] [EXIT] NULL = void com.nowlauncher.nowlauncher.MainActivity.<init>() (f123bd6) 
+[56] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onCreate(android.os.Bundle) (f123bd6,NULL) 
+  [11125] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (548a47,7ed8c5b,24f65d1) 
+  [11125] [CI] [EXIT] 548a47 = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (548a47,7ed8c5b,24f65d1) 
+  [11250] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (db3cb9b,7ed8c5b,f98677) 
+  [11250] [CI] [EXIT] db3cb9b = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (db3cb9b,7ed8c5b,f98677) 
+  [11322] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (2ef5c70,7ed8c5b,1c5cf9c) 
+  [11322] [CI] [EXIT] 2ef5c70 = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (2ef5c70,7ed8c5b,1c5cf9c) 
+[56] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onCreate(android.os.Bundle) (f123bd6,NULL) 
+[11490] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onStart() (f123bd6) 
+[11490] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onStart() (f123bd6) 
+[11506] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[11506] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12274] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12274] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12288] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12288] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12300] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12300] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12314] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12314] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12362] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12362] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12376] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12376] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12408] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12408] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12435] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12435] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12447] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12447] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12461] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12461] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12473] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12473] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12487] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12487] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12499] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12499] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12513] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12513] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12525] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12525] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12566] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12566] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12578] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12578] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12592] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12592] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12604] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12604] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12626] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12626] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12638] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12638] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12652] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12652] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12664] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12664] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12678] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12678] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12690] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12690] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12704] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12704] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12716] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12716] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12730] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12730] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12742] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12742] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12756] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12756] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12768] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12768] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12782] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12782] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12794] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12794] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12808] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12808] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12830] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12830] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12844] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12844] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12880] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12880] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12894] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12894] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12906] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12906] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12920] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12920] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12932] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12932] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12946] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12946] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[12958] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[12958] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13021] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13021] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13033] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13033] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13047] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13047] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13063] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13063] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13077] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13077] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13089] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13089] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13103] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13103] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13202] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13202] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13216] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13216] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13228] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13228] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13242] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13242] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13254] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13254] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13268] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13268] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13280] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13280] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13294] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13294] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13306] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13306] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13320] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13320] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13332] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13332] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+[13346] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+[13346] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+
+
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[0] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.<init>() (f123bd6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.<init>()) |- [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.<init>()) |+ [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[56] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onCreate(android.os.Bundle) (f123bd6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 3
+----------------------------------------
+[11125] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (548a47,7ed8c5b,24f65d1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [548a47] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(7ed8c5b : java.util.concurrent.Executor,24f65d1 : java.lang.Object[])) |- [CI] [ENTRY] [548a47] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(7ed8c5b : java.util.concurrent.Executor,24f65d1 : java.lang.Object[])
+----------------------------------------
+Step: 4
+----------------------------------------
+[11250] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (db3cb9b,7ed8c5b,f98677) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [db3cb9b] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(7ed8c5b : java.util.concurrent.Executor,f98677 : java.lang.Object[])) |- [CI] [ENTRY] [db3cb9b] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(7ed8c5b : java.util.concurrent.Executor,f98677 : java.lang.Object[])
+----------------------------------------
+Step: 5
+----------------------------------------
+[11322] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (2ef5c70,7ed8c5b,1c5cf9c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [2ef5c70] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(7ed8c5b : java.util.concurrent.Executor,1c5cf9c : java.lang.Object[])) |- [CI] [ENTRY] [2ef5c70] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(7ed8c5b : java.util.concurrent.Executor,1c5cf9c : java.lang.Object[])
+----------------------------------------
+Step: 6
+----------------------------------------
+[11490] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onStart() (f123bd6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onStart()) |- [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onStart()) |+ [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()
+----------------------------------------
+Step: 7
+----------------------------------------
+[13346] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (f123bd6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((((((((((((((((((((((((([CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume() | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume())) |+ [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((((((((((((((((((((((((([CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume() | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume())) |- [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()
+----------------------------------------
+Step: 8
+----------------------------------------
+[13332] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onPause() (f123bd6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (((((((((((((((((((((((((((((([CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause() | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause())) |- [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()
+    SPEC (((TRUE)[*]); (((((((((((((((((((((((((((((([CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause() | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause())) |+ [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (((((((((((((((((((((((((((((([CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause() | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause()) | [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onPause())) |+ [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()
+----------------------------------------
+Step: 9
+----------------------------------------
+[56] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onCreate(android.os.Bundle) (f123bd6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f123bd6] void com.nowlauncher.nowlauncher.MainActivity.onResume()
+----------------------------------------
+Step: 10
+----------------------------------------
+[11125] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (548a47,7ed8c5b,24f65d1) 
+    Reached an error state in step 10!
+----------------------------------------

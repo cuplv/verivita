@@ -1,0 +1,107 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/s/Documents/data/monkey_traces/output/blundell-FaceDetectionTutorial-app/monkeyTraces/trace_2017-04-07_19:59:32
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/s/Documents/data/monkey_traces/output/blundell-FaceDetectionTutorial-app/monkeyTraces/trace_2017-04-07_19:59:32 -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/s/software/nuXmv-1.1.1-Linux/bin/nuXmv
+
+---Simplified Trace---
+[2] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.<init>() (682de57) 
+[2] [CB] [EXIT] NULL = void com.blundell.tutorial.MainActivity.<init>() (682de57) 
+[46] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onCreate(android.os.Bundle) (682de57,NULL) 
+[46] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onCreate(android.os.Bundle) (682de57,NULL) 
+[1782] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onStart() (682de57) 
+[1782] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onStart() (682de57) 
+[1800] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onResume() (682de57) 
+  [1805] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (44fca55,785a1f8,c0ab536) 
+  [1805] [CI] [EXIT] 44fca55 = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (44fca55,785a1f8,c0ab536) 
+[1800] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onResume() (682de57) 
+[5958] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onPause() (682de57) 
+[5958] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onPause() (682de57) 
+[5976] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.<init>() (f4fee44) 
+[5976] [CB] [EXIT] NULL = void com.blundell.tutorial.MainActivity.<init>() (f4fee44) 
+[6020] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onCreate(android.os.Bundle) (f4fee44,NULL) 
+[6020] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onCreate(android.os.Bundle) (f4fee44,NULL) 
+[7690] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onStart() (f4fee44) 
+[7690] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onStart() (f4fee44) 
+[7710] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onResume() (f4fee44) 
+  [7715] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (52e8efd,785a1f8,75a1df9) 
+  [7715] [CI] [EXIT] 52e8efd = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (52e8efd,785a1f8,75a1df9) 
+  [7725] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (6cc9331,785a1f8,826316d) 
+  [7725] [CI] [EXIT] 6cc9331 = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (6cc9331,785a1f8,826316d) 
+[7710] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onResume() (f4fee44) 
+[9118] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onStop() (682de57) 
+[9118] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onStop() (682de57) 
+[9126] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onDestroy() (682de57) 
+[9126] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onDestroy() (682de57) 
+
+
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[2] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.<init>() (682de57) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.<init>()) |+ [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.<init>()) |- [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.<init>()
+----------------------------------------
+Step: 2
+----------------------------------------
+[46] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onCreate(android.os.Bundle) (682de57,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 3
+----------------------------------------
+[5976] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.<init>() (f4fee44) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f4fee44] void com.blundell.tutorial.MainActivity.<init>()) |- [CB] [ENTRY] [f4fee44] void com.blundell.tutorial.MainActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f4fee44] void com.blundell.tutorial.MainActivity.<init>()) |+ [CB] [ENTRY] [f4fee44] void com.blundell.tutorial.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 4
+----------------------------------------
+[1782] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onStart() (682de57) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onStart()) |+ [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onStart()) |- [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onStart()
+----------------------------------------
+Step: 5
+----------------------------------------
+[1800] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onResume() (682de57) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onResume()) |+ [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onResume()) |- [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onResume()
+----------------------------------------
+Step: 6
+----------------------------------------
+[1805] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (44fca55,785a1f8,c0ab536) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [44fca55] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(785a1f8 : java.util.concurrent.Executor,c0ab536 : java.lang.Object[])) |- [CI] [ENTRY] [44fca55] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(785a1f8 : java.util.concurrent.Executor,c0ab536 : java.lang.Object[])
+----------------------------------------
+Step: 7
+----------------------------------------
+[5958] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onPause() (682de57) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onPause()) |+ [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onPause()) |+ [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onPause()) |+ [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onPause()) |- [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onPause()
+----------------------------------------
+Step: 8
+----------------------------------------
+[1800] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onResume() (682de57) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onResume()) |- [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onResume()) |+ [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onResume()) |- [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onResume()) |- [CB] [ENTRY] [682de57] void com.blundell.tutorial.MainActivity.onResume()
+----------------------------------------
+Step: 9
+----------------------------------------
+[1805] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (44fca55,785a1f8,c0ab536) 
+    Reached an error state in step 9!
+----------------------------------------
