@@ -30,6 +30,9 @@ def do_filter(iterable):
             to = True
             time = "Timeout"
             result = "?"
+        if line.startswith("Exception: An error happened reading the trace"):
+            result = "ReadError"
+
 
     return 'result %s time %s steps %s %s' % (result, time, steps, " ".join(extra))
 
