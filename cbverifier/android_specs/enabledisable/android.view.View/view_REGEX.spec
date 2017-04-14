@@ -4,5 +4,5 @@ REGEXP view_onClick_listener_set_just(view,listener) = [TRUE[*];[CI] [ENTRY] [vi
 REGEXP view_onClick_listener_set_has(view,listener) = [view_onClick_listener_set_just(view,listener);TRUE[*]];
 
 REGEXP view_onClick_enabled_set_just(view) = [TRUE[*];[CI] [ENTRY] [view] void android.widget.TextView.setEnabled(TRUE : boolean)];
-REGEXP view_onClick_enabled_set_has(view) = [view_onClick_enabled_set_just(view);(![CI] [ENTRY] [view] void android.widget.TextView.setEnabled(TRUE : boolean))[*]]
+REGEXP view_onClick_enabled_set_has(view) = [(view_onClick_enabled_set_just(view);(![CI] [ENTRY] [view] void android.widget.TextView.setEnabled(TRUE : boolean))[*]) | (![CI] [ENTRY] [view] void android.widget.TextView.setEnabled(# : boolean))[*]]
 
