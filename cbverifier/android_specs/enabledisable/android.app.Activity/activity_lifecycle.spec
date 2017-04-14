@@ -26,8 +26,8 @@ SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY
 
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |+ [CB] [ENTRY] [a] void android.app.Activity.onDestroy();
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |+ [CB] [ENTRY] [a] void android.app.Activity.onRestart();
-SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |+ [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
-SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
+//SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |+ [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
+//SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
 
 //Resume branch from pause
 
