@@ -24,11 +24,7 @@ SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onResume() |- [CB] [ENTRY] [a] void android.app.Activity.onStop();
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY] [a] void android.app.Activity.onResume();
 
-SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |+ [CB] [ENTRY] [a] void android.app.Activity.onDestroy();
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |+ [CB] [ENTRY] [a] void android.app.Activity.onRestart();
-//SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |+ [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
-//SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
-
 //Resume branch from pause
 
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onPause() |+ [CB] [ENTRY] [a] void android.app.Activity.onResume();
@@ -61,4 +57,7 @@ SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onDestroy() |- [CB] [EN
 //SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |+ [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
 //SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle) |- [CB] [ENTRY] [a] void android.app.Activity.onRestart();
 //SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onCreate() |- [CB] [ENTRY] [a] void android.app.Activity.onDestroy()
+//SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |+ [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
+//SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
+
 
