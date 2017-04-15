@@ -8,16 +8,41 @@ import argparse
 # meaning that we effectively have a;.*;TRUE|-c
 # instead a;.*;(!t & !b) |-c is needed
 
-if(False):
+if(True):
     combinations = [
 
         ({"onStart","onResume", "onPause","onSaveInstanceState","onDestroy","onDetach",
-          "onCreateView","onViewCreated","onDestroyView", "<init>","onStop","onCreate","onAttach", "onActivityCreated", "isDetached"},
+          "onCreateView","onViewCreated","onDestroyView", "<init>","onStop","onCreate","onAttach", "onActivityCreated", "isDetached", "isResumed"},
             {"android.support.v4.app.Fragment", "android.support.v4.app.ListFragment","android.app.ListFragment",
-               "android.support.v4.app.DialogFragment"})]
+               "android.support.v4.app.DialogFragment","android.preference.PreferenceFragment",
+             "android.app.DialogFragment",
+             "android.webkit.WebViewFragment"
+             # "android.support.v14.preference.EditTextPreferenceDialogFragment",
+             # "android.support.v14.preference.ListPreferenceDialogFragment",
+             # "android.support.v14.preference.MultiSelectListPreferenceDialogFragment",
+             # "android.support.v14.preference.PreferenceDialogFragment",
+             # "android.support.v17.leanback.app.BrandedFragment",
+             # "android.support.v17.leanback.app.GuidedStepFragment",
+             # "android.support.v17.leanback.app.HeadersFragment",
+             # "android.support.v17.preference.LeanbackPreferenceDialogFragment",
+             # "android.support.v17.preference.LeanbackSettingsFragment",
+             # "android.support.v17.leanback.app.OnboardingFragment",
+             # "android.support.v17.leanback.app.PlaybackFragment",
+             # "android.support.v17.leanback.app.RowsFragment",
+             # "android.support.v17.leanback.app.SearchFragment",
+             # "android.support.v17.preference.BaseLeanbackPreferenceFragment",
+             # "android.support.v17.leanback.app.BrowseFragment",
+             # "android.support.v17.leanback.app.DetailsFragment",
+             # "android.support.v17.leanback.app.ErrorFragment",
+             # "android.support.v17.preference.LeanbackListPreferenceDialogFragment",
+             # "android.support.v17.preference.LeanbackPreferenceFragment",
+             # "android.support.v17.leanback.app.PlaybackOverlayFragment",
+             # "android.support.v17.leanback.app.VerticalGridFragment",
+             # "android.support.v17.leanback.app.VideoFragment"
+             })]
     base = "android.app.Fragment"
 
-if(True):
+if(False):
     combinations = [
         ({"getFragmentManager","onDestroy"},
          {"android.support.v7.app.AppCompatActivity"})
@@ -82,7 +107,7 @@ def cycle_lines(in_file, out_file):
                     trimedLine = line2[:-1]
                 else:
                     trimedLine = line2
-                parsedspec = Spec.get_spec_from_string(trimedLine)
+                parsedspec = Spec.get_specs_from_string(trimedLine)
                 assert(len(parsedspec) == 1)
                 spec = parsedspec[0].ast
                 aliasList = get_aliases_for_spec(spec)
