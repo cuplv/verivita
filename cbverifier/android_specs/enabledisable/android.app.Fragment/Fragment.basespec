@@ -1,93 +1,146 @@
+//Note: auto generated specs
 //*** Enable Disable Rules ***
+
 //Initial disable rules
-SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
-SPEC FALSE[*] |-  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle);
-SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle);
-SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onStart();
-SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onResume();
-SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onPause();
-SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle);
-SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onStop();
-SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView();
-SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroy();
-SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onDetach();
-SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle);
-SPEC FALSE[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity);
+
+SPEC (FALSE)[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
+SPEC (FALSE)[*] |- [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle);
+SPEC (FALSE)[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle);
+SPEC (FALSE)[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onStart();
+SPEC (FALSE)[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onResume();
+SPEC (FALSE)[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onPause();
+SPEC (FALSE)[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle);
+SPEC (FALSE)[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onStop();
+SPEC (FALSE)[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView();
+SPEC (FALSE)[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroy();
+SPEC (FALSE)[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onDetach();
+SPEC (FALSE)[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle);
+SPEC (FALSE)[*] |- [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity);
+
+
 
 
 //Initialization
 
-SPEC TRUE[*]; [CI] [ENTRY] [f] void android.app.Fragment.<init>() |+ [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity);
 
-SPEC TRUE[*]; [CI] [EXIT] [f] void android.app.Fragment.<init>() |- [CI] [EXIT] [f] void android.app.Fragment.<init>();
+
+SPEC ((TRUE)[*]); ([CI] [ENTRY] [f] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity);
+
+
+SPEC ((TRUE)[*]); ([CI] [EXIT] [f] void android.app.Fragment.<init>()) |- [CI] [EXIT] [f] void android.app.Fragment.<init>();
+
 
 //Lifecycle
 
-SPEC TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |- [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |+ [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle) |- [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle) |+  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle);
-SPEC TRUE[*];  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle) |-  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle);
-SPEC TRUE[*];  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle) |+ [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle) |- [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle);
+
+
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity)) |- [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity);
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity)) |+ [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle)) |- [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle)) |+ [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle);
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle)) |- [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle);
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle)) |+ [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle);
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle)) |- [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle);
+
 
 //TODO: onActivityCreated and onViewStateRestored conditional on init, for now left unspecified
+
 //When added in the below rule will also need to know whether its in the starting cycle.
 
-SPEC TRUE[*];  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle) |+ [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle) |- [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStart() |- [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle);
+
+
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle)) |+ [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle);
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle)) |- [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle);
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onStart()) |- [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle);
+
+
 
 
 //following rule was commented out, we are overaproximating onViewCreated as it depends on the return value of onCreateView sometimes, this can be modeled precisely but not needed yet
+
 //SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStart();
-SPEC TRUE[*]; [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStart();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStart() |- [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle);
+
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle)) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStart();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onStart()) |- [CB] [ENTRY] [f] void android.app.Fragment.onViewCreated(# : android.view.View,# : android.os.Bundle);
 
 
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStart() |- [CB] [ENTRY] [f] void android.app.Fragment.onStart();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStart() |+ [CB] [ENTRY] [f] void android.app.Fragment.onResume();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onResume() |- [CB] [ENTRY] [f] void android.app.Fragment.onResume();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onResume() |+ [CB] [ENTRY] [f] void android.app.Fragment.onPause();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onPause() |- [CB] [ENTRY] [f] void android.app.Fragment.onPause();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onPause() |+ [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onPause() |+ [CB] [ENTRY] [f] void android.app.Fragment.onStop();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onPause() |+ [CB] [ENTRY] [f] void android.app.Fragment.onResume();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onResume() |- [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle) |- [CB] [ENTRY] [f] void android.app.Fragment.onResume();
+
+
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onStart()) |- [CB] [ENTRY] [f] void android.app.Fragment.onStart();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onStart()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onResume();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onResume()) |- [CB] [ENTRY] [f] void android.app.Fragment.onResume();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onResume()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onPause();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onPause()) |- [CB] [ENTRY] [f] void android.app.Fragment.onPause();
+
+
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onStart()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle);
+
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onResume()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle);
+
+
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onPause()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStop();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onPause()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onResume();
+
+//Removed because onSaveInstanceState "can happenany time before onDestroy" according to expanded fragment lifecycle.  I am going to stick with onResume enabling it until I see otherwise
+//SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onResume()) |- [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle);
+//SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle)) |- [CB] [ENTRY] [f] void android.app.Fragment.onResume();
 //SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStop();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle) |- [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStop() |- [CB] [ENTRY] [f] void android.app.Fragment.onStop();
+
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle)) |- [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle);
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onStop()) |- [CB] [ENTRY] [f] void android.app.Fragment.onStop();
+
 
 //onStop branching control flow
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStop() |+ [CB] [ENTRY] [f] void android.app.Fragment.onStart();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStop() |+ [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStop() |+ [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView();
 
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStart() |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStart() |- [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView() |- [CB] [ENTRY] [f] void android.app.Fragment.onStart();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView() |- [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle) |- [CB] [ENTRY] [f] void android.app.Fragment.onStart();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle) |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onStop()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStart();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onStop()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onStop()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView();
+
+
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onStart()) |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onStart()) |- [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onDestroyView()) |- [CB] [ENTRY] [f] void android.app.Fragment.onStart();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onDestroyView()) |- [CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle);
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle)) |- [CB] [ENTRY] [f] void android.app.Fragment.onStart();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onCreate(# : android.os.Bundle)) |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView();
+
+
 
 
 //onDstroyView branching control
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView() |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView() |+ [CB] [ENTRY] [f] void android.app.Fragment.onDestroy();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView() |+  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle);
 
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDestroy() |-  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle);
-SPEC TRUE[*];  [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(#:android.view.LayoutInflater,#:android.view.ViewGroup,#:android.os.Bundle) |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroy();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onDestroyView()) |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onDestroyView()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onDestroy();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onDestroyView()) |+ [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle);
 
 
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDestroy() |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroy();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDestroy() |+ [CB] [ENTRY] [f] void android.app.Fragment.onDetach();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDetach() |+ [CB] [ENTRY] [f] void android.app.Fragment.onDetach();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onDestroy()) |- [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle);
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] android.view.View android.app.Fragment.onCreateView(# : android.view.LayoutInflater,# : android.view.ViewGroup,# : android.os.Bundle)) |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroy();
+
+
+
+
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onDestroy()) |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroy();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onDestroy()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onDetach();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onDetach()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onDetach();
+
+
+//isResumed callin
+
+SPEC (FALSE)[*] |- TRUE = [CI] [EXIT] [f] boolean android.app.Fragment.isResumed();
+
+
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onPause()) |- TRUE = [CI] [EXIT] [f] boolean android.app.Fragment.isResumed();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onPause()) |+ FALSE = [CI] [EXIT] [f] boolean android.app.Fragment.isResumed();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onResume()) |+ TRUE = [CI] [EXIT] [f] boolean android.app.Fragment.isResumed();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onResume()) |- FALSE = [CI] [EXIT] [f] boolean android.app.Fragment.isResumed();
+
 
 //Callin return value ordering constraints
-SPEC FALSE[*] |- false = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDetach() |- false = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
-SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onDetach() |+ true = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
-SPEC TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |+ false = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
-SPEC TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |- true = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
+
+SPEC (FALSE)[*] |- FALSE = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onPause()) |- FALSE = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onPause()) |+ TRUE = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity)) |+ FALSE = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
+SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity)) |- TRUE = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached()
+
