@@ -29,10 +29,10 @@ def do_filter(iterable):
                 if(app):
                     steps = app.groups(1)
 
-        if line.startswith('The trace cannot be simulated (it gets stuck after'):
+        if line.startswith('The trace cannot be simulated'):
             result = 'Block'
 
-            app = re.match("The trace cannot be simulated \(it gets stuck after (\d+) transition\)", line)
+            app = re.match("The trace cannot be simulated \(it gets stuck at the (\d+) transition\)", line)
 
             if (app):
                 steps = app.group(1)
