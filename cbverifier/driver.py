@@ -1,22 +1,24 @@
 """ Performs the runtime verification.
 """
 
-import logging
-import optparse
-import os
 import sys
+import os
+import optparse
+import logging
 
-from pysmt.shortcuts import Not
 
-from cbverifier.bmc.bmc import BMC
-from cbverifier.encoding.cex_printer import CexPrinter
-from cbverifier.encoding.encoder import TSEncoder
-from cbverifier.specs.spec import Spec
-from cbverifier.traces.ctrace import CCallback, MessageFilter
 from cbverifier.traces.ctrace import CTraceSerializer, CCallin
+from cbverifier.traces.ctrace import CCallback, MessageFilter
 from cbverifier.traces.ctrace import MalformedTraceException, TraceEndsInErrorException
-from smv.tosmv import SmvTranslator, NuXmvDriver
+from cbverifier.specs.spec import Spec
+from cbverifier.encoding.encoder import TSEncoder
+from cbverifier.encoding.cex_printer import CexPrinter
+from cbverifier.bmc.bmc import BMC
 
+from cbverifier.utils.stats import Stats
+
+from smv.tosmv import SmvTranslator, NuXmvDriver
+from pysmt.shortcuts import Not
 
 class DriverOptions:
     def __init__(self,
@@ -26,8 +28,7 @@ class DriverOptions:
                  simplify_trace,
                  debug,
                  filter_msgs,
-                 allow_exception=True,
-                 trace_limit=None):
+                 allow_exception=True):
         self.tracefile = tracefile
         self.traceformat = traceformat
         self.spec_file_list = spec_file_list
@@ -35,7 +36,6 @@ class DriverOptions:
         self.debug = debug
         self.filter_msgs = filter_msgs
         self.allow_exception = allow_exception
-        self.trace_limit = trace_limit
 
 class NoDisableException(Exception):
     def __init__(self,*args,**kwargs):
@@ -46,18 +46,21 @@ class Driver:
     def __init__(self, opts):
         self.opts = opts
 
+        global_stats = Stats.get_global_stats()
+
         # Parse the trace
         try:
+            global_stats.start_timer(Stats.PARSING_TIME)
             self.trace = CTraceSerializer.read_trace_file_name(self.opts.tracefile,
                                                                self.opts.traceformat == "json",
                                                                self.opts.allow_exception)
+            global_stats.stop_timer(Stats.PARSING_TIME)
+            global_stats.write_times(sys.stdout, Stats.PARSING_TIME)
         except MalformedTraceException as e:
             raise
         except TraceEndsInErrorException as e:
             raise
         except Exception as e:
-            import traceback
-            traceback.print_exc()
             raise Exception("An error happened reading the trace in %s (%s)" % (self.opts.tracefile,
                                                                                 e.message))
 
@@ -83,13 +86,16 @@ class Driver:
         stream.write("\n")
 
     def get_ground_specs(self):
-        ts_enc = TSEncoder(self.trace, self.spec_list, limit=self.opts.trace_limit)
+        ts_enc = TSEncoder(self.trace, self.spec_list)
         ground_specs = ts_enc.get_ground_spec()
         return ground_specs
 
 
     def run_bmc(self, depth, inc=False):
-        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace, self.opts.trace_limit)
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+
+        global_stats = Stats.get_global_stats()
+        global_stats.start_timer(Stats.VERIFICATION_TIME)
 
         bmc = BMC(ts_enc.helper,
                   ts_enc.get_ts_encoding(),
@@ -97,10 +103,14 @@ class Driver:
 
         cex = bmc.find_bug(depth, inc)
 
+        global_stats.stop_timer(Stats.VERIFICATION_TIME)
+        global_stats.write_times(sys.stdout, Stats.VERIFICATION_TIME)
+
+
         return (cex, ts_enc.mapback)
 
     def to_smv(self, smv_file_name):
-        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace, self.opts.trace_limit)
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
         ts = ts_enc.get_ts_encoding()
         ts2smv = SmvTranslator(ts_enc.pysmt_env,
                                ts.state_vars,
@@ -114,27 +124,39 @@ class Driver:
             f.close()
 
     def run_ic3(self, nuxmv_path, ic3_frames):
-        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace, self.opts.trace_limit)
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
         ts = ts_enc.get_ts_encoding()
+
+
+        global_stats = Stats.get_global_stats()
+        global_stats.start_timer(Stats.VERIFICATION_TIME,True)
 
         nuxmv_driver = NuXmvDriver(ts_enc.pysmt_env, ts, nuxmv_path)
         (result, trace) = nuxmv_driver.ic3(Not(ts_enc.error_prop),
                                            ic3_frames)
 
+        global_stats.stop_timer(Stats.VERIFICATION_TIME,True)
+        global_stats.write_times(sys.stdout, Stats.VERIFICATION_TIME)
+
         return (result, trace, ts_enc.mapback)
 
     def run_simulation(self, cb_sequence = None): 
-        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace, self.opts.trace_limit)
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+
+        global_stats = Stats.get_global_stats()
+        global_stats.start_timer(Stats.SIMULATION_TIME)
+
         bmc = BMC(ts_enc.helper,
                   ts_enc.get_ts_encoding(),
                   ts_enc.error_prop)
 
         trace_enc = ts_enc.get_trace_encoding(cb_sequence)
-
         (step, trace, last_trace) = bmc.simulate(trace_enc)
 
-        return (step, trace, last_trace, ts_enc.mapback)
+        global_stats.stop_timer(Stats.SIMULATION_TIME)
+        global_stats.write_times(sys.stdout, Stats.SIMULATION_TIME)
 
+        return (step, trace, last_trace, ts_enc.mapback)
 
     def slice(self, object_id, stream):
         if object_id is not None:
@@ -262,8 +284,6 @@ def main(input_args=None):
 
     p.add_option('-j', '--object_id', help="When running slice this is a concrete object to target")
 
-    p.add_option('-a', '--trace_limit', help="truncate trace longer than some number of top level callbacks (happens before simplification)")
-
 
     def usage(msg=""):
         if msg: print "----%s----\n" % msg
@@ -337,8 +357,7 @@ def main(input_args=None):
                                 opts.simplify_trace,
                                 opts.debug,
                                 opts.filter,
-                                opts.mode != "check-trace-relevance",
-                                opts.trace_limit)
+                                opts.mode != "check-trace-relevance")
 
     driver = Driver(driver_opts)
 
