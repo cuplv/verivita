@@ -1,0 +1,20 @@
+[environment]
+db_uri = db
+delay_notifications = true
+create_db = true
+scheduler=make
+dump_scheduler_script = output_scheduler_local.txt
+num_cores = 2
+
+[group_verify]
+executable =./scripts/verify.sh
+parameters=/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec
+
+
+basedir=/
+instances_file=./instances/Dialog.dismiss.txt
+time_limit=600
+mem_limit=4000000
+tarball=./results/AlertDialog_dismiss_lifecycle_verification.tar.bz2
+email=
+disabled=false
