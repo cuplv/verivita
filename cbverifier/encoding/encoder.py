@@ -149,7 +149,7 @@ from cbverifier.encoding.automata import Automaton, AutoEnv
 from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.encoding.conversion import TraceSpecConverter
-
+from cbverifier.utils.stats import Stats
 from cbverifier.helpers import Helper
 
 DEBUG_AUTO = False
@@ -361,12 +361,20 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         Return a list of ground specifications.
         """
+
+        global_stats = Stats.get_global_stats()
+        global_stats.start_timer(Stats.SPEC_GROUNDING_TIME)
+
         ground_specs = set()
         for spec in specs:
             logging.debug("Grounding spec: %s" % str(spec))
             tmp = gs.ground_spec(spec)
             logging.debug("Found %d concrete specs" % len(tmp))
             ground_specs.update(set(tmp))
+
+        global_stats.stop_timer(Stats.SPEC_GROUNDING_TIME)
+        global_stats.write_times(sys.stdout, Stats.SPEC_GROUNDING_TIME)
+
         return ground_specs
 
 
@@ -446,6 +454,9 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         3. Encode the execution of the top-level callbacks and the
         error conditions
         """
+        global_stats = Stats.get_global_stats()
+        global_stats.start_timer(Stats.ENCODING_TIME)
+
         logging.info("Generating the encoding...")
 
         self.ts = TransitionSystem()
@@ -485,6 +496,9 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         self.ts.init = simplify(self.ts.init)
         self.ts.trans = simplify(self.ts.trans)
+
+        global_stats.stop_timer(Stats.ENCODING_TIME)
+        global_stats.write_times(sys.stdout, Stats.ENCODING_TIME)
 
 
     def _encode_ground_specs(self):
