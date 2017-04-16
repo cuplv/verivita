@@ -63,4 +63,3 @@ class Stats:
         stream.write("%s - User time: %f\n" % (timer_name, time_tuple[0]))
         stream.write("%s - System time: %f\n" % (timer_name, time_tuple[1]))
         stream.flush()
-
