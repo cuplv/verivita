@@ -6,7 +6,7 @@ find ~/Documents/data/monkey_traces -name "trace-*" >> ./instances/allTraces.txt
 TOTAL_NUMBER_TRACES=$(cat ./instances/allTraces.txt |wc -l)
 echo "total traces: ${TOTAL_NUMBER_TRACES}"
 
-#cat ./instances/allTraces.txt |shuf |head -n 20 > ./instances/traces_to_process.txt
+#cat ./instances/allTraces.txt |shuf |head -n 1 > ./instances/traces_to_process.txt
 cat ./instances/allTraces.txt |sort > ./instances/traces_to_process.txt
 for TRACE in `cat ./instances/traces_to_process.txt`
 do
@@ -17,17 +17,18 @@ do
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "android.content.res.Resources getResources()" >>./instances/Fragmentv4.getResources.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "java.lang.CharSequence getText(int)" >> ./instances/Fragmentv4.getText.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.app.Fragment --filter_method "java.lang.CharSequence getText(int)" >> ./instances/Fragment.getText.txt)&
-	wait
-done
-
-for TRACE in `cat ./instances/traces_to_process.txt`
-do
+#	wait
+#done
+#
+#for TRACE in `cat ./instances/traces_to_process.txt`
+#do
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.media.MediaPlayer --filter_method "void start()" >> ./instances/MediaPlayer.start.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.content.res.TypedArray --filter_method "void recycle()" >> ./instances/TypedArray.recycle.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.app.Fragment --filter_method "java.lang.String getString(int)" >> ./instances/Fragment.getString.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "java.lang.String getString(int)" >> ./instances/Fragmentv4.getString.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.media.MediaPlayer --filter_method "void start()" >> ./instances/MediaPlayer.start.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.app.Fragment --filter_method "void startActivity(android.content.Intent)" >> ./instances/Fragment.startActivity.txt)&
+	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "void startActivity(android.content.Intent)" >> ./instances/Fragmentv4.startActivity.txt)&
 	wait
 done
 
