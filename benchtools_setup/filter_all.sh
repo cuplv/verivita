@@ -12,6 +12,7 @@ for TRACE in `cat ./instances/traces_to_process.txt`
 do
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.app.FragmentTransaction --filter_method "int commit()" >> ./instances/FragmentTrans.commit.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.os.AsyncTask --filter_method "android.os.AsyncTask execute(java.lang.Object[])" >> ./instances/AsyncTask.execute.txt)&
+	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.os.AsyncTask --filter_method "android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[])" >> ./instances/AsyncTask.executeOnExecutor.txt)&
 
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.app.Fragment --filter_method "android.content.res.Resources getResources()" >> ./instances/Fragment.getResources.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "android.content.res.Resources getResources()" >>./instances/Fragmentv4.getResources.txt)&
@@ -29,6 +30,8 @@ do
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.media.MediaPlayer --filter_method "void start()" >> ./instances/MediaPlayer.start.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.app.Fragment --filter_method "void startActivity(android.content.Intent)" >> ./instances/Fragment.startActivity.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "void startActivity(android.content.Intent)" >> ./instances/Fragmentv4.startActivity.txt)&
+	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace ${BASE_DIR}$1 --filter_class android.app.Dialog --filter_method "void dismiss()" >> ./instances/Dialog.dismiss.txt)&
+	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace ${BASE_DIR}$1 --filter_class android.app.Dialog --filter_method "void show()" >> ./instances/Dialog.show.txt)&
 	wait
 done
 
