@@ -86,7 +86,9 @@ class Spec:
                 elif (get_node_type(spec_ast) == NAMED_REGEXP):
                     rid = get_named_regexp_id(spec_ast)
                     rvars = get_named_regexp_vars(spec_ast)
-                    named_regexp_map[(rid,len(rvars))] = spec_ast
+                    regexpkey = (rid, len(rvars))
+                    assert(regexpkey not in named_regexp_map)
+                    named_regexp_map[regexpkey] = spec_ast
                 iter_list_of_specs = iter_list_of_specs[2]
 
         for spec_ast in spec_ast_list:
