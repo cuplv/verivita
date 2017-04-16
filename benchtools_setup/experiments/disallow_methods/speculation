@@ -1,0 +1,44 @@
+41 , android.app.Activity ; android.app.LoaderManager getLoaderManager() 
+getResources - fragment must be attached to activity
+51 android.app.Fragment ; android.content.res.Resources getResources()
+
+
+12 , android.support.v4.app.Fragment ; void startActivityForResult(android.content.Intent,int)
+
+
+suboptimal:
+==========
+
+120 , android.support.v4.app.Fragment ; java.lang.CharSequence getText(int)
+all in bug- fix- apps
+
+237 , android.app.Activity ; void startActivityForResult(android.content.Intent,int)
+	-can't tell if throws an exception without implementing
+
+Dialog shown after parent is gone: only 13 traces mention "show"
+
+Dialog dismiss after parent is gone: not in traces
+
+GetSystemServices called before activity created: not in traces
+
+Activity finish affinity: not in traces
+
+
+Fragment_instantiateChildFragmentManager_search_buildable.json
+Fragment_requestPermission_search_buildable.json
+Fragment_setRetainInstance_search_buildable.json
+`
+
+
+FragmentTransaction add/remove: not in traces
+GoogleApiClient: not in traces
+
+
+
+https://stackoverflow.com/questions/11631408/android-fragment-getactivity-sometime-returns-null
+471 , android.support.v4.app.Fragment ; android.support.v4.app.FragmentActivity getActivity()
+	-annoying since it just returns null, not actual error
+
+`
+add view remove view: bad for current traces as not many removeView
+	https://stackoverflow.com/questions/4984499/illegalstateexception-in-android
