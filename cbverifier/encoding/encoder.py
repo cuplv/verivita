@@ -149,7 +149,7 @@ from cbverifier.encoding.automata import Automaton, AutoEnv
 from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.encoding.conversion import TraceSpecConverter
-
+from cbverifier.utils.stats import Stats
 from cbverifier.helpers import Helper
 
 DEBUG_AUTO = False
@@ -233,6 +233,10 @@ class TSEncoder:
             for spec in self.ground_specs:
                 for call in spec.get_spec_calls():
                     self.spec_msgs.add(TSEncoder.get_key_from_call(call))
+
+            # Collect the statistics
+            self._is_msg_visible = self._is_msg_visible_all
+            (trace_length, msgs, fmwk_contr, app_contr) = self.get_trace_stats()
 
             self.trace = TSEncoder._simplify_trace(self.trace,
                                                    self.spec_msgs)
@@ -361,12 +365,20 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         Return a list of ground specifications.
         """
+
+        global_stats = Stats.get_global_stats()
+        global_stats.start_timer(Stats.SPEC_GROUNDING_TIME)
+
         ground_specs = set()
         for spec in specs:
             logging.debug("Grounding spec: %s" % str(spec))
             tmp = gs.ground_spec(spec)
             logging.debug("Found %d concrete specs" % len(tmp))
             ground_specs.update(set(tmp))
+
+        global_stats.stop_timer(Stats.SPEC_GROUNDING_TIME)
+        global_stats.write_times(sys.stdout, Stats.SPEC_GROUNDING_TIME)
+
         return ground_specs
 
 
@@ -407,8 +419,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                     new_parent = parent
                 simplify_msg(new_parent, child, spec_msg)
 
-        logging.warning("The simplification of the trace is UNSOUND")
-
         # reconstruct the trace ignoring symbols not in spec_calls
         new_trace = CTrace()
         for cb in trace.children:
@@ -446,6 +456,9 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         3. Encode the execution of the top-level callbacks and the
         error conditions
         """
+        global_stats = Stats.get_global_stats()
+        global_stats.start_timer(Stats.ENCODING_TIME)
+
         logging.info("Generating the encoding...")
 
         self.ts = TransitionSystem()
@@ -476,15 +489,16 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         logging.info("Done generating the encoding.")
 
         logging.info("Miscellaneous stats:")
-        logging.info("Trace length (entry and exits): %d" % (self.trace_length))
-        logging.info("Total messages: %d" % (len(self.msgs)))
-        logging.info("Top-level callbacks: %d" % (len(self.trace.children)))
         logging.info("Ground specs: %d" % (len(self.ground_specs)))
+
         logging.info("State variables: %d" % (len(self.ts.state_vars)))
         logging.info("Input variables: %d" % (len(self.ts.input_vars)))
 
         self.ts.init = simplify(self.ts.init)
         self.ts.trans = simplify(self.ts.trans)
+
+        global_stats.stop_timer(Stats.ENCODING_TIME)
+        global_stats.write_times(sys.stdout, Stats.ENCODING_TIME)
 
 
     def _encode_ground_specs(self):
@@ -1100,8 +1114,13 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         trace_length = 0
         msgs = set()
 
-        fmwk_contr = set()
-        app_contr = set()
+#        fmwk_contr = set()
+#        app_contr = set()
+
+        ci_entry = set()
+        ci_exit = set()
+        cb_entry = set()
+        cb_exit = set()
 
         stack = []
         for msg in self.trace.children:
@@ -1115,19 +1134,45 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             if self._is_msg_visible(key):
                 trace_length = trace_length + 1
                 msgs.add(key)
-                if (isinstance(msg, CCallback)): fmwk_contr.add(key)
-                else: app_contr.add(key)
+                if (isinstance(msg, CCallback)):
+#                    fmwk_contr.add(key)
+                    cb_entry.add(key)
+                else:
+#                    app_contr.add(key)
+                    ci_entry.add(key)
 
             # Add EXIT
             key = TSEncoder.get_key_from_msg(msg, TSEncoder.EXIT)
             if self._is_msg_visible(key):
                 trace_length = trace_length + 1
                 msgs.add(key)
-                if (isinstance(msg, CCallback)): app_contr.add(key)
-                else: fmwk_contr.add(key)
+                if (isinstance(msg, CCallback)):
+#                    app_contr.add(key)
+                    cb_exit.add(key)
+                else:
+#                    fmwk_contr.add(key)
+                    ci_exit.add(key)
 
             for msg2 in msg.children:
                 stack.append(msg2)
+
+        sys.stdout.write("""
+TRACE STATISTICS
+Trace length: %d
+Top-level callbacks: %d
+CI-ENTRY: %d
+CI-EXIT: %d
+CB-ENTRY: %d
+CB-EXIT: %d
+        """ % (trace_length, len(self.trace.children),
+               len(ci_entry), len(ci_exit),
+               len(cb_entry), len(cb_exit)))
+
+        cb_entry.update(ci_exit)
+        fmwk_contr = cb_entry
+
+        ci_entry.update(cb_exit)
+        app_contr = ci_entry
 
         return (trace_length, msgs, fmwk_contr, app_contr)
 
