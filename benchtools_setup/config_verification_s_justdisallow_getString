@@ -1,0 +1,22 @@
+[environment]
+db_uri = db
+delay_notifications = true
+create_db = true
+scheduler=make
+dump_scheduler_script = output_scheduler_local.txt
+num_cores = 2
+
+[group_verify]
+executable =./scripts/verify.sh
+parameters=/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_getString.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_getString.spec
+
+
+
+
+basedir=/
+instances_file=./instances/Fragment_all.getString.txt
+time_limit=600
+mem_limit=4000000
+tarball=./results_Fragment.getString_justdisallow/verification.tar.bz2
+email=
+disabled=false
