@@ -1,0 +1,20 @@
+[environment]
+db_uri = db
+delay_notifications = true
+create_db = true
+scheduler=make
+dump_scheduler_script = output_scheduler_local.txt
+num_cores = 2
+
+[group_verify]
+executable =./scripts/verify.sh
+parameters=/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+
+
+basedir=/home/ubuntu/Documents/data/monkey_traces
+instances_file=./experiments/execute_10_subset.txt
+time_limit=600
+mem_limit=4000000
+tarball=./results/verification.tar.bz2
+email=
+disabled=false

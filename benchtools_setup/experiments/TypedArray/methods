@@ -1,0 +1,55 @@
+
+Other methods:
+==============
+30 , android.content.Context ; android.content.res.TypedArray obtainStyledAttributes(android.util.AttributeSet,int[],int,int)
+android.content.Context ; android.content.res.TypedArray obtainStyledAttributes(android.util.AttributeSet,int[])
+
+callback:
+android.preference.Preference ; java.lang.Object onGetDefaultValue(android.content.res.TypedArray,int)
+
+
+known disallows:
+===============
+CharSequence getText(int index)
+CharSequence[] getTextArray(int index)
+
+ColorStateList getColorStateList(int index)
+
+Drawable getDrawable(int index) : 25
+
+Resources getResources()
+
+String getNonConfigurationString(int index, int allowedChangingConfigs)
+String getNonResourceString(int index)
+String getPositionDescription()
+String getString(int index)
+
+TypedValue peekValue(int index)
+
+
+boolean getBoolean(int index, boolean defValue)
+boolean getValue(int index, TypedValue outValue)
+boolean hasValue(int index)
+boolean hasValueOrEmpty(int index)
+
+
+float getDimension(int index, float defValue)
+float getFloat(int index, float defValue) : 25
+float getFraction(int index, int base, int pbase, float defValue)
+
+int getChangingConfigurations()
+int getColor(int index, @ColorInt int defValue):25
+int getDimensionPixelOffset(int index, int defValue)
+int getDimensionPixelSize(int index, int defValue): 30
+int getIndex(int at)
+int getIndexCount()
+int getInt(int index, int defValue)
+int getInteger(int index, int defValue): 30
+int getLayoutDimension(int index, String name)
+int getLayoutDimension(int index, int defValue)
+int getResourceId(int index, int defValue) : 25
+int getThemeAttributeId(int index, int defValue)
+int getType(int index)
+int length()
+int[] extractThemeAttrs(@Nullable int[] scrap)
+void recycle()
