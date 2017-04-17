@@ -5,6 +5,7 @@ SPEC FALSE[*] |- [CB] [ENTRY] [a] void android.app.Activity.onPause();
 SPEC FALSE[*] |- [CB] [ENTRY] [a] void android.app.Activity.onStop();
 SPEC FALSE[*] |- [CB] [ENTRY] [a] void android.app.Activity.onDestroy();
 SPEC FALSE[*] |- [CB] [ENTRY] [a] void android.app.Activity.onStart();
+SPEC FALSE[*] |- [CB] [ENTRY] [a] void android.app.Activity.onRestart();
 
 
 //create start and resume chain
@@ -56,7 +57,7 @@ SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onDestroy() |- [CB] [EN
 ////Create branch from stop
 //SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |+ [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
 //SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle) |- [CB] [ENTRY] [a] void android.app.Activity.onRestart();
-//SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onCreate() |- [CB] [ENTRY] [a] void android.app.Activity.onDestroy()
+//SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle) |- [CB] [ENTRY] [a] void android.app.Activity.onDestroy()
 //SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |+ [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
 //SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
 

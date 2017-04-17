@@ -8,7 +8,7 @@ import argparse
 # meaning that we effectively have a;.*;TRUE|-c
 # instead a;.*;(!t & !b) |-c is needed
 
-if(True):
+if(False):
     combinations = [
 
         ({"onStart","onResume", "onPause","onSaveInstanceState","onDestroy","onDetach",
@@ -42,10 +42,21 @@ if(True):
              })]
     base = "android.app.Fragment"
 
-if(False):
+if(True):
     combinations = [
-        ({"getFragmentManager","onDestroy"},
-         {"android.support.v7.app.AppCompatActivity"})
+        ({"onCreate","onResume", "onPause","onStop","onStart","onDestroy","<init>","onRestart"},
+         {
+          "android.accounts.AccountAuthenticatorActivity",
+          "android.support.v7.app.ActionBarActivity",
+          "android.app.ActivityGroup",
+          "android.app.AliasActivity",
+          "android.support.v7.app.AppCompatActivity",
+          "android.app.ExpandableListActivity",
+          "android.support.v4.app.FragmentActivity",
+          "android.app.LauncherActivity",
+          "android.app.ListActivity",
+          "android.preference.PreferenceActivity",
+          "android.app.TabActivity"})
     ]
     base = "android.app.Activity"
 
