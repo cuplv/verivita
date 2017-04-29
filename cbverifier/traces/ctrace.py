@@ -859,11 +859,33 @@ class CTraceDelimitedReader(object):
         self.data = trace_file.read()
         self.size = len(self.data)
         self.position = 0
+        self.list_position = 0
+        self.pbufs = []
+        class ReadIter:
+            def __init__(self,v):
+                self.v = v
+            def __iter__(self):
+                return self
+            def next(self):
+                return self.v.inext()
+        ri = ReadIter(self)
+
+        for msg in ri:
+            self.pbufs.append(msg)
+
+        sortpbufs = sorted(self.pbufs, key=lambda m : m.msg.message_id)
+        self.pbufs = sortpbufs
+
+    def next(self):
+        list_position = self.list_position
+        self.list_position += 1
+        return self.pbufs[list_position]
+
 
     def __iter__(self):
         return self
 
-    def next(self):
+    def inext(self):
         """ Read a single trace msg container object from the input
         file.
 
@@ -882,6 +904,7 @@ class CTraceDelimitedReader(object):
         trace_msg_container = tracemsg_pb2.TraceMsgContainer()
         try:
             trace_msg_container.ParseFromString(raw_data)
+            pass
         except message.DecodeError as e:
             trace_msg_container == None
             raise
