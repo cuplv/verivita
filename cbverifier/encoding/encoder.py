@@ -211,7 +211,7 @@ class TSEncoder:
     EXIT = "EXIT"
 
 
-    def __init__(self, trace, specs, ignore_msgs = False, limit = None):
+    def __init__(self, trace, specs, ignore_msgs = False, limit = None, stats=None):
         # copy the trace removing the top-level exception
         self.trace = trace.copy(True, limit)
         self.specs = specs
@@ -220,7 +220,19 @@ class TSEncoder:
 
         logging.info("Total number of specs (before grounding): %d" % (len(specs)))
         self.gs = GroundSpecs(self.trace)
+
+        self.stats = stats
+        if self.stats is not None:
+            self.stats.remove_timer(Stats.SPEC_GROUNDING_TIME)
+            self.stats.remove_timer(Stats.ENCODING_TIME)
+
+        if (self.stats is not None):
+            self.stats.start_timer(Stats.SPEC_GROUNDING_TIME)
         self.ground_specs = TSEncoder._compute_ground_spec(self.gs, self.specs)
+        if (self.stats is not None):
+            self.stats.stop_timer(Stats.SPEC_GROUNDING_TIME)
+            self.stats.write_times(sys.stdout, Stats.SPEC_GROUNDING_TIME)
+
         logging.info("Total specs after grounding: %d" % (len(self.ground_specs)))
 
         # Remove all the messages in the trace that do not
@@ -271,6 +283,7 @@ class TSEncoder:
 
         # Map from regular expression to the correspondent automata, pc and final states
         self.regexp2ts = {}
+
 
     def get_ts_encoding(self):
         """ Returns the transition system encoding of the dynamic
@@ -365,19 +378,12 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         Return a list of ground specifications.
         """
-
-        global_stats = Stats.get_global_stats()
-        global_stats.start_timer(Stats.SPEC_GROUNDING_TIME)
-
         ground_specs = set()
         for spec in specs:
             logging.debug("Grounding spec: %s" % str(spec))
             tmp = gs.ground_spec(spec)
             logging.debug("Found %d concrete specs" % len(tmp))
             ground_specs.update(set(tmp))
-
-        global_stats.stop_timer(Stats.SPEC_GROUNDING_TIME)
-        global_stats.write_times(sys.stdout, Stats.SPEC_GROUNDING_TIME)
 
         return ground_specs
 
@@ -456,8 +462,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         3. Encode the execution of the top-level callbacks and the
         error conditions
         """
-        global_stats = Stats.get_global_stats()
-        global_stats.start_timer(Stats.ENCODING_TIME)
+        if (self.stats is not None):
+            self.stats.start_timer(Stats.ENCODING_TIME)
 
         logging.info("Generating the encoding...")
 
@@ -497,8 +503,9 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         self.ts.init = simplify(self.ts.init)
         self.ts.trans = simplify(self.ts.trans)
 
-        global_stats.stop_timer(Stats.ENCODING_TIME)
-        global_stats.write_times(sys.stdout, Stats.ENCODING_TIME)
+        if (self.stats is not None):
+            self.stats.stop_timer(Stats.ENCODING_TIME)
+            self.stats.write_times(sys.stdout, Stats.ENCODING_TIME)
 
 
     def _encode_ground_specs(self):
