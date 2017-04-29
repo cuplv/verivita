@@ -21,6 +21,11 @@ class Stats:
             Stats.global_stats = Stats()
         return Stats.global_stats
 
+    @staticmethod
+    def reset_global():
+        s = get_global_stats()
+        s.reset()
+
     def __init__(self):
         self.start_times = {}
         self.end_times = {}
@@ -52,6 +57,11 @@ class Stats:
             end_times = (info.ru_utime, info.ru_stime)
             self.end_times[timer_name] = end_times
 
+    def remove_timer(self, timer_name):
+        if timer_name in self.start_times:
+            self.start_times.pop(timer_name)
+        if timer_name in self.end_times:
+            self.end_times.pop(timer_name)
 
     def write_times(self, stream, timer_name):
         assert timer_name in self.start_times
@@ -63,3 +73,7 @@ class Stats:
         stream.write("%s - User time: %f\n" % (timer_name, time_tuple[0]))
         stream.write("%s - System time: %f\n" % (timer_name, time_tuple[1]))
         stream.flush()
+
+    def reset(self):
+        self.global_stats = Stats()
+
