@@ -879,7 +879,10 @@ class CTraceDelimitedReader(object):
     def next(self):
         list_position = self.list_position
         self.list_position += 1
-        return self.pbufs[list_position]
+        if list_position < len(self.pbufs):
+            return self.pbufs[list_position]
+        else:
+            raise StopIteration()
 
 
     def __iter__(self):
