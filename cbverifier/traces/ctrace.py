@@ -14,6 +14,8 @@ import re
 
 import copy
 
+import StringIO
+
 import cbverifier.traces.tracemsg_pb2
 from  cbverifier.traces.tracemsg_pb2 import TraceMsgContainer
 
@@ -420,12 +422,17 @@ class CTrace:
     def __iter__(self):
         return iter(self.children)
 
-    def copy(self, remove_exception=False):
+    def copy(self, remove_exception=False, callback_bound = None):
         """ Copy the trace, eventually removing the top-level
         callbacks that ends in an exception. """
         new_trace = CTrace()
         copy.app_info = copy.deepcopy(self.app_info)
-        for child in self.children:
+
+        maximum = len(self.children)
+        if callback_bound is not None:
+            maximum = int(callback_bound)
+        for ichild in xrange(maximum):
+            child = self.children[ichild]
             if not (remove_exception and
                     child.exception is not None):
                 new_trace.children.append(copy.deepcopy(child))
@@ -512,6 +519,11 @@ class CTraceSerializer:
                 logging.warning("Protobuf is truncated... parsing terminated.")
             else:
                 # This is a non-recoverable error that must be propagated
+                raise
+        except cbverifier.traces.ctrace.MalformedTraceException as e:
+            if len(trace.children) > 0:
+                logging.warning("Last callback truncated")
+            else:
                 raise
 
         return trace
@@ -847,11 +859,33 @@ class CTraceDelimitedReader(object):
         self.data = trace_file.read()
         self.size = len(self.data)
         self.position = 0
+        self.list_position = 0
+        self.pbufs = []
+        class ReadIter:
+            def __init__(self,v):
+                self.v = v
+            def __iter__(self):
+                return self
+            def next(self):
+                return self.v.inext()
+        ri = ReadIter(self)
+
+        for msg in ri:
+            self.pbufs.append(msg)
+
+        sortpbufs = sorted(self.pbufs, key=lambda m : m.msg.message_id)
+        self.pbufs = sortpbufs
+
+    def next(self):
+        list_position = self.list_position
+        self.list_position += 1
+        return self.pbufs[list_position]
+
 
     def __iter__(self):
         return self
 
-    def next(self):
+    def inext(self):
         """ Read a single trace msg container object from the input
         file.
 
@@ -870,6 +904,7 @@ class CTraceDelimitedReader(object):
         trace_msg_container = tracemsg_pb2.TraceMsgContainer()
         try:
             trace_msg_container.ParseFromString(raw_data)
+            pass
         except message.DecodeError as e:
             trace_msg_container == None
             raise
