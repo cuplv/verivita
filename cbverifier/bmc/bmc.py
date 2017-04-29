@@ -7,6 +7,7 @@ from pysmt.shortcuts import is_sat, is_valid
 from pysmt.shortcuts import Symbol, TRUE, FALSE
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
 
+USE_ASSUMPTIONS=False
 
 class BMC:
     """
@@ -71,7 +72,6 @@ class BMC:
         res = None
         for i in range(k + 1):
             logging.info("Finding bugs at step %d..." % i)
-
             f_at_i = self.get_ts_enc_at_i(i)
             solver.add_assertion(f_at_i)
 
@@ -79,18 +79,36 @@ class BMC:
                 tenc_at_i = self.get_trace_enc_at_i(i, trace_enc)
                 solver.add_assertion(tenc_at_i)
 
-            solver.push()
+            if not USE_ASSUMPTIONS:
+                solver.push()
+                error_at_i = self.helper.get_formula_at_i(self.all_vars,
+                                                          self.error,
+                                                          i)
+                solver.add_assertion(error_at_i)
+                res = self.solve(solver, i)
+                if res is not None:
+                    return res
+                solver.pop()
+            else:
+                # ENCODE
+                # b_var <-> bug
+                #add assumption b_var
+                # check, then assert negation of prop
+                na = Symbol("__va__%d" % i, BOOL)
+                error_at_i = self.helper.get_formula_at_i(self.all_vars,
+                                                          self.error,
+                                                          i)
+                solver.add_assertion(Iff(na, error_at_i))
+                app = solver.solve([na])
+                if (app):
+                    logging.debug("The encoding is satisfiable...")
+                    model = solver.get_model()
+                    trace = self._build_trace(model, k)
+                    return trace
+                else:
+                    logging.debug("No bugs found up to %d steps" % k)
+                solver.add_assertion(Not(na))
 
-            error_at_i = self.helper.get_formula_at_i(self.all_vars,
-                                                      self.error,
-                                                      i)
-            solver.add_assertion(error_at_i)
-
-            res = self.solve(solver, i)
-            if res is not None:
-                return res
-
-            solver.pop()
 
         return res
 
