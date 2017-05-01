@@ -186,6 +186,81 @@ EOF
 
         return result
 
+    def bmc(self, invarspec, max_bound):
+        """ Invokes bmc falsification, incremental,  on the safety
+        property invarspec, and runs
+        nuXmv for a maximum of max_bound.
+
+        Return None if the TS |= invarspec up ot k or a counterexample.
+        """
+
+        def bmc_callback(stdout, stderr, res):
+            if (0 != res):
+                return None
+
+            res = None
+            found_success = False
+            result = NuXmvDriver.UNKNOWN
+            reading_xml_trace = False
+            xml_trace = None
+
+            for line in stdout.split("\n"):
+                if (line.startswith("-- invariant ") and
+                    line.endswith("is true")):
+                    result = NuXmvDriver.SAFE
+                if (line.startswith("-- invariant ") and
+                    line.endswith("is false")):
+                    result = NuXmvDriver.UNSAFE
+                elif line.startswith("SUCCESS"):
+                    found_success = True
+                elif self.parse_trace and line.startswith('<?xml version="1.0" encoding="UTF-8"?>'):
+                    reading_xml_trace = True
+                    assert xml_trace is None
+                    xml_trace = StringIO()
+                    xml_trace.write(line)
+                    xml_trace.write("\n")
+                elif self.parse_trace and reading_xml_trace and line.startswith("</counter-example>"):
+                    assert xml_trace is not None
+                    xml_trace.write(line)
+                    xml_trace.write("\n")
+                    reading_xml_trace = False
+                elif reading_xml_trace:
+                    assert xml_trace is not None
+                    xml_trace.write(line)
+                    xml_trace.write("\n")
+
+            if (not found_success):
+                return (None, None)
+            else:
+                if xml_trace is not None:
+                    trace = self.read_trace(xml_trace)
+                else:
+                    trace = None
+
+                return (result, trace)
+
+        cmds = """
+set on_failure_script_quits "1"
+set default_trace_plugin 4
+set traces_show_defines "0"
+set traces_show_defines_with_next "0"
+read_model
+flatten_hierarchy
+encode_variables -n
+build_boolean_model
+go_bmc
+echo "Verifying property..."
+check_invar_bmc_inc -a falsification -n 0 -k %s
+echo "%s"
+quit
+EOF
+        """ % (max_bound, "SUCCESS")
+
+        result = self._run_nuxmv(cmds, invarspec, bmc_callback)
+
+        return result
+
+
     def read_trace(self, xml_trace_stream):
         def get_tf(str_val):
             if str_val == "TRUE":
