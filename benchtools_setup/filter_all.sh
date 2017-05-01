@@ -1,6 +1,6 @@
 #!/bin/bash
 rm ./instances/*.txt 2>/dev/null
-find ~/Documents/data/monkey_traces/ -name "*repaired" > ./instances/allTraces.txt #overwrite old one
+find -L ~/Documents/data/monkey_traces/ -name "*repaired" > ./instances/allTraces.txt #overwrite old one
 #find ~/Documents/data/monkey_traces/ -name "trace-*" >> ./instances/allTraces.txt #append
 
 TOTAL_NUMBER_TRACES=$(cat ./instances/allTraces.txt |wc -l)
