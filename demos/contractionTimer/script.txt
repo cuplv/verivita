@@ -1,0 +1,31 @@
+demo plan:
+1) show bug in app with issue https://github.com/ianhanniballake/ContractionTimer/issues/121
+	“For this demonstration we will show a real world example of a developer who came across a hard to find bug.
+2) Show start activity call: https://github.com/ianhanniballake/ContractionTimer/commit/258e99635a88b2aec4f36eca424a3e04503ba5db
+	“Here is a method which invokes the startActivity method on a fragment object, this method can only be called while the fragment is visible.
+3) scroll to line 250 to show viewContraction call
+	“This method can be called when the onItemSelect is invoked
+4) “onItemClick can happen after fragment is gone due to a poor internal implementation of the android framework object.
+	“The onItemClick can happen after the fragment is no longer visible.
+(Note: skipping tracing since I think its more important to focus on verifier output)
+5) Show startActivity allow disallow specificationhttps://github.com/cuplv/callback-verification/blob/develop/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:  Highlight line 3 which is the one that says after an onPause we can’t have a startActivity https://github.com/cuplv/callback-verification/blob/develop/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec 
+	“Our specification language has the power to encode that such an execution is bad, we do this with a language we developed called “lifestate rules”.  This particular rule states that once you have observed an “onPause” then calling the startActivity method can cause undesireable behavior such as a crash.  The other rules are used to state other conditions where it can or cannot be called.
+
+6) show enable disable fragment rule (line [50 - 53]): https://github.com/cuplv/callback-verification/blob/develop/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.basespec
+	“We encode the lifecycle of a fragment in a similar format which lets us know the ordering of such callbacks, these rules show that onResume happens then onPause happens. onResume |- onResume states that it can only happen once, then onResume |+ onPause states that onPause can happen next
+
+7) show callin enable disable fragment rule lines [89 - 93]
+	“These rules allow us to specify the behavior of method calls into the framework, in this case we are saying that we cannot get a “isDetached” to return a “false” if the fragment is detached.  This rule allows us to distinguish the fixed version of the app and the broken version
+
+8) show simplified trace output by verifier (don’t show full trace, will be a lot of scrolling and hard to read).  Search for “startActivity, this trace only has one. output here: https://gist.github.com/ftc/f5fd8a4a9ae89101d528d1c841f2740f
+	“This is a runtime trace of the real android application and here we show that there is an onItemClick callback which invokes the startActivity callin.  The method call ‘viewActivity’ is not shown since we consider it to be a part of the outermost callback.  Additionally we remove all method calls which are not relevant to the property we are verifying to speed up the process.
+
+8.5) Invoke verifier (input: trace, specifications)
+
+9) show counterexample for broken version of trace (same as last item but scroll to the very bottom of the file):
+	“Our tool outputs the counterexample which shows how the execution may go wrong, in this case we see the startActivity at the very bottom of the trace, just above it we see the onPause for the ContractionListFragmentV11.  The onPause can be triggered by rotating the phone or by temporarily switching to another application.  This means that there is a race condition in this app where the effect of selecting a list item may come after the UI is no longer visible.
+
+10) show fixed version of trace, again search for startActivity: https://gist.github.com/ftc/00b71eafcdf0b014f28750819c3d538f
+	“Here we see a trace of the fixed version of the application, notice how the onItemCLick method now has a method “isDetached”.  This is used to check that the fragment has not been detached and our verifier can use it to see that this transition cannot occur at the wrong time as specified by the previously shown rules.
+11) scroll down to the bottom of that file and show the “safe” output.
+

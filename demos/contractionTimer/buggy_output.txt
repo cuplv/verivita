@@ -1,0 +1,577 @@
+/usr/local/bin/python /Users/s/Documents/source/callback-verification/cbverifier/driver.py -m bmc -t /Users/s/Documents/source/scratch/callback-verification/tests/realApplications/ContractionTimer/bug/trace_140117_0 -s /Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.ListView/listView_setListener.spec -k 50 -n /Users/s/software/nuXmv-1.1.1-Darwin/bin/nuXmv -z -i
+INFO:root:Total number of specs (before grounding): 2764
+INFO:root:Total specs after grounding: 445
+WARNING:root:The simplification of the trace is UNSOUND
+
+---Simplified Trace---
+[408] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onCreate(android.os.Bundle) (b0c0fcb,NULL) 
+  [2359] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (f860411) 
+  [2359] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (f860411) 
+  [2361] [CI] [ENTRY] void android.support.v4.app.ListFragment.<init>() (507fb77) 
+  [2361] [CI] [EXIT] void android.support.v4.app.ListFragment.<init>() (507fb77) 
+  [2371] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (a79bc05) 
+  [2371] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (a79bc05) 
+[408] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.MainActivity.onCreate(android.os.Bundle) (b0c0fcb,NULL) 
+[2438] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onStart() (b0c0fcb) 
+  [2440] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onAttach(android.app.Activity) (f860411,b0c0fcb) 
+  [2440] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onAttach(android.app.Activity) (f860411,b0c0fcb) 
+  [2448] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreate(android.os.Bundle) (f860411,NULL) 
+  [2448] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreate(android.os.Bundle) (f860411,NULL) 
+  [2484] [CB] [ENTRY] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f860411,a4a825,a20a018,NULL) 
+  [2484] [CB] [EXIT] 3494896 = android.view.View com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f860411,a4a825,a20a018,NULL) 
+  [2738] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onViewCreated(android.view.View,android.os.Bundle) (f860411,9f71fb9,NULL) 
+  [2738] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onViewCreated(android.view.View,android.os.Bundle) (f860411,9f71fb9,NULL) 
+  [2742] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onActivityCreated(android.os.Bundle) (f860411,NULL) 
+  [2742] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onActivityCreated(android.os.Bundle) (f860411,NULL) 
+  [2776] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onAttach(android.app.Activity) (507fb77,b0c0fcb) 
+  [2776] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onAttach(android.app.Activity) (507fb77,b0c0fcb) 
+  [2784] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreate(android.os.Bundle) (507fb77,NULL) 
+  [2784] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreate(android.os.Bundle) (507fb77,NULL) 
+  [2808] [CB] [ENTRY] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (507fb77,a4a825,52fad79,NULL) 
+  [2808] [CB] [EXIT] a31e03e = android.view.View com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (507fb77,a4a825,52fad79,NULL) 
+  [3668] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onViewCreated(android.view.View,android.os.Bundle) (507fb77,a1d366c,NULL) 
+  [3668] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onViewCreated(android.view.View,android.os.Bundle) (507fb77,a1d366c,NULL) 
+  [3676] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onActivityCreated(android.os.Bundle) (507fb77,NULL) 
+  [4083] [CI] [ENTRY] void android.widget.AdapterView.setOnItemClickListener(android.widget.AdapterView$OnItemClickListener) (6abc88,65747d3) 
+  [4083] [CI] [EXIT] void android.widget.AdapterView.setOnItemClickListener(android.widget.AdapterView$OnItemClickListener) (6abc88,65747d3) 
+  [3676] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onActivityCreated(android.os.Bundle) (507fb77,NULL) 
+  [4134] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onAttach(android.app.Activity) (a79bc05,b0c0fcb) 
+  [4134] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onAttach(android.app.Activity) (a79bc05,b0c0fcb) 
+  [4142] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreate(android.os.Bundle) (a79bc05,NULL) 
+  [4142] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreate(android.os.Bundle) (a79bc05,NULL) 
+  [4166] [CB] [ENTRY] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a79bc05,a4a825,aaefbf5,NULL) 
+  [4166] [CB] [EXIT] e0cb2f3 = android.view.View com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a79bc05,a4a825,aaefbf5,NULL) 
+  [4628] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onViewCreated(android.view.View,android.os.Bundle) (a79bc05,c531943,NULL) 
+  [4628] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onViewCreated(android.view.View,android.os.Bundle) (a79bc05,c531943,NULL) 
+  [4632] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onActivityCreated(android.os.Bundle) (a79bc05,NULL) 
+  [4632] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onActivityCreated(android.os.Bundle) (a79bc05,NULL) 
+  [4688] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStart() (f860411) 
+  [4688] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStart() (f860411) 
+  [4692] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStart() (507fb77) 
+  [4692] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStart() (507fb77) 
+  [4697] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStart() (a79bc05) 
+  [4697] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStart() (a79bc05) 
+[2438] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.MainActivity.onStart() (b0c0fcb) 
+[4909] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onPostResume() (b0c0fcb) 
+  [4926] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onResume() (f860411) 
+  [4926] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onResume() (f860411) 
+  [4930] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onResume() (507fb77) 
+  [4930] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onResume() (507fb77) 
+  [4942] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onResume() (a79bc05) 
+  [4942] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onResume() (a79bc05) 
+[4909] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.MainActivity.onPostResume() (b0c0fcb) 
+[14588] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragment$4.onItemClick(android.widget.AdapterView,android.view.View,int,long) (65747d3,6abc88,3d88247,2,1) 
+  [14593] [CI] [ENTRY] void android.support.v4.app.Fragment.startActivity(android.content.Intent) (507fb77,a852be4) 
+  [14593] [CI] [EXIT] void android.support.v4.app.Fragment.startActivity(android.content.Intent) (507fb77,a852be4) 
+[14588] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragment$4.onItemClick(android.widget.AdapterView,android.view.View,int,long) (65747d3,6abc88,3d88247,2,1) 
+[14644] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onPause() (b0c0fcb) 
+  [14646] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onPause() (f860411) 
+  [14646] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onPause() (f860411) 
+  [14650] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onPause() (507fb77) 
+  [14650] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onPause() (507fb77) 
+  [14658] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onPause() (a79bc05) 
+  [14658] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onPause() (a79bc05) 
+[14644] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.MainActivity.onPause() (b0c0fcb) 
+[18564] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewActivity.onLoadFinished(android.support.v4.content.Loader,java.lang.Object) (aa8e235,3840e57,b920a94) 
+  [18625] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (c380cb5) 
+  [18625] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (c380cb5) 
+  [18655] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (b0e4e13) 
+  [18655] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (b0e4e13) 
+  [18692] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onAttach(android.app.Activity) (c380cb5,aa8e235) 
+  [18692] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onAttach(android.app.Activity) (c380cb5,aa8e235) 
+  [18700] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onCreate(android.os.Bundle) (c380cb5,NULL) 
+  [18700] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onCreate(android.os.Bundle) (c380cb5,NULL) 
+  [18730] [CB] [ENTRY] android.view.View com.ianhanniballake.contractiontimer.ui.ViewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c380cb5,83b8aa0,23a26bd,NULL) 
+  [18730] [CB] [EXIT] e610266 = android.view.View com.ianhanniballake.contractiontimer.ui.ViewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c380cb5,83b8aa0,23a26bd,NULL) 
+  [19954] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onViewCreated(android.view.View,android.os.Bundle) (c380cb5,5ccb6ab,NULL) 
+  [19954] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onViewCreated(android.view.View,android.os.Bundle) (c380cb5,5ccb6ab,NULL) 
+  [19958] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onActivityCreated(android.os.Bundle) (c380cb5,NULL) 
+  [19958] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onActivityCreated(android.os.Bundle) (c380cb5,NULL) 
+  [20020] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onStart() (c380cb5) 
+  [20020] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onStart() (c380cb5) 
+  [20025] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onResume() (c380cb5) 
+  [20025] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onResume() (c380cb5) 
+  [20029] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onAttach(android.app.Activity) (b0e4e13,aa8e235) 
+  [20029] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onAttach(android.app.Activity) (b0e4e13,aa8e235) 
+  [20037] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onCreate(android.os.Bundle) (b0e4e13,NULL) 
+  [20037] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onCreate(android.os.Bundle) (b0e4e13,NULL) 
+  [20061] [CB] [ENTRY] android.view.View com.ianhanniballake.contractiontimer.ui.ViewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b0e4e13,83b8aa0,23a26bd,NULL) 
+  [20061] [CB] [EXIT] 2984202 = android.view.View com.ianhanniballake.contractiontimer.ui.ViewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b0e4e13,83b8aa0,23a26bd,NULL) 
+  [21324] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onViewCreated(android.view.View,android.os.Bundle) (b0e4e13,ce998f1,NULL) 
+  [21324] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onViewCreated(android.view.View,android.os.Bundle) (b0e4e13,ce998f1,NULL) 
+  [21328] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onActivityCreated(android.os.Bundle) (b0e4e13,NULL) 
+  [21328] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onActivityCreated(android.os.Bundle) (b0e4e13,NULL) 
+[18564] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewActivity.onLoadFinished(android.support.v4.content.Loader,java.lang.Object) (aa8e235,3840e57,b920a94) 
+[21494] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onStart() (b0e4e13) 
+[21494] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onStart() (b0e4e13) 
+[21538] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onResume() (b0e4e13) 
+[21538] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onResume() (b0e4e13) 
+[25562] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (b0c0fcb,5c16555) 
+  [25564] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onSaveInstanceState(android.os.Bundle) (f860411,2b4a436) 
+  [25564] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onSaveInstanceState(android.os.Bundle) (f860411,2b4a436) 
+  [25568] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onSaveInstanceState(android.os.Bundle) (507fb77,2b4a436) 
+  [25568] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onSaveInstanceState(android.os.Bundle) (507fb77,2b4a436) 
+  [25574] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onSaveInstanceState(android.os.Bundle) (a79bc05,3cc531a) 
+  [25574] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onSaveInstanceState(android.os.Bundle) (a79bc05,3cc531a) 
+[25562] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (b0c0fcb,5c16555) 
+[25580] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onStop() (b0c0fcb) 
+  [25582] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStop() (f860411) 
+  [25582] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStop() (f860411) 
+  [25586] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStop() (507fb77) 
+  [25586] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStop() (507fb77) 
+  [25590] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStop() (a79bc05) 
+  [25590] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStop() (a79bc05) 
+[25580] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.MainActivity.onStop() (b0c0fcb) 
+[25750] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewActivity.onPause() (aa8e235) 
+  [25752] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onPause() (c380cb5) 
+  [25752] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onPause() (c380cb5) 
+  [25756] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onPause() (b0e4e13) 
+  [25756] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onPause() (b0e4e13) 
+[25750] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewActivity.onPause() (aa8e235) 
+[25822] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onDestroy() (b0c0fcb) 
+  [25828] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onDestroyView() (f860411) 
+  [25828] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onDestroyView() (f860411) 
+  [25832] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onDestroy() (f860411) 
+  [25832] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onDestroy() (f860411) 
+  [25848] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onDetach() (f860411) 
+  [25848] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onDetach() (f860411) 
+  [25856] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onDestroyView() (507fb77) 
+  [25856] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onDestroyView() (507fb77) 
+  [25864] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onDestroy() (507fb77) 
+  [25864] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onDestroy() (507fb77) 
+  [25880] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onDetach() (507fb77) 
+  [25880] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onDetach() (507fb77) 
+  [25888] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onDestroyView() (a79bc05) 
+  [25888] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onDestroyView() (a79bc05) 
+  [25892] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onDestroy() (a79bc05) 
+  [25892] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onDestroy() (a79bc05) 
+  [25900] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onDetach() (a79bc05) 
+  [25900] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onDetach() (a79bc05) 
+[25822] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.MainActivity.onDestroy() (b0c0fcb) 
+[25976] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onCreate(android.os.Bundle) (a923283,NULL) 
+  [27863] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (4c9742b) 
+  [27863] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (4c9742b) 
+  [27865] [CI] [ENTRY] void android.support.v4.app.ListFragment.<init>() (3949a21) 
+  [27865] [CI] [EXIT] void android.support.v4.app.ListFragment.<init>() (3949a21) 
+  [27875] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (69510ff) 
+  [27875] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (69510ff) 
+[25976] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.MainActivity.onCreate(android.os.Bundle) (a923283,NULL) 
+[27942] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onStart() (a923283) 
+  [27944] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onAttach(android.app.Activity) (4c9742b,a923283) 
+  [27944] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onAttach(android.app.Activity) (4c9742b,a923283) 
+  [27952] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreate(android.os.Bundle) (4c9742b,NULL) 
+  [27952] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreate(android.os.Bundle) (4c9742b,NULL) 
+  [27988] [CB] [ENTRY] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (4c9742b,f248cc7,574324e,NULL) 
+  [27988] [CB] [EXIT] b9375fc = android.view.View com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (4c9742b,f248cc7,574324e,NULL) 
+  [28222] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onViewCreated(android.view.View,android.os.Bundle) (4c9742b,9282274,NULL) 
+  [28222] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onViewCreated(android.view.View,android.os.Bundle) (4c9742b,9282274,NULL) 
+  [28226] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onActivityCreated(android.os.Bundle) (4c9742b,NULL) 
+  [28226] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onActivityCreated(android.os.Bundle) (4c9742b,NULL) 
+  [28260] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onAttach(android.app.Activity) (3949a21,a923283) 
+  [28260] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onAttach(android.app.Activity) (3949a21,a923283) 
+  [28268] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreate(android.os.Bundle) (3949a21,NULL) 
+  [28268] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreate(android.os.Bundle) (3949a21,NULL) 
+  [28292] [CB] [ENTRY] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (3949a21,f248cc7,7f6334,NULL) 
+  [28292] [CB] [EXIT] 808a8dd = android.view.View com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (3949a21,f248cc7,7f6334,NULL) 
+  [29144] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onViewCreated(android.view.View,android.os.Bundle) (3949a21,b5182a5,NULL) 
+  [29144] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onViewCreated(android.view.View,android.os.Bundle) (3949a21,b5182a5,NULL) 
+  [29152] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onActivityCreated(android.os.Bundle) (3949a21,NULL) 
+  [29152] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onActivityCreated(android.os.Bundle) (3949a21,NULL) 
+  [29584] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onAttach(android.app.Activity) (69510ff,a923283) 
+  [29584] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onAttach(android.app.Activity) (69510ff,a923283) 
+  [29592] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreate(android.os.Bundle) (69510ff,NULL) 
+  [29592] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreate(android.os.Bundle) (69510ff,NULL) 
+  [29616] [CB] [ENTRY] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (69510ff,f248cc7,f5081d0,NULL) 
+  [29616] [CB] [EXIT] f0bfd5a = android.view.View com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (69510ff,f248cc7,f5081d0,NULL) 
+  [30076] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onViewCreated(android.view.View,android.os.Bundle) (69510ff,47c558c,NULL) 
+  [30076] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onViewCreated(android.view.View,android.os.Bundle) (69510ff,47c558c,NULL) 
+  [30080] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onActivityCreated(android.os.Bundle) (69510ff,NULL) 
+  [30080] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onActivityCreated(android.os.Bundle) (69510ff,NULL) 
+  [30136] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStart() (4c9742b) 
+  [30136] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStart() (4c9742b) 
+  [30190] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStart() (3949a21) 
+  [30190] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStart() (3949a21) 
+  [30203] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStart() (69510ff) 
+  [30203] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStart() (69510ff) 
+[27942] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.MainActivity.onStart() (a923283) 
+[30385] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onPostResume() (a923283) 
+  [30393] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onResume() (4c9742b) 
+  [30393] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onResume() (4c9742b) 
+  [30397] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onResume() (3949a21) 
+  [30397] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onResume() (3949a21) 
+  [30409] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onResume() (69510ff) 
+  [30409] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onResume() (69510ff) 
+[30385] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.MainActivity.onPostResume() (a923283) 
+[36584] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewActivity.onStop() (aa8e235) 
+  [36586] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onStop() (c380cb5) 
+  [36586] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onStop() (c380cb5) 
+  [36590] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onStop() (b0e4e13) 
+  [36590] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onStop() (b0e4e13) 
+[36584] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewActivity.onStop() (aa8e235) 
+[36612] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewActivity.onDestroy() (aa8e235) 
+  [36618] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onDestroyView() (c380cb5) 
+  [36618] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onDestroyView() (c380cb5) 
+  [36622] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onDestroy() (c380cb5) 
+  [36622] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onDestroy() (c380cb5) 
+  [36636] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onDetach() (c380cb5) 
+  [36636] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onDetach() (c380cb5) 
+  [36644] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onDestroyView() (b0e4e13) 
+  [36644] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onDestroyView() (b0e4e13) 
+  [36648] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onDestroy() (b0e4e13) 
+  [36648] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onDestroy() (b0e4e13) 
+  [36662] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onDetach() (b0e4e13) 
+  [36662] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewFragment.onDetach() (b0e4e13) 
+[36612] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ViewActivity.onDestroy() (aa8e235) 
+[42944] [CB] [ENTRY] boolean com.ianhanniballake.contractiontimer.ui.MainActivity.onMenuItemSelected(int,android.view.MenuItem) (a923283,0,275e332) 
+  [42984] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (f71f289) 
+  [42984] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (f71f289) 
+[42944] [CB] [EXIT] true = boolean com.ianhanniballake.contractiontimer.ui.MainActivity.onMenuItemSelected(int,android.view.MenuItem) (a923283,0,275e332) 
+[43040] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onAttach(android.app.Activity) (f71f289,a923283) 
+[43040] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onAttach(android.app.Activity) (f71f289,a923283) 
+[43048] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onCreate(android.os.Bundle) (f71f289,NULL) 
+[43048] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onCreate(android.os.Bundle) (f71f289,NULL) 
+[43258] [CB] [ENTRY] android.view.View com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f71f289,159d703,NULL,NULL) 
+[43258] [CB] [EXIT] NULL = android.view.View com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f71f289,159d703,NULL,NULL) 
+[43262] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onActivityCreated(android.os.Bundle) (f71f289,NULL) 
+[43262] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onActivityCreated(android.os.Bundle) (f71f289,NULL) 
+[43274] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onStart() (f71f289) 
+[43274] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onStart() (f71f289) 
+[44418] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onResume() (f71f289) 
+[44418] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onResume() (f71f289) 
+[45822] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onPause() (f71f289) 
+[45822] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onPause() (f71f289) 
+[45826] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onStop() (f71f289) 
+[45826] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onStop() (f71f289) 
+[45830] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onDestroyView() (f71f289) 
+[45830] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onDestroyView() (f71f289) 
+[45834] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onDestroy() (f71f289) 
+[45834] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onDestroy() (f71f289) 
+[45838] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onDetach() (f71f289) 
+[45838] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ResetDialogFragment.onDetach() (f71f289) 
+[46282] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onPause() (a923283) 
+  [46284] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onPause() (4c9742b) 
+  [46284] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onPause() (4c9742b) 
+  [46288] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onPause() (3949a21) 
+  [46288] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onPause() (3949a21) 
+  [46296] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onPause() (69510ff) 
+  [46296] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onPause() (69510ff) 
+[46282] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.MainActivity.onPause() (a923283) 
+[46318] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (a923283,6b99baf) 
+  [46320] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onSaveInstanceState(android.os.Bundle) (4c9742b,9bce7a8) 
+  [46320] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onSaveInstanceState(android.os.Bundle) (4c9742b,9bce7a8) 
+  [46324] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onSaveInstanceState(android.os.Bundle) (3949a21,9bce7a8) 
+  [46324] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onSaveInstanceState(android.os.Bundle) (3949a21,9bce7a8) 
+  [46330] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onSaveInstanceState(android.os.Bundle) (69510ff,78ece9f) 
+  [46330] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onSaveInstanceState(android.os.Bundle) (69510ff,78ece9f) 
+[46318] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (a923283,6b99baf) 
+[46336] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onStop() (a923283) 
+  [46338] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStop() (4c9742b) 
+  [46338] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStop() (4c9742b) 
+  [46342] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStop() (3949a21) 
+  [46342] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStop() (3949a21) 
+  [46346] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStop() (69510ff) 
+  [46346] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStop() (69510ff) 
+[46336] [CB] [EXIT] void com.ianhanniballake.contractiontimer.ui.MainActivity.onStop() (a923283) 
+
+
+INFO:root:Generating the encoding...
+INFO:root:Encoding the variables...
+INFO:root:Done encoding the variables.
+INFO:root:Encoding the specification...
+INFO:root:Done encoding the specification.
+INFO:root:Encoding the trace...
+INFO:root:Done encoding the trace.
+INFO:root:Done generating the encoding.
+INFO:root:Miscellaneous stats:
+INFO:root:Trace length (entry and exits): 143
+INFO:root:Total messages: 143
+INFO:root:Top-level callbacks: 32
+INFO:root:Ground specs: 445
+INFO:root:State variables: 274
+INFO:root:Input variables: 8
+INFO:root:Finding bugs at step 0...
+INFO:root:Finding bugs at step 1...
+INFO:root:Finding bugs at step 2...
+INFO:root:Finding bugs at step 3...
+INFO:root:Finding bugs at step 4...
+INFO:root:Finding bugs at step 5...
+INFO:root:Finding bugs at step 6...
+INFO:root:Finding bugs at step 7...
+INFO:root:Finding bugs at step 8...
+INFO:root:Finding bugs at step 9...
+INFO:root:Finding bugs at step 10...
+INFO:root:Finding bugs at step 11...
+INFO:root:Finding bugs at step 12...
+INFO:root:Finding bugs at step 13...
+INFO:root:Finding bugs at step 14...
+INFO:root:Finding bugs at step 15...
+INFO:root:Finding bugs at step 16...
+INFO:root:Finding bugs at step 17...
+INFO:root:Finding bugs at step 18...
+INFO:root:Finding bugs at step 19...
+INFO:root:Finding bugs at step 20...
+INFO:root:Finding bugs at step 21...
+INFO:root:Finding bugs at step 22...
+INFO:root:Finding bugs at step 23...
+INFO:root:Finding bugs at step 24...
+INFO:root:Finding bugs at step 25...
+INFO:root:Finding bugs at step 26...
+INFO:root:Finding bugs at step 27...
+INFO:root:Finding bugs at step 28...
+INFO:root:Finding bugs at step 29...
+INFO:root:Finding bugs at step 30...
+INFO:root:Finding bugs at step 31...
+INFO:root:Finding bugs at step 32...
+INFO:root:Finding bugs at step 33...
+INFO:root:Finding bugs at step 34...
+INFO:root:Finding bugs at step 35...
+INFO:root:Finding bugs at step 36...
+INFO:root:Finding bugs at step 37...
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[408] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onCreate(android.os.Bundle) (b0c0fcb,NULL) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[2359] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (f860411) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [f860411] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onAttach(b0c0fcb : android.app.Activity)
+----------------------------------------
+Step: 3
+----------------------------------------
+[2359] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (f860411) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [f860411] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [f860411] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 4
+----------------------------------------
+[2361] [CI] [ENTRY] void android.support.v4.app.ListFragment.<init>() (507fb77) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [507fb77] void android.support.v4.app.ListFragment.<init>()) |+ [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onAttach(b0c0fcb : android.app.Activity)
+----------------------------------------
+Step: 5
+----------------------------------------
+[2361] [CI] [EXIT] void android.support.v4.app.ListFragment.<init>() (507fb77) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [507fb77] void android.support.v4.app.ListFragment.<init>()) |- [CI] [EXIT] [507fb77] void android.support.v4.app.ListFragment.<init>()
+----------------------------------------
+Step: 6
+----------------------------------------
+[2371] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (a79bc05) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [a79bc05] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onAttach(b0c0fcb : android.app.Activity)
+----------------------------------------
+Step: 7
+----------------------------------------
+[2371] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (a79bc05) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [a79bc05] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [a79bc05] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 8
+----------------------------------------
+[2438] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onStart() (b0c0fcb) 
+----------------------------------------
+Step: 9
+----------------------------------------
+[2440] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onAttach(android.app.Activity) (f860411,b0c0fcb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onAttach(b0c0fcb : android.app.Activity)) |+ [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onAttach(b0c0fcb : android.app.Activity)) |- [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onAttach(b0c0fcb : android.app.Activity)
+----------------------------------------
+Step: 10
+----------------------------------------
+[2448] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreate(android.os.Bundle) (f860411,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f860411] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreateView(a4a825 : android.view.LayoutInflater,a20a018 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 11
+----------------------------------------
+[2484] [CB] [ENTRY] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f860411,a4a825,a20a018,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreateView(a4a825 : android.view.LayoutInflater,a20a018 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [f860411] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreateView(a4a825 : android.view.LayoutInflater,a20a018 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreateView(a4a825 : android.view.LayoutInflater,a20a018 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreateView(a4a825 : android.view.LayoutInflater,a20a018 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onViewCreated(9f71fb9 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onCreateView(a4a825 : android.view.LayoutInflater,a20a018 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 12
+----------------------------------------
+[2738] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onViewCreated(android.view.View,android.os.Bundle) (f860411,9f71fb9,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onViewCreated(9f71fb9 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onViewCreated(9f71fb9 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 13
+----------------------------------------
+[2742] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onActivityCreated(android.os.Bundle) (f860411,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 14
+----------------------------------------
+[2776] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onAttach(android.app.Activity) (507fb77,b0c0fcb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onAttach(b0c0fcb : android.app.Activity)) |+ [CI] [ENTRY] [507fb77] void android.support.v4.app.Fragment.startActivity(a852be4 : android.content.Intent)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onAttach(b0c0fcb : android.app.Activity)) |- [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onAttach(b0c0fcb : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onAttach(b0c0fcb : android.app.Activity)) |+ [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 15
+----------------------------------------
+[2784] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreate(android.os.Bundle) (507fb77,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [507fb77] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreateView(a4a825 : android.view.LayoutInflater,52fad79 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 16
+----------------------------------------
+[2808] [CB] [ENTRY] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (507fb77,a4a825,52fad79,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreateView(a4a825 : android.view.LayoutInflater,52fad79 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreateView(a4a825 : android.view.LayoutInflater,52fad79 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [507fb77] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreateView(a4a825 : android.view.LayoutInflater,52fad79 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreateView(a4a825 : android.view.LayoutInflater,52fad79 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onViewCreated(a1d366c : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onCreateView(a4a825 : android.view.LayoutInflater,52fad79 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 17
+----------------------------------------
+[3668] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onViewCreated(android.view.View,android.os.Bundle) (507fb77,a1d366c,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onViewCreated(a1d366c : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onViewCreated(a1d366c : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 18
+----------------------------------------
+[3676] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onActivityCreated(android.os.Bundle) (507fb77,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 19
+----------------------------------------
+[4083] [CI] [ENTRY] void android.widget.AdapterView.setOnItemClickListener(android.widget.AdapterView$OnItemClickListener) (6abc88,65747d3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [6abc88] void android.widget.AdapterView.setOnItemClickListener(65747d3 : android.widget.AdapterView$OnItemClickListener)) |+ [CB] [ENTRY] [65747d3] void com.ianhanniballake.contractiontimer.ui.ContractionListFragment$4.onItemClick(6abc88 : android.widget.AdapterView,3d88247 : android.view.View,2 : int,1 : long)
+----------------------------------------
+Step: 20
+----------------------------------------
+[4134] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onAttach(android.app.Activity) (a79bc05,b0c0fcb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onAttach(b0c0fcb : android.app.Activity)) |- [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onAttach(b0c0fcb : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onAttach(b0c0fcb : android.app.Activity)) |+ [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 21
+----------------------------------------
+[4142] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreate(android.os.Bundle) (a79bc05,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a79bc05] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreateView(a4a825 : android.view.LayoutInflater,aaefbf5 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 22
+----------------------------------------
+[4166] [CB] [ENTRY] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a79bc05,a4a825,aaefbf5,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreateView(a4a825 : android.view.LayoutInflater,aaefbf5 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onViewCreated(c531943 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreateView(a4a825 : android.view.LayoutInflater,aaefbf5 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [a79bc05] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreateView(a4a825 : android.view.LayoutInflater,aaefbf5 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreateView(a4a825 : android.view.LayoutInflater,aaefbf5 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] android.view.View com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onCreateView(a4a825 : android.view.LayoutInflater,aaefbf5 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 23
+----------------------------------------
+[4628] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onViewCreated(android.view.View,android.os.Bundle) (a79bc05,c531943,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onViewCreated(c531943 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onViewCreated(c531943 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 24
+----------------------------------------
+[4632] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onActivityCreated(android.os.Bundle) (a79bc05,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 25
+----------------------------------------
+[4688] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStart() (f860411) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStart()) |- [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStart()) |+ [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onResume()
+----------------------------------------
+Step: 26
+----------------------------------------
+[4692] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStart() (507fb77) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStart()) |- [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStart()) |+ [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onResume()
+----------------------------------------
+Step: 27
+----------------------------------------
+[4697] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStart() (a79bc05) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStart()) |+ [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStart()) |- [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStart()
+----------------------------------------
+Step: 28
+----------------------------------------
+[4909] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onPostResume() (b0c0fcb) 
+----------------------------------------
+Step: 29
+----------------------------------------
+[4926] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onResume() (f860411) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onResume()) |- [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onResume()) |+ [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onPause()
+----------------------------------------
+Step: 30
+----------------------------------------
+[4930] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onResume() (507fb77) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onResume()) |- [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onResume()) |+ [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onPause()
+----------------------------------------
+Step: 31
+----------------------------------------
+[4942] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onResume() (a79bc05) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onResume()) |+ [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onResume()) |- [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onResume()
+----------------------------------------
+Step: 32
+----------------------------------------
+[14644] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.MainActivity.onPause() (b0c0fcb) 
+----------------------------------------
+Step: 33
+----------------------------------------
+[14646] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onPause() (f860411) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onPause()) |+ [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onPause()) |- [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onPause()) |+ [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onSaveInstanceState(2b4a436 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onPause()) |+ [CB] [ENTRY] [f860411] void com.ianhanniballake.contractiontimer.ui.ContractionControlsFragment.onResume()
+----------------------------------------
+Step: 34
+----------------------------------------
+[14650] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onPause() (507fb77) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onPause()) |- [CI] [ENTRY] [507fb77] void android.support.v4.app.Fragment.startActivity(a852be4 : android.content.Intent)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onPause()) |+ [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onPause()) |+ [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onSaveInstanceState(2b4a436 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onPause()) |- [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onPause()) |+ [CB] [ENTRY] [507fb77] void com.ianhanniballake.contractiontimer.ui.ContractionListFragmentV11.onResume()
+----------------------------------------
+Step: 35
+----------------------------------------
+[14658] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onPause() (a79bc05) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onPause()) |+ [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onPause()) |+ [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onSaveInstanceState(3cc531a : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onPause()) |+ [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onPause()) |- [CB] [ENTRY] [a79bc05] void com.ianhanniballake.contractiontimer.ui.ContractionAverageFragment.onPause()
+----------------------------------------
+Step: 36
+----------------------------------------
+[14588] [CB] [ENTRY] void com.ianhanniballake.contractiontimer.ui.ContractionListFragment$4.onItemClick(android.widget.AdapterView,android.view.View,int,long) (65747d3,6abc88,3d88247,2,1) 
+----------------------------------------
+Step: 37
+----------------------------------------
+[14593] [CI] [ENTRY] void android.support.v4.app.Fragment.startActivity(android.content.Intent) (507fb77,a852be4) 
+    Reached an error state in step 37!
+----------------------------------------
+
+Process finished with exit code 0
