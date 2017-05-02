@@ -62,8 +62,10 @@ if __name__ == "__main__":
     for result in results:
         print "filename: %s" % result
         for appresult in results[result]:
-            print "    app: %s" % appresult
-            print results[result][appresult].toString()
+            c = results[result][appresult]
+            if c.safe > 0 or c.unsafe > 0:
+                print "    app: %s" % appresult
+            	print c.toString()
 
 #    results_split = {}
 #    for fname in just_disallow:
