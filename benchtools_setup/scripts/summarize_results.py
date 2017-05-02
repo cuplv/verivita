@@ -17,6 +17,8 @@ class ResultCount:
             self.read_error += 1
         elif "time Timeout" in resultline:
             self.timeout += 1
+    def toString(self):
+        return "safe: %i, unsafe: %i, readerr: %i, timeout %i" % (self.safe, self.unsafe, self.read_error, self.timeout)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Sort trace by message ID')
@@ -37,32 +39,53 @@ if __name__ == "__main__":
             splitline = resultline.split(" ")
             outputpath = splitline[0]
             outpath_pieces = outputpath.split("/")
-            appname = outpath_pieces[-3]
+            if len(outpath_pieces) > 3:
+                appname = outpath_pieces[-3]
 
-            result = ""
+                result = ""
 
 
 
-            if appname not in appResults:
-                appResults[appname] = ResultCount()
-                appResults[appname].update(resultline)
+                if appname not in appResults:
+                    appResults[appname] = ResultCount()
+                    appResults[appname].update(resultline)
+                else:
+                    appResults[appname].update(resultline)
             else:
-                appResults[appname].update(resultline)
+                print "Unparsable line: %s" % resultline
         results[fname] = appResults
 
     just_disallow = [x for x in results if "_justdisallow_" in x]
     lifecycle = [x for x in results if "_lifecycle_" in x]
     lifestate = [x for x in results if "_lifestate_" in x]
 
+    allApps = set()
+    for result in results:
+        print "-------------------------------------------"
+        print "filename: %s , length: %i" % (result, len(results[result]))
+        alarmingApps = []
+        totAlarmTraces = 0
+        for appResult in results[result]:
+            allApps.add(appResult)
+            c = results[result][appResult]
+            if c.safe > 0 or c.unsafe > 0:
+                print "    app: %s" % appResult
+                print c.toString()
+                if c.unsafe > 0:
+                    totAlarmTraces += c.unsafe
+                    alarmingApps.append(appResult)
+        print "number of alarming apps: %i" % len(alarmingApps)
+        print "number of alarming traces: %i" % totAlarmTraces
+    print "total apps: %i" % len(allApps)
 
-    results_split = {}
-    for fname in just_disallow:
-        bucket = fname.split("_justdisallow_")[0]
-        if bucket in results_split:
-            pass #@TODO: finish me
-
-    for test in results:
-        print "=====test   %s=====" %test
-
-    pass
+#    results_split = {}
+#    for fname in just_disallow:
+#        bucket = fname.split("_justdisallow_")[0]
+#        if bucket in results_split:
+#            pass #@TODO: finish me
+#
+#    for test in results:
+#        print "=====test   %s=====" %test
+#
+#    pass
 
