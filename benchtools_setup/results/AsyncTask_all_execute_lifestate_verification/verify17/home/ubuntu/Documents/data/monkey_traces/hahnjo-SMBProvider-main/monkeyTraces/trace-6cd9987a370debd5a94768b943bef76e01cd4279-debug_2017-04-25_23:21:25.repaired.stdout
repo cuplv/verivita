@@ -1,0 +1,54 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/hahnjo-SMBProvider-main/monkeyTraces/trace-6cd9987a370debd5a94768b943bef76e01cd4279-debug_2017-04-25_23:21:25.repaired
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/hahnjo-SMBProvider-main/monkeyTraces/trace-6cd9987a370debd5a94768b943bef76e01cd4279-debug_2017-04-25_23:21:25.repaired -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.280000
+parsing - System time: 0.010000
+spec_grounding - User time: 30.240000
+spec_grounding - System time: 0.550000
+
+TRACE STATISTICS
+Trace length: 7398
+Top-level callbacks: 1106
+CI-ENTRY: 142
+CI-EXIT: 142
+CB-ENTRY: 127
+CB-EXIT: 127
+        
+---Simplified Trace---
+[20] [CB] [ENTRY] void de.hahnjo.android.smbprovider.AccountPreferences.<init>() (a8a8e97) 
+[20] [CB] [EXIT] NULL = void de.hahnjo.android.smbprovider.AccountPreferences.<init>() (a8a8e97) 
+[68] [CB] [ENTRY] void de.hahnjo.android.smbprovider.AccountPreferences.onCreate(android.os.Bundle) (a8a8e97,NULL) 
+[68] [CB] [EXIT] void de.hahnjo.android.smbprovider.AccountPreferences.onCreate(android.os.Bundle) (a8a8e97,NULL) 
+[2858] [CB] [ENTRY] void de.hahnjo.android.smbprovider.AccountPreferences.onStart() (a8a8e97) 
+[2858] [CB] [EXIT] void de.hahnjo.android.smbprovider.AccountPreferences.onStart() (a8a8e97) 
+[2874] [CB] [ENTRY] void de.hahnjo.android.smbprovider.AccountPreferences.onResume() (a8a8e97) 
+  [2877] [CI] [ENTRY] void android.os.AsyncTask.<init>() (55602eb) 
+  [2877] [CI] [EXIT] void android.os.AsyncTask.<init>() (55602eb) 
+  [2879] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (55602eb,3b7cc06) 
+  [2880] [CB] [ENTRY] void de.hahnjo.android.smbprovider.AccountPreferences$AccountTask.onPreExecute() (55602eb) 
+  [2881] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (55602eb) 
+  [2881] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (55602eb) 
+  [2880] [CB] [EXIT] void de.hahnjo.android.smbprovider.AccountPreferences$AccountTask.onPreExecute() (55602eb) 
+  [2879] [CI] [EXIT] 55602eb = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (55602eb,3b7cc06) 
+[2874] [CB] [EXIT] void de.hahnjo.android.smbprovider.AccountPreferences.onResume() (a8a8e97) 
+[3078] [CB] [ENTRY] void de.hahnjo.android.smbprovider.AccountPreferences$AccountTask.onPostExecute(java.lang.Object) (55602eb,90d7c4d) 
+[3078] [CB] [EXIT] void de.hahnjo.android.smbprovider.AccountPreferences$AccountTask.onPostExecute(java.lang.Object) (55602eb,90d7c4d) 
+
+
+
+TRACE STATISTICS
+Trace length: 9
+Top-level callbacks: 5
+CI-ENTRY: 2
+CI-EXIT: 1
+CB-ENTRY: 6
+CB-EXIT: 0
+        encoding - User time: 0.230000
+encoding - System time: 0.000000
+verification - User time: 0.056000
+verification - System time: 0.016000
+The trace is SAFE

@@ -1,0 +1,68 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/nowlauncher-now-launcher-NowLauncher/monkeyTraces/trace_2017-03-26_20:20:47.repaired
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/nowlauncher-now-launcher-NowLauncher/monkeyTraces/trace_2017-03-26_20:20:47.repaired -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.440000
+parsing - System time: 0.030000
+spec_grounding - User time: 32.180000
+spec_grounding - System time: 0.530000
+
+TRACE STATISTICS
+Trace length: 11428
+Top-level callbacks: 13
+CI-ENTRY: 491
+CI-EXIT: 493
+CB-ENTRY: 242
+CB-EXIT: 244
+        
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.<init>() (7d2c890) 
+[0] [CB] [EXIT] NULL = void com.nowlauncher.nowlauncher.MainActivity.<init>() (7d2c890) 
+[56] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onCreate(android.os.Bundle) (7d2c890,NULL) 
+  [11117] [CI] [ENTRY] void android.os.AsyncTask.<init>() (8a138c0) 
+  [11117] [CI] [EXIT] void android.os.AsyncTask.<init>() (8a138c0) 
+  [11125] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (8a138c0,96ca184,81bbda2) 
+  [11126] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity$ListDrawer.onPreExecute() (8a138c0) 
+  [11127] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (8a138c0) 
+  [11127] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (8a138c0) 
+  [11126] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity$ListDrawer.onPreExecute() (8a138c0) 
+  [11125] [CI] [EXIT] 8a138c0 = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (8a138c0,96ca184,81bbda2) 
+  [11255] [CI] [ENTRY] void android.os.AsyncTask.<init>() (bf75906) 
+  [11255] [CI] [EXIT] void android.os.AsyncTask.<init>() (bf75906) 
+  [11257] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (bf75906,96ca184,11fff92) 
+  [11258] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity$GetSongList.onPreExecute() (bf75906) 
+  [11259] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (bf75906) 
+  [11259] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (bf75906) 
+  [11258] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity$GetSongList.onPreExecute() (bf75906) 
+  [11257] [CI] [EXIT] bf75906 = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (bf75906,96ca184,11fff92) 
+  [11327] [CI] [ENTRY] void android.os.AsyncTask.<init>() (afd3a5f) 
+  [11327] [CI] [EXIT] void android.os.AsyncTask.<init>() (afd3a5f) 
+  [11329] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (afd3a5f,96ca184,1651d7b) 
+  [11330] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity$GetPosition.onPreExecute() (afd3a5f) 
+  [11331] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (afd3a5f) 
+  [11331] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (afd3a5f) 
+  [11330] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity$GetPosition.onPreExecute() (afd3a5f) 
+  [11329] [CI] [EXIT] afd3a5f = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (afd3a5f,96ca184,1651d7b) 
+[56] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onCreate(android.os.Bundle) (7d2c890,NULL) 
+[11704] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onStart() (7d2c890) 
+[11704] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onStart() (7d2c890) 
+[11739] [CB] [ENTRY] void com.nowlauncher.nowlauncher.MainActivity.onResume() (7d2c890) 
+[11739] [CB] [EXIT] void com.nowlauncher.nowlauncher.MainActivity.onResume() (7d2c890) 
+
+
+
+TRACE STATISTICS
+Trace length: 16
+Top-level callbacks: 4
+CI-ENTRY: 6
+CI-EXIT: 3
+CB-ENTRY: 7
+CB-EXIT: 0
+        encoding - User time: 0.390000
+encoding - System time: 0.010000
+verification - User time: 0.220000
+verification - System time: 0.060000
+The trace is SAFE

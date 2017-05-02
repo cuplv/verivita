@@ -1,0 +1,70 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/alexghr-bulkshare-app/monkeyTraces/trace-app-debug_2017-04-25_16:42:04.repaired
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/alexghr-bulkshare-app/monkeyTraces/trace-app-debug_2017-04-25_16:42:04.repaired -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.400000
+parsing - System time: 0.050000
+spec_grounding - User time: 34.810000
+spec_grounding - System time: 0.580000
+
+TRACE STATISTICS
+Trace length: 10784
+Top-level callbacks: 1364
+CI-ENTRY: 253
+CI-EXIT: 258
+CB-ENTRY: 197
+CB-EXIT: 198
+        
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.github.alexghr.bulkshare.EmailActivity.<init>() (5badf51) 
+[0] [CB] [EXIT] NULL = void com.github.alexghr.bulkshare.EmailActivity.<init>() (5badf51) 
+[44] [CB] [ENTRY] void com.github.alexghr.bulkshare.EmailActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+  [1805] [CI] [ENTRY] void android.app.ListFragment.<init>() (3c71123) 
+  [1805] [CI] [EXIT] void android.app.ListFragment.<init>() (3c71123) 
+[44] [CB] [EXIT] void com.github.alexghr.bulkshare.EmailActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+[1848] [CB] [ENTRY] void com.github.alexghr.bulkshare.LinksFragment.onAttach(android.app.Activity) (3c71123,5badf51) 
+[1848] [CB] [EXIT] void com.github.alexghr.bulkshare.LinksFragment.onAttach(android.app.Activity) (3c71123,5badf51) 
+[1856] [CB] [ENTRY] void com.github.alexghr.bulkshare.LinksFragment.onCreate(android.os.Bundle) (3c71123,NULL) 
+[1856] [CB] [EXIT] void com.github.alexghr.bulkshare.LinksFragment.onCreate(android.os.Bundle) (3c71123,NULL) 
+[1888] [CB] [ENTRY] android.view.View com.github.alexghr.bulkshare.LinksFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (3c71123,c565a31,9cfbdb0,NULL) 
+[1888] [CB] [EXIT] 3c76863 = android.view.View com.github.alexghr.bulkshare.LinksFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (3c71123,c565a31,9cfbdb0,NULL) 
+[2476] [CB] [ENTRY] void com.github.alexghr.bulkshare.LinksFragment.onViewCreated(android.view.View,android.os.Bundle) (3c71123,3c76863,NULL) 
+[2476] [CB] [EXIT] void com.github.alexghr.bulkshare.LinksFragment.onViewCreated(android.view.View,android.os.Bundle) (3c71123,3c76863,NULL) 
+[2492] [CB] [ENTRY] void com.github.alexghr.bulkshare.LinksFragment.onActivityCreated(android.os.Bundle) (3c71123,NULL) 
+[2492] [CB] [EXIT] void com.github.alexghr.bulkshare.LinksFragment.onActivityCreated(android.os.Bundle) (3c71123,NULL) 
+[2500] [CB] [ENTRY] void com.github.alexghr.bulkshare.EmailActivity.onStart() (5badf51) 
+[2500] [CB] [EXIT] void com.github.alexghr.bulkshare.EmailActivity.onStart() (5badf51) 
+[2504] [CB] [ENTRY] void com.github.alexghr.bulkshare.LinksFragment.onStart() (3c71123) 
+  [2511] [CI] [ENTRY] void android.os.AsyncTask.<init>() (b409cf1) 
+  [2511] [CI] [EXIT] void android.os.AsyncTask.<init>() (b409cf1) 
+  [2519] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (b409cf1,a267dba) 
+  [2520] [CB] [ENTRY] void com.github.alexghr.bulkshare.logic.LoadLinksTask.onPreExecute() (b409cf1) 
+  [2521] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (b409cf1) 
+  [2521] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (b409cf1) 
+  [2520] [CB] [EXIT] void com.github.alexghr.bulkshare.logic.LoadLinksTask.onPreExecute() (b409cf1) 
+  [2519] [CI] [EXIT] b409cf1 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (b409cf1,a267dba) 
+[2504] [CB] [EXIT] void com.github.alexghr.bulkshare.LinksFragment.onStart() (3c71123) 
+[2538] [CB] [ENTRY] void com.github.alexghr.bulkshare.EmailActivity.onResume() (5badf51) 
+[2538] [CB] [EXIT] void com.github.alexghr.bulkshare.EmailActivity.onResume() (5badf51) 
+[2542] [CB] [ENTRY] void com.github.alexghr.bulkshare.LinksFragment.onResume() (3c71123) 
+[2542] [CB] [EXIT] void com.github.alexghr.bulkshare.LinksFragment.onResume() (3c71123) 
+[2746] [CB] [ENTRY] void com.github.alexghr.bulkshare.logic.LoadLinksTask.onPostExecute(java.lang.Object) (b409cf1,90fcf6e) 
+[2746] [CB] [EXIT] void com.github.alexghr.bulkshare.logic.LoadLinksTask.onPostExecute(java.lang.Object) (b409cf1,90fcf6e) 
+
+
+
+TRACE STATISTICS
+Trace length: 18
+Top-level callbacks: 12
+CI-ENTRY: 3
+CI-EXIT: 2
+CB-ENTRY: 13
+CB-EXIT: 0
+        encoding - User time: 0.480000
+encoding - System time: 0.000000
+verification - User time: 0.096000
+verification - System time: 0.024000
+The trace is SAFE

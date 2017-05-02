@@ -1,0 +1,44 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/jcmore2-ImageProcessingLib-TestImageProcessingLib/monkeyTraces/trace-TestImageProcessingLibrary_2017-04-26_03:58:34.repaired
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/jcmore2-ImageProcessingLib-TestImageProcessingLib/monkeyTraces/trace-TestImageProcessingLibrary_2017-04-26_03:58:34.repaired -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.180000
+parsing - System time: 0.020000
+spec_grounding - User time: 32.180000
+spec_grounding - System time: 0.450000
+
+TRACE STATISTICS
+Trace length: 4458
+Top-level callbacks: 369
+CI-ENTRY: 166
+CI-EXIT: 167
+CB-ENTRY: 105
+CB-EXIT: 106
+        
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.jcmore2.testimageprocessinglibrary.TestActivity.<init>() (5badf51) 
+[0] [CB] [EXIT] NULL = void com.jcmore2.testimageprocessinglibrary.TestActivity.<init>() (5badf51) 
+[44] [CB] [ENTRY] void com.jcmore2.testimageprocessinglibrary.TestActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+[44] [CB] [EXIT] void com.jcmore2.testimageprocessinglibrary.TestActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+[2910] [CB] [ENTRY] void com.jcmore2.testimageprocessinglibrary.TestActivity.onStart() (5badf51) 
+[2910] [CB] [EXIT] void com.jcmore2.testimageprocessinglibrary.TestActivity.onStart() (5badf51) 
+[2926] [CB] [ENTRY] void com.jcmore2.testimageprocessinglibrary.TestActivity.onResume() (5badf51) 
+[2926] [CB] [EXIT] void com.jcmore2.testimageprocessinglibrary.TestActivity.onResume() (5badf51) 
+
+
+
+TRACE STATISTICS
+Trace length: 4
+Top-level callbacks: 4
+CI-ENTRY: 0
+CI-EXIT: 0
+CB-ENTRY: 4
+CB-EXIT: 0
+        encoding - User time: 0.130000
+encoding - System time: 0.000000
+verification - User time: 0.016000
+verification - System time: 0.020000
+The trace is SAFE

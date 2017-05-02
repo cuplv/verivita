@@ -1,0 +1,52 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/rattlehead666-Performance-Tweaker-app/monkeyTraces/trace-app-debug_2017-04-25_20:45:20.repaired
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/rattlehead666-Performance-Tweaker-app/monkeyTraces/trace-app-debug_2017-04-25_20:45:20.repaired -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.090000
+parsing - System time: 0.000000
+spec_grounding - User time: 29.580000
+spec_grounding - System time: 0.490000
+
+TRACE STATISTICS
+Trace length: 2686
+Top-level callbacks: 112
+CI-ENTRY: 80
+CI-EXIT: 80
+CB-ENTRY: 69
+CB-EXIT: 69
+        
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.rattlehead666.performancetweaker.app.ui.MainActivity.<init>() (5badf51) 
+[0] [CB] [EXIT] NULL = void com.rattlehead666.performancetweaker.app.ui.MainActivity.<init>() (5badf51) 
+[48] [CB] [ENTRY] void com.rattlehead666.performancetweaker.app.ui.MainActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+  [2215] [CI] [ENTRY] void android.os.AsyncTask.<init>() (2028f01) 
+  [2215] [CI] [EXIT] void android.os.AsyncTask.<init>() (2028f01) 
+  [2217] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (2028f01,754ff94) 
+  [2218] [CB] [ENTRY] void com.rattlehead666.performancetweaker.app.ui.MainActivity$Task.onPreExecute() (2028f01) 
+  [2219] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (2028f01) 
+  [2219] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (2028f01) 
+  [2218] [CB] [EXIT] void com.rattlehead666.performancetweaker.app.ui.MainActivity$Task.onPreExecute() (2028f01) 
+  [2217] [CI] [EXIT] 2028f01 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (2028f01,754ff94) 
+[48] [CB] [EXIT] void com.rattlehead666.performancetweaker.app.ui.MainActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+[2234] [CB] [ENTRY] void com.rattlehead666.performancetweaker.app.ui.MainActivity.onStart() (5badf51) 
+[2234] [CB] [EXIT] void com.rattlehead666.performancetweaker.app.ui.MainActivity.onStart() (5badf51) 
+[2300] [CB] [ENTRY] void com.rattlehead666.performancetweaker.app.ui.MainActivity.onResume() (5badf51) 
+[2300] [CB] [EXIT] void com.rattlehead666.performancetweaker.app.ui.MainActivity.onResume() (5badf51) 
+
+
+
+TRACE STATISTICS
+Trace length: 8
+Top-level callbacks: 4
+CI-ENTRY: 2
+CI-EXIT: 1
+CB-ENTRY: 5
+CB-EXIT: 0
+        encoding - User time: 0.240000
+encoding - System time: 0.000000
+verification - User time: 0.040000
+verification - System time: 0.028000
+The trace is SAFE

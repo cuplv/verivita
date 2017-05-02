@@ -1,0 +1,166 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/smarek-Simple-Dilbert-main/monkeyTraces/trace_2017-03-27_01:13:52.repaired
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/smarek-Simple-Dilbert-main/monkeyTraces/trace_2017-03-27_01:13:52.repaired -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 1.100000
+parsing - System time: 0.050000
+spec_grounding - User time: 33.380000
+spec_grounding - System time: 0.480000
+
+TRACE STATISTICS
+Trace length: 25264
+Top-level callbacks: 383
+CI-ENTRY: 3519
+CI-EXIT: 5002
+CB-ENTRY: 648
+CB-EXIT: 671
+        
+---Simplified Trace---
+[9024] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragmentActivity.<init>() (4ec98b7) 
+[9024] [CB] [EXIT] NULL = void com.mareksebera.simpledilbert.core.DilbertFragmentActivity.<init>() (4ec98b7) 
+[9076] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragmentActivity.onCreate(android.os.Bundle) (4ec98b7,NULL) 
+[9076] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragmentActivity.onCreate(android.os.Bundle) (4ec98b7,NULL) 
+[12282] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragmentActivity.onStart() (4ec98b7) 
+[12282] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragmentActivity.onStart() (4ec98b7) 
+[12314] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragmentActivity.onResume() (4ec98b7) 
+[12314] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragmentActivity.onResume() (4ec98b7) 
+[13328] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragmentActivity.onPause() (4ec98b7) 
+[13328] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragmentActivity.onPause() (4ec98b7) 
+[13340] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragmentActivity.onResume() (4ec98b7) 
+[13340] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragmentActivity.onResume() (4ec98b7) 
+[14182] [CB] [ENTRY] void com.mareksebera.simpledilbert.utilities.FixedViewPager.onMeasure(int,int) (f0d7536,1073742544,1073742576) 
+  [14225] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (d42b4a7) 
+  [14225] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (d42b4a7) 
+  [14349] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (6955b8) 
+  [14349] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (6955b8) 
+  [14465] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (e38f744) 
+  [14465] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (e38f744) 
+  [14584] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onAttach(android.app.Activity) (d42b4a7,4ec98b7) 
+  [14584] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onAttach(android.app.Activity) (d42b4a7,4ec98b7) 
+  [14592] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onCreate(android.os.Bundle) (d42b4a7,NULL) 
+  [14592] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onCreate(android.os.Bundle) (d42b4a7,NULL) 
+  [14664] [CB] [ENTRY] android.view.View com.mareksebera.simpledilbert.core.DilbertFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (d42b4a7,2b2ae75,f0d7536,NULL) 
+  [15419] [CI] [ENTRY] void android.os.AsyncTask.<init>() (47c9e60) 
+  [15419] [CI] [EXIT] void android.os.AsyncTask.<init>() (47c9e60) 
+  [15421] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (47c9e60,c4ea1bf) 
+  [15421] [CI] [EXIT] 47c9e60 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (47c9e60,c4ea1bf) 
+  [14664] [CB] [EXIT] a64757e = android.view.View com.mareksebera.simpledilbert.core.DilbertFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (d42b4a7,2b2ae75,f0d7536,NULL) 
+  [15623] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onViewCreated(android.view.View,android.os.Bundle) (d42b4a7,f953cd6,NULL) 
+  [15623] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onViewCreated(android.view.View,android.os.Bundle) (d42b4a7,f953cd6,NULL) 
+  [15627] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onActivityCreated(android.os.Bundle) (d42b4a7,NULL) 
+  [15627] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onActivityCreated(android.os.Bundle) (d42b4a7,NULL) 
+  [15635] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onStart() (d42b4a7) 
+  [15635] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onStart() (d42b4a7) 
+  [15639] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onResume() (d42b4a7) 
+  [15639] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onResume() (d42b4a7) 
+  [15643] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onAttach(android.app.Activity) (6955b8,4ec98b7) 
+  [15643] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onAttach(android.app.Activity) (6955b8,4ec98b7) 
+  [15651] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onCreate(android.os.Bundle) (6955b8,NULL) 
+  [15651] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onCreate(android.os.Bundle) (6955b8,NULL) 
+  [15697] [CB] [ENTRY] android.view.View com.mareksebera.simpledilbert.core.DilbertFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (6955b8,b7bea31,f0d7536,NULL) 
+  [16516] [CI] [ENTRY] void android.os.AsyncTask.<init>() (64303af) 
+  [16516] [CI] [EXIT] void android.os.AsyncTask.<init>() (64303af) 
+  [16518] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (64303af,78d469a) 
+  [16518] [CI] [EXIT] 64303af = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (64303af,78d469a) 
+  [15697] [CB] [EXIT] a571be = android.view.View com.mareksebera.simpledilbert.core.DilbertFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (6955b8,b7bea31,f0d7536,NULL) 
+  [16711] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onViewCreated(android.view.View,android.os.Bundle) (6955b8,613c1b0,NULL) 
+  [16711] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onViewCreated(android.view.View,android.os.Bundle) (6955b8,613c1b0,NULL) 
+  [16715] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onActivityCreated(android.os.Bundle) (6955b8,NULL) 
+  [16715] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onActivityCreated(android.os.Bundle) (6955b8,NULL) 
+  [16723] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onAttach(android.app.Activity) (e38f744,4ec98b7) 
+  [16723] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onAttach(android.app.Activity) (e38f744,4ec98b7) 
+  [16731] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onCreate(android.os.Bundle) (e38f744,NULL) 
+  [16731] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onCreate(android.os.Bundle) (e38f744,NULL) 
+  [16777] [CB] [ENTRY] android.view.View com.mareksebera.simpledilbert.core.DilbertFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (e38f744,2288784,f0d7536,NULL) 
+  [17555] [CI] [ENTRY] void android.os.AsyncTask.<init>() (4954801) 
+  [17555] [CI] [EXIT] void android.os.AsyncTask.<init>() (4954801) 
+  [17557] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (4954801,dedcc94) 
+  [17557] [CI] [EXIT] 4954801 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (4954801,dedcc94) 
+  [16777] [CB] [EXIT] 48008be = android.view.View com.mareksebera.simpledilbert.core.DilbertFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (e38f744,2288784,f0d7536,NULL) 
+  [17755] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onViewCreated(android.view.View,android.os.Bundle) (e38f744,67ae0fa,NULL) 
+  [17755] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onViewCreated(android.view.View,android.os.Bundle) (e38f744,67ae0fa,NULL) 
+  [17759] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onActivityCreated(android.os.Bundle) (e38f744,NULL) 
+  [17759] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onActivityCreated(android.os.Bundle) (e38f744,NULL) 
+  [17771] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onStart() (6955b8) 
+  [17771] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onStart() (6955b8) 
+  [17775] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onResume() (6955b8) 
+  [17775] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onResume() (6955b8) 
+  [17779] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onStart() (e38f744) 
+  [17779] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onStart() (e38f744) 
+  [17787] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onResume() (e38f744) 
+  [17787] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onResume() (e38f744) 
+[14182] [CB] [EXIT] void com.mareksebera.simpledilbert.utilities.FixedViewPager.onMeasure(int,int) (f0d7536,1073742544,1073742576) 
+[21952] [CB] [ENTRY] boolean com.mareksebera.simpledilbert.core.DilbertFragmentActivity.dispatchKeyEvent(android.view.KeyEvent) (4ec98b7,f22e26b) 
+  [22107] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (326e37b) 
+  [22107] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (326e37b) 
+  [22292] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onPause() (e38f744) 
+  [22292] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onPause() (e38f744) 
+  [22296] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onStop() (e38f744) 
+  [22296] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onStop() (e38f744) 
+  [22324] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onDestroyView() (e38f744) 
+  [22324] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onDestroyView() (e38f744) 
+  [22392] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onAttach(android.app.Activity) (326e37b,4ec98b7) 
+  [22392] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onAttach(android.app.Activity) (326e37b,4ec98b7) 
+  [22400] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onCreate(android.os.Bundle) (326e37b,NULL) 
+  [22400] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onCreate(android.os.Bundle) (326e37b,NULL) 
+  [22446] [CB] [ENTRY] android.view.View com.mareksebera.simpledilbert.core.DilbertFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (326e37b,182c43d,f0d7536,NULL) 
+  [23189] [CI] [ENTRY] void android.os.AsyncTask.<init>() (6a9bcbd) 
+  [23189] [CI] [EXIT] void android.os.AsyncTask.<init>() (6a9bcbd) 
+  [23191] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (6a9bcbd,bea6580) 
+  [23191] [CI] [EXIT] 6a9bcbd = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (6a9bcbd,bea6580) 
+  [22446] [CB] [EXIT] 460115a = android.view.View com.mareksebera.simpledilbert.core.DilbertFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (326e37b,182c43d,f0d7536,NULL) 
+  [23393] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onViewCreated(android.view.View,android.os.Bundle) (326e37b,98a3cf6,NULL) 
+  [23393] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onViewCreated(android.view.View,android.os.Bundle) (326e37b,98a3cf6,NULL) 
+  [23397] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onActivityCreated(android.os.Bundle) (326e37b,NULL) 
+  [23397] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onActivityCreated(android.os.Bundle) (326e37b,NULL) 
+  [23405] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onStart() (326e37b) 
+  [23405] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onStart() (326e37b) 
+  [23409] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onResume() (326e37b) 
+  [23409] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onResume() (326e37b) 
+[21952] [CB] [EXIT] true = boolean com.mareksebera.simpledilbert.core.DilbertFragmentActivity.dispatchKeyEvent(android.view.KeyEvent) (4ec98b7,f22e26b) 
+[23847] [CB] [ENTRY] boolean com.mareksebera.simpledilbert.core.DilbertFragmentActivity.dispatchKeyEvent(android.view.KeyEvent) (4ec98b7,9073ef3) 
+  [24033] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (93040d) 
+  [24033] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (93040d) 
+  [24236] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onPause() (d42b4a7) 
+  [24236] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onPause() (d42b4a7) 
+  [24240] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onStop() (d42b4a7) 
+  [24240] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onStop() (d42b4a7) 
+  [24268] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onDestroyView() (d42b4a7) 
+  [24268] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onDestroyView() (d42b4a7) 
+  [24348] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onAttach(android.app.Activity) (93040d,4ec98b7) 
+  [24348] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onAttach(android.app.Activity) (93040d,4ec98b7) 
+  [24356] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onCreate(android.os.Bundle) (93040d,NULL) 
+  [24356] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onCreate(android.os.Bundle) (93040d,NULL) 
+  [24402] [CB] [ENTRY] android.view.View com.mareksebera.simpledilbert.core.DilbertFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (93040d,23c32ec,f0d7536,NULL) 
+  [25145] [CI] [ENTRY] void android.os.AsyncTask.<init>() (598161f) 
+  [25145] [CI] [EXIT] void android.os.AsyncTask.<init>() (598161f) 
+  [25147] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (598161f,8ed8fca) 
+  [25147] [CI] [EXIT] 598161f = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (598161f,8ed8fca) 
+  [24402] [CB] [EXIT] 6a90ee6 = android.view.View com.mareksebera.simpledilbert.core.DilbertFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (93040d,23c32ec,f0d7536,NULL) 
+  [25349] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onViewCreated(android.view.View,android.os.Bundle) (93040d,1af0990,NULL) 
+  [25349] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onViewCreated(android.view.View,android.os.Bundle) (93040d,1af0990,NULL) 
+  [25353] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onActivityCreated(android.os.Bundle) (93040d,NULL) 
+  [25353] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onActivityCreated(android.os.Bundle) (93040d,NULL) 
+  [25361] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onStart() (93040d) 
+  [25361] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onStart() (93040d) 
+  [25365] [CB] [ENTRY] void com.mareksebera.simpledilbert.core.DilbertFragment.onResume() (93040d) 
+  [25365] [CB] [EXIT] void com.mareksebera.simpledilbert.core.DilbertFragment.onResume() (93040d) 
+[23847] [CB] [EXIT] true = boolean com.mareksebera.simpledilbert.core.DilbertFragmentActivity.dispatchKeyEvent(android.view.KeyEvent) (4ec98b7,9073ef3) 
+
+
+
+TRACE STATISTICS
+Trace length: 70
+Top-level callbacks: 9
+CI-ENTRY: 10
+CI-EXIT: 10
+CB-ENTRY: 49
+CB-EXIT: 0
+        encoding - User time: 2.120000
+encoding - System time: 0.010000
+verification - User time: 12.116000
+verification - System time: 0.196000
+The trace is SAFE

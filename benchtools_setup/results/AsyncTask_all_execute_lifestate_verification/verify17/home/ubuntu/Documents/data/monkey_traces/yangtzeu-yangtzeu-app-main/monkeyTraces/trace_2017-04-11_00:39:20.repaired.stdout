@@ -1,0 +1,86 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/yangtzeu-yangtzeu-app-main/monkeyTraces/trace_2017-04-11_00:39:20.repaired
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/yangtzeu-yangtzeu-app-main/monkeyTraces/trace_2017-04-11_00:39:20.repaired -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.730000
+parsing - System time: 0.040000
+spec_grounding - User time: 38.650000
+spec_grounding - System time: 0.770000
+
+TRACE STATISTICS
+Trace length: 18290
+Top-level callbacks: 2377
+CI-ENTRY: 602
+CI-EXIT: 612
+CB-ENTRY: 363
+CB-EXIT: 366
+        
+---Simplified Trace---
+[286] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.<init>() (a5f63f4) 
+[286] [CB] [EXIT] NULL = void com.rex.yangtzeu.ui.Welcome.<init>() (a5f63f4) 
+[330] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onCreate(android.os.Bundle) (a5f63f4,NULL) 
+[330] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onCreate(android.os.Bundle) (a5f63f4,NULL) 
+[1474] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onStart() (a5f63f4) 
+[1474] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onStart() (a5f63f4) 
+[1490] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onResume() (a5f63f4) 
+[1490] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onResume() (a5f63f4) 
+[2194] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome$1.onAnimationEnd(android.view.animation.Animation) (8b9d776,9b008d9) 
+  [2195] [CI] [ENTRY] void android.os.AsyncTask.<init>() (b97b35a) 
+  [2195] [CI] [EXIT] void android.os.AsyncTask.<init>() (b97b35a) 
+  [2197] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (b97b35a,3ee0e81) 
+  [2198] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPreExecute() (b97b35a) 
+  [2199] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (b97b35a) 
+  [2199] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (b97b35a) 
+  [2198] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPreExecute() (b97b35a) 
+  [2197] [CI] [EXIT] b97b35a = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (b97b35a,3ee0e81) 
+[2194] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome$1.onAnimationEnd(android.view.animation.Animation) (8b9d776,9b008d9) 
+[3146] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPostExecute(java.lang.Object) (b97b35a,NULL) 
+[3146] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPostExecute(java.lang.Object) (b97b35a,NULL) 
+[3392] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onPause() (a5f63f4) 
+[3392] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onPause() (a5f63f4) 
+[3508] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.<init>() (499a9b1) 
+[3508] [CB] [EXIT] NULL = void com.rex.yangtzeu.ui.Main.<init>() (499a9b1) 
+[3552] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onCreate(android.os.Bundle) (499a9b1,NULL) 
+  [6527] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (84605c3,499a9b1) 
+  [6527] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (84605c3,499a9b1) 
+[3552] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onCreate(android.os.Bundle) (499a9b1,NULL) 
+[6538] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onStart() (499a9b1) 
+[6538] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onStart() (499a9b1) 
+[6554] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onResume() (499a9b1) 
+[6554] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onResume() (499a9b1) 
+[8672] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onStop() (a5f63f4) 
+[8672] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onStop() (a5f63f4) 
+[8676] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onDestroy() (a5f63f4) 
+[8676] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onDestroy() (a5f63f4) 
+[8784] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onClick(android.view.View) (499a9b1,84605c3) 
+[8784] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onClick(android.view.View) (499a9b1,84605c3) 
+[8856] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onPause() (499a9b1) 
+[8856] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onPause() (499a9b1) 
+[8872] [CB] [ENTRY] void com.rex.yangtzeu.ui.Setting.<init>() (1c6f667) 
+[8872] [CB] [EXIT] NULL = void com.rex.yangtzeu.ui.Setting.<init>() (1c6f667) 
+[8916] [CB] [ENTRY] void com.rex.yangtzeu.ui.Setting.onCreate(android.os.Bundle) (1c6f667,NULL) 
+[8916] [CB] [EXIT] void com.rex.yangtzeu.ui.Setting.onCreate(android.os.Bundle) (1c6f667,NULL) 
+[10622] [CB] [ENTRY] void com.rex.yangtzeu.ui.Setting.onStart() (1c6f667) 
+[10622] [CB] [EXIT] void com.rex.yangtzeu.ui.Setting.onStart() (1c6f667) 
+[10638] [CB] [ENTRY] void com.rex.yangtzeu.ui.Setting.onResume() (1c6f667) 
+[10638] [CB] [EXIT] void com.rex.yangtzeu.ui.Setting.onResume() (1c6f667) 
+[12068] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onStop() (499a9b1) 
+[12068] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onStop() (499a9b1) 
+
+
+
+TRACE STATISTICS
+Trace length: 25
+Top-level callbacks: 20
+CI-ENTRY: 3
+CI-EXIT: 1
+CB-ENTRY: 21
+CB-EXIT: 0
+        encoding - User time: 0.750000
+encoding - System time: 0.010000
+verification - User time: 0.168000
+verification - System time: 0.036000
+The trace is SAFE
