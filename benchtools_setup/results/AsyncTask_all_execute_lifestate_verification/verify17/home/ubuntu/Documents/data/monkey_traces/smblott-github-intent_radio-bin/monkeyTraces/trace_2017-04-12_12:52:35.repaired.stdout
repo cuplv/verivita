@@ -1,0 +1,80 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/smblott-github-intent_radio-bin/monkeyTraces/trace_2017-04-12_12:52:35.repaired
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/smblott-github-intent_radio-bin/monkeyTraces/trace_2017-04-12_12:52:35.repaired -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.210000
+parsing - System time: 0.010000
+spec_grounding - User time: 31.530000
+spec_grounding - System time: 0.470000
+
+TRACE STATISTICS
+Trace length: 4556
+Top-level callbacks: 705
+CI-ENTRY: 185
+CI-EXIT: 186
+CB-ENTRY: 99
+CB-EXIT: 100
+        
+---Simplified Trace---
+[2] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio.<init>() (682de57) 
+[2] [CB] [EXIT] NULL = void org.smblott.intentradio.IntentRadio.<init>() (682de57) 
+[26] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio.onCreate(android.os.Bundle) (682de57,NULL) 
+  [1319] [CI] [ENTRY] void android.os.AsyncTask.<init>() (6cbc1e6) 
+  [1319] [CI] [EXIT] void android.os.AsyncTask.<init>() (6cbc1e6) 
+  [1345] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (6cbc1e6,4cded59) 
+  [1346] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio$1.onPreExecute() (6cbc1e6) 
+  [1347] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (6cbc1e6) 
+  [1347] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (6cbc1e6) 
+  [1346] [CB] [EXIT] void org.smblott.intentradio.IntentRadio$1.onPreExecute() (6cbc1e6) 
+  [1345] [CI] [EXIT] 6cbc1e6 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (6cbc1e6,4cded59) 
+[26] [CB] [EXIT] void org.smblott.intentradio.IntentRadio.onCreate(android.os.Bundle) (682de57,NULL) 
+[1375] [CB] [ENTRY] void org.smblott.intentradio.PreferenceActivity.onStart() (682de57) 
+[1375] [CB] [EXIT] void org.smblott.intentradio.PreferenceActivity.onStart() (682de57) 
+[1403] [CB] [ENTRY] void org.smblott.intentradio.PreferenceActivity.onResume() (682de57) 
+[1403] [CB] [EXIT] void org.smblott.intentradio.PreferenceActivity.onResume() (682de57) 
+[4540] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio$1.onPostExecute(java.lang.Object) (6cbc1e6,db819f7) 
+[4540] [CB] [EXIT] void org.smblott.intentradio.IntentRadio$1.onPostExecute(java.lang.Object) (6cbc1e6,db819f7) 
+[4794] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio.install_tasker(android.view.View) (682de57,b900588) 
+  [4795] [CI] [ENTRY] void android.os.AsyncTask.<init>() (1a5d7e) 
+  [4795] [CI] [EXIT] void android.os.AsyncTask.<init>() (1a5d7e) 
+  [4797] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (1a5d7e,cd6c9f5) 
+  [4798] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio$2.onPreExecute() (1a5d7e) 
+  [4799] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (1a5d7e) 
+  [4799] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (1a5d7e) 
+  [4798] [CB] [EXIT] void org.smblott.intentradio.IntentRadio$2.onPreExecute() (1a5d7e) 
+  [4797] [CI] [EXIT] 1a5d7e = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (1a5d7e,cd6c9f5) 
+[4794] [CB] [EXIT] void org.smblott.intentradio.IntentRadio.install_tasker(android.view.View) (682de57,b900588) 
+[6216] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio$2.onPostExecute(java.lang.Object) (1a5d7e,Directory does not exist...) 
+[6216] [CB] [EXIT] void org.smblott.intentradio.IntentRadio$2.onPostExecute(java.lang.Object) (1a5d7e,Directory does not exist...) 
+[6454] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio.install_tasker(android.view.View) (682de57,b900588) 
+  [6457] [CI] [ENTRY] void android.os.AsyncTask.<init>() (7f23c47) 
+  [6457] [CI] [EXIT] void android.os.AsyncTask.<init>() (7f23c47) 
+  [6459] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (7f23c47,837ea12) 
+  [6460] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio$2.onPreExecute() (7f23c47) 
+  [6461] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (7f23c47) 
+  [6461] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (7f23c47) 
+  [6460] [CB] [EXIT] void org.smblott.intentradio.IntentRadio$2.onPreExecute() (7f23c47) 
+  [6459] [CI] [EXIT] 7f23c47 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (7f23c47,837ea12) 
+[6454] [CB] [EXIT] void org.smblott.intentradio.IntentRadio.install_tasker(android.view.View) (682de57,b900588) 
+[6573] [CB] [ENTRY] void org.smblott.intentradio.PreferenceActivity.onPause() (682de57) 
+[6573] [CB] [EXIT] void org.smblott.intentradio.PreferenceActivity.onPause() (682de57) 
+[6607] [CB] [ENTRY] void org.smblott.intentradio.ClipButtons.<init>() (d47ce31) 
+[6607] [CB] [EXIT] NULL = void org.smblott.intentradio.ClipButtons.<init>() (d47ce31) 
+
+
+
+TRACE STATISTICS
+Trace length: 22
+Top-level callbacks: 10
+CI-ENTRY: 6
+CI-EXIT: 3
+CB-ENTRY: 12
+CB-EXIT: 0
+        encoding - User time: 0.520000
+encoding - System time: 0.000000
+verification - User time: 0.268000
+verification - System time: 0.048000
+The trace is SAFE

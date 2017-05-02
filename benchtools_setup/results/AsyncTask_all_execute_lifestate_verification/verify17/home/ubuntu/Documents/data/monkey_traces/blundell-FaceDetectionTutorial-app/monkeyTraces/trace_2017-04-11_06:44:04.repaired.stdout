@@ -1,0 +1,94 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/blundell-FaceDetectionTutorial-app/monkeyTraces/trace_2017-04-11_06:44:04.repaired
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/blundell-FaceDetectionTutorial-app/monkeyTraces/trace_2017-04-11_06:44:04.repaired -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.450000
+parsing - System time: 0.020000
+spec_grounding - User time: 35.490000
+spec_grounding - System time: 0.640000
+
+TRACE STATISTICS
+Trace length: 10698
+Top-level callbacks: 991
+CI-ENTRY: 373
+CI-EXIT: 375
+CB-ENTRY: 362
+CB-EXIT: 364
+        
+---Simplified Trace---
+[2] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.<init>() (682de57) 
+[2] [CB] [EXIT] NULL = void com.blundell.tutorial.MainActivity.<init>() (682de57) 
+[46] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onCreate(android.os.Bundle) (682de57,NULL) 
+[46] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onCreate(android.os.Bundle) (682de57,NULL) 
+[1782] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onStart() (682de57) 
+[1782] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onStart() (682de57) 
+[1800] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onResume() (682de57) 
+  [1803] [CI] [ENTRY] void android.os.AsyncTask.<init>() (e06ed99) 
+  [1803] [CI] [EXIT] void android.os.AsyncTask.<init>() (e06ed99) 
+  [1805] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (e06ed99,c1b810c,85d3c6a) 
+  [1806] [CB] [ENTRY] void com.blundell.tutorial.cam.LoadFrontCameraAsyncTask.onPreExecute() (e06ed99) 
+  [1807] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (e06ed99) 
+  [1807] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (e06ed99) 
+  [1806] [CB] [EXIT] void com.blundell.tutorial.cam.LoadFrontCameraAsyncTask.onPreExecute() (e06ed99) 
+  [1805] [CI] [EXIT] e06ed99 = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (e06ed99,c1b810c,85d3c6a) 
+[1800] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onResume() (682de57) 
+[2646] [CB] [ENTRY] void com.blundell.tutorial.cam.LoadFrontCameraAsyncTask.onPostExecute(java.lang.Object) (e06ed99,NULL) 
+  [2647] [CI] [ENTRY] void android.os.AsyncTask.onPostExecute(java.lang.Object) (e06ed99,NULL) 
+  [2647] [CI] [EXIT] void android.os.AsyncTask.onPostExecute(java.lang.Object) (e06ed99,NULL) 
+[2646] [CB] [EXIT] void com.blundell.tutorial.cam.LoadFrontCameraAsyncTask.onPostExecute(java.lang.Object) (e06ed99,NULL) 
+[7446] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onPause() (682de57) 
+[7446] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onPause() (682de57) 
+[7464] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.<init>() (c915336) 
+[7464] [CB] [EXIT] NULL = void com.blundell.tutorial.MainActivity.<init>() (c915336) 
+[7508] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onCreate(android.os.Bundle) (c915336,NULL) 
+[7508] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onCreate(android.os.Bundle) (c915336,NULL) 
+[9178] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onStart() (c915336) 
+[9178] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onStart() (c915336) 
+[9198] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onResume() (c915336) 
+  [9201] [CI] [ENTRY] void android.os.AsyncTask.<init>() (98cd020) 
+  [9201] [CI] [EXIT] void android.os.AsyncTask.<init>() (98cd020) 
+  [9203] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (98cd020,c1b810c,4bece4c) 
+  [9204] [CB] [ENTRY] void com.blundell.tutorial.cam.LoadFrontCameraAsyncTask.onPreExecute() (98cd020) 
+  [9205] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (98cd020) 
+  [9205] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (98cd020) 
+  [9204] [CB] [EXIT] void com.blundell.tutorial.cam.LoadFrontCameraAsyncTask.onPreExecute() (98cd020) 
+  [9203] [CI] [EXIT] 98cd020 = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (98cd020,c1b810c,4bece4c) 
+  [9211] [CI] [ENTRY] void android.os.AsyncTask.<init>() (b069ae4) 
+  [9211] [CI] [EXIT] void android.os.AsyncTask.<init>() (b069ae4) 
+  [9213] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (b069ae4,c1b810c,2048150) 
+  [9214] [CB] [ENTRY] void com.blundell.tutorial.cam.LoadFrontCameraAsyncTask.onPreExecute() (b069ae4) 
+  [9215] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (b069ae4) 
+  [9215] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (b069ae4) 
+  [9214] [CB] [EXIT] void com.blundell.tutorial.cam.LoadFrontCameraAsyncTask.onPreExecute() (b069ae4) 
+  [9213] [CI] [EXIT] b069ae4 = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (b069ae4,c1b810c,2048150) 
+[9198] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onResume() (c915336) 
+[10054] [CB] [ENTRY] void com.blundell.tutorial.cam.LoadFrontCameraAsyncTask.onPostExecute(java.lang.Object) (b069ae4,NULL) 
+  [10055] [CI] [ENTRY] void android.os.AsyncTask.onPostExecute(java.lang.Object) (b069ae4,NULL) 
+  [10055] [CI] [EXIT] void android.os.AsyncTask.onPostExecute(java.lang.Object) (b069ae4,NULL) 
+[10054] [CB] [EXIT] void com.blundell.tutorial.cam.LoadFrontCameraAsyncTask.onPostExecute(java.lang.Object) (b069ae4,NULL) 
+[10066] [CB] [ENTRY] void com.blundell.tutorial.cam.LoadFrontCameraAsyncTask.onPostExecute(java.lang.Object) (98cd020,NULL) 
+  [10067] [CI] [ENTRY] void android.os.AsyncTask.onPostExecute(java.lang.Object) (98cd020,NULL) 
+  [10067] [CI] [EXIT] void android.os.AsyncTask.onPostExecute(java.lang.Object) (98cd020,NULL) 
+[10066] [CB] [EXIT] void com.blundell.tutorial.cam.LoadFrontCameraAsyncTask.onPostExecute(java.lang.Object) (98cd020,NULL) 
+[10694] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onStop() (682de57) 
+[10694] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onStop() (682de57) 
+[10702] [CB] [ENTRY] void com.blundell.tutorial.MainActivity.onDestroy() (682de57) 
+[10702] [CB] [EXIT] void com.blundell.tutorial.MainActivity.onDestroy() (682de57) 
+
+
+
+TRACE STATISTICS
+Trace length: 29
+Top-level callbacks: 14
+CI-ENTRY: 9
+CI-EXIT: 3
+CB-ENTRY: 17
+CB-EXIT: 0
+        encoding - User time: 0.740000
+encoding - System time: 0.000000
+verification - User time: 0.920000
+verification - System time: 0.048000
+The trace is SAFE

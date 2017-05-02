@@ -1,0 +1,52 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/smblott-github-intent_radio-bin/monkeyTraces/trace_2017-04-07_10:18:04.repaired
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/smblott-github-intent_radio-bin/monkeyTraces/trace_2017-04-07_10:18:04.repaired -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.090000
+parsing - System time: 0.000000
+spec_grounding - User time: 30.630000
+spec_grounding - System time: 0.540000
+
+TRACE STATISTICS
+Trace length: 2212
+Top-level callbacks: 213
+CI-ENTRY: 107
+CI-EXIT: 107
+CB-ENTRY: 50
+CB-EXIT: 50
+        
+---Simplified Trace---
+[2] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio.<init>() (682de57) 
+[2] [CB] [EXIT] NULL = void org.smblott.intentradio.IntentRadio.<init>() (682de57) 
+[26] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio.onCreate(android.os.Bundle) (682de57,NULL) 
+  [1319] [CI] [ENTRY] void android.os.AsyncTask.<init>() (e667ac3) 
+  [1319] [CI] [EXIT] void android.os.AsyncTask.<init>() (e667ac3) 
+  [1345] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (e667ac3,5762d2a) 
+  [1346] [CB] [ENTRY] void org.smblott.intentradio.IntentRadio$1.onPreExecute() (e667ac3) 
+  [1347] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (e667ac3) 
+  [1347] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (e667ac3) 
+  [1346] [CB] [EXIT] void org.smblott.intentradio.IntentRadio$1.onPreExecute() (e667ac3) 
+  [1345] [CI] [EXIT] e667ac3 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (e667ac3,5762d2a) 
+[26] [CB] [EXIT] void org.smblott.intentradio.IntentRadio.onCreate(android.os.Bundle) (682de57,NULL) 
+[1365] [CB] [ENTRY] void org.smblott.intentradio.PreferenceActivity.onStart() (682de57) 
+[1365] [CB] [EXIT] void org.smblott.intentradio.PreferenceActivity.onStart() (682de57) 
+[1393] [CB] [ENTRY] void org.smblott.intentradio.PreferenceActivity.onResume() (682de57) 
+[1393] [CB] [EXIT] void org.smblott.intentradio.PreferenceActivity.onResume() (682de57) 
+
+
+
+TRACE STATISTICS
+Trace length: 8
+Top-level callbacks: 4
+CI-ENTRY: 2
+CI-EXIT: 1
+CB-ENTRY: 5
+CB-EXIT: 0
+        encoding - User time: 0.230000
+encoding - System time: 0.000000
+verification - User time: 0.044000
+verification - System time: 0.024000
+The trace is SAFE

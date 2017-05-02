@@ -1,0 +1,88 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/FoamyGuy-StackSites-bin/monkeyTraces/trace_2017-04-10_14:39:45.repaired
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/FoamyGuy-StackSites-bin/monkeyTraces/trace_2017-04-10_14:39:45.repaired -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.730000
+parsing - System time: 0.040000
+spec_grounding - User time: 34.460000
+spec_grounding - System time: 0.550000
+
+TRACE STATISTICS
+Trace length: 16752
+Top-level callbacks: 1758
+CI-ENTRY: 744
+CI-EXIT: 835
+CB-ENTRY: 335
+CB-EXIT: 335
+        
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.<init>() (f123bd6) 
+[0] [CB] [EXIT] NULL = void com.makemyandroidapp.example.stacksites.MainActivity.<init>() (f123bd6) 
+[44] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onCreate(android.os.Bundle) (f123bd6,NULL) 
+  [1841] [CI] [ENTRY] void android.os.AsyncTask.<init>() (630ab88) 
+  [1841] [CI] [EXIT] void android.os.AsyncTask.<init>() (630ab88) 
+  [1843] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (630ab88,6cd4f07) 
+  [1844] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity$SitesDownloadTask.onPreExecute() (630ab88) 
+  [1845] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (630ab88) 
+  [1845] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (630ab88) 
+  [1844] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity$SitesDownloadTask.onPreExecute() (630ab88) 
+  [1843] [CI] [EXIT] 630ab88 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (630ab88,6cd4f07) 
+[44] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onCreate(android.os.Bundle) (f123bd6,NULL) 
+[1872] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onStart() (f123bd6) 
+[1872] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onStart() (f123bd6) 
+[1888] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onResume() (f123bd6) 
+[1888] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onResume() (f123bd6) 
+[3042] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity$SitesDownloadTask.onPostExecute(java.lang.Object) (630ab88,NULL) 
+[3042] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity$SitesDownloadTask.onPostExecute(java.lang.Object) (630ab88,NULL) 
+[11310] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onPause() (f123bd6) 
+[11310] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onPause() (f123bd6) 
+[11446] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onResume() (f123bd6) 
+[11446] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onResume() (f123bd6) 
+[12478] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onPause() (f123bd6) 
+[12478] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onPause() (f123bd6) 
+[12530] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onStop() (f123bd6) 
+[12530] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onStop() (f123bd6) 
+[12542] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onRestart() (f123bd6) 
+[12542] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onRestart() (f123bd6) 
+[12550] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onStart() (f123bd6) 
+[12550] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onStart() (f123bd6) 
+[12554] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onResume() (f123bd6) 
+[12554] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onResume() (f123bd6) 
+[14090] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onPause() (f123bd6) 
+[14090] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onPause() (f123bd6) 
+[14110] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onStop() (f123bd6) 
+[14110] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onStop() (f123bd6) 
+[14122] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onRestart() (f123bd6) 
+[14122] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onRestart() (f123bd6) 
+[14130] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onStart() (f123bd6) 
+[14130] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onStart() (f123bd6) 
+[14134] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onResume() (f123bd6) 
+[14134] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onResume() (f123bd6) 
+[15270] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onPause() (f123bd6) 
+[15270] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onPause() (f123bd6) 
+[15290] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onStop() (f123bd6) 
+[15290] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onStop() (f123bd6) 
+[15310] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onRestart() (f123bd6) 
+[15310] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onRestart() (f123bd6) 
+[15318] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onStart() (f123bd6) 
+[15318] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onStart() (f123bd6) 
+[15322] [CB] [ENTRY] void com.makemyandroidapp.example.stacksites.MainActivity.onResume() (f123bd6) 
+[15322] [CB] [EXIT] void com.makemyandroidapp.example.stacksites.MainActivity.onResume() (f123bd6) 
+
+
+
+TRACE STATISTICS
+Trace length: 26
+Top-level callbacks: 22
+CI-ENTRY: 2
+CI-EXIT: 1
+CB-ENTRY: 9
+CB-EXIT: 0
+        encoding - User time: 0.330000
+encoding - System time: 0.000000
+verification - User time: 0.052000
+verification - System time: 0.028000
+The trace is SAFE

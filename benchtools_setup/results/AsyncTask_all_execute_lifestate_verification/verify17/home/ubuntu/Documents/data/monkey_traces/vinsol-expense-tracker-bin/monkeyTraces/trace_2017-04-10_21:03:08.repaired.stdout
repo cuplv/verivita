@@ -1,0 +1,78 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/vinsol-expense-tracker-bin/monkeyTraces/trace_2017-04-10_21:03:08.repaired
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/vinsol-expense-tracker-bin/monkeyTraces/trace_2017-04-10_21:03:08.repaired -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.480000
+parsing - System time: 0.010000
+spec_grounding - User time: 33.130000
+spec_grounding - System time: 0.470000
+
+TRACE STATISTICS
+Trace length: 6806
+Top-level callbacks: 747
+CI-ENTRY: 399
+CI-EXIT: 410
+CB-ENTRY: 89
+CB-EXIT: 90
+        
+---Simplified Trace---
+[146] [CB] [ENTRY] void com.vinsol.expensetracker.Home.<init>() (5427838) 
+[146] [CB] [EXIT] NULL = void com.vinsol.expensetracker.Home.<init>() (5427838) 
+[190] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onCreate(android.os.Bundle) (5427838,NULL) 
+  [2705] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fa0a54,5427838) 
+  [2705] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fa0a54,5427838) 
+[190] [CB] [EXIT] void com.vinsol.expensetracker.Home.onCreate(android.os.Bundle) (5427838,NULL) 
+[2766] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onStart() (5427838) 
+[2766] [CB] [EXIT] void com.vinsol.expensetracker.Home.onStart() (5427838) 
+[3352] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onResume() (5427838) 
+  [3515] [CI] [ENTRY] void android.os.AsyncTask.<init>() (b2855be) 
+  [3515] [CI] [EXIT] void android.os.AsyncTask.<init>() (b2855be) 
+  [3629] [CI] [ENTRY] void android.os.AsyncTask.<init>() (f63c8aa) 
+  [3629] [CI] [EXIT] void android.os.AsyncTask.<init>() (f63c8aa) 
+  [3631] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (f63c8aa,aefe011) 
+  [3632] [CB] [ENTRY] void com.vinsol.expensetracker.helpers.UnfinishedEntryCount.onPreExecute() (f63c8aa) 
+  [3633] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (f63c8aa) 
+  [3633] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (f63c8aa) 
+  [3632] [CB] [EXIT] void com.vinsol.expensetracker.helpers.UnfinishedEntryCount.onPreExecute() (f63c8aa) 
+  [3631] [CI] [EXIT] f63c8aa = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (f63c8aa,aefe011) 
+  [3637] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (b2855be,9874650) 
+  [3646] [CB] [ENTRY] void com.vinsol.expensetracker.helpers.GraphHelper.onPreExecute() (b2855be) 
+  [3647] [CI] [ENTRY] void android.os.AsyncTask.onPreExecute() (b2855be) 
+  [3647] [CI] [EXIT] void android.os.AsyncTask.onPreExecute() (b2855be) 
+  [3646] [CB] [EXIT] void com.vinsol.expensetracker.helpers.GraphHelper.onPreExecute() (b2855be) 
+  [3637] [CI] [EXIT] b2855be = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (b2855be,9874650) 
+[3352] [CB] [EXIT] void com.vinsol.expensetracker.Home.onResume() (5427838) 
+[3866] [CB] [ENTRY] void com.vinsol.expensetracker.helpers.UnfinishedEntryCount.onPostExecute(java.lang.Object) (f63c8aa,NULL) 
+[3866] [CB] [EXIT] void com.vinsol.expensetracker.helpers.UnfinishedEntryCount.onPostExecute(java.lang.Object) (f63c8aa,NULL) 
+[5374] [CB] [ENTRY] void com.vinsol.expensetracker.helpers.GraphHelper.onPostExecute(java.lang.Object) (b2855be,NULL) 
+  [5409] [CI] [ENTRY] void android.os.AsyncTask.onPostExecute(java.lang.Object) (b2855be,NULL) 
+  [5409] [CI] [EXIT] void android.os.AsyncTask.onPostExecute(java.lang.Object) (b2855be,NULL) 
+[5374] [CB] [EXIT] void com.vinsol.expensetracker.helpers.GraphHelper.onPostExecute(java.lang.Object) (b2855be,NULL) 
+[7100] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onClick(android.view.View) (5427838,fa0a54) 
+  [7109] [CI] [ENTRY] boolean android.os.AsyncTask.cancel(boolean) (b2855be,true) 
+  [7109] [CI] [EXIT] false = boolean android.os.AsyncTask.cancel(boolean) (b2855be,true) 
+  [7113] [CI] [ENTRY] boolean android.os.AsyncTask.cancel(boolean) (f63c8aa,true) 
+  [7113] [CI] [EXIT] false = boolean android.os.AsyncTask.cancel(boolean) (f63c8aa,true) 
+[7100] [CB] [EXIT] void com.vinsol.expensetracker.Home.onClick(android.view.View) (5427838,fa0a54) 
+[7150] [CB] [ENTRY] void com.vinsol.expensetracker.Home.onPause() (5427838) 
+[7150] [CB] [EXIT] void com.vinsol.expensetracker.Home.onPause() (5427838) 
+[7182] [CB] [ENTRY] void com.vinsol.expensetracker.entry.Voice.<init>() (a8b24ca) 
+[7182] [CB] [EXIT] NULL = void com.vinsol.expensetracker.entry.Voice.<init>() (a8b24ca) 
+
+
+
+TRACE STATISTICS
+Trace length: 21
+Top-level callbacks: 9
+CI-ENTRY: 8
+CI-EXIT: 2
+CB-ENTRY: 11
+CB-EXIT: 0
+        encoding - User time: 0.520000
+encoding - System time: 0.010000
+verification - User time: 0.252000
+verification - System time: 0.028000
+The trace is SAFE
