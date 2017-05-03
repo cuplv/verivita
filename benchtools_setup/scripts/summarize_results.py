@@ -60,6 +60,9 @@ if __name__ == "__main__":
     lifestate = [x for x in results if "_lifestate_" in x]
 
     allApps = set()
+    justDisallowAlarmingApps = set()
+    lifecycleAlarmingApps = set()
+    lifestateAlarmingApps = set()
     for result in results:
         print "-------------------------------------------"
         print "filename: %s , length: %i" % (result, len(results[result]))
@@ -74,9 +77,20 @@ if __name__ == "__main__":
                 if c.unsafe > 0:
                     totAlarmTraces += c.unsafe
                     alarmingApps.append(appResult)
+                    if "lifecycle" in result:
+                        lifecycleAlarmingApps.add(appResult)
+                    if "lifestate" in result:
+                        lifestateAlarmingApps.add(appResult)
+                    if "justdisallow" in result:
+                        justDisallowAlarmingApps.add(appResult)
+
         print "number of alarming apps: %i" % len(alarmingApps)
         print "number of alarming traces: %i" % totAlarmTraces
+    print "==============================="
     print "total apps: %i" % len(allApps)
+    print "unique justdisallow alarming apps: %i" % len(justDisallowAlarmingApps)
+    print "unique lifecycle alarming apps: %i" % len(lifecycleAlarmingApps)
+    print "unique lifestate alarming apps: %i" % len(lifestateAlarmingApps)
 
 #    results_split = {}
 #    for fname in just_disallow:
