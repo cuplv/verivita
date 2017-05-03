@@ -1,0 +1,15 @@
+property		,# justDisallow app alarms	,#justDisallow trace alarms	,#lifecycle apps alarms	,#lifecycle traces alarms	,#lifestate apps alarms	,#lifestate traces alarms	, True_bugs
+
+AsyncTask.execute	, 20				,251				,7			,94				,0			,0
+Fragment.getString	, 4				,8				,3			,7				,3			,7				, 1 (see disclaimer)
+Fragment.startActivity	, 5				,21				,5			,21				,5			,14				, 2 (see disclaimer)
+Fragment.getResources	, 2				,19				,2			,19				,2			,12
+total (unique)		, 27				,n/a				,15			,n/a				,9			,n/a
+
+total traces before pre filter: 2547
+
+notes: if any trace alarms I count it as an alarming app
+gathered from branch: "experiments_1" on github.com/cuplv/callback-verification 
+file benchtools_setup/results/app_results.txt has the summary, produced by benchtools_setup/scripts/summarize_results.py which reads the output of extract_results.sh which uses benchtools with benchtools_setup/filters/ic3_filter.py
+
+the raw data has kistenstappeln and contraction timer, this was removed manually since these were curated apps and it doesn't seem fair to add them in a fishing expidition
