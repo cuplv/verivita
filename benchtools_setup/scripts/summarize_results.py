@@ -29,6 +29,9 @@ if __name__ == "__main__":
 
     toProcess = [ x for x in os.listdir(args.dir) if x.endswith("txt")]
 
+    justDisallowAlarmingTraces = set()
+    lifecycleAlarmingTraces = set()
+    lifestateAlarmingTraces = set()
     results = {}
     for fname in toProcess:
         f = open(os.path.join(args.dir, fname))
@@ -44,7 +47,15 @@ if __name__ == "__main__":
 
                 result = ""
 
+                if "result Unsafe" in resultline:
+                    if "lifecycle" in fname:
+                        lifecycleAlarmingTraces.add(resultline)
+                    if "lifestate" in fname:
+                        lifestateAlarmingTraces.add(resultline)
+                    if "justdisallow" in fname:
+                        justDisallowAlarmingTraces.add(resultline)
 
+                   
 
                 if appname not in appResults:
                     appResults[appname] = ResultCount()
@@ -89,9 +100,17 @@ if __name__ == "__main__":
     print "==============================="
     print "total apps: %i" % len(allApps)
     print "unique justdisallow alarming apps: %i" % len(justDisallowAlarmingApps)
+    for a in justDisallowAlarmingApps:
+        print "    %s" % a
     print "unique lifecycle alarming apps: %i" % len(lifecycleAlarmingApps)
+    for a in lifecycleAlarmingApps:
+        print "    %s" % a
     print "unique lifestate alarming apps: %i" % len(lifestateAlarmingApps)
-
+    for a in lifestateAlarmingApps:
+        print "    %s" % a
+    print "justDisallowAlarmingTraces: %i" % len(justDisallowAlarmingTraces)
+    print "lifecycleAlarmingTraces: %i" % len(lifecycleAlarmingTraces)
+    print "lifestateAlarmingTraces: %i" % len(lifestateAlarmingTraces)
 #    results_split = {}
 #    for fname in just_disallow:
 #        bucket = fname.split("_justdisallow_")[0]
