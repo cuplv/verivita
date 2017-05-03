@@ -12,6 +12,9 @@ TODO: ListView spec for no attach hierarchy
 /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec
 /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec
 
+following added to lifecycle to test difference
+/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec
+
 **Allow and disallow specs**
 
 /home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_getString.spec
