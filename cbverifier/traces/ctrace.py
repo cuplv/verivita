@@ -538,7 +538,8 @@ class CTraceSerializer:
             assert None != tm_container
 
             recorded_message = tm_container.msg
-
+            if (len(message_stack) == 1 and recorded_message.type == TraceMsgContainer.TraceMsg.CALLIN_EXEPION):
+                continue
             if CTraceSerializer.is_app_message(recorded_message):
                 # DO NOTHING for now
                 # TODO: the APP type of message is NOT used as the
@@ -574,9 +575,12 @@ class CTraceSerializer:
                     CTraceSerializer.update_trace_message(trace_message,
                                                           recorded_message)
 
+
                 if (len(message_stack) == 0):
+
                     assert (isinstance(trace_message, CCallback))
                     trace.add_msg(trace_message)
+
                 else:
                     last_message = message_stack[len(message_stack)-1]
 
