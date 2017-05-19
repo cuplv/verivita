@@ -11,6 +11,9 @@ They *CANNOT* be redistributed or reused for other projects.
 - Path to nuXmv
 ```export NUXMV_PATH="<path-to-nuxmv-executable>"```
 
+# Instances setup
+run filter_all.sh
+filter out blacklisted using script (TODO)
 
 # Simulation
 
