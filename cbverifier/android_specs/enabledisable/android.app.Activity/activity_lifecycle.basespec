@@ -13,6 +13,10 @@ SPEC TRUE[*];[CB] [ENTRY] [a] void android.app.Activity.<init>() |+ [CB] [ENTRY]
 SPEC TRUE[*];[CB] [ENTRY] [a] void android.app.Activity.<init>() |- [CB] [ENTRY] [a] void android.app.Activity.<init>();
 SPEC TRUE[*];[CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle) |- [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
 SPEC TRUE[*];[CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle) |+ [CB] [ENTRY] [a] void android.app.Activity.onStart();
+//onCreate can go directly to onDestroy if a "finish" method is called, in lifecycle we need to overapproximate this behavior
+SPEC TRUE[*];[CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle) |+ [CB] [ENTRY] [a] void android.app.Activity.onDestroy();
+SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStart() |+ [CB] [ENTRY] [a] void android.app.Activity.onDestroy();
+
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStart() |-  [CB] [ENTRY] [a] void android.app.Activity.onStart();
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStart() |+ [CB] [ENTRY] [a] void android.app.Activity.onResume();
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onResume() |- [CB] [ENTRY] [a] void android.app.Activity.onResume();
@@ -51,6 +55,12 @@ SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |+ [CB] [ENTRY
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onDestroy() |- [CB] [ENTRY] [a] void android.app.Activity.onRestart();
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onDestroy() |- [CB] [ENTRY] [a] void android.app.Activity.onDestroy();
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onDestroy() |- [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle)
+
+//disable start when coming from create/start
+SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onDestroy() |- [CB] [ENTRY] [a] void android.app.Activity.onStart();
+
+//disable create when coming from create/start
+SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onDestroy() |- [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
 
 
 //TODO: this branch of the lifecycle appears to necessitate destroying the process meaning the activity will be recreated
