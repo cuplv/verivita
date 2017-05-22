@@ -40,7 +40,7 @@ SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onResume() |- [CB] [ENT
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onPause() |+ [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
 SPEC TRUE[*];[CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle) |- [CB] [ENTRY] [a] void android.app.Activity.onRestart();
 SPEC TRUE[*];[CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle) |- [CB] [ENTRY] [a] void android.app.Activity.onResume();
-SPEC TRUE[*];[CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle) |- [CB] [ENTRY] [a] void android.app.Activity.onStop();
+//SPEC TRUE[*];[CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle) |- [CB] [ENTRY] [a] void android.app.Activity.onStop();
 
 
 //Restart branch from stop
@@ -57,10 +57,10 @@ SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onDestroy() |- [CB] [EN
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onDestroy() |- [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle)
 
 //disable start when coming from create/start
-SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY] [a] void android.app.Activity.onStart();
+//SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY] [a] void android.app.Activity.onStart();
 
 //disable create when coming from create/start
-SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
+//SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
 
 
 //TODO: this branch of the lifecycle appears to necessitate destroying the process meaning the activity will be recreated
