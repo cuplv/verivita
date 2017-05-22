@@ -161,7 +161,7 @@ if __name__ == "__main__":
     parser.add_argument('--input', type=str,
                         help="input file",required=True)
     parser.add_argument('--output', type=str,
-                        help="input file",required=True)
+                        help="input file",required=False)
     args = parser.parse_args()
 
     cycle_lines(args.input, args.output)
