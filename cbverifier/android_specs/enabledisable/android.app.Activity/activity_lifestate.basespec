@@ -24,6 +24,12 @@ SPEC TRUE[*]; [CI] [ENTRY] [a] void android.app.Activity.finish(); TRUE[*]; [CB]
 //onStart to onStop
 SPEC TRUE[*]; [CI] [ENTRY] [a] void android.app.Activity.finish(); TRUE[*]; [CB] [EXIT] [a] void android.app.Activity.onStart() |+ [CB] [ENTRY] [a] void android.app.Activity.onStop();
 
+//onCreate to onDestroy
+SPEC TRUE[*]; [CI] [ENTRY] [a] void android.app.Activity.finish(); TRUE[*]; [CB] [EXIT] [a] void android.app.Activity.onCreate(# : android.os.Bundle) |+ [CB] [ENTRY] [a] void android.app.Activity.onDestroy();
+//onStart to onDestroy
+SPEC TRUE[*]; [CI] [ENTRY] [a] void android.app.Activity.finish(); TRUE[*]; [CB] [EXIT] [a] void android.app.Activity.onStart() |+ [CB] [ENTRY] [a] void android.app.Activity.onDestroy();
+
+
 
 //Stop branch from pause
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onPause() |+ [CB] [ENTRY] [a] void android.app.Activity.onStop();
@@ -60,9 +66,11 @@ SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onDestroy() |- [CB] [EN
 
 //disable start when coming from create/start
 SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY] [a] void android.app.Activity.onStart();
+SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onDestroy() |- [CB] [ENTRY] [a] void android.app.Activity.onStart();
 
 //disable create when coming from create/start
-SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY] [a] void android.app.Activity.onCreate(# : android.os.Bundle);
+SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onStop() |- [CB] [ENTRY] [a] void android.app.Activity.onResume();
+SPEC TRUE[*]; [CB] [ENTRY] [a] void android.app.Activity.onDestroy() |- [CB] [ENTRY] [a] void android.app.Activity.onResume();
 
 
 
