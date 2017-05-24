@@ -146,3 +146,7 @@ SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onPause()) |+ TRUE
 SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity)) |+ FALSE = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached();
 SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity)) |- TRUE = [CI] [EXIT] [f] boolean android.app.Fragment.isDetached()
 
+//parent activity finish can trigger the following edges:
+SPEC (((TRUE)[*]); [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle)) |+ [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView() ;
+SPEC (((TRUE)[*]); [CB] [ENTRY] [f] void android.app.Fragment.onStart()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStop() ;
+SPEC [CB] [ENTRY] [f] void android.app.Fragment.onStop() |- [CB] [ENTRY] [f] void android.app.Fragment.onResume();
