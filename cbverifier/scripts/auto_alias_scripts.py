@@ -8,7 +8,7 @@ import argparse
 # meaning that we effectively have a;.*;TRUE|-c
 # instead a;.*;(!t & !b) |-c is needed
 
-if(False):
+if(True):
     combinations = [
 
         ({"onStart","onResume", "onPause","onSaveInstanceState","onDestroy","onDetach",
@@ -16,7 +16,8 @@ if(False):
             {"android.support.v4.app.Fragment", "android.support.v4.app.ListFragment","android.app.ListFragment",
                "android.support.v4.app.DialogFragment","android.preference.PreferenceFragment",
              "android.app.DialogFragment",
-             "android.webkit.WebViewFragment"
+             "android.webkit.WebViewFragment",
+             "android.support.v7.preference.PreferenceFragmentCompat"
              # "android.support.v14.preference.EditTextPreferenceDialogFragment",
              # "android.support.v14.preference.ListPreferenceDialogFragment",
              # "android.support.v14.preference.MultiSelectListPreferenceDialogFragment",
@@ -42,7 +43,7 @@ if(False):
              })]
     base = "android.app.Fragment"
 
-if(True):
+if(False):
     combinations = [
         ({"onCreate","onResume", "onPause","onStop","onStart","onDestroy","<init>","onRestart"},
          {
