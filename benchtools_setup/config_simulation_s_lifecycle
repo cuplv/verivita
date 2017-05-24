@@ -1,0 +1,22 @@
+[environment]
+db_uri = db_simulate
+delay_notifications = true
+create_db = true
+scheduler=make
+dump_scheduler_script = output_scheduler_local_simulate.txt
+num_cores = 1
+
+[group_simulate]
+executable =./scripts/simulate.sh
+parameters=/home/s/Documents/source/callback-verification;
+/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec
+
+
+
+basedir=/
+instances_file=./instances/allTraces.txt
+time_limit=240
+mem_limit=4000000
+tarball=./results_simulation/simulation_lifecycle.tar.bz2
+email=
+disabled=false
