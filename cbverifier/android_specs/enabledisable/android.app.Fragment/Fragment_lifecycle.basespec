@@ -102,7 +102,9 @@ SPEC (((TRUE)[*]); [CB] [ENTRY] [f] android.view.View android.app.Fragment.onCre
 
 SPEC (((TRUE)[*]); [CB] [ENTRY] [f] void android.app.Fragment.onDestroy()) |- [CB] [ENTRY] [f] void android.app.Fragment.onDestroy() ;
 SPEC (((TRUE)[*]); [CB] [ENTRY] [f] void android.app.Fragment.onDestroy()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onDetach() ;
-SPEC (((TRUE)[*]); [CB] [ENTRY] [f] void android.app.Fragment.onDetach()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onDetach() ;
+SPEC (((TRUE)[*]); [CB] [ENTRY] [f] void android.app.Fragment.onDetach()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) ;
+SPEC (((TRUE)[*]); [CB] [ENTRY] [f] void android.app.Fragment.onDetach()) |- [CB] [ENTRY] [f] void android.app.Fragment.onDetach());
+
 
 //isResumed callin
 //Callin return value ordering constraints
