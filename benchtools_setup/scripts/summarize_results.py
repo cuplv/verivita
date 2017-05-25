@@ -56,7 +56,8 @@ if __name__ == "__main__":
         results[fname] = appResults
 
     just_disallow = [x for x in results if "_justdisallow_" in x]
-    lifecycle = [x for x in results if "_lifecycle_" in x]
+    lifecycle_init = [x for x in results if ("_lifecycle_init_" in x)]
+    lifecycle = [x for x in results if ("_lifecycle_" in x) and (not "_lifecycle_init_" in x)]
     lifestate = [x for x in results if "_lifestate_" in x]
 
     allApps = set()
@@ -76,6 +77,49 @@ if __name__ == "__main__":
                     alarmingApps.append(appResult)
         print "number of alarming apps: %i" % len(alarmingApps)
         print "number of alarming traces: %i" % totAlarmTraces
+
+    # justdisallow
+    just_disallow_alarm_apps = set()
+    for property in just_disallow:
+        app_results = results[property]
+        for app in app_results:
+            counts = app_results[app]
+            if counts.unsafe > 0:
+                just_disallow_alarm_apps.add(app)
+    print "just disallow alarming apps total: %i" % len(just_disallow_alarm_apps)
+
+    lifecycle_alarm_apps = set()
+    for property in lifecycle:
+        app_results = results[property]
+        for app in app_results:
+            counts = app_results[app]
+            if counts.unsafe > 0:
+                lifecycle_alarm_apps.add(app)
+    print "lifecycle alarming apps total: %i" % len(lifecycle_alarm_apps)
+
+    lifecycle_init_alarm_apps = set()
+    for property in lifecycle_init:
+        app_results = results[property]
+        for app in app_results:
+            counts = app_results[app]
+            if counts.unsafe > 0:
+                lifecycle_init_alarm_apps.add(app)
+
+    print "lifecycle init alarming apps totoal: %i" % len(lifecycle_init_alarm_apps)
+
+    lifestate_alarm_apps = set()
+    for property in lifestate:
+        app_results = results[property]
+        for app in app_results:
+            counts = app_results[app]
+            if counts.unsafe > 0:
+                lifestate_alarm_apps.add(app)
+
+    print "lifestate alarming apps totoal: %i" % len(lifestate_alarm_apps)
+
+    # lifecycle_init
+
+    #lifecycle
     print "total apps: %i" % len(allApps)
 
 #    results_split = {}
