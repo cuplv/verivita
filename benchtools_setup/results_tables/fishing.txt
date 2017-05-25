@@ -7,7 +7,22 @@ Fragment.startActivity	%	18		%	13		%	12			%	12			%	11
 AlertDialog.dismiss	%	21		%	5		%	5			%	5			%	5
 AlertDialog.show	%	30		%	12		%	11			%	11			%	9
 TypedArray.recycle	%	26		%	6		%	6			%	6			%	6
+total			%	90		%	63		%	55			%	41			%	36
 
+following counts traces 
+property		%	total traces	%	ground (alarms)	%	lifecycle(alarms)	%	lifecycle-init(alarms)	%	lifestate(alarms)
+AsyncTask.execute(eoe)	%	435		%	420		%	223			%	0			%	0
+Fragment.getString	%	272		%	90		%	81			%	83			%	73
+Fragment.getResources	%	213		%	49		%	49			%	49			%	18
+Fragment.startActivity	%	56		%	53		%	47			%	47			%	38
+AlertDialog.dismiss	%	97		%	39		%	37			%	32			%	25
+AlertDialog.show	%	163		%	35		%	33			%	32			%	27
+TypedArray.recycle	%	262		%	65		%	65			%	65			%	65
+
+TODO: quantify timeout increase
+
+
+TODO: figure out why alarms went up with adding init rule?
 
 notes:
 total apps: these are all the apps with traces that use the disallow
