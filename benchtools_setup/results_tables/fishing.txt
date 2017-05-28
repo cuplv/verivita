@@ -19,10 +19,75 @@ AlertDialog.dismiss	%	97		%	39		%	37			%	32			%	25
 AlertDialog.show	%	163		%	35		%	33			%	32			%	27
 TypedArray.recycle	%	262		%	65		%	65			%	65			%	65
 
-TODO: quantify timeout increase
+Bottom line question: does disabling a callback affect results?
 
+next steps:
+- get n open source apps apks
+- search those os apps use disallow callins
+- try to trace apks
+
+
+TODO: quantify how much return value thing "isDetached" affects the results
+TODO: quantify timeout increase, just call timeout an alarm
+TODO: deduplicate different apk traces
+TOOD: show running time difference
 
 TODO: figure out why alarms went up with adding init rule?
 
 notes:
 total apps: these are all the apps with traces that use the disallow
+
+
+SPEC todo:
+- androidsx-rate-me-SampleProject parse error for benchtools
+- fix onDestroy/onCreate getString issue
+- add listView spec
+- figure out why kist is failing
+- add onPreferenceClick to lifecycle
+
+Other todo:
+detect erroring traces
+
+fragment.getString alarming apps:
+================================
+gonjay-rubychina4android-app #shouldn't alarm, similar to wada811 dialogfragments issue
+wada811-Android-Material-Design-Colors-sample #list item, possibly real bug, need more research
+Kistenstapeln-bug #bug
+wada811-Android-DialogFragments-sample #shouldn't alarm, TODO: debug this
+nextgis-nextgislogger-app # onSensorChanged not specified also runs in service, TODO: figure out what is going on here?
+
+
+sh1r0-NovelDroid-app # onPreferenceClick calls getString, PrefencesClickListener not specified
+#martinmarinov-rtl_tcp_andro--bin# onCreateDialog not tracked
+#casimir-simpleDeadlines-main # onCreateDialog not tracked
+
+#casimir-simpleDeadlines-app # onCreateDialog not tracked
+
+fragment.getResources alarming apps:
+====================================
+matt-allen-repay-android-repay #onActivityCreated after onDetach, spec bug
+tamsler-android-flash-cards-bin #onListItemClick, possibly real bug, TODO: inspect source code
+gonjay-rubychina4android-app #onCreateView, false alarm check if destroy/detach/create cycle is wrong
+d4rken-audiobug-app #onServiceConnected callback not tracked
+
+framgent.startActivity alarming apps:
+====================================
+thwick-android-provider-join-joinexample #onListItemClick (may be real bug)
+casimir-simpleDeadlines-main #onPreferenceClick
+matt-allen-repay-android-repay #view attachment false alarm #onListItemClick
+leok7v-android-textview-custom-fonts-bin #onListItemClick
+kyze8439690-v2ex-daily-android-app #onPreferenceClick
+androidsx-rate-me-SampleProject #trace read error, misparse result
+wada811-Android-DialogFragments-sample #onListItemClick
+googlesamples-android-BasicSyncAdapter-Application # onListItemClick
+webpay-webpay-token-android-sample # onListItemClick
+lukhnos-roundandsplit-Android # onClick view attachment issue
+jgilfelt-ThisWayUp-main #onListItemClick
+
+AlertDialog.dismiss alarming apps:
+==================================
+learning-android-Yamba-bin # ****REAL BUG, REPRODUCEABLE!!!****
+PingPlusPlus-pingpp-android-example_androidstudio 
+sh1r0-NovelDroid-app
+twitter-university-yamba-bin
+thenewcircle-class-3177-Yamba
