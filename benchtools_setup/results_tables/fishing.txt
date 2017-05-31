@@ -87,7 +87,25 @@ jgilfelt-ThisWayUp-main #onListItemClick
 AlertDialog.dismiss alarming apps:
 ==================================
 learning-android-Yamba-bin # ****REAL BUG, REPRODUCEABLE!!!****
-PingPlusPlus-pingpp-android-example_androidstudio 
-sh1r0-NovelDroid-app
-twitter-university-yamba-bin
-thenewcircle-class-3177-Yamba
+- PingPlusPlus-pingpp-android-example_androidstudio **onPostExec, may be real bug, need origional apk to check, in obfuscated code
+- sh1r0-NovelDroid-app **onPostExec REAL BUG, TODO: reproduce
+    We did not trace this part of the code for some reason but this appears to be another dismiss problem.  Two problems here "sendEmptyMessage(i : int)" is executed on another thread, and if we want to talk about the message coming back then "message.what" is a direct field access.  This is an example of two things we do not model precisely and must overapproximate.
+    https://github.com/sh1r0/NovelDroid/blob/f3245055d7a8bcc69a9bca278fbe890081dac58a/app/src/main/java/com/sh1r0/noveldroid/MainActivity.java
+- twitter-university-yamba-bin **Someone's version of Yamba made from book (not forked)
+- thenewcircle-class-3177-Yamba **Copy/paste of origional Yamba code
+
+AlertDialog.show alarming apps:
+===============================
+- yeokm1-nus-soc-print-app # false alarm: show can be called in onCreate, fix disallow specs
+- MarcosPividori-GSoC-Communicating-with-mobile-devices-push-notify-general *probably false alarm, onMenuItemSelected (unless this can happen after attached activity paused)
+- zeroows-Wordpress-Android-App-bin * false alarm, disallow spec onResume doesn't re enable
+- nextgis-nextgislogger-app * false alarm, view attachment issue
+- sh1r0-NovelDroid-app * onOptionItemSelect, false alarm
+- ciasaboark-Tacere-release * false alarm, can write spec about onClick of AlertDialog being disabled by activity pause (I believe this should be lifestate and not lifecycle due to multi object)
+    https://github.com/ciasaboark/Tacere/commit/502ee1919604c271c2bd39e0e8239b01c0c5725f
+- samicemalone-android-vlc-remote-bin * AlertDialog allow disallow issue, pause/resume should re allow it
+- nguillaumin-osmtracker-android-app * AlertDialog allow disallow issue, pause/resume should re allow it
+- rrtigga-GetDisciplined-app * false alarm view attachment issue
+
+
+
