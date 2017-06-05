@@ -33,6 +33,12 @@ SPEC TRUE[*];[CI] [ENTRY] [ta] void android.content.res.TypedArray.recycle() |- 
 SPEC TRUE[*];[CI] [ENTRY] [ta] void android.content.res.TypedArray.recycle() |- [CI] [ENTRY] [ta] void android.content.res.TypedArray.recycle();
 
 
+//missed sources:
+//2c2719c = android.content.res.TypedArray android.content.res.Resources$Theme.obtainStyledAttributes(android.util.AttributeSet,int[],int,int)
+//android.content.res.TypedArray android.content.res.Resources$Theme.obtainStyledAttributes(int[])
+//android.content.res.TypedArray android.content.Context.obtainStyledAttributes(int[])
+//android.content.res.TypedArray android.content.Context.obtainStyledAttributes(int,int[])
+
 REGEXP source_of_typed_array_ad(ta) = [(ta = [CI] [EXIT] [#] android.content.res.TypedArray android.content.Context.obtainStyledAttributes(# : android.util.AttributeSet,# : int[],# : int,# : int))
     | (ta = [CI] [EXIT] [#] android.content.res.TypedArray android.content.Context.obtainStyledAttributes(# : android.util.AttributeSet,# : int[]))
     | [CB] [ENTRY] [#] java.lang.Object android.preference.Preference.onGetDefaultValue(ta : android.content.res.TypedArray, # : int)];
