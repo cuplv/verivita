@@ -8,15 +8,19 @@ class ResultCount:
         self.unsafe = 0
         self.read_error = 0
         self.timeout = 0
+        self.total = 0
     def update(self, resultline):
         if "result Safe" in resultline :
             self.safe += 1
+            self.total +=1
         elif "result Unsafe" in resultline:
             self.unsafe += 1
+            self.total +=1
         elif "result ReadError" in resultline:
             self.read_error += 1
         elif "time Timeout" in resultline:
             self.timeout += 1
+            self.total +=1
     def toString(self):
         return "safe: %i, unsafe: %i, readerr: %i, timeout %i" % (self.safe, self.unsafe, self.read_error, self.timeout)
 def pathToAppId(outpath, alias_map):
@@ -66,10 +70,11 @@ if __name__ == "__main__":
         lines = f.readlines()
         resultlines = [line for line in lines if not line.strip().startswith("#")]
         appResults = {}
-        for resultline in resultlines:
-            splitline = resultline.split(" ")
-            outputpath = splitline[0]
-            try:
+        if fname != "summary.txt":
+            for resultline in resultlines:
+                splitline = resultline.split(" ")
+                outputpath = splitline[0]
+                # try:
                 appname = pathToAppId(outputpath, alias_map)
                 if appname not in app_blacklist:
                     if appname not in appResults:
@@ -77,9 +82,9 @@ if __name__ == "__main__":
                         appResults[appname].update(resultline)
                     else:
                         appResults[appname].update(resultline)
-            except:
-                print "Unparsable line: %s" % resultline
-        results[fname] = appResults
+                # except:
+                #     print "Unparsable line: %s" % resultline
+            results[fname] = appResults
 
     just_disallow = [x for x in results if "_justdisallow_" in x]
     lifecycle_init = [x for x in results if ("_lifecycle_init_" in x)]
@@ -90,19 +95,35 @@ if __name__ == "__main__":
     for result in results:
         print "-------------------------------------------"
         print "filename: %s , length: %i" % (result, len(results[result]))
-        alarmingApps = []
+        alarmingApps = set()
         totAlarmTraces = 0
+        totTraces = 0
+        totApps = 0
+        timeoutApps = set()
+        timeoutTraces = 0
         for appResult in results[result]:
             allApps.add(appResult)
             c = results[result][appResult]
+            totTraces += c.total
+            totApps +=1
+            if c.timeout > 0:
+                timeoutApps.add(appResult)
+            timeoutTraces += c.timeout
             if c.safe > 0 or c.unsafe > 0:
                 print "    app: %s" % appResult
                 print c.toString()
                 if c.unsafe > 0:
                     totAlarmTraces += c.unsafe
-                    alarmingApps.append(appResult)
+                    alarmingApps.add(appResult)
         print "number of alarming apps: %i" % len(alarmingApps)
         print "number of alarming traces: %i" % totAlarmTraces
+        print "number of timeout apps: %i" % len(timeoutApps)
+        print "number of timeout traces: %i" % timeoutTraces
+        print "trace alarms+timeouts %i" % (timeoutTraces + totAlarmTraces)
+        print "app alarms + timeouts %i" % (len(alarmingApps.union(timeoutApps)))
+        print "total number of traces: %i" % totTraces
+        print "total number of apps %i" % totApps
+
 
     # justdisallow
     just_disallow_alarm_apps = set()
