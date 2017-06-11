@@ -1,3 +1,5 @@
+**Regexp needed for frag disallows**
+/Users/s/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec
 **Specs for no view attachment hierarchy**
 
 /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec
@@ -7,6 +9,9 @@
 /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec
 /Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec
 TODO: ListView spec for no attach hierarchy
+
+/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec
+
 
 **Lifecycle with async task init**
 /home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec
