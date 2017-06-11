@@ -171,23 +171,23 @@ REGEXP Fragment_all_onDestroyView(f) = [(
     [CB] [ENTRY] [f] void android.support.v7.preference.PreferenceFragmentCompat.onDestroyView()
 )];
 REGEXP Fragment_all_init(f) = [(
-    [CB] [ENTRY] [f] void android.support.v4.app.Fragment.<init>()
+    [CI] [ENTRY] [f] void android.support.v4.app.Fragment.<init>()
     |
-    [CB] [ENTRY] [f] void android.support.v4.app.ListFragment.<init>()
+    [CI] [ENTRY] [f] void android.support.v4.app.ListFragment.<init>()
     |
-    [CB] [ENTRY] [f] void android.app.ListFragment.<init>()
+    [CI] [ENTRY] [f] void android.app.ListFragment.<init>()
     |
-    [CB] [ENTRY] [f] void android.app.Fragment.<init>()
+    [CI] [ENTRY] [f] void android.app.Fragment.<init>()
     |
-    [CB] [ENTRY] [f] void android.support.v4.app.DialogFragment.<init>()
+    [CI] [ENTRY] [f] void android.support.v4.app.DialogFragment.<init>()
     |
-    [CB] [ENTRY] [f] void android.preference.PreferenceFragment.<init>()
+    [CI] [ENTRY] [f] void android.preference.PreferenceFragment.<init>()
     |
-    [CB] [ENTRY] [f] void android.app.DialogFragment.<init>()
+    [CI] [ENTRY] [f] void android.app.DialogFragment.<init>()
     |
-    [CB] [ENTRY] [f] void android.webkit.WebViewFragment.<init>()
+    [CI] [ENTRY] [f] void android.webkit.WebViewFragment.<init>()
     |
-    [CB] [ENTRY] [f] void android.support.v7.preference.PreferenceFragmentCompat.<init>()
+    [CI] [ENTRY] [f] void android.support.v7.preference.PreferenceFragmentCompat.<init>()
 )];
 REGEXP Fragment_all_onStop(f) = [(
     [CB] [ENTRY] [f] void android.support.v4.app.Fragment.onStop()
