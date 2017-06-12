@@ -150,3 +150,8 @@ SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : andro
 SPEC (((TRUE)[*]); [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle)) |+ [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView() ;
 SPEC (((TRUE)[*]); [CB] [ENTRY] [f] void android.app.Fragment.onStart()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStop() ;
 SPEC [CB] [ENTRY] [f] void android.app.Fragment.onStop() |- [CB] [ENTRY] [f] void android.app.Fragment.onResume();
+
+//TODO: isVisible for Yamba
+//fragment isVisible method
+//SPEC FALSE[*] |- TRUE = [CI] [EXIT] [f] boolean android.app.Fragment.isVisible();
+//SPEC (TRUE[*];[CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle); TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onResume()
