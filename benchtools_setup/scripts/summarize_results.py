@@ -31,29 +31,29 @@ if __name__ == "__main__":
 
     results = {}
     for fname in toProcess:
-        f = open(os.path.join(args.dir, fname))
-        lines = f.readlines()
-        resultlines = [line for line in lines if not line.strip().startswith("#")]
-        appResults = {}
-        for resultline in resultlines:
-            splitline = resultline.split(" ")
-            outputpath = splitline[0]
-            outpath_pieces = outputpath.split("/")
-            if len(outpath_pieces) > 3:
-                appname = outpath_pieces[-3]
+        if(fname != "summary.txt"):
+            f = open(os.path.join(args.dir, fname))
+            lines = f.readlines()
+            resultlines = [line for line in lines if not line.strip().startswith("#")]
+            appResults = {}
+            for resultline in resultlines:
+                splitline = resultline.split(" ")
+                outputpath = splitline[0]
+                outpath_pieces = outputpath.split("/")
+                if len(outpath_pieces) > 3:
+                    appname = outpath_pieces[-3]
+                    if appname.isdigit():
+                        appname = outpath_pieces[-4] + "_" +  outpath_pieces[-3]
 
-                result = ""
 
-
-
-                if appname not in appResults:
-                    appResults[appname] = ResultCount()
-                    appResults[appname].update(resultline)
+                    if appname not in appResults:
+                        appResults[appname] = ResultCount()
+                        appResults[appname].update(resultline)
+                    else:
+                        appResults[appname].update(resultline)
                 else:
-                    appResults[appname].update(resultline)
-            else:
-                print "Unparsable line: %s" % resultline
-        results[fname] = appResults
+                    print "Unparsable line: %s" % resultline
+            results[fname] = appResults
 
     just_disallow = [x for x in results if "_justdisallow_" in x]
     lifecycle_init = [x for x in results if ("_lifecycle_init_" in x)]
