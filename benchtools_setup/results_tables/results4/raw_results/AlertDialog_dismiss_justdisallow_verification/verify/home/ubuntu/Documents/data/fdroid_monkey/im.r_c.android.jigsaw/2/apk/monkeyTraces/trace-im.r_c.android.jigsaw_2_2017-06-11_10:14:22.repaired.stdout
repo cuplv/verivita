@@ -1,0 +1,54 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/fdroid_monkey/im.r_c.android.jigsaw/2/apk/monkeyTraces/trace-im.r_c.android.jigsaw_2_2017-06-11_10:14:22.repaired
+/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec
+/home/s/Documents/source/callback-verification
+/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/fdroid_monkey/im.r_c.android.jigsaw/2/apk/monkeyTraces/trace-im.r_c.android.jigsaw_2_2017-06-11_10:14:22.repaired -s /home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+----Specification file /Users/s/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec does not exists!----
+
+Usage: driver.py [options]
+
+Options:
+  -h, --help            show this help message and exit
+  -t TRACEFILE, --tracefile=TRACEFILE
+                        File containing the concrete trace (protobuf format)
+  -f TRACEFORMAT, --traceformat=TRACEFORMAT
+                        Choose between the binary and json proto formats
+                        (default bin)
+  -s SPECFILE, --specfile=SPECFILE
+                        Colon (:) seperated listof specifications.
+  -c, --enc_coi         Apply cone of influence
+  -z, --simplify_trace  Simplify the trace (possibly unsound)
+  -d, --debug           Output debug informations
+  -m MODE, --mode=MODE  bmc: run bmc on the trace;
+                        ic3: run ic3 on the trace;
+                        check-files: check if the input files are well formed
+                        and prints them;
+                        show-ground-specs: shows the specifications
+                        instantiateed by the given trace;
+                        simulate: simulate the given trace with the existing
+                        specification;
+                        to-smv: prints the SMV file of the generated
+                        transition system.
+                        check-trace-relevance: check if a trace is well
+                        formed, does not end with an exception and can
+                        instantiate a disable rule.
+                        slice: slice a trace for relevant transitions with
+                        object or transition id
+  -k BMC_DEPTH, --bmc_depth=BMC_DEPTH
+                        Depth of the search
+  -i, --bmc_inc         Incremental search
+  -o SMV_FILE, --smv_file=SMV_FILE
+                        Output smv file
+  -n NUXMV_PATH, --nuxmv_path=NUXMV_PATH
+                        Path to the nuXmv executable
+  -q IC3_FRAMES, --ic3_frames=IC3_FRAMES
+                        Maximum number of frames explored by IC3
+  -w CB_SEQUENCE, --cb_sequence=CB_SEQUENCE
+                        Sequence of callbacks (message ids) to be simulated.
+  -l FILTER, --filter=FILTER
+                        When running check-files this will only: filter all
+                        messages to the oneswhere type is matched
+  -j OBJECT_ID, --object_id=OBJECT_ID
+                        When running slice this is a concrete object to target
