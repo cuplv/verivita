@@ -14,17 +14,22 @@ def methodName(ccallback):
 
 def getCallbacksForCallin(acc, classname_methodname_tup, trace):
 
-    if isinstance(trace,CTrace):
+    if isinstance(trace,CTrace) or isinstance(trace,CCallin):
         cacc = acc
-    elif isinstance(trace,CCallback) or isinstance(trace,CCallin):
-        cacc = acc + [(trace.class_name,methodName(trace))]
+
+    elif isinstance(trace,CCallback):
+        override = None
+        if len(trace.fmwk_overrides) > 0:
+            override = trace.fmwk_overrides[-1]
+        cacc = acc + [(trace.class_name, override, methodName(trace))]
 
     for tlcb in trace.children:
         tlcb_methodname = methodName(tlcb)
         tlcb_classname = tlcb.class_name
         if isinstance(tlcb, CCallin):
             if tlcb_classname == classname_methodname_tup[0] and tlcb_methodname == classname_methodname_tup[1]:
-                print "%s %s" % (str(cacc + []), str((tlcb_classname,tlcb_methodname)))
+                # print "%s %s" % (str(cacc), str((tlcb_classname,tlcb_methodname))) #uncomment this line to get full callback nesting
+                print "%s %s" % (str(cacc[-1]), str((tlcb_classname,tlcb_methodname)))
         getCallbacksForCallin(cacc, classname_methodname_tup, tlcb)
 
 
