@@ -25,10 +25,10 @@ parameters=/home/s/Documents/source/callback-verification;/home/s/Documents/sour
 
 
 basedir=/
-instances_file=./instances/Dialog.dismiss.txt
+instances_file=./instances/Fragment.getLoaderManager.txt
 time_limit=600
 mem_limit=4000000
-tarball=./results/AlertDialog_dismiss_justdisallow_verification.tar.bz2
+tarball=./results/Fragment.getLoaderManager_justdisallow_verification.tar.bz2
 email=
 disabled=false
 
@@ -83,6 +83,21 @@ mem_limit=4000000
 tarball=./results/Fragment.getString_justdisallow_verification.tar.bz2
 email=
 disabled=false
+
+[set_arguments]
+executable =./scripts/verify.sh
+parameters=/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_setArguments.spec
+
+
+basedir=/
+instances_file=./instances/Fragment.setArguments.txt
+time_limit=600
+mem_limit=4000000
+tarball=./results/Fragment.setArguments_justdisallow_verification.tar.bz2
+email=
+disabled=false
+
+
 
 [group_verify5]
 executable =./scripts/verify.sh
@@ -185,15 +200,29 @@ tarball=./results/Fragment.getString_lifecycle_verification.tar.bz2
 email=
 disabled=false
 
+[setArguments_lifecycle]
+executable =./scripts/verify.sh
+parameters=/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_setArguments.spec
+
+basedir=/
+instances_file=./instances/Fragment.setArguments.txt
+time_limit=600
+mem_limit=4000000
+tarball=./results/Fragment.setArguments_lifecycle_verification.tar.bz2
+email=
+disabled=false
+
+
+
 [getLoaderManager_lifecycle]
 executable =./scripts/verify.sh
 parameters=/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_getLoaderManager.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_getLoaderManager.spec
 
 basedir=/
-instances_file=./instances/Fragment_all.getString.txt
+instances_file=./instances/Fragment.getLoaderManager.txt
 time_limit=600
 mem_limit=4000000
-tarball=./results/Fragment.getString_lifecycle_verification.tar.bz2
+tarball=./results/Fragment.getLoaderManager_lifecycle_verification.tar.bz2
 email=
 disabled=false
 
@@ -397,9 +426,9 @@ tarball=./results/Fragment_getResources_lifestate_verification.tar.bz2
 email=
 disabled=false
 
-[group_verify19]
+[getString_lifestate]
 executable =./scripts/verify.sh
-parameters=/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_getLoaderManager.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_getLoaderManager.spec
+parameters=/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_getString.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_getString.spec
 
 
 
@@ -409,6 +438,39 @@ instances_file=./instances/Fragment_all.getString.txt
 time_limit=600
 mem_limit=4000000
 tarball=./results/Fragment.getString_lifestate_verification.tar.bz2
+email=
+disabled=false
+
+
+[setArguments_lifestate]
+executable =./scripts/verify.sh
+parameters=/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/Users/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_setArguments.spec
+
+
+
+
+basedir=/
+instances_file=./instances/Fragment.setArguments.txt
+time_limit=600
+mem_limit=4000000
+tarball=./results/Fragment.setArguments_lifestate_verification.tar.bz2
+email=
+disabled=false
+
+
+
+[getLoaderManager_lifestate]
+executable =./scripts/verify.sh
+parameters=/home/s/Documents/source/callback-verification;/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_getLoaderManager.spec:/home/s/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_getLoaderManager.spec
+
+
+
+
+basedir=/
+instances_file=./instances/Fragment.getLoaderManager.txt
+time_limit=600
+mem_limit=4000000
+tarball=./results/Fragment.getLoaderManager_lifestate_verification.tar.bz2
 email=
 disabled=false
 
