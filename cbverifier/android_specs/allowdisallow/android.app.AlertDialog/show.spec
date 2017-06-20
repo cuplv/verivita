@@ -15,9 +15,10 @@ REGEXP AlertDialog_show_activity_resume(act) = [([CB] [EXIT] [act] void android.
     | ([CB] [EXIT] [act] void android.app.Activity.onResume())];
 
 REGEXP AlertDialog_show_attached_to_activity(act,dialog) = [(AlertDialogBuilder_show_init(builder,act);TRUE[*];AlertDialog_show_create(builder,dialog)) | 
-dialog = [CI] [EXIT] [#] android.app.ProgressDialog android.app.ProgressDialog.show(act : android.content.Context, # : java.lang.CharSequence,# : java.lang.CharSequence)];
+dialog = [CI] [EXIT] [#] android.app.ProgressDialog android.app.ProgressDialog.show(act : android.content.Context, # : java.lang.CharSequence,# : java.lang.CharSequence)
+| [CI] [ENTRY] [dialog] void android.app.ProgressDialog.<init>(act : android.content.Context)];
 
-SPEC TRUE[*];AlertDialog_show_attached_to_activity(act,dialog);TRUE[*];AlertDialog_show_activity_pause(act)|- [CI] [ENTRY] [dialog] void android.app.Dialog.show();
-SPEC TRUE[*];AlertDialog_show_attached_to_activity(act,dialog);TRUE[*];AlertDialog_show_activity_resume(act)|+ [CI] [ENTRY] [dialog] void android.app.Dialog.show()
+SPEC TRUE[*];AlertDialog_show_attached_to_activity(act,dialog);TRUE[*];Activity_all_onPause(act)|- [CI] [ENTRY] [dialog] void android.app.Dialog.show();
+SPEC TRUE[*];AlertDialog_show_attached_to_activity(act,dialog);TRUE[*];Activity_all_onResume(act)|+ [CI] [ENTRY] [dialog] void android.app.Dialog.show()
 
 
