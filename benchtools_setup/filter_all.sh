@@ -24,6 +24,14 @@ do
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "java.lang.String getString(int)" >> ./instances/Fragmentv4.getString.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.app.Fragment --filter_method "void startActivity(android.content.Intent)" >> ./instances/Fragment.startActivity.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "void startActivity(android.content.Intent)" >> ./instances/Fragmentv4.startActivity.txt)&
+
+	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.app.Fragment --filter_method "startActivity(android.content.Intent,android.os.Bundle)" >> ./instances/Fragment.startActivity.txt)&
+	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "startActivity(android.content.Intent,android.os.Bundle)" >> ./instances/Fragmentv4.startActivity.txt)&
+
+	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.app.Fragment --filter_method "android.app.LoaderManager getLoaderManager()" >> ./instances/Fragment.getLoaderManager.txt)&
+	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "android.support.v4.app.LoaderManager getLoaderManager()" >> ./instances/Fragment.getLoaderManager.txt)&
+
+
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.app.Dialog --filter_method "void dismiss()" >> ./instances/Dialog.dismiss.txt)&
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.app.Dialog --filter_method "void show()" >> ./instances/Dialog.show.txt)&
 	wait
