@@ -47,7 +47,7 @@ do
 
 	#setArguments
 	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.app.Fragment --filter_method "void setArguments(android.os.Bundle)" >> ./instances/Fragment.setArguments.txt)&
-	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method >> ./instances/Fragment.setArguments.txt)&
+	(python ~/Documents/source/TraceRunner/utils/ProtoConverter/filterProto.py --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "void setArguments(android.os.Bundle)" >> ./instances/Fragment.setArguments.txt)&
 	wait
 done
 
