@@ -9,9 +9,16 @@ dialog = [CI] [EXIT] [#] android.app.ProgressDialog android.app.ProgressDialog.s
 
 //TODO: this needs the registration from the dialog itself
 REGEXP AlertDialog_builder_click_reg_just(dialog, clickListener) = [ 
+	(TRUE[*];
 	([CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setPositiveButton(# : int, clickListener : android.content.DialogInterface$OnClickListener) 
 		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNegativeButton(# : int,clickListener : android.content.DialogInterface$OnClickListener)
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNegativeButton(# : java.lang.CharSequence, clickListener : android.content.DialogInterface$OnClickListener)
 		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNeutralButton(# : int,clickListener : android.content.DialogInterface$OnClickListener)
-	); TRUE[*];
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNeutralButton(# : java.lang.CharSequence, clickListener : android.content.DialogInterface$OnClickListener)
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setSingleChoiceItems( # : int, # : int,clickListener : android.content.DialogInterface$OnClickListener)
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setSingleChoiceItems(# : java.lang.CharSequence, clickListener : android.content.DialogInterface$OnClickListener) 
+	)
+	;TRUE[*])
+	&
 	dialog = [CI] [EXIT] [builder] android.app.AlertDialog android.app.AlertDialog$Builder.create()
 ]
