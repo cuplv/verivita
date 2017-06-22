@@ -11,5 +11,5 @@ SPEC (TRUE[*]; AlertDialog_builder_click_reg_just(dialog, clickListener)) & (TRU
 
 //activity just paused
 SPEC (TRUE[*]; AlertDialog_builder_click_reg_just(dialog, clickListener)) & (TRUE[*];Activity_all_onPause(act);TRUE[*]) & (TRUE[*];AlertDialog_attached_to_activity(act,dialog);TRUE[*])
- |- [CB] [ENTRY] [clickListener] void android.content.DialogInterface$OnClickListener.onClick(dialog : android.content.DialogInterface,# : int);
+ |- [CB] [ENTRY] [clickListener] void android.content.DialogInterface$OnClickListener.onClick(dialog : android.content.DialogInterface,# : int)
 
