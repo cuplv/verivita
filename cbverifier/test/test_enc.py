@@ -19,7 +19,6 @@ from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceE
 from cbverifier.specs.spec_ast import *
 from cbverifier.specs.spec import Spec
 from cbverifier.bmc.bmc import BMC
-from cbverifier.utils.stats import Stats
 
 from pysmt.typing import BOOL
 from pysmt.logics import QF_BOOL
@@ -194,6 +193,8 @@ class TestEnc(unittest.TestCase):
                             ts_enc.msgs == msgs and
                             ts_enc.fmwk_contr == fmwk_contr and
                             ts_enc.app_contr == app_contr)
+
+
         ts_enc = TSEncoder(CTrace(), [])
         _test_eq(ts_enc, 0, set(), set(), set())
 
@@ -849,7 +850,8 @@ class TestEnc(unittest.TestCase):
         trace_enc = ts_enc.get_trace_encoding()
 
         bmc = BMC(ts_enc.helper, ts, FALSE())
-        (step, trace, app) = bmc.simulate(trace_enc)
+
+        (step, trace, _) = bmc.simulate(trace_enc)
 
         self.assertTrue(trace is not None)
 
@@ -878,7 +880,7 @@ class TestEnc(unittest.TestCase):
         trace_enc = ts_enc.get_trace_encoding()
         self.assertTrue(len(trace_enc) == 1)
         bmc = BMC(ts_enc.helper, ts, FALSE())
-        (step, cex, app) = bmc.simulate(trace_enc)
+        (step, cex, _) = bmc.simulate(trace_enc)
         self.assertTrue(cex is not None)
 
     def test_simplify_exit(self):
@@ -905,7 +907,7 @@ class TestEnc(unittest.TestCase):
         trace_enc = ts_enc.get_trace_encoding()
         self.assertTrue(len(trace_enc) == 1)
         bmc = BMC(ts_enc.helper, ts, FALSE())
-        (step, cex, app) = bmc.simulate(trace_enc)
+        (step, cex, _) = bmc.simulate(trace_enc)
         self.assertTrue(cex is not None)
 
     def test_simplify_exit_callin(self):
@@ -938,7 +940,7 @@ class TestEnc(unittest.TestCase):
         print trace_enc
         self.assertTrue(len(trace_enc) == 3)
         bmc = BMC(ts_enc.helper, ts, FALSE())
-        (step, cex, app) = bmc.simulate(trace_enc)
+        (step, cex, _) = bmc.simulate(trace_enc)
         self.assertTrue(cex is not None)
 
 

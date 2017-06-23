@@ -46,16 +46,17 @@ class Driver:
     def __init__(self, opts):
         self.opts = opts
 
-        global_stats = Stats.get_global_stats()
+        self.stats = Stats()
+        self.stats.enable()
 
         # Parse the trace
         try:
-            global_stats.start_timer(Stats.PARSING_TIME)
+            self.stats.start_timer(Stats.PARSING_TIME)
             self.trace = CTraceSerializer.read_trace_file_name(self.opts.tracefile,
                                                                self.opts.traceformat == "json",
                                                                self.opts.allow_exception)
-            global_stats.stop_timer(Stats.PARSING_TIME)
-            global_stats.write_times(sys.stdout, Stats.PARSING_TIME)
+            self.stats.stop_timer(Stats.PARSING_TIME)
+            self.stats.write_times(sys.stdout, Stats.PARSING_TIME)
         except MalformedTraceException as e:
             raise
         except TraceEndsInErrorException as e:
@@ -86,42 +87,30 @@ class Driver:
         stream.write("\n")
 
     def get_ground_specs(self):
-        ts_enc = TSEncoder(self.trace, self.spec_list, False, None,
-                           Stats.get_global_stats())
+        ts_enc = TSEncoder(self.trace, self.spec_list)
         ground_specs = ts_enc.get_ground_spec()
         return ground_specs
 
 
-    def run_bmc(self, depth, inc=False, nuxmv_path=None):
-        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace,
-                           None, Stats.get_global_stats())
+    def run_bmc(self, depth, inc=False):
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
 
-        global_stats = Stats.get_global_stats()
-        global_stats.start_timer(Stats.VERIFICATION_TIME,True)
+        self.stats.start_timer(Stats.VERIFICATION_TIME)
 
-        if nuxmv_path is not None:
-            logging.info("Runnning nuXmv BMC implementation")
-            ts = ts_enc.get_ts_encoding()
-            nuxmv_driver = NuXmvDriver(ts_enc.pysmt_env, ts, nuxmv_path)
-            (result, cex) = nuxmv_driver.bmc(Not(ts_enc.error_prop),
-                                             depth)
-        else:
-            logging.info("Runnning custom BMC implementation")
-            bmc = BMC(ts_enc.helper,
-                      ts_enc.get_ts_encoding(),
-                      ts_enc.error_prop)
-            cex = bmc.find_bug(depth, inc)
+        bmc = BMC(ts_enc.helper,
+                  ts_enc.get_ts_encoding(),
+                  ts_enc.error_prop)
 
-        global_stats.stop_timer(Stats.VERIFICATION_TIME,True)
-        global_stats.write_times(sys.stdout, Stats.VERIFICATION_TIME)
+        cex = bmc.find_bug(depth, inc)
+
+        self.stats.stop_timer(Stats.VERIFICATION_TIME)
+        self.stats.write_times(sys.stdout, Stats.VERIFICATION_TIME)
 
 
         return (cex, ts_enc.mapback)
 
     def to_smv(self, smv_file_name):
-        ts_enc = TSEncoder(self.trace, self.spec_list,
-                           self.opts.simplify_trace,
-                           None, Stats.get_global_stats())
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
         ts = ts_enc.get_ts_encoding()
         ts2smv = SmvTranslator(ts_enc.pysmt_env,
                                ts.state_vars,
@@ -135,31 +124,24 @@ class Driver:
             f.close()
 
     def run_ic3(self, nuxmv_path, ic3_frames):
-        ts_enc = TSEncoder(self.trace, self.spec_list,
-                           self.opts.simplify_trace,
-                           None, Stats.get_global_stats())
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
         ts = ts_enc.get_ts_encoding()
 
-
-        global_stats = Stats.get_global_stats()
-        global_stats.start_timer(Stats.VERIFICATION_TIME,True)
+        self.stats.start_timer(Stats.VERIFICATION_TIME,True)
 
         nuxmv_driver = NuXmvDriver(ts_enc.pysmt_env, ts, nuxmv_path)
         (result, trace) = nuxmv_driver.ic3(Not(ts_enc.error_prop),
                                            ic3_frames)
 
-        global_stats.stop_timer(Stats.VERIFICATION_TIME,True)
-        global_stats.write_times(sys.stdout, Stats.VERIFICATION_TIME)
+        self.stats.stop_timer(Stats.VERIFICATION_TIME,True)
+        self.stats.write_times(sys.stdout, Stats.VERIFICATION_TIME)
 
         return (result, trace, ts_enc.mapback)
 
     def run_simulation(self, cb_sequence = None): 
-        ts_enc = TSEncoder(self.trace, self.spec_list,
-                           self.opts.simplify_trace,
-                           None, Stats.get_global_stats())
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
 
-        global_stats = Stats.get_global_stats()
-        global_stats.start_timer(Stats.SIMULATION_TIME)
+        self.stats.start_timer(Stats.SIMULATION_TIME)
 
         bmc = BMC(ts_enc.helper,
                   ts_enc.get_ts_encoding(),
@@ -168,8 +150,8 @@ class Driver:
         trace_enc = ts_enc.get_trace_encoding(cb_sequence)
         (step, trace, last_trace) = bmc.simulate(trace_enc)
 
-        global_stats.stop_timer(Stats.SIMULATION_TIME)
-        global_stats.write_times(sys.stdout, Stats.SIMULATION_TIME)
+        self.stats.stop_timer(Stats.SIMULATION_TIME)
+        self.stats.write_times(sys.stdout, Stats.SIMULATION_TIME)
 
         return (step, trace, last_trace, ts_enc.mapback)
 
@@ -383,7 +365,7 @@ def main(input_args=None):
         ground_specs = driver.get_ground_specs()
         print_ground_spec(ground_specs)
     elif (opts.mode == "bmc"):
-        (cex, mapback) = driver.run_bmc(depth, opts.bmc_inc, opts.nuxmv_path)
+        (cex, mapback) = driver.run_bmc(depth, opts.bmc_inc)
 
         if (cex is not None):
             printer = CexPrinter(mapback, cex, sys.stdout)

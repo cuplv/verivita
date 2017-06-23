@@ -211,28 +211,18 @@ class TSEncoder:
     EXIT = "EXIT"
 
 
-    def __init__(self, trace, specs, ignore_msgs = False, limit = None, stats=None):
+    def __init__(self, trace, specs, ignore_msgs = False, stats = None):
         # copy the trace removing the top-level exception
-        self.trace = trace.copy(True, limit)
+        self.trace = trace.copy(True)
         self.specs = specs
         self.ts = None
         self.error_prop = None
+        self.stats = stats
 
         logging.info("Total number of specs (before grounding): %d" % (len(specs)))
         self.gs = GroundSpecs(self.trace)
-
-        self.stats = stats
-        if self.stats is not None:
-            self.stats.remove_timer(Stats.SPEC_GROUNDING_TIME)
-            self.stats.remove_timer(Stats.ENCODING_TIME)
-
-        if (self.stats is not None):
-            self.stats.start_timer(Stats.SPEC_GROUNDING_TIME)
-        self.ground_specs = TSEncoder._compute_ground_spec(self.gs, self.specs)
-        if (self.stats is not None):
-            self.stats.stop_timer(Stats.SPEC_GROUNDING_TIME)
-            self.stats.write_times(sys.stdout, Stats.SPEC_GROUNDING_TIME)
-
+        self.ground_specs = TSEncoder._compute_ground_spec(self.gs, self.specs,
+                                                           self.stats)
         logging.info("Total specs after grounding: %d" % (len(self.ground_specs)))
 
         # Remove all the messages in the trace that do not
@@ -283,7 +273,6 @@ class TSEncoder:
 
         # Map from regular expression to the correspondent automata, pc and final states
         self.regexp2ts = {}
-
 
     def get_ts_encoding(self):
         """ Returns the transition system encoding of the dynamic
@@ -371,19 +360,28 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         return self.ground_specs
 
     @staticmethod
-    def _compute_ground_spec(gs, specs):
+    def _compute_ground_spec(gs, specs, stats = None):
         """ Computes all the ground specifications from the
         specifications with free variables in self.spec and the
         concrete trace self.trace
 
         Return a list of ground specifications.
         """
+
+        if stats is not None:
+            global_stats = stats.get_global_stats()
+            global_stats.start_timer(stats.SPEC_GROUNDING_TIME)
+
         ground_specs = set()
         for spec in specs:
             logging.debug("Grounding spec: %s" % str(spec))
             tmp = gs.ground_spec(spec)
             logging.debug("Found %d concrete specs" % len(tmp))
             ground_specs.update(set(tmp))
+
+        if stats is not None:
+            global_stats.stop_timer(stats.SPEC_GROUNDING_TIME)
+            global_stats.write_times(sys.stdout, stats.SPEC_GROUNDING_TIME)
 
         return ground_specs
 
@@ -462,8 +460,9 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         3. Encode the execution of the top-level callbacks and the
         error conditions
         """
-        if (self.stats is not None):
-            self.stats.start_timer(Stats.ENCODING_TIME)
+        if self.stats is not None:
+            global_stats = self.stats.get_global_stats()
+            global_stats.start_timer(self.stats.ENCODING_TIME)
 
         logging.info("Generating the encoding...")
 
@@ -503,9 +502,9 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         self.ts.init = simplify(self.ts.init)
         self.ts.trans = simplify(self.ts.trans)
 
-        if (self.stats is not None):
-            self.stats.stop_timer(Stats.ENCODING_TIME)
-            self.stats.write_times(sys.stdout, Stats.ENCODING_TIME)
+        if self.stats is not None:
+            global_stats.stop_timer(self.stats.ENCODING_TIME)
+            global_stats.write_times(sys.stdout, self.stats.ENCODING_TIME)
 
 
     def _encode_ground_specs(self):
@@ -630,6 +629,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         # Initially we are in one of the initial states
         # There should be a single initial state though since the automaton
         # is deterministic
+        assert len(auto.initial_states) > 0
         current_pc_val = -1
         ts.init = FALSE_PYSMT()
         for a_init in auto.initial_states:
@@ -680,7 +680,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
             if DEBUG_AUTO:
                 print "FINAL - %s: %d\n" % (auto_pc, ts_s)
-
 
         return (auto_pc, final_states_ts, ts)
 
@@ -1423,6 +1422,7 @@ class RegExpToAuto():
         res = self.get_from_regexp_aux(regexp)
         #deterministic = res.determinize()
         deterministic = res.minimize()
+
         return deterministic
 
     def get_from_regexp_aux(self, regexp):
