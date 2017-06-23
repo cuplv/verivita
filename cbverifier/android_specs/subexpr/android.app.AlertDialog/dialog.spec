@@ -14,6 +14,7 @@ dialog = [CI] [EXIT] [#] android.app.ProgressDialog android.app.ProgressDialog.s
 REGEXP AlertDialog_builder_show_just(dialog, clickListener) = [ 
 	(TRUE[*];
 	([CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setPositiveButton(# : int, clickListener : android.content.DialogInterface$OnClickListener) 
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setPositiveButton(# : java.lang.CharSequence, clickListener : android.content.DialogInterface$OnClickListener)
 		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNegativeButton(# : int,clickListener : android.content.DialogInterface$OnClickListener)
 		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNegativeButton(# : java.lang.CharSequence, clickListener : android.content.DialogInterface$OnClickListener)
 		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNeutralButton(# : int,clickListener : android.content.DialogInterface$OnClickListener)
