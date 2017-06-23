@@ -23,8 +23,8 @@ from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
 class TestRegExpToAuto(unittest.TestCase):
 
     def test_regexptoauto(self):
-        # auto_env = AutoEnv.get_global_auto_env()
-        auto_env = AutoEnv(get_env(), True)
+        auto_env = AutoEnv.get_global_auto_env()
+        # auto_env = AutoEnv(get_env(), True)
         cenc = CounterEnc(auto_env.pysmt_env)
         alphabet = set(["[CB]_[ENTRY]_void m1()(1)","[CI]_[ENTRY]_void m2()(1)",
                         "[CB]_[ENTRY]_void m3()(1)"])

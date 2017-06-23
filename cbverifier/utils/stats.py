@@ -14,21 +14,10 @@ class Stats:
     VERIFICATION_TIME="verification"
     SIMULATION_TIME="simulation"
 
-    global_stats = None
-    @staticmethod
-    def get_global_stats():
-        if Stats.global_stats is None:
-            Stats.global_stats = Stats()
-        return Stats.global_stats
-
-    @staticmethod
-    def reset_global():
-        s = get_global_stats()
-        s.reset()
-
     def __init__(self):
         self.start_times = {}
         self.end_times = {}
+        self.is_enabled = False
 
     def _diff_times(self, start_time, end_time):
         diff_list = []
@@ -38,7 +27,10 @@ class Stats:
         return diff_list
 
     def start_timer(self, timer_name, is_sub=False):
-        assert timer_name not in self.start_times
+        assert (not self.is_enabled) or timer_name not in self.start_times
+
+        if (not self.is_enabled): return
+
         if not is_sub:
             start_times = os.times()
             self.start_times[timer_name] = start_times
@@ -47,8 +39,11 @@ class Stats:
             self.start_times[timer_name] = (info.ru_utime, info.ru_stime)
 
     def stop_timer(self, timer_name, is_sub=False):
-        assert timer_name in self.start_times
-        assert timer_name not in self.end_times
+        assert (not self.is_enabled) or timer_name in self.start_times
+        assert (not self.is_enabled) or timer_name not in self.end_times
+
+        if (not self.is_enabled): return
+
         if not is_sub:
             end_times = os.times()
             self.end_times[timer_name] = end_times
@@ -57,15 +52,12 @@ class Stats:
             end_times = (info.ru_utime, info.ru_stime)
             self.end_times[timer_name] = end_times
 
-    def remove_timer(self, timer_name):
-        if timer_name in self.start_times:
-            self.start_times.pop(timer_name)
-        if timer_name in self.end_times:
-            self.end_times.pop(timer_name)
 
     def write_times(self, stream, timer_name):
-        assert timer_name in self.start_times
-        assert timer_name in self.end_times
+        assert (not self.is_enabled) or timer_name in self.start_times
+        assert (not self.is_enabled) or timer_name in self.end_times
+
+        if (not self.is_enabled): return
 
         time_tuple = self._diff_times(self.start_times[timer_name],
                                       self.end_times[timer_name])
@@ -74,6 +66,8 @@ class Stats:
         stream.write("%s - System time: %f\n" % (timer_name, time_tuple[1]))
         stream.flush()
 
-    def reset(self):
-        self.global_stats = Stats()
+    def enable(self):
+        self.is_enabled = True
 
+    def disable(self):
+        self.is_disabled = False
