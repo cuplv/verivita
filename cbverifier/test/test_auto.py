@@ -14,6 +14,7 @@ from cbverifier.encoding.automata import SatLabel, BddLabel, Automaton, AutoEnv
 
 import sys
 
+import pysmt
 from pysmt.typing import BOOL
 from pysmt.shortcuts import Symbol, TRUE, FALSE, get_env
 from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
@@ -41,33 +42,43 @@ class TestAuto(unittest.TestCase):
 
         symbols = [Symbol(chr(i), BOOL) for i in range(ord('a'),ord('z')+1)]
 
-        bdd_env = AutoEnv(get_env(), True)
-
         # just try some formulas
         labels = [SatLabel(And(symbols[0], symbols[1])),
                   SatLabel(Or(symbols[1], symbols[1])),
                   SatLabel(Not(And(symbols[0], symbols[1]))),
-                  SatLabel(And(Not(symbols[0]), symbols[1])),
-                  BddLabel(And(symbols[0], symbols[1]), bdd_env),
-                  BddLabel(Or(symbols[1], symbols[1]), bdd_env),
-                  BddLabel(Not(And(symbols[0], symbols[1])), bdd_env),
-                  BddLabel(And(Not(symbols[0]), symbols[1]), bdd_env)]
+                  SatLabel(And(Not(symbols[0]), symbols[1]))]
+
+        if self._has_bdd():
+            bdd_env = AutoEnv(get_env(), True)
+
+            labels.extend([BddLabel(And(symbols[0], symbols[1]), bdd_env),
+                           BddLabel(Or(symbols[1], symbols[1]), bdd_env),
+                           BddLabel(Not(And(symbols[0], symbols[1])), bdd_env),
+                           BddLabel(And(Not(symbols[0]), symbols[1]), bdd_env)])
 
         for l in labels:
             _check_tautologies(l)
 
+    def _has_bdd(self):
+        try:
+            from pysmt.solvers.bdd import BddSolver
+        except pysmt.exceptions.SolverAPINotFound:
+            return False
+        return True
 
     def test_auto(self):
         sat_env = AutoEnv(get_env(), False)
         self._test_auto_aux(sat_env)
 
-        bdd_env = AutoEnv(get_env(), True)
-        self._test_auto_aux(bdd_env)
+        if self._has_bdd():
+            bdd_env = AutoEnv(get_env(), True)
+            self._test_auto_aux(bdd_env)
 
     def _test_auto_aux(self, auto_env):
         def _check_auto_tautologies(auto):
             self.assertTrue(auto.is_equivalent(auto))
             self.assertTrue(auto.is_equivalent(auto.copy_reachable()))
+            self.assertTrue(auto.is_equivalent(auto.complete()))
             self.assertTrue(auto.is_equivalent(auto.determinize()))
             self.assertTrue(auto.is_equivalent(auto.union(auto)))
             self.assertTrue(auto.is_equivalent((auto.reverse()).reverse()))
@@ -87,7 +98,8 @@ class TestAuto(unittest.TestCase):
         copy_2 = copy_1.copy_reachable()
         det = auto_a.determinize()
         twice_neg = auto_a.complement().complement()
-        for auto in [auto_a, copy_1, copy_2, twice_neg]:
+        complete = auto_a.complete()
+        for auto in [auto_a, copy_1, copy_2, twice_neg, complete]:
             self.assertFalse(auto.is_empty())
             self.assertTrue(auto.accept([a]))
             self.assertFalse(auto.accept([a,a]))
@@ -102,7 +114,8 @@ class TestAuto(unittest.TestCase):
         auto_aa = auto_a.concatenate(auto_a)
         det = auto_aa.determinize()
         twice_neg = auto_aa.complement().complement()
-        for auto in [auto_aa, det, twice_neg]:
+        complete = auto_aa.complete()
+        for auto in [auto_aa, det, twice_neg, complete]:
             self.assertFalse(auto.is_empty())
             self.assertFalse(auto.accept([a]))
             self.assertTrue(auto.accept([a,a]))
@@ -119,7 +132,8 @@ class TestAuto(unittest.TestCase):
         auto_astar = auto_a.klenee_star()
         det = auto_astar.determinize()
         twice_neg = auto_astar.complement().complement()
-        for auto in [auto_astar, det, twice_neg]:
+        complete = auto_astar.complete()
+        for auto in [auto_astar, det, twice_neg, complete]:
             self.assertFalse(auto.is_empty())
             self.assertTrue(auto.accept([]))
             self.assertTrue(auto.accept([a,a]))
@@ -130,7 +144,8 @@ class TestAuto(unittest.TestCase):
         aut_true = Automaton.get_singleton(auto_env.new_label(TRUE()), auto_env)
         twice_neg = aut_true.complement().complement()
         det = aut_true.determinize()
-        for auto in [aut_true, det, twice_neg]:
+        complete = aut_true.complete()
+        for auto in [aut_true, det, twice_neg, complete]:
             self.assertFalse(det.is_empty())
             self.assertFalse(det.accept([]))
             self.assertTrue(det.accept([a]))
@@ -143,7 +158,8 @@ class TestAuto(unittest.TestCase):
         aut_truestar = aut_true.klenee_star()
         twice_neg = aut_truestar.complement().complement()
         det = aut_truestar.determinize()
-        for auto in [aut_truestar, det, twice_neg]:
+        complete = aut_truestar.complete()
+        for auto in [aut_truestar, det, twice_neg, complete]:
             self.assertFalse(auto.is_empty())
             self.assertTrue(auto.accept([]))
             self.assertTrue(auto.accept([a]))
@@ -276,7 +292,8 @@ class TestAuto(unittest.TestCase):
         self.assertFalse(auto_ts_a_ts.accept([]))
 
     def test_iss171(self):
-        auto_env = AutoEnv(get_env(), True)
+        auto_env = AutoEnv(get_env(), False)
+
         auto = Automaton(auto_env)
 
         s0 = auto._add_new_state(True, True)
@@ -292,3 +309,16 @@ class TestAuto(unittest.TestCase):
         auto._add_trans(s1, s2, true_label)
 
         auto.klenee_star()
+
+
+    def test_iss198(self):
+        auto_env = AutoEnv(get_env(), False)
+        auto = Automaton(auto_env)
+        
+        # Add a single initial state
+        s0 = auto._add_new_state(True, False)
+
+        det_auto = auto.determinize()
+    
+
+        self.assertTrue(len(det_auto.trans[0]) >0 )
