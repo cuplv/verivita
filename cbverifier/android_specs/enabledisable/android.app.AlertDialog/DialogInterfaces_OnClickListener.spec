@@ -7,8 +7,7 @@ SPEC (TRUE[*]; AlertDialog_builder_show_just(dialog, clickListener);TRUE[*]) & (
 
 //just registered
 
-//TODO: activity must be resumed
-SPEC (TRUE[*]; AlertDialog_builder_show_just(dialog, clickListener)) &  (TRUE[*];AlertDialog_attached_to_activity(act,dialog);TRUE[*])
+SPEC (TRUE[*]; AlertDialog_builder_show_just(dialog, clickListener)) &  (TRUE[*];AlertDialog_attached_to_activity(act,dialog);TRUE[*]) & (TRUE[*]; Activity_all_onResume(act);TRUE[*])
   |+ [CB] [ENTRY] [clickListener] void android.content.DialogInterface$OnClickListener.onClick(dialog : android.content.DialogInterface,# : int);
 
 ////DEBUG SPEC: TODO REMOVE WHEN DEBUGGED
