@@ -850,7 +850,8 @@ class TestEnc(unittest.TestCase):
         trace_enc = ts_enc.get_trace_encoding()
 
         bmc = BMC(ts_enc.helper, ts, FALSE())
-        (step, trace) = bmc.simulate(trace_enc)
+
+        (step, trace, _) = bmc.simulate(trace_enc)
 
         self.assertTrue(trace is not None)
 
@@ -879,7 +880,7 @@ class TestEnc(unittest.TestCase):
         trace_enc = ts_enc.get_trace_encoding()
         self.assertTrue(len(trace_enc) == 1)
         bmc = BMC(ts_enc.helper, ts, FALSE())
-        (step, cex) = bmc.simulate(trace_enc)
+        (step, cex, _) = bmc.simulate(trace_enc)
         self.assertTrue(cex is not None)
 
     def test_simplify_exit(self):
@@ -906,7 +907,7 @@ class TestEnc(unittest.TestCase):
         trace_enc = ts_enc.get_trace_encoding()
         self.assertTrue(len(trace_enc) == 1)
         bmc = BMC(ts_enc.helper, ts, FALSE())
-        (step, cex) = bmc.simulate(trace_enc)
+        (step, cex, _) = bmc.simulate(trace_enc)
         self.assertTrue(cex is not None)
 
     def test_simplify_exit_callin(self):
@@ -939,7 +940,7 @@ class TestEnc(unittest.TestCase):
         print trace_enc
         self.assertTrue(len(trace_enc) == 3)
         bmc = BMC(ts_enc.helper, ts, FALSE())
-        (step, cex) = bmc.simulate(trace_enc)
+        (step, cex, _) = bmc.simulate(trace_enc)
         self.assertTrue(cex is not None)
 
 
