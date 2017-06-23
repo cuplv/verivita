@@ -140,7 +140,7 @@ class Automaton(object):
     def count_state(self):
         return len(self.states)
 
-    def copy_reachable(self, copy=None, offset = 0):
+    def copy_reachable(self, copy=None, offset = 0, complete_auto = False):
         """ Copy the reachable state of self in a new automaton """
 
         if copy is None:
@@ -149,6 +149,9 @@ class Automaton(object):
         stack = []
         visited = set()
 
+        if (len(self.initial_states) == 0):
+            return Automaton.get_empty(self.env)
+
         for s in self.initial_states:
             copy_s = s + offset
             copy._add_state(copy_s, self.is_initial(s), self.is_final(s))
@@ -156,9 +159,18 @@ class Automaton(object):
             visited.add(s)
             stack.append(s)
 
+        sink_state_in_copy = None
+
+        # Copy the reachable states
         while (len(stack) != 0):
             s = stack.pop()
             copy_s = s + offset
+
+            # record the sink
+            if (len(self.trans[s]) == 0 and
+                (not self.is_final(s)) and
+                (not self.is_final(s))):
+                sink_state_in_copy = copy_s
 
             for (dst, label) in self.trans[s]:
                 copy_dst = dst + offset
@@ -170,8 +182,27 @@ class Automaton(object):
                 trans = copy.trans[copy_s]
                 copy._add_trans_dst(trans, copy_dst,label)
 
+        if complete_auto:
+            if sink_state_in_copy is None:
+                sink_state_in_copy = copy._add_new_state(False, False)
+
+            for s in copy.states:
+                trans_of_s = copy.trans[s]
+                if (len(trans_of_s) == 0):
+                    true_label = self.env.new_label(TRUE())
+                    copy._add_trans_dst(copy.trans[s], sink_state_in_copy, true_label)
+                else:
+                    all_labels = self.env.new_label(FALSE())
+                    for (dst, label) in trans_of_s:
+                        all_labels = all_labels.union(label)
+
+                    copy._add_trans_dst(copy.trans[s], sink_state_in_copy,
+                                        all_labels.complement())
+
         return copy
 
+    def complete(self):
+        return self.copy_reachable(None, 0, True)
 
     def concatenate(self, other):
         """ Returns the automaton that recognize the concatenation
@@ -512,17 +543,20 @@ class Automaton(object):
 
         """
 
-        dfa = Automaton(self.env)
+        # Complete the automaton
+        complete_auto = self.copy_reachable(None, 0, True)
+
+        dfa = Automaton(complete_auto.env)
         sc_map = SubsConsMap()
 
         is_final = False
-        for s in self.initial_states:
-            is_final = is_final or self.is_final(s)
-        initial_set = frozenset(self.initial_states)
+        for s in complete_auto.initial_states:
+            is_final = is_final or complete_auto.is_final(s)
+        initial_set = frozenset(complete_auto.initial_states)
         initial_dfa = dfa._add_new_state(True, is_final)
 
-        if (len(self.initial_states) == 0): return dfa
-
+        if (len(complete_auto.initial_states) == 0):
+            return complete_auto
 
         sc_map.insert(initial_dfa, initial_set)
 
@@ -534,13 +568,13 @@ class Automaton(object):
             q_trans = dfa.trans[q]
 
             q_set = sc_map.lookup_set(q)
-            next_trans = self._sc_enum_trans(q_set)
+            next_trans = complete_auto._sc_enum_trans(q_set)
 
             for (nfa_states, comb_label) in next_trans:
                 q_next = sc_map.lookup_state(nfa_states)
 
                 if (None == q_next):
-                    is_q_next_final = sc_map.is_final(self, nfa_states)
+                    is_q_next_final = sc_map.is_final(complete_auto, nfa_states)
                     q_next = dfa._add_new_state(False, is_q_next_final)
                     sc_map.insert(q_next, nfa_states)
                     stack.append(q_next)
@@ -929,4 +963,3 @@ class SubsConsMap:
 
     def is_final(self, nfa, nfa_states):
         return not nfa_states.isdisjoint(nfa.final_states)
-
