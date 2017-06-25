@@ -198,4 +198,29 @@ REGEXP Activity_all_onRestart(f) = [(
     [CB] [ENTRY] [f] void android.app.TabActivity.onRestart()
     |
     [CB] [ENTRY] [f] void android.app.Activity.onRestart()
+)];
+REGEXP Activity_all_findViewByID_ci(f) = [(
+    [CI] [ENTRY] [f] android.view.View android.accounts.AccountAuthenticatorActivity.findViewById(int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.support.v7.app.ActionBarActivity.findViewById(int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.ActivityGroup.findViewById(int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.AliasActivity.findViewById(int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.support.v7.app.AppCompatActivity.findViewById(int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.ExpandableListActivity.findViewById(int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.support.v4.app.FragmentActivity.findViewById(int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.LauncherActivity.findViewById(int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.ListActivity.findViewById(int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.preference.PreferenceActivity.findViewById(int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.TabActivity.findViewById(int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.Activity.findViewById(int)
 )]
