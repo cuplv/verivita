@@ -6,3 +6,14 @@ REGEXP view_onClick_listener_set_has(view,listener) = [view_onClick_listener_set
 REGEXP view_onClick_enabled_set_just(view) = [TRUE[*];[CI] [ENTRY] [view] void android.widget.TextView.setEnabled(TRUE : boolean)];
 REGEXP view_onClick_enabled_set_has(view) = [(view_onClick_enabled_set_just(view);(![CI] [ENTRY] [view] void android.widget.TextView.setEnabled(TRUE : boolean))[*]) | (![CI] [ENTRY] [view] void android.widget.TextView.setEnabled(# : boolean))[*]]
 
+
+//Activity attachment
+REGEXP view_activity_attachment_method = [ ];
+
+//REGEXP view_view_attachment_method = [ ];
+
+REGEXP view_lose_precision_method = [ ];
+
+REGEXP view_attached_Activity(view,activity) = [ ];
+
+REGEXP view_unknown_attachment(view) = [ ]

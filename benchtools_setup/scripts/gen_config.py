@@ -14,7 +14,7 @@ enable_disable_rules = {
         "cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec",
         "cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec",
         "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec",
-        "cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec"
+        "cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec" # TODO: this one is having precision issue
     ],
     "lifecycle" : [
         "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec",
