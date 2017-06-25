@@ -85,7 +85,8 @@ if __name__ == "__main__":
                         help = "disallow to print", required=False)
     args = parser.parse_args()
 
-    scriptdir = os.path.dirname(__file__)
+    #scriptdir = os.path.dirname(__file__)
+    scriptdir=os.path.dirname(os.path.abspath(__file__))
 
     basedir = "/".join(scriptdir.split("/")[:-2])
 
