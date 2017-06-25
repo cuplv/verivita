@@ -199,28 +199,30 @@ REGEXP Activity_all_onRestart(f) = [(
     |
     [CB] [ENTRY] [f] void android.app.Activity.onRestart()
 )];
-REGEXP Activity_all_findViewByID_ci(f) = [(
-    [CI] [ENTRY] [f] android.view.View android.accounts.AccountAuthenticatorActivity.findViewById(int)
+
+//REGEXP Activity_all_findViewByID_ci(f,v) = [FALSE]
+REGEXP Activity_all_findViewByID_ci(f,v) = [(
+    (v = [CI] [EXIT] [f] android.view.View android.accounts.AccountAuthenticatorActivity.findViewById(# : int))
     |
-    [CI] [ENTRY] [f] android.view.View android.support.v7.app.ActionBarActivity.findViewById(int)
+    (v = [CI] [EXIT] [f] android.view.View android.support.v7.app.ActionBarActivity.findViewById(# : int))
     |
-    [CI] [ENTRY] [f] android.view.View android.app.ActivityGroup.findViewById(int)
+    (v = [CI] [EXIT] [f] android.view.View android.app.ActivityGroup.findViewById(i : int))
     |
-    [CI] [ENTRY] [f] android.view.View android.app.AliasActivity.findViewById(int)
+    (v = [CI] [EXIT] [f] android.view.View android.app.AliasActivity.findViewById(i : int))
     |
-    [CI] [ENTRY] [f] android.view.View android.support.v7.app.AppCompatActivity.findViewById(int)
+    (v = [CI] [EXIT] [f] android.view.View android.support.v7.app.AppCompatActivity.findViewById(i : int))
     |
-    [CI] [ENTRY] [f] android.view.View android.app.ExpandableListActivity.findViewById(int)
+    (v = [CI] [EXIT] [f] android.view.View android.app.ExpandableListActivity.findViewById(i : int))
     |
-    [CI] [ENTRY] [f] android.view.View android.support.v4.app.FragmentActivity.findViewById(int)
+    (v = [CI] [EXIT] [f] android.view.View android.support.v4.app.FragmentActivity.findViewById(i : int))
     |
-    [CI] [ENTRY] [f] android.view.View android.app.LauncherActivity.findViewById(int)
+    (v = [CI] [EXIT] [f] android.view.View android.app.LauncherActivity.findViewById(i : int))
     |
-    [CI] [ENTRY] [f] android.view.View android.app.ListActivity.findViewById(int)
+    (v = [CI] [EXIT] [f] android.view.View android.app.ListActivity.findViewById(i : int))
     |
-    [CI] [ENTRY] [f] android.view.View android.preference.PreferenceActivity.findViewById(int)
+    (v = [CI] [EXIT] [f] android.view.View android.preference.PreferenceActivity.findViewById(i : int))
     |
-    [CI] [ENTRY] [f] android.view.View android.app.TabActivity.findViewById(int)
+    (v = [CI] [EXIT] [f] android.view.View android.app.TabActivity.findViewById(i : int))
     |
-    [CI] [ENTRY] [f] android.view.View android.app.Activity.findViewById(int)
+    (v = [CI] [EXIT] [f] android.view.View android.app.Activity.findViewById(i : int))
 )]
