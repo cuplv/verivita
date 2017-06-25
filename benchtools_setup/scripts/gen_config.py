@@ -97,6 +97,10 @@ if __name__ == "__main__":
                 print group_pref + ruleset + "_" + disallow + "]"
                 print params
                 specfiles = enable_disable_rules[ruleset] + allow_disallow_rules[disallow][1] + subexpressions
-                print parameters_pref + ":".join([ basedir + "/" + f for f in specfiles])
+                specfiles_absolute = [basedir + "/" + f for f in specfiles]
+                for specfile in specfiles_absolute:
+                    if not os.path.isfile(specfile):
+                        raise Exception("specfile: " + specfile + " does not exist")
+                print parameters_pref + ":".join(specfiles_absolute)
                 print tarball_pref + disallow + "_" + ruleset
                 print instance_pref + "_" + allow_disallow_rules[disallow][0] + ".tar.gz"
