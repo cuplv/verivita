@@ -103,5 +103,5 @@ if __name__ == "__main__":
                     if not os.path.isfile(specfile):
                         raise Exception("specfile: " + specfile + " does not exist")
                 print parameters_pref + ":".join(specfiles_absolute)
-                print tarball_pref + disallow + "_" + ruleset
-                print instance_pref + allow_disallow_rules[disallow][0] + ".tar.gz"
+                print tarball_pref + disallow + "_" + ruleset  + ".tar.gz"
+                print instance_pref + allow_disallow_rules[disallow][0]
