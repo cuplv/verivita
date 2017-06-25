@@ -85,7 +85,8 @@ if __name__ == "__main__":
                         help = "disallow to print", required=False)
     args = parser.parse_args()
 
-    scriptdir = os.path.dirname(__file__)
+    #scriptdir = os.path.dirname(__file__)
+    scriptdir=os.path.dirname(os.path.abspath(__file__))
 
     basedir = "/".join(scriptdir.split("/")[:-2])
 
@@ -102,5 +103,5 @@ if __name__ == "__main__":
                     if not os.path.isfile(specfile):
                         raise Exception("specfile: " + specfile + " does not exist")
                 print parameters_pref + ":".join(specfiles_absolute)
-                print tarball_pref + disallow + "_" + ruleset
-                print instance_pref + allow_disallow_rules[disallow][0] + ".tar.gz"
+                print tarball_pref + disallow + "_" + ruleset  + ".tar.bz2"
+                print instance_pref + allow_disallow_rules[disallow][0]
