@@ -4,7 +4,8 @@ import os
 subexpressions = [
     "cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec",
     "cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec",
-    "cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec"
+    "cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec",
+    "cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec"
 ]
 enable_disable_rules = {
     "lifestate" : [
@@ -14,7 +15,8 @@ enable_disable_rules = {
         "cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec",
         "cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec",
         "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec",
-        "cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec" # TODO: this one is having precision issue
+        "cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec", # TODO: this one is having precision issue
+        "cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec"
     ],
     "lifecycle" : [
         "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec",
@@ -105,3 +107,11 @@ if __name__ == "__main__":
                 print parameters_pref + ":".join(specfiles_absolute)
                 print tarball_pref + disallow + "_" + ruleset  + ".tar.bz2"
                 print instance_pref + allow_disallow_rules[disallow][0]
+    elif args.print_paths == "ls":
+        for ruleset in enable_disable_rules:
+            print "ruleset: %s" % ruleset
+            print ""
+            specfiles = enable_disable_rules[ruleset] + subexpressions
+            specfiles_absolute = [basedir + "/" + f for f in specfiles]
+            print ":".join(specfiles_absolute)
+            print "--------"
