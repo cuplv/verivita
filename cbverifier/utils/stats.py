@@ -27,8 +27,6 @@ class Stats:
         return diff_list
 
     def start_timer(self, timer_name, is_sub=False):
-        assert (not self.is_enabled) or timer_name not in self.start_times
-
         if (not self.is_enabled): return
 
         if not is_sub:
