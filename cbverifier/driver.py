@@ -87,13 +87,14 @@ class Driver:
         stream.write("\n")
 
     def get_ground_specs(self):
-        ts_enc = TSEncoder(self.trace, self.spec_list)
+        ts_enc = TSEncoder(self.trace, self.spec_list, False, self.stats)
         ground_specs = ts_enc.get_ground_spec()
         return ground_specs
 
 
     def run_bmc(self, depth, inc=False):
-        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace,
+                           self.stats)
 
         self.stats.start_timer(Stats.VERIFICATION_TIME)
 
@@ -110,7 +111,9 @@ class Driver:
         return (cex, ts_enc.mapback)
 
     def to_smv(self, smv_file_name):
-        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        ts_enc = TSEncoder(self.trace, self.spec_list,
+                           self.opts.simplify_trace,
+                           self.stats)
         ts = ts_enc.get_ts_encoding()
         ts2smv = SmvTranslator(ts_enc.pysmt_env,
                                ts.state_vars,
@@ -124,7 +127,9 @@ class Driver:
             f.close()
 
     def run_ic3(self, nuxmv_path, ic3_frames):
-        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        ts_enc = TSEncoder(self.trace, self.spec_list,
+                           self.opts.simplify_trace,
+                           self.stats)
         ts = ts_enc.get_ts_encoding()
 
         self.stats.start_timer(Stats.VERIFICATION_TIME,True)
@@ -139,7 +144,9 @@ class Driver:
         return (result, trace, ts_enc.mapback)
 
     def run_simulation(self, cb_sequence = None): 
-        ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace)
+        ts_enc = TSEncoder(self.trace, self.spec_list,
+                           self.opts.simplify_trace,
+                           self.stats)
 
         self.stats.start_timer(Stats.SIMULATION_TIME)
 
