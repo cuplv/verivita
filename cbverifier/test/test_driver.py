@@ -7,6 +7,8 @@ import logging
 import unittest
 import os
 
+from cStringIO import StringIO
+
 try:
     import unittest2 as unittest
 except ImportError:
@@ -14,6 +16,7 @@ except ImportError:
 
 from cbverifier.driver import main, DriverOptions, Driver, NoDisableException, check_disable
 from cbverifier.traces.ctrace import MalformedTraceException, TraceEndsInErrorException
+from cbverifier.utils.stats import Stats
 import cbverifier.test.examples
 
 
@@ -45,7 +48,7 @@ class TestEnc(unittest.TestCase):
                                     None)
 
         driver = Driver(driver_opts)
-
+        self.stats = Stats()
         driver.check_files(sys.stdout)
 
         ground_specs = driver.get_ground_specs()
@@ -119,3 +122,31 @@ class TestEnc(unittest.TestCase):
         ground_specs = driver.get_ground_specs()
         with self.assertRaises(NoDisableException):
             check_disable(ground_specs)
+
+    def test_stats(self):
+        test_path = os.path.dirname(cbverifier.test.examples.__file__)
+
+        t1 = os.path.join(test_path, "trace1.json")
+        s1 = os.path.join(test_path, "spec1.spec")
+
+        driver_opts = DriverOptions(t1,
+                                    "json",
+                                    [s1],
+                                    False,
+                                    False,
+                                    None)
+
+        driver = Driver(driver_opts)
+        trace = driver.run_bmc(2)
+
+        mystream = StringIO()
+        driver.stats.write_times(mystream, Stats.PARSING_TIME)
+        self.assertTrue(Stats.PARSING_TIME in mystream)
+        driver.stats.write_times(mystream, Stats.SPEC_GROUNDING_TIME)
+        self.assertTrue(Stats.SPEC_GROUNDING_TIME in mystream)
+        driver.stats.write_times(mystream, Stats.ENCODING_TIME)
+        self.assertTrue(Stats.ENCODING_TIME in mystream)
+        driver.stats.write_times(mystream, Stats.VERIFICATION_TIME)
+        self.assertTrue(Stats.VERIFICATION_TIME in mystream)
+        driver.stats.write_times(mystream, Stats.SIMULATION_TIME)
+        self.assertTrue(Stats.SIMULATION_TIME in mystream)
