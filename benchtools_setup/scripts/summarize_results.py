@@ -24,14 +24,17 @@ class ResultCount:
     def toString(self):
         return "safe: %i, unsafe: %i, readerr: %i, timeout %i" % (self.safe, self.unsafe, self.read_error, self.timeout)
 def pathToAppId(outpath, alias_map):
-    outpath_pieces = outputpath.split("/")
+    outpath_pieces = outpath.split("/")
     if len(outpath_pieces) > 3:
-        appname = outpath_pieces[-3]
+        appname = outpath_pieces[-4]
+        if appname.isdigit():
+            appname = outpath_pieces[-5]
     else:
         raise Exception("unparseable path")
     if appname in alias_map:
         return alias_map[appname]
-    else: return appname
+    else:
+        return appname
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Sort trace by message ID')
