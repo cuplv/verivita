@@ -7,21 +7,32 @@ read error: 0
 unknown: 0
 --------------------------
 results_AlertDialog.dismiss_lifecycle.tar.bz2.txt
-safe: 1
+safe: 1 # opentraining (trace error, we should remove this one)
 unsafe: 4
 timeout: 0
 read error: 0
 unknown: 0
 --------------------------
 results_AlertDialog.dismiss_lifestate.tar.bz2.txt
-safe: 2
-unsafe: 3
+safe: 2 # swiftnotes became safe
+unsafe: 3 # sgtpuzzles still unsafe (1 app)
 timeout: 0
 read error: 0
 unknown: 0
 --------------------------
+above done
+
+
+
+
 results_AlertDialog.show_just_disallow.tar.bz2.txt
 safe: 18
+#Safe with justDis
+# - AIMSICD
+# - swiftnotes
+# - 2048
+# - sgtPuzzles
+# - slide
 unsafe: 8
 timeout: 0
 read error: 0
@@ -36,13 +47,21 @@ unknown: 0
 --------------------------
 results_AlertDialog.show_lifestate.tar.bz2.txt
 safe: 19
-unsafe: 7
+
+unsafe: 7 #trikita slide became safe
+#still unafe:
+# - swiftnotes
+# - 2048
+# - sgtpuzzles
 timeout: 0
 read error: 0
 unknown: 0
 --------------------------
 results_AsyncTask.execute_just_disallow.tar.bz2.txt
 safe: 13
+#Safe with justDis
+# - duckduck
+# - AIMSICD
 unsafe: 1
 timeout: 0
 read error: 0
@@ -64,6 +83,9 @@ unknown: 0
 --------------------------
 results_Fragment.getResources_just_disallow.tar.bz2.txt
 safe: 6
+#Safe with justDis
+# - AIMSICD
+# - duckduck
 unsafe: 0
 timeout: 0
 read error: 1
@@ -85,6 +107,8 @@ unknown: 0
 --------------------------
 results_Fragment.getString_just_disallow.tar.bz2.txt
 safe: 8
+#Safe with justDis
+# - AIMSICD
 unsafe: 0
 timeout: 0
 read error: 2
@@ -106,10 +130,11 @@ unknown: 0
 --------------------------
 results_Fragment.setArguments_just_disallow.tar.bz2.txt
 safe: 10
+#Safe with justDis
+# - duckduck
+# - Swiftnotes
 unsafe: 5
-timeout: 0
-read error: 0
-unknown: 0
+timeout: 0 read error: 0 unknown: 0
 --------------------------
 results_Fragment.setArguments_lifecycle.tar.bz2.txt
 safe: 10
