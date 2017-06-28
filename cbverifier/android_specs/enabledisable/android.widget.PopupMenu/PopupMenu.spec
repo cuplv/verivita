@@ -11,4 +11,4 @@ SPEC (PopupMenu_attached_to_activity_has(act,pop)) & (TRUE[*];Activity_all_onRes
 
 
 //Activity pause disable
-SPEC (PopupMenu_attached_to_activity_has(act,pop)) & PopupMenu_listener_registered_just(pop,list) & (TRUE[*];Activity_all_onPause(act)) |- [CB] [ENTRY] [list] boolean android.widget.PopupMenu$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem)
+SPEC (PopupMenu_attached_to_activity_has(act,pop)) & (PopupMenu_listener_registered_just(pop,list);TRUE[*]) & (TRUE[*];Activity_all_onPause(act)) |- [CB] [ENTRY] [list] boolean android.widget.PopupMenu$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem)
