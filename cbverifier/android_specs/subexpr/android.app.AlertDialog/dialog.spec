@@ -31,5 +31,5 @@ REGEXP AlertDialog_builder_show_just(dialog, clickListener) = [
 		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setSingleChoiceItems(# : java.lang.CharSequence, clickListener : android.content.DialogInterface$OnClickListener) 
 	)); (TRUE[*]; AlertDialog_create(builder,dialog)))
 	|
-	(TRUE[*];[CI] [ENTRY] [dialog] void android.app.AlertDialog.setButton(# : int,# : java.lang.CharSequence,listener : android.content.DialogInterface$OnClickListener);TRUE[*])
+	((TRUE[*];[CI] [ENTRY] [dialog] void android.app.AlertDialog.setButton(# : int,# : java.lang.CharSequence,listener : android.content.DialogInterface$OnClickListener)))
 ]
