@@ -10,7 +10,14 @@ REGEXP view_onClick_listener_set_has(view,listener) = [view_onClick_listener_set
 
 REGEXP view_onClick_enabled_set_just(view) = [TRUE[*];[CI] [ENTRY] [view] void android.widget.TextView.setEnabled(TRUE : boolean)];
 
-REGEXP view_onClick_enabled_set_has(view) = [(view_onClick_enabled_set_just(view);(![CI] [ENTRY] [view] void android.widget.TextView.setEnabled(TRUE : boolean))[*]) | (![CI] [ENTRY] [view] void android.widget.TextView.setEnabled(# : boolean))[*]]
+REGEXP view_onClick_enabled_set_has(view) = [(view_onClick_enabled_set_just(view);(![CI] [ENTRY] [view] void android.widget.TextView.setEnabled(TRUE : boolean))[*]) | (![CI] [ENTRY] [view] void android.widget.TextView.setEnabled(# : boolean))[*]];
+
+
+//Regular expression is true when this is a view we know is attached to an Activity
+REGEXP view_attached(act,view) = [TRUE[*];view = [CI] [EXIT] [act] android.view.View android.app.Activity.findViewById(# : int);TRUE[*]]; 
+
+//Circumstances where we say we lose precision (later this should handle findViewByID on view objects and other nested things)
+REGEXP view_lose_precision(view2) = [TRUE[*]; [CI] [ENTRY] [view2] void android.view.View.setOnClickListener(# : android.view.View$OnClickListener); TRUE[*]]
 
 
 ////Activity attachment
