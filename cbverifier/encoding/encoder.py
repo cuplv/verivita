@@ -369,8 +369,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         """
 
         if stats is not None:
-            global_stats = stats.get_global_stats()
-            global_stats.start_timer(stats.SPEC_GROUNDING_TIME)
+            stats.start_timer(stats.SPEC_GROUNDING_TIME)
 
         ground_specs = set()
         for spec in specs:
@@ -380,8 +379,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             ground_specs.update(set(tmp))
 
         if stats is not None:
-            global_stats.stop_timer(stats.SPEC_GROUNDING_TIME)
-            global_stats.write_times(sys.stdout, stats.SPEC_GROUNDING_TIME)
+            stats.stop_timer(stats.SPEC_GROUNDING_TIME)
+            stats.write_times(sys.stdout, stats.SPEC_GROUNDING_TIME)
 
         return ground_specs
 
@@ -461,8 +460,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         error conditions
         """
         if self.stats is not None:
-            global_stats = self.stats.get_global_stats()
-            global_stats.start_timer(self.stats.ENCODING_TIME)
+            self.stats.start_timer(self.stats.ENCODING_TIME)
 
         logging.info("Generating the encoding...")
 
@@ -503,8 +501,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         self.ts.trans = simplify(self.ts.trans)
 
         if self.stats is not None:
-            global_stats.stop_timer(self.stats.ENCODING_TIME)
-            global_stats.write_times(sys.stdout, self.stats.ENCODING_TIME)
+            self.stats.stop_timer(self.stats.ENCODING_TIME)
+            self.stats.write_times(sys.stdout, self.stats.ENCODING_TIME)
 
 
     def _encode_ground_specs(self):
