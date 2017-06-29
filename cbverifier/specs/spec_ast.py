@@ -460,6 +460,12 @@ def get_expr_vars(node):
 
 
 def subs_named_regexp_rec(node, named_regexp_map, bound_vars, subs_map):
+    """
+    bound_vars: (prev_expr_vars, current_vars)
+      - prev_expr_vars: variables defined in the  previous expressions
+      - current_vars: variables defined in the current expression
+    subs_map: maps from ids to values to substitue.
+    """
     node_type = get_node_type(node)
 
     if (node_type == TRUE): return node
@@ -471,6 +477,9 @@ def subs_named_regexp_rec(node, named_regexp_map, bound_vars, subs_map):
     elif (node_type == ID):
         (prev_expr_var, myvar) = bound_vars
         assert prev_expr_var is not None
+        assert type(prev_expr_var) == set
+        assert myvar is not None
+        assert type(myvar) == set
 
         if (node in subs_map):
             return subs_map[node]
@@ -478,10 +487,10 @@ def subs_named_regexp_rec(node, named_regexp_map, bound_vars, subs_map):
             # Avoid capture of variables
             tmp_id = len(bound_vars)
             new_var = new_id("tmp_%d" % tmp_id)
-            while new_var in bound_vars:
+            while new_var in prev_expr_var:
                 tmp_id = tmp_id + 1
                 new_var = new_id("tmp_%d" % tmp_id)
-            bound_vars.add(new_var)
+            myvar.add(new_var)
             return new_var
         else:
             return node
@@ -489,7 +498,6 @@ def subs_named_regexp_rec(node, named_regexp_map, bound_vars, subs_map):
           node_type == FLOAT or node_type == STRING):
         return node
     elif (node_type == PARAM_LIST):
-
         param = subs_named_regexp_rec(get_param_name(node),
                                       named_regexp_map,
                                       bound_vars,
@@ -546,7 +554,10 @@ def subs_named_regexp_rec(node, named_regexp_map, bound_vars, subs_map):
 
         new_subs_map = {}
         for a,f in zip(vars_list, formal_list):
-            new_subs_map[f] = a
+            if a in subs_map:
+                new_subs_map[f] = subs_map[a]
+            else:
+                new_subs_map[f] = a
 
         regexp_template = get_named_regexp_regexp(named_regexp)
         sub_var = get_expr_vars(regexp_template)
