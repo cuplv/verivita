@@ -27,8 +27,6 @@ class Stats:
         return diff_list
 
     def start_timer(self, timer_name, is_sub=False):
-        assert (not self.is_enabled) or timer_name not in self.start_times
-
         if (not self.is_enabled): return
 
         if not is_sub:
@@ -39,9 +37,6 @@ class Stats:
             self.start_times[timer_name] = (info.ru_utime, info.ru_stime)
 
     def stop_timer(self, timer_name, is_sub=False):
-        assert (not self.is_enabled) or timer_name in self.start_times
-        assert (not self.is_enabled) or timer_name not in self.end_times
-
         if (not self.is_enabled): return
 
         if not is_sub:
@@ -54,9 +49,6 @@ class Stats:
 
 
     def write_times(self, stream, timer_name):
-        assert (not self.is_enabled) or timer_name in self.start_times
-        assert (not self.is_enabled) or timer_name in self.end_times
-
         if (not self.is_enabled): return
 
         time_tuple = self._diff_times(self.start_times[timer_name],
