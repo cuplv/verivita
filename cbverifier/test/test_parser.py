@@ -516,3 +516,40 @@ SPEC pollo(l) |- TRUE ALIASES method_name = [subs1]""")
         res = "SPEC [CI] [ENTRY] [l] void subs1() |- TRUE"
         self.assertTrue(len(spec_list) == 1)
         self.assertTrue(str(spec_list[0]) == res)
+
+    def test_instantiate_regexp_nested(self):
+        spec_string = """REGEXP pollo(x) = [[CB] [ENTRY] [x] type methodName()];
+        REGEXP pollo2(z) = [pollo(z)];
+        SPEC pollo2(1) |- pollo(1)
+        """
+        res = "SPEC [CB] [ENTRY] [1] type methodName() |- [CB] [ENTRY] [1] type methodName()"
+        specs = Spec.get_specs_from_string(spec_string)
+        self.assertTrue(len(specs) == 1)
+        self.assertTrue(str(specs[0]) == res)
+
+        spec_string = """REGEXP pollo(x,y) = [[CB] [ENTRY] [x] type methodName(y : boolean)];
+        REGEXP pollo2(x,y) = [pollo(y,x)];
+        SPEC pollo2(1,2) |- pollo(1,2)
+        """
+        res = "SPEC [CB] [ENTRY] [2] type methodName(1 : boolean) |- [CB] [ENTRY] [1] type methodName(2 : boolean)"
+        specs = Spec.get_specs_from_string(spec_string)
+        self.assertTrue(len(specs) == 1)
+        self.assertTrue(str(specs[0]) == res)
+
+        spec_string = """REGEXP pollo(x) = [[CB] [ENTRY] [x] type methodName(y : boolean)];
+        REGEXP pollo2(x,y) = [pollo(x)];
+        SPEC pollo2(1,2) |- pollo2(1,2)
+        """
+        res = "SPEC [CB] [ENTRY] [1] type methodName(y : boolean) |- [CB] [ENTRY] [1] type methodName(y : boolean)"
+        specs = Spec.get_specs_from_string(spec_string)
+        self.assertTrue(len(specs) == 1)
+        self.assertTrue(str(specs[0]) == res)
+
+        spec_string = """REGEXP pollo(x) = [[CB] [ENTRY] [x] type methodName(y : boolean)];
+        REGEXP pollo2(x,y) = [pollo(x)];
+        SPEC pollo2(1,2) |- pollo2(1,2)
+        """
+        res = "SPEC [CB] [ENTRY] [1] type methodName(y : boolean) |- [CB] [ENTRY] [1] type methodName(y : boolean)"
+        specs = Spec.get_specs_from_string(spec_string)
+        self.assertTrue(len(specs) == 1)
+        self.assertTrue(str(specs[0]) == res)
