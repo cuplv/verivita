@@ -183,10 +183,9 @@ class TestEnc(unittest.TestCase):
         (cex, mapback) = driver.run_bmc(2)
         assert (cex is not None)
         mystream = StringIO()
-        printer = CexPrinter(mapback, cex, mystream)
+        printer = CexPrinter(mapback, cex, mystream, True)
         printer.print_cex()
-#        self.assertTrue("SPEC [CB] [ENTRY] [l] void m1() |- [CI] [ENTRY] [l] void m2()" in mystream.getvalue())
+        self.assertTrue("SPEC [CB] [ENTRY] [l] void m1() |- [CI] [ENTRY] [l] void m2()" in mystream.getvalue())
 
 
 
-        
