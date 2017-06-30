@@ -357,7 +357,32 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
 
     def get_ground_spec(self):
+        """
+        Returns the list of ground specifications
+        """
         return self.ground_specs
+
+    def get_orig_ground_spec(self):
+        """
+        Returns a map where the key is one of the original
+        specifications, and the value is the list of specification
+        obtained by grounding the original spec.
+        """
+
+        ground_spec_map = {}
+        for spec in self.ground_specs:
+            orig_spec = self.gs.get_source_spec(spec)
+            assert orig_spec is not None
+
+            if orig_spec in ground_spec_map:
+                spec_list = ground_spec_map[orig_spec]
+            else:
+                spec_list = []
+                ground_spec_map[orig_spec] = spec_list
+            spec_list.append(spec)
+
+        return ground_spec_map
+
 
     @staticmethod
     def _compute_ground_spec(gs, specs, stats = None):
