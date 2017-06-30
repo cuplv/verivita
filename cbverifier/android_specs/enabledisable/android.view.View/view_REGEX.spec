@@ -15,14 +15,19 @@ REGEXP view_onClick_enabled_set_has(view) = [(view_onClick_enabled_set_just(view
 
 
 //Regular expression is true when this is a view we know is attached to an Activity
-REGEXP view_attached_has(act,view) = [TRUE[*];view = [CI] [EXIT] [act] android.view.View android.app.Activity.findViewById(# : int);TRUE[*]]; 
+REGEXP view_attached_has(act,view) = [TRUE[*];
+	(view = [CI] [EXIT] [act] android.view.View android.app.Activity.findViewById(# : int))
+	| (toolbar = [CI] [EXIT] [act] android.view.View android.app.Activity.findViewById(# : int);TRUE[*];[CI] [ENTRY] [toolbar] void android.support.v7.widget.Toolbar.setNavigationOnClickListener(listener : android.view.View$OnClickListener))
+;TRUE[*]]; 
 
 //Circumstances where we say we lose precision (later this should handle findViewByID on view objects and other nested things)
 //All of these probably could be specified but we need to lazily instantiate to avoid too much work
 REGEXP view_lose_precision(view) = [TRUE[*];
 	(
 		view = [CI] [EXIT] [#] android.view.View android.app.Dialog.findViewById(# : int)
-		| view = [CI] [EXIT] [#] android.view.View android.view.LayoutInflater.inflate(# : int,# : android.view.ViewGroup,# : boolean)
+		| view = [CI] [EXIT] [#] android.view.View android.view.LayoutInflater.inflate(# : int, # : android.view.ViewGroup,# : boolean)
+		| view = [CI] [EXIT] [#] android.view.View android.view.LayoutInflater.inflate(# : int, # : android.view.ViewGroup)
+		| view = [CI] [EXIT] [#] android.view.View android.view.View.findViewById(# : int)
 	)
 ;TRUE[*]] 
 
