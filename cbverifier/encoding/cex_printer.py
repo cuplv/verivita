@@ -16,17 +16,16 @@ class CexPrinter:
     """ Base class used to print a cex.
     """
 
-    def __init__(self, mapback, cex, out_stream=None):
+    def __init__(self, mapback, cex, out_stream=None, print_orig_spec=False):
         self._mapback = mapback
 
         assert cex is not None
-
         self._cex = cex
-
         if (None == out_stream):
             self.out_stream = sys.stdout
         else:
             self.out_stream = out_stream
+        self.print_orig_spec = print_orig_spec
 
     def _print_sep(self):
         sep = "----------------------------------------\n"
@@ -111,12 +110,20 @@ class CexPrinter:
 
                 fired_specs = self._mapback.get_fired_spec(prev_step, step, True)
                 if len(fired_specs) > 0:
-                    self.out_stream.write("    Matched specifications:\n")
+                    sep = "    "
+                    self.out_stream.write("%sMatched specifications:\n" % sep)
                     for s in fired_specs:
                         (ground, spec) = s
-                        self.out_stream.write("    ")
+                        self.out_stream.write(sep)
                         ground.print_spec(self.out_stream)
                         self.out_stream.write("\n")
+
+                        if self.print_orig_spec:
+                            self.out_stream.write("%s%sGrounded from the spec:\n" % (sep,sep))
+                            self.out_stream.write("%s%s" % (sep,sep))
+                            spec.print_spec(self.out_stream)
+                            self.out_stream.write("\n")
+
 
                 if (self._mapback.is_error(step)):
                     # TODO: add precise list of callins that end in error
