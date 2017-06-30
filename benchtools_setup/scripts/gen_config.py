@@ -5,7 +5,9 @@ subexpressions = [
     "cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec",
     "cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec",
     "cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec",
-    "cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec"
+    "cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec",
+    "cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec",
+    "cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec"
 ]
 enable_disable_rules = {
     "lifestate" : [
@@ -15,8 +17,9 @@ enable_disable_rules = {
         "cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec",
         "cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec",
         "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec",
-        "cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec", # TODO: this one is having precision issue
-        "cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec"
+        "cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec",
+        "cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec",
+        "cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec"
     ],
     "lifecycle" : [
         "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec",
