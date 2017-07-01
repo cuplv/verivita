@@ -1,0 +1,4 @@
+collected 4 apps and manually removed all alarms by specifying rules except 2
+1 real "defect" in sgtpuzzles where show is called in "onNewIntent".  App author catches exception and does nothing.
+1 alarm which is potentially false due to dismiss in a runnable.run method posted from another thread.  It may be a real alarm but debugging will be hard so not doing this yet.
+
