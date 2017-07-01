@@ -68,7 +68,7 @@ environment = "[environment]\n" \
 
 params = "executable =./scripts/verify.sh\n" \
     "basedir=/\n" \
-    "time_limit=1000\n" \
+    "time_limit=1500\n" \
     "mem_limit=4000000\n" \
     "email=\n"\
     "disabled=false"
