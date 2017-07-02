@@ -86,11 +86,13 @@ class Driver:
             self.trace.print_trace(stream, self.opts.debug)
         stream.write("\n")
 
-    def get_ground_specs(self):
+    def get_ground_specs(self, get_map = False):
         ts_enc = TSEncoder(self.trace, self.spec_list, False, self.stats)
-        ground_specs = ts_enc.get_ground_spec()
+        if not get_map:
+            ground_specs = ts_enc.get_ground_spec()
+        else:
+            ground_specs = ts_enc.get_orig_ground_spec()
         return ground_specs
-
 
     def run_bmc(self, depth, inc=False):
         ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace,
@@ -209,6 +211,18 @@ def print_ground_spec(ground_specs, out=sys.stdout):
         spec.print_spec(out)
         out.write("\n")
 
+def print_ground_spec_map(ground_spec_map, out=sys.stdout):
+    out.write("List of ground specifications:\n")
+
+    for orig_spec, ground_spec_list in ground_spec_map.iteritems():
+        out.write("Ground specs for: ")
+        orig_spec.print_spec(out)
+        out.write("\n----\n")
+        for spec in ground_spec_list:
+            spec.print_spec(out)
+            out.write("\n")
+        out.write("----\n")
+
 def check_disable(ground_specs):
     has_disable = False
     for spec in ground_specs:
@@ -283,6 +297,11 @@ def main(input_args=None):
                  "(message ids) to be simulated.")
 
     # Miscellaneous
+    p.add_option('-x', '--print_orig_spec', action="store_true",
+                 default=False, help="Print the original spec")
+
+
+
     p.add_option('-l', '--filter', help="When running check-files this will only: filter all messages to the ones"
                                         "where type is matched")
 
@@ -355,6 +374,11 @@ def main(input_args=None):
     else:
         logging.basicConfig(level=logging.INFO)
 
+    if (opts.print_orig_spec):
+        print_orig_spec = True
+    else:
+        print_orig_spec = False        
+
     driver_opts = DriverOptions(opts.tracefile,
                                 opts.traceformat,
                                 spec_file_list,
@@ -369,13 +393,18 @@ def main(input_args=None):
         driver.check_files(sys.stdout)
         return 0
     elif (opts.mode == "show-ground-specs"):
-        ground_specs = driver.get_ground_specs()
-        print_ground_spec(ground_specs)
+        if print_orig_spec:
+            ground_specs_map = driver.get_ground_specs(True)
+            print_ground_spec_map(ground_specs_map)
+        else:
+            ground_specs = driver.get_ground_specs()
+            print_ground_spec(ground_specs)
+
     elif (opts.mode == "bmc"):
         (cex, mapback) = driver.run_bmc(depth, opts.bmc_inc)
 
         if (cex is not None):
-            printer = CexPrinter(mapback, cex, sys.stdout)
+            printer = CexPrinter(mapback, cex, sys.stdout, print_orig_spec)
             printer.print_cex()
         else:
             print "No bugs found up to %d steps" % (depth)
@@ -385,7 +414,7 @@ def main(input_args=None):
 
         if (cex is not None):
             print "\nThe trace can be simulated in %d steps." % steps
-            printer = CexPrinter(mapback, cex, sys.stdout)
+            printer = CexPrinter(mapback, cex, sys.stdout, print_orig_spec)
             printer.print_cex()
         else:
             print("The trace cannot be simulated (it gets stuck at the " +
@@ -397,7 +426,7 @@ def main(input_args=None):
                     print("Cannot simulate the first event!")
                 else:
                     print("Last simulable trace:")
-                    printer = CexPrinter(mapback, last_cex, sys.stdout)
+                    printer = CexPrinter(mapback, last_cex, sys.stdout, print_orig_spec)
                     printer.print_cex()
 
                     print("\n--- WARNING: the trace *CANNOT* be simulated! ---")
@@ -423,7 +452,7 @@ def main(input_args=None):
             print("The system can reach an error state.")
 
             if (cex is not None):
-                printer = CexPrinter(mapback, cex, sys.stdout)
+                printer = CexPrinter(mapback, cex, sys.stdout, print_orig_spec)
                 printer.print_cex()
 
 

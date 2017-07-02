@@ -14,8 +14,10 @@ try:
 except ImportError:
     import unittest
 
-from cbverifier.driver import main, DriverOptions, Driver, NoDisableException, check_disable
+from cbverifier.driver import main, DriverOptions, Driver, NoDisableException
+from cbverifier.driver import check_disable, print_ground_spec_map
 from cbverifier.traces.ctrace import MalformedTraceException, TraceEndsInErrorException
+from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.utils.stats import Stats
 import cbverifier.test.examples
 
@@ -148,3 +150,42 @@ class TestEnc(unittest.TestCase):
         self.assertTrue(Stats.ENCODING_TIME in mystream.getvalue())
         driver.stats.write_times(mystream, Stats.VERIFICATION_TIME)
         self.assertTrue(Stats.VERIFICATION_TIME in mystream.getvalue())
+
+
+    def test_print_orig_spec(self):
+        # Test of the printing the original specification
+        test_path = os.path.dirname(cbverifier.test.examples.__file__)
+
+        t1 = os.path.join(test_path, "trace1.json")
+        s1 = os.path.join(test_path, "spec1.spec")
+
+        # TODO Add driver options
+        driver_opts = DriverOptions(t1,
+                                    "json",
+                                    [s1],
+                                    False,
+                                    False,
+                                    None)
+
+        driver = Driver(driver_opts)
+        self.stats = Stats()
+        driver.check_files(sys.stdout)
+
+        ground_specs_map = driver.get_ground_specs(True)
+        assert(ground_specs_map is not None)
+
+        mystream = StringIO()        
+        print_ground_spec_map(ground_specs_map, mystream)
+
+        self.assertTrue("SPEC [CB] [ENTRY] [l] void m1() |- [CI] [ENTRY] [l] void m2()" in mystream.getvalue())
+
+
+        (cex, mapback) = driver.run_bmc(2)
+        assert (cex is not None)
+        mystream = StringIO()
+        printer = CexPrinter(mapback, cex, mystream, True)
+        printer.print_cex()
+        self.assertTrue("SPEC [CB] [ENTRY] [l] void m1() |- [CI] [ENTRY] [l] void m2()" in mystream.getvalue())
+
+
+
