@@ -6,7 +6,8 @@ SPEC (PopupMenu_attached_to_activity_has(act,pop)) & (TRUE[*];Activity_all_onRes
 //SPEC (PopupMenu_attached_to_activity_has(act,pop)) & (TRUE[*];Activity_all_onResume(act); (((!(Activity_all_onPause(act)))[*]))) & PopupMenu_listener_registered_just(pop,list) |+ [CB] [ENTRY] [list] boolean android.widget.PopupMenu$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
 
 //Activity resume enable
-//TODO: write this when simulation fails because of it
+SPEC (PopupMenu_attached_to_activity_has(act,pop)) & (TRUE[*];Activity_all_onResume(act)) & (PopupMenu_listener_registered_just(pop,list);TRUE[*]) |+ [CB] [ENTRY] [list] boolean android.widget.PopupMenu$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
+
 
 //Activity pause disable
 SPEC (PopupMenu_attached_to_activity_has(act,pop)) & (PopupMenu_listener_registered_just(pop,list);TRUE[*]) & (TRUE[*];Activity_all_onPause(act)) |- [CB] [ENTRY] [list] boolean android.widget.PopupMenu$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
