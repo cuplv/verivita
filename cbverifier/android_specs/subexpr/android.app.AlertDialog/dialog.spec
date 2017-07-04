@@ -13,6 +13,8 @@ REGEXP AlertDialog_attached_to_activity(act,dialog) = [(AlertDialogBuilder_init(
 	| [CI] [ENTRY] [dialog] void android.app.AlertDialog.<init>(act : android.content.Context)
 ];
 
+REGEXP AlertDialog_losePrecision(dialog) = [FALSE]; //smaller corpus, no examples of attached to activity failing
+
 //REGEXP AlertDialog_direct_init(act,dialog) = [([CI] [ENTRY] [dialog] void android.app.AlertDialog.<init>(act : android.content.Context))];
 
 
