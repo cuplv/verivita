@@ -1,0 +1,68 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/fdroid_manually_curated/apps/name.boyle.chris.sgtpuzzles/115/traces/manual1.trace.repaired
+/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec
+/home/s/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/fdroid_manually_curated/apps/name.boyle.chris.sgtpuzzles/115/traces/manual1.trace.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 9.920000
+parsing - System time: 0.820000
+
+TRACE STATISTICS
+Trace length: 134920
+Top-level callbacks: 15404
+CI-ENTRY: 6114
+CI-EXIT: 6415
+CB-ENTRY: 1257
+CB-EXIT: 1275
+        
+---Simplified Trace---
+[44520] [CB] [ENTRY] void name.boyle.chris.sgtpuzzles.GamePlay.onResume() (eddf153) 
+  [44639] [CI] [ENTRY] void android.app.ProgressDialog.<init>(android.content.Context) (58e810d,eddf153) 
+  [44639] [CI] [EXIT] void android.app.ProgressDialog.<init>(android.content.Context) (58e810d,eddf153) 
+[44520] [CB] [EXIT] void name.boyle.chris.sgtpuzzles.GamePlay.onResume() (eddf153) 
+[49669] [CB] [ENTRY] void name.boyle.chris.sgtpuzzles.-$Lambda$46.run() (fee774d) 
+  [50490] [CI] [ENTRY] void android.app.Dialog.dismiss() (58e810d) 
+  [50490] [CI] [EXIT] void android.app.Dialog.dismiss() (58e810d) 
+[49669] [CB] [EXIT] void name.boyle.chris.sgtpuzzles.-$Lambda$46.run() (fee774d) 
+[95463] [CB] [ENTRY] void name.boyle.chris.sgtpuzzles.GamePlay.onPause() (eddf153) 
+[95463] [CB] [EXIT] void name.boyle.chris.sgtpuzzles.GamePlay.onPause() (eddf153) 
+
+
+
+TRACE STATISTICS
+Trace length: 5
+Top-level callbacks: 3
+CI-ENTRY: 2
+CI-EXIT: 0
+CB-ENTRY: 3
+CB-EXIT: 0
+        verification - User time: 0.044000
+verification - System time: 0.040000
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[44520] [CB] [ENTRY] void name.boyle.chris.sgtpuzzles.GamePlay.onResume() (eddf153) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[44639] [CI] [ENTRY] void android.app.ProgressDialog.<init>(android.content.Context) (58e810d,eddf153) 
+----------------------------------------
+Step: 3
+----------------------------------------
+[95463] [CB] [ENTRY] void name.boyle.chris.sgtpuzzles.GamePlay.onPause() (eddf153) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); [CI] [ENTRY] [58e810d] void android.app.ProgressDialog.<init>(eddf153 : android.content.Context)); ((TRUE)[*])); [CB] [ENTRY] [eddf153] void name.boyle.chris.sgtpuzzles.GamePlay.onPause()) |- [CI] [ENTRY] [58e810d] void android.app.Dialog.dismiss()
+----------------------------------------
+Step: 4
+----------------------------------------
+[49669] [CB] [ENTRY] void name.boyle.chris.sgtpuzzles.-$Lambda$46.run() (fee774d) 
+----------------------------------------
+Step: 5
+----------------------------------------
+[50490] [CI] [ENTRY] void android.app.Dialog.dismiss() (58e810d) 
+    Reached an error state in step 5!
+----------------------------------------

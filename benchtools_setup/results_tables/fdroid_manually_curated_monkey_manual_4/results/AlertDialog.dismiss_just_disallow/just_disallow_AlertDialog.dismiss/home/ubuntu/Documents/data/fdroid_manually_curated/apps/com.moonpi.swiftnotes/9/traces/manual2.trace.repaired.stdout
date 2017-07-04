@@ -1,0 +1,80 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/fdroid_manually_curated/apps/com.moonpi.swiftnotes/9/traces/manual2.trace.repaired
+/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec
+/home/s/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/fdroid_manually_curated/apps/com.moonpi.swiftnotes/9/traces/manual2.trace.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 5.510000
+parsing - System time: 0.360000
+
+TRACE STATISTICS
+Trace length: 70974
+Top-level callbacks: 6553
+CI-ENTRY: 3144
+CI-EXIT: 3257
+CB-ENTRY: 2306
+CB-EXIT: 2375
+        
+---Simplified Trace---
+[50] [CB] [ENTRY] void com.moonpi.swiftnotes.MainActivity.onCreate(android.os.Bundle) (6f0bc24,NULL) 
+  [3239] [CI] [ENTRY] void android.app.AlertDialog$Builder.<init>(android.content.Context) (247c6e7,6f0bc24) 
+  [3239] [CI] [EXIT] void android.app.AlertDialog$Builder.<init>(android.content.Context) (247c6e7,6f0bc24) 
+  [3269] [CI] [ENTRY] android.app.AlertDialog android.app.AlertDialog$Builder.create() (247c6e7) 
+  [3269] [CI] [EXIT] b8dbbc1 = android.app.AlertDialog android.app.AlertDialog$Builder.create() (247c6e7) 
+[50] [CB] [EXIT] void com.moonpi.swiftnotes.MainActivity.onCreate(android.os.Bundle) (6f0bc24,NULL) 
+[3466] [CB] [ENTRY] void com.moonpi.swiftnotes.MainActivity.onResume() (6f0bc24) 
+[3466] [CB] [EXIT] void com.moonpi.swiftnotes.MainActivity.onResume() (6f0bc24) 
+[5164] [CB] [ENTRY] void com.moonpi.swiftnotes.MainActivity.onPause() (6f0bc24) 
+[5164] [CB] [EXIT] void com.moonpi.swiftnotes.MainActivity.onPause() (6f0bc24) 
+[49054] [CB] [ENTRY] void com.moonpi.swiftnotes.MainActivity.onResume() (6f0bc24) 
+[49054] [CB] [EXIT] void com.moonpi.swiftnotes.MainActivity.onResume() (6f0bc24) 
+[55102] [CB] [ENTRY] void com.moonpi.swiftnotes.MainActivity$5.onClick(android.content.DialogInterface,int) (79ba248,b8dbbc1,-1) 
+  [55143] [CI] [ENTRY] void android.app.Dialog.dismiss() (b8dbbc1) 
+  [55143] [CI] [EXIT] void android.app.Dialog.dismiss() (b8dbbc1) 
+[55102] [CB] [EXIT] void com.moonpi.swiftnotes.MainActivity$5.onClick(android.content.DialogInterface,int) (79ba248,b8dbbc1,-1) 
+[67626] [CB] [ENTRY] void com.moonpi.swiftnotes.MainActivity.onPause() (6f0bc24) 
+[67626] [CB] [EXIT] void com.moonpi.swiftnotes.MainActivity.onPause() (6f0bc24) 
+
+
+
+TRACE STATISTICS
+Trace length: 9
+Top-level callbacks: 6
+CI-ENTRY: 2
+CI-EXIT: 1
+CB-ENTRY: 4
+CB-EXIT: 0
+        verification - User time: 0.096000
+verification - System time: 0.032000
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[50] [CB] [ENTRY] void com.moonpi.swiftnotes.MainActivity.onCreate(android.os.Bundle) (6f0bc24,NULL) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[3239] [CI] [ENTRY] void android.app.AlertDialog$Builder.<init>(android.content.Context) (247c6e7,6f0bc24) 
+----------------------------------------
+Step: 3
+----------------------------------------
+[3269] [CI] [EXIT] b8dbbc1 = android.app.AlertDialog android.app.AlertDialog$Builder.create() (247c6e7) 
+----------------------------------------
+Step: 4
+----------------------------------------
+[67626] [CB] [ENTRY] void com.moonpi.swiftnotes.MainActivity.onPause() (6f0bc24) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); (([CI] [ENTRY] [247c6e7] void android.app.AlertDialog$Builder.<init>(6f0bc24 : android.content.Context); ((TRUE)[*])); b8dbbc1 = [CI] [EXIT] [247c6e7] android.app.AlertDialog android.app.AlertDialog$Builder.create())); ((TRUE)[*])); ([CB] [ENTRY] [6f0bc24] void com.moonpi.swiftnotes.MainActivity.onPause() | [CB] [ENTRY] [6f0bc24] void com.moonpi.swiftnotes.MainActivity.onPause())) |- [CI] [ENTRY] [b8dbbc1] void android.app.Dialog.dismiss()
+----------------------------------------
+Step: 5
+----------------------------------------
+[55102] [CB] [ENTRY] void com.moonpi.swiftnotes.MainActivity$5.onClick(android.content.DialogInterface,int) (79ba248,b8dbbc1,-1) 
+----------------------------------------
+Step: 6
+----------------------------------------
+[55143] [CI] [ENTRY] void android.app.Dialog.dismiss() (b8dbbc1) 
+    Reached an error state in step 6!
+----------------------------------------
