@@ -1,0 +1,46 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/fdroid_manually_curated/apps_traceerr/de.skubware.opentraining/31/traces/manual1.trace.repaired
+/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec
+/home/s/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/fdroid_manually_curated/apps_traceerr/de.skubware.opentraining/31/traces/manual1.trace.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 10.750000
+parsing - System time: 0.860000
+
+TRACE STATISTICS
+Trace length: 28336
+Top-level callbacks: 1625
+CI-ENTRY: 1310
+CI-EXIT: 1360
+CB-ENTRY: 452
+CB-EXIT: 471
+        
+---Simplified Trace---
+[1782] [CB] [ENTRY] void de.skubware.opentraining.activity.MainActivity.onCreate(android.os.Bundle) (4c8a486,NULL) 
+  [13477] [CI] [ENTRY] void android.app.AlertDialog.<init>(android.content.Context) (ddf6592,4c8a486) 
+  [13477] [CI] [EXIT] void android.app.AlertDialog.<init>(android.content.Context) (ddf6592,4c8a486) 
+[1782] [CB] [EXIT] void de.skubware.opentraining.activity.MainActivity.onCreate(android.os.Bundle) (4c8a486,NULL) 
+[17813] [CB] [ENTRY] void de.skubware.opentraining.activity.MainActivity.onResume() (4c8a486) 
+[17813] [CB] [EXIT] void de.skubware.opentraining.activity.MainActivity.onResume() (4c8a486) 
+[56716] [CB] [ENTRY] void de.skubware.opentraining.activity.DisclaimerDialog$1.onClick(android.content.DialogInterface,int) (67455c4,ddf6592,-1) 
+  [56723] [CI] [ENTRY] void android.app.Dialog.dismiss() (ddf6592) 
+  [56723] [CI] [EXIT] void android.app.Dialog.dismiss() (ddf6592) 
+[56716] [CB] [EXIT] void de.skubware.opentraining.activity.DisclaimerDialog$1.onClick(android.content.DialogInterface,int) (67455c4,ddf6592,-1) 
+[56856] [CB] [ENTRY] void de.skubware.opentraining.activity.DisclaimerDialog.dismiss() (ddf6592) 
+  [56857] [CI] [ENTRY] void android.app.Dialog.dismiss() (ddf6592) 
+  [56857] [CI] [EXIT] void android.app.Dialog.dismiss() (ddf6592) 
+[56856] [CB] [EXIT] void de.skubware.opentraining.activity.DisclaimerDialog.dismiss() (ddf6592) 
+
+
+
+TRACE STATISTICS
+Trace length: 7
+Top-level callbacks: 4
+CI-ENTRY: 2
+CI-EXIT: 0
+CB-ENTRY: 4
+CB-EXIT: 0
+        verification - User time: 0.032000
+verification - System time: 0.020000
+The trace is SAFE
