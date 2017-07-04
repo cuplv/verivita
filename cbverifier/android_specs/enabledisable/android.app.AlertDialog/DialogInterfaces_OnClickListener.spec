@@ -7,6 +7,7 @@ SPEC (TRUE[*]; AlertDialog_builder_show_just(dialog, clickListener);TRUE[*]) & (
 
 //just registered
 
+//TODO: activity not visible macro replacement
 SPEC (TRUE[*]; AlertDialog_builder_show_just(dialog, clickListener)) &  (TRUE[*];AlertDialog_attached_to_activity(act,dialog);TRUE[*]) & (TRUE[*]; Activity_all_onResume(act);((!(Activity_all_onPause(act))) & TRUE)[*])
   |+ [CB] [ENTRY] [clickListener] void android.content.DialogInterface$OnClickListener.onClick(dialog : android.content.DialogInterface,# : int);
 
@@ -18,5 +19,11 @@ SPEC (TRUE[*]; AlertDialog_builder_show_just(dialog, clickListener)) &  (TRUE[*]
 
 //activity just paused
 SPEC (TRUE[*]; AlertDialog_builder_show_just(dialog, clickListener);TRUE[*]) & (TRUE[*];Activity_all_onPause(act)) & (TRUE[*];AlertDialog_attached_to_activity(act,dialog);TRUE[*])
- |- [CB] [ENTRY] [clickListener] void android.content.DialogInterface$OnClickListener.onClick(dialog : android.content.DialogInterface,# : int)
+ |- [CB] [ENTRY] [clickListener] void android.content.DialogInterface$OnClickListener.onClick(dialog : android.content.DialogInterface,# : int);
+
+//show with no activity attached
+
+SPEC (TRUE[*]; AlertDialog_builder_show_just(dialog, clickListener)) & AlertDialog_losePrecision(dialog)
+  |+ [CB] [ENTRY] [clickListener] void android.content.DialogInterface$OnClickListener.onClick(dialog : android.content.DialogInterface,# : int)
+
 

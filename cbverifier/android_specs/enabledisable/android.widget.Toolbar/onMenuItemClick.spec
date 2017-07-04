@@ -6,6 +6,12 @@ SPEC view_attached_has(act,toolbar) &
 	Activity_writ_onResumed_has(act) |+
 		[CB] [ENTRY] [listener] boolean android.support.v7.widget.Toolbar$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
 
+//lose precision
+SPEC view_lose_precision(toolbar) &
+	Toolbar_listener_registered_just(toolbar,listener) |+
+		[CB] [ENTRY] [listener] boolean android.support.v7.widget.Toolbar$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
+
+
 
 //activity resumed enable
 SPEC view_attached_has(act,toolbar) &
@@ -17,8 +23,15 @@ SPEC view_attached_has(act,toolbar) &
 //activity paused disable
 SPEC view_attached_has(act,toolbar) &
 	Toolbar_listener_registered_has(toolbar,listener) &
-	(TRUE[*];Activity_all_onPause(act)) |-
+	Activity_not_visible_just(act) |-
 		[CB] [ENTRY] [listener] boolean android.support.v7.widget.Toolbar$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem)
+
+////activity paused disable
+//SPEC view_attached_has(act,toolbar) &
+//	Toolbar_listener_registered_has(toolbar,listener) &
+//	(TRUE[*];Activity_all_onDestroy(act)) |-
+//		[CB] [ENTRY] [listener] boolean android.support.v7.widget.Toolbar$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem)
+
 
 	
 
