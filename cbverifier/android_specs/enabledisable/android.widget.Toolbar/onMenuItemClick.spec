@@ -18,7 +18,14 @@ SPEC view_attached_has(act,toolbar) &
 SPEC view_attached_has(act,toolbar) &
 	Toolbar_listener_registered_has(toolbar,listener) &
 	(TRUE[*];Activity_all_onPause(act)) |-
+		[CB] [ENTRY] [listener] boolean android.support.v7.widget.Toolbar$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
+
+//activity paused disable
+SPEC view_attached_has(act,toolbar) &
+	Toolbar_listener_registered_has(toolbar,listener) &
+	(TRUE[*];Activity_all_onDestroy(act)) |-
 		[CB] [ENTRY] [listener] boolean android.support.v7.widget.Toolbar$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem)
+
 
 	
 
