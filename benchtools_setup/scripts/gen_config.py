@@ -2,26 +2,48 @@ import argparse
 import os
 
 subexpressions = [
-    "cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec",
+
     "cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec",
     "cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec",
-    "cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec",
+
     "cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec",
-    "cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec"
+    # "cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec", #TODO
+
 ]
+#TODO: factor view attachment out of other view regex
 enable_disable_rules = {
-    "lifestate" : [
-        "cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec",
+    "lifestate_va1": [
+        "cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec",
+        "cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec", #va1 sub
         "cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec",
         "cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec",
         "cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec",
         "cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec",
         "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec",
+        "cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec", #va1 sub
         "cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec",
+        "cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec", #va1 sub
         "cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec",
+        "cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec", #va1 sub
+        "cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec"
+    ],
+    "lifestate_va0": [
+        "cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec",
+        "cbverifier/android_specs/enabledisable/android.view.View/view_REGEX_va0.spec",
+        "cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec",
+        "cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec",
+        "cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec",
+        "cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec",
+        "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec",
+        "cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog_va0.spec", #va1 sub
+        "cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec",
+        "cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu_va0.spec", #va1 sub #TODO
+        "cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec",
+        "cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec", #va1 sub,same since uses view attach
         "cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec"
     ],
     "lifecycle" : [
+        "cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec",
         "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec",
         "cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec"
     ],
