@@ -1,7 +1,7 @@
 SPEC FALSE[*] |- [CB] [ENTRY] [#] boolean android.widget.PopupMenu$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
 
 //Listener registration enable
-SPEC (PopupMenu_attached_to_activity_has(act,pop)) & (TRUE[*];Activity_all_onResume(act); ((!(Activity_all_onPause(act))) & TRUE)[*]) & PopupMenu_listener_registered_just(pop,list) |+ [CB] [ENTRY] [list] boolean android.widget.PopupMenu$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
+SPEC (PopupMenu_attached_to_activity_has(act,pop)) & Activity_writ_onResumed_has(act) & PopupMenu_listener_registered_just(pop,list) |+ [CB] [ENTRY] [list] boolean android.widget.PopupMenu$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
 
 //Lose precision listener enable
 SPEC PopupMenu_losePrecision(pop) & PopupMenu_listener_registered_just(pop,list) |+ [CB] [ENTRY] [list] boolean android.widget.PopupMenu$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
@@ -24,7 +24,7 @@ SPEC (PopupMenu_attached_to_activity_has(act,pop)) & (PopupMenu_listener_registe
 SPEC FALSE[*] |- [CB] [ENTRY] [#] boolean android.support.v7.widget.PopupMenu$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
 
 //Listener registration enable
-SPEC (PopupMenu_attached_to_activity_has(act,pop)) & (TRUE[*];Activity_all_onResume(act); ((!(Activity_all_onPause(act))) & TRUE)[*]) & PopupMenu_listener_registered_just(pop,list) |+ [CB] [ENTRY] [list] boolean android.support.v7.widget.PopupMenu$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
+SPEC (PopupMenu_attached_to_activity_has(act,pop)) & Activity_writ_onResumed_has(act) & PopupMenu_listener_registered_just(pop,list) |+ [CB] [ENTRY] [list] boolean android.support.v7.widget.PopupMenu$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
 
 
 //Lose precision
