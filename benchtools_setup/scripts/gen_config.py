@@ -45,7 +45,8 @@ enable_disable_rules = {
     "lifecycle" : [
         "cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec",
         "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec",
-        "cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec"
+        "cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec",
+	"cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec"
     ],
     "just_disallow" : [
 
@@ -88,9 +89,10 @@ environment = "[environment]\n" \
     "num_cores = 1\n"
 
 
+#"time_limit=28800\n" \
 params = "executable =./scripts/verify.sh\n" \
     "basedir=/\n" \
-    "time_limit=28800\n" \
+    "time_limit=3600\n" \
     "mem_limit=4000000\n" \
     "email=\n"\
     "disabled=false"
