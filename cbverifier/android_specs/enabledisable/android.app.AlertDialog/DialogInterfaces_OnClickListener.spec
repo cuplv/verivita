@@ -18,7 +18,7 @@ SPEC (TRUE[*]; AlertDialog_builder_show_just(dialog, clickListener)) &  (TRUE[*]
 
 
 //activity just paused
-SPEC (TRUE[*]; AlertDialog_builder_show_just(dialog, clickListener);TRUE[*]) & (TRUE[*];Activity_all_onPause(act)) & (TRUE[*];AlertDialog_attached_to_activity(act,dialog);TRUE[*])
+SPEC (TRUE[*]; AlertDialog_builder_show_just(dialog, clickListener);TRUE[*]) & Activity_not_visible_just(act) & (TRUE[*];AlertDialog_attached_to_activity(act,dialog);TRUE[*])
  |- [CB] [ENTRY] [clickListener] void android.content.DialogInterface$OnClickListener.onClick(dialog : android.content.DialogInterface,# : int);
 
 //show with no activity attached
