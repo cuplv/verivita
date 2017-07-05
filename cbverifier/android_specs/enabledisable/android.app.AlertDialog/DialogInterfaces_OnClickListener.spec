@@ -24,6 +24,7 @@ SPEC (TRUE[*]; AlertDialog_builder_show_just(dialog, clickListener);TRUE[*]) & A
 //show with no activity attached
 
 SPEC (TRUE[*]; AlertDialog_builder_show_just(dialog, clickListener)) & AlertDialog_losePrecision(dialog)
-  |+ [CB] [ENTRY] [clickListener] void android.content.DialogInterface$OnClickListener.onClick(dialog : android.content.DialogInterface,# : int)
+  |+ [CB] [ENTRY] [clickListener] void android.content.DialogInterface$OnClickListener.onClick(dialog : android.content.DialogInterface,# : int);
 
-
+//DialogPreference init Note: DialogPreference itself is a DialogInterface$OnClickListener so just instantiating it registers it, we will add precision later as needed
+SPEC TRUE[*];[CB] [ENTRY] [clickListener] void android.preference.DialogPreference.<init>(# : android.content.Context, # : android.util.AttributeSet) |+ [CB] [ENTRY] [clickListener] void android.content.DialogInterface$OnClickListener.onClick(# : android.content.DialogInterface,# : int)
