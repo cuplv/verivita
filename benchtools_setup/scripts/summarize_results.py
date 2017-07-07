@@ -21,16 +21,23 @@ class ResultCount:
         elif "time Timeout" in resultline:
             self.timeout += 1
             self.total +=1
+        else:
+            self.timeout += 1
+            self.total +=1
     def toString(self):
         return "safe: %i, unsafe: %i, readerr: %i, timeout %i" % (self.safe, self.unsafe, self.read_error, self.timeout)
 def pathToAppId(outpath, alias_map):
     outpath_pieces = outpath.split("/")
-    if len(outpath_pieces) > 3:
-        appname = outpath_pieces[-4]
-        if appname.isdigit():
-            appname = outpath_pieces[-5]
+    if outpath_pieces[5] == "monkey_traces": #TODO: split data not on file path, this is a bad way to do it
+        pass
+        appname = outpath_pieces[-3]
     else:
-        raise Exception("unparseable path")
+        if len(outpath_pieces) > 3:
+            appname = outpath_pieces[-4]
+            if appname.isdigit():
+                appname = outpath_pieces[-5]
+        else:
+            raise Exception("unparseable path")
     if appname in alias_map:
         return alias_map[appname]
     else:
@@ -66,20 +73,51 @@ if __name__ == "__main__":
                     replacewith = splitline[0].strip()
                     for mapfrom in splitline[1:]:
                         alias_map[mapfrom.strip()] = replacewith.strip()
-
+    set_alarmingTraces = set()
+    set_timeoutTraces = set()
+    set_safeTraces = set()
     results = {}
+    level_alarming_traces = {"just_disallow": set(), "lifecycle": set(), "lifestateva0": set(), "lifestateva1": set()}
+    level_timeout_traces = {"just_disallow": set(), "lifecycle": set(), "lifestateva0": set(), "lifestateva1": set()}
+    level_safe_traces = {"just_disallow": set(), "lifecycle": set(), "lifestateva0": set(), "lifestateva1": set()}
+    average_safe_trace_runtime = {"just_disallow": [], "lifecycle": [], "lifestateva0": [], "lifestateva1": []}
     for fname in toProcess:
         f = open(os.path.join(args.dir, fname))
         lines = f.readlines()
         resultlines = [line for line in lines if not line.strip().startswith("#")]
         appResults = {}
         if fname != "summary.txt":
+            level = ""
+            if "_just_disallow" in fname:
+                level = "just_disallow"
+            if "_lifestate_va0" in fname:
+                level = "lifestateva0"
+            if "_lifestate_va1" in fname:
+                level = "lifestateva1"
+            if "_lifecycle" in fname:
+                level = "lifecycle"
+
+
             for resultline in resultlines:
                 splitline = resultline.split(" ")
                 outputpath = splitline[0]
                 # try:
+
+
                 appname = pathToAppId(outputpath, alias_map)
                 if appname not in app_blacklist:
+                    if ("result ?" in resultline) or ("result Timeout" in resultline) or ("result ReadError" in resultline):
+                        set_timeoutTraces.add(outputpath)
+                        level_timeout_traces[level].add(outputpath)
+                    elif ("result Safe" in resultline):
+                        set_safeTraces.add(outputpath)
+                        level_safe_traces[level].add(outputpath)
+                        average_safe_trace_runtime[level].append(float(splitline[4]))
+                    elif ("result Unsafe" in resultline):
+                        set_alarmingTraces.add(outputpath)
+                        level_alarming_traces[level].add(outputpath)
+                    else:
+                        raise Exception("unparseable line")
                     if appname not in appResults:
                         appResults[appname] = ResultCount()
                         appResults[appname].update(resultline)
@@ -89,10 +127,11 @@ if __name__ == "__main__":
                 #     print "Unparsable line: %s" % resultline
             results[fname] = appResults
 
-    just_disallow = [x for x in results if "_justdisallow_" in x]
-    lifecycle_init = [x for x in results if ("_lifecycle_init_" in x)]
-    lifecycle = [x for x in results if ("_lifecycle_" in x) and (not "_lifecycle_init_" in x)]
-    lifestate = [x for x in results if "_lifestate_" in x]
+    just_disallow = [x for x in results if "_just_disallow" in x]
+    #lifecycle_init = [x for x in results if ("_lifecycle_init_" in x)]
+    lifecycle = [x for x in results if ("_lifecycle" in x) and (not "_lifecycle_init_" in x)]
+    lifestateva0 = [x for x in results if "_lifestate_va0" in x]
+    lifestateva1 = [x for x in results if "_lifestate_va1" in x]
 
     allApps = set()
     for result in results:
@@ -128,13 +167,40 @@ if __name__ == "__main__":
         print "total number of apps %i" % totApps
 
 
+    for i in xrange(3):
+        print ""
+
+    print "===full trace summary=="
+
+    print "total alarming traces: %i" % len(set_alarmingTraces)
+    print "total safe traces: %i" % len(set_safeTraces)
+    print "total timeout traces: %i" % len(set_timeoutTraces)
+    print "total alarm and timeout: %i" % len(set_alarmingTraces.union(set_timeoutTraces))
+    print "total traces in summary sets: %i" % len(set_timeoutTraces.union(set_alarmingTraces.union(set_safeTraces)))
+
+
+    print ""
+    print "===level trace summary==="
+    for level in level_alarming_traces:
+        print "--%s" % level
+        print "    alarming traces: %i" % len(level_alarming_traces[level])
+        print "    safe traces: %i" % len(level_safe_traces[level])
+        print "    timeout traces: %i" % len(level_timeout_traces[level])
+        print "    timeout and alarm traces: %i" % len(level_timeout_traces[level].union(level_alarming_traces[level]))
+        print "    total traces in summary: %i" % len(level_safe_traces[level].union(level_alarming_traces[level].union(level_timeout_traces[level])))
+
+
+    print ""
+    print "===app alarm summary==="
+
+
     # justdisallow
     just_disallow_alarm_apps = set()
     for property in just_disallow:
         app_results = results[property]
         for app in app_results:
             counts = app_results[app]
-            if counts.unsafe > 0:
+            if counts.unsafe > 0 or counts.timeout > 0:
                 just_disallow_alarm_apps.add(app)
     print "just disallow alarming apps total: %i" % len(just_disallow_alarm_apps)
 
@@ -143,29 +209,29 @@ if __name__ == "__main__":
         app_results = results[property]
         for app in app_results:
             counts = app_results[app]
-            if counts.unsafe > 0:
+            if counts.unsafe > 0 or counts.timeout > 0:
                 lifecycle_alarm_apps.add(app)
     print "lifecycle alarming apps total: %i" % len(lifecycle_alarm_apps)
 
-    lifecycle_init_alarm_apps = set()
-    for property in lifecycle_init:
+    lifestate_va0_alarm_apps = set()
+    for property in lifestateva0:
         app_results = results[property]
         for app in app_results:
             counts = app_results[app]
-            if counts.unsafe > 0:
-                lifecycle_init_alarm_apps.add(app)
+            if counts.unsafe > 0 or counts.timeout > 0:
+                lifestate_va0_alarm_apps.add(app)
 
-    print "lifecycle init alarming apps totoal: %i" % len(lifecycle_init_alarm_apps)
+    print "lifestate va0 alarming apps totoal: %i" % len(lifestate_va0_alarm_apps)
 
     lifestate_alarm_apps = set()
-    for property in lifestate:
+    for property in lifestateva1:
         app_results = results[property]
         for app in app_results:
             counts = app_results[app]
-            if counts.unsafe > 0:
+            if counts.unsafe > 0 or counts.timeout > 0:
                 lifestate_alarm_apps.add(app)
 
-    print "lifestate alarming apps totoal: %i" % len(lifestate_alarm_apps)
+    print "lifestate va1 alarming apps totoal: %i" % len(lifestate_alarm_apps)
 
     # lifecycle_init
 
@@ -177,6 +243,17 @@ if __name__ == "__main__":
         for app in allApps:
             all_apps_output.write(app + "\n")
         all_apps_output.close()
+
+
+    print ""
+    print "===Average Runtimes===="
+    for level in average_safe_trace_runtime:
+        print "--%s" %level
+        l = average_safe_trace_runtime[level]
+        if(len(l) > 0):
+            print "    avg: %f" % (sum(l)/len(l))
+        else:
+            print "    empty"
 
 
 #    results_split = {}
