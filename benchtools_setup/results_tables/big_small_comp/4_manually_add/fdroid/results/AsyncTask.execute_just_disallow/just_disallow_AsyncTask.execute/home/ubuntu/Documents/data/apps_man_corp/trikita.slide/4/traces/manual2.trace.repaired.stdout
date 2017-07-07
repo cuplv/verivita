@@ -1,0 +1,62 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/apps_man_corp/trikita.slide/4/traces/manual2.trace.repaired
+/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/s/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/apps_man_corp/trikita.slide/4/traces/manual2.trace.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 7.160000
+parsing - System time: 0.510000
+spec_grounding - User time: 0.010000
+spec_grounding - System time: 0.000000
+
+TRACE STATISTICS
+Trace length: 168942
+Top-level callbacks: 3550
+CI-ENTRY: 18683
+CI-EXIT: 27711
+CB-ENTRY: 1235
+CB-EXIT: 1336
+        
+---Simplified Trace---
+[146216] [CB] [ENTRY] void trikita.slide.ui.MainActivity.onActivityResult(int,int,android.content.Intent) (a3818d0,46,-1,644bb47) 
+  [146225] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (d2ac255,76f9f8) 
+  [146225] [CI] [EXIT] d2ac255 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (d2ac255,76f9f8) 
+[146216] [CB] [EXIT] void trikita.slide.ui.MainActivity.onActivityResult(int,int,android.content.Intent) (a3818d0,46,-1,644bb47) 
+
+
+
+TRACE STATISTICS
+Trace length: 2
+Top-level callbacks: 1
+CI-ENTRY: 1
+CI-EXIT: 0
+CB-ENTRY: 1
+CB-EXIT: 0
+        encoding - User time: 0.050000
+encoding - System time: 0.000000
+verification - User time: 0.016000
+verification - System time: 0.044000
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[146216] [CB] [ENTRY] void trikita.slide.ui.MainActivity.onActivityResult(int,int,android.content.Intent) (a3818d0,46,-1,644bb47) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[146225] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (d2ac255,76f9f8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [d2ac255] android.os.AsyncTask android.os.AsyncTask.execute(76f9f8 : java.lang.Object[])) |- [CI] [ENTRY] [d2ac255] android.os.AsyncTask android.os.AsyncTask.execute(76f9f8 : java.lang.Object[])
+----------------------------------------
+Step: 3
+----------------------------------------
+[146216] [CB] [ENTRY] void trikita.slide.ui.MainActivity.onActivityResult(int,int,android.content.Intent) (a3818d0,46,-1,644bb47) 
+----------------------------------------
+Step: 4
+----------------------------------------
+[146225] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (d2ac255,76f9f8) 
+    Reached an error state in step 4!
+----------------------------------------
