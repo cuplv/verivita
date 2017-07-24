@@ -489,36 +489,42 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         logging.info("Generating the encoding...")
 
-        self.ts = TransitionSystem()
-
         # 1. Encode all the variables of the system
         logging.info("Encoding the variables...")
         vars_ts = self._encode_vars()
-        self.ts.product(vars_ts)
         logging.info("Done encoding the variables.")
 
         # 2. Specs ts
         logging.info("Encoding the specification...")
-        (spec_ts, disabled_msg, accepting) = self._encode_ground_specs()
-        self.ts.product(spec_ts)
+        (ts_list, fc_ts, disabled_msg, accepting) = self._encode_ground_specs()
         logging.info("Done encoding the specification.")
 
         # 3. Encode the execution of the top-level callbacks
         logging.info("Encoding the trace...")
         (cb_ts, errors) = self._encode_cbs(disabled_msg)
-        self.ts.product(cb_ts)
         self.error_prop = FALSE_PYSMT()
         for e in errors:
             self.error_prop = Or(self.error_prop, e)
         self.mapback.set_error_condition(self.error_prop)
         logging.info("Done encoding the trace.")
 
-        self._encode_initial_conditions()
-        logging.info("Done generating the encoding.")
+        global_init = TRUE_PYSMT()
+        for ts in ts_list:
+            global_init = And(global_init, ts.init)
+        global_init = And(global_init, cb_ts.init)
+        global_init = And(global_init, fc_ts.init)
 
+        fc_ts = self._encode_initial_conditions(global_init, fc_ts)
+        self.ts = TransitionSystem()
+        self.ts.product(vars_ts)
+        for t in ts_list:
+            self.ts.product(t)
+        self.ts.product(cb_ts)
+        self.ts.product(fc_ts)
+
+        logging.info("Done generating the encoding.")
         logging.info("Miscellaneous stats:")
         logging.info("Ground specs: %d" % (len(self.ground_specs)))
-
         logging.info("State variables: %d" % (len(self.ts.state_vars)))
         logging.info("Input variables: %d" % (len(self.ts.input_vars)))
 
@@ -539,7 +545,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         of callin messages that can be disabled by some specification.
         """
 
-        ts = TransitionSystem()
+        # list of transition systems, one for each specification
+        ts_list = []
 
         # Accepting is a map from messages to set of states where the
         # message enabled status is changed (because the system matched
@@ -560,8 +567,14 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             gs_ts = self._get_ground_spec_ts(ground_spec,
                                              spec_id,
                                              accepting[key])
-            ts.product(gs_ts)
+            ts_list.append(gs_ts)
+            # ts.product(gs_ts)
             spec_id = spec_id + 1
+
+        # Transition system encoding the frame condition
+        fc_ts = TransitionSystem()
+        for t in ts_list:            
+            fc_ts.state_vars.update(t.state_vars)
 
         # encodes the frame conditions when there are no accepting
         # the frame conditions must be encoded globally
@@ -579,7 +592,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             fc_msg = Iff(msg_enabled,
                          Helper.get_next_var(msg_enabled,
                                              self.pysmt_env.formula_manager))
-
+            
             # If we do not end in the final states of the automata
             # the variable should not change
             #
@@ -589,9 +602,10 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             for u in accepting_for_var:
                 changes = Or(changes, u)
             not_change = Not(changes)
-            not_change_next = self.helper.get_next_formula(ts.state_vars, not_change)
+            not_change_next = self.helper.get_next_formula(fc_ts.state_vars,
+                                                           not_change)
             fc = Implies(not_change_next, fc_msg)
-            ts.trans = And(ts.trans, fc)
+            fc_ts.trans = And(fc_ts.trans, fc)
 
         # If a message is not in the msg_key, then its value do not change.
         # This applies to all the messages that are not changed by a
@@ -602,8 +616,9 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                 fc_msg = Iff(msg_enabled,
                              Helper.get_next_var(msg_enabled,
                                                  self.pysmt_env.formula_manager))
-                ts.trans = And(ts.trans, fc_msg)
-        return (ts, disabled_msg, accepting)
+                fc_ts.trans = And(fc_ts.trans, fc_msg)
+
+        return (ts_list, fc_ts, disabled_msg, accepting)
 
     def _get_regexp_ts(self, regexp, spec_id):
         """ Builds the ts for the automaton.
@@ -991,7 +1006,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         return (ts, errors)
 
 
-    def _encode_initial_conditions(self):
+    def _encode_initial_conditions(self, global_init, fc_ts):
         """ Initial condition:
         All the messages that are not specifically disabled/disallowed are
         enalbed/allowed
@@ -999,7 +1014,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         solver = self.pysmt_env.factory.Solver(quantified=False,
                                                name="z3",
                                                logic=QF_BOOL)
-        solver.add_assertion(self.ts.init)
+        solver.add_assertion(global_init)
 
         for msg in self.msgs:
             msg_var = TSEncoder._get_state_var(msg)
@@ -1009,7 +1024,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             solver.pop()
 
             if (can_be_enabled):
-                self.ts.init = And(self.ts.init, msg_var)
+                fc_ts.init = And(fc_ts.init, msg_var)
+        return fc_ts
 
 
     @staticmethod
