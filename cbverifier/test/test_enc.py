@@ -12,7 +12,7 @@ try:
 except ImportError:
     import unittest
 
-from cbverifier.encoding.encoder import TSEncoder, TSMapback
+from cbverifier.encoding.encoder import TSEncoder, TSMapback, TransitionSystem
 from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceException
@@ -352,8 +352,12 @@ class TestEnc(unittest.TestCase):
     def test_encode_ground_specs(self):
         ts_enc = self._get_sample_trace()
         vars_ts = ts_enc._encode_vars()
-        (ts, disabled_ci, accepting) = ts_enc._encode_ground_specs()
+        (ts_list, fc_ts, disabled_ci, accepting) = ts_enc._encode_ground_specs()
+        ts = TransitionSystem()
         ts.product(vars_ts)
+        for t in ts_list:
+            ts.product(t)
+        ts.product(fc_ts)
 
         accepting_states = FALSE()
         for k,v in accepting.iteritems():
