@@ -216,6 +216,7 @@ class TSEncoder:
         self.trace = trace.copy(True)
         self.specs = specs
         self.ts = None
+        self.ts_list = None
         self.error_prop = None
         self.stats = stats
 
@@ -278,7 +279,9 @@ class TSEncoder:
         """ Returns the transition system encoding of the dynamic
         verification problem.
         """
-        if (self.ts is None): self._encode()
+        if (self.ts is None):
+            self._encode()
+            self._compose()
         return self.ts
 
     def get_trace_encoding(self, tl_cb_ids = None):
@@ -515,12 +518,19 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         global_init = And(global_init, fc_ts.init)
 
         fc_ts = self._encode_initial_conditions(global_init, fc_ts)
+
+        self.ts_list = []
+        self.ts_list.append(vars_ts)
+        self.ts_list.extend(ts_list)
+        self.ts_list.append(cb_ts)
+        self.ts_list.append(fc_ts)
+
+    def _compose(self):
+        assert self.ts_list is not None
+        
         self.ts = TransitionSystem()
-        self.ts.product(vars_ts)
-        for t in ts_list:
+        for t in self.ts_list:
             self.ts.product(t)
-        self.ts.product(cb_ts)
-        self.ts.product(fc_ts)
 
         logging.info("Done generating the encoding.")
         logging.info("Miscellaneous stats:")
