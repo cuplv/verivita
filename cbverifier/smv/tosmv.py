@@ -38,7 +38,7 @@ class NuXmvDriver:
     UNSAFE = "UNSAFE"
     UNKNOWN = "UNKNOWN"
 
-    def __init__(self, pysmt_env, ts, nuxmv):
+    def __init__(self, pysmt_env, ts, nuxmv, multiple_modules=False):
         self.pysmt_env = pysmt_env
         if (not os.path.isfile(nuxmv)):
             raise Exception("The nuXmv executable file %s does not exists " % nuXmv)
@@ -46,6 +46,7 @@ class NuXmvDriver:
         self.nuxmv = nuxmv
         self.ts2smv = None
         self.parse_trace = True
+        self.multiple_modules = multiple_modules
 
     def get_tmp_file(self, file_suffix, to_delete=True):
         """ Get a tmpfile that is deleted when closed.
@@ -232,14 +233,19 @@ class SmvTranslator:
                  state_vars,
                  input_vars,
                  init, trans,
-                 invarspec=None):
+                 invarspec=None,
+                 var_prefix=None,
+                 module_name="main"):
         self.state_vars = state_vars
         self.input_vars = input_vars
         self.init = init
         self.trans = trans
         self.invarspec = invarspec
-        self.translator = SmvFormulaTranslator(env)
+        #self.translator = SmvFormulaTranslator(env, True, var_prefix)
+        self.translator = SmvFormulaTranslator(env, False, var_prefix)
         self.env = env
+        self.var_prefix = var_prefix
+        self.module_name = module_name
 
     def get_var(self, smv_var_name):
         assert self.translator is not None
@@ -247,15 +253,20 @@ class SmvTranslator:
 
     def to_smv(self, stream):
 
-        stream.write("MODULE main\n")
-        self.print_vars(stream, "VAR", self.state_vars)
-        self.print_vars(stream, "IVAR", self.input_vars)
+        if self.var_prefix is not None:
+            params = "(%s)" % self.var_prefix
+        else:
+            params = ""
+        stream.write("MODULE %s%s\n" % (self.module_name,params))
+        if self.var_prefix is None:
+            self.print_vars(stream, "VAR", self.state_vars)
+            self.print_vars(stream, "IVAR", self.input_vars)
 
         if (self.invarspec is not None):
             stream.write("INVARSPEC\n")
             self._print_formula(stream, self.invarspec)
-
-        stream.write(";\nINIT\n")
+            stream.write(";")
+        stream.write("\nINIT\n")
         self._print_formula(stream, self.init)
         stream.write(";\nTRANS\n")
         self._print_formula(stream, self.trans)
@@ -285,9 +296,10 @@ class SmvTranslator:
         stream.write(self.translator.translate(formula))
 
 class SmvFormulaTranslator(DagWalker):
-    def __init__(self, env, short_names=True):
+    def __init__(self, env, short_names=True, var_prefix=None):
         DagWalker.__init__(self, env, None)
 
+        self.var_prefix = var_prefix
         self.short_names = short_names
         self.symb_map = {}
         self.reverse_map = {}
@@ -380,6 +392,13 @@ class SmvFormulaTranslator(DagWalker):
                 else:
                     self.counter = self.counter + 1
                     res = "var_%d" % self.counter
+
+                if self.var_prefix is not None:
+                    print "Not none"
+                    res = "%s.%s" % (self.var_prefix, res)
+                else:
+                    print "none"
+
                 self.symb_map[key] = res
                 if not (is_next):
                     self.reverse_map[res] = formula

@@ -128,6 +128,54 @@ class Driver:
             ts2smv.to_smv(f)
             f.close()
 
+    def to_smv_mult(self, smv_file_name):
+        ts_enc = TSEncoder(self.trace, self.spec_list,
+                           self.opts.simplify_trace,
+                           self.stats)
+        ts = ts_enc.get_ts_encoding()
+
+        with open(smv_file_name, "wt") as f:
+            first = True
+            i = 0
+            for t in ts_enc.ts_list:        
+                if first:
+                    all_state = set()
+                    all_input = set()
+                    for t in ts_enc.ts_list:
+                        all_state.update(t.state_vars)
+                        all_input.update(t.input_vars)
+
+
+                    ts2smv = SmvTranslator(ts_enc.pysmt_env,
+                                           all_state, all_input,
+                                           t.init,
+                                           t.trans,
+                                           Not(ts_enc.error_prop),
+                                           None,
+                                           "main")
+                    ts2smv.to_smv(f)
+
+                    j = 0
+                    for t in ts_enc.ts_list[1:]:
+                        j += 1
+                        f.write("VAR m%d : mod%d(self);\n" % (j,j))
+                    first = False
+                else:
+                    i += 1
+                    ts2smv = SmvTranslator(ts_enc.pysmt_env,
+                                           t.state_vars,
+                                           t.input_vars,
+                                           t.init,
+                                           t.trans,
+                                           None,
+                                           "prev",
+                                           "mod%d" % i)
+                    ts2smv.to_smv(f)
+                    
+
+        f.close()
+
+
     def run_ic3(self, nuxmv_path, ic3_frames):
         ts_enc = TSEncoder(self.trace, self.spec_list,
                            self.opts.simplify_trace,
@@ -436,7 +484,8 @@ def main(input_args=None):
         ground_specs = driver.get_ground_specs()
         check_disable(ground_specs)
     elif (opts.mode == "to-smv"):
-        driver.to_smv(opts.smv_file)
+        driver.to_smv_mult(opts.smv_file)
+#        driver.to_smv(opts.smv_file)
         return 0
     elif (opts.mode == "ic3"):
         (res, cex, mapback) = driver.run_ic3(opts.nuxmv_path, opts.ic3_frames)
