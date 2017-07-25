@@ -118,10 +118,7 @@ class Driver:
                            self.stats)
         ts = ts_enc.get_ts_encoding()
         ts2smv = SmvTranslator(ts_enc.pysmt_env,
-                               ts.state_vars,
-                               ts.input_vars,
-                               ts.init,
-                               ts.trans,
+                               ts,
                                Not(ts_enc.error_prop))
 
         with open(smv_file_name, "wt") as f:
@@ -134,28 +131,28 @@ class Driver:
                            self.stats)
         ts = ts_enc.get_ts_encoding()
 
+        use_defines = True
+
         with open(smv_file_name, "wt") as f:
             first = True
             i = 0
             for t in ts_enc.ts_list:        
                 if first:
-                    all_state = set()
-                    all_input = set()
-                    for t in ts_enc.ts_list:
-                        all_state.update(t.state_vars)
-                        all_input.update(t.input_vars)
+                    for t1 in ts_enc.ts_list:
+                        t.state_vars.update(t1.state_vars)
+                        t.input_vars.update(t1.input_vars)
 
 
                     ts2smv = SmvTranslator(ts_enc.pysmt_env,
-                                           all_state, all_input,
-                                           t.init,
-                                           t.trans,
+                                           t,
                                            Not(ts_enc.error_prop),
                                            None,
-                                           "main")
+                                           "main",
+                                           use_defines)
                     ts2smv.to_smv(f)
 
                     j = 0
+                    f.write("\n")
                     for t in ts_enc.ts_list[1:]:
                         j += 1
                         f.write("VAR m%d : mod%d(self);\n" % (j,j))
@@ -163,14 +160,13 @@ class Driver:
                 else:
                     i += 1
                     ts2smv = SmvTranslator(ts_enc.pysmt_env,
-                                           t.state_vars,
-                                           t.input_vars,
-                                           t.init,
-                                           t.trans,
+                                           t,
                                            None,
                                            "prev",
-                                           "mod%d" % i)
+                                           "mod%d" % i,
+                                           use_defines)
                     ts2smv.to_smv(f)
+                f.write("\n")
                     
 
         f.close()

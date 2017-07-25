@@ -163,6 +163,8 @@ class TransitionSystem:
         self.init = TRUE_PYSMT()
         self.trans = TRUE_PYSMT()
 
+        self.comment = None
+
     def add_var(self, var):
         self.state_vars.add(var)
 
@@ -519,10 +521,9 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         fc_ts = self._encode_initial_conditions(global_init, fc_ts)
 
-        self.ts_list = []
-        self.ts_list.append(vars_ts)
-        self.ts_list.extend(ts_list)
+        self.ts_list = [vars_ts]
         self.ts_list.append(cb_ts)
+        self.ts_list.extend(ts_list)
         self.ts_list.append(fc_ts)
 
     def _compose(self):
@@ -577,12 +578,18 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             gs_ts = self._get_ground_spec_ts(ground_spec,
                                              spec_id,
                                              accepting[key])
+
+            comment = """Ground spec: %s
+Original spec: %s\n""" % (str(ground_spec),
+                          self.gs.get_source_spec(ground_spec))
+            gs_ts.comment = comment
+
             ts_list.append(gs_ts)
-            # ts.product(gs_ts)
             spec_id = spec_id + 1
 
         # Transition system encoding the frame condition
         fc_ts = TransitionSystem()
+        fc_ts.comment = "Frame conditions on the message variables"
         for t in ts_list:            
             fc_ts.state_vars.update(t.state_vars)
 
@@ -846,6 +853,12 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         self.mapback.add_state_vars(var_ts.state_vars)
 
+        var_ts.comment = """Declare the variables of the system:
+  - one state varaible for each message in the trace
+  - one input variable to encode the alphabet
+Encode the behavior of messages: a message cannot happen if
+the corresponding state variable is false."""
+
         return var_ts
 
 
@@ -1013,6 +1026,9 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             errors = []
         else:
             errors = [error]
+
+        ts.comment = "Encode the possible reordering of the trace"
+
         return (ts, errors)
 
 
