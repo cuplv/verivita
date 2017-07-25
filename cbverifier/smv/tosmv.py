@@ -88,10 +88,7 @@ class NuXmvDriver:
     def _run_nuxmv(self, cmds, invarspec, result_cb):
         # 1. Writes the SMV model
         self.ts2smv = SmvTranslator(self.pysmt_env,
-                                    self.ts.state_vars,
-                                    self.ts.input_vars,
-                                    self.ts.init,
-                                    self.ts.trans,
+                                    ts,
                                     invarspec)
 
         if (logging.getLogger().getEffectiveLevel() >= logging.DEBUG):
@@ -230,22 +227,19 @@ EOF
 
 class SmvTranslator:
     def __init__(self, env,
-                 state_vars,
-                 input_vars,
-                 init, trans,
+                 ts,
                  invarspec=None,
                  var_prefix=None,
-                 module_name="main"):
-        self.state_vars = state_vars
-        self.input_vars = input_vars
-        self.init = init
-        self.trans = trans
+                 module_name="main",
+                 use_define = True):
+        self.ts = ts
         self.invarspec = invarspec
         #self.translator = SmvFormulaTranslator(env, True, var_prefix)
-        self.translator = SmvFormulaTranslator(env, False, var_prefix)
+        self.translator = SmvFormulaTranslator(env, False, var_prefix, use_define)
         self.env = env
         self.var_prefix = var_prefix
         self.module_name = module_name
+        self.use_define  = use_define
 
     def get_var(self, smv_var_name):
         assert self.translator is not None
@@ -257,19 +251,24 @@ class SmvTranslator:
             params = "(%s)" % self.var_prefix
         else:
             params = ""
+
+        if self.ts.comment is not None:
+            for line in self.ts.comment.split("\n"):
+                stream.write("-- %s\n" % line)
+
         stream.write("MODULE %s%s\n" % (self.module_name,params))
         if self.var_prefix is None:
-            self.print_vars(stream, "VAR", self.state_vars)
-            self.print_vars(stream, "IVAR", self.input_vars)
+            self.print_vars(stream, "VAR", self.ts.state_vars)
+            self.print_vars(stream, "IVAR", self.ts.input_vars)
 
         if (self.invarspec is not None):
             stream.write("INVARSPEC\n")
             self._print_formula(stream, self.invarspec)
             stream.write(";")
         stream.write("\nINIT\n")
-        self._print_formula(stream, self.init)
+        self._print_formula(stream, self.ts.init)
         stream.write(";\nTRANS\n")
-        self._print_formula(stream, self.trans)
+        self._print_formula(stream, self.ts.trans)
         stream.write(";\n")
 
         for (f, define) in self.translator.defines.iteritems():
@@ -296,11 +295,13 @@ class SmvTranslator:
         stream.write(self.translator.translate(formula))
 
 class SmvFormulaTranslator(DagWalker):
-    def __init__(self, env, short_names=True, var_prefix=None):
+    def __init__(self, env, short_names=True, var_prefix=None, USE_DEF = True):
         DagWalker.__init__(self, env, None)
 
         self.var_prefix = var_prefix
         self.short_names = short_names
+        self.USE_DEF = USE_DEF
+
         self.symb_map = {}
         self.reverse_map = {}
 
@@ -317,7 +318,6 @@ class SmvFormulaTranslator(DagWalker):
         """ Mapback from a smv variable to the original variable """
         return self.reverse_map[smv_var_name]
 
-
     def translate(self, formula):
         s = self.walk(formula)
         return s
@@ -325,9 +325,8 @@ class SmvFormulaTranslator(DagWalker):
     def _get_key(self, formula, **kwargs):
         return formula
 
-    USE_DEF = True
     def _insert_def(self, formula, res):
-        if SmvFormulaTranslator.USE_DEF:
+        if self.USE_DEF:
             self.def_counter = self.def_counter + 1
             def_var = "define_%d" % self.def_counter
             self.defines[formula] = (def_var, res)
@@ -394,10 +393,7 @@ class SmvFormulaTranslator(DagWalker):
                     res = "var_%d" % self.counter
 
                 if self.var_prefix is not None:
-                    print "Not none"
                     res = "%s.%s" % (self.var_prefix, res)
-                else:
-                    print "none"
 
                 self.symb_map[key] = res
                 if not (is_next):
