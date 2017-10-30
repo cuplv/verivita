@@ -1,0 +1,112 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-2/_traces/matt-allen-repay-android-repay/monkeyTraces/trace-repay-debug-unaligned_2017-04-16_20:24:55.repaired
+/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/s/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-2/_traces/matt-allen-repay-android-repay/monkeyTraces/trace-repay-debug-unaligned_2017-04-16_20:24:55.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.490000
+parsing - System time: 0.030000
+spec_grounding - User time: 38.650000
+spec_grounding - System time: 0.790000
+
+TRACE STATISTICS
+Trace length: 14560
+Top-level callbacks: 1769
+CI-ENTRY: 610
+CI-EXIT: 623
+CB-ENTRY: 417
+CB-EXIT: 430
+        
+---Simplified Trace---
+[216] [CB] [ENTRY] void com.repay.android.MainActivity.<init>() (3b732e4) 
+[216] [CB] [EXIT] NULL = void com.repay.android.MainActivity.<init>() (3b732e4) 
+[264] [CB] [ENTRY] void com.repay.android.MainActivity.onCreate(android.os.Bundle) (3b732e4,NULL) 
+[264] [CB] [EXIT] void com.repay.android.MainActivity.onCreate(android.os.Bundle) (3b732e4,NULL) 
+[1210] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onAttach(android.app.Activity) (6a2aec9,3b732e4) 
+[1210] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onAttach(android.app.Activity) (6a2aec9,3b732e4) 
+[1218] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onCreate(android.os.Bundle) (6a2aec9,NULL) 
+[1218] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onCreate(android.os.Bundle) (6a2aec9,NULL) 
+[1248] [CB] [ENTRY] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (6a2aec9,d095f4a,5d88a48,NULL) 
+[1248] [CB] [EXIT] 27e4579 = android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (6a2aec9,d095f4a,5d88a48,NULL) 
+[2082] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onViewCreated(android.view.View,android.os.Bundle) (6a2aec9,27e4579,NULL) 
+[2082] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onViewCreated(android.view.View,android.os.Bundle) (6a2aec9,27e4579,NULL) 
+[2086] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(android.os.Bundle) (6a2aec9,NULL) 
+[2086] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(android.os.Bundle) (6a2aec9,NULL) 
+[2122] [CB] [ENTRY] void com.repay.android.MainActivity.onStart() (3b732e4) 
+[2122] [CB] [EXIT] void com.repay.android.MainActivity.onStart() (3b732e4) 
+[2126] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onStart() (6a2aec9) 
+[2126] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onStart() (6a2aec9) 
+[2158] [CB] [ENTRY] void com.repay.android.MainActivity.onResume() (3b732e4) 
+[2158] [CB] [EXIT] void com.repay.android.MainActivity.onResume() (3b732e4) 
+[2210] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onResume() (6a2aec9) 
+[2210] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onResume() (6a2aec9) 
+[9982] [CB] [ENTRY] boolean com.melnykov.fab.FloatingActionButton.performClick() (ffe0190) 
+  [10006] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent) (6a2aec9,8397b1e) 
+  [10008] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent,android.os.Bundle) (6a2aec9,8397b1e,NULL) 
+  [10008] [CI] [EXIT] void android.app.Fragment.startActivity(android.content.Intent,android.os.Bundle) (6a2aec9,8397b1e,NULL) 
+  [10006] [CI] [EXIT] void android.app.Fragment.startActivity(android.content.Intent) (6a2aec9,8397b1e) 
+[9982] [CB] [EXIT] true = boolean com.melnykov.fab.FloatingActionButton.performClick() (ffe0190) 
+[10420] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onPause() (6a2aec9) 
+[10420] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onPause() (6a2aec9) 
+[10424] [CB] [ENTRY] void com.repay.android.MainActivity.onPause() (3b732e4) 
+[10424] [CB] [EXIT] void com.repay.android.MainActivity.onPause() (3b732e4) 
+[10478] [CB] [ENTRY] void com.repay.android.debtwizard.AddDebtActivity.<init>() (f81be11) 
+[10478] [CB] [EXIT] NULL = void com.repay.android.debtwizard.AddDebtActivity.<init>() (f81be11) 
+[10530] [CB] [ENTRY] void com.repay.android.debtwizard.AddDebtActivity.onCreate(android.os.Bundle) (f81be11,NULL) 
+[10530] [CB] [EXIT] void com.repay.android.debtwizard.AddDebtActivity.onCreate(android.os.Bundle) (f81be11,NULL) 
+[11420] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onAttach(android.app.Activity) (c14bfd1,f81be11) 
+[11420] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onAttach(android.app.Activity) (c14bfd1,f81be11) 
+[11428] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onCreate(android.os.Bundle) (c14bfd1,NULL) 
+[11428] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onCreate(android.os.Bundle) (c14bfd1,NULL) 
+[11456] [CB] [ENTRY] android.view.View com.repay.android.debtwizard.fragment.ChoosePersonFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c14bfd1,5ee3d94,2ee2b70,NULL) 
+[11456] [CB] [EXIT] 3ba2a4e = android.view.View com.repay.android.debtwizard.fragment.ChoosePersonFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c14bfd1,5ee3d94,2ee2b70,NULL) 
+[12108] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onViewCreated(android.view.View,android.os.Bundle) (c14bfd1,3ba2a4e,NULL) 
+[12108] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onViewCreated(android.view.View,android.os.Bundle) (c14bfd1,3ba2a4e,NULL) 
+[12112] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.ChoosePersonFragment.onActivityCreated(android.os.Bundle) (c14bfd1,NULL) 
+  [12187] [CI] [ENTRY] void android.os.AsyncTask.<init>() (2e85e9e) 
+  [12187] [CI] [EXIT] void android.os.AsyncTask.<init>() (2e85e9e) 
+[12112] [CB] [EXIT] void com.repay.android.debtwizard.fragment.ChoosePersonFragment.onActivityCreated(android.os.Bundle) (c14bfd1,NULL) 
+[12200] [CB] [ENTRY] void com.repay.android.debtwizard.DebtActivity.onStart() (f81be11) 
+[12200] [CB] [EXIT] void com.repay.android.debtwizard.DebtActivity.onStart() (f81be11) 
+[12204] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onStart() (c14bfd1) 
+[12204] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onStart() (c14bfd1) 
+[12220] [CB] [ENTRY] void com.repay.android.debtwizard.DebtActivity.onResume() (f81be11) 
+[12220] [CB] [EXIT] void com.repay.android.debtwizard.DebtActivity.onResume() (f81be11) 
+[12224] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onResume() (c14bfd1) 
+[12224] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onResume() (c14bfd1) 
+[14214] [CB] [ENTRY] void com.repay.android.MainActivity.onSaveInstanceState(android.os.Bundle) (3b732e4,ebb6e38) 
+  [14216] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onSaveInstanceState(android.os.Bundle) (6a2aec9,8b9a4d) 
+  [14216] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onSaveInstanceState(android.os.Bundle) (6a2aec9,8b9a4d) 
+[14214] [CB] [EXIT] void com.repay.android.MainActivity.onSaveInstanceState(android.os.Bundle) (3b732e4,ebb6e38) 
+[14230] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onStop() (6a2aec9) 
+[14230] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onStop() (6a2aec9) 
+[14234] [CB] [ENTRY] void com.repay.android.MainActivity.onStop() (3b732e4) 
+[14234] [CB] [EXIT] void com.repay.android.MainActivity.onStop() (3b732e4) 
+
+
+
+TRACE STATISTICS
+Trace length: 32
+Top-level callbacks: 28
+CI-ENTRY: 2
+CI-EXIT: 1
+CB-ENTRY: 29
+CB-EXIT: 0
+        encoding - User time: 1.330000
+encoding - System time: 0.010000
+verification - User time: 0.152000
+verification - System time: 0.024000
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[9982] [CB] [ENTRY] boolean com.melnykov.fab.FloatingActionButton.performClick() (ffe0190) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[10006] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent) (6a2aec9,8397b1e) 
+    Reached an error state in step 2!
+----------------------------------------

@@ -1,0 +1,114 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/_traces/kyze8439690-v2ex-daily-android-app/monkeyTraces/trace-app-debug_2017-04-25_16:00:14.repaired
+/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/s/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/_traces/kyze8439690-v2ex-daily-android-app/monkeyTraces/trace-app-debug_2017-04-25_16:00:14.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 4.020000
+parsing - System time: 0.360000
+spec_grounding - User time: 46.740000
+spec_grounding - System time: 0.620000
+
+TRACE STATISTICS
+Trace length: 95454
+Top-level callbacks: 2067
+CI-ENTRY: 5889
+CI-EXIT: 11437
+CB-ENTRY: 1025
+CB-EXIT: 1126
+        
+---Simplified Trace---
+[216] [CB] [ENTRY] void com.yugy.v2ex.daily.activity.MainActivity.<init>() (c0fa87) 
+[216] [CB] [EXIT] NULL = void com.yugy.v2ex.daily.activity.MainActivity.<init>() (c0fa87) 
+[312] [CB] [ENTRY] void com.yugy.v2ex.daily.activity.MainActivity.onCreate(android.os.Bundle) (c0fa87,NULL) 
+  [3194] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onAttach(android.app.Activity) (4afd3a4,c0fa87) 
+  [3194] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onAttach(android.app.Activity) (4afd3a4,c0fa87) 
+  [3202] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onCreate(android.os.Bundle) (4afd3a4,NULL) 
+  [3202] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onCreate(android.os.Bundle) (4afd3a4,NULL) 
+  [3264] [CB] [ENTRY] android.view.View com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (4afd3a4,ab80647,NULL,NULL) 
+  [3264] [CB] [EXIT] 7ab39a3 = android.view.View com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (4afd3a4,ab80647,NULL,NULL) 
+  [3510] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onViewCreated(android.view.View,android.os.Bundle) (4afd3a4,7ab39a3,NULL) 
+  [3510] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onViewCreated(android.view.View,android.os.Bundle) (4afd3a4,7ab39a3,NULL) 
+[312] [CB] [EXIT] void com.yugy.v2ex.daily.activity.MainActivity.onCreate(android.os.Bundle) (c0fa87,NULL) 
+[3906] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onActivityCreated(android.os.Bundle) (4afd3a4,NULL) 
+[3906] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onActivityCreated(android.os.Bundle) (4afd3a4,NULL) 
+[3944] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onAttach(android.app.Activity) (5b13bfc,c0fa87) 
+[3944] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onAttach(android.app.Activity) (5b13bfc,c0fa87) 
+[3958] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onCreate(android.os.Bundle) (5b13bfc,NULL) 
+[3958] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onCreate(android.os.Bundle) (5b13bfc,NULL) 
+[3994] [CB] [ENTRY] android.view.View com.yugy.v2ex.daily.fragment.NewestNodeFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (5b13bfc,ab80647,6664f42,NULL) 
+[3994] [CB] [EXIT] 2d762cd = android.view.View com.yugy.v2ex.daily.fragment.NewestNodeFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (5b13bfc,ab80647,6664f42,NULL) 
+[4854] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onViewCreated(android.view.View,android.os.Bundle) (5b13bfc,2d762cd,NULL) 
+[4854] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onViewCreated(android.view.View,android.os.Bundle) (5b13bfc,2d762cd,NULL) 
+[4858] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onActivityCreated(android.os.Bundle) (5b13bfc,NULL) 
+[4858] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onActivityCreated(android.os.Bundle) (5b13bfc,NULL) 
+[55230] [CB] [ENTRY] void com.yugy.v2ex.daily.activity.BaseActivity.onStart() (c0fa87) 
+[55230] [CB] [EXIT] void com.yugy.v2ex.daily.activity.BaseActivity.onStart() (c0fa87) 
+[55422] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onStart() (4afd3a4) 
+[55422] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onStart() (4afd3a4) 
+[55426] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onStart() (5b13bfc) 
+[55426] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onStart() (5b13bfc) 
+[55454] [CB] [ENTRY] void com.yugy.v2ex.daily.activity.BaseActivity.onResume() (c0fa87) 
+[55454] [CB] [EXIT] void com.yugy.v2ex.daily.activity.BaseActivity.onResume() (c0fa87) 
+[55520] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onResume() (4afd3a4) 
+[55520] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NavigationDrawerFragment.onResume() (4afd3a4) 
+[55524] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onResume() (5b13bfc) 
+[55524] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onResume() (5b13bfc) 
+[86434] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onPause() (5b13bfc) 
+[86434] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onPause() (5b13bfc) 
+[86438] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onStop() (5b13bfc) 
+[86438] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onStop() (5b13bfc) 
+[86454] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onDestroyView() (5b13bfc) 
+[86454] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onDestroyView() (5b13bfc) 
+[86534] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.SettingFragment.onAttach(android.app.Activity) (df8a2bb,c0fa87) 
+[86534] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.SettingFragment.onAttach(android.app.Activity) (df8a2bb,c0fa87) 
+[86548] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.SettingFragment.onCreate(android.os.Bundle) (df8a2bb,NULL) 
+[86548] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.SettingFragment.onCreate(android.os.Bundle) (df8a2bb,NULL) 
+[86682] [CB] [ENTRY] android.view.View com.yugy.v2ex.daily.fragment.SettingFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (df8a2bb,ab80647,6664f42,NULL) 
+[86682] [CB] [EXIT] 9b9bcca = android.view.View com.yugy.v2ex.daily.fragment.SettingFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (df8a2bb,ab80647,6664f42,NULL) 
+[87878] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.SettingFragment.onViewCreated(android.view.View,android.os.Bundle) (df8a2bb,9b9bcca,NULL) 
+[87878] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.SettingFragment.onViewCreated(android.view.View,android.os.Bundle) (df8a2bb,9b9bcca,NULL) 
+[87882] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.SettingFragment.onActivityCreated(android.os.Bundle) (df8a2bb,NULL) 
+[87882] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.SettingFragment.onActivityCreated(android.os.Bundle) (df8a2bb,NULL) 
+[87924] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.SettingFragment.onStart() (df8a2bb) 
+[87924] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.SettingFragment.onStart() (df8a2bb) 
+[87928] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.SettingFragment.onResume() (df8a2bb) 
+[87928] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.SettingFragment.onResume() (df8a2bb) 
+[97670] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onDestroy() (5b13bfc) 
+[97670] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onDestroy() (5b13bfc) 
+[97686] [CB] [ENTRY] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onDetach() (5b13bfc) 
+[97686] [CB] [EXIT] void com.yugy.v2ex.daily.fragment.NewestNodeFragment.onDetach() (5b13bfc) 
+[135807] [CB] [ENTRY] boolean com.yugy.v2ex.daily.fragment.SettingFragment.onPreferenceClick(android.preference.Preference) (df8a2bb,d4bab0d) 
+  [135893] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent) (df8a2bb,63bbd6d) 
+  [135946] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent,android.os.Bundle) (df8a2bb,63bbd6d,NULL) 
+  [135946] [CI] [EXIT] void android.app.Fragment.startActivity(android.content.Intent,android.os.Bundle) (df8a2bb,63bbd6d,NULL) 
+  [135893] [CI] [EXIT] void android.app.Fragment.startActivity(android.content.Intent) (df8a2bb,63bbd6d) 
+[135807] [CB] [EXIT] true = boolean com.yugy.v2ex.daily.fragment.SettingFragment.onPreferenceClick(android.preference.Preference) (df8a2bb,d4bab0d) 
+
+
+
+TRACE STATISTICS
+Trace length: 33
+Top-level callbacks: 27
+CI-ENTRY: 2
+CI-EXIT: 0
+CB-ENTRY: 31
+CB-EXIT: 0
+        encoding - User time: 1.460000
+encoding - System time: 0.010000
+verification - User time: 0.172000
+verification - System time: 0.028000
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[135807] [CB] [ENTRY] boolean com.yugy.v2ex.daily.fragment.SettingFragment.onPreferenceClick(android.preference.Preference) (df8a2bb,d4bab0d) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[135893] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent) (df8a2bb,63bbd6d) 
+    Reached an error state in step 2!
+----------------------------------------

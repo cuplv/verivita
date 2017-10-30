@@ -1,0 +1,106 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/_traces/webpay-webpay-token-android-sample/monkeyTraces/trace-sample-debug_2017-04-26_12:15:32.repaired
+/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/s/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/_traces/webpay-webpay-token-android-sample/monkeyTraces/trace-sample-debug_2017-04-26_12:15:32.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.890000
+parsing - System time: 0.080000
+spec_grounding - User time: 36.780000
+spec_grounding - System time: 0.500000
+
+TRACE STATISTICS
+Trace length: 26506
+Top-level callbacks: 1121
+CI-ENTRY: 7688
+CI-EXIT: 7749
+CB-ENTRY: 240
+CB-EXIT: 245
+        
+---Simplified Trace---
+[0] [CB] [ENTRY] void jp.webpay.android.token.sample.SampleListActivity.<init>() (5badf51) 
+[0] [CB] [EXIT] NULL = void jp.webpay.android.token.sample.SampleListActivity.<init>() (5badf51) 
+[48] [CB] [ENTRY] void jp.webpay.android.token.sample.SampleListActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+  [970] [CB] [ENTRY] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onAttach(android.app.Activity) (b94c56c,5badf51) 
+  [970] [CB] [EXIT] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onAttach(android.app.Activity) (b94c56c,5badf51) 
+  [978] [CB] [ENTRY] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onCreate(android.os.Bundle) (b94c56c,NULL) 
+  [978] [CB] [EXIT] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onCreate(android.os.Bundle) (b94c56c,NULL) 
+  [1054] [CB] [ENTRY] android.view.View jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b94c56c,aa3b2a8,NULL,NULL) 
+  [1054] [CB] [EXIT] eddf42d = android.view.View jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b94c56c,aa3b2a8,NULL,NULL) 
+  [1458] [CB] [ENTRY] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onViewCreated(android.view.View,android.os.Bundle) (b94c56c,467b215,NULL) 
+  [1458] [CB] [EXIT] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onViewCreated(android.view.View,android.os.Bundle) (b94c56c,467b215,NULL) 
+[48] [CB] [EXIT] void jp.webpay.android.token.sample.SampleListActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+[1594] [CB] [ENTRY] void jp.webpay.android.token.sample.BaseFragmentActivity.onStart() (5badf51) 
+  [1596] [CB] [ENTRY] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onActivityCreated(android.os.Bundle) (b94c56c,NULL) 
+  [1596] [CB] [EXIT] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onActivityCreated(android.os.Bundle) (b94c56c,NULL) 
+  [1604] [CB] [ENTRY] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onStart() (b94c56c) 
+  [1604] [CB] [EXIT] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onStart() (b94c56c) 
+[1594] [CB] [EXIT] void jp.webpay.android.token.sample.BaseFragmentActivity.onStart() (5badf51) 
+[1638] [CB] [ENTRY] void jp.webpay.android.token.sample.BaseFragmentActivity.onResume() (5badf51) 
+[1638] [CB] [EXIT] void jp.webpay.android.token.sample.BaseFragmentActivity.onResume() (5badf51) 
+[1642] [CB] [ENTRY] void jp.webpay.android.token.sample.BaseFragmentActivity.onPostResume() (5badf51) 
+  [1650] [CB] [ENTRY] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onResume() (b94c56c) 
+  [1650] [CB] [EXIT] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onResume() (b94c56c) 
+[1642] [CB] [EXIT] void jp.webpay.android.token.sample.BaseFragmentActivity.onPostResume() (5badf51) 
+[3792] [CB] [ENTRY] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onListItemClick(android.widget.ListView,android.view.View,int,long) (b94c56c,28e3a73,70767d4,1,1) 
+  [3811] [CI] [ENTRY] void android.support.v4.app.Fragment.startActivity(android.content.Intent) (b94c56c,65717a0) 
+  [3811] [CI] [EXIT] void android.support.v4.app.Fragment.startActivity(android.content.Intent) (b94c56c,65717a0) 
+[3792] [CB] [EXIT] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onListItemClick(android.widget.ListView,android.view.View,int,long) (b94c56c,28e3a73,70767d4,1,1) 
+[3882] [CB] [ENTRY] void jp.webpay.android.token.sample.BaseFragmentActivity.onPause() (5badf51) 
+  [3884] [CB] [ENTRY] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onPause() (b94c56c) 
+  [3884] [CB] [EXIT] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onPause() (b94c56c) 
+[3882] [CB] [EXIT] void jp.webpay.android.token.sample.BaseFragmentActivity.onPause() (5badf51) 
+[3916] [CB] [ENTRY] void jp.webpay.android.token.sample.CardIoIntegrationActivity.<init>() (c97f4c) 
+[3916] [CB] [EXIT] NULL = void jp.webpay.android.token.sample.CardIoIntegrationActivity.<init>() (c97f4c) 
+[3964] [CB] [ENTRY] void jp.webpay.android.token.sample.CardIoIntegrationActivity.onCreate(android.os.Bundle) (c97f4c,NULL) 
+[3964] [CB] [EXIT] void jp.webpay.android.token.sample.CardIoIntegrationActivity.onCreate(android.os.Bundle) (c97f4c,NULL) 
+[5686] [CB] [ENTRY] void jp.webpay.android.token.sample.BaseFragmentActivity.onStart() (c97f4c) 
+[5686] [CB] [EXIT] void jp.webpay.android.token.sample.BaseFragmentActivity.onStart() (c97f4c) 
+[5718] [CB] [ENTRY] void jp.webpay.android.token.sample.BaseFragmentActivity.onResume() (c97f4c) 
+[5718] [CB] [EXIT] void jp.webpay.android.token.sample.BaseFragmentActivity.onResume() (c97f4c) 
+[5774] [CB] [ENTRY] void jp.webpay.android.token.sample.BaseFragmentActivity.onPause() (c97f4c) 
+[5774] [CB] [EXIT] void jp.webpay.android.token.sample.BaseFragmentActivity.onPause() (c97f4c) 
+[6072] [CB] [ENTRY] void io.card.payment.CardIOActivity.<init>() (6ca8a05) 
+[6072] [CB] [EXIT] NULL = void io.card.payment.CardIOActivity.<init>() (6ca8a05) 
+[6120] [CB] [ENTRY] void io.card.payment.CardIOActivity.onCreate(android.os.Bundle) (6ca8a05,NULL) 
+[6120] [CB] [EXIT] void io.card.payment.CardIOActivity.onCreate(android.os.Bundle) (6ca8a05,NULL) 
+[24606] [CB] [ENTRY] void jp.webpay.android.token.sample.BaseFragmentActivity.onResume() (c97f4c) 
+[24606] [CB] [EXIT] void jp.webpay.android.token.sample.BaseFragmentActivity.onResume() (c97f4c) 
+[25882] [CB] [ENTRY] void io.card.payment.CardIOActivity.onDestroy() (6ca8a05) 
+[25882] [CB] [EXIT] void io.card.payment.CardIOActivity.onDestroy() (6ca8a05) 
+[26246] [CB] [ENTRY] void jp.webpay.android.token.sample.BaseFragmentActivity.onSaveInstanceState(android.os.Bundle) (5badf51,23d843) 
+  [26248] [CB] [ENTRY] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onSaveInstanceState(android.os.Bundle) (b94c56c,e2af6ec) 
+  [26248] [CB] [EXIT] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onSaveInstanceState(android.os.Bundle) (b94c56c,e2af6ec) 
+[26246] [CB] [EXIT] void jp.webpay.android.token.sample.BaseFragmentActivity.onSaveInstanceState(android.os.Bundle) (5badf51,23d843) 
+[26254] [CB] [ENTRY] void jp.webpay.android.token.sample.BaseFragmentActivity.onStop() (5badf51) 
+  [26256] [CB] [ENTRY] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onStop() (b94c56c) 
+  [26256] [CB] [EXIT] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onStop() (b94c56c) 
+[26254] [CB] [EXIT] void jp.webpay.android.token.sample.BaseFragmentActivity.onStop() (5badf51) 
+
+
+
+TRACE STATISTICS
+Trace length: 29
+Top-level callbacks: 18
+CI-ENTRY: 1
+CI-EXIT: 0
+CB-ENTRY: 27
+CB-EXIT: 0
+        encoding - User time: 1.140000
+encoding - System time: 0.000000
+verification - User time: 0.128000
+verification - System time: 0.028000
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[3792] [CB] [ENTRY] void jp.webpay.android.token.sample.SampleListActivity$SampleListFragment.onListItemClick(android.widget.ListView,android.view.View,int,long) (b94c56c,28e3a73,70767d4,1,1) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[3811] [CI] [ENTRY] void android.support.v4.app.Fragment.startActivity(android.content.Intent) (b94c56c,65717a0) 
+    Reached an error state in step 2!
+----------------------------------------

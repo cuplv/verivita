@@ -1,0 +1,192 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/_traces/googlesamples-android-StorageClient-Application/monkeyTraces/trace-Application-debug_2017-04-26_18:29:55.repaired
+/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/s/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/_traces/googlesamples-android-StorageClient-Application/monkeyTraces/trace-Application-debug_2017-04-26_18:29:55.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.620000
+parsing - System time: 0.040000
+spec_grounding - User time: 35.380000
+spec_grounding - System time: 0.620000
+
+TRACE STATISTICS
+Trace length: 17596
+Top-level callbacks: 1347
+CI-ENTRY: 543
+CI-EXIT: 609
+CB-ENTRY: 429
+CB-EXIT: 494
+        
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.example.android.storageclient.MainActivity.<init>() (5badf51) 
+[0] [CB] [EXIT] NULL = void com.example.android.storageclient.MainActivity.<init>() (5badf51) 
+[48] [CB] [ENTRY] void com.example.android.storageclient.MainActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+  [812] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onAttach(android.app.Activity) (74d00a0,5badf51) 
+  [812] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onAttach(android.app.Activity) (74d00a0,5badf51) 
+  [822] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onCreate(android.os.Bundle) (74d00a0,NULL) 
+  [822] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onCreate(android.os.Bundle) (74d00a0,NULL) 
+  [838] [CB] [ENTRY] android.view.View com.example.android.common.logger.LogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (74d00a0,24edfb,NULL,NULL) 
+  [838] [CB] [EXIT] 68569e2 = android.view.View com.example.android.common.logger.LogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (74d00a0,24edfb,NULL,NULL) 
+  [1330] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onViewCreated(android.view.View,android.os.Bundle) (74d00a0,68569e2,NULL) 
+  [1330] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onViewCreated(android.view.View,android.os.Bundle) (74d00a0,68569e2,NULL) 
+[48] [CB] [EXIT] void com.example.android.storageclient.MainActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+[1436] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onStart() (5badf51) 
+  [1438] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onActivityCreated(android.os.Bundle) (74d00a0,NULL) 
+  [1438] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onActivityCreated(android.os.Bundle) (74d00a0,NULL) 
+  [1460] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onAttach(android.app.Activity) (eed938f,5badf51) 
+  [1460] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onAttach(android.app.Activity) (eed938f,5badf51) 
+  [1470] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onCreate(android.os.Bundle) (eed938f,NULL) 
+  [1470] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onCreate(android.os.Bundle) (eed938f,NULL) 
+  [1496] [CB] [ENTRY] android.view.View com.example.android.storageclient.StorageClientFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (eed938f,3a8e74f,NULL,NULL) 
+  [1496] [CB] [EXIT] NULL = android.view.View com.example.android.storageclient.StorageClientFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (eed938f,3a8e74f,NULL,NULL) 
+  [1500] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onActivityCreated(android.os.Bundle) (eed938f,NULL) 
+  [1500] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onActivityCreated(android.os.Bundle) (eed938f,NULL) 
+  [1504] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onStart() (74d00a0) 
+  [1504] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onStart() (74d00a0) 
+  [1508] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onStart() (eed938f) 
+  [1508] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onStart() (eed938f) 
+[1436] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onStart() (5badf51) 
+[1766] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[1766] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[1770] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+  [1778] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [1778] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [1782] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+  [1782] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+[1770] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+[4312] [CB] [ENTRY] boolean com.example.android.common.activities.SampleActivityBase.onMenuItemSelected(int,android.view.MenuItem) (5badf51,0,d129b4f) 
+  [4326] [CI] [ENTRY] void android.support.v4.app.Fragment.startActivityForResult(android.content.Intent,int) (eed938f,8f4f0e0,1337) 
+  [4326] [CI] [EXIT] void android.support.v4.app.Fragment.startActivityForResult(android.content.Intent,int) (eed938f,8f4f0e0,1337) 
+[4312] [CB] [EXIT] true = boolean com.example.android.common.activities.SampleActivityBase.onMenuItemSelected(int,android.view.MenuItem) (5badf51,0,d129b4f) 
+[4372] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onPause() (5badf51) 
+  [4374] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onPause() (74d00a0) 
+  [4374] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onPause() (74d00a0) 
+  [4378] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onPause() (eed938f) 
+  [4378] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onPause() (eed938f) 
+[4372] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onPause() (5badf51) 
+[4534] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[4534] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[4538] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+  [4546] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [4546] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [4550] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+  [4550] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+[4538] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+[7046] [CB] [ENTRY] boolean com.example.android.common.activities.SampleActivityBase.onMenuItemSelected(int,android.view.MenuItem) (5badf51,0,d129b4f) 
+  [7060] [CI] [ENTRY] void android.support.v4.app.Fragment.startActivityForResult(android.content.Intent,int) (eed938f,4e32e60,1337) 
+  [7060] [CI] [EXIT] void android.support.v4.app.Fragment.startActivityForResult(android.content.Intent,int) (eed938f,4e32e60,1337) 
+[7046] [CB] [EXIT] true = boolean com.example.android.common.activities.SampleActivityBase.onMenuItemSelected(int,android.view.MenuItem) (5badf51,0,d129b4f) 
+[7114] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onPause() (5badf51) 
+  [7116] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onPause() (74d00a0) 
+  [7116] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onPause() (74d00a0) 
+  [7120] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onPause() (eed938f) 
+  [7120] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onPause() (eed938f) 
+[7114] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onPause() (5badf51) 
+[7276] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[7276] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[7280] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+  [7288] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [7288] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [7292] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+  [7292] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+[7280] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+[8300] [CB] [ENTRY] boolean com.example.android.common.activities.SampleActivityBase.onMenuItemSelected(int,android.view.MenuItem) (5badf51,0,d129b4f) 
+  [8314] [CI] [ENTRY] void android.support.v4.app.Fragment.startActivityForResult(android.content.Intent,int) (eed938f,b8777ae,1337) 
+  [8314] [CI] [EXIT] void android.support.v4.app.Fragment.startActivityForResult(android.content.Intent,int) (eed938f,b8777ae,1337) 
+[8300] [CB] [EXIT] true = boolean com.example.android.common.activities.SampleActivityBase.onMenuItemSelected(int,android.view.MenuItem) (5badf51,0,d129b4f) 
+[8368] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onPause() (5badf51) 
+  [8370] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onPause() (74d00a0) 
+  [8370] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onPause() (74d00a0) 
+  [8374] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onPause() (eed938f) 
+  [8374] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onPause() (eed938f) 
+[8368] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onPause() (5badf51) 
+[8530] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[8530] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[8534] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+  [8542] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [8542] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [8546] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+  [8546] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+[8534] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+[10202] [CB] [ENTRY] boolean com.example.android.common.activities.SampleActivityBase.onMenuItemSelected(int,android.view.MenuItem) (5badf51,0,d129b4f) 
+  [10216] [CI] [ENTRY] void android.support.v4.app.Fragment.startActivityForResult(android.content.Intent,int) (eed938f,1be9ce2,1337) 
+  [10216] [CI] [EXIT] void android.support.v4.app.Fragment.startActivityForResult(android.content.Intent,int) (eed938f,1be9ce2,1337) 
+[10202] [CB] [EXIT] true = boolean com.example.android.common.activities.SampleActivityBase.onMenuItemSelected(int,android.view.MenuItem) (5badf51,0,d129b4f) 
+[10270] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onPause() (5badf51) 
+  [10272] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onPause() (74d00a0) 
+  [10272] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onPause() (74d00a0) 
+  [10276] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onPause() (eed938f) 
+  [10276] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onPause() (eed938f) 
+[10270] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onPause() (5badf51) 
+[10432] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[10432] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[10436] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+  [10444] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [10444] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [10448] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+  [10448] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+[10436] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+[11604] [CB] [ENTRY] boolean com.example.android.common.activities.SampleActivityBase.onMenuItemSelected(int,android.view.MenuItem) (5badf51,0,d129b4f) 
+  [11618] [CI] [ENTRY] void android.support.v4.app.Fragment.startActivityForResult(android.content.Intent,int) (eed938f,3e931ee,1337) 
+  [11618] [CI] [EXIT] void android.support.v4.app.Fragment.startActivityForResult(android.content.Intent,int) (eed938f,3e931ee,1337) 
+[11604] [CB] [EXIT] true = boolean com.example.android.common.activities.SampleActivityBase.onMenuItemSelected(int,android.view.MenuItem) (5badf51,0,d129b4f) 
+[11672] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onPause() (5badf51) 
+  [11674] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onPause() (74d00a0) 
+  [11674] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onPause() (74d00a0) 
+  [11678] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onPause() (eed938f) 
+  [11678] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onPause() (eed938f) 
+[11672] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onPause() (5badf51) 
+[11834] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[11834] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[11838] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+  [11846] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [11846] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [11850] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+  [11850] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+[11838] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+[12766] [CB] [ENTRY] boolean com.example.android.common.activities.SampleActivityBase.onMenuItemSelected(int,android.view.MenuItem) (5badf51,0,d129b4f) 
+  [12780] [CI] [ENTRY] void android.support.v4.app.Fragment.startActivityForResult(android.content.Intent,int) (eed938f,19eb620,1337) 
+  [12780] [CI] [EXIT] void android.support.v4.app.Fragment.startActivityForResult(android.content.Intent,int) (eed938f,19eb620,1337) 
+[12766] [CB] [EXIT] true = boolean com.example.android.common.activities.SampleActivityBase.onMenuItemSelected(int,android.view.MenuItem) (5badf51,0,d129b4f) 
+[12834] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onPause() (5badf51) 
+  [12836] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onPause() (74d00a0) 
+  [12836] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onPause() (74d00a0) 
+  [12840] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onPause() (eed938f) 
+  [12840] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onPause() (eed938f) 
+[12834] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onPause() (5badf51) 
+[12996] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[12996] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onResume() (5badf51) 
+[13000] [CB] [ENTRY] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+  [13008] [CB] [ENTRY] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [13008] [CB] [EXIT] void com.example.android.common.logger.LogFragment.onResume() (74d00a0) 
+  [13012] [CB] [ENTRY] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+  [13012] [CB] [EXIT] void com.example.android.storageclient.StorageClientFragment.onResume() (eed938f) 
+[13000] [CB] [EXIT] void com.example.android.common.activities.SampleActivityBase.onPostResume() (5badf51) 
+
+
+
+TRACE STATISTICS
+Trace length: 72
+Top-level callbacks: 29
+CI-ENTRY: 6
+CI-EXIT: 0
+CB-ENTRY: 22
+CB-EXIT: 0
+        encoding - User time: 1.060000
+encoding - System time: 0.010000
+verification - User time: 0.140000
+verification - System time: 0.028000
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[7046] [CB] [ENTRY] boolean com.example.android.common.activities.SampleActivityBase.onMenuItemSelected(int,android.view.MenuItem) (5badf51,0,d129b4f) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[7060] [CI] [ENTRY] void android.support.v4.app.Fragment.startActivityForResult(android.content.Intent,int) (eed938f,4e32e60,1337) 
+    Reached an error state in step 2!
+----------------------------------------
