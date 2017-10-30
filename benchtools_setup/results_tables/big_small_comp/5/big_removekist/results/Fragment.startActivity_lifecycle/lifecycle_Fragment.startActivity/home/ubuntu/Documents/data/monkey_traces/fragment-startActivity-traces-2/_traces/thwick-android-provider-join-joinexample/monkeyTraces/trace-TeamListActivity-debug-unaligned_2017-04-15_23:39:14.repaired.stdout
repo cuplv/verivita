@@ -1,0 +1,112 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-2/_traces/thwick-android-provider-join-joinexample/monkeyTraces/trace-TeamListActivity-debug-unaligned_2017-04-15_23:39:14.repaired
+/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/s/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-2/_traces/thwick-android-provider-join-joinexample/monkeyTraces/trace-TeamListActivity-debug-unaligned_2017-04-15_23:39:14.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.270000
+parsing - System time: 0.020000
+spec_grounding - User time: 33.420000
+spec_grounding - System time: 0.580000
+
+TRACE STATISTICS
+Trace length: 8812
+Top-level callbacks: 871
+CI-ENTRY: 482
+CI-EXIT: 487
+CB-ENTRY: 206
+CB-EXIT: 207
+        
+---Simplified Trace---
+[186] [CB] [ENTRY] void com.example.joinexample.TeamListActivity.<init>() (55ba1ab) 
+[186] [CB] [EXIT] NULL = void com.example.joinexample.TeamListActivity.<init>() (55ba1ab) 
+[210] [CB] [ENTRY] void com.example.joinexample.TeamListActivity.onCreate(android.os.Bundle) (55ba1ab,NULL) 
+  [844] [CB] [ENTRY] void com.example.joinexample.TeamListFragment.onAttach(android.app.Activity) (f4fb013,55ba1ab) 
+  [844] [CB] [EXIT] void com.example.joinexample.TeamListFragment.onAttach(android.app.Activity) (f4fb013,55ba1ab) 
+  [852] [CB] [ENTRY] void com.example.joinexample.TeamListFragment.onCreate(android.os.Bundle) (f4fb013,NULL) 
+  [852] [CB] [EXIT] void com.example.joinexample.TeamListFragment.onCreate(android.os.Bundle) (f4fb013,NULL) 
+  [868] [CB] [ENTRY] android.view.View com.example.joinexample.TeamListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f4fb013,98b184e,NULL,NULL) 
+  [868] [CB] [EXIT] b58bf6c = android.view.View com.example.joinexample.TeamListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f4fb013,98b184e,NULL,NULL) 
+  [1240] [CB] [ENTRY] void com.example.joinexample.TeamListFragment.onViewCreated(android.view.View,android.os.Bundle) (f4fb013,5d88a48,NULL) 
+  [1240] [CB] [EXIT] void com.example.joinexample.TeamListFragment.onViewCreated(android.view.View,android.os.Bundle) (f4fb013,5d88a48,NULL) 
+[210] [CB] [EXIT] void com.example.joinexample.TeamListActivity.onCreate(android.os.Bundle) (55ba1ab,NULL) 
+[1360] [CB] [ENTRY] void com.example.joinexample.TeamListActivity.onStart() (55ba1ab) 
+  [1362] [CB] [ENTRY] void com.example.joinexample.TeamListFragment.onActivityCreated(android.os.Bundle) (f4fb013,NULL) 
+  [1362] [CB] [EXIT] void com.example.joinexample.TeamListFragment.onActivityCreated(android.os.Bundle) (f4fb013,NULL) 
+  [1472] [CB] [ENTRY] void com.example.joinexample.TeamListFragment.onStart() (f4fb013) 
+  [1472] [CB] [EXIT] void com.example.joinexample.TeamListFragment.onStart() (f4fb013) 
+[1360] [CB] [EXIT] void com.example.joinexample.TeamListActivity.onStart() (55ba1ab) 
+[1502] [CB] [ENTRY] void com.example.joinexample.TeamListActivity.onResume() (55ba1ab) 
+[1502] [CB] [EXIT] void com.example.joinexample.TeamListActivity.onResume() (55ba1ab) 
+[1551] [CB] [ENTRY] void com.example.joinexample.TeamListActivity.onPostResume() (55ba1ab) 
+  [1557] [CB] [ENTRY] void com.example.joinexample.TeamListFragment.onResume() (f4fb013) 
+  [1557] [CB] [EXIT] void com.example.joinexample.TeamListFragment.onResume() (f4fb013) 
+[1551] [CB] [EXIT] void com.example.joinexample.TeamListActivity.onPostResume() (55ba1ab) 
+[2762] [CB] [ENTRY] void com.example.joinexample.TeamListFragment.onListItemClick(android.widget.ListView,android.view.View,int,long) (f4fb013,15e620d,35cbead,1,2) 
+  [3001] [CI] [ENTRY] void android.support.v4.app.Fragment.startActivity(android.content.Intent) (f4fb013,46ae62f) 
+  [3001] [CI] [EXIT] void android.support.v4.app.Fragment.startActivity(android.content.Intent) (f4fb013,46ae62f) 
+[2762] [CB] [EXIT] void com.example.joinexample.TeamListFragment.onListItemClick(android.widget.ListView,android.view.View,int,long) (f4fb013,15e620d,35cbead,1,2) 
+[3024] [CB] [ENTRY] void com.example.joinexample.TeamListActivity.onPause() (55ba1ab) 
+  [3026] [CB] [ENTRY] void com.example.joinexample.TeamListFragment.onPause() (f4fb013) 
+  [3026] [CB] [EXIT] void com.example.joinexample.TeamListFragment.onPause() (f4fb013) 
+[3024] [CB] [EXIT] void com.example.joinexample.TeamListActivity.onPause() (55ba1ab) 
+[3044] [CB] [ENTRY] void com.example.joinexample.TeamViewActivity.<init>() (cebe045) 
+[3044] [CB] [EXIT] NULL = void com.example.joinexample.TeamViewActivity.<init>() (cebe045) 
+[3068] [CB] [ENTRY] void com.example.joinexample.TeamViewActivity.onCreate(android.os.Bundle) (cebe045,NULL) 
+[3068] [CB] [EXIT] void com.example.joinexample.TeamViewActivity.onCreate(android.os.Bundle) (cebe045,NULL) 
+[3144] [CB] [ENTRY] void com.example.joinexample.TeamViewActivity.onStart() (cebe045) 
+  [3146] [CB] [ENTRY] void com.example.joinexample.TeamViewFragment.onAttach(android.app.Activity) (148bf76,cebe045) 
+  [3146] [CB] [EXIT] void com.example.joinexample.TeamViewFragment.onAttach(android.app.Activity) (148bf76,cebe045) 
+  [3154] [CB] [ENTRY] void com.example.joinexample.TeamViewFragment.onCreate(android.os.Bundle) (148bf76,NULL) 
+  [3154] [CB] [EXIT] void com.example.joinexample.TeamViewFragment.onCreate(android.os.Bundle) (148bf76,NULL) 
+  [3630] [CB] [ENTRY] android.view.View com.example.joinexample.TeamViewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (148bf76,503756d,5fb8821,NULL) 
+  [3630] [CB] [EXIT] d363aee = android.view.View com.example.joinexample.TeamViewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (148bf76,503756d,5fb8821,NULL) 
+  [4522] [CB] [ENTRY] void com.example.joinexample.TeamViewFragment.onViewCreated(android.view.View,android.os.Bundle) (148bf76,e7ed760,NULL) 
+  [4522] [CB] [EXIT] void com.example.joinexample.TeamViewFragment.onViewCreated(android.view.View,android.os.Bundle) (148bf76,e7ed760,NULL) 
+  [4526] [CB] [ENTRY] void com.example.joinexample.TeamViewFragment.onActivityCreated(android.os.Bundle) (148bf76,NULL) 
+  [4526] [CB] [EXIT] void com.example.joinexample.TeamViewFragment.onActivityCreated(android.os.Bundle) (148bf76,NULL) 
+  [4530] [CB] [ENTRY] void com.example.joinexample.TeamViewFragment.onStart() (148bf76) 
+  [4530] [CB] [EXIT] void com.example.joinexample.TeamViewFragment.onStart() (148bf76) 
+[3144] [CB] [EXIT] void com.example.joinexample.TeamViewActivity.onStart() (cebe045) 
+[4560] [CB] [ENTRY] void com.example.joinexample.TeamViewActivity.onResume() (cebe045) 
+[4560] [CB] [EXIT] void com.example.joinexample.TeamViewActivity.onResume() (cebe045) 
+[4564] [CB] [ENTRY] void com.example.joinexample.TeamViewActivity.onPostResume() (cebe045) 
+  [4570] [CB] [ENTRY] void com.example.joinexample.TeamViewFragment.onResume() (148bf76) 
+  [4570] [CB] [EXIT] void com.example.joinexample.TeamViewFragment.onResume() (148bf76) 
+[4564] [CB] [EXIT] void com.example.joinexample.TeamViewActivity.onPostResume() (cebe045) 
+[5892] [CB] [ENTRY] void com.example.joinexample.TeamListActivity.onSaveInstanceState(android.os.Bundle) (55ba1ab,6ce23fe) 
+  [5894] [CB] [ENTRY] void com.example.joinexample.TeamListFragment.onSaveInstanceState(android.os.Bundle) (f4fb013,3a69a7b) 
+  [5894] [CB] [EXIT] void com.example.joinexample.TeamListFragment.onSaveInstanceState(android.os.Bundle) (f4fb013,3a69a7b) 
+[5892] [CB] [EXIT] void com.example.joinexample.TeamListActivity.onSaveInstanceState(android.os.Bundle) (55ba1ab,6ce23fe) 
+[5904] [CB] [ENTRY] void com.example.joinexample.TeamListActivity.onStop() (55ba1ab) 
+  [5906] [CB] [ENTRY] void com.example.joinexample.TeamListFragment.onStop() (f4fb013) 
+  [5906] [CB] [EXIT] void com.example.joinexample.TeamListFragment.onStop() (f4fb013) 
+[5904] [CB] [EXIT] void com.example.joinexample.TeamListActivity.onStop() (55ba1ab) 
+
+
+
+TRACE STATISTICS
+Trace length: 32
+Top-level callbacks: 14
+CI-ENTRY: 1
+CI-EXIT: 0
+CB-ENTRY: 31
+CB-EXIT: 0
+        encoding - User time: 1.350000
+encoding - System time: 0.000000
+verification - User time: 0.144000
+verification - System time: 0.032000
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[2762] [CB] [ENTRY] void com.example.joinexample.TeamListFragment.onListItemClick(android.widget.ListView,android.view.View,int,long) (f4fb013,15e620d,35cbead,1,2) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[3001] [CI] [ENTRY] void android.support.v4.app.Fragment.startActivity(android.content.Intent) (f4fb013,46ae62f) 
+    Reached an error state in step 2!
+----------------------------------------

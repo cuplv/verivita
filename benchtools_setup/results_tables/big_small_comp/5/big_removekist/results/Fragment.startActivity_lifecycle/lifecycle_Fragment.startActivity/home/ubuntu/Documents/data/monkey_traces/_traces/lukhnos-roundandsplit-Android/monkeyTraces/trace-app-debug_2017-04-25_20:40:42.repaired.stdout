@@ -1,0 +1,150 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/_traces/lukhnos-roundandsplit-Android/monkeyTraces/trace-app-debug_2017-04-25_20:40:42.repaired
+/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/s/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/_traces/lukhnos-roundandsplit-Android/monkeyTraces/trace-app-debug_2017-04-25_20:40:42.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 1.840000
+parsing - System time: 0.120000
+spec_grounding - User time: 44.030000
+spec_grounding - System time: 0.660000
+
+TRACE STATISTICS
+Trace length: 49724
+Top-level callbacks: 5217
+CI-ENTRY: 2195
+CI-EXIT: 2472
+CB-ENTRY: 808
+CB-EXIT: 836
+        
+---Simplified Trace---
+[2] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity.<init>() (a41f3b6) 
+[2] [CB] [EXIT] NULL = void org.lukhnos.roundandsplit.MainActivity.<init>() (a41f3b6) 
+[46] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity.onCreate(android.os.Bundle) (a41f3b6,NULL) 
+[46] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity.onCreate(android.os.Bundle) (a41f3b6,NULL) 
+[6636] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity.onStart() (a41f3b6) 
+[6636] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity.onStart() (a41f3b6) 
+[6652] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity.onResume() (a41f3b6) 
+[6652] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity.onResume() (a41f3b6) 
+[28184] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (fc49797,a41f3b6) 
+[28184] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (fc49797,a41f3b6) 
+[28192] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (fc49797,NULL) 
+[28192] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (fc49797,NULL) 
+[28290] [CB] [ENTRY] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (fc49797,f470ce,NULL,NULL) 
+[28290] [CB] [EXIT] NULL = android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (fc49797,f470ce,NULL,NULL) 
+[28294] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (fc49797,NULL) 
+[28294] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (fc49797,NULL) 
+[28306] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (fc49797) 
+[28306] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (fc49797) 
+[29338] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (fc49797) 
+[29338] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (fc49797) 
+[30960] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (fc49797) 
+[30960] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (fc49797) 
+[30964] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (fc49797) 
+[30964] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (fc49797) 
+[30968] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (fc49797) 
+[30968] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (fc49797) 
+[30972] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (fc49797) 
+[30972] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (fc49797) 
+[30976] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (fc49797) 
+[30976] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (fc49797) 
+[33492] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (11f2612,a41f3b6) 
+[33492] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (11f2612,a41f3b6) 
+[33500] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (11f2612,NULL) 
+[33500] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (11f2612,NULL) 
+[33594] [CB] [ENTRY] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (11f2612,8581d43,NULL,NULL) 
+[33594] [CB] [EXIT] NULL = android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (11f2612,8581d43,NULL,NULL) 
+[33598] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (11f2612,NULL) 
+[33598] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (11f2612,NULL) 
+[33610] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (11f2612) 
+[33610] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (11f2612) 
+[34618] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (11f2612) 
+[34618] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (11f2612) 
+[36322] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (11f2612) 
+[36322] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (11f2612) 
+[36326] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (11f2612) 
+[36326] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (11f2612) 
+[36330] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (11f2612) 
+[36330] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (11f2612) 
+[36334] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (11f2612) 
+[36334] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (11f2612) 
+[36338] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (11f2612) 
+[36338] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (11f2612) 
+[39076] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (547d5c5,a41f3b6) 
+[39076] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (547d5c5,a41f3b6) 
+[39084] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (547d5c5,NULL) 
+[39084] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (547d5c5,NULL) 
+[39178] [CB] [ENTRY] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (547d5c5,b697bfa,NULL,NULL) 
+[39178] [CB] [EXIT] NULL = android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (547d5c5,b697bfa,NULL,NULL) 
+[39182] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (547d5c5,NULL) 
+[39182] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (547d5c5,NULL) 
+[39194] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (547d5c5) 
+[39194] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (547d5c5) 
+[40202] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (547d5c5) 
+[40202] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (547d5c5) 
+[41694] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (547d5c5) 
+[41694] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (547d5c5) 
+[41698] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (547d5c5) 
+[41698] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (547d5c5) 
+[41702] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (547d5c5) 
+[41702] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (547d5c5) 
+[41706] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (547d5c5) 
+[41706] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (547d5c5) 
+[41710] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (547d5c5) 
+[41710] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (547d5c5) 
+[42198] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (385d074,a41f3b6) 
+[42198] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (385d074,a41f3b6) 
+[42206] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (385d074,NULL) 
+[42206] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (385d074,NULL) 
+[42300] [CB] [ENTRY] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (385d074,1c97dfd,NULL,NULL) 
+[42300] [CB] [EXIT] NULL = android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (385d074,1c97dfd,NULL,NULL) 
+[42304] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (385d074,NULL) 
+[42304] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (385d074,NULL) 
+[42316] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (385d074) 
+[42316] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (385d074) 
+[43324] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (385d074) 
+[43324] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (385d074) 
+[44708] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment$1.onClick(android.content.DialogInterface,int) (e120ca0,a136c1,0) 
+  [44717] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent) (385d074,239e7be) 
+  [44719] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent,android.os.Bundle) (385d074,239e7be,NULL) 
+  [44719] [CI] [EXIT] void android.app.Fragment.startActivity(android.content.Intent,android.os.Bundle) (385d074,239e7be,NULL) 
+  [44717] [CI] [EXIT] void android.app.Fragment.startActivity(android.content.Intent) (385d074,239e7be) 
+[44708] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment$1.onClick(android.content.DialogInterface,int) (e120ca0,a136c1,0) 
+[45044] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (385d074) 
+[45044] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (385d074) 
+[45048] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (385d074) 
+[45048] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (385d074) 
+[45052] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (385d074) 
+[45052] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (385d074) 
+[45056] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (385d074) 
+[45056] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (385d074) 
+[45060] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (385d074) 
+[45060] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (385d074) 
+
+
+
+TRACE STATISTICS
+Trace length: 51
+Top-level callbacks: 49
+CI-ENTRY: 2
+CI-EXIT: 0
+CB-ENTRY: 49
+CB-EXIT: 0
+        encoding - User time: 2.570000
+encoding - System time: 0.020000
+verification - User time: 0.264000
+verification - System time: 0.032000
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[44708] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment$1.onClick(android.content.DialogInterface,int) (e120ca0,a136c1,0) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[44717] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent) (385d074,239e7be) 
+    Reached an error state in step 2!
+----------------------------------------

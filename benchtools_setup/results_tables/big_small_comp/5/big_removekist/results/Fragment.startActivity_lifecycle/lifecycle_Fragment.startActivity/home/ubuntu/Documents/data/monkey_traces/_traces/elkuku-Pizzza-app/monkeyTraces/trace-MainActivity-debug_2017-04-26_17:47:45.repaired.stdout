@@ -1,0 +1,134 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/_traces/elkuku-Pizzza-app/monkeyTraces/trace-MainActivity-debug_2017-04-26_17:47:45.repaired
+/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/s/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/_traces/elkuku-Pizzza-app/monkeyTraces/trace-MainActivity-debug_2017-04-26_17:47:45.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 0.420000
+parsing - System time: 0.020000
+spec_grounding - User time: 49.110000
+spec_grounding - System time: 0.780000
+
+TRACE STATISTICS
+Trace length: 12652
+Top-level callbacks: 1172
+CI-ENTRY: 357
+CI-EXIT: 362
+CB-ENTRY: 298
+CB-EXIT: 303
+        
+---Simplified Trace---
+[0] [CB] [ENTRY] void org.elkuku.pizzza.MainActivity.<init>() (5badf51) 
+[0] [CB] [EXIT] NULL = void org.elkuku.pizzza.MainActivity.<init>() (5badf51) 
+[44] [CB] [ENTRY] void org.elkuku.pizzza.MainActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+  [1582] [CB] [ENTRY] void org.elkuku.pizzza.PromoFragment.onAttach(android.app.Activity) (da2adf0,5badf51) 
+  [1582] [CB] [EXIT] void org.elkuku.pizzza.PromoFragment.onAttach(android.app.Activity) (da2adf0,5badf51) 
+  [1590] [CB] [ENTRY] void org.elkuku.pizzza.PromoFragment.onCreate(android.os.Bundle) (da2adf0,NULL) 
+  [1590] [CB] [EXIT] void org.elkuku.pizzza.PromoFragment.onCreate(android.os.Bundle) (da2adf0,NULL) 
+  [1610] [CB] [ENTRY] android.view.View org.elkuku.pizzza.PromoFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (da2adf0,c565a31,NULL,NULL) 
+  [1610] [CB] [EXIT] b0d8ebe = android.view.View org.elkuku.pizzza.PromoFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (da2adf0,c565a31,NULL,NULL) 
+  [1730] [CB] [ENTRY] void org.elkuku.pizzza.PromoFragment.onViewCreated(android.view.View,android.os.Bundle) (da2adf0,b0d8ebe,NULL) 
+  [1730] [CB] [EXIT] void org.elkuku.pizzza.PromoFragment.onViewCreated(android.view.View,android.os.Bundle) (da2adf0,b0d8ebe,NULL) 
+  [1790] [CB] [ENTRY] void org.elkuku.pizzza.ControlsFragment.onAttach(android.app.Activity) (94c629f,5badf51) 
+  [1790] [CB] [EXIT] void org.elkuku.pizzza.ControlsFragment.onAttach(android.app.Activity) (94c629f,5badf51) 
+  [1798] [CB] [ENTRY] void org.elkuku.pizzza.ControlsFragment.onCreate(android.os.Bundle) (94c629f,NULL) 
+  [1798] [CB] [EXIT] void org.elkuku.pizzza.ControlsFragment.onCreate(android.os.Bundle) (94c629f,NULL) 
+  [1818] [CB] [ENTRY] android.view.View org.elkuku.pizzza.ControlsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (94c629f,c565a31,NULL,NULL) 
+  [1818] [CB] [EXIT] 802213c = android.view.View org.elkuku.pizzza.ControlsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (94c629f,c565a31,NULL,NULL) 
+  [2570] [CB] [ENTRY] void org.elkuku.pizzza.ControlsFragment.onViewCreated(android.view.View,android.os.Bundle) (94c629f,802213c,NULL) 
+  [2570] [CB] [EXIT] void org.elkuku.pizzza.ControlsFragment.onViewCreated(android.view.View,android.os.Bundle) (94c629f,802213c,NULL) 
+  [2666] [CB] [ENTRY] void org.elkuku.pizzza.MenuListFragment.onAttach(android.app.Activity) (51e5bbc,5badf51) 
+  [2666] [CB] [EXIT] void org.elkuku.pizzza.MenuListFragment.onAttach(android.app.Activity) (51e5bbc,5badf51) 
+  [2674] [CB] [ENTRY] void org.elkuku.pizzza.MenuListFragment.onCreate(android.os.Bundle) (51e5bbc,NULL) 
+  [2674] [CB] [EXIT] void org.elkuku.pizzza.MenuListFragment.onCreate(android.os.Bundle) (51e5bbc,NULL) 
+  [2694] [CB] [ENTRY] android.view.View org.elkuku.pizzza.MenuListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (51e5bbc,c565a31,NULL,NULL) 
+  [2694] [CB] [EXIT] edf9c3f = android.view.View org.elkuku.pizzza.MenuListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (51e5bbc,c565a31,NULL,NULL) 
+  [3198] [CB] [ENTRY] void org.elkuku.pizzza.MenuListFragment.onViewCreated(android.view.View,android.os.Bundle) (51e5bbc,edf9c3f,NULL) 
+  [3198] [CB] [EXIT] void org.elkuku.pizzza.MenuListFragment.onViewCreated(android.view.View,android.os.Bundle) (51e5bbc,edf9c3f,NULL) 
+[44] [CB] [EXIT] void org.elkuku.pizzza.MainActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+[3426] [CB] [ENTRY] void org.elkuku.pizzza.PromoFragment.onActivityCreated(android.os.Bundle) (da2adf0,NULL) 
+[3426] [CB] [EXIT] void org.elkuku.pizzza.PromoFragment.onActivityCreated(android.os.Bundle) (da2adf0,NULL) 
+[3430] [CB] [ENTRY] void org.elkuku.pizzza.ControlsFragment.onActivityCreated(android.os.Bundle) (94c629f,NULL) 
+[3430] [CB] [EXIT] void org.elkuku.pizzza.ControlsFragment.onActivityCreated(android.os.Bundle) (94c629f,NULL) 
+[3518] [CB] [ENTRY] void org.elkuku.pizzza.MenuListFragment.onActivityCreated(android.os.Bundle) (51e5bbc,NULL) 
+[3518] [CB] [EXIT] void org.elkuku.pizzza.MenuListFragment.onActivityCreated(android.os.Bundle) (51e5bbc,NULL) 
+[3606] [CB] [ENTRY] void org.elkuku.pizzza.MainActivity.onStart() (5badf51) 
+[3606] [CB] [EXIT] void org.elkuku.pizzza.MainActivity.onStart() (5badf51) 
+[3610] [CB] [ENTRY] void org.elkuku.pizzza.PromoFragment.onStart() (da2adf0) 
+[3610] [CB] [EXIT] void org.elkuku.pizzza.PromoFragment.onStart() (da2adf0) 
+[3614] [CB] [ENTRY] void org.elkuku.pizzza.ControlsFragment.onStart() (94c629f) 
+[3614] [CB] [EXIT] void org.elkuku.pizzza.ControlsFragment.onStart() (94c629f) 
+[3618] [CB] [ENTRY] void org.elkuku.pizzza.MenuListFragment.onStart() (51e5bbc) 
+[3618] [CB] [EXIT] void org.elkuku.pizzza.MenuListFragment.onStart() (51e5bbc) 
+[3634] [CB] [ENTRY] void org.elkuku.pizzza.MainActivity.onResume() (5badf51) 
+[3634] [CB] [EXIT] void org.elkuku.pizzza.MainActivity.onResume() (5badf51) 
+[3638] [CB] [ENTRY] void org.elkuku.pizzza.PromoFragment.onResume() (da2adf0) 
+[3638] [CB] [EXIT] void org.elkuku.pizzza.PromoFragment.onResume() (da2adf0) 
+[3642] [CB] [ENTRY] void org.elkuku.pizzza.ControlsFragment.onResume() (94c629f) 
+[3642] [CB] [EXIT] void org.elkuku.pizzza.ControlsFragment.onResume() (94c629f) 
+[3646] [CB] [ENTRY] void org.elkuku.pizzza.MenuListFragment.onResume() (51e5bbc) 
+[3646] [CB] [EXIT] void org.elkuku.pizzza.MenuListFragment.onResume() (51e5bbc) 
+[6052] [CB] [ENTRY] void org.elkuku.pizzza.ControlsFragment$2.onClick(android.view.View) (89252e9,bea8f22) 
+  [6061] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent) (94c629f,36109d9) 
+  [6061] [CI] [EXIT] void android.app.Fragment.startActivity(android.content.Intent) (94c629f,36109d9) 
+[6052] [CB] [EXIT] void org.elkuku.pizzza.ControlsFragment$2.onClick(android.view.View) (89252e9,bea8f22) 
+[6080] [CB] [ENTRY] void org.elkuku.pizzza.PromoFragment.onPause() (da2adf0) 
+[6080] [CB] [EXIT] void org.elkuku.pizzza.PromoFragment.onPause() (da2adf0) 
+[6084] [CB] [ENTRY] void org.elkuku.pizzza.ControlsFragment.onPause() (94c629f) 
+[6084] [CB] [EXIT] void org.elkuku.pizzza.ControlsFragment.onPause() (94c629f) 
+[6088] [CB] [ENTRY] void org.elkuku.pizzza.MenuListFragment.onPause() (51e5bbc) 
+[6088] [CB] [EXIT] void org.elkuku.pizzza.MenuListFragment.onPause() (51e5bbc) 
+[6092] [CB] [ENTRY] void org.elkuku.pizzza.MainActivity.onPause() (5badf51) 
+[6092] [CB] [EXIT] void org.elkuku.pizzza.MainActivity.onPause() (5badf51) 
+[6164] [CB] [ENTRY] void org.elkuku.pizzza.PromosActivity.<init>() (b5e8135) 
+[6164] [CB] [EXIT] NULL = void org.elkuku.pizzza.PromosActivity.<init>() (b5e8135) 
+[6208] [CB] [ENTRY] void org.elkuku.pizzza.PromosActivity.onCreate(android.os.Bundle) (b5e8135,NULL) 
+[6208] [CB] [EXIT] void org.elkuku.pizzza.PromosActivity.onCreate(android.os.Bundle) (b5e8135,NULL) 
+[7948] [CB] [ENTRY] void org.elkuku.pizzza.PromosActivity.onStart() (b5e8135) 
+[7948] [CB] [EXIT] void org.elkuku.pizzza.PromosActivity.onStart() (b5e8135) 
+[7964] [CB] [ENTRY] void org.elkuku.pizzza.PromosActivity.onResume() (b5e8135) 
+[7964] [CB] [EXIT] void org.elkuku.pizzza.PromosActivity.onResume() (b5e8135) 
+[9112] [CB] [ENTRY] void org.elkuku.pizzza.MainActivity.onSaveInstanceState(android.os.Bundle) (5badf51,4ea0a13) 
+  [9114] [CB] [ENTRY] void org.elkuku.pizzza.PromoFragment.onSaveInstanceState(android.os.Bundle) (da2adf0,337557c) 
+  [9114] [CB] [EXIT] void org.elkuku.pizzza.PromoFragment.onSaveInstanceState(android.os.Bundle) (da2adf0,337557c) 
+  [9118] [CB] [ENTRY] void org.elkuku.pizzza.ControlsFragment.onSaveInstanceState(android.os.Bundle) (94c629f,337557c) 
+  [9118] [CB] [EXIT] void org.elkuku.pizzza.ControlsFragment.onSaveInstanceState(android.os.Bundle) (94c629f,337557c) 
+  [9122] [CB] [ENTRY] void org.elkuku.pizzza.MenuListFragment.onSaveInstanceState(android.os.Bundle) (51e5bbc,337557c) 
+  [9122] [CB] [EXIT] void org.elkuku.pizzza.MenuListFragment.onSaveInstanceState(android.os.Bundle) (51e5bbc,337557c) 
+[9112] [CB] [EXIT] void org.elkuku.pizzza.MainActivity.onSaveInstanceState(android.os.Bundle) (5badf51,4ea0a13) 
+[9128] [CB] [ENTRY] void org.elkuku.pizzza.PromoFragment.onStop() (da2adf0) 
+[9128] [CB] [EXIT] void org.elkuku.pizzza.PromoFragment.onStop() (da2adf0) 
+[9132] [CB] [ENTRY] void org.elkuku.pizzza.ControlsFragment.onStop() (94c629f) 
+[9132] [CB] [EXIT] void org.elkuku.pizzza.ControlsFragment.onStop() (94c629f) 
+[9136] [CB] [ENTRY] void org.elkuku.pizzza.MenuListFragment.onStop() (51e5bbc) 
+[9136] [CB] [EXIT] void org.elkuku.pizzza.MenuListFragment.onStop() (51e5bbc) 
+[9140] [CB] [ENTRY] void org.elkuku.pizzza.MainActivity.onStop() (5badf51) 
+[9140] [CB] [EXIT] void org.elkuku.pizzza.MainActivity.onStop() (5badf51) 
+
+
+
+TRACE STATISTICS
+Trace length: 43
+Top-level callbacks: 27
+CI-ENTRY: 1
+CI-EXIT: 0
+CB-ENTRY: 42
+CB-EXIT: 0
+        encoding - User time: 2.120000
+encoding - System time: 0.000000
+verification - User time: 0.224000
+verification - System time: 0.032000
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[6052] [CB] [ENTRY] void org.elkuku.pizzza.ControlsFragment$2.onClick(android.view.View) (89252e9,bea8f22) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[6061] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent) (94c629f,36109d9) 
+    Reached an error state in step 2!
+----------------------------------------

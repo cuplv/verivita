@@ -1,0 +1,50 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/_traces/codlab-android_internal_external-program/monkeyTraces/trace-Internal2External_2017-04-25_23:14:19.repaired
+/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/s/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/_traces/codlab-android_internal_external-program/monkeyTraces/trace-Internal2External_2017-04-25_23:14:19.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 1.010000
+parsing - System time: 0.080000
+spec_grounding - User time: 33.740000
+spec_grounding - System time: 0.520000
+
+TRACE STATISTICS
+Trace length: 8926
+Top-level callbacks: 536
+CI-ENTRY: 508
+CI-EXIT: 521
+CB-ENTRY: 420
+CB-EXIT: 429
+        
+---Simplified Trace---
+[0] [CB] [ENTRY] void eu.codlab.int2ext.Int2ExtActivity.<init>() (5badf51) 
+[0] [CB] [EXIT] NULL = void eu.codlab.int2ext.Int2ExtActivity.<init>() (5badf51) 
+[44] [CB] [ENTRY] void eu.codlab.int2ext.Int2ExtActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+[44] [CB] [EXIT] void eu.codlab.int2ext.Int2ExtActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+[3656] [CB] [ENTRY] void eu.codlab.int2ext.Int2ExtActivity.onStart() (5badf51) 
+[3656] [CB] [EXIT] void eu.codlab.int2ext.Int2ExtActivity.onStart() (5badf51) 
+[3672] [CB] [ENTRY] void eu.codlab.int2ext.Int2ExtActivity.onResume() (5badf51) 
+[3672] [CB] [EXIT] void eu.codlab.int2ext.Int2ExtActivity.onResume() (5badf51) 
+[8900] [CB] [ENTRY] void eu.codlab.int2ext.Int2ExtActivity$InternalExternalPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (6c7a50b,27fd439,0,7f05253) 
+  [8908] [CB] [ENTRY] void eu.codlab.int2ext.ChoiceFragment.onAttach(android.app.Activity) (7f05253,5badf51) 
+  [8908] [CB] [EXIT] void eu.codlab.int2ext.ChoiceFragment.onAttach(android.app.Activity) (7f05253,5badf51) 
+  [8916] [CB] [ENTRY] void eu.codlab.int2ext.ChoiceFragment.onCreate(android.os.Bundle) (7f05253,NULL) 
+  [8916] [CB] [EXIT] void eu.codlab.int2ext.ChoiceFragment.onCreate(android.os.Bundle) (7f05253,NULL) 
+[8900] [CB] [EXIT] void eu.codlab.int2ext.Int2ExtActivity$InternalExternalPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (6c7a50b,27fd439,0,7f05253) 
+
+
+
+TRACE STATISTICS
+Trace length: 7
+Top-level callbacks: 5
+CI-ENTRY: 0
+CI-EXIT: 0
+CB-ENTRY: 7
+CB-EXIT: 0
+        encoding - User time: 0.290000
+encoding - System time: 0.000000
+verification - User time: 0.016000
+verification - System time: 0.024000
+The trace is SAFE

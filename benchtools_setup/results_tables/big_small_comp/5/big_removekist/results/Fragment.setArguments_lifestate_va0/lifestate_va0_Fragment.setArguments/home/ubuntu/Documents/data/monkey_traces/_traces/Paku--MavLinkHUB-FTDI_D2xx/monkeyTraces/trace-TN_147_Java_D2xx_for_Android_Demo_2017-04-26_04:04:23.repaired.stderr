@@ -1,0 +1,42 @@
+INFO:root:Total number of specs (before grounding): 17199
+Traceback (most recent call last):
+  File "/home/s/Documents/source/callback-verification/cbverifier/driver.py", line 466, in <module>
+    main()
+  File "/home/s/Documents/source/callback-verification/cbverifier/driver.py", line 442, in main
+    (res, cex, mapback) = driver.run_ic3(opts.nuxmv_path, opts.ic3_frames)
+  File "/home/s/Documents/source/callback-verification/cbverifier/driver.py", line 134, in run_ic3
+    self.stats)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/encoder.py", line 225, in __init__
+    self.stats)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/encoder.py", line 402, in _compute_ground_spec
+    tmp = gs.ground_spec(spec)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/grounding.py", line 67, in ground_spec
+    sg.process_substitutions(spec, self, self._process_subs, data)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/grounding.py", line 752, in process_substitutions
+    ground_formula = self._get_ground_bindings_formula(spec)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/grounding.py", line 674, in _get_ground_bindings_formula
+    ground_enc = self.resize_bvs(ground_enc)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/grounding.py", line 645, in resize_bvs
+    new_f = Equals(new_enc_var,  new_value)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/shortcuts.py", line 204, in Equals
+    return get_env().formula_manager.Equals(left, right)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/formula.py", line 270, in Equals
+    args=(left, right))
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/formula.py", line 87, in create_node
+    self._do_type_check(n)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/formula.py", line 72, in _do_type_check_real
+    self.get_type(formula)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/type_checker.py", line 69, in get_type
+    res = self.walk(formula)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/walkers/dag.py", line 107, in walk
+    res = self.iter_walk(formula, **kwargs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/walkers/dag.py", line 99, in iter_walk
+    self._process_stack(**kwargs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/walkers/dag.py", line 92, in _process_stack
+    self._compute_node_result(formula, **kwargs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/walkers/dag.py", line 76, in _compute_node_result
+    self.memoization[key] = f(formula, args=args, **kwargs)
+MemoryError
+real 163.19
+user 160.10
+sys 3.04

@@ -1,0 +1,158 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/_traces/casimir-simpleDeadlines-main/monkeyTraces/trace-2803eb2fd65e0a176dbbab97f85494b6193e9134-debug_2017-04-26_03:23:13.repaired
+/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/s/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/s/Documents/source/callback-verification/cbverifier/driver.py -t /home/ubuntu/Documents/data/monkey_traces/_traces/casimir-simpleDeadlines-main/monkeyTraces/trace-2803eb2fd65e0a176dbbab97f85494b6193e9134-debug_2017-04-26_03:23:13.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec -m ic3 -z -q 300 -n /home/ubuntu/software/nuXmv-1.1.1-Linux/bin/nuXmv
+parsing - User time: 2.290000
+parsing - System time: 0.190000
+spec_grounding - User time: 39.170000
+spec_grounding - System time: 0.530000
+
+TRACE STATISTICS
+Trace length: 63400
+Top-level callbacks: 11446
+CI-ENTRY: 1308
+CI-EXIT: 1357
+CB-ENTRY: 852
+CB-EXIT: 880
+        
+---Simplified Trace---
+[16] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.<init>() (aa0ce4a) 
+[16] [CB] [EXIT] NULL = void com.casimirlab.simpleDeadlines.ui.MainActivity.<init>() (aa0ce4a) 
+[64] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onCreate(android.os.Bundle) (aa0ce4a,NULL) 
+[64] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.MainActivity.onCreate(android.os.Bundle) (aa0ce4a,NULL) 
+[1436] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStart() (aa0ce4a) 
+[1436] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStart() (aa0ce4a) 
+[1546] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onResume() (aa0ce4a) 
+[1546] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.MainActivity.onResume() (aa0ce4a) 
+[2318] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [2326] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(android.app.Activity) (938423f,aa0ce4a) 
+  [2326] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(android.app.Activity) (938423f,aa0ce4a) 
+  [2334] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(android.os.Bundle) (938423f,NULL) 
+  [2334] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(android.os.Bundle) (938423f,NULL) 
+[2318] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+[2384] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [2430] [CB] [ENTRY] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (938423f,e44421d,3a8e74f,NULL) 
+  [2430] [CB] [EXIT] 9b0b24e = android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (938423f,e44421d,3a8e74f,NULL) 
+  [2866] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(android.view.View,android.os.Bundle) (938423f,a1ed582,NULL) 
+  [2866] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(android.view.View,android.os.Bundle) (938423f,a1ed582,NULL) 
+  [2902] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(android.os.Bundle) (938423f,NULL) 
+  [2902] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(android.os.Bundle) (938423f,NULL) 
+  [2910] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart() (938423f) 
+  [2910] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart() (938423f) 
+  [2956] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume() (938423f) 
+  [2956] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume() (938423f) 
+  [2960] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(android.app.Activity) (46a42d3,aa0ce4a) 
+  [2960] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(android.app.Activity) (46a42d3,aa0ce4a) 
+  [2968] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(android.os.Bundle) (46a42d3,NULL) 
+  [2968] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(android.os.Bundle) (46a42d3,NULL) 
+  [3053] [CB] [ENTRY] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (46a42d3,f72f758,3a8e74f,NULL) 
+  [3053] [CB] [EXIT] 937bf90 = android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (46a42d3,f72f758,3a8e74f,NULL) 
+  [3514] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(android.view.View,android.os.Bundle) (46a42d3,63816a4,NULL) 
+  [3514] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(android.view.View,android.os.Bundle) (46a42d3,63816a4,NULL) 
+  [3550] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(android.os.Bundle) (46a42d3,NULL) 
+  [3550] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(android.os.Bundle) (46a42d3,NULL) 
+[2384] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[4772] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart() (46a42d3) 
+[4772] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart() (46a42d3) 
+[4813] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume() (46a42d3) 
+[4813] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume() (46a42d3) 
+[5010] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+[5010] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+[5014] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5014] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5142] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+[5142] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+[5146] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5146] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5380] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+[5380] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+[5384] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5384] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5570] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onPause() (aa0ce4a) 
+  [5572] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause() (938423f) 
+  [5572] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause() (938423f) 
+  [5576] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause() (46a42d3) 
+  [5576] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause() (46a42d3) 
+[5570] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.MainActivity.onPause() (aa0ce4a) 
+[5602] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.<init>() (8af754f) 
+[5602] [CB] [EXIT] NULL = void com.casimirlab.simpleDeadlines.ui.Settings.<init>() (8af754f) 
+[5650] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.onCreate(android.os.Bundle) (8af754f,NULL) 
+[5650] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings.onCreate(android.os.Bundle) (8af754f,NULL) 
+[8272] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onAttach(android.app.Activity) (7f96da1,8af754f) 
+[8272] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onAttach(android.app.Activity) (7f96da1,8af754f) 
+[8280] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onCreate(android.os.Bundle) (7f96da1,NULL) 
+[8280] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onCreate(android.os.Bundle) (7f96da1,NULL) 
+[8678] [CB] [ENTRY] android.view.View com.casimirlab.simpleDeadlines.ui.Settings$1.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (7f96da1,fe8db26,367057,NULL) 
+[8678] [CB] [EXIT] 778391e = android.view.View com.casimirlab.simpleDeadlines.ui.Settings$1.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (7f96da1,fe8db26,367057,NULL) 
+[9406] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onViewCreated(android.view.View,android.os.Bundle) (7f96da1,778391e,NULL) 
+[9406] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onViewCreated(android.view.View,android.os.Bundle) (7f96da1,778391e,NULL) 
+[9410] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onActivityCreated(android.os.Bundle) (7f96da1,NULL) 
+[9410] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onActivityCreated(android.os.Bundle) (7f96da1,NULL) 
+[9462] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.onStart() (8af754f) 
+[9462] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings.onStart() (8af754f) 
+[9466] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onStart() (7f96da1) 
+[9466] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onStart() (7f96da1) 
+[9482] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.onResume() (8af754f) 
+[9482] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings.onResume() (8af754f) 
+[9486] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume() (7f96da1) 
+[9486] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume() (7f96da1) 
+[19178] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (aa0ce4a,b6c3a1d) 
+  [19184] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(android.os.Bundle) (938423f,94836db) 
+  [19184] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(android.os.Bundle) (938423f,94836db) 
+  [19188] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(android.os.Bundle) (46a42d3,94836db) 
+  [19188] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(android.os.Bundle) (46a42d3,94836db) 
+[19178] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (aa0ce4a,b6c3a1d) 
+[19194] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStop() (aa0ce4a) 
+  [19196] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop() (938423f) 
+  [19196] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop() (938423f) 
+  [19200] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop() (46a42d3) 
+  [19200] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop() (46a42d3) 
+[19194] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStop() (aa0ce4a) 
+[27958] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.Settings$1$3.onPreferenceClick(android.preference.Preference) (b4de3db,b3a34d5) 
+  [28085] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent) (7f96da1,77a3f64) 
+  [28087] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent,android.os.Bundle) (7f96da1,77a3f64,NULL) 
+  [28087] [CI] [EXIT] void android.app.Fragment.startActivity(android.content.Intent,android.os.Bundle) (7f96da1,77a3f64,NULL) 
+  [28085] [CI] [EXIT] void android.app.Fragment.startActivity(android.content.Intent) (7f96da1,77a3f64) 
+[27958] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.Settings$1$3.onPreferenceClick(android.preference.Preference) (b4de3db,b3a34d5) 
+[40806] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.Settings$1$3.onPreferenceClick(android.preference.Preference) (b4de3db,b3a34d5) 
+  [40933] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent) (7f96da1,d3482e4) 
+  [40935] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent,android.os.Bundle) (7f96da1,d3482e4,NULL) 
+  [40935] [CI] [EXIT] void android.app.Fragment.startActivity(android.content.Intent,android.os.Bundle) (7f96da1,d3482e4,NULL) 
+  [40933] [CI] [EXIT] void android.app.Fragment.startActivity(android.content.Intent) (7f96da1,d3482e4) 
+[40806] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.Settings$1$3.onPreferenceClick(android.preference.Preference) (b4de3db,b3a34d5) 
+[50432] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.Settings$1$3.onPreferenceClick(android.preference.Preference) (b4de3db,b3a34d5) 
+  [50559] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent) (7f96da1,67c5800) 
+  [50561] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent,android.os.Bundle) (7f96da1,67c5800,NULL) 
+  [50561] [CI] [EXIT] void android.app.Fragment.startActivity(android.content.Intent,android.os.Bundle) (7f96da1,67c5800,NULL) 
+  [50559] [CI] [EXIT] void android.app.Fragment.startActivity(android.content.Intent) (7f96da1,67c5800) 
+[50432] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.Settings$1$3.onPreferenceClick(android.preference.Preference) (b4de3db,b3a34d5) 
+
+
+
+TRACE STATISTICS
+Trace length: 55
+Top-level callbacks: 31
+CI-ENTRY: 6
+CI-EXIT: 0
+CB-ENTRY: 41
+CB-EXIT: 0
+        encoding - User time: 2.010000
+encoding - System time: 0.010000
+verification - User time: 0.204000
+verification - System time: 0.044000
+The system can reach an error state.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[27958] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.Settings$1$3.onPreferenceClick(android.preference.Preference) (b4de3db,b3a34d5) 
+----------------------------------------
+Step: 2
+----------------------------------------
+[28085] [CI] [ENTRY] void android.app.Fragment.startActivity(android.content.Intent) (7f96da1,77a3f64) 
+    Reached an error state in step 2!
+----------------------------------------
