@@ -23,7 +23,7 @@ REGEXP view_attached_has(act,view) = [TRUE[*];
 
 //Circumstances where we say we lose precision (later this should handle findViewByID on view objects and other nested things)
 //All of these probably could be specified but we need to lazily instantiate to avoid too much work
-REGEXP view_lose_precision(view) = [TRUE[*];
+REGEXP view_lose_precision_just(view) = [TRUE[*];
 	(
 		view = [CI] [EXIT] [#] android.view.View android.app.Dialog.findViewById(# : int)
 		| view = [CI] [EXIT] [#] android.view.View android.view.LayoutInflater.inflate(# : int, # : android.view.ViewGroup,# : boolean)
@@ -31,7 +31,8 @@ REGEXP view_lose_precision(view) = [TRUE[*];
 		| view = [CI] [EXIT] [#] android.view.View android.view.View.findViewById(# : int)
 		| [CI] [ENTRY] [#] void android.view.ViewGroup.addView(view : android.view.View,# : int)
 	)
-;TRUE[*]] 
+];
+REGEXP view_lose_precision_has(view) = [view_lose_precision_just(view);TRUE[*]]
 
 
 ////Activity attachment
