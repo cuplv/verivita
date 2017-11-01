@@ -7,7 +7,7 @@ SPEC view_attached_has(act,toolbar) &
 		[CB] [ENTRY] [listener] boolean android.support.v7.widget.Toolbar$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
 
 //lose precision
-SPEC view_lose_precision(toolbar) &
+SPEC view_lose_precision_has(toolbar) &
 	Toolbar_listener_registered_just(toolbar,listener) |+
 		[CB] [ENTRY] [listener] boolean android.support.v7.widget.Toolbar$OnMenuItemClickListener.onMenuItemClick(# : android.view.MenuItem);
 
