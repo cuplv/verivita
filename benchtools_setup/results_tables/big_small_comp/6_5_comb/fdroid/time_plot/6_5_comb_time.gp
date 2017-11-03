@@ -7,8 +7,8 @@ set logscale x
 
 #set key right bottom box
 set key left top
-set xlabel 'Total time'
-set ylabel 'Number of solved instances'
+set xlabel 'Total time (seconds)'
+set ylabel 'Safe Traces'
 set title ''
 set terminal postscript eps color
 set output '| epstopdf --filter > accumulated_time_small_exp.pdf'
