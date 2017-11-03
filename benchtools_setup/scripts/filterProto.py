@@ -24,7 +24,3 @@ if __name__ == "__main__":
             print args.trace
     except:
         pass # ignore bad traces
-
-
-
-

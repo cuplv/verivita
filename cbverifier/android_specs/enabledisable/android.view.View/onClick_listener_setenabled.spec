@@ -47,4 +47,7 @@ SPEC TRUE[*]; [CI] [ENTRY] [view] void android.widget.TextView.setEnabled(FALSE 
 //Note: I could trigger this off either the listener or the view, the view is more direct so will likely cause fewer simulation problems, the listener is more precise
 SPEC TRUE[*]; view_attached_has(act,view) & 
 	view_onClick_listener_set_has(view,listener) &
-	Activity_not_visible_just(act) |- [CB] [ENTRY] [listener] void android.view.View$OnClickListener.onClick(# : android.view.View)
+	Activity_not_visible_just(act) |- [CB] [ENTRY] [listener] void android.view.View$OnClickListener.onClick(# : android.view.View);
+
+//lose precision when developer calls this method, why is this even public???
+SPEC TRUE[*]; [CI] [ENTRY] [view] boolean android.view.View.performClick() |+[CB] [ENTRY] [#] void android.view.View$OnClickListener.onClick(view : android.view.View)

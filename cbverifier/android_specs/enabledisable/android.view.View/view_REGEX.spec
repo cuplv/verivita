@@ -17,7 +17,8 @@ REGEXP view_onClick_enabled_set_has(view) = [(view_onClick_enabled_set_just(view
 
 //Regular expression is true when this is a view we know is attached to an Activity
 REGEXP view_attached_has(act,view) = [TRUE[*];
-	(view = [CI] [EXIT] [act] android.view.View android.app.Activity.findViewById(# : int))
+	(view = [CI] [EXIT] [act] android.view.View android.app.Activity.findViewById(# : int)
+	| view = [CI] [EXIT] [act] android.view.View android.support.v7.app.AppCompatActivity.findViewById(# : int))
 	//| (toolbar = [CI] [EXIT] [act] android.view.View android.app.Activity.findViewById(# : int);TRUE[*];[CI] [ENTRY] [toolbar] void android.support.v7.widget.Toolbar.setNavigationOnClickListener(listener : android.view.View$OnClickListener))
 ;TRUE[*]]; 
 
