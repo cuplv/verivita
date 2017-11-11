@@ -18,4 +18,6 @@ REGEXP view_onClick_enabled_set_has(view) = [(view_onClick_enabled_set_just(view
 //Regular expression is true when this is a view we know is attached to an Activity
 REGEXP view_attached_has(act,view) = [FALSE]; //disable attachment rules
 
-REGEXP view_lose_precision(view) = [TRUE[*]] //only lose precision rules
+REGEXP view_lose_precision_has(view) = [TRUE[*]]; //only lose precision rules
+
+REGEXP view_lose_precision_just(view) = [FALSE] //only lose precision rules
