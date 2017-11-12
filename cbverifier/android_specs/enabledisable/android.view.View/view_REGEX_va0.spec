@@ -5,6 +5,7 @@ REGEXP view_onClick_listener_set_just(view,listener) = [TRUE[*];
 	(
 		[CI] [ENTRY] [view] void android.view.View.setOnClickListener(listener : android.view.View$OnClickListener)
 		| [CI] [ENTRY] [view] void android.support.v7.widget.Toolbar.setNavigationOnClickListener(listener : android.view.View$OnClickListener)
+		| [CI] [ENTRY] [view] void android.widget.AutoCompleteTextView.setOnClickListener(listener : android.view.View$OnClickListener)
 
 	)
 ];
