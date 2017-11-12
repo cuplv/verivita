@@ -5,6 +5,7 @@ REGEXP view_onClick_listener_set_just(view,listener) = [TRUE[*];
 	(
 		[CI] [ENTRY] [view] void android.view.View.setOnClickListener(listener : android.view.View$OnClickListener)
 		| [CI] [ENTRY] [view] void android.support.v7.widget.Toolbar.setNavigationOnClickListener(listener : android.view.View$OnClickListener)
+		| [CI] [ENTRY] [view] void android.widget.AutoCompleteTextView.setOnClickListener(listener : android.view.View$OnClickListener)
 
 	)
 ];
@@ -31,6 +32,7 @@ REGEXP view_lose_precision_just(view) = [TRUE[*];
 		| view = [CI] [EXIT] [#] android.view.View android.view.LayoutInflater.inflate(# : int, # : android.view.ViewGroup)
 		| view = [CI] [EXIT] [#] android.view.View android.view.View.findViewById(# : int)
 		| [CI] [ENTRY] [#] void android.view.ViewGroup.addView(view : android.view.View,# : int)
+		| [CI] [ENTRY] [view] void android.widget.LinearLayout.<init>(# : android.content.Context)
 	)
 ];
 REGEXP view_lose_precision_has(view) = [view_lose_precision_just(view);TRUE[*]]
