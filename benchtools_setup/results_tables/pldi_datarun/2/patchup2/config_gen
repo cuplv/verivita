@@ -4,13 +4,13 @@ delay_notifications = true
 create_db = true
 scheduler=make
 dump_scheduler_script = output_scheduler_local.txt
-num_cores = 4
+num_cores = 2
 
 
 [group_just_disallow_Fragment.startActivity]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -21,7 +21,7 @@ instances_file=./instances/Fragment_all.startActivity.txt
 [group_just_disallow_AlertDialog.dismiss]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -32,7 +32,7 @@ instances_file=./instances/Dialog.dismiss.txt
 [group_just_disallow_AsyncTask.execute]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=false
@@ -43,7 +43,7 @@ instances_file=./instances/rerun_results_AsyncTask.execute_just_disallow.tar.bz2
 [group_just_disallow_AlertDialog.show]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -54,7 +54,7 @@ instances_file=./instances/rerun_results_AlertDialog.show_just_disallow.tar.bz2.
 [group_just_disallow_Fragment.getResources]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -65,7 +65,7 @@ instances_file=./instances/Fragment_all.getResources.txt
 [group_just_disallow_Fragment.setArguments]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -76,7 +76,7 @@ instances_file=./instances/Fragment.setArguments.txt
 [group_just_disallow_Fragment.getString]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -87,7 +87,7 @@ instances_file=./instances/Fragment_all.getString.txt
 [group_lifestate_va0_Fragment.startActivity]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -98,7 +98,7 @@ instances_file=./instances/Fragment_all.startActivity.txt
 [group_lifestate_va0_AlertDialog.dismiss]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -109,18 +109,18 @@ instances_file=./instances/Dialog.dismiss.txt
 [group_lifestate_va0_AsyncTask.execute]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
-disabled=true
+disabled=false
 parameters=/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX_va0.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog_va0.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu_va0.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
 tarball=./results/AsyncTask.execute_lifestate_va0.tar.bz2
-instances_file=./instances/AsyncTask_all.execute.txt
+instances_file=./instances/rerun_results_AsyncTask.execute_lifestate_va0.tar.bz2.txt
 
 [group_lifestate_va0_AlertDialog.show]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -131,7 +131,7 @@ instances_file=./instances/rerun_results_AlertDialog.show_lifestate_va0.tar.bz2.
 [group_lifestate_va0_Fragment.getResources]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -142,7 +142,7 @@ instances_file=./instances/Fragment_all.getResources.txt
 [group_lifestate_va0_Fragment.setArguments]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -153,7 +153,7 @@ instances_file=./instances/Fragment.setArguments.txt
 [group_lifestate_va0_Fragment.getString]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -164,7 +164,7 @@ instances_file=./instances/Fragment_all.getString.txt
 [group_lifestate_va1_Fragment.startActivity]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -175,7 +175,7 @@ instances_file=./instances/Fragment_all.startActivity.txt
 [group_lifestate_va1_AlertDialog.dismiss]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -186,18 +186,18 @@ instances_file=./instances/Dialog.dismiss.txt
 [group_lifestate_va1_AsyncTask.execute]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
-disabled=true
+disabled=false
 parameters=/home/s/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
 tarball=./results/AsyncTask.execute_lifestate_va1.tar.bz2
-instances_file=./instances/AsyncTask_all.execute.txt
+instances_file=./instances/rerun_results_AsyncTask.execute_lifestate_va1.tar.bz2.txt
 
 [group_lifestate_va1_AlertDialog.show]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -208,7 +208,7 @@ instances_file=./instances/rerun_results_AlertDialog.show_lifestate_va1.tar.bz2.
 [group_lifestate_va1_Fragment.getResources]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -219,7 +219,7 @@ instances_file=./instances/Fragment_all.getResources.txt
 [group_lifestate_va1_Fragment.setArguments]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -230,7 +230,7 @@ instances_file=./instances/Fragment.setArguments.txt
 [group_lifestate_va1_Fragment.getString]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -241,7 +241,7 @@ instances_file=./instances/Fragment_all.getString.txt
 [group_lifecycle_Fragment.startActivity]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -252,7 +252,7 @@ instances_file=./instances/Fragment_all.startActivity.txt
 [group_lifecycle_AlertDialog.dismiss]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -263,7 +263,7 @@ instances_file=./instances/Dialog.dismiss.txt
 [group_lifecycle_AsyncTask.execute]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=false
@@ -274,7 +274,7 @@ instances_file=./instances/rerun_results_AsyncTask.execute_lifecycle.tar.bz2.txt
 [group_lifecycle_AlertDialog.show]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -285,7 +285,7 @@ instances_file=./instances/rerun_results_AlertDialog.show_lifecycle.tar.bz2.txt
 [group_lifecycle_Fragment.getResources]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -296,7 +296,7 @@ instances_file=./instances/Fragment_all.getResources.txt
 [group_lifecycle_Fragment.setArguments]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
@@ -307,7 +307,7 @@ instances_file=./instances/Fragment.setArguments.txt
 [group_lifecycle_Fragment.getString]
 executable =./scripts/verify.sh
 basedir=/
-time_limit=36000
+time_limit=720000
 mem_limit=8000000
 email=
 disabled=true
