@@ -6,7 +6,7 @@
 TOTAL_NUMBER_TRACES=$(cat ./instances/allTraces.txt |wc -l)
 echo "total traces: ${TOTAL_NUMBER_TRACES}"
 
-$FILTER_SCRIPT="${HOME}/Documents/source/callback-verification/benchtools_setup/scripts/filterProto.py"
+FILTER_SCRIPT="${HOME}/Documents/source/callback-verification/benchtools_setup/scripts/filterProto.py"
 
 #cat ./instances/allTraces.txt |shuf |head -n 1 > ./instances/traces_to_process.txt
 cat ./instances/allTraces.txt |sort > ./instances/traces_to_process.txt
@@ -20,11 +20,14 @@ do
 	(python $FILTER_SCRIPT --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "android.content.res.Resources getResources()" >>./instances/Fragmentv4.getResources.txt)&
 	(python $FILTER_SCRIPT --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "java.lang.CharSequence getText(int)" >> ./instances/Fragmentv4.getText.txt)&
 	(python $FILTER_SCRIPT --trace $TRACE --filter_class android.app.Fragment --filter_method "java.lang.CharSequence getText(int)" >> ./instances/Fragment.getText.txt)&
+
 	(python $FILTER_SCRIPT --trace $TRACE --filter_class android.media.MediaPlayer --filter_method "void start()" >> ./instances/MediaPlayer.start.txt)&
 	(python $FILTER_SCRIPT --trace $TRACE --filter_class android.content.res.TypedArray --filter_method "void recycle()" >> ./instances/TypedArray.recycle.txt)&
 	(python $FILTER_SCRIPT --trace $TRACE --filter_class android.app.Fragment --filter_method "java.lang.String getString(int)" >> ./instances/Fragment.getString.txt)&
 	(python $FILTER_SCRIPT --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "java.lang.String getString(int)" >> ./instances/Fragmentv4.getString.txt)&
-
+done
+for TRACE in `cat ./instances/traces_to_process.txt`
+do
 	# start activity
 	(python $FILTER_SCRIPT --trace $TRACE --filter_class android.app.Fragment --filter_method "void startActivity(android.content.Intent)" >> ./instances/Fragment.startActivity.txt)&
 	(python $FILTER_SCRIPT --trace $TRACE --filter_class android.support.v4.app.Fragment --filter_method "void startActivity(android.content.Intent)" >> ./instances/Fragmentv4.startActivity.txt)&
