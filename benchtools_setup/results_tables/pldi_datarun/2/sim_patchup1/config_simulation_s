@@ -4,7 +4,7 @@ delay_notifications = true
 create_db = true
 scheduler=make
 dump_scheduler_script = output_scheduler_local_simulate.txt
-num_cores = 3
+num_cores = 6
 
 [group_lifestate_va1]
 executable =./scripts/simulate.sh
@@ -12,7 +12,7 @@ parameters=/home/s/Documents/source/callback-verification;/home/ubuntu/Documents
 
 basedir=/
 instances_file=./instances/results_simulation_lifestate_va1.tar.bz2.txt
-mem_limit=4900000
+mem_limit=9800000
 time_limit=54000
 tarball=./results_simulation/simulation_lifestate_va1.tar.bz2
 email=
@@ -24,7 +24,7 @@ parameters=/home/s/Documents/source/callback-verification;/home/ubuntu/Documents
 
 basedir=/
 instances_file=./instances/allTraces.txt
-mem_limit=4900000
+mem_limit=9800000
 time_limit=54000
 tarball=./results_simulation/simulation_lifestate_va0.tar.bz2
 email=
@@ -36,7 +36,7 @@ parameters=/home/s/Documents/source/callback-verification;/home/ubuntu/Documents
 
 basedir=/
 instances_file=./instances/allTraces.txt
-mem_limit=4900000
+mem_limit=9800000
 time_limit=54000
 tarball=./results_simulation/simulation_lifecycle.tar.bz2
 email=
