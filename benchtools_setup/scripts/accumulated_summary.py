@@ -151,7 +151,7 @@ def gnuplotTime(loadedResults, sample_time_seconds, outdir):
             min_proof_level = min_proof[1]
 
             #sum all unsafe with lower proof numbers
-            unsafe_list = sorted([f for f in unsorted if (f[0] == "Unsafe") and f[1] < min_proof_level], key=lambda x:x[1])
+            unsafe_list = sorted([f for f in unsorted if (isunsafe(f[0])) and f[1] < min_proof_level], key=lambda x:x[1])
 
             unsafe_time = 0
             for unsafe in unsafe_list:
