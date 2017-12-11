@@ -24,6 +24,31 @@ REGEXP Activity_all_onCreate(f) = [(
     |
     [CB] [ENTRY] [f] void android.app.Activity.onCreate(# : android.os.Bundle)
 )];
+REGEXP Activity_all_onCreate_exit(f,v) = [(
+    (v = [CB] [EXIT] [f] void android.accounts.AccountAuthenticatorActivity.onCreate(# : android.os.Bundle))
+    |
+    (v = [CB] [EXIT] [f] void android.support.v7.app.ActionBarActivity.onCreate(# : android.os.Bundle))
+    |
+    (v = [CB] [EXIT] [f] void android.app.ActivityGroup.onCreate(# : android.os.Bundle))
+    |
+    (v = [CB] [EXIT] [f] void android.app.AliasActivity.onCreate(# : android.os.Bundle))
+    |
+    (v = [CB] [EXIT] [f] void android.support.v7.app.AppCompatActivity.onCreate(# : android.os.Bundle))
+    |
+    (v = [CB] [EXIT] [f] void android.app.ExpandableListActivity.onCreate(# : android.os.Bundle))
+    |
+    (v = [CB] [EXIT] [f] void android.support.v4.app.FragmentActivity.onCreate(# : android.os.Bundle))
+    |
+    (v = [CB] [EXIT] [f] void android.app.LauncherActivity.onCreate(# : android.os.Bundle))
+    |
+    (v = [CB] [EXIT] [f] void android.app.ListActivity.onCreate(# : android.os.Bundle))
+    |
+    (v = [CB] [EXIT] [f] void android.preference.PreferenceActivity.onCreate(# : android.os.Bundle))
+    |
+    (v = [CB] [EXIT] [f] void android.app.TabActivity.onCreate(# : android.os.Bundle))
+    |
+    (v = [CB] [EXIT] [f] void android.app.Activity.onCreate(# : android.os.Bundle))
+)];
 REGEXP Activity_all_onResume(f) = [(
     [CB] [ENTRY] [f] void android.accounts.AccountAuthenticatorActivity.onResume()
     |
@@ -48,6 +73,31 @@ REGEXP Activity_all_onResume(f) = [(
     [CB] [ENTRY] [f] void android.app.TabActivity.onResume()
     |
     [CB] [ENTRY] [f] void android.app.Activity.onResume()
+)];
+REGEXP Activity_all_onResume_exit(f,v) = [(
+    (v = [CB] [EXIT] [f] void android.accounts.AccountAuthenticatorActivity.onResume())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v7.app.ActionBarActivity.onResume())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ActivityGroup.onResume())
+    |
+    (v = [CB] [EXIT] [f] void android.app.AliasActivity.onResume())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v7.app.AppCompatActivity.onResume())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ExpandableListActivity.onResume())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v4.app.FragmentActivity.onResume())
+    |
+    (v = [CB] [EXIT] [f] void android.app.LauncherActivity.onResume())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ListActivity.onResume())
+    |
+    (v = [CB] [EXIT] [f] void android.preference.PreferenceActivity.onResume())
+    |
+    (v = [CB] [EXIT] [f] void android.app.TabActivity.onResume())
+    |
+    (v = [CB] [EXIT] [f] void android.app.Activity.onResume())
 )];
 REGEXP Activity_all_onPause(f) = [(
     [CB] [ENTRY] [f] void android.accounts.AccountAuthenticatorActivity.onPause()
@@ -74,6 +124,31 @@ REGEXP Activity_all_onPause(f) = [(
     |
     [CB] [ENTRY] [f] void android.app.Activity.onPause()
 )];
+REGEXP Activity_all_onPause_exit(f) = [(
+    ([CB] [EXIT] [f] void android.accounts.AccountAuthenticatorActivity.onPause())
+    |
+    ([CB] [EXIT] [f] void android.support.v7.app.ActionBarActivity.onPause())
+    |
+    ([CB] [EXIT] [f] void android.app.ActivityGroup.onPause())
+    |
+    ([CB] [EXIT] [f] void android.app.AliasActivity.onPause())
+    |
+    ([CB] [EXIT] [f] void android.support.v7.app.AppCompatActivity.onPause())
+    |
+    ([CB] [EXIT] [f] void android.app.ExpandableListActivity.onPause())
+    |
+    ([CB] [EXIT] [f] void android.support.v4.app.FragmentActivity.onPause())
+    |
+    ([CB] [EXIT] [f] void android.app.LauncherActivity.onPause())
+    |
+    ([CB] [EXIT] [f] void android.app.ListActivity.onPause())
+    |
+    ([CB] [EXIT] [f] void android.preference.PreferenceActivity.onPause())
+    |
+    ([CB] [EXIT] [f] void android.app.TabActivity.onPause())
+    |
+    ([CB] [EXIT] [f] void android.app.Activity.onPause())
+)];
 REGEXP Activity_all_onStop(f) = [(
     [CB] [ENTRY] [f] void android.accounts.AccountAuthenticatorActivity.onStop()
     |
@@ -98,6 +173,31 @@ REGEXP Activity_all_onStop(f) = [(
     [CB] [ENTRY] [f] void android.app.TabActivity.onStop()
     |
     [CB] [ENTRY] [f] void android.app.Activity.onStop()
+)];
+REGEXP Activity_all_onStop_exit(f,v) = [(
+    (v = [CB] [EXIT] [f] void android.accounts.AccountAuthenticatorActivity.onStop())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v7.app.ActionBarActivity.onStop())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ActivityGroup.onStop())
+    |
+    (v = [CB] [EXIT] [f] void android.app.AliasActivity.onStop())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v7.app.AppCompatActivity.onStop())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ExpandableListActivity.onStop())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v4.app.FragmentActivity.onStop())
+    |
+    (v = [CB] [EXIT] [f] void android.app.LauncherActivity.onStop())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ListActivity.onStop())
+    |
+    (v = [CB] [EXIT] [f] void android.preference.PreferenceActivity.onStop())
+    |
+    (v = [CB] [EXIT] [f] void android.app.TabActivity.onStop())
+    |
+    (v = [CB] [EXIT] [f] void android.app.Activity.onStop())
 )];
 REGEXP Activity_all_onStart(f) = [(
     [CB] [ENTRY] [f] void android.accounts.AccountAuthenticatorActivity.onStart()
@@ -124,6 +224,31 @@ REGEXP Activity_all_onStart(f) = [(
     |
     [CB] [ENTRY] [f] void android.app.Activity.onStart()
 )];
+REGEXP Activity_all_onStart_exit(f,v) = [(
+    (v = [CB] [EXIT] [f] void android.accounts.AccountAuthenticatorActivity.onStart())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v7.app.ActionBarActivity.onStart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ActivityGroup.onStart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.AliasActivity.onStart())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v7.app.AppCompatActivity.onStart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ExpandableListActivity.onStart())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v4.app.FragmentActivity.onStart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.LauncherActivity.onStart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ListActivity.onStart())
+    |
+    (v = [CB] [EXIT] [f] void android.preference.PreferenceActivity.onStart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.TabActivity.onStart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.Activity.onStart())
+)];
 REGEXP Activity_all_onDestroy(f) = [(
     [CB] [ENTRY] [f] void android.accounts.AccountAuthenticatorActivity.onDestroy()
     |
@@ -148,6 +273,31 @@ REGEXP Activity_all_onDestroy(f) = [(
     [CB] [ENTRY] [f] void android.app.TabActivity.onDestroy()
     |
     [CB] [ENTRY] [f] void android.app.Activity.onDestroy()
+)];
+REGEXP Activity_all_onDestroy_exit(f,v) = [(
+    (v = [CB] [EXIT] [f] void android.accounts.AccountAuthenticatorActivity.onDestroy())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v7.app.ActionBarActivity.onDestroy())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ActivityGroup.onDestroy())
+    |
+    (v = [CB] [EXIT] [f] void android.app.AliasActivity.onDestroy())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v7.app.AppCompatActivity.onDestroy())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ExpandableListActivity.onDestroy())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v4.app.FragmentActivity.onDestroy())
+    |
+    (v = [CB] [EXIT] [f] void android.app.LauncherActivity.onDestroy())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ListActivity.onDestroy())
+    |
+    (v = [CB] [EXIT] [f] void android.preference.PreferenceActivity.onDestroy())
+    |
+    (v = [CB] [EXIT] [f] void android.app.TabActivity.onDestroy())
+    |
+    (v = [CB] [EXIT] [f] void android.app.Activity.onDestroy())
 )];
 REGEXP Activity_all_<init>(f) = [(
     [CB] [ENTRY] [f] void android.accounts.AccountAuthenticatorActivity.<init>()
@@ -174,6 +324,31 @@ REGEXP Activity_all_<init>(f) = [(
     |
     [CB] [ENTRY] [f] void android.app.Activity.<init>()
 )];
+REGEXP Activity_all_<init>_exit(f,v) = [(
+    (v = [CB] [EXIT] [f] void android.accounts.AccountAuthenticatorActivity.<init>())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v7.app.ActionBarActivity.<init>())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ActivityGroup.<init>())
+    |
+    (v = [CB] [EXIT] [f] void android.app.AliasActivity.<init>())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v7.app.AppCompatActivity.<init>())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ExpandableListActivity.<init>())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v4.app.FragmentActivity.<init>())
+    |
+    (v = [CB] [EXIT] [f] void android.app.LauncherActivity.<init>())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ListActivity.<init>())
+    |
+    (v = [CB] [EXIT] [f] void android.preference.PreferenceActivity.<init>())
+    |
+    (v = [CB] [EXIT] [f] void android.app.TabActivity.<init>())
+    |
+    (v = [CB] [EXIT] [f] void android.app.Activity.<init>())
+)];
 REGEXP Activity_all_onRestart(f) = [(
     [CB] [ENTRY] [f] void android.accounts.AccountAuthenticatorActivity.onRestart()
     |
@@ -199,12 +374,60 @@ REGEXP Activity_all_onRestart(f) = [(
     |
     [CB] [ENTRY] [f] void android.app.Activity.onRestart()
 )];
-
-//REGEXP Activity_all_findViewByID_ci(f,v) = [FALSE]
-REGEXP Activity_all_findViewByID_ci(f,v) = [(
-    (v = [CI] [EXIT] [f] android.view.View android.accounts.AccountAuthenticatorActivity.findViewById(# : int))
+REGEXP Activity_all_onRestart_exit(f,v) = [(
+    (v = [CB] [EXIT] [f] void android.accounts.AccountAuthenticatorActivity.onRestart())
     |
-    (v = [CI] [EXIT] [f] android.view.View android.support.v7.app.ActionBarActivity.findViewById(# : int))
+    (v = [CB] [EXIT] [f] void android.support.v7.app.ActionBarActivity.onRestart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ActivityGroup.onRestart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.AliasActivity.onRestart())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v7.app.AppCompatActivity.onRestart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ExpandableListActivity.onRestart())
+    |
+    (v = [CB] [EXIT] [f] void android.support.v4.app.FragmentActivity.onRestart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.LauncherActivity.onRestart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.ListActivity.onRestart())
+    |
+    (v = [CB] [EXIT] [f] void android.preference.PreferenceActivity.onRestart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.TabActivity.onRestart())
+    |
+    (v = [CB] [EXIT] [f] void android.app.Activity.onRestart())
+)];
+REGEXP Activity_all_findViewByID_ci(f) = [(
+    [CI] [ENTRY] [f] android.view.View android.accounts.AccountAuthenticatorActivity.findViewById(i : int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.support.v7.app.ActionBarActivity.findViewById(i : int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.ActivityGroup.findViewById(i : int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.AliasActivity.findViewById(i : int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.support.v7.app.AppCompatActivity.findViewById(i : int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.ExpandableListActivity.findViewById(i : int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.support.v4.app.FragmentActivity.findViewById(i : int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.LauncherActivity.findViewById(i : int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.ListActivity.findViewById(i : int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.preference.PreferenceActivity.findViewById(i : int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.TabActivity.findViewById(i : int)
+    |
+    [CI] [ENTRY] [f] android.view.View android.app.Activity.findViewById(i : int)
+)];
+REGEXP Activity_all_findViewByID_ci_exit(f,v) = [(
+    (v = [CI] [EXIT] [f] android.view.View android.accounts.AccountAuthenticatorActivity.findViewById(i : int))
+    |
+    (v = [CI] [EXIT] [f] android.view.View android.support.v7.app.ActionBarActivity.findViewById(i : int))
     |
     (v = [CI] [EXIT] [f] android.view.View android.app.ActivityGroup.findViewById(i : int))
     |
