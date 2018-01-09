@@ -5,11 +5,20 @@ import re
 def emit_regexps(name_prefix, base_types, methodmap):
     regexp_list = []
     for method in methodmap:
+        ###entry
         r_start =  "REGEXP " + name_prefix + method[1] + "(f) = [("
 
         or_clauses = []
         for base_type in base_types:
             or_clauses.append("[" + method[0] + "] [ENTRY] [f] " + method[2] + " " + base_type + "." + method[3])
+
+        regexp = r_start + "\n    " + "\n    |\n    ".join(or_clauses) + "\n)]"
+        regexp_list.append(regexp)
+        ###exit
+        r_start =  "REGEXP " + name_prefix + method[1] + "_exit" + "(f,v) = [("
+        or_clauses = []
+        for base_type in base_types:
+            or_clauses.append("(v = [" + method[0] + "] [EXIT] [f] " + method[2] + " " + base_type + "." + method[3] + ")")
 
         regexp = r_start + "\n    " + "\n    |\n    ".join(or_clauses) + "\n)]"
         regexp_list.append(regexp)
