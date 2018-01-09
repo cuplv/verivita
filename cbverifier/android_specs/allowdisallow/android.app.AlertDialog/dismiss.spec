@@ -27,7 +27,8 @@ REGEXP AlertDialog_attached_to_activity_disallow(act,dialog) = [(AlertDialogBuil
 	| [CI] [ENTRY] [dialog] void android.app.AlertDialog.<init>(act : android.content.Context)
 ];
 
-SPEC TRUE[*];AlertDialog_attached_to_activity_disallow(act,dialog);TRUE[*];Activity_all_onPause(act)|- [CI] [ENTRY] [dialog] void android.app.Dialog.dismiss();
+SPEC TRUE[*];AlertDialog_attached_to_activity_disallow(act,dialog);TRUE[*];Activity_all_onPause_exit(act)|- [CI] [ENTRY] [dialog] void android.app.Dialog.dismiss();
+//SPEC TRUE[*];AlertDialog_attached_to_activity_disallow(act,dialog);TRUE[*];Activity_all_onPause(act)|- [CI] [ENTRY] [dialog] void android.app.Dialog.dismiss();
 SPEC TRUE[*];AlertDialog_attached_to_activity_disallow(act,dialog);TRUE[*];Activity_all_onResume(act)|+ [CI] [ENTRY] [dialog] void android.app.Dialog.dismiss()
 
 
