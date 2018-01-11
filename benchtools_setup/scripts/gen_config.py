@@ -18,7 +18,7 @@ enable_disable_rules = {
         "cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec",
         "cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec",
         "cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec",
-        "cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec",
+        #"cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec",
         "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec",
         "cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec", #va1 sub
         "cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec",
@@ -33,7 +33,7 @@ enable_disable_rules = {
         "cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec",
         "cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec",
         "cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec",
-        "cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec",
+        #"cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec",
         "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec",
         "cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog_va0.spec", #va1 sub
         "cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec",
@@ -46,7 +46,7 @@ enable_disable_rules = {
         "cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec",
         "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec",
         "cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_lifecycle.spec",
-	"cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec"
+	#"cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec"
     ],
     "just_disallow" : [
 
