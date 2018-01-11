@@ -6,7 +6,7 @@
 TOTAL_NUMBER_TRACES=$(cat ./instances/allTraces.txt |wc -l)
 echo "total traces: ${TOTAL_NUMBER_TRACES}"
 
-$FILTER_SCRIPT="${HOME}/Documents/source/callback-verification/benchtools_setup/scripts/filterProto.py"
+FILTER_SCRIPT="${HOME}/Documents/source/callback-verification/benchtools_setup/scripts/filterProto.py"
 
 #cat ./instances/allTraces.txt |shuf |head -n 1 > ./instances/traces_to_process.txt
 cat ./instances/allTraces.txt |sort > ./instances/traces_to_process.txt
