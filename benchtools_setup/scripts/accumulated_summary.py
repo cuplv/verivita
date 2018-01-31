@@ -116,6 +116,7 @@ def gnuplotTime(loadedResults, sample_time_seconds, outdir):
     for safelevel in safe:
         f = open(os.path.join(outdir, safelevel + ".data"), 'w')
 
+
         cbuckets = safe[safelevel]
         sorted_time_safelevel = sorted(cbuckets, key=lambda x: x[1].time)
         for proof in sorted_time_safelevel:
@@ -248,6 +249,11 @@ def genTable(loadedResults, outdir):
 
     print tabulate.tabulate(df, headers="keys", tablefmt="latex_booktabs")
 
+
+def gnuplotAllTime(loadedResults, out):
+    pass
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Print results table with accumulated proofs')
     parser.add_argument('--dir', type=str,
@@ -259,7 +265,7 @@ if __name__ == "__main__":
     parser.add_argument('--app_alias', type=str,
                         help="file with each line representing the possible aliases for an app separated by commas")
     parser.add_argument('--out', type=str, help="output directory to dump gnu plot data and other files", required=True)
-    parser.add_argument('--mode', type=str, help="time or table")
+    parser.add_argument('--mode', type=str, help="timeSafe, timeAll or table")
 
     args = parser.parse_args()
 
@@ -268,8 +274,10 @@ if __name__ == "__main__":
 
 
     loadedResults = loadDirectory(args.dir, alias_map)
-    if args.mode == "time":
+    if args.mode == "timeSafe":
         gnuplotTime(loadedResults, 10, args.out)
+    if args.mode == "timeAll":
+        gnuplotAllTime(loadedResults,args.out)
     elif args.mode == "table":
         genTable(loadedResults, args.out)
     else:
