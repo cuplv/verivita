@@ -251,6 +251,30 @@ def genTable(loadedResults, outdir):
 
 
 def gnuplotAllTime(loadedResults, out):
+    safe,unsafe = getBuckets(loadedResults)
+    merged = {}
+    for preclevel in PRECISION_LEVELS:
+        merged[preclevel] = safe[preclevel][:]
+        merged[preclevel].extend(unsafe[preclevel])
+
+    for safelevel in merged:
+        maxtime = -1;
+        f = open(os.path.join(out, safelevel + ".data"), 'w')
+
+
+        cbuckets = merged[safelevel]
+        sorted_time_safelevel = sorted(cbuckets, key=lambda x: x[1].time)
+        for proof in sorted_time_safelevel:
+            f.write(proof[1].trace_path + " " + proof[1].proof_status + " " + str(proof[1].time) + "\n")
+            if proof[1].time > maxtime:
+                maxtime = proof[1].time
+        print "safelevel %s max time: %s" % (safelevel, maxtime)
+        f.close()
+    # just_disallow = safe[PRECISION_LEVELS[0]][:]
+    # just_disallow.extend(unsafe[PRECISION_LEVELS[0]])
+    #
+    # lifecycle = safe[PRECISION_LEVELS[1]]
+    # lifecycle.extend(unsafe[PRECISION_LEVELS[1]])
     pass
 
 
