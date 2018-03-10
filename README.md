@@ -1,4 +1,4 @@
-# Verivita (may be referred to as "callback-verification" in files not yet updated)
+# Verivita (may be referred to as "callback-verification" in certain files)
 Verivita is a verification technique for checking the event driven programming protocol of an Android application.  The event driven programming protocol  defines the possible interactions between an android application and the android framework via callbacks and library method invocations called callins. This is done by recording a trace of the application and then automatically searching for nearby executions that could fail.
 
 # High Level Process For Use
