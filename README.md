@@ -3,7 +3,7 @@ Verivita is a verification technique for checking the event driven programming p
 
 # High Level Process For Use
 
-- Create trace of Android application (See TraceRunner submodule)
+- Create trace of Android application (See [TraceRunner](https://github.com/cuplv/TraceRunner))
 - Check trace with verivita using a relevant set of lifestate rules
 - Output is either a rearranged trace showing a possible failure or a proof that it cannot be rearranged
 
