@@ -9,7 +9,7 @@ Verivita is a verification technique for checking the event driven programming p
 
 
 # External Dependencies
-- PySMT
+- [PySMT](https://github.com/pysmt/pysmt)
   - Install PySMT (e.g. pip install pysmt)
   - Install z3 and the CUDD support (pysmt-install --z3 --bdd, then pysmt-install --env, and use the output to extend the PYTHONPATH)
 - TraceRunner
