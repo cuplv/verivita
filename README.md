@@ -1,15 +1,17 @@
-# Verivita (may be referred to as "callback-verification" in files not yet updated)
+# Verivita (may be referred to as "callback-verification" in certain files)
 Verivita is a verification technique for checking the event driven programming protocol of an Android application.  The event driven programming protocol  defines the possible interactions between an android application and the android framework via callbacks and library method invocations called callins. This is done by recording a trace of the application and then automatically searching for nearby executions that could fail.
+
+For a detailed description of how the tool works please see [this repository](https://github.com/cuplv/verivita_yamba_explanation).
 
 # High Level Process For Use
 
-- Create trace of Android application (See TraceRunner submodule)
+- Create trace of Android application (See [TraceRunner](https://github.com/cuplv/TraceRunner))
 - Check trace with verivita using a relevant set of lifestate rules
 - Output is either a rearranged trace showing a possible failure or a proof that it cannot be rearranged
 
 
 # External Dependencies
-- PySMT
+- [PySMT](https://github.com/pysmt/pysmt)
   - Install PySMT (e.g. pip install pysmt)
   - Install z3 and the CUDD support (pysmt-install --z3 --bdd, then pysmt-install --env, and use the output to extend the PYTHONPATH)
 - TraceRunner
