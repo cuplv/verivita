@@ -116,6 +116,7 @@ def gnuplotTime(loadedResults, sample_time_seconds, outdir):
     for safelevel in safe:
         f = open(os.path.join(outdir, safelevel + ".data"), 'w')
 
+
         cbuckets = safe[safelevel]
         sorted_time_safelevel = sorted(cbuckets, key=lambda x: x[1].time)
         for proof in sorted_time_safelevel:
@@ -168,16 +169,21 @@ def gnuplotTime(loadedResults, sample_time_seconds, outdir):
 
 
 def isunsafe(trace):
-    assert(trace[1].proof_status in {"Unsafe","Safe","Timeout", "ReadError","?"})
-    if trace[1].proof_status in {"?"}:
-        print ""
-        print "unknown, manaully evaluate:"
-        print "==========================="
-        print "filename:"
-        print trace[0].origional_fname
-        print "path:"
-        print trace[1].trace_path
-    return trace[1].proof_status in {"Unsafe","Timeout","?"} #We are ignoring read errors since they are bad traces
+    if(type(trace) == list):
+        assert(trace[1].proof_status in {"Unsafe","Safe","Timeout", "ReadError","?"})
+        if trace[1].proof_status in {"?"}:
+            print ""
+            print "unknown, manaully evaluate:"
+            print "==========================="
+            print "filename:"
+            print trace[0].origional_fname
+            print "path:"
+            print trace[1].trace_path
+        return trace[1].proof_status in {"Unsafe","Timeout","?"} #We are ignoring read errors since they are bad traces
+    elif(isinstance(trace,ResultLine)):
+        return trace.proof_status in {"Unsafe","Timeout","?"}
+    else:
+        raise Exception("bad type in isUnsafe")
 
 def genTable(loadedResults, outdir):
     column_names = []
@@ -248,6 +254,46 @@ def genTable(loadedResults, outdir):
 
     print tabulate.tabulate(df, headers="keys", tablefmt="latex_booktabs")
 
+
+def gnuplotAllTime(loadedResults, out):
+    pass
+
+
+def genSimHist(loadedResults, out):
+    pass
+
+
+def genAppTable(loadedResults, out):
+
+    total_trace_count = {}
+    tables = {}
+    for key in loadedResults:
+        fileinf,lines = loadedResults[key]
+        assert(fileinf.precision_level in PRECISION_LEVELS)
+        current_precision_level = tables.get(fileinf.precision_level,{}) #precision level is first dim
+        for line in lines:
+            current_app_unsafe_count = current_precision_level.get(line.app_name,0)
+            current_app_unsafe_count += 1 if isunsafe(line) else 0
+            current_precision_level[line.app_name] = current_app_unsafe_count
+
+            if(fileinf.precision_level == PRECISION_LEVELS[0]):
+                total_trace_count[line.app_name] = total_trace_count.get(line.app_name,0)+1
+
+        tables[fileinf.precision_level] = current_precision_level
+
+    del tables['lifestate_va0']
+    tables['aa_trace_count'] = total_trace_count
+    dataframe = pandas.DataFrame(tables)
+    # print dataframe
+    print tabulate.tabulate(dataframe, headers="keys", tablefmt="latex_booktabs")
+        # current_app_row = current_precision_level.get(fileinf)
+
+    # for precision_level in precision_levels:
+    #     df = pandas.DataFrame(index = properties_list, columns=column_names)
+    #     pass
+    pass
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Print results table with accumulated proofs')
     parser.add_argument('--dir', type=str,
@@ -259,7 +305,7 @@ if __name__ == "__main__":
     parser.add_argument('--app_alias', type=str,
                         help="file with each line representing the possible aliases for an app separated by commas")
     parser.add_argument('--out', type=str, help="output directory to dump gnu plot data and other files", required=True)
-    parser.add_argument('--mode', type=str, help="time or table")
+    parser.add_argument('--mode', type=str, help="timeSafe, timeAll or table")
 
     args = parser.parse_args()
 
@@ -268,9 +314,15 @@ if __name__ == "__main__":
 
 
     loadedResults = loadDirectory(args.dir, alias_map)
-    if args.mode == "time":
+    if args.mode == "timeSafe":
         gnuplotTime(loadedResults, 10, args.out)
+    elif args.mode == "timeAll":
+        gnuplotAllTime(loadedResults,args.out)
     elif args.mode == "table":
         genTable(loadedResults, args.out)
+    elif args.mode == "simTimeHist":
+        genSimHist(loadedResults,args.out)
+    elif args.mode == "byApp":
+        genAppTable(loadedResults,args.out)
     else:
         raise Exception("Please specify mode with --mode")
