@@ -67,7 +67,7 @@ def ignoreLineInResultFile(line):
         return True
     return False
 
-def loadDirectory(directory, alias_map):
+def loadDirectory(directory, alias_map, trace_exclusions, app_exclusions):
     file_map = {} #mapping from a filename to a set of ResultLine objects Dictionary[String,(ResultsFile,List[ResultLine])]
     toProcess = [ x for x in os.listdir(args.dir) if x.endswith(FILE_SUFFIX)]
     for fname in toProcess:
@@ -75,10 +75,21 @@ def loadDirectory(directory, alias_map):
         lines = f.readlines()
         file_map[fname] = (ResultsFile(fname), [])
         for line in lines:
-            if not ignoreLineInResultFile(line):
-                resultLine = ResultLine(line, alias_map)
-                resultsFile,list_resultLine = file_map[fname]
-                list_resultLine.append(resultLine)
+            exclude = False
+            for exclusion in trace_exclusions:
+                if exclusion in line:
+                    exclude = True
+
+            if(not exclude):
+                if not ignoreLineInResultFile(line):
+                    resultLine = ResultLine(line, alias_map)
+                    if(resultLine.app_name not in app_exclusions):
+                        resultsFile,list_resultLine = file_map[fname]
+                        list_resultLine.append(resultLine)
+                    else:
+                        print "excluding: " + line
+            else:
+                print "excluding: " + line
 
     return file_map
 
@@ -169,7 +180,7 @@ def gnuplotTime(loadedResults, sample_time_seconds, outdir):
 
 
 def isunsafe(trace):
-    if(type(trace) == list):
+    if(type(trace) == tuple):
         assert(trace[1].proof_status in {"Unsafe","Safe","Timeout", "ReadError","?"})
         if trace[1].proof_status in {"?"}:
             print ""
@@ -294,6 +305,10 @@ def genAppTable(loadedResults, out):
     pass
 
 
+def simulationTimePlot(loadedResults):
+    pass
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Print results table with accumulated proofs')
     parser.add_argument('--dir', type=str,
@@ -302,6 +317,8 @@ if __name__ == "__main__":
                         help="text file to output list of all apps")
     parser.add_argument('--blacklist', type=str,
                         help="remove apps from results, one per line in file")
+    parser.add_argument('--trace_blacklist', type=str,
+                        help="remove bad traces, string is contained within full trace path one per line")
     parser.add_argument('--app_alias', type=str,
                         help="file with each line representing the possible aliases for an app separated by commas")
     parser.add_argument('--out', type=str, help="output directory to dump gnu plot data and other files", required=True)
@@ -312,8 +329,18 @@ if __name__ == "__main__":
     #create alias map from file
     alias_map = loadAliasMap(args.app_alias)
 
+    app_exclusions = []
+    if(args.blacklist is not None):
+        app_exclusions_file = open(args.blacklist,'r')
+        app_exclusions = [f.strip() for f in app_exclusions_file.readlines()]
 
-    loadedResults = loadDirectory(args.dir, alias_map)
+
+    trace_exclusions = []
+    trace_exclusions_file = open(args.trace_blacklist,'r')
+    trace_exclusions = [f.strip() for f in trace_exclusions_file.readlines()]
+
+
+    loadedResults = loadDirectory(args.dir, alias_map, trace_exclusions, app_exclusions)
     if args.mode == "timeSafe":
         gnuplotTime(loadedResults, 10, args.out)
     elif args.mode == "timeAll":
@@ -324,5 +351,7 @@ if __name__ == "__main__":
         genSimHist(loadedResults,args.out)
     elif args.mode == "byApp":
         genAppTable(loadedResults,args.out)
+    elif args.mode == "simTimePlot":
+        simulationTimePlot(loadedResults)
     else:
         raise Exception("Please specify mode with --mode")
