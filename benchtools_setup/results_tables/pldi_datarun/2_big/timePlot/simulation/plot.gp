@@ -11,7 +11,7 @@ set xlabel 'Total time (seconds)'
 set ylabel 'Simulated Traces'
 set title ''
 set terminal postscript eps color
-set output '| epstopdf --filter > accumulated_time_small_exp.pdf'
+set output '| epstopdf --filter > accumulated_time_big_sim_exp.pdf'
 plot \
      'simtime.datalifecycle.data' using 3:0 with linespoints lw 3 lt 7 pt 7 title 'Lifecycle', \
      'simtime.datalifestate.data' using 3:0 with linespoints lw 3 lt 1 pt 1 title 'Lifestate'
