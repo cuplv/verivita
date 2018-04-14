@@ -1,6 +1,6 @@
 set size square
-set xrange [10:200.0]
-set yrange [10:200.0]
+set xrange [10:1000]
+set yrange [10:1000]
 set key off
 set logscale x
 set logscale y
