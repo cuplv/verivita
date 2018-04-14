@@ -309,6 +309,27 @@ def simulationTimePlot(loadedResults):
     pass
 
 
+def timeComp(loadedResults, out):
+    proofs = {}
+    for result in loadedResults:
+        for line in loadedResults[result][1]:
+            fileInfo = loadedResults[result][0]
+            key = (fileInfo.method, line.trace_path)
+            imap = proofs.get(key, {})
+            if(line.proof_status == "Safe"):
+                imap[fileInfo.precision_level] = line.time
+
+            proofs[key] = imap
+    f = open(out,'w')
+    for key in proofs:
+        value = proofs[key]
+        if ('lifecycle' in value) and ('lifestate_va1' in value):
+            f.write()
+
+
+    pass
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Print results table with accumulated proofs')
     parser.add_argument('--dir', type=str,
@@ -353,5 +374,7 @@ if __name__ == "__main__":
         genAppTable(loadedResults,args.out)
     elif args.mode == "simTimePlot":
         simulationTimePlot(loadedResults)
+    elif args.mode == "timeComp":
+        timeComp(loadedResults,args.out)
     else:
         raise Exception("Please specify mode with --mode")
