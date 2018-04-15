@@ -59,7 +59,27 @@ class ResultLine:
             self.time = float("inf")
             self.proof_status = "Timeout"
 
-
+class SimLine:
+    def __init__(self,line,alias_map):
+        self.origional_line = line
+        split_line = line.split(" ")
+        self.trace_path = split_line[0]
+        assert("/" in self.trace_path)
+        assert(self.trace_path.endswith("repaired"))
+        assert(split_line[1] == "result")
+        assert(split_line[3] == "time")
+        pass
+        #appname
+        self.app_name = summarize_results.pathToAppId(self.trace_path, alias_map)
+        #proof status
+        self.proof_status = split_line[2]
+        #time
+        time_result = split_line[4]
+        if time_result != "Timeout":
+            self.time = float(time_result)
+        else:
+            self.time = float("inf")
+            self.proof_status = "Timeout"
 #ignore lines at top of results file with comments
 def ignoreLineInResultFile(line):
     stripped_line = line.strip()
@@ -67,7 +87,7 @@ def ignoreLineInResultFile(line):
         return True
     return False
 
-def loadDirectory(directory, alias_map, trace_exclusions, app_exclusions):
+def loadDirectory(directory, alias_map, trace_exclusions, app_exclusions, isSim=False):
     file_map = {} #mapping from a filename to a set of ResultLine objects Dictionary[String,(ResultsFile,List[ResultLine])]
     toProcess = [ x for x in os.listdir(args.dir) if x.endswith(FILE_SUFFIX)]
     for fname in toProcess:
@@ -81,8 +101,9 @@ def loadDirectory(directory, alias_map, trace_exclusions, app_exclusions):
                     exclude = True
 
             if(not exclude):
+
                 if not ignoreLineInResultFile(line):
-                    resultLine = ResultLine(line, alias_map)
+                    resultLine = SimLine(line,alias_map) if isSim else ResultLine(line, alias_map)
                     if(resultLine.app_name not in app_exclusions):
                         resultsFile,list_resultLine = file_map[fname]
                         list_resultLine.append(resultLine)
@@ -305,8 +326,40 @@ def genAppTable(loadedResults, out):
     pass
 
 
-def simulationTimePlot(loadedResults):
-    pass
+def simulationTimePlot(loadedResults, out):
+    for simset in ['results_simulation_lifecycle.tar.bz2.txt','results_simulation_lifestate_va1.tar.bz2.txt']:
+        lifestate_sim = [r  for r in loadedResults[simset][1] if r.proof_status=="Ok"]
+        lifestate_sim_sorted = sorted(lifestate_sim, key= lambda x : x.time)
+        if "lifecycle" in simset:
+            f = open(out + "lifecycle.data",'w')
+        else:
+            f = open(out + "lifestate.data", 'w')
+        for l in lifestate_sim_sorted:
+            f.write("%s %s %f\n" %(l.trace_path, l.proof_status, l.time))
+        f.close()
+    proofs = {}
+    for result in loadedResults:
+        for line in loadedResults[result][1]:
+            fileInfo = loadedResults[result][0]
+            key = line.trace_path
+            imap = proofs.get(key,{})
+            if(line.proof_status == "Ok"):
+                imap[fileInfo.precision_level] = line.time
+            proofs[key] = imap
+    f = open(out + "combined.data", 'w')
+    maxtime = -1
+    mintime = 999999999
+    for key in proofs:
+        value = proofs[key]
+        if ('lifecycle' in value) and ('lifestate_va1' in value):
+            v1 = value['lifecycle']
+            v2 = value['lifestate_va1']
+            lmax = v1 if v1>v2 else v2
+            lmin = v1 if v1<v2 else v2
+            maxtime = maxtime if maxtime>lmax else lmax
+            mintime = mintime if mintime<lmin else lmin
+            f.write(key + " 1 " + str(v1) + " " + str(v2) + "\n")
+    f.close()
 
 
 def timeComp(loadedResults, out):
@@ -321,13 +374,21 @@ def timeComp(loadedResults, out):
 
             proofs[key] = imap
     f = open(out,'w')
+    maxtime = -1
+    mintime = 999999999
     for key in proofs:
         value = proofs[key]
         if ('lifecycle' in value) and ('lifestate_va1' in value):
-            f.write()
-
-
-    pass
+            v1 = value['lifecycle']
+            v2 = value['lifestate_va1']
+            lmax = v1 if v1>v2 else v2
+            lmin = v1 if v1<v2 else v2
+            maxtime = maxtime if maxtime>lmax else lmax
+            mintime = mintime if mintime<lmin else lmin
+            f.write(key[0] + "_" + key[1] + " 1 " + str(v1) + " " + str(v2) + "\n")
+    f.close()
+    print "maximum recorded time %f" % maxtime
+    print "minimum recorded time %f" % mintime
 
 
 if __name__ == "__main__":
@@ -346,6 +407,8 @@ if __name__ == "__main__":
     parser.add_argument('--mode', type=str, help="timeSafe, timeAll or table")
 
     args = parser.parse_args()
+    simModes = ["simTimePlot"]
+    isSim = True if (args.mode in simModes) else False
 
     #create alias map from file
     alias_map = loadAliasMap(args.app_alias)
@@ -361,7 +424,7 @@ if __name__ == "__main__":
     trace_exclusions = [f.strip() for f in trace_exclusions_file.readlines()]
 
 
-    loadedResults = loadDirectory(args.dir, alias_map, trace_exclusions, app_exclusions)
+    loadedResults = loadDirectory(args.dir, alias_map, trace_exclusions, app_exclusions, isSim)
     if args.mode == "timeSafe":
         gnuplotTime(loadedResults, 10, args.out)
     elif args.mode == "timeAll":
@@ -372,9 +435,9 @@ if __name__ == "__main__":
         genSimHist(loadedResults,args.out)
     elif args.mode == "byApp":
         genAppTable(loadedResults,args.out)
-    elif args.mode == "simTimePlot":
-        simulationTimePlot(loadedResults)
     elif args.mode == "timeComp":
         timeComp(loadedResults,args.out)
+    elif args.mode == "simTimePlot":
+        simulationTimePlot(loadedResults,args.out)
     else:
         raise Exception("Please specify mode with --mode")
