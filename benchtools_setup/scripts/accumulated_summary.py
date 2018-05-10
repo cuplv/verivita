@@ -59,7 +59,27 @@ class ResultLine:
             self.time = float("inf")
             self.proof_status = "Timeout"
 
-
+class SimLine:
+    def __init__(self,line,alias_map):
+        self.origional_line = line
+        split_line = line.split(" ")
+        self.trace_path = split_line[0]
+        assert("/" in self.trace_path)
+        assert(self.trace_path.endswith("repaired"))
+        assert(split_line[1] == "result")
+        assert(split_line[3] == "time")
+        pass
+        #appname
+        self.app_name = summarize_results.pathToAppId(self.trace_path, alias_map)
+        #proof status
+        self.proof_status = split_line[2]
+        #time
+        time_result = split_line[4]
+        if time_result != "Timeout":
+            self.time = float(time_result)
+        else:
+            self.time = float("inf")
+            self.proof_status = "Timeout"
 #ignore lines at top of results file with comments
 def ignoreLineInResultFile(line):
     stripped_line = line.strip()
@@ -67,7 +87,7 @@ def ignoreLineInResultFile(line):
         return True
     return False
 
-def loadDirectory(directory, alias_map):
+def loadDirectory(directory, alias_map, trace_exclusions, app_exclusions, isSim=False):
     file_map = {} #mapping from a filename to a set of ResultLine objects Dictionary[String,(ResultsFile,List[ResultLine])]
     toProcess = [ x for x in os.listdir(args.dir) if x.endswith(FILE_SUFFIX)]
     for fname in toProcess:
@@ -75,10 +95,22 @@ def loadDirectory(directory, alias_map):
         lines = f.readlines()
         file_map[fname] = (ResultsFile(fname), [])
         for line in lines:
-            if not ignoreLineInResultFile(line):
-                resultLine = ResultLine(line, alias_map)
-                resultsFile,list_resultLine = file_map[fname]
-                list_resultLine.append(resultLine)
+            exclude = False
+            for exclusion in trace_exclusions:
+                if exclusion in line:
+                    exclude = True
+
+            if(not exclude):
+
+                if not ignoreLineInResultFile(line):
+                    resultLine = SimLine(line,alias_map) if isSim else ResultLine(line, alias_map)
+                    if(resultLine.app_name not in app_exclusions):
+                        resultsFile,list_resultLine = file_map[fname]
+                        list_resultLine.append(resultLine)
+                    else:
+                        print "excluding: " + line
+            else:
+                print "excluding: " + line
 
     return file_map
 
@@ -169,16 +201,21 @@ def gnuplotTime(loadedResults, sample_time_seconds, outdir):
 
 
 def isunsafe(trace):
-    assert(trace[1].proof_status in {"Unsafe","Safe","Timeout", "ReadError","?"})
-    if trace[1].proof_status in {"?"}:
-        print ""
-        print "unknown, manaully evaluate:"
-        print "==========================="
-        print "filename:"
-        print trace[0].origional_fname
-        print "path:"
-        print trace[1].trace_path
-    return trace[1].proof_status in {"Unsafe","Timeout","?"} #We are ignoring read errors since they are bad traces
+    if(type(trace) == tuple):
+        assert(trace[1].proof_status in {"Unsafe","Safe","Timeout", "ReadError","?"})
+        if trace[1].proof_status in {"?"}:
+            print ""
+            print "unknown, manaully evaluate:"
+            print "==========================="
+            print "filename:"
+            print trace[0].origional_fname
+            print "path:"
+            print trace[1].trace_path
+        return trace[1].proof_status in {"Unsafe","Timeout","?"} #We are ignoring read errors since they are bad traces
+    elif(isinstance(trace,ResultLine)):
+        return trace.proof_status in {"Unsafe","Timeout","?"}
+    else:
+        raise Exception("bad type in isUnsafe")
 
 def genTable(loadedResults, outdir):
     column_names = []
@@ -254,6 +291,125 @@ def gnuplotAllTime(loadedResults, out):
     pass
 
 
+def genSimHist(loadedResults, out):
+    pass
+
+
+def genAppTable(loadedResults, out):
+
+    total_trace_count = {}
+    tables = {}
+    for key in loadedResults:
+        fileinf,lines = loadedResults[key]
+        assert(fileinf.precision_level in PRECISION_LEVELS)
+        current_precision_level = tables.get(fileinf.precision_level,{}) #precision level is first dim
+        for line in lines:
+            current_app_unsafe_count = current_precision_level.get(line.app_name,0)
+            current_app_unsafe_count += 1 if isunsafe(line) else 0
+            current_precision_level[line.app_name] = current_app_unsafe_count
+
+            if(fileinf.precision_level == PRECISION_LEVELS[0]):
+                total_trace_count[line.app_name] = total_trace_count.get(line.app_name,0)+1
+
+        tables[fileinf.precision_level] = current_precision_level
+
+    del tables['lifestate_va0']
+    tables['aa_trace_count'] = total_trace_count
+    dataframe = pandas.DataFrame(tables)
+    # print dataframe
+    print tabulate.tabulate(dataframe, headers="keys", tablefmt="latex_booktabs")
+        # current_app_row = current_precision_level.get(fileinf)
+
+    # for precision_level in precision_levels:
+    #     df = pandas.DataFrame(index = properties_list, columns=column_names)
+    #     pass
+    pass
+
+
+def simulationTimePlot(loadedResults, out):
+
+    #plot percentage of traces proven for a given time budget
+    for simset in ['results_simulation_lifestate_va1.tar.bz2.txt']:
+        lifestate_sim = [r  for r in loadedResults[simset][1] if r.proof_status=="Ok"]
+        lifestate_all = [r for r in loadedResults[simset][1] if r.proof_status in {"Ok","?","Timeout"}]
+
+        # lifestate_wtf = [r for r in loadedResults[simset][1] if r.proof_status not in {"Ok","?","ReadError"}]
+        lifestate_sim_sorted = sorted(lifestate_sim, key= lambda x : x.time)
+
+        count = float(len(lifestate_all))
+        f = open(out + "lifestate.data", 'w')
+        index = 1
+        for l in lifestate_sim_sorted:
+            f.write("%f %f\n" %((float(index)/count)*100, l.time))
+            index+=1
+        f.close()
+
+        f = open(out + "cumulative_lifestate.data", 'w')
+        index = 1
+        time_sum = 0.0
+        for l in lifestate_sim_sorted:
+            time_sum += l.time
+            index +=1
+            f.write("%f %f\n" % (((float(index))/count)*100, time_sum/(60**2)))
+        f.close()
+    #plot scatterplot data
+    proofs = {}
+    for result in loadedResults:
+        for line in loadedResults[result][1]:
+            fileInfo = loadedResults[result][0]
+            key = line.trace_path
+            imap = proofs.get(key,{})
+            if(line.proof_status == "Ok"):
+                imap[fileInfo.precision_level] = line.time
+            proofs[key] = imap
+
+
+    f = open(out + "combined.data", 'w')
+    maxtime = -1
+    mintime = 999999999
+
+    for key in proofs:
+        value = proofs[key]
+        if ('lifecycle' in value) and ('lifestate_va1' in value):
+            v1 = value['lifecycle']
+            v2 = value['lifestate_va1']
+            lmax = v1 if v1>v2 else v2
+            lmin = v1 if v1<v2 else v2
+            maxtime = maxtime if maxtime>lmax else lmax
+            mintime = mintime if mintime<lmin else lmin
+            f.write(key + " 1 " + str(v1) + " " + str(v2) + "\n")
+    f.close()
+
+
+def timeComp(loadedResults, out):
+    proofs = {}
+    for result in loadedResults:
+        for line in loadedResults[result][1]:
+            fileInfo = loadedResults[result][0]
+            key = (fileInfo.method, line.trace_path)
+            imap = proofs.get(key, {})
+            if(line.proof_status == "Safe"):
+                imap[fileInfo.precision_level] = line.time
+
+            proofs[key] = imap
+    f = open(out,'w')
+    maxtime = -1
+    mintime = 999999999
+    for key in proofs:
+        value = proofs[key]
+        if ('lifecycle' in value) and ('lifestate_va1' in value):
+            v1 = value['lifecycle']
+            v2 = value['lifestate_va1']
+            lmax = v1 if v1>v2 else v2
+            lmin = v1 if v1<v2 else v2
+            maxtime = maxtime if maxtime>lmax else lmax
+            mintime = mintime if mintime<lmin else lmin
+            f.write(key[0] + "_" + key[1] + " 1 " + str(v1) + " " + str(v2) + "\n")
+    f.close()
+    print "maximum recorded time %f" % maxtime
+    print "minimum recorded time %f" % mintime
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Print results table with accumulated proofs')
     parser.add_argument('--dir', type=str,
@@ -262,23 +418,45 @@ if __name__ == "__main__":
                         help="text file to output list of all apps")
     parser.add_argument('--blacklist', type=str,
                         help="remove apps from results, one per line in file")
+    parser.add_argument('--trace_blacklist', type=str,
+                        help="remove bad traces, string is contained within full trace path one per line")
     parser.add_argument('--app_alias', type=str,
                         help="file with each line representing the possible aliases for an app separated by commas")
     parser.add_argument('--out', type=str, help="output directory to dump gnu plot data and other files", required=True)
     parser.add_argument('--mode', type=str, help="timeSafe, timeAll or table")
 
     args = parser.parse_args()
+    simModes = ["simTimePlot"]
+    isSim = True if (args.mode in simModes) else False
 
     #create alias map from file
     alias_map = loadAliasMap(args.app_alias)
 
+    app_exclusions = []
+    if(args.blacklist is not None):
+        app_exclusions_file = open(args.blacklist,'r')
+        app_exclusions = [f.strip() for f in app_exclusions_file.readlines()]
 
-    loadedResults = loadDirectory(args.dir, alias_map)
+
+    trace_exclusions = []
+    trace_exclusions_file = open(args.trace_blacklist,'r')
+    trace_exclusions = [f.strip() for f in trace_exclusions_file.readlines()]
+
+
+    loadedResults = loadDirectory(args.dir, alias_map, trace_exclusions, app_exclusions, isSim)
     if args.mode == "timeSafe":
         gnuplotTime(loadedResults, 10, args.out)
-    if args.mode == "timeAll":
+    elif args.mode == "timeAll":
         gnuplotAllTime(loadedResults,args.out)
     elif args.mode == "table":
         genTable(loadedResults, args.out)
+    elif args.mode == "simTimeHist":
+        genSimHist(loadedResults,args.out)
+    elif args.mode == "byApp":
+        genAppTable(loadedResults,args.out)
+    elif args.mode == "timeComp":
+        timeComp(loadedResults,args.out)
+    elif args.mode == "simTimePlot":
+        simulationTimePlot(loadedResults,args.out)
     else:
         raise Exception("Please specify mode with --mode")

@@ -1,0 +1,20 @@
+#set size square
+#set size 0.53,0.66
+set size 1,1
+set xrange [10:3600]
+set yrange [0:105]
+set logscale x
+unset logscale y
+#set key right bottom box
+#set key left top
+set key off
+set xlabel 'Time Budget Per Trace (seconds)'
+set ylabel 'Validated Traces (%)'
+set title ''
+set terminal postscript eps color
+set arrow from 3, graph 0 to 3, graph 1 nohead
+set output '| epstopdf --filter > pertrace_time_big_sim_exp.pdf'
+#set arrow from 480, graph 0 to 480, graph 1 nohead
+
+plot x notitle lt -1, 50 notitle lt -1, \
+   'sim_perc_timelifestate.data' using 2:1 with linespoints lw 3 lt 1 pt 1

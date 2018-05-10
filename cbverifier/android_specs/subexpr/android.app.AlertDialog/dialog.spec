@@ -11,6 +11,7 @@ REGEXP AlertDialog_attached_to_activity(act,dialog) = [(AlertDialogBuilder_init(
 	| dialog = [CI] [EXIT] [#] android.app.ProgressDialog android.app.ProgressDialog.show(act : android.content.Context, # : java.lang.CharSequence,# : java.lang.CharSequence)
 	| [CI] [ENTRY] [dialog] void android.app.ProgressDialog.<init>(act : android.content.Context)
 	| [CI] [ENTRY] [dialog] void android.app.AlertDialog.<init>(act : android.content.Context)
+	| [CI] [ENTRY] [dialog] void android.app.AlertDialog.<init>(act : android.content.Context, # : int)
 ];
 
 REGEXP AlertDialog_losePrecision(dialog) = [FALSE]; //smaller corpus, no examples of attached to activity failing
