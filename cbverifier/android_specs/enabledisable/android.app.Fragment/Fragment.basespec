@@ -149,4 +149,8 @@ SPEC ((TRUE)[*]); ([CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : andro
 //parent activity finish can trigger the following edges:
 SPEC (((TRUE)[*]); [CB] [ENTRY] [f] void android.app.Fragment.onActivityCreated(# : android.os.Bundle)) |+ [CB] [ENTRY] [f] void android.app.Fragment.onDestroyView() ;
 SPEC (((TRUE)[*]); [CB] [ENTRY] [f] void android.app.Fragment.onStart()) |+ [CB] [ENTRY] [f] void android.app.Fragment.onStop() ;
-SPEC [CB] [ENTRY] [f] void android.app.Fragment.onStop() |- [CB] [ENTRY] [f] void android.app.Fragment.onResume();
+SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStop() |- [CB] [ENTRY] [f] void android.app.Fragment.onResume();
+SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onStop() |- [CB] [ENTRY] [f] void android.app.Fragment.onPause();
+SPEC TRUE[*]; [CB] [ENTRY] [f] void android.app.Fragment.onAttach(# : android.app.Activity) |- [CB] [ENTRY] [f] void android.app.Fragment.onSaveInstanceState(# : android.os.Bundle);
+
+
