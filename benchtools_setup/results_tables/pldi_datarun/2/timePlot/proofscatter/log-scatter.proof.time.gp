@@ -1,12 +1,13 @@
 set size square
+set tics font "Helvetica,18"
 set xrange [10:1000]
 set yrange [10:1000]
 set key off
 set logscale x
 set logscale y
-set xlabel 'Lifecycle time (seconds)'
-set ylabel 'Lifestate time (seconds)'
-set terminal postscript eps color size 3,3
+set xlabel 'Lifecycle time (seconds)' font "Helvetica,18"
+set ylabel 'Lifestate time (seconds)' font "Helvetica,18"
+set terminal postscript eps color size 3,2
 set output '| epstopdf --filter > log-scatter.proof.time.pdf'
 
 plot x notitle lt -1, 10*x notitle lt -1, x/10 notitle lt -1, \

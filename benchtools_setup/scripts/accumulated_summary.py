@@ -327,16 +327,32 @@ def genAppTable(loadedResults, out):
 
 
 def simulationTimePlot(loadedResults, out):
-    for simset in ['results_simulation_lifecycle.tar.bz2.txt','results_simulation_lifestate_va1.tar.bz2.txt']:
+
+    #plot percentage of traces proven for a given time budget
+    for simset in ['results_simulation_lifestate_va1.tar.bz2.txt']:
         lifestate_sim = [r  for r in loadedResults[simset][1] if r.proof_status=="Ok"]
+        lifestate_all = [r for r in loadedResults[simset][1] if r.proof_status in {"Ok","?","Timeout"}]
+
+        # lifestate_wtf = [r for r in loadedResults[simset][1] if r.proof_status not in {"Ok","?","ReadError"}]
         lifestate_sim_sorted = sorted(lifestate_sim, key= lambda x : x.time)
-        if "lifecycle" in simset:
-            f = open(out + "lifecycle.data",'w')
-        else:
-            f = open(out + "lifestate.data", 'w')
+
+        count = float(len(lifestate_all))
+        f = open(out + "lifestate.data", 'w')
+        index = 1
         for l in lifestate_sim_sorted:
-            f.write("%s %s %f\n" %(l.trace_path, l.proof_status, l.time))
+            f.write("%f %f\n" %((float(index)/count)*100, l.time))
+            index+=1
         f.close()
+
+        f = open(out + "cumulative_lifestate.data", 'w')
+        index = 1
+        time_sum = 0.0
+        for l in lifestate_sim_sorted:
+            time_sum += l.time
+            index +=1
+            f.write("%f %f\n" % (((float(index))/count)*100, time_sum/(60**2)))
+        f.close()
+    #plot scatterplot data
     proofs = {}
     for result in loadedResults:
         for line in loadedResults[result][1]:
@@ -346,9 +362,12 @@ def simulationTimePlot(loadedResults, out):
             if(line.proof_status == "Ok"):
                 imap[fileInfo.precision_level] = line.time
             proofs[key] = imap
+
+
     f = open(out + "combined.data", 'w')
     maxtime = -1
     mintime = 999999999
+
     for key in proofs:
         value = proofs[key]
         if ('lifecycle' in value) and ('lifestate_va1' in value):

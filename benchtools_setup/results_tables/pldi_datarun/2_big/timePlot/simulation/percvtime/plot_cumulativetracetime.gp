@@ -8,7 +8,7 @@ set logscale y
 #set key right bottom box
 #set key left top
 set key off
-set xlabel 'Traces Validated (%)'
+set xlabel 'Total Traces Validated (%)'
 set ylabel 'Cumulative Time (hours)'
 set title ''
 set terminal postscript eps color
