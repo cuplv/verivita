@@ -1,4 +1,4 @@
-module TestHelpers exposing (..)
+module TestHelpers where
 
 import VirtualDom exposing (Node)
 
