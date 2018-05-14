@@ -5,18 +5,28 @@ FROM python:2.7-slim
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-ADD . /app
+ADD ./cbverifier /app/cbverifier
+ADD ./nuXmv-1.1.1-linux64.tar.gz /app/nuXmv-1.1.1-linux64.tar.gz
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+#RUN pip install --trusted-host pypi.python.org -r requirements.txt
 RUN apt-get update
-RUN apt-get install -y wget
+RUN pip install protobuf 
+RUN pip install ply
+RUN pip install pysmt
+RUN yes | pysmt-install --z3
+
+#RUN apt-get install -y wget
+#RUN apt-get install dtrx
+#RUN dtrx /app/nuXmv-1.1.1-linux64.tar.gz
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
 
 # Define environment variable
 ENV NAME World
+ENV PYTHONPATH "/app"
 
 # Run app.py when the container launches
-CMD ["python", "app.py"]
+CMD ["sleep", "9999"]
+#CMD ["python", "/app/cbverifier/driver.py"]

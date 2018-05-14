@@ -1,17 +1,14 @@
-name := """verivita-web"""
-organization := "edu.colorado.plv"
+name := "play-elm-example"
 
 version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.5"
 
-libraryDependencies += guice
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+libraryDependencies ++= Seq(
+  guice,
+  "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+)
+(ElmKeys.elmOptions in ElmKeys.elmMake in Assets) ++= Seq("--debug")
 
-// Adds additional packages into Twirl
-//TwirlKeys.templateImports += "edu.colorado.plv.controllers._"
-
-// Adds additional packages into conf/routes
-// play.sbt.routes.RoutesKeys.routesImport += "edu.colorado.plv.binders._"
