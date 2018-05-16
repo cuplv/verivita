@@ -15,7 +15,7 @@ RUN pip install protobuf
 RUN pip install ply
 RUN pip install pysmt
 RUN yes | pysmt-install --z3
-
+RUN pip install jep
 #RUN apt-get install -y wget
 #RUN apt-get install dtrx
 #RUN dtrx /app/nuXmv-1.1.1-linux64.tar.gz
