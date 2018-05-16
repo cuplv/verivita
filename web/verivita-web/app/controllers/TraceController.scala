@@ -37,7 +37,8 @@ class TraceController @Inject()(counter: Counter, traceManager : TraceManager) e
     Ok(JsArray(trace.map(TraceUtils.summarizeMsg)))
   }
   def cxe(traceId: String, disallowId: String) = Action {
-    Ok("")
+    val trace = traceManager.verifyTrace(traceId: String, disallowId: String)
+    Ok(JsArray(trace.map(TraceUtils.summarizeMsg)))
   }
 
 }

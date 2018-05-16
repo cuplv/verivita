@@ -8,7 +8,8 @@ scalaVersion := "2.12.5"
 
 libraryDependencies ++= Seq(
   guice,
-  "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+  "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test,
+  "black.ninia" % "jep" % "3.7.1"
 )
 (ElmKeys.elmOptions in ElmKeys.elmMake in Assets) ++= Seq("--debug")
 

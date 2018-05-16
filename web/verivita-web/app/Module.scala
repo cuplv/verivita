@@ -2,7 +2,7 @@ import com.google.inject.AbstractModule
 import java.time.Clock
 
 import com.google.inject.name.Names
-import edu.colorado.plv.{TraceManager, VerivitaManager}
+import edu.colorado.plv.{FakeManager, TraceManager, VerivitaManager}
 import services.{AtomicCounter, Counter}
 
 
@@ -21,7 +21,11 @@ class Module extends AbstractModule {
   override def configure() = {
     // Set AtomicCounter as the implementation for Counter.
     bind(classOf[Counter]).to(classOf[AtomicCounter])
-    bind(classOf[TraceManager]).to(classOf[VerivitaManager])
+    sys.env.get("VERIVITA_MOCK") match{
+      case Some("true") => bind(classOf[TraceManager]).to(classOf[FakeManager])
+      case _ => bind(classOf[TraceManager]).to(classOf[VerivitaManager])
+    }
+
   }
 
 }

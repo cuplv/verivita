@@ -3,6 +3,8 @@ package edu.colorado.plv
 import play.api.libs.json.{JsObject, JsString}
 
 trait TraceManager {
+  def verifyTrace(traceId: String, disallowId: String): List[TraceMessage]
+
   def getTrace(id: String): List[TraceMessage]
   def getTraceList(): List[String]
 }

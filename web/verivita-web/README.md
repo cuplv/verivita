@@ -1,42 +1,53 @@
-Play with Elm sample application
-================================
+Verivita Web Interface
+======================
 
-This application shows a simple counter maintained server-side and incremented client-side by Elm.
+A web site for verifying android applications with the Verivita system.
 
-You can run the app in developer mode (`>sbt run`), then modify any listed file below and refresh your browser to see modifications.
 
-There are several demonstration files available in this template.
+Setup
+-----
+Install elm (Note this is only required for development not deployment)
+```
+brew install elm
+```
 
-Elm Application
-===============
+or
 
-- ServerCounter.elm:
+```
+npm install elm
+```
 
-  Demonstrates how Elm code can call a Play controller.
+Install JEP
 
-- main.scala.html:
+JEP is a python interface for java and is used to invoke Verivita.
 
-  Shows how a Play Twirl template can embed an Elm app, thus mixing UI rendered server and client side.
+```
+pip install jep
+```
 
-Controllers
-===========
+Include jep.so in the library path for java
 
-- HomeController.scala:
+* In MacOS this is the environment variable DYLD_LIBRARY_PATH, location is likely ```/usr/local/lib/python2.7/site-packages/jep/jep.so```
 
-  Shows how to handle simple HTTP requests.
+* In Linux this is the environment variable LD_LIBRARY_PATH
 
-- CountController.scala:
 
-  Shows how to inject a component into a controller and use the component when
-  handling requests.
 
-Components
-==========
+Running
+-------
 
-- Module.scala:
+```
+sbt run
+```
 
-  Shows how to use Guice to bind all the components needed by your application.
+Mock Objects for Web Development
+--------------------------------
 
-- Counter.scala:
+set environment variable.
+```
+export VERIVITA_MOCK=true
+```
 
-  An example of a component that contains state, in this case a simple counter.
+This switches the implementation of TraceManager to an instance of
+"FakeManager" so verivita isn't required for development tasks.
+

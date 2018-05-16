@@ -45,7 +45,9 @@ type Msg
     | ServerCounterUpdated (Result Http.Error Int)
     | GetTrace String
     | ResponseTrace (Result Http.Error Trace)
-    | ResponseTraceList(Result Http.Error (List String))
+    | ResponseTraceList (Result Http.Error (List String))
+    | VerifyTrace String String
+    | ResponseVerification (Result Http.Error Trace)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -64,8 +66,11 @@ update msg model =
         ResponseTrace (Err newError) ->
             ( {model | error = Just <| toString newError}, Cmd.none)
         GetTrace id -> (model, getTrace id)
+        VerifyTrace id dis -> (model, verifyTrace id dis)
         ResponseTraceList (Err newError) -> ( {model | error = Just <| toString newError}, Cmd.none)
         ResponseTraceList (Ok traceList) -> ( {model | traceChoice = traceList}, Cmd.none)
+        ResponseVerification (Err newError) -> ( {model | error = Just <| toString newError}, Cmd.none)
+        ResponseVerification (Ok newTrace) -> ( {model | trace = Just newTrace}, Cmd.none)
 
 
 -- VIEW
@@ -79,7 +84,8 @@ view model =
             |> (List.map text)
             |> (List.map (\a -> option [] [a]))
             )
-        , div [] [button [ onClick (GetTrace "1") ] [ text "GetTrace" ]]
+        , div [] [button [ onClick (GetTrace "1") ] [ text "Get Trace" ]]
+        , div [] [button [ onClick (VerifyTrace "1" "1")] [ text "Verify Trace" ]]
 --        , div [] (List.map (\ c -> (div [] [ text (toString c)])) model.counter)
         , (viewTrace (Maybe.withDefault [] model.trace))
         , div [] [ text (Maybe.withDefault "" model.error) ]
@@ -121,6 +127,10 @@ incrementCounterServer =
 getTrace : String -> Cmd Msg
 getTrace id =
     Http.send ResponseTrace (Http.get ("/trace?traceId=" ++ id) decodeTrace)
+
+verifyTrace : String -> String -> Cmd Msg
+verifyTrace id did =
+    Http.send ResponseVerification (Http.get ("/cxe?traceId=" ++ id ++ "&disallowId=" ++ did) decodeTrace)
 
 
 getTraceList : Cmd Msg
