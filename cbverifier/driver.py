@@ -7,7 +7,7 @@ import optparse
 import logging
 
 
-from cbverifier.traces.ctrace import CTraceSerializer, CCallin
+from cbverifier.traces.ctrace import CTraceSerializer, CCallin, CMessage
 from cbverifier.traces.ctrace import CCallback, MessageFilter
 from cbverifier.traces.ctrace import MalformedTraceException, TraceEndsInErrorException
 from cbverifier.specs.spec import Spec
