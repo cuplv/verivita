@@ -33,7 +33,7 @@ class TraceController @Inject()(counter: Counter, traceManager : TraceManager) e
   }
   //Params in function are url params
   def trace(traceId: String) = Action {
-    val trace: immutable.Seq[TraceMessage] = traceManager.getTrace(traceId)
+    val trace = traceManager.getTrace(traceId)
     Ok(JsArray(trace.map(TraceUtils.summarizeMsg)))
   }
   def cxe(traceId: String, disallowId: String) = Action {
