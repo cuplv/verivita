@@ -11,6 +11,9 @@ RUN apk add --update python-dev
 RUN apk add --update py-pip
 RUN apk add --update g++
 RUN apk add --update make
+RUN apk add openrc
+RUN apk add openssh
+
 
 RUN cd /tmp/build && \
  sbt compile && \
