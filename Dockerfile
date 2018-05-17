@@ -7,6 +7,7 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 ADD ./cbverifier /app/cbverifier
 ADD ./nuXmv-1.1.1-linux64.tar.gz /app/nuXmv-1.1.1-linux64.tar.gz
+ADD ./web/verivita-web/target/universal/play-elm-example-1.0-SNAPSHOT/* /app/web/
 
 # Install any needed packages specified in requirements.txt
 #RUN pip install --trusted-host pypi.python.org -r requirements.txt
@@ -22,6 +23,7 @@ RUN pip install jep
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
+EXPOSE 9000
 
 # Define environment variable
 ENV NAME World
