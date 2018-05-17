@@ -21,9 +21,16 @@ class Module extends AbstractModule {
   override def configure() = {
     // Set AtomicCounter as the implementation for Counter.
     bind(classOf[Counter]).to(classOf[AtomicCounter])
+    println("===binding classes")
     sys.env.get("VERIVITA_MOCK") match{
-      case Some("true") => bind(classOf[TraceManager]).to(classOf[FakeManager])
-      case _ => bind(classOf[TraceManager]).to(classOf[VerivitaManager])
+      case Some("true") => {
+        println("===fake manager")
+        bind(classOf[TraceManager]).to(classOf[FakeManager])
+      }
+      case _ => {
+        println("===real manager")
+        bind(classOf[TraceManager]).to(classOf[VerivitaManager])
+      }
     }
 
   }

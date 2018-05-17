@@ -106,7 +106,9 @@ class VerivitaManager extends TraceManager{
 //    val a : PyJObject = ???
 //    val value2 = jep.getValue("foo()")
 //    val value: AnyRef = jep.getValue("ans")
-    getTraceFromVV(sys.env("TRACE_PATH"))
+    val tracepath = sys.env("TRACE_PATH")
+    println(tracepath)
+    getTraceFromVV(tracepath)
   }
 
   override def getTraceList(): List[String] = List()
