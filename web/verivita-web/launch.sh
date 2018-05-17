@@ -1,0 +1,1 @@
+/Library/Java/Home/bin/java -Xms512M -Xmx1024M -Xss1M -XX:+CMSClassUnloadingEnabled "-javaagent:/Applications/IntelliJ IDEA CE.app/Contents/lib/idea_rt.jar=52199:/Applications/IntelliJ IDEA CE.app/Contents/bin" -Dfile.encoding=UTF-8 -classpath "/Users/s/Library/Application Support/IdeaIC2018.1/Scala/launcher/sbt-launch.jar" xsbt.boot.Boot run
