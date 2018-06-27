@@ -1,15 +1,24 @@
 package edu.colorado.plv
 
+import java.io.File
 import java.util
 import java.util.concurrent.Executors
 
+import javax.inject.Inject
 import jep.Jep
+import play.Environment
 
 import scala.collection.{JavaConverters, immutable}
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
+import scala.io.{BufferedSource, Source}
 
-class VerivitaManager extends TraceManager{
+class VerivitaManager @Inject()(env: Environment) extends TraceManager{
+  val fileList = getListOfFiles()
+  val filePaths = fileList.map(a => a.getAbsolutePath)
+  val nametopath = fileList.map(a => (a.getName-> a.getAbsolutePath)).toMap
+
+
   implicit val ec = new ExecutionContext {
     val threadPool = Executors.newFixedThreadPool(1);
 
@@ -49,7 +58,13 @@ class VerivitaManager extends TraceManager{
     jep.eval("import traces.ctrace")
   })
   //TODO: jep.close on object destruction
-
+  //TODO: notes perhaps serializing trace to json can make interface more stable
+  def getSpecList(file: String): String = {
+    val bufferedSource: BufferedSource = Source.fromFile(env.getFile(file))
+    val specList : List[String] = bufferedSource.getLines().toList
+    bufferedSource.close()
+    specList.map(a => "'" + a + "'").mkString(",")
+  }
   def createDriver(jep: Jep, tracePath : String, simplifyTrace: Boolean) = {
     var debug = "False"
     var filter_msg= "None"
@@ -58,8 +73,13 @@ class VerivitaManager extends TraceManager{
 //    jep.runScript("/Users/s/foo.py")
 //    val value = jep.getValue("exception")
 
+    val specListFile = s"conf/speclists/va1.txt"
     //TODO: get spec file list from somewhere
-    jep.eval("""spec_file_list = ["/Users/s/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec"]""")
+
+    val specString = getSpecList(specListFile)
+    val disallowString = getSpecList("conf/speclists/AlertDialog.dismiss.txt")
+    val specfileList = s"""[${specString},${disallowString}]"""
+    jep.eval(s"""spec_file_list = $specfileList""")
     jep.eval(s"""driver_opts = driver.DriverOptions("${tracePath}","bin",spec_file_list,${strSimplifyTrace},${debug},${filter_msg},True)""")
     jep.eval("idriver = driver.Driver(driver_opts)")
   }
@@ -84,7 +104,8 @@ class VerivitaManager extends TraceManager{
   def getTraceFromVV(path : String) = {
     val t = (jep: Jep) => {
       createDriver(jep,path, false)
-      val traceLen: Int = jep.getValue("len(idriver.trace.children)").asInstanceOf[Integer]
+      val traceexpr = "idriver.trace"
+      val traceLen: Int = jep.getValue(s"len(${traceexpr}.children)").asInstanceOf[Integer]
       val result = (0 until traceLen).map(i => {
         getCmsg(jep, s"idriver.trace.children[${i}]")
       })
@@ -92,11 +113,25 @@ class VerivitaManager extends TraceManager{
       result
     }
     jepRun(t).toList
-
+  }
+  def verifyTraceFromVV(fname : String) = {
+    val path = nametopath(fname)
+    jepRun( (jep: Jep) => {
+      createDriver(jep,path,true)
+      val nuxmvpath = sys.env("NUXMV_PATH")
+      //(res, cex, mapback)
+      val runcmd = s"""res = idriver.run_ic3('${nuxmvpath}', 40)"""
+      jep.eval(runcmd)
+      //TODO: extract cex
+      val cex = List[TraceMessage]()
+//      List("cex","res","mapback") map (a => jep.getValue(s"del ${a}"))
+      jep.eval("del res")
+      cex
+    })
   }
 
 
-  override def verifyTrace(traceId: String, disallowId: String): List[TraceMessage] = List()
+  override def verifyTrace(traceId: String, disallowId: String): List[TraceMessage] = verifyTraceFromVV(traceId)
 
   override def getTrace(id: String): List[TraceMessage] = {
 //    val maybeString = sys.env.get("DYLD_LIBRARY_PATH")
@@ -106,12 +141,26 @@ class VerivitaManager extends TraceManager{
 //    val a : PyJObject = ???
 //    val value2 = jep.getValue("foo()")
 //    val value: AnyRef = jep.getValue("ans")
-    val tracepath = sys.env("TRACE_PATH")
+    val tracepath = filePaths.filter(a => a.contains(id)).headOption
+
+//    val tracepath = sys.env("TRACE_PATH")
+
     println(tracepath)
-    getTraceFromVV(tracepath)
+    getTraceFromVV(tracepath.getOrElse(???))
+  }
+  def getListOfFiles():List[File] = {
+    val dir = sys.env("TRACE_DIR")
+    val d = new File(dir)
+    if (d.exists && d.isDirectory) {
+      d.listFiles.filter(_.isFile).toList
+    } else {
+      List[File]()
+    }
   }
 
-  override def getTraceList(): List[String] = List()
+  override def getTraceList(): List[String] = {
+    fileList.map(a => a.getName)
+  }
 
   override def finalize(): Unit = {
     super.finalize()

@@ -5,6 +5,7 @@ import Html.Events exposing (onClick)
 import Http
 import Json.Decode as Json
 import Dict as Dict exposing (Dict)
+import Html.Events exposing (onInput)
 
 
 main : Program Never Model Msg
@@ -26,12 +27,13 @@ type alias Model =
     , error : Maybe String
     , trace : Maybe Trace
     , traceChoice: List String
+    , selection : Maybe String
     }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model [] Nothing Nothing [], getTraceList )
+    ( Model [] Nothing Nothing [] Nothing, getTraceList)
 
 
 
@@ -46,8 +48,9 @@ type Msg
     | GetTrace String
     | ResponseTrace (Result Http.Error Trace)
     | ResponseTraceList (Result Http.Error (List String))
-    | VerifyTrace String String
+    | VerifyTrace (Maybe String) String
     | ResponseVerification (Result Http.Error Trace)
+    | ChangeSelection String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -66,11 +69,13 @@ update msg model =
         ResponseTrace (Err newError) ->
             ( {model | error = Just <| toString newError}, Cmd.none)
         GetTrace id -> (model, getTrace id)
-        VerifyTrace id dis -> (model, verifyTrace id dis)
+        VerifyTrace (Just id) dis -> (model, verifyTrace id dis)
+        VerifyTrace Nothing dis -> (model, Cmd.none)
         ResponseTraceList (Err newError) -> ( {model | error = Just <| toString newError}, Cmd.none)
         ResponseTraceList (Ok traceList) -> ( {model | traceChoice = traceList}, Cmd.none)
         ResponseVerification (Err newError) -> ( {model | error = Just <| toString newError}, Cmd.none)
         ResponseVerification (Ok newTrace) -> ( {model | trace = Just newTrace}, Cmd.none)
+        ChangeSelection sel -> ({model | selection = Just sel}, Cmd.none)
 
 
 -- VIEW
@@ -80,12 +85,14 @@ view : Model -> Html Msg
 view model =
     div []
         [ --button [ onClick IncrementServerCounter ] [ text "Increment Server" ]
-         select [] ( model.traceChoice
+        --(List.range 0 (List.length model.traceChoice))
+        --model.traceChoice
+         select [onInput ChangeSelection] ( model.traceChoice
             |> (List.map text)
-            |> (List.map (\a -> option [] [a]))
+            |> (List.map (\a -> option [] [ a]))
             )
-        , div [] [button [ onClick (GetTrace "1") ] [ text "Get Trace" ]]
-        , div [] [button [ onClick (VerifyTrace "1" "1")] [ text "Verify Trace" ]]
+        , div [] [button [ onClick (GetTrace (Maybe.withDefault "" model.selection)) ] [ text "Get Trace" ]]
+        , div [] [button [ onClick (VerifyTrace model.selection "1")] [ text "Verify Trace" ]]
 --        , div [] (List.map (\ c -> (div [] [ text (toString c)])) model.counter)
         , (viewTrace (Maybe.withDefault [] model.trace))
         , div [] [ text (Maybe.withDefault "" model.error) ]
