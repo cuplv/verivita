@@ -61,13 +61,10 @@ Possible bottlenecks:
 a. The length of the sequence that must be explored can be huge.
 We need to optimize the encoding as much as we can.
 
-b. We build a single automata for each ground specification.
+b. We build a single automaton for each ground specification.
 This can lead to an explosion in the state space.
 
-c. The construction of each automaton can be expensive, since we
-perform operations on symbolic labels
-
-d. Other standard bottlenecks: e.g. recursive vs. iterative, no
+c. Other standard bottlenecks: e.g. recursive vs. iterative, no
 memoization when visiting specs.
 
 
@@ -107,17 +104,15 @@ Improvements for a)
 
 
 Improvements for b)
-- We can perform the union of different regexp automata to reduce the state space.
+- We already merge together the automata that are equivalent.
+
+  We could further perform the union of different regexp automata to reduce the state space.
   For example, we can perform the union of all the automata that have
   the same effect on the transition system.
   Here we will have a tradeoff between the composed representation of
   the automata and the monolithic one (WARNING: the states of the monolithic
   automaton can explode since we need a complete and deterministic automaton).
 
-Improvements for c)
-- Now we compute the label operations using SAT.
-  We can switch to BDD to increase the sharing and exploit the
-  canonical representation.
 
 
 The module defines the following classes:
@@ -211,24 +206,33 @@ class TSEncoder:
     EXIT = "EXIT"
 
 
-    def __init__(self, trace, specs, ignore_msgs = False, stats = None):
-        # copy the trace removing the top-level exception
+    def __init__(self, trace, specs, ignore_msgs = False,
+                 stats = None, use_flowdroid_model = False):
+        # 1. copy the trace removing the top-level exception
         self.trace = trace.copy(True)
         self.specs = specs
         self.ts = None
         self.error_prop = None
         self.stats = stats
+        self.use_flowdroid_model = use_flowdroid_model
 
+        # 2. computes the ground specification
         logging.info("Total number of specs (before grounding): %d" % (len(specs)))
         self.gs = GroundSpecs(self.trace)
         self.ground_specs = TSEncoder._compute_ground_spec(self.gs, self.specs,
                                                            self.stats)
         logging.info("Total specs after grounding: %d" % (len(self.ground_specs)))
 
-        # Remove all the messages in the trace that do not
+        # initializes the informations needed to compute the FlowDroid model
+        if (self.use_flowdroid_model):
+            # [TODO] Add check to verify that we do not have enable/disable
+            # in the current set of specification
+            self.flowdroid_model_builder = FlowDroidModelBuilder(self.trace)
+        else:
+            self.flowdroid_model_builder = None
+
+        # 3. Remove all the messages in the trace that do not
         # appear in the specification.
-        # WARNING: the simplification is UNSOUND - added to make
-        # progresses in the verification.
         if (ignore_msgs):
             # collect the calls appearing in the ground specs
             self.spec_msgs = set()
@@ -236,7 +240,11 @@ class TSEncoder:
                 for call in spec.get_spec_calls():
                     self.spec_msgs.add(TSEncoder.get_key_from_call(call))
 
-            # Collect the statistics
+            # collect the calls from the FlowDroid model
+            for call in self.flowdroid_model_builder.get_calls():
+                self.spec_msgs.add(TSEncoder.get_key_from_call(call))
+
+            # Collect the statistics on the trace
             self._is_msg_visible = self._is_msg_visible_all
             (trace_length, msgs, fmwk_contr, app_contr) = self.get_trace_stats()
 
@@ -249,6 +257,7 @@ class TSEncoder:
         else:
             self._is_msg_visible = self._is_msg_visible_all
 
+        # 4. Initialize the data structures needed to construct the encoding
         (trace_length, msgs, fmwk_contr, app_contr) = self.get_trace_stats()
         self.trace_length = trace_length
         self.msgs = msgs
@@ -481,8 +490,11 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         1. Encode all the variables of the system
         2. Encode the effects of the specifications
-        3. Encode the execution of the top-level callbacks and the
-        error conditions
+        3. Encode the FlowDroid model of callbacks, if the option
+           is enabled
+        4. Encode the execution of the top-level callbacks and the
+           error conditions
+        5. Encode the initial condition
         """
         if self.stats is not None:
             self.stats.start_timer(self.stats.ENCODING_TIME)
@@ -503,7 +515,12 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         self.ts.product(spec_ts)
         logging.info("Done encoding the specification.")
 
-        # 3. Encode the execution of the top-level callbacks
+        # 3. Encode the FlowDroid model (if the option is enabled)
+        if (self.use_flowdroid_model):
+            assert self.flowdroid_model_builder is not None
+            self.flowdroid_model_builder.encode()
+
+        # 4. Encode the execution of the top-level callbacks
         logging.info("Encoding the trace...")
         (cb_ts, errors) = self._encode_cbs(disabled_msg)
         self.ts.product(cb_ts)
@@ -513,6 +530,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         self.mapback.set_error_condition(self.error_prop)
         logging.info("Done encoding the trace.")
 
+        # 5. Encode the initial condition
         self._encode_initial_conditions()
         logging.info("Done generating the encoding.")
 
@@ -592,6 +610,14 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             not_change_next = self.helper.get_next_formula(ts.state_vars, not_change)
             fc = Implies(not_change_next, fc_msg)
             ts.trans = And(ts.trans, fc)
+
+        # [TODO] When using the FlowDroid model, be sure that we do not add
+        # the frame condition for all the back messages!
+        # This works under the assumption that the FlowDroid model is never used
+        # when the specification has some enabled/disabled rule
+        if (self.use_flowdroid_model):
+            raise NotImplementedError("Fix generation of frame condition when "\
+                                      "using the FlowDroid model")
 
         # If a message is not in the msg_key, then its value do not change.
         # This applies to all the messages that are not changed by a
@@ -1408,7 +1434,6 @@ class RegExpToAuto():
         self.cenc = cenc
         self.alphabet = alphabet
 
-        # TODO: get a fresh variable
         self.counter_var = "__msg_var___"
         self.cenc.add_var(self.counter_var, len(self.alphabet))
         mapback.set_msg_ivar(self.counter_var)
