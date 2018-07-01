@@ -17,8 +17,9 @@ RUN pip install ply
 RUN pip install protobuf
 RUN yes | python /home/muse/pysmt/install.py --z3
 ENV PYTHONPATH "/root/.smt_solvers/python-bindings-2.7:/home/muse/cbverifier:/home/muse/pysmt"
-ENV JAVA_HOME "/usr/lib/jvm/java-9-openjdk-amd64"
-RUN apt-get install -y openjdk-9-jdk-headless
+ENV JAVA_HOME "/usr/lib/jvm/java-8-openjdk-amd64"
+ENV TRACE_DIR "/home/muse/testTrace"
+RUN apt-get install -y openjdk-8-jdk-headless
 RUN pip install jep
 #TODO
 
