@@ -57,7 +57,6 @@ enable_disable_rules = {
         "cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_baseline.spec",
         "cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled_baseline.spec", #android.view.View
         "cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec",
-        "cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec", #va1 sub
         "cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec", #popup menu doesn't have anything to change
         "cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec",
         "cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec",
