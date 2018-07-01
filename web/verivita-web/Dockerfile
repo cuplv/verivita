@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 WORKDIR /home/muse
 COPY . /home/muse/
 RUN apt-get update
-RUN apt-get install -y openssh-server vim emacs gcc make sudo curl
+RUN apt-get install -y openssh-server vim emacs gcc make sudo curl python2.7
 RUN mkdir /var/run/sshd
 RUN chmod 0755 /var/run/sshd
 RUN useradd muse
@@ -10,6 +10,20 @@ RUN groupadd admin
 RUN usermod -a -G admin muse
 RUN mkdir -p /home/muse
 RUN chown -R muse:muse /home/muse
+RUN apt-get install -y python-pip python-dev
+#RUN pip install --upgrade pip #left out because failure https://github.com/pypa/pip/issues/5240
+RUN pip install six
+RUN pip install ply
+RUN pip install protobuf
+RUN yes | python /home/muse/pysmt/install.py --z3
+ENV PYTHONPATH "/root/.smt_solvers/python-bindings-2.7:/home/muse/cbverifier:/home/muse/pysmt"
+ENV JAVA_HOME "/usr/lib/jvm/java-9-openjdk-amd64"
+RUN apt-get install -y openjdk-9-jdk-headless
+RUN pip install jep
+#TODO
+
+
+
 
 EXPOSE 9000
 # overwrite this with 'CMD []' in a dependent Dockerfile
@@ -63,3 +77,9 @@ CMD ["sleep", "9999"]
 #
 ##block exit of docker container
 #CMD ["sh", "dockerstart.sh"] 
+
+
+#Pysmt old version install
+#git clone git@github.com:pysmt/pysmt.git
+#git checkout v0.6.1
+#python install.py --z3

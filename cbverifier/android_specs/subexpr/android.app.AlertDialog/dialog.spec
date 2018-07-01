@@ -37,4 +37,22 @@ REGEXP AlertDialog_builder_show_just(dialog, clickListener) = [
 	)); (TRUE[*]; AlertDialog_create(builder,dialog)))
 	|
 	((TRUE[*];[CI] [ENTRY] [dialog] void android.app.AlertDialog.setButton(# : int,# : java.lang.CharSequence,listener : android.content.DialogInterface$OnClickListener)))
+];
+
+REGEXP AlertDialog_builder_register(dialog, clickListener) = [ 
+	((TRUE[*];
+	([CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setPositiveButton(# : int, clickListener : android.content.DialogInterface$OnClickListener) 
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setPositiveButton(# : java.lang.CharSequence, clickListener : android.content.DialogInterface$OnClickListener)
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNegativeButton(# : int,clickListener : android.content.DialogInterface$OnClickListener)
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNegativeButton(# : java.lang.CharSequence, clickListener : android.content.DialogInterface$OnClickListener)
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNeutralButton(# : int,clickListener : android.content.DialogInterface$OnClickListener)
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNeutralButton(# : java.lang.CharSequence, clickListener : android.content.DialogInterface$OnClickListener)
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setSingleChoiceItems( # : int, # : int,clickListener : android.content.DialogInterface$OnClickListener)
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setSingleChoiceItems(# : java.lang.CharSequence, clickListener : android.content.DialogInterface$OnClickListener) 
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setItems(# : java.lang.CharSequence[], clickListener : android.content.DialogInterface$OnClickListener)
+		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setAdapter(# : android.widget.ListAdapter,clickListener : android.content.DialogInterface$OnClickListener)
+	)))
+	|
+	((TRUE[*];[CI] [ENTRY] [dialog] void android.app.AlertDialog.setButton(# : int,# : java.lang.CharSequence,listener : android.content.DialogInterface$OnClickListener)))
 ]
+
