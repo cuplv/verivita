@@ -144,7 +144,7 @@ from cbverifier.encoding.automata import Automaton, AutoEnv
 from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.encoding.conversion import TraceSpecConverter
-from cbverifier.encoding.flowdroid_model.flowdroid_model_builder import FlowdroidModelBuilder
+from cbverifier.encoding.flowdroid_model.flowdroid_model_builder import FlowDroidModelBuilder
 from cbverifier.utils.stats import Stats
 from cbverifier.helpers import Helper
 

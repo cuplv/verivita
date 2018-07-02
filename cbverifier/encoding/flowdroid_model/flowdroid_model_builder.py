@@ -31,9 +31,12 @@ inside their activity component.
 
 """
 
-from cbverifier.encoding.flowdroid_model.lifecycle_constants import ActivityConst
+from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceException
+from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity
+from cbverifier.specs.spec_ast import get_node_type, CALL_ENTRY, CALL_EXIT, ID
+from cbverifier.encoding.grounding import bottom_value
 
-class FlowDroidModelBuidler:
+class FlowDroidModelBuilder:
 
     def __init__(self, ts_encoder):
         """ Initialize the model builder taking as input an instance
@@ -41,21 +44,27 @@ class FlowDroidModelBuidler:
         """
         self.ts_encoder = ts_encoder
 
-        self.components_list = []    # list of components
+        # Populate the set of all components from the trace
+        # and the map of existing top-level callbacks for every receiver
+        self.components_set = set([])
+        FlowDroidModelBuilder._get_all_components(self.ts_encoder.trace,
+                                                  self.ts_encoder.gs.trace_map,
+                                                  self.components_set)
+
         # map from activity to a list of contained objects
         self.activity2contained = {}
 
         # map from an object to one of its back messages
-        self._obj2backmsg = {}
-        # List of messages used in the the model builder
-        self._msgs = []
+        self.obj2backmsg = {}
 
-        # Populate the list of all components from the trace
-        self.components_list = self._get_all_components()
+        # List of messages used in the the model builder
+        self.msgs = []
+
+        return
+
         # Get an over-approximation of the objects that may
         # be attached to the activities/fragments
         self._get_attachment_overapprox()
-
 
         raise NotImplementedError("Initialization of the fd model")
 
@@ -66,64 +75,80 @@ class FlowDroidModelBuidler:
         """
         raise NotImplementedError("get_calls not implemented")
 
-    def _get_all_components(self):
+
+    def get_components(self):
+        return self.components_set
+
+    @staticmethod
+    def _get_all_components(trace, trace_map, components):
         """ Populate the list of all components from the trace.
 
         The components we are interested in are Activities
         """
-
-        components_set = set([])
+        trace_stack = []
+        for msg in trace.children:
+            trace_stack.append(msg)
 
         # Finds all the components in the trace
-        trace_stack = [self.ts_encoder.trace]
         while (0 != len(trace_stack)):
             msg = trace_stack.pop()
+            # Collect the list of activities
+            for value in msg.params:
+                if Activity.is_class_activity(value.type):
+                    activity = Activity(value.type, value)
+                    components.add(activity)
+            for child in msg.children:
+                trace_stack.append(child)
 
-            if isinstance(msg, CCallin):
-                msg_type = "CI"
-            elif isinstance(msg, CCallback):
-                msg_type = "CB"
-            else:
-                assert False
+        # Finds the lifecycle methods for each component
+        for component in components:
+            for (key, _) in component.get_class_cb():
+                for call_ast in component.get_methods_names(key):
+                    # find the concrete methods in the trace for the correct
+                    # method name
 
+                    node_type = get_node_type(call_ast)
+                    assert (node_type == CALL_ENTRY or node_type == CALL_EXIT)
+                    asets = trace_map.lookup_assignments(call_ast)
 
-            # check the parameters of the CI/CB are a component
-            # If yes, add it to the set.
+                    # convert the values to concrete calls and then to messages
+                    for aset in asets:
+                        for (fvar, fval) in aset.assignments.iteritems():
+                            if (fval == bottom_value or
+                                get_node_type(fvar) == ID):
+                                continue
+                            elif (type(fvar) == tuple):
+                                if fval != bottom_value:
+                                    # fval is the mapback to the trace message
+                                    assert fval is not None
+                                    assert (isinstance(fval, CCallin) or
+                                            isinstance(fval, CCallback))
+                                    component.add_trace_msg(key, fval)
 
-            # Try to match the method (CB, CI, ...) with a method
-            # specified in the constants
-            # If there is a match, save it.
-
-            # if the component is the callee, then investigate
-
-            # if self.ts_encoder.gs.trace_map
-
-
-    # def lookup_methods(self, is_entry, msg_type_node, method_name, arity, has_retval):
-    #     """ Find all the messages in the trace that match the above signature:
-    #       - is_entry (entry or exit message)
-    #       - msg_type_node (CI or CB)
-    #       - method_name
-    #       - aritity
-    #       - has_retval
-    #     """
-
-
-    #         for child in msg.children:
-    #             trace_stack.push(child)
-
-
-
-        return components_set
 
     def _get_attachment_overapprox(self):
         """ Computes an over-approximate relation of objects in the
-        trace that can be contained in other objects
+        trace that can be attached.
 
-        Compile a list of callbakcs by active component
+        Compile a list of callbacks by active component.
+
+        Assume no components are attached, then build an over-approximation of
+        attachment using the method calls seen in the trace.
+        This is similar to theFlowDroid heuristic.
+
+        TODO: check if we see or miss the attachment in the XML.
         """
-
         raise NotImplementedError("_get_attachment_overapprox not implemented")
+
+
+    def _get_registered_overapprox(self):
+        """ Computes an over-approximate relation of the callback that can
+        be registered at any point in time in the trace.
+
+       TODO: check if we see or miss the registration in the XML.
+        """
+        raise NotImplementedError("_get_registered_overapprox not implemented")
+
 
     def encode(self):
         """ Create an encoding of the FlowDroid model
@@ -149,5 +174,3 @@ class ObjectRepr:
     """ Construct a backward representation from the object in the
     trace to their messages to messages. """
 
-    def __init__(self):
-        # TODO
