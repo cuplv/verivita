@@ -45,11 +45,14 @@ class FlowDroidModelBuilder:
         self.ts_encoder = ts_encoder
 
         # Populate the set of all components from the trace
-        # and the map of existing top-level callbacks for every receiver
         self.components_set = set([])
         FlowDroidModelBuilder._get_all_components(self.ts_encoder.trace,
-                                                  self.ts_encoder.gs.trace_map,
                                                   self.components_set)
+
+        # Finds the existing lifecycle messages in the trace
+        FlowDroidModelBuilder._find_lifecycle_messages(self.ts_encoder.gs.trace_map,
+                                                       self.components_set)
+
 
         # map from activity to a list of contained objects
         self.activity2contained = {}
@@ -80,10 +83,8 @@ class FlowDroidModelBuilder:
         return self.components_set
 
     @staticmethod
-    def _get_all_components(trace, trace_map, components):
+    def _get_all_components(trace, components):
         """ Populate the list of all components from the trace.
-
-        The components we are interested in are Activities
         """
         trace_stack = []
         for msg in trace.children:
@@ -103,6 +104,10 @@ class FlowDroidModelBuilder:
             for child in msg.children:
                 trace_stack.append(child)
 
+    @staticmethod
+    def _find_lifecycle_messages(trace_map, components):
+        """ Finds the existing lifecycle messages in the trace
+        """
         # Finds the lifecycle methods for each component
         for component in components:
             for (key, _) in component.get_class_cb():
