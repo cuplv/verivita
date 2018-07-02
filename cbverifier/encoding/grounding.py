@@ -149,7 +149,9 @@ class GroundSpecs(object):
         inside substitution to spec.
 
         It also returns a subset of the variables assigned in substitution
-        that are sufficient to make the spec inconsistent
+        that are sufficient to make the spec inconsistent (we do a sort of "conflict clause"
+        learning as in SAT).
+        This subset is used to possibly rule out a set of assignments.
         """
 
         def substitute_rec(node, substitution):
@@ -164,7 +166,7 @@ class GroundSpecs(object):
             node_type = get_node_type(node)
             if (node_type in leaf_nodes):
                 # reasons is empty: no matter what substitution,
-                # we always get the same resul
+                # we always get the same result
                 return (node, GroundSpecs._get_empty_reason())
             elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
                 is_entry = True if node_type == CALL_ENTRY else False
@@ -1167,11 +1169,11 @@ class TraceMap(object):
                     key_index = key_index + 1
                     method_list = lookupres
             else:
-                key_index += 1
                 # exit the loop if the element was not found
                 if lookupres is None:
                     break
                 else:
+                    key_index += 1
                     current_map = lookupres
 
         if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
@@ -1189,15 +1191,18 @@ class TraceMap(object):
             elif key_index == 5:
                 stop_lookup = None
 
-            logging.debug("Lookup %s for %s" \
-                          "%s %s %s with arity %d: %s"
-                          % ("succeded" if stop_lookup is None else "failed",
-                             "retval = " if has_retval else "",
-                             msg_type_node,
-                             "ENTRY" if is_entry else "EXIT",
-                             method_name,
-                             arity,
-                             ",".join([str(m.message_id) for m in method_list])))
+            failure_reason = "" if stop_lookup is None else "\nFailure: different %s\n" % stop_lookup
+
+            debug_msg = "Lookup %s for %s%s" \
+                        "%s %s %s with arity %d: %s" % ("succeded" if stop_lookup is None else "failed",
+                                                        failure_reason,
+                                                        "retval = " if has_retval else "",
+                                                        msg_type_node,
+                                                        "ENTRY" if is_entry else "EXIT",
+                                                        method_name,
+                                                        arity,
+                                                        ",".join([str(m.message_id) for m in method_list]))
+            logging.debug(debug_msg)
         return method_list
 
     def _get_formal_assignment(self, method_assignments, formal, actual):
@@ -1280,6 +1285,7 @@ class TraceMap(object):
                                                method_signature,
                                                arity,
                                                (retval is not None) and (retval != new_nil()))
+
         # For each method, find:
         #   - the assignments to the variables in params
         #   - the assignment to the return value
