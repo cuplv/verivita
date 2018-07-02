@@ -144,6 +144,7 @@ from cbverifier.encoding.automata import Automaton, AutoEnv
 from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.encoding.conversion import TraceSpecConverter
+from cbverifier.encoding.flowdroid_model.flowdroid_model_builder import FlowdroidModelBuilder
 from cbverifier.utils.stats import Stats
 from cbverifier.helpers import Helper
 
@@ -614,7 +615,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         # [TODO] When using the FlowDroid model, be sure that we do not add
         # the frame condition for all the back messages!
         # This works under the assumption that the FlowDroid model is never used
-        # when the specification has some enabled/disabled rule
+        # when the specification has any enabled/disabled rule
         if (self.use_flowdroid_model):
             raise NotImplementedError("Fix generation of frame condition when "\
                                       "using the FlowDroid model")
