@@ -107,7 +107,7 @@ class Activity(Component):
     # ONRESUME = "ONRESUME"
 
     @staticmethod
-    def is_class_activity(class_name):
+    def is_class(class_name):
         return class_name in Activity.class_names
 
     def get_class_names(self):
@@ -120,9 +120,8 @@ class Activity(Component):
         We use the specification language to pattern match the method
         in the trace, also matching the parameter names.
         """
-        init_names = (Activity.INIT, ["[CB] [ENTRY] [${l}] void ${MYTYPE}.<init>()"])
         on_create_names = (Activity.ONCREATE, ["[CB] [ENTRY] [${l}] void ${MYTYPE}.onCreate(f : android.os.Bundle)"])
-        cb_to_find = [init_names] #, on_create_names]
+        cb_to_find = [(Activity.INIT, ["[CB] [ENTRY] [${l}] void ${MYTYPE}.<init>()"])]
 
         # TODO
         # , on_resume_names, on_pause_names,
@@ -134,39 +133,61 @@ class Activity(Component):
         Component.__init__(self, class_name, inst_value, "l", "MYTYPE")
 
 
-class FragmentConst:
-    class_names = []
+class Fragment(Component):
+    class_names = ["android.app.Fragment",
+                   "android.support.v4.app.Fragment",
+                   "android.support.v4.app.ListFragment",
+                   "android.app.ListFragment",
+                   "android.support.v4.app.DialogFragment",
+                   "android.preference.PreferenceFragment",
+                   "android.app.DialogFragment",
+                   "android.webkit.WebViewFragment",
+                   "android.support.v7.preference.PreferenceFragmentCompat"]
+
+    INIT = "INIT"
+
+    @staticmethod
+    def is_class(class_name):
+        return class_name in Fragment.class_names
+
+    def get_class_names(self):
+        return Fragment.class_names
+
+    def __init__(self, class_name, inst_value):
+        Component.__init__(self, class_name, inst_value, "l", "MYTYPE")
+
+    def get_class_cb(self):
+        cb_to_find = [(Fragment.INIT, ["[CB] [ENTRY] [${l}] void ${MYTYPE}.<init>()"])]
+        return cb_to_find
+
+
 
     # TODO
 
 # onStart","onResume", "onPause","onSaveInstanceState","onDestroy","onDetach",
 #           "onCreateView","onViewCreated","onDestroyView", "<init>","onStop","onCreate","onAttach", "onActivityCreated", "isDetached", "isResumed"},
-#             {"android.support.v4.app.Fragment", "android.support.v4.app.ListFragment","android.app.ListFragment",
-#                "android.support.v4.app.DialogFragment","android.preference.PreferenceFragment",
-#              "android.app.DialogFragment",
-#              "android.webkit.WebViewFragment",
-#              "android.support.v7.preference.PreferenceFragmentCompat"
-#              # "android.support.v14.preference.EditTextPreferenceDialogFragment",
-#              # "android.support.v14.preference.ListPreferenceDialogFragment",
-#              # "android.support.v14.preference.MultiSelectListPreferenceDialogFragment",
-#              # "android.support.v14.preference.PreferenceDialogFragment",
-#              # "android.support.v17.leanback.app.BrandedFragment",
-#              # "android.support.v17.leanback.app.GuidedStepFragment",
-#              # "android.support.v17.leanback.app.HeadersFragment",
-#              # "android.support.v17.preference.LeanbackPreferenceDialogFragment",
-#              # "android.support.v17.preference.LeanbackSettingsFragment",
-#              # "android.support.v17.leanback.app.OnboardingFragment",
-#              # "android.support.v17.leanback.app.PlaybackFragment",
-#              # "android.support.v17.leanback.app.RowsFragment",
-#              # "android.support.v17.leanback.app.SearchFragment",
-#              # "android.support.v17.preference.BaseLeanbackPreferenceFragment",
-#              # "android.support.v17.leanback.app.BrowseFragment",
-#              # "android.support.v17.leanback.app.DetailsFragment",
-#              # "android.support.v17.leanback.app.ErrorFragment",
-#              # "android.support.v17.preference.LeanbackListPreferenceDialogFragment",
-#              # "android.support.v17.preference.LeanbackPreferenceFragment",
-#              # "android.support.v17.leanback.app.PlaybackOverlayFragment",
-#              # "android.support.v17.leanback.app.VerticalGridFragment",
-#              # "android.support.v17.leanback.app.VideoFragment"
+
+             # "android.support.v14.preference.EditTextPreferenceDialogFragment",
+             # "android.support.v14.preference.ListPreferenceDialogFragment",
+             # "android.support.v14.preference.MultiSelectListPreferenceDialogFragment",
+             # "android.support.v14.preference.PreferenceDialogFragment",
+             # "android.support.v17.leanback.app.BrandedFragment",
+             # "android.support.v17.leanback.app.GuidedStepFragment",
+             # "android.support.v17.leanback.app.HeadersFragment",
+             # "android.support.v17.preference.LeanbackPreferenceDialogFragment",
+             # "android.support.v17.preference.LeanbackSettingsFragment",
+             # "android.support.v17.leanback.app.OnboardingFragment",
+             # "android.support.v17.leanback.app.PlaybackFragment",
+             # "android.support.v17.leanback.app.RowsFragment",
+             # "android.support.v17.leanback.app.SearchFragment",
+             # "android.support.v17.preference.BaseLeanbackPreferenceFragment",
+             # "android.support.v17.leanback.app.BrowseFragment",
+             # "android.support.v17.leanback.app.DetailsFragment",
+             # "android.support.v17.leanback.app.ErrorFragment",
+             # "android.support.v17.preference.LeanbackListPreferenceDialogFragment",
+             # "android.support.v17.preference.LeanbackPreferenceFragment",
+             # "android.support.v17.leanback.app.PlaybackOverlayFragment",
+             # "android.support.v17.leanback.app.VerticalGridFragment",
+             # "android.support.v17.leanback.app.VideoFragment"
 
 

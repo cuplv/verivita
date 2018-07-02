@@ -32,7 +32,7 @@ inside their activity component.
 """
 
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceException
-from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity
+from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
 from cbverifier.specs.spec_ast import get_node_type, CALL_ENTRY, CALL_EXIT, ID
 from cbverifier.encoding.grounding import bottom_value
 
@@ -92,11 +92,14 @@ class FlowDroidModelBuilder:
         # Finds all the components in the trace
         while (0 != len(trace_stack)):
             msg = trace_stack.pop()
-            # Collect the list of activities
+            # Collect the list of compnents
             for value in msg.params:
-                if Activity.is_class_activity(value.type):
-                    activity = Activity(value.type, value)
-                    components.add(activity)
+                if Activity.is_class(value.type):
+                    component = Activity(value.type, value)
+                    components.add(component)
+                if Fragment.is_class(value.type):
+                    component = Fragment(value.type, value)
+                    components.add(component)
             for child in msg.children:
                 trace_stack.append(child)
 
