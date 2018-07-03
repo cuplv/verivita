@@ -35,6 +35,7 @@ from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceE
 from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
 from cbverifier.specs.spec_ast import get_node_type, CALL_ENTRY, CALL_EXIT, ID
 from cbverifier.encoding.grounding import bottom_value
+from cbverifier.encoding.model_properties import AttachRelation, RegistrationRelation
 
 class FlowDroidModelBuilder:
 
@@ -58,10 +59,20 @@ class FlowDroidModelBuilder:
         FlowDroidModelBuilder._find_lifecycle_messages(self.ts_encoder.gs.trace_map,
                                                        self.components_set)
 
+        root_components_ids = []
+        for c in self.components_set:
+            if isinstance(c, Activity):
+                root_components_ids.append(c.get_inst_value())
+        self.attach_rel = AttachRelation(ts_encoder.gs.trace_map,
+                                         root_components_ids)
+        self.register_rel = RegistrationRelation(ts_encoder.gs.trace_map,
+                                                 root_components_ids)
+
         # List of messages used in the the model builder
         self.msgs = []
 
         return
+
 
         # Get an over-approximation of the objects that may
         # be attached to the activities/fragments

@@ -76,13 +76,13 @@ class BinRelation:
     """
     Returns the list of components attached to obj
     """
-    def get_attached(self, obj):
+    def get_related(self, obj):
         if obj in self.relation:
             return self.relation[obj]
         else:
             return []
 
-    def is_attached(self, obj_a, obj_b):
+    def is_related(self, obj_a, obj_b):
         if obj_a in self.relation:
             return obj_b in self.relation[obj_a]
         else:
