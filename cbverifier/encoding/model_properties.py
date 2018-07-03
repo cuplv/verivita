@@ -107,3 +107,14 @@ class AttachRelation(BinRelation):
                              "L",
                              AttachRelation.attach_methods,
                              root_components)
+
+
+class RegistrationRelation(BinRelation):
+    register_methods = {'android.view.View' : ['[CI] [ENTRY] [${CONTAINER}] void android.view.View.setOnClickListener(L : android.view.View$OnClickListener)']}
+
+    def __init__(self, trace_map, root_components):
+        BinRelation.__init__(self, trace_map,
+                             "CONTAINER",
+                             "L",
+                             RegistrationRelation.register_methods,
+                             root_components)
