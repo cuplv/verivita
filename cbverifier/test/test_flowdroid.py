@@ -19,6 +19,14 @@ except ImportError:
 
 class TestFlowDroid(unittest.TestCase):
 
+    def setUp(self):
+        # Reset the obj id before each test
+        self._obj_id_ = 0
+
+    def get_obj_id(self):
+        self._obj_id_ += 1
+        return self._obj_id_
+
     def test_const_classes(self):
         """ Test the creation of ad-hoc classes used to lookup methods """
 
@@ -53,7 +61,7 @@ class TestFlowDroid(unittest.TestCase):
         return ts_enc
 
 
-    def test_flowdroid_init(self):
+    def test_component_construction(self):
         enc = self._get_sample_trace()
         fd_builder = FlowDroidModelBuilder(enc.trace, enc.gs.trace_map, set([]))
 
@@ -86,5 +94,117 @@ class TestFlowDroid(unittest.TestCase):
                          isinstance(trace_msg, CCallback))
 
 
+    def test_cb_approx(self):
+        # Attachment relation:
+        #
+        # activity_1
+        # activity_2
+        #
+        trace = CTrace()
+        (cb1, act1) = self._create_activity()
+        (cb2, act2) = self._create_activity()
+        trace.add_msg(cb1)
+        trace.add_msg(cb2)
 
-        # check that it attaches 
+        fd = self._get_fdm(trace)
+
+        # No "free messages"
+        self.assertTrue(len(fd.free_msg) == 0)
+
+        self.assertTrue(act1 in fd.compid2msg_keys)
+        self.assertTrue(0 < fd.compid2msg_keys[act1])
+        self.assertTrue(act2 in fd.compid2msg_keys)
+        self.assertTrue(0 < fd.compid2msg_keys[act2])
+        self.assertTrue(fd.compid2msg_keys[act1].isdisjoint(fd.compid2msg_keys[act2]))
+
+
+    def test_fragment_in_act(self):
+        # Attachment relation:
+        #
+        # activity_1
+        #   frag1
+        # activity_2
+        #   frag2
+        trace = CTrace()
+        (cb1, act1) = self._create_activity()
+        (cb2, act2) = self._create_activity()
+        (cb3, frag1) = self._create_fragment()
+        (cb3, frag2) = self._create_fragment()
+        cb5 = self._attach_fragment_to_activity(act1, frag1)
+        cb6 = self._attach_fragment_to_activity(act1, frag2)
+        trace.add_msg(cb1)
+        trace.add_msg(cb2)
+        trace.add_msg(cb3)
+        trace.add_msg(cb4)
+        trace.add_msg(cb5)
+        trace.add_msg(cb6)
+
+        fd = self._get_fdm(trace)
+
+        self.assertTrue(act1 in fd.compid2msg_keys)
+        self.assertTrue(0 < fd.compid2msg_keys[act1])
+
+        self.assertTrue(act2 in fd.compid2msg_keys)
+        self.assertTrue(0 < fd.compid2msg_keys[act2])
+
+        self.assertTrue(frag1 in fd.compid2msg_keys)
+        self.assertTrue(0 < fd.compid2msg_keys[frag1])
+
+        self.assertTrue(frag2 in fd.compid2msg_keys)
+        self.assertTrue(0 < fd.compid2msg_keys[frag2])
+
+
+        self.assertTrue(fd.compid2msg_keys[act1].isdisjoint(fd.compid2msg_keys[act2]))
+        self.assertTrue(fd.compid2msg_keys[act1].isdisjoint(fd.compid2msg_keys[frag1]))
+        self.assertTrue(fd.compid2msg_keys[act1].isdisjoint(fd.compid2msg_keys[frag2]))
+
+        self.assertTrue(fd.compid2msg_keys[act2].isdisjoint(fd.compid2msg_keys[frag1]))
+        self.assertTrue(fd.compid2msg_keys[act2].isdisjoint(fd.compid2msg_keys[frag2]))
+
+        self.assertTrue(fd.compid2msg_keys[frag1].isdisjoint(fd.compid2msg_keys[frag2]))
+
+
+    def _get_fdm(self, trace):
+        enc = TSEncoder(trace, [])
+        fd_builder = FlowDroidModelBuilder(enc.trace,
+                                           enc.gs.trace_map,
+                                           set([]))
+        return fd_builder
+
+
+    def _create_activity(self):
+        obj_id = TestGrounding._get_obj("objid_%d" % self.get_obj_id(), "android.app.Activity")
+        cb = CCallback(1, 1, "", "void android.app.Activity.<init>()",
+                       [obj_id],
+                       None,
+                       [TestGrounding._get_fmwkov("void android.app.Activity","<init>()", False)])
+        return (cb, obj_id)
+
+    def _create_fragment(self):
+        obj_id = TestGrounding._get_obj("objid_%d" % self.get_obj_id(), "android.app.Fragment")
+        cb = CCallback(1, 1, "", "void android.app.Fragment.<init>()",
+                       [obj_id],
+                       None,
+                       [TestGrounding._get_fmwkov("void android.app.Fragment","<init>()", False)])
+        return (cb, obj_id)
+
+    def _create_view(self):
+        obj_id = TestGrounding._get_obj("objid_%d" % self.get_obj_id(),"android.view.View")
+        cb = CCallback(1, 1, "", "void android.view.View.<init>()",
+                       [obj_id],
+                       None,
+                       [TestGrounding._get_fmwkov("void android.view.View","<init>()", False)])
+        return (cb, obj_id)
+
+    def _attach_fragment_to_activity(self, activity, fragment):
+        # public void onAttach (Context context)
+        cb = CCallback(1, 1, "", "void android.app.Fragment.onAttach(android.app.Activity)",
+                       [fragment, activity],
+                       None,
+                       [TestGrounding._get_fmwkov("void android.app.Fragment","onAttach(android.app.Activity)", False)])
+        return cb
+
+    def _attach_view(self, parent, child):
+        cb = None
+        return cb
+

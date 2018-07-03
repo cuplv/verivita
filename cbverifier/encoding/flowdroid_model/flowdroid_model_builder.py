@@ -87,6 +87,9 @@ class FlowDroidModelBuilder:
         # Computes where each message can be executed
         (compid2msg_keys, free_msg) = self._compute_msgs_boundaries()
 
+        self.compid2msg_keys = compid2msg_keys
+        self.free_msg = free_msg
+
     def get_msgs_keys(self):
         return self.msgs_keys
 
