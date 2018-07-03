@@ -140,6 +140,7 @@ from pysmt.shortcuts import simplify
 from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
 from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
+from cbverifier.encoding.encoder_utils import EncoderUtils
 from cbverifier.encoding.automata import Automaton, AutoEnv
 from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
@@ -203,10 +204,6 @@ class TSEncoder:
 
     """
 
-    ENTRY = "ENTRY"
-    EXIT = "EXIT"
-
-
     def __init__(self, trace, specs, ignore_msgs = False,
                  stats = None, use_flowdroid_model = False):
         # 1. copy the trace removing the top-level exception
@@ -228,7 +225,13 @@ class TSEncoder:
         if (self.use_flowdroid_model):
             # [TODO] Add check to verify that we do not have enable/disable
             # in the current set of specification
-            self.flowdroid_model_builder = FlowDroidModelBuilder(self.trace)
+            msg_key_sets = set()
+            for spec in self.ground_specs:
+                for call in spec.get_spec_calls():
+                    msgs_key_sets.add(EncoderUtils.get_key_from_call(call))
+
+            self.flowdroid_model_builder = FlowDroidModelBuilder(self.trace,
+                                                                 msg_key_sets)
         else:
             self.flowdroid_model_builder = None
 
@@ -236,15 +239,13 @@ class TSEncoder:
         # appear in the specification.
         if (ignore_msgs):
             # collect the calls appearing in the ground specs
-            self.spec_msgs = set()
-            for spec in self.ground_specs:
-                for call in spec.get_spec_calls():
-                    self.spec_msgs.add(TSEncoder.get_key_from_call(call))
-
-            # collect the calls from the FlowDroid model
             if (self.use_flowdroid_model):
-                for call in self.flowdroid_model_builder.get_calls():
-                    self.spec_msgs.add(TSEncoder.get_key_from_call(call))
+                self.spec_msgs = self.flowdroid_model_builder.get_msgs_keys()
+            else:
+                self.spec_msgs = set()
+                for spec in self.ground_specs:
+                    for call in spec.get_spec_calls():
+                        self.spec_msgs.add(EncoderUtils.get_key_from_call(call))
 
             # Collect the statistics on the trace
             self._is_msg_visible = self._is_msg_visible_all
@@ -306,8 +307,8 @@ class TSEncoder:
                 if cb is None:
                     raise Exception("Message id %s not found in the trace" % message_id)
 
-                msg_enc = self.mapback.get_trans2pc((TSEncoder.ENTRY, cb))
-                key = TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY)
+                msg_enc = self.mapback.get_trans2pc((EncoderUtils.ENTRY, cb))
+                key = EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY)
                 if not self._is_msg_visible(key):
                     raise Exception("Message id %s not found in the (simplified) trace" % message_id)
 
@@ -318,20 +319,20 @@ class TSEncoder:
         # encode each callback
         # No trace constraints in the initial state
         trace_encoding = []
-        pc_name = TSEncoder._get_pc_name()
+        pc_name = EncoderUtils._get_pc_name()
         for tl_cb in tl_cbs:
-            stack = [(TSEncoder.EXIT, tl_cb),(TSEncoder.ENTRY, tl_cb)]
+            stack = [(EncoderUtils.EXIT, tl_cb),(EncoderUtils.ENTRY, tl_cb)]
 
             while (len(stack) != 0):
                 (entry_type, msg) = stack.pop()
 
                 # Fill the stack in reverse order
-                if (TSEncoder.ENTRY == entry_type):
+                if (EncoderUtils.ENTRY == entry_type):
                     for i in reversed(range(len(msg.children))):
-                        stack.append((TSEncoder.EXIT, msg.children[i]))
-                        stack.append((TSEncoder.ENTRY, msg.children[i]))
+                        stack.append((EncoderUtils.EXIT, msg.children[i]))
+                        stack.append((EncoderUtils.ENTRY, msg.children[i]))
 
-                msg_key = TSEncoder.get_key_from_msg(msg, entry_type)
+                msg_key = EncoderUtils.get_key_from_msg(msg, entry_type)
                 if not self._is_msg_visible(msg_key):
                     continue
 
@@ -341,7 +342,7 @@ class TSEncoder:
                 (current_state, next_state) = msg_enc
                 s0 = self.cenc.eq_val(pc_name, current_state)
                 # strengthen s0 - progress only if the message is enabled
-                msg_enabled = TSEncoder._get_state_var(msg_key)
+                msg_enabled = EncoderUtils._get_state_var(msg_key)
                 s0 = And(s0, msg_enabled)
                 s1 = self.cenc.eq_val(pc_name, next_state)
 
@@ -356,8 +357,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                     logging.info(info_msg)
                     # if msg_error_enc is not None:
                     #     # this is a possible error state
-                    #     msg_key = TSEncoder.get_key_from_msg(msg, entry_type)
-                    #     msg_enabled = TSEncoder._get_state_var(msg_key)
+                    #     msg_key = EncoderUtils.get_key_from_msg(msg, entry_type)
+                    #     msg_enabled = EncoderUtils._get_state_var(msg_key)
                     #     # progress only if the message is enabled
                     #     s0 = And(s0, msg_enabled)
                 except KeyError:
@@ -447,8 +448,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         """
         def simplify_msg(parent, trace_msg, spec_msg):
             for child in trace_msg.children:
-                if (TSEncoder.get_key_from_msg(child, TSEncoder.ENTRY) in spec_msg or
-                    TSEncoder.get_key_from_msg(child, TSEncoder.EXIT) in spec_msg):
+                if (EncoderUtils.get_key_from_msg(child, EncoderUtils.ENTRY) in spec_msg or
+                    EncoderUtils.get_key_from_msg(child, EncoderUtils.EXIT) in spec_msg):
                     # Keep both entry and exit for now
                     new_parent = copy.copy(child)
                     new_parent.children = []
@@ -466,20 +467,20 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             simplify_msg(parent, cb, spec_msgs)
 
             # always add the ENTRY of the tl callback
-            if ((TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs or
-                 TSEncoder.get_key_from_msg(cb, TSEncoder.EXIT) in spec_msgs) or
+            if ((EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY) in spec_msgs or
+                 EncoderUtils.get_key_from_msg(cb, EncoderUtils.EXIT) in spec_msgs) or
                 len(parent.children) > 0):
                 new_trace.add_msg(parent)
 
                 # print spec_msgs
-                # print TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs
-                # print TSEncoder.get_key_from_msg(cb, TSEncoder.EXIT) in spec_msgs
+                # print EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY) in spec_msgs
+                # print EncoderUtils.get_key_from_msg(cb, EncoderUtils.EXIT) in spec_msgs
                 # print len(parent.children) > 0
 
-                if ( ( not TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs) and
+                if ( ( not EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY) in spec_msgs) and
                      len(parent.children) > 0):
                     # CB included by its children
-                    msg_key = TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY)
+                    msg_key = EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY)
                     spec_msgs.add(msg_key)
 
         return new_trace
@@ -570,7 +571,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         spec_id = 0
         for ground_spec in self.ground_specs:
             msg = get_spec_rhs(ground_spec.ast)
-            key = TSEncoder.get_key_from_call(msg)
+            key = EncoderUtils.get_key_from_call(msg)
 
             if ground_spec.is_disable():
                 if key in self.app_contr:
@@ -593,7 +594,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         # the variable do not change, so we must encode the frame
         # condition
         for (msg_key, accepting_for_var) in accepting.iteritems():
-            msg_enabled = TSEncoder._get_state_var(msg_key)
+            msg_enabled = EncoderUtils._get_state_var(msg_key)
 
             # msg_enabled <-> msg_enabled'
             fc_msg = Iff(msg_enabled,
@@ -626,7 +627,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         # specification
         for msg in self.msgs:
             if msg not in accepting:
-                msg_enabled = TSEncoder._get_state_var(msg)
+                msg_enabled = EncoderUtils._get_state_var(msg)
                 fc_msg = Iff(msg_enabled,
                              Helper.get_next_var(msg_enabled,
                                                  self.pysmt_env.formula_manager))
@@ -781,8 +782,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         # rhs of the specifications change
         spec_accepting = []
         msg = get_spec_rhs(ground_spec.ast)
-        key = TSEncoder.get_key_from_call(msg)
-        msg_enabled = TSEncoder._get_state_var(key)
+        key = EncoderUtils.get_key_from_call(msg)
+        msg_enabled = EncoderUtils._get_state_var(key)
         all_vars = set(ts.state_vars)
         all_vars.add(msg_enabled)
         for ts_s in final_states:
@@ -812,7 +813,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         for f in spec_accepting:
             accepting_formula = Or(accepting_formula, f)
         spec = self.gs.get_source_spec(ground_spec)
-        self.mapback.add_var2spec(TSEncoder._get_state_var(key),
+        self.mapback.add_var2spec(EncoderUtils._get_state_var(key),
                                   ground_spec.is_enable(),
                                   ground_spec,
                                   accepting_formula,
@@ -837,7 +838,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         for msg in self.msgs:
             # create the state variable
-            var = TSEncoder._get_state_var(msg)
+            var = EncoderUtils._get_state_var(msg)
             var_ts.add_var(var)
 
             # Add the constraint on the msg
@@ -892,7 +893,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         max_pc_value = pc_size - 1
 
-        pc_name = TSEncoder._get_pc_name()
+        pc_name = EncoderUtils._get_pc_name()
         self.cenc.add_var(pc_name, max_pc_value) # starts from 0
         self.mapback.set_pc_var(pc_name)
         self.mapback.add_encoder(pc_name, self.cenc)
@@ -911,13 +912,13 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
 
         def add_msgs_to_stack(stack, msg):
-            exit_key = TSEncoder.get_key_from_msg(msg, TSEncoder.EXIT)
+            exit_key = EncoderUtils.get_key_from_msg(msg, EncoderUtils.EXIT)
             if self._is_msg_visible(exit_key):
-                stack.append((TSEncoder.EXIT, msg))
+                stack.append((EncoderUtils.EXIT, msg))
 
-            entry_key = TSEncoder.get_key_from_msg(msg, TSEncoder.ENTRY)
+            entry_key = EncoderUtils.get_key_from_msg(msg, EncoderUtils.ENTRY)
             if self._is_msg_visible(entry_key):
-                stack.append((TSEncoder.ENTRY, msg))
+                stack.append((EncoderUtils.ENTRY, msg))
 
         offset = 0
         ts.trans = FALSE_PYSMT() # disjunction of transitions
@@ -933,13 +934,13 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             add_msgs_to_stack(stack, tl_cb)
             while (len(stack) != 0):
                 (entry_type, msg) = stack.pop()
-                msg_key = TSEncoder.get_key_from_msg(msg, entry_type)
-                msg_enabled = TSEncoder._get_state_var(msg_key)
+                msg_key = EncoderUtils.get_key_from_msg(msg, entry_type)
+                msg_enabled = EncoderUtils._get_state_var(msg_key)
                 assert self._is_msg_visible(msg_key)
 
                 # Fill the stack in reverse order
                 # Add the child only if pre-visit
-                if (entry_type == TSEncoder.ENTRY):
+                if (entry_type == EncoderUtils.ENTRY):
                     for i in reversed(range(len(msg.children))):
                         msg_i = msg.children[i]
                         add_msgs_to_stack(stack, msg_i)
@@ -972,8 +973,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                 logging.debug("Trans: %d -> %d on %s" % (current_state, next_state, msg_key))
 
                 # encode the transition to the error state
-                if (msg_key in disabled_msg and ((isinstance(msg, CCallin) and entry_type == TSEncoder.ENTRY) or
-                                                 (isinstance(msg, CCallback) and entry_type == TSEncoder.EXIT))):
+                if (msg_key in disabled_msg and ((isinstance(msg, CCallin) and entry_type == EncoderUtils.ENTRY) or
+                                                 (isinstance(msg, CCallback) and entry_type == EncoderUtils.EXIT))):
                     logging.debug("Error condition: %s not enabled" % str(msg_enabled))
                     error_label = And(Not(msg_enabled),
                                       self.r2a.get_msg_eq(self.error_label))
@@ -1030,7 +1031,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         solver.add_assertion(self.ts.init)
 
         for msg in self.msgs:
-            msg_var = TSEncoder._get_state_var(msg)
+            msg_var = EncoderUtils._get_state_var(msg)
             solver.push()
             solver.add_assertion(msg_var)
             can_be_enabled = solver.solve()
@@ -1038,132 +1039,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
             if (can_be_enabled):
                 self.ts.init = And(self.ts.init, msg_var)
-
-
-    @staticmethod
-    def _get_pc_name():
-        atom_name = "pc"
-        return atom_name
-
-    @staticmethod
-    def _get_state_var(key):
-        atom_name = "enabled_" + key
-        return Symbol(atom_name, BOOL)
-
-    @staticmethod
-    def get_key(retval, call_type, entry_type, method_name, params):
-        assert method_name is not None
-        assert params is not None
-        assert method_name != ""
-
-        assert call_type == "CI" or call_type == "CB"
-        assert entry_type == TSEncoder.ENTRY or entry_type == TSEncoder.EXIT
-
-        string_params = [str(f) for f in params]
-
-        if (retval != None and entry_type == TSEncoder.EXIT):
-            # ADD return value only for EXIT
-            key = "%s=[%s]_[%s]_%s(%s)" % (retval,
-                                           call_type,
-                                           entry_type,
-                                           method_name,
-                                           ",".join(string_params))
-        else:
-            key = "[%s]_[%s]_%s(%s)" % (call_type ,
-                                        entry_type,
-                                        method_name,
-                                        ",".join(string_params))
-        return key
-
-    @staticmethod
-    def get_key_from_msg(msg, entry_type):
-        """ The input is a msg from a concrete trace.
-        The output is the key to the message
-
-        The message must also be paired with the entry/exit information.
-        """
-
-        if isinstance(msg, CCallin):
-            msg_type = "CI"
-        elif isinstance(msg, CCallback):
-            msg_type = "CB"
-        else:
-            assert False
-
-        if (msg.return_value is None):
-            retval = None
-        else:
-            retval = TSEncoder.get_value_key(msg.return_value)
-
-        params = []
-        for p in msg.params:
-            p_value = TSEncoder.get_value_key(p)
-            params.append(p_value)
-
-        full_msg_name = msg.get_full_msg_name()
-        return TSEncoder.get_key(retval, msg_type, entry_type, full_msg_name, params)
-
-    @staticmethod
-    def get_key_from_call(call_node):
-        """ Works for grounded call node """
-        assert (get_node_type(call_node) == CALL_ENTRY or
-                get_node_type(call_node) == CALL_EXIT)
-
-        if (get_node_type(call_node) == CALL_EXIT):
-            node_retval = get_call_assignee(call_node)
-            if (new_nil() != node_retval):
-                retval_val = TraceSpecConverter.specnode2traceval(node_retval)
-                retval = TSEncoder.get_value_key(retval_val)
-            else:
-                retval = None
-        else:
-            retval = None
-
-        node_call_type = get_call_type(call_node)
-        if (get_node_type(node_call_type) == CI):
-            call_type = "CI"
-        elif (get_node_type(node_call_type) == CB):
-            call_type = "CB"
-        else:
-            assert False
-
-        entry_type = TSEncoder.ENTRY if get_node_type(call_node) == CALL_ENTRY else TSEncoder.EXIT
-
-        method_name_node = get_call_signature(call_node)
-
-        assert (ID == get_node_type(method_name_node))
-        method_name = get_id_val(method_name_node)
-        receiver = get_call_receiver(call_node)
-
-        if (new_nil() != receiver):
-            param_val = TraceSpecConverter.specnode2traceval(receiver)
-            params = [TSEncoder.get_value_key(param_val)]
-        else:
-            params = []
-
-        node_params = get_call_params(call_node)
-
-        while (PARAM_LIST == get_node_type(node_params)):
-            p_node = get_param_name(node_params)
-            p = TraceSpecConverter.specnode2traceval(p_node)
-            p_value = TSEncoder.get_value_key(p)
-            params.append(p_value)
-            node_params = get_param_tail(node_params)
-
-        return TSEncoder.get_key(retval, call_type, entry_type,
-                                 method_name, params)
-
-
-    @staticmethod
-    def get_value_key(value):
-        """ Given a value returns its representation
-        that will be used in the message key """
-
-        assert (isinstance(value, CValue))
-
-        value_repr = value.get_value()
-
-        return value_repr
 
     def get_trace_stats(self):
         # count the total number of messages and returns the set of
@@ -1187,7 +1062,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             msg = stack.pop()
 
             # Add ENTRY
-            key = TSEncoder.get_key_from_msg(msg, TSEncoder.ENTRY)
+            key = EncoderUtils.get_key_from_msg(msg, EncoderUtils.ENTRY)
             if self._is_msg_visible(key):
                 trace_length = trace_length + 1
                 msgs.add(key)
@@ -1199,7 +1074,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                     ci_entry.add(key)
 
             # Add EXIT
-            key = TSEncoder.get_key_from_msg(msg, TSEncoder.EXIT)
+            key = EncoderUtils.get_key_from_msg(msg, EncoderUtils.EXIT)
             if self._is_msg_visible(key):
                 trace_length = trace_length + 1
                 msgs.add(key)
@@ -1463,7 +1338,7 @@ class RegExpToAuto():
         return self.alphabet_list[value]
 
     def get_atom_var(self, call_node):
-        key = TSEncoder.get_key_from_call(call_node)
+        key = EncoderUtils.get_key_from_call(call_node)
         eq = self.get_msg_eq(key)
         return eq
 

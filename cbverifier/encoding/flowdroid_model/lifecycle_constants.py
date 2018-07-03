@@ -84,6 +84,16 @@ class Component:
         assert key in self.methods_msgs
         return self.methods_msgs[key]
 
+    def get_lifecycle_msgs(self):
+        """ Returns the list of messages that are used
+        to define the lifecycle of the activity
+        """
+        lc_msgs = set()
+        for (_, msg_list) in self.methods_msgs.iteritems():
+            for m in msg_list:
+                lc_msgs.add(m)
+        return lc_msgs
+
 
 ################################################################################
 # Activity

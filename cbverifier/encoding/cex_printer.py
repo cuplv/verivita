@@ -8,8 +8,8 @@ import logging
 
 from cbverifier.specs.spec import Spec
 from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
-from cbverifier.encoding.encoder import TSMapback, TSEncoder
-
+from cbverifier.encoding.encoder import TSMapback
+from cbverifier.encoding.encoder_utils import EncoderUtils
 
 
 class CexPrinter:
@@ -100,7 +100,7 @@ class CexPrinter:
                 if (isinstance(trace_msg, str)):
                     self.out_stream.write("[-] %s transition ---\n" % trace_msg)
                 else:
-                   if (is_entry == TSEncoder.ENTRY):
+                   if (is_entry == EncoderUtils.ENTRY):
                        trace_msg._print_entry(self.out_stream, "", False)
                    else:
                        trace_msg._print_exit(self.out_stream, "", False)

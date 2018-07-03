@@ -55,7 +55,7 @@ class TestFlowDroid(unittest.TestCase):
 
     def test_flowdroid_init(self):
         enc = self._get_sample_trace()
-        fd_builder = FlowDroidModelBuilder(enc)
+        fd_builder = FlowDroidModelBuilder(enc.trace, enc.gs.trace_map, set([]))
 
         # check that it finds the activity component
         components_set = fd_builder.get_components()

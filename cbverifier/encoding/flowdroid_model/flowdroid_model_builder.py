@@ -35,19 +35,21 @@ from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceE
 from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
 from cbverifier.specs.spec_ast import get_node_type, CALL_ENTRY, CALL_EXIT, ID
 from cbverifier.encoding.grounding import bottom_value
+from cbverifier.encoding.encoder_utils import EncoderUtils
 from cbverifier.encoding.model_properties import AttachRelation, RegistrationRelation
 
 class FlowDroidModelBuilder:
 
-    def __init__(self, ts_encoder):
+    def __init__(self, trace, trace_map, spec_msgs_keys):
         """ Initialize the model builder taking as input an instance
         of the ts_encoder (to use traces, other encoders...).
         """
-        self.ts_encoder = ts_encoder
+        self.trace = trace
+        self.trace_map = trace_map
 
         # Populate the map of all components from the trace
         self.components_set = set([])
-        FlowDroidModelBuilder._get_all_components(self.ts_encoder.trace,
+        FlowDroidModelBuilder._get_all_components(self.trace,
                                                   self.components_set)
 
         # map from component address to its representation
@@ -56,40 +58,37 @@ class FlowDroidModelBuilder:
             self.components_map[c.get_inst_value()] = c
 
         # Finds the existing lifecycle messages in the trace
-        FlowDroidModelBuilder._find_lifecycle_messages(self.ts_encoder.gs.trace_map,
+        FlowDroidModelBuilder._find_lifecycle_messages(self.trace_map,
                                                        self.components_set)
 
         root_components_ids = []
         for c in self.components_set:
             if isinstance(c, Activity):
                 root_components_ids.append(c.get_inst_value())
-        self.attach_rel = AttachRelation(ts_encoder.gs.trace_map,
+        self.attach_rel = AttachRelation(self.trace_map,
                                          root_components_ids)
-        self.register_rel = RegistrationRelation(ts_encoder.gs.trace_map,
-                                                 root_components_ids)
 
-        # List of messages used in the the model builder
-        self.msgs = []
+        all_values = FlowDroidModelBuilder._get_all_values(self.trace)
+        self.register_rel = RegistrationRelation(self.trace_map,
+                                                 all_values)
 
-        return
+        # Map from object id to messages where the id is used as a receiver
+        self.obj2msg_keys = FlowDroidModelBuilder._get_obj2msg_keys(self.trace)
 
+        # set up all messages -- all messages narrowed down from the specs
+        # and all the messages from the lifecycle
+        self.msgs_keys = set(spec_msgs_keys)
+        for c in self.components_set:
+            c_msgs = c.get_lifecycle_msgs()
+            for msg in c_msgs:
+                msg_key = EncoderUtils.get_key_from_call(msg)
+                self.msgs_keys.add(msg_key)
 
-        # Get an over-approximation of the objects that may
-        # be attached to the activities/fragments
-        self._get_attachment_overapprox()
+        # Computes where each message can be executed
+        (compid2msg_keys, free_msg) = self._compute_msgs_boundaries()
 
-        raise NotImplementedError("Initialization of the fd model")
-
-    def get_calls(self):
-        """ Get all the calls that are observed in the FlowDroid
-        model.
-
-        """
-        raise NotImplementedError("get_calls not implemented")
-
-
-    def get_components(self):
-        return self.components_set
+    def get_msgs_keys(self):
+        return self.msgs_keys
 
     @staticmethod
     def _get_all_components(trace, components):
@@ -128,18 +127,165 @@ class FlowDroidModelBuilder:
                         component.add_trace_msg(key, m)
 
 
-    def _get_registration_overapprox(self):
-        """ Computes an over-approximate relation of the callback that can
-        be registered at any point in time in the trace.
-
-        Assume no components are attached, then build an over-approximation of
-        attachment using the method calls seen in the trace.
-        This is similar to theFlowDroid heuristic.
-
-        TODO: check if we see or miss the registration in the XML.
+    def _compute_msgs_boundaries(self):
         """
-        raise NotImplementedError("_get_registered_overapprox not implemented")
+        Determines where each message can be executed in the
+        activity/fragment lifecycle
+        """
+        # Messages that can be executed everywhere in the lifecycle
+        free_msg = set(self.msgs_keys)
 
+        # Map from object id of a component to a set of messages that
+        # can only be called inside that component lifecycle
+        compid2msg_keys = {}
+
+        visited_registered = set()
+        visited_attached = set()
+
+        # Loop on all the activities
+        for c in self.components_set:
+            if not isinstance(c, Activity):
+                continue
+            activity = c
+            activity_obj = activity.get_inst_value()
+
+            self._process_msgs_component(free_msg,
+                                         compid2msg_keys,
+                                         activity)
+
+            # Process all the registered callbacks to the activity
+            self._add_registered_msgs(compid2msg_keys,
+                                      visited_registered,
+                                      activity,
+                                      (activity, activity_obj))
+
+            # Process all the attached components
+            self._add_attached_msgs(free_msg, compid2msg_keys,
+                                    visited_attached,
+                                    visited_registered,
+                                    activity,
+                                    (activity, activity_obj))
+
+        return (compid2msg_keys, free_msg)
+
+
+    def _add_registered_msgs(self,
+                             compid2msg_keys,
+                             visited_registered,
+                             lifecycle_comp, parent_pair):
+        (parent_comp, parent_obj) = parent_pair
+        assert lifecycle_comp is not None
+        assert parent_obj is not None
+        lifecycle_obj = lifecycle_comp.get_inst_value()
+
+        key = (lifecycle_obj, parent_obj)
+        if key in visited_registered:
+            return
+        visited_registered.add(key)
+
+        assert(lifecycle_obj in compid2msg_keys)
+        lifecycle_comp_msgs_keys = compid2msg_keys[lifecycle_obj]
+
+        # get all the msg keys registered to parent
+        for registered_obj in self.register_rel.get_related(parent_obj):
+            registered_msg_keys = self.obj2msg_keys(registered_obj)
+
+            for msg_key in registered_msg_keys:
+                lifecycle_comp_msgs_keys.add(msg_key)
+
+            # TODO - check
+            # Transitive closure on the registered relation
+            self._add_registered_msgs(compid2msg_keys,
+                                      visited_registered,
+                                      lifecycle_comp,
+                                      (None, registered_obj))
+
+
+    def _add_attached_msgs(self, free_msg, compid2msg_keys,
+                           visited_attached,
+                           visited_registered,
+                           lifecycle_comp, parent_pair):
+        (parent_comp, parent_obj) = parent_pair
+        assert lifecycle_comp is not None
+        assert parent_obj is not None
+        lifecycle_obj = lifecycle_comp.get_inst_value()
+
+        key = (lifecycle_obj, parent_obj)
+        if key in visited_attached:
+            return
+        visited_attached.add(key)
+
+        for attached_obj in self.attach_rel.get_related(parent_obj):
+            is_fragment = False
+            fragment = None
+            if attach_obj in self.components_map:
+                fragment = self.components_map[attach_obj]
+                is_fragment = isinstance(fragment, Fragment)
+
+            if self.is_fragment(attached_obj):
+                # Handle the fragment callback differently
+                raise NotImplementedError("get_fragment")
+                fragment = self.get_fragment(attached_obj)
+
+                self._process_msgs_component(free_msg,
+                                             compid2msg_keys,
+                                             fragment)
+
+                # Process all the registered callbacks to the activity
+                self._add_registered_msgs(compid2msg_keys,
+                                          visited_registered, fragment,
+                                          (fragment, fragment.get_inst_value()))
+
+                # Process all the attached components
+                self._add_attached_msgs(free_msg, compid2msg_keys,
+                                        visited_attached,
+                                        visited_registered,
+                                        fragment,
+                                        (fragment, fragment.get_inst_value()))
+            else:
+                # The obj should have been visited before
+                assert(lifecycle_obj in compid2msg_keys)
+                lifecycle_comp_msgs_keys = compid2msg_keys[lifecycle_obj]
+                attached_msg_keys = self.obj2msg_keys(attached_obj)
+
+                for msg_key in attached_msg_keys:
+                    lifecycle_comp_msgs_keys.add(msg_key)
+
+                self._add_registered_msgs(compid2msg_keys,
+                                          visited_registered,
+                                          lifecycle_comp,
+                                          (None, attached_obj))
+
+                self._add_attached_msgs(free_msg, compid2msg_keys,
+                                        visited_attached,
+                                        visited_registered,
+                                        lifecycle_comp,
+                                        (None, attached_obj))
+
+    def _process_msgs_component(self,
+                                free_msg,
+                                compid2msg_keys,
+                                component):
+        component_obj = component.get_inst_value()
+
+        if (component_obj in compid2msg_keys):
+            component_msg_keys = compid2msg_keys[component_obj]
+        else:
+            component_msg_keys = set()
+            compid2msg_keys[component_obj] = component_msg_keys
+
+        lifecycle_msg = component.get_lifecycle_msgs()
+        lifecycle_msg_keys = [EncoderUtils.get_key_from_call(msg) for msg in lifecycle_msg]
+        # Removes the lifecycle messages
+        for m in lifecycle_msg_keys:
+            free_msg.remove(m)
+        # add all the non-lifecycle component messages
+        for m in self.obj2msg_keys[component_obj]:
+            if m not in lifecycle_msg_keys:
+                component_msg_keys.add(m)
+
+    def get_components(self):
+        return list(self.components_set)
 
     def encode(self):
         """ Create an encoding of the FlowDroid model
@@ -160,8 +306,48 @@ class FlowDroidModelBuilder:
         """
         raise NotImplementedError("_encode_callbacks_in_lifecycle not implemented")
 
+    @staticmethod
+    def _get_all_values(trace):
+        """
+        Get all the objects used in the trace.
+        """
+        all_values = set()
 
-class ObjectRepr:
-    """ Construct a backward representation from the object in the
-    trace to their messages to messages. """
+        msg_stack = [child for child in trace.children]
+        while (0 < len(msg_stack)):
+            current = msg_stack.pop()
 
+            rec = current.get_receiver()
+            if rec is not None:
+                all_values.add(rec)
+
+            for par in current.get_other_params():
+                all_values.add(par)
+
+            for c in current.children:
+                msg_stack.append(c)
+
+        return all_values
+
+    @staticmethod
+    def _get_obj2msg_keys(trace):
+        obj2msg = {}
+
+        trace_stack = [child for child in trace.children]
+        while (0 < len(trace_stack)):
+            current = trace_stack.pop()
+
+            rec = current.get_receiver()
+            if rec is not None:
+                if not rec in obj2msg:
+                    obj2msg[rec] = set()
+
+                msg_entry = EncoderUtils.get_key_from_msg(current, EncoderUtils.ENTRY)
+                msg_exit = EncoderUtils.get_key_from_msg(current, EncoderUtils.EXIT)
+                obj2msg[rec].add(msg_entry)
+                obj2msg[rec].add(msg_exit)
+
+            for c in current.children:
+                trace_stack.append(c)
+
+        return obj2msg

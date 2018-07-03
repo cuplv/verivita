@@ -1036,7 +1036,6 @@ class TraceMap(object):
     EXIT_TYPE = "EXIT"
 
     def __init__(self, trace):
-        # 3-level index with method name and arity of paramters
         self.trace_map = {}
         for child in trace.children:
             self.trace_map = self._fill_map(child, self.trace_map)

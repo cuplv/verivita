@@ -13,6 +13,7 @@ except ImportError:
     import unittest
 
 from cbverifier.encoding.encoder import TSEncoder, TSMapback
+from cbverifier.encoding.encoder_utils import EncoderUtils
 from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceException
@@ -67,36 +68,36 @@ class TestEnc(unittest.TestCase):
         """ Test the retrieval for the key of the message """
 
         self.assertTrue("[CB]_[ENTRY]_method(int,int,int)(1,2,3)" ==
-                        TSEncoder.get_key(None, "CB", TSEncoder.ENTRY, "method(int,int,int)", ["1","2","3"]))
+                        EncoderUtils.get_key(None, "CB", EncoderUtils.ENTRY, "method(int,int,int)", ["1","2","3"]))
         self.assertTrue("[CI]_[ENTRY]_method()()" ==
-                        TSEncoder.get_key(None, "CI", TSEncoder.ENTRY, "method()", []))
+                        EncoderUtils.get_key(None, "CI", EncoderUtils.ENTRY, "method()", []))
         self.assertTrue("1=[CB]_[EXIT]_method(int,int)(1,2)" ==
-                        TSEncoder.get_key("1", "CB", TSEncoder.EXIT, "method(int,int)", ["1","2"]))
+                        EncoderUtils.get_key("1", "CB", EncoderUtils.EXIT, "method(int,int)", ["1","2"]))
 
         with self.assertRaises(AssertionError):
-            TSEncoder.get_key(False, "CI", TSEncoder.ENTRY, "", [])
+            EncoderUtils.get_key(False, "CI", EncoderUtils.ENTRY, "", [])
         with self.assertRaises(AssertionError):
-            TSEncoder.get_key(False, "CI", TSEncoder.ENTRY, None, [])
+            EncoderUtils.get_key(False, "CI", EncoderUtils.ENTRY, None, [])
         with self.assertRaises(AssertionError):
-            TSEncoder.get_key(False, "CA", TSEncoder.ENTRY, "method", [])
+            EncoderUtils.get_key(False, "CA", EncoderUtils.ENTRY, "method", [])
 
     def test_get_value_key(self):
         obj = TestGrounding._get_obj("1", "string")
-        res = TSEncoder.get_value_key(obj)
+        res = EncoderUtils.get_value_key(obj)
         self.assertTrue(res == "1")
 
         obj = TestGrounding._get_obj("1", "string")
         obj.is_null = True
-        res = TSEncoder.get_value_key(obj)
+        res = EncoderUtils.get_value_key(obj)
         self.assertTrue(res == "NULL")
 
         value = TestGrounding._get_int("1")
-        res = TSEncoder.get_value_key(value)
+        res = EncoderUtils.get_value_key(value)
         self.assertTrue(res == "1")
 
         value = TestGrounding._get_int("1")
         value.is_null = True
-        res = TSEncoder.get_value_key(value)
+        res = EncoderUtils.get_value_key(value)
         self.assertTrue(res == "NULL")
 
     def test_get_key_from_msg(self):
@@ -106,9 +107,9 @@ class TestEnc(unittest.TestCase):
                        [TestGrounding._get_obj("1","string")],
                        None,
                        [fmwk_over])
-        res = TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY)
+        res = EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY)
         self.assertTrue("[CB]_[ENTRY]_type doSomethingCb(1)" == res)
-        res = TSEncoder.get_key_from_msg(cb, TSEncoder.EXIT)
+        res = EncoderUtils.get_key_from_msg(cb, EncoderUtils.EXIT)
         self.assertTrue("[CB]_[EXIT]_type doSomethingCb(1)" == res)
 
 
@@ -116,28 +117,28 @@ class TestEnc(unittest.TestCase):
                        [TestGrounding._get_obj("1","string")],
                        TestGrounding._get_obj("1","string"),
                        [fmwk_over])
-        res = TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY)
+        res = EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY)
         self.assertTrue("[CB]_[ENTRY]_void doSomethingCb(1)" == res)
-        res = TSEncoder.get_key_from_msg(cb, TSEncoder.EXIT)
+        res = EncoderUtils.get_key_from_msg(cb, EncoderUtils.EXIT)
         self.assertTrue("1=[CB]_[EXIT]_void doSomethingCb(1)" == res)
 
         cb = CCallback(1, 1, "pippo.Class", "void doSomethingCb(int,int)",
                        [TestGrounding._get_obj("1","string"),
                         TestGrounding._get_int(1)],
                        None, [TestGrounding._get_fmwkov("pippo.Class","doSomethingCb", False)])
-        res = TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY)
+        res = EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY)
         self.assertTrue("[CB]_[ENTRY]_void pippo.Class.doSomethingCb(int,int)(1,1)" == res)
 
         ci = CCallin(1, 1, "a.Class", "void doSomethingCi(string)",
                      [TestGrounding._get_obj("1","string")],
                      None)
-        res = TSEncoder.get_key_from_msg(ci, TSEncoder.ENTRY)
+        res = EncoderUtils.get_key_from_msg(ci, EncoderUtils.ENTRY)
         self.assertTrue("[CI]_[ENTRY]_void a.Class.doSomethingCi(string)(1)" == res)
 
         ci = CCallin(1, 1, "", "void doSomethingCi",
                      [],
                      None)
-        res = TSEncoder.get_key_from_msg(ci, TSEncoder.ENTRY)
+        res = EncoderUtils.get_key_from_msg(ci, EncoderUtils.ENTRY)
         self.assertTrue("[CI]_[ENTRY]_void doSomethingCi()" == res)
 
 
@@ -170,19 +171,19 @@ class TestEnc(unittest.TestCase):
             calls_nodes.append(msg)
         assert (len(calls_nodes) == len(spec_list))
 
-        res = TSEncoder.get_key_from_call(calls_nodes[0])
-        res2 = TSEncoder.get_key_from_msg(ci1, TSEncoder.ENTRY)
+        res = EncoderUtils.get_key_from_call(calls_nodes[0])
+        res2 = EncoderUtils.get_key_from_msg(ci1, EncoderUtils.ENTRY)
         self.assertTrue("[CI]_[ENTRY]_void m1()(1)" == res)
         self.assertTrue(res == res2)
 
-        res = TSEncoder.get_key_from_call(calls_nodes[1])
-        res2 = TSEncoder.get_key_from_msg(ci2, TSEncoder.ENTRY)
+        res = EncoderUtils.get_key_from_call(calls_nodes[1])
+        res2 = EncoderUtils.get_key_from_msg(ci2, EncoderUtils.ENTRY)
         self.assertTrue("[CI]_[ENTRY]_void m1(int,int,int)(1,2,1,2)" == res)
         self.assertTrue(res == res2)
 
 
-        res = TSEncoder.get_key_from_call(calls_nodes[2])
-        res2 = TSEncoder.get_key_from_msg(ci3, TSEncoder.EXIT)
+        res = EncoderUtils.get_key_from_call(calls_nodes[2])
+        res2 = EncoderUtils.get_key_from_msg(ci3, EncoderUtils.EXIT)
         self.assertTrue("3=[CI]_[EXIT]_void m1(int,int,int)(1,2,1,2)" == res)
         self.assertTrue(res == res2)
 
@@ -284,9 +285,9 @@ class TestEnc(unittest.TestCase):
         trans = TRUE()
         l = [cb,cb1,ci]
         for m in l:
-            for entry in [TSEncoder.ENTRY, TSEncoder.EXIT]:
-                var = TSEncoder._get_state_var(TSEncoder.get_key_from_msg(m, entry))
-                ivar = ts_enc.r2a.get_msg_eq(TSEncoder.get_key_from_msg(m, entry))
+            for entry in [EncoderUtils.ENTRY, EncoderUtils.EXIT]:
+                var = EncoderUtils._get_state_var(EncoderUtils.get_key_from_msg(m, entry))
+                ivar = ts_enc.r2a.get_msg_eq(EncoderUtils.get_key_from_msg(m, entry))
                 trans = And(trans, Implies(ivar, var))
 
         self.assertTrue(is_valid(Iff(ts_var.init, TRUE())))
@@ -329,7 +330,7 @@ class TestEnc(unittest.TestCase):
         self.assertFalse(self._accept_word(ts_enc, gs_ts, ["[CI]_[ENTRY]_void m2()(1)"], error))
 
         # check the disable
-        error = _encode_error(accepting, TSEncoder._get_state_var("[CI]_[ENTRY]_void m2()(1)"))
+        error = _encode_error(accepting, EncoderUtils._get_state_var("[CI]_[ENTRY]_void m2()(1)"))
         self.assertFalse(self._accept_word(ts_enc, gs_ts, ["[CB]_[ENTRY]_void m1()(1)"], error))
         self.assertFalse(self._accept_word(ts_enc, gs_ts, ["[CI]_[ENTRY]_void m2()(1)"], error))
 
@@ -364,7 +365,7 @@ class TestEnc(unittest.TestCase):
 
         self.assertTrue(self._accept_word(ts_enc, ts, ["[CB]_[ENTRY]_void m1()(1)"], accepting_states))
         self.assertFalse(self._accept_word(ts_enc, ts, ["[CI]_[ENTRY]_void m2()(1)"], accepting_states))
-        error = And(accepting_states, TSEncoder._get_state_var("[CI]_[ENTRY]_void m2()(1)"))
+        error = And(accepting_states, EncoderUtils._get_state_var("[CI]_[ENTRY]_void m2()(1)"))
         self.assertFalse(self._accept_word(ts_enc, ts, ["[CB]_[ENTRY]_void m1()(1)"], error))
 
 
@@ -431,7 +432,7 @@ class TestEnc(unittest.TestCase):
         ts.product(vars_ts)
         self.assertTrue(len(errors) == 1)
         self.assertTrue(is_sat(And(errors[0],
-                                   Not(TSEncoder._get_state_var("[CI]_[ENTRY_]ci1()")))))
+                                   Not(EncoderUtils._get_state_var("[CI]_[ENTRY_]ci1()")))))
 
         ts_enc = TSEncoder(ctrace, [])
         vars_ts = ts_enc._encode_vars()
@@ -439,7 +440,7 @@ class TestEnc(unittest.TestCase):
         ts.product(vars_ts)
         self.assertTrue(len(errors) == 1)
         self.assertTrue(is_sat(And(errors[0],
-                                   Not(TSEncoder._get_state_var("[CB]_[EXIT]_cb1()")))))
+                                   Not(EncoderUtils._get_state_var("[CB]_[EXIT]_cb1()")))))
 
 
         ts_enc = TSEncoder(ctrace, [])
@@ -449,8 +450,8 @@ class TestEnc(unittest.TestCase):
         self.assertTrue(len(errors) == 1)
 
         self.assertTrue(is_sat(And([errors[0],
-                                    Not(TSEncoder._get_state_var("[CI]_[ENTRY]_ci1()")),
-                                    Not(TSEncoder._get_state_var("[CI]_[ENTRY]_ci2()"))])))
+                                    Not(EncoderUtils._get_state_var("[CI]_[ENTRY]_ci1()")),
+                                    Not(EncoderUtils._get_state_var("[CI]_[ENTRY]_ci2()"))])))
 
 
     def test_mapback(self):
