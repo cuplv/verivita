@@ -1353,3 +1353,32 @@ class TraceMap(object):
                                 isinstance(fval, CCallback))
                         msg_list.append(fval)
         return msg_list
+
+    def find_all_vars(self, call_ast, var_name_ast):
+        """
+        call_ast is a call node
+        var_name_ast is an ID node.
+
+        Finds all the messages in the trace that are compatible with
+        call_ast, and returns a list of all the possible values took
+        by var_name_ast in the found messages.
+        """
+
+        # find the concrete methods in the trace that are compatible
+        # with call_ast
+        node_type = get_node_type(call_ast)
+        assert (node_type == CALL_ENTRY or node_type == CALL_EXIT)
+        asets = self.lookup_assignments(call_ast)
+
+        var_assignments = set()
+
+        # get the ci/cb from the trace
+        for aset in asets:
+            for (fvar, fval) in aset.assignments.iteritems():
+                if (fval == bottom_value):
+                    pass
+                elif (get_node_type(fvar) == ID):
+                    if (fvar == var_name_ast):
+                        var_assignments.add(fval)
+
+        return var_assignments
