@@ -4,6 +4,7 @@ import java.io.File
 import java.util
 import java.util.concurrent.Executors
 
+import com.google.inject.Singleton
 import javax.inject.Inject
 import jep.Jep
 import play.Environment
@@ -13,7 +14,14 @@ import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.io.{BufferedSource, Source}
 
+object VerivitaManager{
+  var count = 0
+}
+
+@Singleton
 class VerivitaManager @Inject()(env: Environment) extends TraceManager{
+  VerivitaManager.count = VerivitaManager.count + 1
+  if(VerivitaManager.count > 1) throw new IllegalStateException("Only one instance of VerivitaManager allowed")
   val fileList = getListOfFiles()
   val filePaths = fileList.map(a => a.getAbsolutePath)
   val nametopath = fileList.map(a => (a.getName-> a.getAbsolutePath)).toMap
@@ -30,7 +38,10 @@ class VerivitaManager @Inject()(env: Environment) extends TraceManager{
   }
   val jepFuture: Future[Jep] = Future{
     val tid = Thread.currentThread().getId()
-    new Jep(false)
+    val jep = new Jep(false)
+    jep.eval("import sys")
+    println(jep.getValue("sys.version"))
+    jep
   }
   val jep: Jep = Await.result(jepFuture, 999 seconds)
 
