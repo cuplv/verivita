@@ -1027,6 +1027,9 @@ class TraceMap(object):
     the method returns all the possible assignments to the free
     variables in the AST node that can be built by looking at the
     method calls found in the trace.
+
+    3. Finds all the messages in the trace that are compatible with
+    call_ast.
     """
 
     ENTRY_TYPE = "ENTRY"
@@ -1322,3 +1325,31 @@ class TraceMap(object):
 
         return set_assignments
 
+
+    def find_methods(self, call_ast):
+        """
+        Finds all the messages in the trace that are compatible with
+        call_ast.
+        """
+        # find the concrete methods in the trace that are compatible
+        # with call_ast
+        node_type = get_node_type(call_ast)
+        assert (node_type == CALL_ENTRY or node_type == CALL_EXIT)
+        asets = self.lookup_assignments(call_ast)
+
+        msg_list = []
+
+        # get the ci/cb from the trace
+        for aset in asets:
+            for (fvar, fval) in aset.assignments.iteritems():
+                if (fval == bottom_value or
+                    get_node_type(fvar) == ID):
+                    continue
+                elif (type(fvar) == tuple):
+                    if fval != bottom_value:
+                        # fval is the mapback to the trace message
+                        assert fval is not None
+                        assert (isinstance(fval, CCallin) or
+                                isinstance(fval, CCallback))
+                        msg_list.append(fval)
+        return msg_list

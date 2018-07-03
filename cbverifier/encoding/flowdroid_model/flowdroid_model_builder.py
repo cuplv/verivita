@@ -112,24 +112,9 @@ class FlowDroidModelBuilder:
                 for call_ast in component.get_methods_names(key):
                     # find the concrete methods in the trace for the correct
                     # method name
-
-                    node_type = get_node_type(call_ast)
-                    assert (node_type == CALL_ENTRY or node_type == CALL_EXIT)
-                    asets = trace_map.lookup_assignments(call_ast)
-
-                    # get the ci/cb from the trace
-                    for aset in asets:
-                        for (fvar, fval) in aset.assignments.iteritems():
-                            if (fval == bottom_value or
-                                get_node_type(fvar) == ID):
-                                continue
-                            elif (type(fvar) == tuple):
-                                if fval != bottom_value:
-                                    # fval is the mapback to the trace message
-                                    assert fval is not None
-                                    assert (isinstance(fval, CCallin) or
-                                            isinstance(fval, CCallback))
-                                    component.add_trace_msg(key, fval)
+                    msg_list = trace_map.find_methods(call_ast)
+                    for m in msg_list:
+                        component.add_trace_msg(key, m)
 
 
     def _get_registration_overapprox(self):
