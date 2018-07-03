@@ -20,15 +20,15 @@ an activity component is active after the onResume and before the onPause
 callbacks.
 
 We follow the modeling where callbacks cannot happen if the component
-that contains them is active. We compute an over-approximation of the
-containment of components from the trace.
+that register them is not active.
+We compute an over-approximation of the registration of components
+from the trace.
 
 We model the lifecycle for activity and fragment components since we
 are interested in components that run in the UI thread.
 
 As done in flowdroid, we encode the lifecycle component of fragment
 inside their activity component.
-
 """
 
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceException
@@ -44,21 +44,19 @@ class FlowDroidModelBuilder:
         """
         self.ts_encoder = ts_encoder
 
-        # Populate the set of all components from the trace
+        # Populate the map of all components from the trace
         self.components_set = set([])
         FlowDroidModelBuilder._get_all_components(self.ts_encoder.trace,
                                                   self.components_set)
 
+        # map from component address to its representation
+        self.components_map = {}
+        for c in self.components_set:
+            self.components_map[c.get_inst_value()] = c
+
         # Finds the existing lifecycle messages in the trace
         FlowDroidModelBuilder._find_lifecycle_messages(self.ts_encoder.gs.trace_map,
                                                        self.components_set)
-
-
-        # map from activity to a list of contained objects
-        self.activity2contained = {}
-
-        # map from an object to one of its back messages
-        self.obj2backmsg = {}
 
         # List of messages used in the the model builder
         self.msgs = []
@@ -119,7 +117,7 @@ class FlowDroidModelBuilder:
                     assert (node_type == CALL_ENTRY or node_type == CALL_EXIT)
                     asets = trace_map.lookup_assignments(call_ast)
 
-                    # convert the values to concrete calls and then to messages
+                    # get the ci/cb from the trace
                     for aset in asets:
                         for (fvar, fval) in aset.assignments.iteritems():
                             if (fval == bottom_value or
@@ -134,26 +132,15 @@ class FlowDroidModelBuilder:
                                     component.add_trace_msg(key, fval)
 
 
-    def _get_attachment_overapprox(self):
-        """ Computes an over-approximate relation of objects in the
-        trace that can be attached.
-
-        Compile a list of callbacks by active component.
+    def _get_registration_overapprox(self):
+        """ Computes an over-approximate relation of the callback that can
+        be registered at any point in time in the trace.
 
         Assume no components are attached, then build an over-approximation of
         attachment using the method calls seen in the trace.
         This is similar to theFlowDroid heuristic.
 
-        TODO: check if we see or miss the attachment in the XML.
-        """
-        raise NotImplementedError("_get_attachment_overapprox not implemented")
-
-
-    def _get_registered_overapprox(self):
-        """ Computes an over-approximate relation of the callback that can
-        be registered at any point in time in the trace.
-
-       TODO: check if we see or miss the registration in the XML.
+        TODO: check if we see or miss the registration in the XML.
         """
         raise NotImplementedError("_get_registered_overapprox not implemented")
 
@@ -169,13 +156,13 @@ class FlowDroidModelBuilder:
 
         For now we handle activities.
         """
-        raise NotImplementedError("_get_attachment_overapprox not implemented")
+        raise NotImplementedError("_encode_lifecycle not implemented")
 
     def _encode_callbacks_in_lifecycle(self):
         """ Encode the enabledness of the callbacks attached to
         Activities and Fragment
         """
-        raise NotImplementedError("_get_attachment_overapprox not implemented")
+        raise NotImplementedError("_encode_callbacks_in_lifecycle not implemented")
 
 
 class ObjectRepr:

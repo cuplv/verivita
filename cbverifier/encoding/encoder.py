@@ -242,8 +242,9 @@ class TSEncoder:
                     self.spec_msgs.add(TSEncoder.get_key_from_call(call))
 
             # collect the calls from the FlowDroid model
-            for call in self.flowdroid_model_builder.get_calls():
-                self.spec_msgs.add(TSEncoder.get_key_from_call(call))
+            if (self.use_flowdroid_model):
+                for call in self.flowdroid_model_builder.get_calls():
+                    self.spec_msgs.add(TSEncoder.get_key_from_call(call))
 
             # Collect the statistics on the trace
             self._is_msg_visible = self._is_msg_visible_all
