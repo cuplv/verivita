@@ -2,35 +2,18 @@
 --------------------------------------------------------------------------------
 Helper class that builds the FlowDroid model.
 
+The helper builds the relations among different objects and determines
+when a callback can be executed inside a particular component's
+lifecycle.
+
 We follow the description in Section 3 "Precise Modeling of Lifecycle" of:
 'FlowDroid: Precise Context, Flow, Field, Object-sensitive
 and Lifecycle-aware Taint Analysis for Android Apps',
 Artz et al, PLDI 14
 
-and in particular the implementation in:
-soot-infoflow/src/soot/jimple/infoflow/entryPointCreators/
-AndroidEntryPointCreator.java
-in the repo secure-software-engineering/FlowDroid,
+We further consulted the source code of flowdroid in the repo
+secure-software-engineering/FlowDroid,
 commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
-
-- Activity lifecycle: generateActivityLifecycle, line 774
-
-We encode the lifecylce of each component forcing that at most one component
-can be active at each time.
-For each component, there is a different definition of active. For example,
-an activity component is active after the onResume and before the onPause
-callbacks.
-
-We follow the modeling where callbacks cannot happen if the component
-that register them is not active.
-We compute an over-approximation of the registration of components
-from the trace.
-
-We model the lifecycle for activity and fragment components since we
-are interested in components that run in the UI thread.
-
-As done in flowdroid, we encode the lifecycle component of fragment
-inside their activity component.
 """
 
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceException
@@ -44,7 +27,7 @@ class FlowDroidModelBuilder:
 
     def __init__(self, trace, trace_map, spec_msgs_keys):
         """ Initialize the model builder taking as input an instance
-        of the ts_encoder (to use traces, other encoders...).
+        of the trace, trace map and a list of the existing messages
         """
         self.trace = trace
         self.trace_map = trace_map
@@ -278,25 +261,6 @@ class FlowDroidModelBuilder:
 
     def get_components(self):
         return list(self.components_set)
-
-    def encode(self):
-        """ Create an encoding of the FlowDroid model
-        """
-        self._encode_lifecycle()
-        self._encode_callbacks_in_lifecycle()
-
-    def _encode_lifecycle(self):
-        """ Encode the components' lifecylces
-
-        For now we handle activities.
-        """
-        raise NotImplementedError("_encode_lifecycle not implemented")
-
-    def _encode_callbacks_in_lifecycle(self):
-        """ Encode the enabledness of the callbacks attached to
-        Activities and Fragment
-        """
-        raise NotImplementedError("_encode_callbacks_in_lifecycle not implemented")
 
     @staticmethod
     def _get_all_values(trace):

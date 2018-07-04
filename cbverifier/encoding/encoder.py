@@ -1427,3 +1427,69 @@ class RegExpToAuto():
         else:
             raise UnexpectedSymbol(be_node)
 
+
+class FlowDroidModelBuilder:
+    def __init__(self, encoder, fd_model_builder):
+        """ We follow the description in Section 3 "Precise Modeling of Lifecycle" of:
+        'FlowDroid: Precise Context, Flow, Field, Object-sensitive
+        and Lifecycle-aware Taint Analysis for Android Apps',
+        Artz et al, PLDI 14
+
+        and in particular the implementation in:
+        soot-infoflow/src/soot/jimple/infoflow/entryPointCreators/
+        AndroidEntryPointCreator.java
+        in the repo secure-software-engineering/FlowDroid,
+        commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
+
+        - Activity lifecycle: generateActivityLifecycle, line 774
+
+        We encode the lifecylce of each component forcing that at most one component
+        can be active at each time.
+        For each component, there is a different definition of active. For example,
+        an activity component is active after the onResume and before the onPause
+        callbacks.
+
+        We follow the modeling where callbacks cannot happen if the component
+        that register them is not active.
+        We compute an over-approximation of the registration of components
+        from the trace.
+
+        We model the lifecycle for activity and fragment components since we
+        are interested in components that run in the UI thread.
+
+        As done in flowdroid, we encode the lifecycle component of fragment
+        inside their activity component."""
+
+    def encode(self):
+        """ Create an encoding of the FlowDroid model
+        """
+        self._encode_component_lifecycle()
+        self._encode_callbacks_in_lifecycle()
+
+    def _encode_component_lifecycle(self):
+        """ Encode the components' lifecylces
+
+        For now we handle activities and fragments.
+
+        The encoding is compositional and, without additional
+        constraints, allow each component lifecycle to
+        interleave with each other.
+        """
+        lifecycle_state_formula = None
+        enabled_callback_set = None
+
+        cb_in_component = (lifecycle_state_formula,
+                           enabled_callback_set_formula)
+
+        ts = TransitionSystem()
+
+
+        return (component_state, component_init, component_end, cb_in_component)
+
+        raise NotImplementedError("_encode_lifecycle not implemented")
+
+    def _encode_callbacks_in_lifecycle(self):
+        """ Encode the enabledness of the callbacks attached to
+        Activities and Fragment
+        """
+        raise NotImplementedError("_encode_callbacks_in_lifecycle not implemented")

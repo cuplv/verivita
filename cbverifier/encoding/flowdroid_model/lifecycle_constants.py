@@ -187,15 +187,10 @@ class Activity(Component):
                       (Activity.ONACTIVITYRESUMED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityResumed(L : ${MYTYPE})"]),
                       (Activity.ONACTIVITYPAUSED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityPaused(L : ${MYTYPE})"]),
                       (Activity.ONACTIVITYDESTROYED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityDestroyed(L : ${MYTYPE})"]),
-                      # (Activity.ONACTIVITYCREATED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityCreated(L : ${MYTYPE}, f : android.os.Bundle)"])
+                      (Activity.ONACTIVITYCREATED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityCreated(L : ${MYTYPE}, f : android.os.Bundle)"])
         ]
 
         # Activity.ONATTACHFRAGMENT = "[CB] [ENTRY] [L] void ${MYTYPE}.onAttachFragment(f : android.app.Fragment)"
-
-
-        # TODO
-        # , on_resume_names, on_pause_names,
-        # on_stop_names, on_start_names, on_destroy_names, on_restart_names]
 
         return cb_to_find
 
