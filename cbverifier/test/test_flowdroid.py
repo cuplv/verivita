@@ -28,32 +28,57 @@ class TestFlowDroid(unittest.TestCase):
         self._obj_id_ += 1
         return self._obj_id_
 
-    def test_const_classes(self):
-        """ Test the creation of ad-hoc classes used to lookup methods """
+    def test_activity_lifecycle_callbacks(self):
+        """ Test the creation of the ad-hoc classes used to represent
+        the activity lifecycle callbacks
+        """
         trace = CTrace()
 
-        act = TestGrounding._get_obj("1","android.app.Activity")
-        cb = CCallback(1, 1, "", "void android.app.Activity.onCreate(android.os.Bundle)",
-                       [act, TestGrounding._get_obj("2","android.os.Bundle")],
-                       None,
-                       [TestGrounding._get_fmwkov("void android.app.Activity","onCreate(android.os.Bundle)", False)])
-        trace.add_msg(cb)
+        def _gen_activity_trace(class_name):
+            act = TestGrounding._get_obj("1","android.app.Activity")
+            bundle = TestGrounding._get_obj("2","android.os.Bundle")
 
-        fa = TestGrounding._get_obj("1","android.support.v4.app.FragmentActivity")
-        cb = CCallback(1, 1, "", "void android.support.v4.app.FragmentActivity.onCreate(android.os.Bundle)",
-                       [fa, TestGrounding._get_obj("2","android.os.Bundle")],
-                       None,
-                       [TestGrounding._get_fmwkov("void android.support.v4.app.FragmentActivity","onCreate(android.os.Bundle)", False)])
+            for method_name in ["onCreate(android.os.Bundle)",
+                                "onPostCreate(android.os.Bundle)",
+                                "onSaveInstanceState(android.os.Bundle)",
+                                "onRestoreInstanceState(android.os.Bundle)"]:
+                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
+                               [act, bundle],
+                               None,
+                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+                trace.add_msg(cb)
 
-        trace.add_msg(cb)
+            for method_name in ["onDestroy()",
+                                "onPause()",
+                                "onPostResume()",
+                                "onRestart()",
+                                "onResume()",
+                                "onStart()",
+                                "onStop()"]:
+                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
+                               [act],
+                               None,
+                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+                trace.add_msg(cb)
 
-        traceMap = TraceMap(trace)
+            cb = CCallback(1, 1, "", "java.lang.CharSequence %s.onCreateDescription()" % (class_name),
+                           [act],
+                           None,
+                           [TestGrounding._get_fmwkov("java.lang.CharSequence %s" % class_name,
+                                                      "onCreateDescription()", False)])
+            trace.add_msg(cb)
 
-        activity = Activity("android.app.Activity", act, traceMap)
-        self.assertTrue(activity.has_trace_msg(Activity.ONCREATE))
 
-        activity = Activity("android.support.v4.app.FragmentActivity", fa, traceMap)
-        self.assertTrue(activity.has_trace_msg(Activity.ONCREATE))
+
+            return (trace, act)
+
+        for class_name in Activity.class_names:
+            (trace, act) = _gen_activity_trace(class_name)
+            traceMap = TraceMap(trace)
+
+            activity = Activity(class_name, act, traceMap)
+            for (cb_name, _) in activity.get_class_cb():
+                self.assertTrue(activity.has_trace_msg(cb_name))
 
 
     def _get_sample_trace(self):

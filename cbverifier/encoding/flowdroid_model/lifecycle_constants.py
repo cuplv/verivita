@@ -163,19 +163,21 @@ class Activity(Component):
 
         # From activityMethods in AndroidEntryPointtConstants.java:117 and
         # list at line 39
-#        cb_to_find = [(Activity.INIT, ["[CB] [ENTRY] [L] void ${MYTYPE}.<init>()"])]
         cb_to_find = [(Activity.ONCREATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onCreate(f : android.os.Bundle)"]),
-                      (Activity.ONCREATEDESCRIPTION, []),
-                      (Activity.ONDESTROY, []),
-                      (Activity.ONPAUSE, []),
-                      (Activity.ONPOSTCREATE, []),
-                      (Activity.ONPOSTRESUME, []),
-                      (Activity.ONRESTART, []),
-                      (Activity.ONRESUME, []),
-                      (Activity.ONSAVEINSTANCESTATE, []),
-                      (Activity.ONSTART, []),
-                      (Activity.ONSTOP, []),
-                      (Activity.ONRESTOREINSTANCESTATE, [])]
+                      (Activity.ONCREATEDESCRIPTION, ["[CB] [ENTRY] [L] java.lang.CharSequence ${MYTYPE}.onCreateDescription()"]),
+                      (Activity.ONDESTROY, ["[CB] [ENTRY] [L] void ${MYTYPE}.onDestroy()"]),
+                      (Activity.ONPAUSE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onPause()"]),
+                      (Activity.ONPOSTCREATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onPostCreate(f : android.os.Bundle)"]),
+                      (Activity.ONPOSTRESUME, ["[CB] [ENTRY] [L] void ${MYTYPE}.onPostResume()"]),
+                      (Activity.ONRESTART, ["[CB] [ENTRY] [L] void ${MYTYPE}.onRestart()"]),
+                      (Activity.ONRESUME, ["[CB] [ENTRY] [L] void ${MYTYPE}.onResume()"]),
+                      (Activity.ONSAVEINSTANCESTATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onSaveInstanceState(f : android.os.Bundle)"]),
+                      (Activity.ONSTART, ["[CB] [ENTRY] [L] void ${MYTYPE}.onStart()"]),
+                      (Activity.ONSTOP, ["[CB] [ENTRY] [L] void ${MYTYPE}.onStop()"]),
+                      (Activity.ONRESTOREINSTANCESTATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onRestoreInstanceState(f : android.os.Bundle)"])]
+
+        # Activity.ONATTACHFRAGMENT = "[CB] [ENTRY] [L] void ${MYTYPE}.onAttachFragment(f : android.app.Fragment)"
+
 
         # TODO
         # , on_resume_names, on_pause_names,
