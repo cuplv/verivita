@@ -51,7 +51,7 @@ REGEXP AlertDialog_builder_register(dialog, clickListener) = [
 		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setSingleChoiceItems(# : java.lang.CharSequence, clickListener : android.content.DialogInterface$OnClickListener) 
 		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setItems(# : java.lang.CharSequence[], clickListener : android.content.DialogInterface$OnClickListener)
 		| [CI] [ENTRY] [builder] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setAdapter(# : android.widget.ListAdapter,clickListener : android.content.DialogInterface$OnClickListener)
-	)))
+	);TRUE[*]) & (TRUE[*];AlertDialog_create(builder,dialog);TRUE[*]))
 	|
 	((TRUE[*];[CI] [ENTRY] [dialog] void android.app.AlertDialog.setButton(# : int,# : java.lang.CharSequence,listener : android.content.DialogInterface$OnClickListener)))
 ]

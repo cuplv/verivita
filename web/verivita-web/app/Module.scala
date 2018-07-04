@@ -25,6 +25,7 @@ class Module extends AbstractModule {
     sys.env.get("VERIVITA_MOCK") match{
       case Some("true") => {
         println("===fake manager")
+
         bind(classOf[TraceManager]).to(classOf[FakeManager])
       }
       case _ => {
