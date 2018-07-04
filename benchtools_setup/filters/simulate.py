@@ -38,6 +38,12 @@ def do_filter(iterable):
                 steps = app.group(1)
         if line.startswith("Exception: An error happened reading the trace"):
             result = "ReadError"
+        if line.startswith("MemoryError"):
+            result = "MemoryError"
+        if line.startswith("z3types.Z3Exception: out of memory"):
+            result = "MemoryError"
+        if line.startswith("cbverifier.traces.ctrace.MalformedTraceException"):
+            result = "ReadError"
 
 
         # no bug found - unknown result
