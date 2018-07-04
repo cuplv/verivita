@@ -1,48 +1,67 @@
 """ Define the constants used to represent the lifecycle
 
-Representation of the object (components) in the trace
+Representation of the object (components) in the trace_map
 
 """
 
-
 import string
 from cbverifier.specs.spec_parser import spec_parser
+from cbverifier.specs.spec_ast import *
+from cbverifier.encoding.grounding import TraceMap
+from cbverifier.encoding.encoder_utils import EncoderUtils
 
 def _substitute(template, substitution):
     return string.Template(template).safe_substitute(substitution)
 
+
 class Component:
-    def __init__(self, class_name, inst_value, my_var_name, my_type_const):
+    def __init__(self, class_name, inst_value, trace_map, my_var_name, my_type_const):
         self.class_name = class_name
         self.inst_value = inst_value
+        self.trace_map = trace_map
         self.my_var_name = my_var_name
         self.my_type_const = my_type_const
-        self.methods_names = {}
         self.methods_msgs = {}
 
         for (key, cb_names) in self.get_class_cb():
             for cb_name in cb_names:
-                # construct a well formed message
-                inst_value_str = self.inst_value.get_value()
-                cb_name_subs = _substitute(cb_name,
-                                           {self.get_mytype_const() : class_name,
-                                            self.get_my_var_name() : inst_value_str})
                 # parse the message
-                message = spec_parser.parse_call(cb_name_subs)
+                cb_name_subs = _substitute(cb_name,
+                                           {self.get_mytype_const() : class_name})
 
-                if message is None:
+                call_ast = spec_parser.parse_call(cb_name_subs)
+
+                if call_ast is None:
                     error_msg = "Error parsing the back message %s.\n" \
                                 "The original template message was %s with the " \
                                 "following substitutsion:\n" \
                                 "%s = %s\n" \
-                                "%s = %s\n\n" % (cb_name_subs, cb_name,
+                                "%s = %s\n\n" % (cb_name, cb_name,
                                                  self.get_mytype_const(),
-                                                 class_name,
+                                                 class_name_subs,
                                                  self.get_my_var_name(),
-                                                 inst_value_str)
+                                                 self.get_inst_value())
                     raise Exception(error_msg)
 
-                self.add_method_names(key, message)
+                # filter the message for assignments such that
+                # self.my_var_name is assigned to inst_value
+
+                # find the methods
+                my_var_name_ast = new_id(self.my_var_name)
+                trace_msg_list = trace_map.find_methods(call_ast, {my_var_name_ast :
+                                                                   self.get_inst_value()})
+
+                call_type = get_node_type(call_ast)
+                if (CALL_ENTRY == call_type):
+                    call_type_enc = EncoderUtils.ENTRY
+                elif (CALL_EXIT == call_type):
+                    call_type_enc = EncoderUtils.EXIT
+                else:
+                    raise Exception("Unkonwn node " + str(call_ast))
+
+                for m_trace in trace_msg_list:
+                    msg = EncoderUtils.get_key_from_msg(m_trace, call_type_enc)
+                    self.add_trace_msg(key, msg)
 
     def get_inst_value(self):
         return self.inst_value
@@ -59,20 +78,7 @@ class Component:
     def get_class_cb(self):
         raise NotImplementedError("Not implemented in base component")
 
-    def get_methods_names(self, key):
-        return self.methods_names[key]
-
-    def has_methods_names(self, key):
-        return key in self.methods_names
-
-    def add_method_names(self, key, cb):
-        if not self.has_methods_names(key):
-            self.methods_names[key] = [cb]
-        else:
-            self.methods_names[key].add(cb)
-
     def add_trace_msg(self, key, msg):
-        assert self.has_methods_names(key)
         if key not in self.methods_msgs:
             self.methods_msgs[key] = []
         self.methods_msgs[key].append(msg)
@@ -130,8 +136,8 @@ class Activity(Component):
         We use the specification language to pattern match the method
         in the trace, also matching the parameter names.
         """
-        on_create_names = (Activity.ONCREATE, ["[CB] [ENTRY] [${l}] void ${MYTYPE}.onCreate(f : android.os.Bundle)"])
-        cb_to_find = [(Activity.INIT, ["[CB] [ENTRY] [${l}] void ${MYTYPE}.<init>()"])]
+        on_create_names = (Activity.ONCREATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onCreate(f : android.os.Bundle)"])
+        cb_to_find = [(Activity.INIT, ["[CB] [ENTRY] [L] void ${MYTYPE}.<init>()"])]
 
         # TODO
         # , on_resume_names, on_pause_names,
@@ -139,8 +145,8 @@ class Activity(Component):
 
         return cb_to_find
 
-    def __init__(self, class_name, inst_value):
-        Component.__init__(self, class_name, inst_value, "l", "MYTYPE")
+    def __init__(self, class_name, inst_value, trace_map):
+        Component.__init__(self, class_name, inst_value, trace_map, "L", "MYTYPE")
 
 
 class Fragment(Component):
@@ -163,11 +169,11 @@ class Fragment(Component):
     def get_class_names(self):
         return Fragment.class_names
 
-    def __init__(self, class_name, inst_value):
-        Component.__init__(self, class_name, inst_value, "l", "MYTYPE")
+    def __init__(self, class_name, inst_value, trace_map):
+        Component.__init__(self, class_name, inst_value, trace_map, "L", "MYTYPE")
 
     def get_class_cb(self):
-        cb_to_find = [(Fragment.INIT, ["[CB] [ENTRY] [${l}] void ${MYTYPE}.<init>()"])]
+        cb_to_find = [(Fragment.INIT, ["[CB] [ENTRY] [L] void ${MYTYPE}.<init>()"])]
         return cb_to_find
 
 

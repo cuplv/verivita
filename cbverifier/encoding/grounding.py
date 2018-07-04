@@ -1325,7 +1325,7 @@ class TraceMap(object):
         return set_assignments
 
 
-    def find_methods(self, call_ast):
+    def find_methods(self, call_ast, filter_map):
         """
         Finds all the messages in the trace that are compatible with
         call_ast.
@@ -1337,20 +1337,32 @@ class TraceMap(object):
         asets = self.lookup_assignments(call_ast)
 
         msg_list = []
-
         # get the ci/cb from the trace
         for aset in asets:
+            mapback = None
+
+            # Assume a unique assignment to each var in asets
+            to_match = set(filter_map.keys())
+
             for (fvar, fval) in aset.assignments.iteritems():
-                if (fval == bottom_value or
-                    get_node_type(fvar) == ID):
+                if (fval == bottom_value):
                     continue
+                elif get_node_type(fvar) == ID:
+                    if fvar in filter_map:
+                        if filter_map[fvar] == fval:
+                            to_match.remove(fvar)
                 elif (type(fvar) == tuple):
                     if fval != bottom_value:
                         # fval is the mapback to the trace message
                         assert fval is not None
                         assert (isinstance(fval, CCallin) or
                                 isinstance(fval, CCallback))
-                        msg_list.append(fval)
+                        mapback = fval
+
+            if (len(to_match) == 0 and not mapback is None):
+                msg_list.append(mapback)
+
+
         return msg_list
 
     def find_all_vars(self, call_ast, var_name_ast):

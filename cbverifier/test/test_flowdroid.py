@@ -4,6 +4,7 @@ import sys
 import logging
 import unittest
 
+from cbverifier.encoding.grounding import TraceMap
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceException
 from cbverifier.test.test_grounding import TestGrounding
 from cbverifier.encoding.encoder import TSEncoder
@@ -29,16 +30,29 @@ class TestFlowDroid(unittest.TestCase):
 
     def test_const_classes(self):
         """ Test the creation of ad-hoc classes used to lookup methods """
+        trace = CTrace()
 
-        inst_value = TestGrounding._get_obj("1","android.app.Activity")
-        activity = Activity("android.app.Activity", inst_value)
-        self.assertTrue(activity.has_methods_names(Activity.INIT))
-        "[CB] [ENTRY] [l]  android.app.Activity <init>()" in activity.get_methods_names(Activity.INIT)
+        act = TestGrounding._get_obj("1","android.app.Activity")
+        cb = CCallback(1, 1, "", "void android.app.Activity.<init>()",
+                       [act],
+                       None,
+                       [TestGrounding._get_fmwkov("void android.app.Activity","<init>()", False)])
+        trace.add_msg(cb)
 
-        inst_value = TestGrounding._get_obj("1","android.support.v4.app.FragmentActivity")
-        activity = Activity("android.support.v4.app.FragmentActivity", inst_value)
-        self.assertTrue(activity.has_methods_names(Activity.INIT))
-        "[CB] [ENTRY] [l]  android.support.v4.app.FragmentActivity <init>()" in activity.get_methods_names(Activity.INIT)
+        fa = TestGrounding._get_obj("1","android.support.v4.app.FragmentActivity")
+        cb = CCallback(1, 1, "", "void android.support.v4.app.FragmentActivity.<init>()",
+                       [fa],
+                       None,
+                       [TestGrounding._get_fmwkov("void android.support.v4.app.FragmentActivity","<init>()", False)])
+        trace.add_msg(cb)
+
+        traceMap = TraceMap(trace)
+
+        activity = Activity("android.app.Activity", act, traceMap)
+        self.assertTrue(activity.has_trace_msg(Activity.INIT))
+
+        activity = Activity("android.support.v4.app.FragmentActivity", fa, traceMap)
+        self.assertTrue(activity.has_trace_msg(Activity.INIT))
 
 
     def _get_sample_trace(self):
@@ -80,13 +94,11 @@ class TestFlowDroid(unittest.TestCase):
         self.assertTrue(fragment is not None)
 
         self.assertTrue(isinstance(activity, Activity))
-        activity.has_methods_names(Activity.INIT)
         activity.has_trace_msg(Activity.INIT)
         trace_msg = activity.get_trace_msgs(Activity.INIT)
         self.assertTrue(trace_msg is not None)
 
         self.assertTrue(isinstance(fragment, Fragment))
-        fragment.has_methods_names(Fragment.INIT)
         fragment.has_trace_msg(Fragment.INIT)
         trace_msg = fragment.get_trace_msgs(Fragment.INIT)
         self.assertTrue(trace_msg is not None)

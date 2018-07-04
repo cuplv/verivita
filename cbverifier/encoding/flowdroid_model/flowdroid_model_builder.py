@@ -50,16 +50,13 @@ class FlowDroidModelBuilder:
         # Populate the map of all components from the trace
         self.components_set = set([])
         FlowDroidModelBuilder._get_all_components(self.trace,
-                                                  self.components_set)
+                                                  self.components_set,
+                                                  self.trace_map)
 
         # map from component address to its representation
         self.components_map = {}
         for c in self.components_set:
             self.components_map[c.get_inst_value()] = c
-
-        # Finds the existing lifecycle messages in the trace
-        FlowDroidModelBuilder._find_lifecycle_messages(self.trace_map,
-                                                       self.components_set)
 
         # root_components_ids = []
         # for c in self.components_set:
@@ -95,7 +92,7 @@ class FlowDroidModelBuilder:
         return self.msgs_keys
 
     @staticmethod
-    def _get_all_components(trace, components):
+    def _get_all_components(trace, components, trace_map):
         """ Populate the list of all components from the trace.
         """
         trace_stack = []
@@ -113,42 +110,17 @@ class FlowDroidModelBuilder:
                     continue
 
                 if Activity.is_class(value.type):
-                    component = Activity(value.type, value)
+                    component = Activity(value.type, value, trace_map)
                     components.add(component)
                     component_ids.add(value)
 
                 if Fragment.is_class(value.type):
-                    component = Fragment(value.type, value)
+                    component = Fragment(value.type, value, trace_map)
                     components.add(component)
                     component_ids.add(value)
 
             for child in msg.children:
                 trace_stack.append(child)
-
-    @staticmethod
-    def _find_lifecycle_messages(trace_map, components):
-        """ Finds the existing lifecycle messages in the trace
-        """
-        # Finds the lifecycle methods for each component
-        for component in components:
-            for (key, _) in component.get_class_cb():
-                for call_ast in component.get_methods_names(key):
-                    # find the concrete methods in the trace for the correct
-                    # method name
-                    trace_msg_list = trace_map.find_methods(call_ast)
-
-                    call_type = get_node_type(call_ast)
-                    if (CALL_ENTRY == call_type):
-                        call_type_enc = EncoderUtils.ENTRY
-                    elif (CALL_EXIT == call_type):
-                        call_type_enc = EncoderUtils.EXIT
-                    else:
-                        raise Exception("Unkonwn node " + str(call_ast))
-
-                    for m_trace in trace_msg_list:
-                        msg = EncoderUtils.get_key_from_msg(m_trace, call_type_enc)
-                        component.add_trace_msg(key, msg)
-
 
     def _compute_msgs_boundaries(self):
         """
