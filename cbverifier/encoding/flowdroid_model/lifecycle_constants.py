@@ -2,6 +2,18 @@
 
 Representation of the object (components) in the trace_map
 
+Take the definition of lifecycle callbacks from Flowdroid:
+
+soot-infoflow/src/soot/jimple/infoflow/entryPointCreators/
+AndroidEntryPointtConstants.java
+in the repo secure-software-engineering/FlowDroid,
+commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
+
+Differently from FlowDroid we manually encode the subclasses
+of Activity and Fragment that we handle (we do not use the static
+information extracted from the Android class hierarchy now,
+but we already have the list from the lifestate specification
+activity).
 """
 
 import string
@@ -117,9 +129,21 @@ class Activity(Component):
                    "android.preference.PreferenceActivity",
                    "android.app.TabActivity"]
 
-    # Constants used to specify the lifecycle
-    INIT = "INIT"
-    ONCREATE = "ONCREATE"
+    # Constants used to specify the activity lifecycle
+    ONCREATE = "ACTIVITY_ONCREATE"
+    ONCREATEDESCRIPTION = "ACTIVITY_ONCREATEDESCRIPTION"
+    ONDESTROY = "ACTIVITY_ONDESTROY"
+    ONPAUSE = "ACTIVITY_ONPAUSE"
+    ONPOSTCREATE = "ACTIVITY_ONPOSTCREATE"
+    ONPOSTRESUME = "ACTIVITY_ONPOSTRESUME"
+    ONRESTART = "ACTIVITY_ONRESTART"
+    ONRESUME = "ACTIVITY_ONRESUME"
+    ONSAVEINSTANCESTATE = "ACTIVITY_ONSAVEINSTANCESTATE"
+    ONSTART = "ACTIVITY_ONSTART"
+    ONSTOP = "ACTIVITY_ONSTOP"
+    ONRESTOREINSTANCESTATE = "ACTIVITY_ONRESTOREINSTANCESTATE"
+
+
     # ONRESUME = "ONRESUME"
 
     @staticmethod
@@ -136,8 +160,22 @@ class Activity(Component):
         We use the specification language to pattern match the method
         in the trace, also matching the parameter names.
         """
-        on_create_names = (Activity.ONCREATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onCreate(f : android.os.Bundle)"])
-        cb_to_find = [(Activity.INIT, ["[CB] [ENTRY] [L] void ${MYTYPE}.<init>()"])]
+
+        # From activityMethods in AndroidEntryPointtConstants.java:117 and
+        # list at line 39
+#        cb_to_find = [(Activity.INIT, ["[CB] [ENTRY] [L] void ${MYTYPE}.<init>()"])]
+        cb_to_find = [(Activity.ONCREATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onCreate(f : android.os.Bundle)"]),
+                      (Activity.ONCREATEDESCRIPTION, []),
+                      (Activity.ONDESTROY, []),
+                      (Activity.ONPAUSE, []),
+                      (Activity.ONPOSTCREATE, []),
+                      (Activity.ONPOSTRESUME, []),
+                      (Activity.ONRESTART, []),
+                      (Activity.ONRESUME, []),
+                      (Activity.ONSAVEINSTANCESTATE, []),
+                      (Activity.ONSTART, []),
+                      (Activity.ONSTOP, []),
+                      (Activity.ONRESTOREINSTANCESTATE, [])]
 
         # TODO
         # , on_resume_names, on_pause_names,

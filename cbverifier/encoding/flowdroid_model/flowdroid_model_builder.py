@@ -13,6 +13,8 @@ AndroidEntryPointCreator.java
 in the repo secure-software-engineering/FlowDroid,
 commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
 
+- Activity lifecycle: generateActivityLifecycle, line 774
+
 We encode the lifecylce of each component forcing that at most one component
 can be active at each time.
 For each component, there is a different definition of active. For example,

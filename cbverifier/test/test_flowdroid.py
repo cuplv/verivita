@@ -33,36 +33,38 @@ class TestFlowDroid(unittest.TestCase):
         trace = CTrace()
 
         act = TestGrounding._get_obj("1","android.app.Activity")
-        cb = CCallback(1, 1, "", "void android.app.Activity.<init>()",
-                       [act],
+        cb = CCallback(1, 1, "", "void android.app.Activity.onCreate(android.os.Bundle)",
+                       [act, TestGrounding._get_obj("2","android.os.Bundle")],
                        None,
-                       [TestGrounding._get_fmwkov("void android.app.Activity","<init>()", False)])
+                       [TestGrounding._get_fmwkov("void android.app.Activity","onCreate(android.os.Bundle)", False)])
         trace.add_msg(cb)
 
         fa = TestGrounding._get_obj("1","android.support.v4.app.FragmentActivity")
-        cb = CCallback(1, 1, "", "void android.support.v4.app.FragmentActivity.<init>()",
-                       [fa],
+        cb = CCallback(1, 1, "", "void android.support.v4.app.FragmentActivity.onCreate(android.os.Bundle)",
+                       [fa, TestGrounding._get_obj("2","android.os.Bundle")],
                        None,
-                       [TestGrounding._get_fmwkov("void android.support.v4.app.FragmentActivity","<init>()", False)])
+                       [TestGrounding._get_fmwkov("void android.support.v4.app.FragmentActivity","onCreate(android.os.Bundle)", False)])
+
         trace.add_msg(cb)
 
         traceMap = TraceMap(trace)
 
         activity = Activity("android.app.Activity", act, traceMap)
-        self.assertTrue(activity.has_trace_msg(Activity.INIT))
+        self.assertTrue(activity.has_trace_msg(Activity.ONCREATE))
 
         activity = Activity("android.support.v4.app.FragmentActivity", fa, traceMap)
-        self.assertTrue(activity.has_trace_msg(Activity.INIT))
+        self.assertTrue(activity.has_trace_msg(Activity.ONCREATE))
 
 
     def _get_sample_trace(self):
         spec_list = []
         ctrace = CTrace()
 
-        cb = CCallback(1, 1, "", "void android.app.Activity.<init>()",
-                       [TestGrounding._get_obj("d8ad51d","android.app.Activity")],
+        cb = CCallback(1, 1, "", "void android.app.Activity.onCreate(android.os.Bundle)",
+                       [TestGrounding._get_obj("d8ad51d","android.app.Activity"),
+                        TestGrounding._get_obj("2","android.os.Bundle")],
                        None,
-                       [TestGrounding._get_fmwkov("void android.app.Activity","<init>()", False)])
+                       [TestGrounding._get_fmwkov("void android.app.Activity","onCreate(android.os.Bundle)", False)])
         ctrace.add_msg(cb)
 
         cb = CCallback(1, 1, "", "void android.app.Fragment.<init>()",
@@ -94,8 +96,8 @@ class TestFlowDroid(unittest.TestCase):
         self.assertTrue(fragment is not None)
 
         self.assertTrue(isinstance(activity, Activity))
-        activity.has_trace_msg(Activity.INIT)
-        trace_msg = activity.get_trace_msgs(Activity.INIT)
+        activity.has_trace_msg(Activity.ONCREATE)
+        trace_msg = activity.get_trace_msgs(Activity.ONCREATE)
         self.assertTrue(trace_msg is not None)
 
         self.assertTrue(isinstance(fragment, Fragment))
@@ -209,10 +211,11 @@ class TestFlowDroid(unittest.TestCase):
 
     def _create_activity(self):
         obj_id = TestGrounding._get_obj("objid_%d" % self.get_obj_id(), "android.app.Activity")
-        cb = CCallback(1, 1, "", "void android.app.Activity.<init>()",
-                       [obj_id],
+        obj_bundle_id = TestGrounding._get_obj("objid_%d" % self.get_obj_id(), "android.os.Bundle")
+        cb = CCallback(1, 1, "", "void android.app.Activity.onCreate(android.os.Bundle)",
+                       [obj_id, obj_bundle_id],
                        None,
-                       [TestGrounding._get_fmwkov("void android.app.Activity","<init>()", False)])
+                       [TestGrounding._get_fmwkov("void android.app.Activity","onCreate(android.os.Bundle)", False)])
         return (cb, obj_id)
 
     def _create_fragment(self):
