@@ -83,16 +83,13 @@ class TestFlowDroid(unittest.TestCase):
         activity.has_methods_names(Activity.INIT)
         activity.has_trace_msg(Activity.INIT)
         trace_msg = activity.get_trace_msgs(Activity.INIT)
-        self.assertTrue (isinstance(trace_msg, CCallin) or
-                         isinstance(trace_msg, CCallback))
+        self.assertTrue(trace_msg is not None)
 
         self.assertTrue(isinstance(fragment, Fragment))
         fragment.has_methods_names(Fragment.INIT)
         fragment.has_trace_msg(Fragment.INIT)
         trace_msg = fragment.get_trace_msgs(Fragment.INIT)
-        self.assertTrue (isinstance(trace_msg, CCallin) or
-                         isinstance(trace_msg, CCallback))
-
+        self.assertTrue(trace_msg is not None)
 
     def test_cb_approx(self):
         # Attachment relation:
@@ -129,9 +126,9 @@ class TestFlowDroid(unittest.TestCase):
         (cb1, act1) = self._create_activity()
         (cb2, act2) = self._create_activity()
         (cb3, frag1) = self._create_fragment()
-        (cb3, frag2) = self._create_fragment()
+        (cb4, frag2) = self._create_fragment()
         cb5 = self._attach_fragment_to_activity(act1, frag1)
-        cb6 = self._attach_fragment_to_activity(act1, frag2)
+        cb6 = self._attach_fragment_to_activity(act2, frag2)
         trace.add_msg(cb1)
         trace.add_msg(cb2)
         trace.add_msg(cb3)
@@ -163,6 +160,31 @@ class TestFlowDroid(unittest.TestCase):
 
         self.assertTrue(fd.compid2msg_keys[frag1].isdisjoint(fd.compid2msg_keys[frag2]))
 
+
+
+    def test_act_frag_view(self):
+        # Attachment relation:
+        #
+        # activity1
+        #   frag1
+        #   view1
+        #
+        trace = CTrace()
+        (cb1, act1) = self._create_activity()
+        (cb2, frag1) = self._create_fragment()
+        (cb3, view1) = self._create_view()
+        cb4 = self._attach_fragment_to_activity(act1, frag1)
+        ci = self._attach_view_to_activity(act1, view1)
+        cb1.add_msg(ci)
+        cb5 = self._add_view_on_measure(view1)
+
+        trace.add_msg(cb1)
+        trace.add_msg(cb2)
+        trace.add_msg(cb3)
+        trace.add_msg(cb4)
+        trace.add_msg(cb5)
+
+        fd = self._get_fdm(trace)
 
     def _get_fdm(self, trace):
         enc = TSEncoder(trace, [])
@@ -204,7 +226,16 @@ class TestFlowDroid(unittest.TestCase):
                        [TestGrounding._get_fmwkov("void android.app.Fragment","onAttach(android.app.Activity)", False)])
         return cb
 
-    def _attach_view(self, parent, child):
-        cb = None
+    def _attach_view_to_activity(self, activity, view):
+        ci = CCallin(1, 1, "", "android.view.View android.app.Activity.findViewById(int)",
+                     [activity, TestGrounding._get_int(1)], view)
+        return ci
+
+    def _add_view_on_measure(self, view):
+        cb = CCallback(1, 1, "", "void android.view.View.onMeasure(int,int)",
+                       [view, TestGrounding._get_int(1), TestGrounding._get_int(1)],
+                       None,
+                       [TestGrounding._get_fmwkov("void android.view.View","onMeasure(int,int)", False)])
         return cb
+
 

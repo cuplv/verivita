@@ -75,7 +75,7 @@ class Component:
         assert self.has_methods_names(key)
         if key not in self.methods_msgs:
             self.methods_msgs[key] = []
-        self.methods_msgs[key] = msg
+        self.methods_msgs[key].append(msg)
 
     def has_trace_msg(self, key):
         return key in self.methods_msgs

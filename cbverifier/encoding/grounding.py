@@ -1307,7 +1307,7 @@ class TraceMap(object):
             for formal, actual in zip(param_list, method.params):
                 match = match and self._get_formal_assignment(method_assignments,
                                                               formal, actual)
-            # return value (only for exit
+            # return value (only for exit)
             if (not is_entry) and match and retval != new_nil():
                 match = match and self._get_formal_assignment(method_assignments,
                                                               retval,

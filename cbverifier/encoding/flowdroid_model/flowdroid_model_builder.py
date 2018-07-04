@@ -61,16 +61,18 @@ class FlowDroidModelBuilder:
         FlowDroidModelBuilder._find_lifecycle_messages(self.trace_map,
                                                        self.components_set)
 
-        root_components_ids = []
-        for c in self.components_set:
-            if isinstance(c, Activity):
-                root_components_ids.append(c.get_inst_value())
-        self.attach_rel = AttachRelation(self.trace_map,
-                                         root_components_ids)
+        # root_components_ids = []
+        # for c in self.components_set:
+        #     if isinstance(c, Activity):
+        #         root_components_ids.append(c.get_inst_value())
 
         all_values = FlowDroidModelBuilder._get_all_values(self.trace)
+        self.attach_rel = AttachRelation(self.trace_map,
+                                         all_values)
         self.register_rel = RegistrationRelation(self.trace_map,
                                                  all_values)
+
+        print self.attach_rel.relation
 
         # Map from object id to messages where the id is used as a receiver
         self.obj2msg_keys = FlowDroidModelBuilder._get_obj2msg_keys(self.trace)
@@ -80,8 +82,7 @@ class FlowDroidModelBuilder:
         self.msgs_keys = set(spec_msgs_keys)
         for c in self.components_set:
             c_msgs = c.get_lifecycle_msgs()
-            for msg in c_msgs:
-                msg_key = EncoderUtils.get_key_from_call(msg)
+            for msg_key in c_msgs:
                 self.msgs_keys.add(msg_key)
 
         # Computes where each message can be executed
@@ -101,17 +102,26 @@ class FlowDroidModelBuilder:
         for msg in trace.children:
             trace_stack.append(msg)
 
+        component_ids = set()
+
         # Finds all the components in the trace
         while (0 != len(trace_stack)):
             msg = trace_stack.pop()
             # Collect the list of compnents
             for value in msg.params:
+                if value in component_ids:
+                    continue
+
                 if Activity.is_class(value.type):
                     component = Activity(value.type, value)
                     components.add(component)
+                    component_ids.add(value)
+
                 if Fragment.is_class(value.type):
                     component = Fragment(value.type, value)
                     components.add(component)
+                    component_ids.add(value)
+
             for child in msg.children:
                 trace_stack.append(child)
 
@@ -125,9 +135,19 @@ class FlowDroidModelBuilder:
                 for call_ast in component.get_methods_names(key):
                     # find the concrete methods in the trace for the correct
                     # method name
-                    msg_list = trace_map.find_methods(call_ast)
-                    for m in msg_list:
-                        component.add_trace_msg(key, m)
+                    trace_msg_list = trace_map.find_methods(call_ast)
+
+                    call_type = get_node_type(call_ast)
+                    if (CALL_ENTRY == call_type):
+                        call_type_enc = EncoderUtils.ENTRY
+                    elif (CALL_EXIT == call_type):
+                        call_type_enc = EncoderUtils.EXIT
+                    else:
+                        raise Exception("Unkonwn node " + str(call_ast))
+
+                    for m_trace in trace_msg_list:
+                        msg = EncoderUtils.get_key_from_msg(m_trace, call_type_enc)
+                        component.add_trace_msg(key, msg)
 
 
     def _compute_msgs_boundaries(self):
@@ -221,15 +241,11 @@ class FlowDroidModelBuilder:
         for attached_obj in self.attach_rel.get_related(parent_obj):
             is_fragment = False
             fragment = None
-            if attach_obj in self.components_map:
+            for attach_obj in self.components_map:
                 fragment = self.components_map[attach_obj]
                 is_fragment = isinstance(fragment, Fragment)
 
-            if self.is_fragment(attached_obj):
-                # Handle the fragment callback differently
-                raise NotImplementedError("get_fragment")
-                fragment = self.get_fragment(attached_obj)
-
+            if is_fragment:
                 self._process_msgs_component(free_msg,
                                              compid2msg_keys,
                                              fragment)
@@ -278,13 +294,13 @@ class FlowDroidModelBuilder:
             compid2msg_keys[component_obj] = component_msg_keys
 
         lifecycle_msg = component.get_lifecycle_msgs()
-        lifecycle_msg_keys = [EncoderUtils.get_key_from_call(msg) for msg in lifecycle_msg]
         # Removes the lifecycle messages
-        for m in lifecycle_msg_keys:
-            free_msg.remove(m)
+        for m in lifecycle_msg:
+            if m in free_msg:
+                free_msg.remove(m)
         # add all the non-lifecycle component messages
         for m in self.obj2msg_keys[component_obj]:
-            if m not in lifecycle_msg_keys:
+            if m not in lifecycle_msg:
                 component_msg_keys.add(m)
 
     def get_components(self):
