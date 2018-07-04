@@ -1365,14 +1365,15 @@ class TraceMap(object):
 
         return msg_list
 
-    def find_all_vars(self, call_ast, var_name_ast):
+    def find_all_vars(self, call_ast, var_name_ast, filter_map):
         """
         call_ast is a call node
         var_name_ast is an ID node.
 
         Finds all the messages in the trace that are compatible with
-        call_ast, and returns a list of all the possible values took
-        by var_name_ast in the found messages.
+        call_ast, returns a list of all the possible values took
+        by var_name_ast in the found messages, and agrees on the variable
+        values in filter_map
         """
 
         # find the concrete methods in the trace that are compatible
@@ -1385,11 +1386,24 @@ class TraceMap(object):
 
         # get the ci/cb from the trace
         for aset in asets:
+            to_match = set(filter_map.keys())
+
+            app_var_assignments = set()
+
             for (fvar, fval) in aset.assignments.iteritems():
                 if (fval == bottom_value):
                     pass
                 elif (get_node_type(fvar) == ID):
+                    # get the var value
                     if (fvar == var_name_ast):
-                        var_assignments.add(fval)
+                        app_var_assignments.add(fval)
+
+                    # check the filter
+                    if fvar in filter_map:
+                        if filter_map[fvar] == fval:
+                            to_match.remove(fvar)
+
+            if len(to_match) == 0:
+                var_assignments.update(app_var_assignments)
 
         return var_assignments

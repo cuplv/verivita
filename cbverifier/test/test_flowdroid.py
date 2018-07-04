@@ -198,6 +198,7 @@ class TestFlowDroid(unittest.TestCase):
 
         fd = self._get_fdm(trace)
 
+
     def _get_fdm(self, trace):
         enc = TSEncoder(trace, [])
         fd_builder = FlowDroidModelBuilder(enc.trace,

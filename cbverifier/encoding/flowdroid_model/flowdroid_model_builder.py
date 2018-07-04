@@ -69,8 +69,6 @@ class FlowDroidModelBuilder:
         self.register_rel = RegistrationRelation(self.trace_map,
                                                  all_values)
 
-        print self.attach_rel.relation
-
         # Map from object id to messages where the id is used as a receiver
         self.obj2msg_keys = FlowDroidModelBuilder._get_obj2msg_keys(self.trace)
 
@@ -213,8 +211,9 @@ class FlowDroidModelBuilder:
         for attached_obj in self.attach_rel.get_related(parent_obj):
             is_fragment = False
             fragment = None
-            for attach_obj in self.components_map:
-                fragment = self.components_map[attach_obj]
+
+            if attached_obj in self.components_map:
+                fragment = self.components_map[attached_obj]
                 is_fragment = isinstance(fragment, Fragment)
 
             if is_fragment:
@@ -237,7 +236,7 @@ class FlowDroidModelBuilder:
                 # The obj should have been visited before
                 assert(lifecycle_obj in compid2msg_keys)
                 lifecycle_comp_msgs_keys = compid2msg_keys[lifecycle_obj]
-                attached_msg_keys = self.obj2msg_keys(attached_obj)
+                attached_msg_keys = self.obj2msg_keys[attached_obj]
 
                 for msg_key in attached_msg_keys:
                     lifecycle_comp_msgs_keys.add(msg_key)

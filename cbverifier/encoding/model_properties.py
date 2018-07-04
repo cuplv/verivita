@@ -76,19 +76,24 @@ class BinRelation:
             for m_template in generic_method_list:
                 if (forward):
                     var_to_search_for = new_id(self.dst_var_name)
-                    subs = {self.src_placeholder : obj.get_value()}
+                    var_to_filter = new_id(self.src_placeholder)
+                    subs = {var_to_filter : obj}
                 else:
                     var_to_search_for = new_id(self.src_placeholder)
-                    subs = {self.dst_var_name : obj.get_value()}
+                    var_to_filter = new_id(self.dst_var_name)
+                    subs = {var_to_filter : obj}
 
-                m_replaced_str = string.Template(m_template).safe_substitute(subs)
-
+                # m_replaced_str = string.Template(m_template).safe_substitute(subs)
                 # parse m_replaced
-                m_ast = spec_parser.parse_call(m_replaced_str)
+                # m_ast = spec_parser.parse_call(m_replaced_str)
+
+                m_ast = spec_parser.parse_call(m_template)
                 if (m_ast is None):
-                    raise Exception("Error parsing %s" % m_replaced_str)
+#                    raise Exception("Error parsing %s" % m_replaced_str)
+                    raise Exception("Error parsing %s" % m_template)
                 related_objs = self.trace_map.find_all_vars(m_ast,
-                                                            var_to_search_for)
+                                                            var_to_search_for,
+                                                            subs)
                 return related_objs
         else:
             return []
@@ -112,8 +117,8 @@ class BinRelation:
 
 class AttachRelation(BinRelation):
 
-    attach_methods_fwd = {'android.app.Activity' : ['L = [CI] [EXIT] [${CONTAINER}] android.view.View android.app.Activity.findViewById(# : int)']}
-    attach_methods_bwd = {'android.app.Fragment' : ['[CB] [ENTRY] [${L}] void android.app.Fragment.onAttach(CONTAINER : android.app.Activity)']}
+    attach_methods_fwd = {'android.app.Activity' : ['L = [CI] [EXIT] [CONTAINER] android.view.View android.app.Activity.findViewById(# : int)']}
+    attach_methods_bwd = {'android.app.Fragment' : ['[CB] [ENTRY] [L] void android.app.Fragment.onAttach(CONTAINER : android.app.Activity)']}
 
     """ Computes the attachment relation between objects """
     def __init__(self, trace_map, root_components):
@@ -132,7 +137,7 @@ class AttachRelation(BinRelation):
 
 
 class RegistrationRelation(BinRelation):
-    register_methods_fwd = {'android.view.View' : ['[CI] [ENTRY] [${CONTAINER}] void android.view.View.setOnClickListener(L : android.view.View$OnClickListener)']}
+    register_methods_fwd = {'android.view.View' : ['[CI] [ENTRY] [CONTAINER] void android.view.View.setOnClickListener(L : android.view.View$OnClickListener)']}
     register_methods_bwd = {}
 
     def __init__(self, trace_map, root_components):
