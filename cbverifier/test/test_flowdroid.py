@@ -35,8 +35,9 @@ class TestFlowDroid(unittest.TestCase):
         trace = CTrace()
 
         def _gen_activity_trace(class_name):
-            act = TestGrounding._get_obj("1","android.app.Activity")
+            act = TestGrounding._get_obj("1",class_name)
             bundle = TestGrounding._get_obj("2","android.os.Bundle")
+            lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
 
             for method_name in ["onCreate(android.os.Bundle)",
                                 "onPostCreate(android.os.Bundle)",
@@ -68,7 +69,23 @@ class TestFlowDroid(unittest.TestCase):
                                                       "onCreateDescription()", False)])
             trace.add_msg(cb)
 
+            for method_name in ["onActivityStarted",
+                                "onActivityStopped",
+                                "onActivityResumed",
+                                "onActivityPaused",
+                                "onActivityDestroyed"]:
+                cb = CCallback(1, 1, "", "void android.app.Application.ActivityLifecycleCallbacks.%s(%s)" % (method_name,class_name),
+                               [lifecycle, act],
+                               None,
+                               [TestGrounding._get_fmwkov("void android.app.Application.ActivityLifecycleCallbacks", "%s(%s)" % (method_name, class_name), False)])
+                trace.add_msg(cb)
 
+            for method_name in ["onActivityCreated", "onActivitySaveInstanceState"]:
+                cb = CCallback(1, 1, "", "void android.app.Application.ActivityLifecycleCallbacks.%s(%s,android.os.Bundle)" % (method_name,class_name),
+                               [lifecycle, act, bundle],
+                               None,
+                               [TestGrounding._get_fmwkov("void android.app.Application.ActivityLifecycleCallbacks", "%s(%s,android.os.Bundle)" % (method_name, class_name), False)])
+                trace.add_msg(cb)
 
             return (trace, act)
 

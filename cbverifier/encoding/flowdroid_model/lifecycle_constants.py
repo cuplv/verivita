@@ -50,7 +50,7 @@ class Component:
                                 "%s = %s\n" \
                                 "%s = %s\n\n" % (cb_name, cb_name,
                                                  self.get_mytype_const(),
-                                                 class_name_subs,
+                                                 cb_name_subs,
                                                  self.get_my_var_name(),
                                                  self.get_inst_value())
                     raise Exception(error_msg)
@@ -143,8 +143,13 @@ class Activity(Component):
     ONSTOP = "ACTIVITY_ONSTOP"
     ONRESTOREINSTANCESTATE = "ACTIVITY_ONRESTOREINSTANCESTATE"
 
-
-    # ONRESUME = "ONRESUME"
+    ONACTIVITYSTARTED = "ACTIVITY_ONACTIVITYSTARTED"
+    ONACTIVITYSTOPPED = "ACTIVITY_ONACTIVITYSTOPPED"
+    ONACTIVITYSAVEINSTANCESTATE = "ACTIVITY_ONACTIVITYSAVEINSTANCESTATE"
+    ONACTIVITYRESUMED = "ACTIVITY_ONACTIVITYRESUMED"
+    ONACTIVITYPAUSED = "ACTIVITY_ONACTIVITYPAUSED"
+    ONACTIVITYDESTROYED = "ACTIVITY_ONACTIVITYDESTROYED"
+    ONACTIVITYCREATED = "ACTIVITY_ONACTIVITYCREATED"
 
     @staticmethod
     def is_class(class_name):
@@ -174,7 +179,16 @@ class Activity(Component):
                       (Activity.ONSAVEINSTANCESTATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onSaveInstanceState(f : android.os.Bundle)"]),
                       (Activity.ONSTART, ["[CB] [ENTRY] [L] void ${MYTYPE}.onStart()"]),
                       (Activity.ONSTOP, ["[CB] [ENTRY] [L] void ${MYTYPE}.onStop()"]),
-                      (Activity.ONRESTOREINSTANCESTATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onRestoreInstanceState(f : android.os.Bundle)"])]
+                      (Activity.ONRESTOREINSTANCESTATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onRestoreInstanceState(f : android.os.Bundle)"]),
+                      #
+                      (Activity.ONACTIVITYSTARTED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityStarted(L : ${MYTYPE})"]),
+                      (Activity.ONACTIVITYSTOPPED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityStopped(L : ${MYTYPE})"]),
+                      (Activity.ONACTIVITYSAVEINSTANCESTATE, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivitySaveInstanceState(L : ${MYTYPE}, f : android.os.Bundle)"]),
+                      (Activity.ONACTIVITYRESUMED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityResumed(L : ${MYTYPE})"]),
+                      (Activity.ONACTIVITYPAUSED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityPaused(L : ${MYTYPE})"]),
+                      (Activity.ONACTIVITYDESTROYED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityDestroyed(L : ${MYTYPE})"]),
+                      # (Activity.ONACTIVITYCREATED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityCreated(L : ${MYTYPE}, f : android.os.Bundle)"])
+        ]
 
         # Activity.ONATTACHFRAGMENT = "[CB] [ENTRY] [L] void ${MYTYPE}.onAttachFragment(f : android.app.Fragment)"
 
