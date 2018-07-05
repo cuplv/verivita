@@ -1429,44 +1429,75 @@ class RegExpToAuto():
 
 
 class FlowDroidModelBuilder:
-    def __init__(self, encoder, fd_model_builder):
-        """ We follow the description in Section 3 "Precise Modeling of Lifecycle" of:
-        'FlowDroid: Precise Context, Flow, Field, Object-sensitive
-        and Lifecycle-aware Taint Analysis for Android Apps',
-        Artz et al, PLDI 14
+    """ We follow the description in Section 3 "Precise Modeling of Lifecycle" of:
+    'FlowDroid: Precise Context, Flow, Field, Object-sensitive
+    and Lifecycle-aware Taint Analysis for Android Apps',
+    Artz et al, PLDI 14
 
-        and in particular the implementation in:
-        soot-infoflow/src/soot/jimple/infoflow/entryPointCreators/
-        AndroidEntryPointCreator.java
-        in the repo secure-software-engineering/FlowDroid,
-        commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
+    and in particular the implementation in:
+    soot-infoflow/src/soot/jimple/infoflow/entryPointCreators/
+    AndroidEntryPointCreator.java
+    in the repo secure-software-engineering/FlowDroid,
+    commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
 
-        - Activity lifecycle: generateActivityLifecycle, line 774
+      Activity lifecycle: generateActivityLifecycle, line 774
 
-        We encode the lifecylce of each component forcing that at most one component
-        can be active at each time.
-        For each component, there is a different definition of active. For example,
-        an activity component is active after the onResume and before the onPause
-        callbacks.
+    We encode the lifecylce of each component forcing that at most one component
+    can be active at each time.
+    For each component, there is a different definition of active. For example,
+    an activity component is active after the onResume and before the onPause
+    callbacks.
 
-        We follow the modeling where callbacks cannot happen if the component
-        that register them is not active.
-        We compute an over-approximation of the registration of components
-        from the trace.
+    We follow the modeling where callbacks cannot happen if the component
+    that register them is not active.
+    We compute an over-approximation of the registration of components
+    from the trace.
 
-        We model the lifecycle for activity and fragment components since we
-        are interested in components that run in the UI thread.
+    We model the lifecycle for activity and fragment components since we
+    are interested in components that run in the UI thread.
 
-        As done in flowdroid, we encode the lifecycle component of fragment
-        inside their activity component."""
+    As done in flowdroid, we encode the lifecycle component of fragment
+    inside their activity component."""
+
+    def __init__(self, enc, fd_builder):
+        self.enc = enc
+        self.fd_builder = builder
 
     def encode(self):
-        """ Create an encoding of the FlowDroid model
-        """
-        self._encode_component_lifecycle()
-        self._encode_callbacks_in_lifecycle()
+        """ Create an encoding of the FlowDroid model.
 
-    def _encode_component_lifecycle(self):
+        Returns a transition system representing the FlowDroid model of
+        the callback control-flow.
+
+        The transition system can be composed to the disallow set of
+        specification and to the callback re-ordering from the trace.
+        """
+
+        # Encode the lifecycle for each component
+        ts_components = {}
+        for c in self.fd_builder.get_components():
+            ts_components[c] = self._encode_component_lifecycle(c)
+
+        # The encoding of enabled callback is "global"
+        # since more callback can be enabled in several
+        # components
+        ts_callbacks = self._encode_callbacks_in_lifecycle()
+
+        # Encode the component scheduler
+
+        # TODO:
+        # We must change the ts of the other components to add the 
+        # stuttering!
+        ts_scheduler = self._encode_components_scheduler()
+
+        # Compose all the components
+        ts_scheduler.product(ts_callbacks)
+        for c in self.fd_builder.get_components():
+            ts_scheduler.product(c)
+
+        return ts_scheduler
+
+    def _encode_component_lifecycle(self, component):
         """ Encode the components' lifecylces
 
         For now we handle activities and fragments.
@@ -1475,21 +1506,291 @@ class FlowDroidModelBuilder:
         constraints, allow each component lifecycle to
         interleave with each other.
         """
-        lifecycle_state_formula = None
-        enabled_callback_set = None
 
-        cb_in_component = (lifecycle_state_formula,
-                           enabled_callback_set_formula)
+        if (isinstance(component, Activity)):
+            lc_encodings = self._encode_activity_lifecycle(component)
+        elif (isinstance(component, Fragment)):
+            raise NotImplementedError("Fragment!")
+        else:
+            raise Exception("Unknown component!")
+
+        return lc_encodings
+
+
+    def _encode_activity_lifecycle(self, activity):
+        """
+        Encode the lifecycle for activity.
+
+        Return a transition system encoding the lifecycle
+        automaton, the pc encoding the states of the automaton,
+        and a condition determining when the activity is active.
+        """
 
         ts = TransitionSystem()
 
+        # Add the program counter variable to encode the lifecycle
+        pc_size = self._compute_max_states(activity)
+        pc = "pc_%s" % activity.get_inst_value()
+        self.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
+        for v in self.cenc.get_counter_var(pc): ts.add_var(v)
 
-        return (component_state, component_init, component_end, cb_in_component)
+        # Start from the initial state
+        pc_val = 0
+        entry_label = pc_val
+        ts.init = self.cenc.eq_val(pc, pc_val)
 
-        raise NotImplementedError("_encode_lifecycle not implemented")
+        ts.trans = FALSE_PYSMT() # disjunction of transitions
+
+        # Encode the lifecycle
+
+        # line 793
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONCREATE,
+                                          ts, pc, pc_val, pc_val + 1)
+        # line 795
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYCREATED,
+                                          ts, pc, pc_val, pc_val + 1, True)
+        # line 840
+        before_onStartStmt_label = pc_val
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONSTART,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          False, True)
+
+        # line 842
+        before_onActivityStarted_label = pc_val
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYSTARTED,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          True, True)
+
+        # line 860
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONRESTOREINSTANCESTATE,
+                                          ts, pc, pc_val, pc_val + 1)
+
+        before_onPostCreate_label = pc_val
+        # line 859 - jump from before before_onActivityStarted_label
+        self._enc_component_step(activity,
+                                 Activity.ONACTIVITYSTARTED,
+                                 ts, pc,
+                                 before_onActivityStarted_label, pc_val,
+                                 True, True)
+        # line 864
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONPOSTCREATE,
+                                          ts, pc, pc_val, pc_val + 1)
+        before_onResume_label = pc_val # 868
+
+        # line 870
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONRESUME,
+                                          ts, pc, pc_val, pc_val + 1)
+
+        # line 872
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYRESUMED,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          True)
+
+
+        # line 876
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONPOSTRESUME,
+                                          ts, pc, pc_val, pc_val + 1)
+
+        # Now we can execute all the activity callbacks
+        # We pass back this condition to encode the scheduling of the
+        # activity callbacks
+        activity_is_active = self._eq_val(pc, pc_val)
+
+        # line 916
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONPAUSE,
+                                          ts, pc, pc_val, pc_val + 1)
+
+        # line 918
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYPAUSED,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          True)
+
+        # line 921
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONCREATEDESCRIPTION,
+                                          ts, pc, pc_val, pc_val + 1)
+
+        # line 922
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONSAVEINSTANCESTATE,
+                                          ts, pc, pc_val, pc_val + 1)
+
+        # line 924
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYSAVEINSTANCESTATE,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          True)
+
+        # line 930
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYSAVEINSTANCESTATE,
+                                          ts, pc, pc_val, before_onResume_label,
+                                          True)
+
+        # line 934
+        before_onStop_label = pc_val
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONSTOP,
+                                          ts, pc, pc_val, pc_val + 1)
+
+        # line 937
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYSTOPPED,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          True)
+
+        # line 943
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYSTOPPED,
+                                          ts, pc, pc_val, before_onStop_label,
+                                          True)
+
+        # line 952
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONRESTART,
+                                          ts, pc, pc_val, pc_val + 1)
+        # line 953
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONRESTART,
+                                          ts, pc, pc_val, before_onResume_label)
+
+        # line 958
+        before_onDestroy_label = pc_val
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONDESTROY,
+                                          ts, pc, pc_val, before_onResume_label)
+
+        # line 948
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYSTOPPED,
+                                          ts, pc, pc_val, before_onDestroy_label,
+                                          True)
+
+        # line 960 - go back to the beginning
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYDESTROYED,
+                                          ts, pc, 0, before_onResume_label,
+                                          True)
+
+        return (ts, pc, activity_is_active)
+
+
+    def _compute_max_states(self, component):
+        """ Computes the maximum value of the pc for a single component. """
+
+        if (isinstance(component, Activity)):
+            # 18 is the maximum number of states in the automaton
+            # encoded in the activity lifecycle
+            # (see how many times pc is incremented there)
+            return 18
+        elif (isinstance(component, Fragment)):
+            # TODO
+            raise NotImplementedError("_compute_max_states not implemented")
+        else:
+            raise NotImplementedError("Unknown component!")
 
     def _encode_callbacks_in_lifecycle(self):
         """ Encode the enabledness of the callbacks attached to
         Activities and Fragment
         """
         raise NotImplementedError("_encode_callbacks_in_lifecycle not implemented")
+
+    def _encode_components_scheduler(self):
+        """ Encode the order of execution of each component
+        """
+        raise NotImplementedError("_encode_components_scheduler not implemented")
+
+
+    def _enc_component_step(self, component,
+                            component_callback,
+                            ts, pc, pc_val, next_pc_val,
+                            at_least_one = False,
+                            optional = False):
+        """ Encode one step of the lifecycle for a component
+
+        component: The component to encode the lifecycle to
+        component_callback: key to get the lifecycle callbacks to observe
+        in the encoded step (e.g., Activity.ONCREATE)
+        ts: the transition system that encodes the lifecycle
+            *WARNING* side effect on TS
+        pc: the program counter variable
+        pc_val: the current program counter value
+
+        at_least_one: at_least_one encodes the fact that the set of lifecycle
+        callback may be executed more than once to go to the next state.
+        It somehow encodes a {cb1, cb2, ..., cbn}+ label
+
+        optional: if true do not stop the execution even if the
+        component does not have the callback
+
+        Return the new value of pc_val
+        """
+
+        has_callback = False
+        if component.has_trace_msg(component_callback):
+            cb_msgs = activity.get_trace_msgs(component_callback)
+
+            if len(cb_msgs) > 0:
+                has_callback = True
+                current_pc_val_enc = self._eq_val(pc, pc_val)
+                pc_val = next_pc_val
+                next_pc_val_enc = self._eq_val(pc, pc_val)
+                next_pc_val_enc = self._get_next_formula(ts.state_vars,
+                                                         next_pc_val_enc)
+
+                all_cb_msg_enc = FALSE_PYSMT()
+                for cb_msg in cb_msgs:
+                    cb_msg_enc = self._get_msg_label(cb_msg)
+                    all_msg_enc = Or(all_cb_msg_enc, cb_msg_enc)
+
+                # Move from pc to pc + 1 by observing at least one of the
+                # callback
+                single_trans = And(all_msg_enc, And(current_pc_val, next_pc_val_enc))
+
+                if not at_least_one:
+                    ts.trans = Or(ts.ts_trans, single_trans)
+                else:
+                    # Add a self loop on current_pc_val
+                    # It allows to non-determinitically visit more than once
+                    # the same set of callbacks
+                    single_trans = And(all_msg_enc, And(current_pc_val, current_pc_val))
+                    ts.trans = Or(ts.ts_trans, single_trans)
+
+            # Block the execution in this state if the call is not
+            # optional
+            if not has_callback:
+                if not optional:
+                    # the ts cannot move in pc_val right now, so there
+                    # is a deadlock
+
+                    # advance the pc, so that we keep to encode the rest
+                    # of the lifecycle as it is.
+                    # while there is a deadlock in the current pc_val
+                    pc_val += next_pc_val
+
+        # note that pc_val may *not* be incremented in the optional case
+        # where we do not create the intermediate state
+        return pc_val
+
+
+    def _eq_val(self, pc, val):
+        return self.enc.cenc.eq_val(pc, val)
+
+    def _get_msg_label(self, msg_key):
+        label = self.enc.r2a.get_msg_eq(msg_key)
+        return label
+
+    def _get_next_formula(self, state_vars, formula):
+        return self.enc.helper.get_next_formula(state_vars,
+                                                formula)
