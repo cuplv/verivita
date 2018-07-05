@@ -1587,14 +1587,11 @@ class FlowDroidModelBuilder:
         pc_val = self._enc_component_step(activity,
                                           Activity.ONRESUME,
                                           ts, pc, pc_val, pc_val + 1)
-
         # line 872
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYRESUMED,
                                           ts, pc, pc_val, pc_val + 1,
                                           True)
-
-
         # line 876
         pc_val = self._enc_component_step(activity,
                                           Activity.ONPOSTRESUME,
@@ -1627,15 +1624,16 @@ class FlowDroidModelBuilder:
                                           ts, pc, pc_val, pc_val + 1)
 
         # line 924
+        before_onActivitySaveInstanceState_label = pc_val
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYSAVEINSTANCESTATE,
                                           ts, pc, pc_val, pc_val + 1,
                                           True)
-
         # line 930
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYSAVEINSTANCESTATE,
-                                          ts, pc, pc_val, before_onResume_label,
+                                          ts, pc, before_onActivitySaveInstanceState_label,
+                                          before_onResume_label,
                                           True)
 
         # line 934
@@ -1645,38 +1643,40 @@ class FlowDroidModelBuilder:
                                           ts, pc, pc_val, pc_val + 1)
 
         # line 937
+        before_onActivityStopped_label = pc_val
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYSTOPPED,
-                                          ts, pc, pc_val, pc_val + 1,
+                                          ts, pc, before_onActivityStopped_label,
+                                          pc_val + 1,
                                           True)
-
         # line 943
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYSTOPPED,
-                                          ts, pc, pc_val, before_onStop_label,
+                                          ts, pc,
+                                          before_onActivityStopped_label,
+                                          before_onStop_label,
                                           True)
-
         # line 952
+        before_onRestart_label = pc_val
         pc_val = self._enc_component_step(activity,
                                           Activity.ONRESTART,
-                                          ts, pc, pc_val, pc_val + 1)
+                                          ts, pc, before_onRestart_label, pc_val + 1)
         # line 953
         pc_val = self._enc_component_step(activity,
                                           Activity.ONRESTART,
-                                          ts, pc, pc_val, before_onResume_label)
-
+                                          ts, pc, before_onRestart_label, before_onResume_label)
         # line 958
         before_onDestroy_label = pc_val
         pc_val = self._enc_component_step(activity,
                                           Activity.ONDESTROY,
                                           ts, pc, pc_val, before_onResume_label)
-
         # line 948
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYSTOPPED,
-                                          ts, pc, pc_val, before_onDestroy_label,
+                                          ts, pc,
+                                          pc_val,
+                                          before_onDestroy_label,
                                           True)
-
         # line 960 - go back to the beginning
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYDESTROYED,
@@ -1714,6 +1714,103 @@ class FlowDroidModelBuilder:
 
         ts.trans = FALSE_PYSMT() # disjunction of transitions
 
+        # line 821, 820
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONATTACHFRAGMENT,
+                                          ts, pc, pc_val, pc_val)
+
+        before_onAttach_label = pc
+
+        # line 986
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONATTACH,
+                                          ts, pc, pc_val, pc_val+1,
+                                          False, True)
+        # line 992
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONCREATE,
+                                          ts, pc, pc_val, pc_val+1,
+                                          False, True)
+        before_onCreateview_label = pc
+        # line 998
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONCREATEVIEW,
+                                          ts, pc, pc_val, pc_val+1,
+                                          False, True)
+        # line 1003
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONVIEWCREATED,
+                                          ts, pc, pc_val, pc_val+1,
+                                          False, True)
+        # line 1009
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONACTIVITYCREATED,
+                                          ts, pc, pc_val, pc_val+1,
+                                          False, True)
+        before_onStart_label = pc
+        # line 1015
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONSTART,
+                                          ts, pc, pc_val, pc_val+1)
+        # line 1021
+        before_onResume_label = pc
+        # line 1022
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONRESUME,
+                                          ts, pc, pc_val, pc_val+1)
+        # line 1025
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONPAUSE,
+                                          ts, pc, pc_val, pc_val+1)
+        # line 1026
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONPAUSE,
+                                          ts, pc, pc_val, before_onResume_label)
+
+        # line 1029
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONSAVEINSTANCESTATE,
+                                          ts, pc, pc_val, pc_val+1)
+        # line 1032
+        before_onStop_label = pc_val
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONSTOP,
+                                          ts, pc, before_onStop_label,
+                                          pc_val+1)
+        # line 1033
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONSTOP,
+                                          ts, pc, before_onStop_label,
+                                          before_onCreateview_label)
+        # line 1034
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONSTOP,
+                                          ts, pc, before_onStop_label,
+                                          before_onStart_label)
+
+        # line 1037
+        before_onDestroyView_label = pc_val
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONDESTROYVIEW,
+                                          ts, pc, before_onDestroyView_label, pc_val+1)
+        # line 1038
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONDESTROYVIEW,
+                                          ts, pc, before_onDestroyView_label,
+                                          before_onCreateview_label)
+        # line 1041
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONDESTROY,
+                                          ts, pc, pc_val, pc_val+1)
+        # line 1044
+        before_onDetach_label = pc_val
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONDETACH,
+                                          ts, pc, before_onDetach_label, entry_label)
+        # line 1045
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONDETACH,
+                                          ts, pc, before_onAttach_label, entry_label)
 
         return lc_info
 
