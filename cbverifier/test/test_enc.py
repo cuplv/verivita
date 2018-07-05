@@ -347,26 +347,31 @@ class TestEnc(unittest.TestCase):
                      [TestGrounding._get_obj("1","string")],
                      None)
         cb.add_msg(ci)
-        ts_enc = TSEncoder(ctrace, spec_list)
-        return ts_enc
+
+        enc1 = TSEncoder(ctrace, spec_list)
+        enc2 = TSEncoder(ctrace, spec_list,
+                         False,
+                         None,
+                         True) # flowdroid model
+        return [enc1, enc2]
 
     def test_encode_ground_specs(self):
-        ts_enc = self._get_sample_trace()
-        vars_ts = ts_enc._encode_vars()
-        (ts, disabled_ci, accepting) = ts_enc._encode_ground_specs()
-        ts.product(vars_ts)
+        for ts_enc in self._get_sample_trace():
+            vars_ts = ts_enc._encode_vars()
+            (ts, disabled_ci, accepting) = ts_enc._encode_ground_specs()
+            ts.product(vars_ts)
 
-        accepting_states = FALSE()
-        for k,v in accepting.iteritems():
-            for state in v:
-                accepting_states = Or(accepting_states, state)
+            accepting_states = FALSE()
+            for k,v in accepting.iteritems():
+                for state in v:
+                    accepting_states = Or(accepting_states, state)
 
-        assert(disabled_ci == set(["[CI]_[ENTRY]_void m2()(1)"]))
+            assert(disabled_ci == set(["[CI]_[ENTRY]_void m2()(1)"]))
 
-        self.assertTrue(self._accept_word(ts_enc, ts, ["[CB]_[ENTRY]_void m1()(1)"], accepting_states))
-        self.assertFalse(self._accept_word(ts_enc, ts, ["[CI]_[ENTRY]_void m2()(1)"], accepting_states))
-        error = And(accepting_states, EncoderUtils._get_state_var("[CI]_[ENTRY]_void m2()(1)"))
-        self.assertFalse(self._accept_word(ts_enc, ts, ["[CB]_[ENTRY]_void m1()(1)"], error))
+            self.assertTrue(self._accept_word(ts_enc, ts, ["[CB]_[ENTRY]_void m1()(1)"], accepting_states))
+            self.assertFalse(self._accept_word(ts_enc, ts, ["[CI]_[ENTRY]_void m2()(1)"], accepting_states))
+            error = And(accepting_states, EncoderUtils._get_state_var("[CI]_[ENTRY]_void m2()(1)"))
+            self.assertFalse(self._accept_word(ts_enc, ts, ["[CB]_[ENTRY]_void m1()(1)"], error))
 
 
     def test_encode_cbs(self):
@@ -570,43 +575,42 @@ class TestEnc(unittest.TestCase):
 
 
     def test_encode(self):
-        ts_enc = self._get_sample_trace()
+        for ts_enc in self._get_sample_trace():
+            ts = ts_enc.get_ts_encoding()
 
-        ts = ts_enc.get_ts_encoding()
+            error = ts_enc.error_prop
+            bmc = BMC(ts_enc.helper, ts, error)
 
-        error = ts_enc.error_prop
-        bmc = BMC(ts_enc.helper, ts, error)
+            # not None == there is a bug
+            self.assertTrue(bmc.find_bug(0) is None)
+            self.assertTrue(bmc.find_bug(1) is None)
+            self.assertTrue(bmc.find_bug(2) is not None)
+            self.assertTrue(bmc.find_bug(3) is not None)
 
-        # not None == there is a bug
-        self.assertTrue(bmc.find_bug(0) is None)
-        self.assertTrue(bmc.find_bug(1) is None)
-        self.assertTrue(bmc.find_bug(2) is not None)
-        self.assertTrue(bmc.find_bug(3) is not None)
-
-        self.assertTrue(bmc.find_bug(0,True) is None)
-        self.assertTrue(bmc.find_bug(1,True) is None)
-        self.assertTrue(bmc.find_bug(2,True) is not None)
-        self.assertTrue(bmc.find_bug(3,True) is not None)
+            self.assertTrue(bmc.find_bug(0,True) is None)
+            self.assertTrue(bmc.find_bug(1,True) is None)
+            self.assertTrue(bmc.find_bug(2,True) is not None)
+            self.assertTrue(bmc.find_bug(3,True) is not None)
 
 
     def test_cex_printer(self):
-        ts_enc = self._get_sample_trace()
-        ts = ts_enc.get_ts_encoding()
-        error = ts_enc.error_prop
-        bmc = BMC(ts_enc.helper, ts, error)
-        cex = bmc.find_bug(2)
-        cex = bmc.find_bug(2,True)
+        for ts_enc in self._get_sample_trace():
+            ts = ts_enc.get_ts_encoding()
+            error = ts_enc.error_prop
+            bmc = BMC(ts_enc.helper, ts, error)
+            cex = bmc.find_bug(2)
+            cex = bmc.find_bug(2,True)
 
-        self.assertFalse(cex is None)
+            self.assertFalse(cex is None)
 
-        stringio = StringIO()
-        printer = CexPrinter(ts_enc.mapback, cex, stringio)
-        printer.print_cex()
+            stringio = StringIO()
+            printer = CexPrinter(ts_enc.mapback, cex, stringio)
+            printer.print_cex()
 
-        io_string = stringio.getvalue()
+            io_string = stringio.getvalue()
 
-        self.assertTrue("SPEC [CB] [ENTRY] [1] void m1() |- [CI] [ENTRY] [1] void m2()" in io_string)
-        self.assertTrue("Reached an error state in step 2" in io_string)
+            self.assertTrue("SPEC [CB] [ENTRY] [1] void m1() |- [CI] [ENTRY] [1] void m2()" in io_string)
+            self.assertTrue("Reached an error state in step 2" in io_string)
 
     def test_cex_printer_exit(self):
         spec_list = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [l] void m1() |- [CB] [EXIT] [l] void m1()")
@@ -762,12 +766,12 @@ class TestEnc(unittest.TestCase):
                          None,
                          True) # flowdroid model
 
-        for ts_enc in [enc1, enc2]:
+        for (ts_enc, expected_res) in zip([enc1, enc2],[True, False]):
             ts = ts_enc.get_ts_encoding()
             error = ts_enc.error_prop
             bmc = BMC(ts_enc.helper, ts, error)
             cex = bmc.find_bug(2, True)
-            self.assertTrue(cex is None)
+            self.assertTrue((cex is None) == expected_res)
 
     def test_simplify_1(self):
         spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CB] [ENTRY] [l] void m3(); SPEC FALSE[*] |- [CI] [ENTRY] [l] void m4()")
