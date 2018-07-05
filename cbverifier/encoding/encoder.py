@@ -1461,7 +1461,7 @@ class FlowDroidModelBuilder:
 
     def __init__(self, enc, fd_builder):
         self.enc = enc
-        self.fd_builder = builder
+        self.fd_builder = fd_builder
 
     def encode(self):
         """ Create an encoding of the FlowDroid model.
@@ -1472,20 +1472,17 @@ class FlowDroidModelBuilder:
         The transition system can be composed to the disallow set of
         specification and to the callback re-ordering from the trace.
         """
-
         # Encode the lifecycle for each component
-        ts_components = {}
+        lifecycles = {}
         for c in self.fd_builder.get_components():
-            ts_components[c] = self._encode_component_lifecycle(c)
+            c_lifecycle[c] = self._encode_component_lifecycle(c)
 
         # The encoding of enabled callback is "global"
         # since more callback can be enabled in several
         # components
-        ts_callbacks = self._encode_callbacks_in_lifecycle()
+        ts_callbacks = self._encode_callbacks_in_lifecycle(lifecycles)
 
         # Encode the component scheduler
-
-        # TODO:
         # We must change the ts of the other components to add the 
         # stuttering!
         ts_scheduler = self._encode_components_scheduler()
@@ -1498,7 +1495,7 @@ class FlowDroidModelBuilder:
         return ts_scheduler
 
     def _encode_component_lifecycle(self, component):
-        """ Encode the components' lifecylces
+        """ Encode the components' lifecycles
 
         For now we handle activities and fragments.
 
@@ -1508,13 +1505,13 @@ class FlowDroidModelBuilder:
         """
 
         if (isinstance(component, Activity)):
-            lc_encodings = self._encode_activity_lifecycle(component)
+            lifecycle_encoding = self._encode_activity_lifecycle(component)
         elif (isinstance(component, Fragment)):
             raise NotImplementedError("Fragment!")
         else:
             raise Exception("Unknown component!")
 
-        return lc_encodings
+        return lifecycle_encoding
 
 
     def _encode_activity_lifecycle(self, activity):
@@ -1700,11 +1697,55 @@ class FlowDroidModelBuilder:
         else:
             raise NotImplementedError("Unknown component!")
 
-    def _encode_callbacks_in_lifecycle(self):
+    def _encode_callbacks_in_lifecycle(self, lifecycles):
         """ Encode the enabledness of the callbacks attached to
         Activities and Fragment
         """
-        raise NotImplementedError("_encode_callbacks_in_lifecycle not implemented")
+        ts = TransitionSystem()
+
+        # Loop over all the components
+        for c, lifecycle in lifecycles.iteritems():
+            (ts_c, pc, component_is_active) = lifecycle
+
+            if (isinstance(c, Activity)):
+                # computes all the messages that must be executed
+                # the activity lifecycle.
+                # It includes all the cb from the attached
+                # components
+                cb_star = set()
+                stack = [c]
+                while (len(stack) > 0):
+                    c = stack.pop()
+                    c_id = c.get_inst_value()
+
+                    if c_id in self.fd_builder.compid2msg_keys:
+                        cb_star.update(self.fd_builder.compid2msg_keys[c_id])
+                        if isinstance(c, Fragment):
+                            # Remove the instance of lifecycle callbacks
+                            # of the fragment
+                            cb_star.difference(c.get_lifecycle_msgs())
+                    for attached_obj in self.attach_rel.get_related(c_id):
+                        stack.append(attached_obj)
+
+                # encodes that these messages are executed only
+                # when the activity is active
+                all_msg_lbl = FALSE_PYSMT()
+                for msg_key in cb_star:
+                    all_msg_lbl = Or(all_msg_lbl,
+                                     self._get_msg_label(msg_key))
+                cb_msg_enc = Implies(all_msg_lbl, component_is_active)
+                ts.trans = And(ts.trans, cb_msg_enc)
+            elif (isinstance(c, Fragment)):
+                # Do nothing on fragments here
+                # Callbacks are encoded inside the activity
+                pass
+            else:
+                raise Exception("Unknown component")
+
+        # Do nothing for the other callbacks -- they are free
+        # to happen whenever
+
+        return ts
 
     def _encode_components_scheduler(self):
         """ Encode the order of execution of each component
