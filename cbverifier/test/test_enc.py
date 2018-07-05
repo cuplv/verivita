@@ -756,12 +756,18 @@ class TestEnc(unittest.TestCase):
                      None)
         cb.add_msg(ci)
 
-        ts_enc = TSEncoder(ctrace, spec_list)
-        ts = ts_enc.get_ts_encoding()
-        error = ts_enc.error_prop
-        bmc = BMC(ts_enc.helper, ts, error)
-        cex = bmc.find_bug(2, True)
-        self.assertTrue(cex is None)
+        enc1 = TSEncoder(ctrace, spec_list)
+        enc2 = TSEncoder(ctrace, spec_list,
+                         False,
+                         None,
+                         True) # flowdroid model
+
+        for ts_enc in [enc1, enc2]:
+            ts = ts_enc.get_ts_encoding()
+            error = ts_enc.error_prop
+            bmc = BMC(ts_enc.helper, ts, error)
+            cex = bmc.find_bug(2, True)
+            self.assertTrue(cex is None)
 
     def test_simplify_1(self):
         spec_list = Spec.get_specs_from_string("SPEC FALSE[*] |- [CB] [ENTRY] [l] void m3(); SPEC FALSE[*] |- [CI] [ENTRY] [l] void m4()")

@@ -227,6 +227,15 @@ class TestFlowDroid(unittest.TestCase):
         fd = self._get_fdm(trace)
 
 
+
+    # activity: simulate lifecycle
+    # activity: simulate lifecycle + cb only in active
+    # activity + activity: seq. lifecycle
+    # activity + activity: interleaving lifecycle (fail)
+    # activity + fragment: act lifecycle
+    # activity + fragment: act lifecycle, frag lifecycle
+
+
     def _get_fdm(self, trace):
         enc = TSEncoder(trace, [])
         fd_builder = FlowDroidModelBuilder(enc.trace,

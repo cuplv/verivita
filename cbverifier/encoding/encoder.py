@@ -120,7 +120,7 @@ The module defines the following classes:
   - TSEncoder
   - TSMapback
   - RegExpToAuto
-
+  - FlowDroidModelEncoder
 """
 
 import logging
@@ -134,7 +134,7 @@ from pysmt.shortcuts import Symbol
 from pysmt.shortcuts import Solver
 from pysmt.shortcuts import TRUE as TRUE_PYSMT
 from pysmt.shortcuts import FALSE as FALSE_PYSMT
-from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
+from pysmt.shortcuts import Not, And, Or, Implies, Iff, AtMostOne
 from pysmt.shortcuts import simplify
 
 from cbverifier.specs.spec import Spec
@@ -232,6 +232,7 @@ class TSEncoder:
         if (self.use_flowdroid_model):
             # initializes the informations needed to compute the FlowDroid model
             self.fd_builder = FlowDroidModelBuilder(self.trace,
+                                                    self.gs.trace_map,
                                                     msg_key_sets)
             self.ground_specs = TSEncoder._remove_enable_spec(self.ground_specs)
         else:
@@ -432,8 +433,9 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         new_spec_set = set()
         for spec in spec_set:
             msg_ast = get_spec_rhs(spec.ast)
-            entry_type = get_node_type(node)
+            entry_type = get_node_type(msg_ast)
             assert (CALL_ENTRY == entry_type or CALL_EXIT == entry_type)
+            call_type = get_call_type(msg_ast)
             is_entry_msg = ((CI == call_type and CALL_ENTRY == entry_type) or
                             (CB == call_type and CALL_EXIT == entry_type))
 
@@ -1494,7 +1496,7 @@ class FlowDroidModelEncoder:
         # Encode the lifecycle for each component
         lifecycles = {}
         for c in self.fd_builder.get_components():
-            c_lifecycle[c] = self._encode_component_lifecycle(c)
+            lifecycles[c] = self._encode_component_lifecycle(c)
 
         # The encoding of enabled callback is "global"
         # since more callback can be enabled in several
@@ -1504,7 +1506,7 @@ class FlowDroidModelEncoder:
         # Encode the component scheduler
         # We must change the ts of the other components to add the
         # stuttering!
-        ts_scheduler = self._encode_components_scheduler(c_lifecycle,
+        ts_scheduler = self._encode_components_scheduler(lifecycles,
                                                          ts_callbacks)
         self.ts = ts_scheduler
 
@@ -1879,7 +1881,7 @@ class FlowDroidModelEncoder:
         return ts
 
     def _encode_components_scheduler(self,
-                                     c_lifecycle,
+                                     lifecycles,
                                      ts_callbacks):
 
         ts_sched = TransitionSystem()
@@ -1888,7 +1890,7 @@ class FlowDroidModelEncoder:
         """
         # 1. Encode a Boolean activation variable for each
         #    component
-        comp2actflags = []
+        comp2actflags = {}
         for c in self.fd_builder.get_components():
             c_act = "act_component_%s" % c.get_inst_value()
             self.cenc.add_var(c_act, 1)
@@ -1909,7 +1911,7 @@ class FlowDroidModelEncoder:
         for c in self.fd_builder.get_components():
             flag = comp2actflags[c]
             if (isinstance(c, Activity)):
-                lc_info = c_lifecycle[c]
+                lc_info = lifecycles[c]
 
                 pc_init = lc_info.get_label(Activity.INIT)
                 pc_init_next = self._get_next_formula(ts_sched.state_vars,
@@ -1971,7 +1973,7 @@ class FlowDroidModelEncoder:
                 # The fragment gets to completion before being
                 # preempted
 
-                lc_info = c_lifecycle[c]
+                lc_info = lifecycles[c]
 
                 pc_init = lc_info.get_label(Fragment.INIT)
                 pc_init_next = self._get_next_formula(ts_sched.state_vars,
@@ -1990,13 +1992,29 @@ class FlowDroidModelEncoder:
 
         # Add the encoding of all the callback involved in the
         # lifecycle
-        ts_scheduler.product(ts_callbacks)
+        ts_sched.product(ts_callbacks)
 
         # Compose the components' lifecycle
-        for c in self.fd_builder.get_components():
-            ts_scheduler.product(c)
+        for c_lc in lifecycles:
+            lc_info = lifecycles[c]
+            flag = comp2actflags[c]
 
-        return ts_scheduler
+            # Frame condition for the pc of the
+            # lifecycle automaton
+            fc_ts = TRUE_PYSMT()
+            for var in lc_info.ts.state_vars:
+                fc_ts = And(Iff(var,
+                                _get_next_formula(lc_info.ts.state_vars,var)),
+                            fc_ts)
+
+            # The automaton moves only when the flag is true
+            lc_info.ts.trans = And(Implies(flag, ts.trans),
+                                   Implies(Not(flag), fc_ts))
+
+            # Product with the scheduler
+            ts_sched.product(c)
+
+        return ts_sched
 
     def _enc_component_step(self, component,
                             component_callback,
