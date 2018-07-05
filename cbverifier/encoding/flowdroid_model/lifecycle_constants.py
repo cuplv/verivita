@@ -219,7 +219,7 @@ class Fragment(Component):
     ONDESTROY = "FRAGMENT_ONDESTROY"
     ONDETACH = "FRAGMENT_ONDETACH"
     ONSAVEINSTANCESTATE = "FRAGMENT_ONSAVEINSTANCESTATE"
-
+    ONATTACHFRAGMENT = "ACTIVITY_ONATTACHFRAGMENT"
 
     @staticmethod
     def is_class(class_name):
@@ -246,7 +246,12 @@ class Fragment(Component):
                       (Fragment.ONDESTROYVIEW, ["[CB] [ENTRY] [L] void ${MYTYPE}.onDestroyView()"]),
                       (Fragment.ONDESTROY, ["[CB] [ENTRY] [L] void ${MYTYPE}.onDestroy()"]),
                       (Fragment.ONDETACH, ["[CB] [ENTRY] [L] void ${MYTYPE}.onDetach()"]),
-                      (Fragment.ONSAVEINSTANCESTATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onSaveInstanceState(f : android.os.Bundle)"])]
+                      (Fragment.ONSAVEINSTANCESTATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onSaveInstanceState(f : android.os.Bundle)"]),
+                      (Fragment.ONATTACHFRAGMENT, ["[CB] [ENTRY] [f] void android.app.Activity.onAttachFragment(L : ${MYTYPE})"])]
+
+                      # (Fragment.ONATTACHFRAGMENT,
+                      #  [_substitute("[CB] [ENTRY] [f] void ${activity_class}.onAttachFragment(L : ${MYTYPE})",
+                      #               ("activity_class" : activity_class)) for activity_class in Activity.class_names])
 
         return cb_to_find
 
