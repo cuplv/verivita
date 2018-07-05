@@ -635,14 +635,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             fc = Implies(not_change_next, fc_msg)
             ts.trans = And(ts.trans, fc)
 
-        # [TODO] When using the FlowDroid model, be sure that we do not add
-        # the frame condition for all the back messages!
-        # This works under the assumption that the FlowDroid model is never used
-        # when the specification has any enabled/disabled rule
-        if (self.use_flowdroid_model):
-            raise NotImplementedError("Fix generation of frame condition when "\
-                                      "using the FlowDroid model")
-
         # If a message is not in the msg_key, then its value do not change.
         # This applies to all the messages that are not changed by a
         # specification
