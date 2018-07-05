@@ -40,52 +40,9 @@ class TestFlowDroid(unittest.TestCase):
 
             trace = CTrace()
 
-            for method_name in ["onCreate(android.os.Bundle)",
-                                "onPostCreate(android.os.Bundle)",
-                                "onSaveInstanceState(android.os.Bundle)",
-                                "onRestoreInstanceState(android.os.Bundle)"]:
-                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
-                               [act, bundle],
-                               None,
-                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
-                trace.add_msg(cb)
-
-            for method_name in ["onDestroy()",
-                                "onPause()",
-                                "onPostResume()",
-                                "onRestart()",
-                                "onResume()",
-                                "onStart()",
-                                "onStop()"]:
-                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
-                               [act],
-                               None,
-                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
-                trace.add_msg(cb)
-
-            cb = CCallback(1, 1, "", "java.lang.CharSequence %s.onCreateDescription()" % (class_name),
-                           [act],
-                           None,
-                           [TestGrounding._get_fmwkov("java.lang.CharSequence %s" % class_name,
-                                                      "onCreateDescription()", False)])
-            trace.add_msg(cb)
-
-            for method_name in ["onActivityStarted",
-                                "onActivityStopped",
-                                "onActivityResumed",
-                                "onActivityPaused",
-                                "onActivityDestroyed"]:
-                cb = CCallback(1, 1, "", "void android.app.Application.ActivityLifecycleCallbacks.%s(%s)" % (method_name,class_name),
-                               [lifecycle, act],
-                               None,
-                               [TestGrounding._get_fmwkov("void android.app.Application.ActivityLifecycleCallbacks", "%s(%s)" % (method_name, class_name), False)])
-                trace.add_msg(cb)
-
-            for method_name in ["onActivityCreated", "onActivitySaveInstanceState"]:
-                cb = CCallback(1, 1, "", "void android.app.Application.ActivityLifecycleCallbacks.%s(%s,android.os.Bundle)" % (method_name,class_name),
-                               [lifecycle, act, bundle],
-                               None,
-                               [TestGrounding._get_fmwkov("void android.app.Application.ActivityLifecycleCallbacks", "%s(%s,android.os.Bundle)" % (method_name, class_name), False)])
+            helper = ActivityHelper(class_name, act, bundle, lifecycle)
+            for (cb_name, _) in activity.get_class_cb():
+                cb = helper.get_cb(cb_name)
                 trace.add_msg(cb)
 
             return (trace, act)
@@ -376,3 +333,65 @@ class TestFlowDroid(unittest.TestCase):
         return cb
 
 
+    class ActivityHelper:
+        def __init__(self, class_name, act, bundle, lc_object):
+
+            self.class_name = class_name
+            self.bundle = bundle
+            self.act = act
+            self.lc_object = lc_object
+            self.cb_map = {}
+
+            for (method_name, key) in [("onCreate(android.os.Bundle)", Activity.ONCREATE),
+                                       ("onPostCreate(android.os.Bundle)", Activity.ONPOSTCREATE),
+                                       ("onSaveInstanceState(android.os.Bundle)", Activity.ONSAVEINSTANCESTATE),
+                                       ("onRestoreInstanceState(android.os.Bundle)", Activity.ONRESTOREINSTANCESTATE)]:
+                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
+                               [act, bundle],
+                               None,
+                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+                self.cb_map[key] = cb
+
+                trace.add_msg(cb)
+
+            for (method_name, key) in [("onDestroy()", Activity.ONDESTROY),
+                                       ("onPause()", Activity.ONPAUSE),
+                                       ("onPostResume()", Activity.ONPOSTRESUME),
+                                       ("onRestart()", Activity.ONRESTART),
+                                       ("onResume()", Activity.ONRESUME),
+                                       ("onStart()", Activity.ONSTART),
+                                       ("onStop()", Activity.ONSTOP)]:
+                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
+                               [act],
+                               None,
+                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+                self.cb_map[key] = cb
+
+            cb = CCallback(1, 1, "", "java.lang.CharSequence %s.onCreateDescription()" % (class_name),
+                           [act],
+                           None,
+                           [TestGrounding._get_fmwkov("java.lang.CharSequence %s" % class_name,
+                                                      "onCreateDescription()", False)])
+            self.cb_map[Activity.ONCREATEDESCRIPTION] = cb
+
+            for (method_name, key) in [("onActivityStarted", Activity.ONACTIVITYSTARTED),
+                                       ("onActivityStopped", Activity.ONACTIVITYSTOPPED),
+                                       ("onActivityResumed", Activity.ONACTIVITYRESUMED),
+                                       ("onActivityPaused", Activity.ONACTIVITYPAUSED),
+                                       ("onActivityDestroyed", Activity.ONACTIVITYDESTROYED)]:
+                cb = CCallback(1, 1, "", "void android.app.Application.ActivityLifecycleCallbacks.%s(%s)" % (method_name,class_name),
+                               [lifecycle, act],
+                               None,
+                               [TestGrounding._get_fmwkov("void android.app.Application.ActivityLifecycleCallbacks", "%s(%s)" % (method_name, class_name), False)])
+                self.cb_map[key] = cb
+
+            for (method_name, key) in [("onActivityCreated", Activity.ONACTIVITYCREATED),
+                                       ("onActivitySaveInstanceState", Activity.ONACTIVITYSAVEINSTANCESTATE)]:
+                cb = CCallback(1, 1, "", "void android.app.Application.ActivityLifecycleCallbacks.%s(%s,android.os.Bundle)" % (method_name,class_name),
+                               [lifecycle, act, bundle],
+                               None,
+                               [TestGrounding._get_fmwkov("void android.app.Application.ActivityLifecycleCallbacks", "%s(%s,android.os.Bundle)" % (method_name, class_name), False)])
+                self.cb_map[key] = cb
+
+        def get_cb(self, key):
+            return self.cb_map[key]
