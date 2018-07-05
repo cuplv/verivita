@@ -435,11 +435,11 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             msg_ast = get_spec_rhs(spec.ast)
             entry_type = get_node_type(msg_ast)
             assert (CALL_ENTRY == entry_type or CALL_EXIT == entry_type)
-            call_type = get_call_type(msg_ast)
-            is_entry_msg = ((CI == call_type and CALL_ENTRY == entry_type) or
-                            (CB == call_type and CALL_EXIT == entry_type))
+            call_type = get_node_type(get_call_type(msg_ast))
+            is_in_msg = ((CI == call_type and CALL_ENTRY == entry_type) or
+                         (CB == call_type and CALL_EXIT == entry_type))
 
-            if (is_entry_msg):
+            if (is_in_msg):
                 new_spec_set.add(spec)
         return new_spec_set
 
