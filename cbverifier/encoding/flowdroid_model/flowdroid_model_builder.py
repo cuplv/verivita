@@ -64,6 +64,7 @@ class FlowDroidModelBuilder:
                     if attached_obj in self.components_map:
                         fragment = self.components_map[attached_obj]
                         if isinstance(fragment, Fragment):
+                            activity.add_child_fragment(fragment)
                             fragment.add_parent_activity(activity)
                     stack.append(attached_obj)
 

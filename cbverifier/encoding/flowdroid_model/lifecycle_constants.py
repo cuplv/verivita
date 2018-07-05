@@ -192,6 +192,14 @@ class Activity(Component):
 
     def __init__(self, class_name, inst_value, trace_map):
         Component.__init__(self, class_name, inst_value, trace_map, "L", "MYTYPE")
+        self._child_fragments = set()
+
+    def add_child_fragment(self, fragment):
+        self._child_fragments.add(fragment)
+
+    def get_child_fragments(self):
+        return self._child_fragments
+
 
 
 class Fragment(Component):

@@ -1485,12 +1485,8 @@ class FlowDroidModelBuilder:
         # Encode the component scheduler
         # We must change the ts of the other components to add the
         # stuttering!
-        ts_scheduler = self._encode_components_scheduler()
-
-        # Compose all the components
-        ts_scheduler.product(ts_callbacks)
-        for c in self.fd_builder.get_components():
-            ts_scheduler.product(c)
+        ts_scheduler = self._encode_components_scheduler(c_lifecycle,
+                                                         ts_callbacks)
 
         return ts_scheduler
 
@@ -1864,11 +1860,125 @@ class FlowDroidModelBuilder:
 
         return ts
 
-    def _encode_components_scheduler(self):
+    def _encode_components_scheduler(self,
+                                     c_lifecycle,
+                                     ts_callbacks):
+
+        ts_sched = TransitionSystem()
+
         """ Encode the order of execution of each component
         """
-        raise NotImplementedError("_encode_components_scheduler not implemented")
+        # 1. Encode a Boolean activation variable for each
+        #    component
+        comp2actflags = []
+        for c in self.fd_builder.get_components():
+            c_act = "act_component_%s" % c.get_inst_value()
+            self.cenc.add_var(c_act, 1)
+            counter_vars = self.cenc.get_counter_var(c_act)
+            assert (len(counter_vars) == 1)
+            for act_flag in counter_vars:
+                ts_sched.add_var(act_flag)
+                comp2actflags[c] = act_flag
 
+        # 2. Enforce that at most one component is active
+        at_most_one = AtMostOne(set(comp2actflags.values()))
+        ts_sched.trans = And(at_most_one,
+                             self._get_next_formula(ts_sched.state_vars,
+                                                    at_most_one))
+
+        # 3. Encode when the activity lifecycle and a fragment
+        #    can be interrupted and resumed
+        for c in self.fd_builder.get_components():
+            flag = comp2actflags[c]
+            if (isinstance(c, Activity)):
+                lc_info = c_lifecycle[c]
+
+                pc_init = lc_info.get_label(Activity.INIT)
+                pc_init_next = self._get_next_formula(ts_sched.state_vars,
+                                                      pc_init)
+                pc_before_onstart = lc_info.get_label(Activity.BEFORE_ONSTART)
+                pc_before_onstart_next = self._get_next_formula(ts_sched.state_vars,
+                                                                pc_before_onstart)
+                activity_act = And(Not(flag),
+                                   self._get_next_formula(ts_sched.state_vars,
+                                                          flag))
+                activity_deact = And(flag,
+                                     Not(self._get_next_formula(ts_sched.state_vars,
+                                                                flag)))
+
+                atleastone_frag_act = FALSE_PYSMT()
+                atleatone_frag_deact = FALSE_PYSMT()
+                for fragment in c.get_child_fragments:
+                    flag_frag = comp2actflags[fragment]
+                    frag_act = And(Not(flag_frag),
+                                   self._get_next_formula(ts_sched.state_vars,
+                                                          flag_frag))
+                    frag_deact = And(flag_frag,
+                                     Not(self._get_next_formula(ts_sched.state_vars,
+                                                                flag_frag)))
+
+                    atleastone_frag_act = Or(atleastone_frag_act,
+                                             frag_act)
+                    atleatone_frag_deact = Or(atleatone_frag_deact,
+                                              frag_deact)
+
+                # when an activity can be de-activated
+                #
+                # Must be in the intial state.
+                # Must be before onstart, and one of its fragment must be
+                # activated next
+                activity_sched = Implies(activity_deact,
+                                         Or(pc_init_next,
+                                            And(pc_before_onstart_next,
+                                                atleatone_frag_act)))
+
+                # when an activity can be activated
+                #
+                # Must be in the intial state
+                # Must be before onstart, and one of its fragment must
+                # be deactivated next
+                #
+                # The final condition ensures that an activity
+                # gets to completion before being preempted or that
+                # it is before onstart and it is preempted by one
+                # of its fragments
+                activity_sched = And(activity_sched,
+                                     Implies(activity_act,
+                                             Or(pc_init_next,
+                                                And(pc_before_onstart_next,
+                                                    atleatone_frag_deact))))
+                ts_sched.trans = And(ts_sched.trans, activity_sched)
+
+            elif (isinstance(c, Fragment)):
+                # The fragment gets to completion before being
+                # preempted
+
+                lc_info = c_lifecycle[c]
+
+                pc_init = lc_info.get_label(Fragment.INIT)
+                pc_init_next = self._get_next_formula(ts_sched.state_vars,
+                                                      pc_init)
+                fragment_act = And(Not(flag),
+                                   self._get_next_formula(ts_sched.state_vars,
+                                                          flag))
+                fragment_deact = And(flag,
+                                     Not(self._get_next_formula(ts_sched.state_vars,
+                                                                flag)))
+
+                fragment_sched = Iff(fragment_deact, pc_init_next)
+                ts_sched.trans = And(ts_sched.trans, fragment_sched)
+            else:
+                raise Exception("Unknown component")
+
+        # Add the encoding of all the callback involved in the
+        # lifecycle
+        ts_scheduler.product(ts_callbacks)
+
+        # Compose the components' lifecycle
+        for c in self.fd_builder.get_components():
+            ts_scheduler.product(c)
+
+        return ts_scheduler
 
     def _enc_component_step(self, component,
                             component_callback,
