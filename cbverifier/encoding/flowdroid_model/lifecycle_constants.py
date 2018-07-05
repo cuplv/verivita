@@ -138,7 +138,6 @@ class Activity(Component):
     ONSTART = "ACTIVITY_ONSTART"
     ONSTOP = "ACTIVITY_ONSTOP"
     ONRESTOREINSTANCESTATE = "ACTIVITY_ONRESTOREINSTANCESTATE"
-
     ONACTIVITYSTARTED = "ACTIVITY_ONACTIVITYSTARTED"
     ONACTIVITYSTOPPED = "ACTIVITY_ONACTIVITYSTOPPED"
     ONACTIVITYSAVEINSTANCESTATE = "ACTIVITY_ONACTIVITYSAVEINSTANCESTATE"
@@ -155,6 +154,10 @@ class Activity(Component):
         return Activity.class_names
 
     def get_class_cb(self):
+        return Activity.get_class_cb_static()
+
+    @staticmethod
+    def get_class_cb_static():
         """ Defines the method signatures of the Activity
         lifecycle methods.
 
@@ -241,6 +244,10 @@ class Fragment(Component):
         self._parent_activities = set()
 
     def get_class_cb(self):
+        return Fragment.get_class_cb_static()
+
+    @staticmethod
+    def get_class_cb_static():
         cb_to_find = [(Fragment.ONCREATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onCreate(f : android.os.Bundle)"]),
                       (Fragment.ONATTACH, ["[CB] [ENTRY] [L] void ${MYTYPE}.onAttach(f : android.app.Activity)"]),
                       (Fragment.ONCREATEVIEW, ["[CB] [ENTRY] [L] android.view.View ${MYTYPE}.onCreateView(f1 : android.view.LayoutInflater, f2 : android.view.ViewGroup, f3 : android.os.Bundle)"]),

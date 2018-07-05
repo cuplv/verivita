@@ -39,12 +39,10 @@ class TestFlowDroid(unittest.TestCase):
             lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
 
             trace = CTrace()
-
-            helper = ActivityHelper(class_name, act, bundle, lifecycle)
-            for (cb_name, _) in activity.get_class_cb():
+            helper = TestFlowDroid.ActivityHelper(class_name, act, bundle, lifecycle)
+            for (cb_name, _) in Activity.get_class_cb_static():
                 cb = helper.get_cb(cb_name)
                 trace.add_msg(cb)
-
             return (trace, act)
 
         for class_name in Activity.class_names:
@@ -52,7 +50,7 @@ class TestFlowDroid(unittest.TestCase):
             traceMap = TraceMap(trace)
 
             activity = Activity(class_name, act, traceMap)
-            for (cb_name, _) in activity.get_class_cb():
+            for (cb_name, _) in Activity.get_class_cb_static():
                 self.assertTrue(activity.has_trace_msg(cb_name))
 
     def test_fragment_lifecycle_callbacks(self):
@@ -66,59 +64,11 @@ class TestFlowDroid(unittest.TestCase):
             view = TestGrounding._get_obj("6","android.view.View")
 
             trace = CTrace()
-
-            for method_name in ["onStart()",
-                                "onResume()",
-                                "onPause()",
-                                "onStop()",
-                                "onDestroyView()",
-                                "onDestroy()",
-                                "onDetach()"]:
-                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
-                               [fragment],
-                               None,
-                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+            helper = TestFlowDroid.FragmentHelper(class_name, fragment, act, bundle,
+                                                  inflater, viewgroup, view)
+            for (cb_name, _) in Fragment.get_class_cb_static():
+                cb = helper.get_cb(cb_name)
                 trace.add_msg(cb)
-
-
-            for method_name in ["onCreate(android.os.Bundle)",
-                                "onActivityCreated(android.os.Bundle)",
-                                "onSaveInstanceState(android.os.Bundle)"]:
-                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
-                               [fragment, bundle],
-                               None,
-                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
-                trace.add_msg(cb)
-
-            for method_name in ["onAttach(android.app.Activity)",
-                                "onViewStateRestored(android.app.Activity)"]:
-                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
-                               [fragment, act],
-                               None,
-                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
-                trace.add_msg(cb)
-
-            for method_name in ["onViewCreated(android.view.View,android.os.Bundle)"]:
-                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
-                               [fragment, view, bundle],
-                               None,
-                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
-                trace.add_msg(cb)
-
-            for method_name in ["onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)"]:
-                cb = CCallback(1, 1, "", "android.view.View %s.%s" % (class_name, method_name),
-                               [fragment, inflater, viewgroup, bundle],
-                               view,
-                               [TestGrounding._get_fmwkov("android.view.View %s" % class_name, method_name, False)])
-                trace.add_msg(cb)
-
-            cb = CCallback(1, 1, "", "void android.app.Activity.onAttachFragment(%s)" % class_name,
-                           [act,fragment],
-                           None,
-                           [TestGrounding._get_fmwkov("void android.app.Activity", "onAttachFragment(%s)" % class_name, False)])
-            trace.add_msg(cb)
-
-
             return (trace, fragment)
 
 
@@ -127,7 +77,7 @@ class TestFlowDroid(unittest.TestCase):
             traceMap = TraceMap(trace)
 
             fragment = Fragment(class_name, act, traceMap)
-            for (cb_name, _) in fragment.get_class_cb():
+            for (cb_name, _) in Fragment.get_class_cb_static():
                 self.assertTrue(fragment.has_trace_msg(cb_name))
 
 
@@ -333,13 +283,14 @@ class TestFlowDroid(unittest.TestCase):
         return cb
 
 
+
     class ActivityHelper:
-        def __init__(self, class_name, act, bundle, lc_object):
+        def __init__(self, class_name, act, bundle, lifecycle):
 
             self.class_name = class_name
             self.bundle = bundle
             self.act = act
-            self.lc_object = lc_object
+            self.lifecycle = lifecycle
             self.cb_map = {}
 
             for (method_name, key) in [("onCreate(android.os.Bundle)", Activity.ONCREATE),
@@ -351,8 +302,6 @@ class TestFlowDroid(unittest.TestCase):
                                None,
                                [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
                 self.cb_map[key] = cb
-
-                trace.add_msg(cb)
 
             for (method_name, key) in [("onDestroy()", Activity.ONDESTROY),
                                        ("onPause()", Activity.ONPAUSE),
@@ -395,3 +344,69 @@ class TestFlowDroid(unittest.TestCase):
 
         def get_cb(self, key):
             return self.cb_map[key]
+
+    class FragmentHelper:
+        def get_cb(self, key):
+            return self.cb_map[key]
+
+        def __init__(self, class_name, fragment, act, bundle,
+                     inflater, viewgroup, view):
+            self.class_name = class_name
+            self.fragment = fragment
+            self.act = act
+            self.bundle = bundle
+            self.inflater = inflater
+            self.viewgroup = viewgroup
+            self.view = view
+            self.cb_map = {}
+
+            for method_name, key in [("onStart()", Fragment.ONSTART),
+                                     ("onResume()", Fragment.ONRESUME),
+                                     ("onPause()", Fragment.ONPAUSE),
+                                     ("onStop()", Fragment.ONSTOP),
+                                     ("onDestroyView()", Fragment.ONDESTROYVIEW),
+                                     ("onDestroy()", Fragment.ONDESTROY),
+                                     ("onDetach()", Fragment.ONDETACH)]:
+                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
+                               [fragment],
+                               None,
+                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+                self.cb_map[key] = cb
+
+
+            for method_name, key in [("onCreate(android.os.Bundle)", Fragment.ONCREATE),
+                                     ("onActivityCreated(android.os.Bundle)", Fragment.ONACTIVITYCREATED),
+                                     ("onSaveInstanceState(android.os.Bundle)", Fragment.ONSAVEINSTANCESTATE)]:
+                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
+                               [fragment, bundle],
+                               None,
+                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+                self.cb_map[key] = cb
+
+            for method_name, key in [("onAttach(android.app.Activity)", Fragment.ONATTACH),
+                                     ("onViewStateRestored(android.app.Activity)", Fragment.ONVIEWSTATERESTORED)]:
+                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
+                               [fragment, act],
+                               None,
+                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+                self.cb_map[key] = cb
+
+            for method_name, key in [("onViewCreated(android.view.View,android.os.Bundle)", Fragment.ONVIEWCREATED)]:
+                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
+                               [fragment, view, bundle],
+                               None,
+                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+                self.cb_map[key] = cb
+
+            for method_name, key in [("onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)", Fragment.ONCREATEVIEW)]:
+                cb = CCallback(1, 1, "", "android.view.View %s.%s" % (class_name, method_name),
+                               [fragment, inflater, viewgroup, bundle],
+                               view,
+                               [TestGrounding._get_fmwkov("android.view.View %s" % class_name, method_name, False)])
+                self.cb_map[key] = cb
+
+            cb = CCallback(1, 1, "", "void android.app.Activity.onAttachFragment(%s)" % class_name,
+                           [act,fragment],
+                           None,
+                           [TestGrounding._get_fmwkov("void android.app.Activity", "onAttachFragment(%s)" % class_name, False)])
+            self.cb_map[Fragment.ONATTACHFRAGMENT] = cb
