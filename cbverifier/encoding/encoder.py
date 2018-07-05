@@ -1483,7 +1483,7 @@ class FlowDroidModelBuilder:
         ts_callbacks = self._encode_callbacks_in_lifecycle(lifecycles)
 
         # Encode the component scheduler
-        # We must change the ts of the other components to add the 
+        # We must change the ts of the other components to add the
         # stuttering!
         ts_scheduler = self._encode_components_scheduler()
 
@@ -1503,17 +1503,14 @@ class FlowDroidModelBuilder:
         constraints, allow each component lifecycle to
         interleave with each other.
         """
-
         if (isinstance(component, Activity)):
             lifecycle_encoding = self._encode_activity_lifecycle(component)
         elif (isinstance(component, Fragment)):
             lifecycle_encoding = self._encode_fragment_lifecycle(component)
-            raise NotImplementedError("Fragment!")
         else:
             raise Exception("Unknown component!")
 
         return lifecycle_encoding
-
 
     def _encode_activity_lifecycle(self, activity):
         """
@@ -1630,11 +1627,11 @@ class FlowDroidModelBuilder:
                                           ts, pc, pc_val, pc_val + 1,
                                           True)
         # line 930
-        pc_val = self._enc_component_step(activity,
-                                          Activity.ONACTIVITYSAVEINSTANCESTATE,
-                                          ts, pc, before_onActivitySaveInstanceState_label,
-                                          before_onResume_label,
-                                          True)
+        self._enc_component_step(activity,
+                                 Activity.ONACTIVITYSAVEINSTANCESTATE,
+                                 ts, pc, before_onActivitySaveInstanceState_label,
+                                 before_onResume_label,
+                                 True)
 
         # line 934
         before_onStop_label = pc_val
@@ -1650,38 +1647,38 @@ class FlowDroidModelBuilder:
                                           pc_val + 1,
                                           True)
         # line 943
-        pc_val = self._enc_component_step(activity,
-                                          Activity.ONACTIVITYSTOPPED,
-                                          ts, pc,
-                                          before_onActivityStopped_label,
-                                          before_onStop_label,
-                                          True)
+        self._enc_component_step(activity,
+                                 Activity.ONACTIVITYSTOPPED,
+                                 ts, pc,
+                                 before_onActivityStopped_label,
+                                 before_onStop_label,
+                                 True)
         # line 952
         before_onRestart_label = pc_val
         pc_val = self._enc_component_step(activity,
                                           Activity.ONRESTART,
                                           ts, pc, before_onRestart_label, pc_val + 1)
         # line 953
-        pc_val = self._enc_component_step(activity,
-                                          Activity.ONRESTART,
-                                          ts, pc, before_onRestart_label, before_onResume_label)
+        self._enc_component_step(activity,
+                                 Activity.ONRESTART,
+                                 ts, pc, before_onRestart_label, before_onResume_label)
         # line 958
         before_onDestroy_label = pc_val
-        pc_val = self._enc_component_step(activity,
-                                          Activity.ONDESTROY,
-                                          ts, pc, pc_val, before_onResume_label)
+        self._enc_component_step(activity,
+                                 Activity.ONDESTROY,
+                                 ts, pc, pc_val, before_onResume_label)
         # line 948
-        pc_val = self._enc_component_step(activity,
-                                          Activity.ONACTIVITYSTOPPED,
-                                          ts, pc,
-                                          pc_val,
-                                          before_onDestroy_label,
-                                          True)
+        self._enc_component_step(activity,
+                                 Activity.ONACTIVITYSTOPPED,
+                                 ts, pc,
+                                 pc_val,
+                                 before_onDestroy_label,
+                                 True)
         # line 960 - go back to the beginning
-        pc_val = self._enc_component_step(activity,
-                                          Activity.ONACTIVITYDESTROYED,
-                                          ts, pc, 0, before_onResume_label,
-                                          True)
+        self._enc_component_step(activity,
+                                 Activity.ONACTIVITYDESTROYED,
+                                 ts, pc, 0, before_onResume_label,
+                                 True)
 
         lc_info = ActivityLcInfo(ts, pc, pc_size)
         lc_info.add_label(ActivityLcInfo.INIT,
@@ -1703,7 +1700,7 @@ class FlowDroidModelBuilder:
         """
         ts = TransitionSystem()
 
-        pc_size = TODO
+        pc_size = 13 # init state + 12 (+ 1) of pc counter
         pc = "pc_%s" % fragment.get_inst_value()
         self.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
         for v in self.cenc.get_counter_var(pc): ts.add_var(v)
@@ -1715,11 +1712,11 @@ class FlowDroidModelBuilder:
         ts.trans = FALSE_PYSMT() # disjunction of transitions
 
         # line 821, 820
-        pc_val = self._enc_component_step(fragment,
-                                          Fragment.ONATTACHFRAGMENT,
-                                          ts, pc, pc_val, pc_val)
+        self._enc_component_step(fragment,
+                                 Fragment.ONATTACHFRAGMENT,
+                                 ts, pc, pc_val, pc_val)
 
-        before_onAttach_label = pc
+        before_onAttach_label = pc_val
 
         # line 986
         pc_val = self._enc_component_step(fragment,
@@ -1731,7 +1728,7 @@ class FlowDroidModelBuilder:
                                           Fragment.ONCREATE,
                                           ts, pc, pc_val, pc_val+1,
                                           False, True)
-        before_onCreateview_label = pc
+        before_onCreateview_label = pc_val
         # line 998
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONCREATEVIEW,
@@ -1747,7 +1744,7 @@ class FlowDroidModelBuilder:
                                           Fragment.ONACTIVITYCREATED,
                                           ts, pc, pc_val, pc_val+1,
                                           False, True)
-        before_onStart_label = pc
+        before_onStart_label = pc_val
         # line 1015
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONSTART,
@@ -1763,9 +1760,9 @@ class FlowDroidModelBuilder:
                                           Fragment.ONPAUSE,
                                           ts, pc, pc_val, pc_val+1)
         # line 1026
-        pc_val = self._enc_component_step(fragment,
-                                          Fragment.ONPAUSE,
-                                          ts, pc, pc_val, before_onResume_label)
+        self._enc_component_step(fragment,
+                                 Fragment.ONPAUSE,
+                                 ts, pc, pc_val, before_onResume_label)
 
         # line 1029
         pc_val = self._enc_component_step(fragment,
@@ -1778,15 +1775,15 @@ class FlowDroidModelBuilder:
                                           ts, pc, before_onStop_label,
                                           pc_val+1)
         # line 1033
-        pc_val = self._enc_component_step(fragment,
-                                          Fragment.ONSTOP,
-                                          ts, pc, before_onStop_label,
-                                          before_onCreateview_label)
+        self._enc_component_step(fragment,
+                                 Fragment.ONSTOP,
+                                 ts, pc, before_onStop_label,
+                                 before_onCreateview_label)
         # line 1034
-        pc_val = self._enc_component_step(fragment,
-                                          Fragment.ONSTOP,
-                                          ts, pc, before_onStop_label,
-                                          before_onStart_label)
+        self._enc_component_step(fragment,
+                                 Fragment.ONSTOP,
+                                 ts, pc, before_onStop_label,
+                                 before_onStart_label)
 
         # line 1037
         before_onDestroyView_label = pc_val
@@ -1794,27 +1791,26 @@ class FlowDroidModelBuilder:
                                           Fragment.ONDESTROYVIEW,
                                           ts, pc, before_onDestroyView_label, pc_val+1)
         # line 1038
-        pc_val = self._enc_component_step(fragment,
-                                          Fragment.ONDESTROYVIEW,
-                                          ts, pc, before_onDestroyView_label,
-                                          before_onCreateview_label)
+        self._enc_component_step(fragment,
+                                 Fragment.ONDESTROYVIEW,
+                                 ts, pc, before_onDestroyView_label,
+                                 before_onCreateview_label)
         # line 1041
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONDESTROY,
                                           ts, pc, pc_val, pc_val+1)
-        # line 1044
+        # line 1044, 1045
         before_onDetach_label = pc_val
-        pc_val = self._enc_component_step(fragment,
-                                          Fragment.ONDETACH,
-                                          ts, pc, before_onDetach_label, entry_label)
-        # line 1045
-        pc_val = self._enc_component_step(fragment,
-                                          Fragment.ONDETACH,
-                                          ts, pc, before_onAttach_label, entry_label)
+        self._enc_component_step(fragment,
+                                 Fragment.ONDETACH,
+                                 ts, pc, before_onDetach_label, entry_label)
 
+        lc_info = FragmentLcInfo(ts, pc, pc_size)
+        lc_info.add_label(FragmentLcInfo.INIT,
+                          self._eq_val(pc, entry_label))
+        lc_info.add_label(Fragment.END,
+                          self._eq_val(pc, pc_val))
         return lc_info
-
-
 
 
     def _encode_callbacks_in_lifecycle(self, lifecycles):
@@ -1983,7 +1979,6 @@ class FlowDroidModelBuilder:
     class FragmentLcInfo(LcInfo):
         INIT = "init"
         END = "end"
-        IS_ACTIVE= "is_active"
 
         def __init__(self, ts, pc, pc_size):
             LcInfo.__init__(self, ts, pc, pc_size)
