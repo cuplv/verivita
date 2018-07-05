@@ -29,30 +29,30 @@ def do_filter(iterable):
                 if(app):
                     steps = app.groups(1)
 
-        if line.startswith('The trace cannot be simulated'):
+        elif line.startswith('The trace cannot be simulated'):
             result = 'Block'
 
             app = re.match("The trace cannot be simulated \(it gets stuck at the (\d+) transition\)", line)
 
             if (app):
                 steps = app.group(1)
-        if line.startswith("Exception: An error happened reading the trace"):
+        elif line.startswith("Exception: An error happened reading the trace"):
             result = "ReadError"
-        if line.startswith("MemoryError"):
+        elif line.startswith("MemoryError"):
             result = "MemoryError"
-        if line.startswith("z3types.Z3Exception: out of memory"):
+        elif line.startswith("z3types.Z3Exception: out of memory"):
             result = "MemoryError"
-        if line.startswith("cbverifier.traces.ctrace.MalformedTraceException"):
+        elif line.startswith("cbverifier.traces.ctrace.MalformedTraceException"):
             result = "ReadError"
-        if line.startswith("Exception MemoryError: MemoryError()"):
+        elif line.startswith("Exception MemoryError: MemoryError()"):
             result = "MemoryError"
-        if line.startswith("KeyError: ('"):
+        elif line.startswith("KeyError: ('"):
             result = "KeyError"
 
 
 
         # no bug found - unknown result
-        if time > 3600 #line.startswith("KeyboardInterrupt"):
+        if time > 3600: #line.startswith("KeyboardInterrupt"):
             to = True
             time = "Timeout"
             result = "?"
