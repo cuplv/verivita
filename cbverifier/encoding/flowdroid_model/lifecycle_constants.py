@@ -40,19 +40,15 @@ class Component:
                 # parse the message
                 cb_name_subs = _substitute(cb_name,
                                            {self.get_mytype_const() : class_name})
-
                 call_ast = spec_parser.parse_call(cb_name_subs)
 
                 if call_ast is None:
-                    error_msg = "Error parsing the back message %s.\n" \
-                                "The original template message was %s with the " \
-                                "following substitutsion:\n" \
-                                "%s = %s\n" \
-                                "%s = %s\n\n" % (cb_name, cb_name,
+                    error_msg = "Error parsing the back message %s.\n\n" \
+                                "The original template message was %s\n" \
+                                "\tSubstitution: " \
+                                "%s = %s\n\n" % (cb_name_subs, cb_name,
                                                  self.get_mytype_const(),
-                                                 cb_name_subs,
-                                                 self.get_my_var_name(),
-                                                 self.get_inst_value())
+                                                 class_name)
                     raise Exception(error_msg)
 
                 # filter the message for assignments such that
@@ -209,7 +205,21 @@ class Fragment(Component):
                    "android.webkit.WebViewFragment",
                    "android.support.v7.preference.PreferenceFragmentCompat"]
 
-    INIT = "INIT"
+    ONCREATE = "FRAGMENT_ONCREATE"
+    ONATTACH = "FRAGMENT_ONATTACH"
+    ONCREATEVIEW = "FRAGMENT_ONCREATEVIEW"
+    ONVIEWCREATED = "FRAGMENT_ONVIEWCREATED"
+    ONSTART = "FRAGMENT_ONSTART"
+    ONACTIVITYCREATED = "FRAGMENT_ONACTIVITYCREATED"
+    ONVIEWSTATERESTORED = "FRAGMENT_ONVIEWSTATERESTORED"
+    ONRESUME = "FRAGMENT_ONRESUME"
+    ONPAUSE = "FRAGMENT_ONPAUSE"
+    ONSTOP = "FRAGMENT_ONSTOP"
+    ONDESTROYVIEW = "FRAGMENT_ONDESTROYVIEW"
+    ONDESTROY = "FRAGMENT_ONDESTROY"
+    ONDETACH = "FRAGMENT_ONDETACH"
+    ONSAVEINSTANCESTATE = "FRAGMENT_ONSAVEINSTANCESTATE"
+
 
     @staticmethod
     def is_class(class_name):
@@ -220,39 +230,33 @@ class Fragment(Component):
 
     def __init__(self, class_name, inst_value, trace_map):
         Component.__init__(self, class_name, inst_value, trace_map, "L", "MYTYPE")
+        self._parent_activities = set()
 
     def get_class_cb(self):
-        cb_to_find = [(Fragment.INIT, ["[CB] [ENTRY] [L] void ${MYTYPE}.<init>()"])]
+        cb_to_find = [(Fragment.ONCREATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onCreate(f : android.os.Bundle)"]),
+                      (Fragment.ONATTACH, ["[CB] [ENTRY] [L] void ${MYTYPE}.onAttach(f : android.app.Activity)"]),
+                      (Fragment.ONCREATEVIEW, ["[CB] [ENTRY] [L] android.view.View ${MYTYPE}.onCreateView(f1 : android.view.LayoutInflater, f2 : android.view.ViewGroup, f3 : android.os.Bundle)"]),
+                      (Fragment.ONVIEWCREATED, ["[CB] [ENTRY] [L] void ${MYTYPE}.onViewCreated(f1 : android.view.View, f2 : android.os.Bundle)"]),
+                      (Fragment.ONSTART, ["[CB] [ENTRY] [L] void ${MYTYPE}.onStart()"]),
+                      (Fragment.ONACTIVITYCREATED, ["[CB] [ENTRY] [L] void ${MYTYPE}.onActivityCreated(f : android.os.Bundle)"]),
+                      (Fragment.ONVIEWSTATERESTORED, ["[CB] [ENTRY] [L] void ${MYTYPE}.onViewStateRestored(f : android.app.Activity)"]),
+                      (Fragment.ONRESUME, ["[CB] [ENTRY] [L] void ${MYTYPE}.onResume()"]),
+                      (Fragment.ONPAUSE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onPause()"]),
+                      (Fragment.ONSTOP, ["[CB] [ENTRY] [L] void ${MYTYPE}.onStop()"]),
+                      (Fragment.ONDESTROYVIEW, ["[CB] [ENTRY] [L] void ${MYTYPE}.onDestroyView()"]),
+                      (Fragment.ONDESTROY, ["[CB] [ENTRY] [L] void ${MYTYPE}.onDestroy()"]),
+                      (Fragment.ONDETACH, ["[CB] [ENTRY] [L] void ${MYTYPE}.onDetach()"]),
+                      (Fragment.ONSAVEINSTANCESTATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onSaveInstanceState(f : android.os.Bundle)"])]
+
         return cb_to_find
 
+    def add_parent_activity(self, activity):
+        """ Add one activity that attach the fragment (or
+        a fragment that attach the fragment) """
+        self._parent_activities.add(activity)
 
+    def get_parent_activities(self):
+        return self._parent_activities
 
-    # TODO
-
-# onStart","onResume", "onPause","onSaveInstanceState","onDestroy","onDetach",
-#           "onCreateView","onViewCreated","onDestroyView", "<init>","onStop","onCreate","onAttach", "onActivityCreated", "isDetached", "isResumed"},
-
-             # "android.support.v14.preference.EditTextPreferenceDialogFragment",
-             # "android.support.v14.preference.ListPreferenceDialogFragment",
-             # "android.support.v14.preference.MultiSelectListPreferenceDialogFragment",
-             # "android.support.v14.preference.PreferenceDialogFragment",
-             # "android.support.v17.leanback.app.BrandedFragment",
-             # "android.support.v17.leanback.app.GuidedStepFragment",
-             # "android.support.v17.leanback.app.HeadersFragment",
-             # "android.support.v17.preference.LeanbackPreferenceDialogFragment",
-             # "android.support.v17.preference.LeanbackSettingsFragment",
-             # "android.support.v17.leanback.app.OnboardingFragment",
-             # "android.support.v17.leanback.app.PlaybackFragment",
-             # "android.support.v17.leanback.app.RowsFragment",
-             # "android.support.v17.leanback.app.SearchFragment",
-             # "android.support.v17.preference.BaseLeanbackPreferenceFragment",
-             # "android.support.v17.leanback.app.BrowseFragment",
-             # "android.support.v17.leanback.app.DetailsFragment",
-             # "android.support.v17.leanback.app.ErrorFragment",
-             # "android.support.v17.preference.LeanbackListPreferenceDialogFragment",
-             # "android.support.v17.preference.LeanbackPreferenceFragment",
-             # "android.support.v17.leanback.app.PlaybackOverlayFragment",
-             # "android.support.v17.leanback.app.VerticalGridFragment",
-             # "android.support.v17.leanback.app.VideoFragment"
 
 

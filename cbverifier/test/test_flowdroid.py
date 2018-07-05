@@ -32,12 +32,13 @@ class TestFlowDroid(unittest.TestCase):
         """ Test the creation of the ad-hoc classes used to represent
         the activity lifecycle callbacks
         """
-        trace = CTrace()
 
         def _gen_activity_trace(class_name):
             act = TestGrounding._get_obj("1",class_name)
             bundle = TestGrounding._get_obj("2","android.os.Bundle")
             lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
+
+            trace = CTrace()
 
             for method_name in ["onCreate(android.os.Bundle)",
                                 "onPostCreate(android.os.Bundle)",
@@ -96,6 +97,74 @@ class TestFlowDroid(unittest.TestCase):
             activity = Activity(class_name, act, traceMap)
             for (cb_name, _) in activity.get_class_cb():
                 self.assertTrue(activity.has_trace_msg(cb_name))
+
+    def test_fragment_lifecycle_callbacks(self):
+        """ """
+        def _gen_fragment_trace(class_name):
+            fragment = TestGrounding._get_obj("1",class_name)
+            bundle = TestGrounding._get_obj("2","android.os.Bundle")
+            act = TestGrounding._get_obj("3","android.app.Activity")
+            inflater = TestGrounding._get_obj("4","android.view.LayoutInflater")
+            viewgroup = TestGrounding._get_obj("5","android.view.ViewGroup")
+            view = TestGrounding._get_obj("6","android.view.View")
+
+            trace = CTrace()
+
+            for method_name in ["onStart()",
+                                "onResume()",
+                                "onPause()",
+                                "onStop()",
+                                "onDestroyView()",
+                                "onDestroy()",
+                                "onDetach()"]:
+                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
+                               [fragment],
+                               None,
+                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+                trace.add_msg(cb)
+
+
+            for method_name in ["onCreate(android.os.Bundle)",
+                                "onActivityCreated(android.os.Bundle)",
+                                "onSaveInstanceState(android.os.Bundle)"]:
+                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
+                               [fragment, bundle],
+                               None,
+                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+                trace.add_msg(cb)
+
+            for method_name in ["onAttach(android.app.Activity)",
+                                "onViewStateRestored(android.app.Activity)"]:
+                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
+                               [fragment, act],
+                               None,
+                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+                trace.add_msg(cb)
+
+            for method_name in ["onViewCreated(android.view.View,android.os.Bundle)"]:
+                cb = CCallback(1, 1, "", "void %s.%s" % (class_name, method_name),
+                               [fragment, view, bundle],
+                               None,
+                               [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+                trace.add_msg(cb)
+
+            for method_name in ["onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)"]:
+                cb = CCallback(1, 1, "", "android.view.View %s.%s" % (class_name, method_name),
+                               [fragment, inflater, viewgroup, bundle],
+                               view,
+                               [TestGrounding._get_fmwkov("android.view.View %s" % class_name, method_name, False)])
+                trace.add_msg(cb)
+
+            return (trace, fragment)
+
+
+        for class_name in Fragment.class_names:
+            (trace, act) = _gen_fragment_trace(class_name)
+            traceMap = TraceMap(trace)
+
+            fragment = Fragment(class_name, act, traceMap)
+            for (cb_name, _) in fragment.get_class_cb():
+                self.assertTrue(fragment.has_trace_msg(cb_name))
 
 
     def _get_sample_trace(self):
