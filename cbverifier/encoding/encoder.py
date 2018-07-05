@@ -213,6 +213,8 @@ class TSEncoder:
         self.error_prop = None
         self.stats = stats
         self.use_flowdroid_model = use_flowdroid_model
+        self.fd_builder = None
+        self.fd_enc = None
 
         # 2. computes the ground specification
         logging.info("Total number of specs (before grounding): %d" % (len(specs)))
@@ -221,31 +223,27 @@ class TSEncoder:
                                                            self.stats)
         logging.info("Total specs after grounding: %d" % (len(self.ground_specs)))
 
-        # initializes the informations needed to compute the FlowDroid model
-        if (self.use_flowdroid_model):
-            # [TODO] Add check to verify that we do not have enable/disable
-            # in the current set of specification
-            msg_key_sets = set()
-            for spec in self.ground_specs:
-                for call in spec.get_spec_calls():
-                    msgs_key_sets.add(EncoderUtils.get_key_from_call(call))
+        # collect the calls appearing in the ground specs
+        msg_key_sets = set()
+        for spec in self.ground_specs:
+            for call in spec.get_spec_calls():
+                msg_key_sets.add(EncoderUtils.get_key_from_call(call))
 
-            self.flowdroid_model_builder = FlowDroidModelBuilder(self.trace,
-                                                                 msg_key_sets)
+        if (self.use_flowdroid_model):
+            # initializes the informations needed to compute the FlowDroid model
+            self.fd_builder = FlowDroidModelBuilder(self.trace,
+                                                    msg_key_sets)
+            self.ground_specs = TSEncoder._remove_enable_spec(self.ground_specs)
         else:
-            self.flowdroid_model_builder = None
+            self.fd_builder = None
 
         # 3. Remove all the messages in the trace that do not
         # appear in the specification.
         if (ignore_msgs):
-            # collect the calls appearing in the ground specs
             if (self.use_flowdroid_model):
-                self.spec_msgs = self.flowdroid_model_builder.get_msgs_keys()
+                self.spec_msgs = self.fd_builder.get_msgs_keys()
             else:
-                self.spec_msgs = set()
-                for spec in self.ground_specs:
-                    for call in spec.get_spec_calls():
-                        self.spec_msgs.add(EncoderUtils.get_key_from_call(call))
+                self.spec_msgs = msg_key_sets
 
             # Collect the statistics on the trace
             self._is_msg_visible = self._is_msg_visible_all
@@ -421,6 +419,27 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         return ground_specs
 
+    @staticmethod
+    def _remove_enable_spec(spec_set):
+        # Remove all the enable/disable specification
+        #
+        # The flowdroid model replaces the specifications used for
+        # enabling/disabling messages.
+        #
+        # We still use the enable/disable specification to have the
+        # filtering
+        #
+        new_spec_set = set()
+        for spec in spec_set:
+            msg_ast = get_spec_rhs(spec.ast)
+            entry_type = get_node_type(node)
+            assert (CALL_ENTRY == entry_type or CALL_EXIT == entry_type)
+            is_entry_msg = ((CI == call_type and CALL_ENTRY == entry_type) or
+                            (CB == call_type and CALL_EXIT == entry_type))
+
+            if (is_entry_msg):
+                new_spec_set.add(spec)
+        return new_spec_set
 
     def _is_msg_visible_all(self, msg_key):
         return True
@@ -520,8 +539,10 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         # 3. Encode the FlowDroid model (if the option is enabled)
         if (self.use_flowdroid_model):
-            assert self.flowdroid_model_builder is not None
-            self.flowdroid_model_builder.encode()
+            assert self.fd_builder is not None
+            self.fd_enc = FlowDroidModelEncoder(self, self.fd_builder)
+            fd_ts = self.fd_enc.get_ts_encoding()
+            self.ts.product(fd_ts)
 
         # 4. Encode the execution of the top-level callbacks
         logging.info("Encoding the trace...")
@@ -1428,7 +1449,7 @@ class RegExpToAuto():
             raise UnexpectedSymbol(be_node)
 
 
-class FlowDroidModelBuilder:
+class FlowDroidModelEncoder:
     """ We follow the description in Section 3 "Precise Modeling of Lifecycle" of:
     'FlowDroid: Precise Context, Flow, Field, Object-sensitive
     and Lifecycle-aware Taint Analysis for Android Apps',
@@ -1462,8 +1483,14 @@ class FlowDroidModelBuilder:
     def __init__(self, enc, fd_builder):
         self.enc = enc
         self.fd_builder = fd_builder
+        self.ts = None
 
-    def encode(self):
+    def get_ts_encoding(self):
+        if (self.ts is None):
+            self._encode()
+        return self.ts
+
+    def _encode(self):
         """ Create an encoding of the FlowDroid model.
 
         Returns a transition system representing the FlowDroid model of
@@ -1487,8 +1514,7 @@ class FlowDroidModelBuilder:
         # stuttering!
         ts_scheduler = self._encode_components_scheduler(c_lifecycle,
                                                          ts_callbacks)
-
-        return ts_scheduler
+        self.ts = ts_scheduler
 
     def _encode_component_lifecycle(self, component):
         """ Encode the components' lifecycles
