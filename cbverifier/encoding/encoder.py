@@ -1507,6 +1507,7 @@ class FlowDroidModelBuilder:
         if (isinstance(component, Activity)):
             lifecycle_encoding = self._encode_activity_lifecycle(component)
         elif (isinstance(component, Fragment)):
+            lifecycle_encoding = self._encode_fragment_lifecycle(component)
             raise NotImplementedError("Fragment!")
         else:
             raise Exception("Unknown component!")
@@ -1518,15 +1519,16 @@ class FlowDroidModelBuilder:
         """
         Encode the lifecycle for activity.
 
-        Return a transition system encoding the lifecycle
-        automaton, the pc encoding the states of the automaton,
-        and a condition determining when the activity is active.
+        Return an ActivityLcInfo object
         """
 
         ts = TransitionSystem()
 
         # Add the program counter variable to encode the lifecycle
-        pc_size = self._compute_max_states(activity)
+        # is the maximum number of states in the automaton
+        # encoded in the activity lifecycle
+        # (see how many times pc is incremented there)
+        pc_size = 18
         pc = "pc_%s" % activity.get_inst_value()
         self.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
         for v in self.cenc.get_counter_var(pc): ts.add_var(v)
@@ -1548,6 +1550,7 @@ class FlowDroidModelBuilder:
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYCREATED,
                                           ts, pc, pc_val, pc_val + 1, True)
+
         # line 840
         before_onStartStmt_label = pc_val
         pc_val = self._enc_component_step(activity,
@@ -1680,22 +1683,42 @@ class FlowDroidModelBuilder:
                                           ts, pc, 0, before_onResume_label,
                                           True)
 
-        return (ts, pc, activity_is_active)
+        lc_info = ActivityLcInfo(ts, pc, pc_size)
+        lc_info.add_label(ActivityLcInfo.INIT,
+                          self._eq_val(pc, entry_label))
+        lc_info.add_label(ActivityLcInfo.BEFORE_ONSTART,
+                          self._eq_val(pc, before_onStartStmt_label))
+        lc_info.add_label(ActivityLcInfo.END,
+                          self._eq_val(pc, pc_val))
+        lc_info.add_label(ActivityLcInfo.IS_ACTIVE,
+                          activity_is_active)
+
+        return lc_info
+
+    def _encode_fragment_lifecycle(self, fragment):
+        """
+        Encode the lifecycle for activity.
+
+        Return a FragmentLcInfo object
+        """
+        ts = TransitionSystem()
+
+        pc_size = TODO
+        pc = "pc_%s" % fragment.get_inst_value()
+        self.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
+        for v in self.cenc.get_counter_var(pc): ts.add_var(v)
+
+        pc_val = 0
+        entry_label = pc_val
+        ts.init = self.cenc.eq_val(pc, pc_val)
+
+        ts.trans = FALSE_PYSMT() # disjunction of transitions
 
 
-    def _compute_max_states(self, component):
-        """ Computes the maximum value of the pc for a single component. """
+        return lc_info
 
-        if (isinstance(component, Activity)):
-            # 18 is the maximum number of states in the automaton
-            # encoded in the activity lifecycle
-            # (see how many times pc is incremented there)
-            return 18
-        elif (isinstance(component, Fragment)):
-            # TODO
-            raise NotImplementedError("_compute_max_states not implemented")
-        else:
-            raise NotImplementedError("Unknown component!")
+
+
 
     def _encode_callbacks_in_lifecycle(self, lifecycles):
         """ Encode the enabledness of the callbacks attached to
@@ -1705,26 +1728,26 @@ class FlowDroidModelBuilder:
 
         # Loop over all the components
         for c, lifecycle in lifecycles.iteritems():
-            (ts_c, pc, component_is_active) = lifecycle
-
             if (isinstance(c, Activity)):
                 # computes all the messages that must be executed
                 # the activity lifecycle.
                 # It includes all the cb from the attached
                 # components
                 cb_star = set()
-                stack = [c]
+                stack = [c.get_inst_value()]
                 while (len(stack) > 0):
-                    c = stack.pop()
-                    c_id = c.get_inst_value()
+                    c_id = stack.pop()
 
                     if c_id in self.fd_builder.compid2msg_keys:
                         cb_star.update(self.fd_builder.compid2msg_keys[c_id])
-                        if isinstance(c, Fragment):
-                            # Remove the instance of lifecycle callbacks
-                            # of the fragment
-                            cb_star.difference(c.get_lifecycle_msgs())
-                    for attached_obj in self.attach_rel.get_related(c_id):
+
+                        if (c_id in self.fd_builder.compid2msg_keys):
+                            c = self.fd_builder.compid2msg_keys[c_id]
+                            if isinstance(c, Fragment):
+                                # Remove the instance of lifecycle callbacks
+                                # of the fragment
+                                cb_star.difference(c.get_lifecycle_msgs())
+                    for attached_obj in self.fd_builder.attach_rel.get_related(c_id):
                         stack.append(attached_obj)
 
                 # encodes that these messages are executed only
@@ -1733,7 +1756,8 @@ class FlowDroidModelBuilder:
                 for msg_key in cb_star:
                     all_msg_lbl = Or(all_msg_lbl,
                                      self._get_msg_label(msg_key))
-                cb_msg_enc = Implies(all_msg_lbl, component_is_active)
+                cb_msg_enc = Implies(all_msg_lbl,
+                                     lifecycle.get_label(Activity.IS_ACTIVE))
                 ts.trans = And(ts.trans, cb_msg_enc)
             elif (isinstance(c, Fragment)):
                 # Do nothing on fragments here
@@ -1835,3 +1859,34 @@ class FlowDroidModelBuilder:
     def _get_next_formula(self, state_vars, formula):
         return self.enc.helper.get_next_formula(state_vars,
                                                 formula)
+
+    class LcInfo:
+        def __init__(self, ts, pc, pc_size):
+            self.ts = ts
+            self.pc = pc
+            self.pc_size =  pc_size
+            self.labels = {}
+
+        def add_label(self, label, val):
+            self.labels[label] = val
+
+        def get_label(self, label):
+            # Assume the label is there
+            return self.labels[label]
+
+    class ActivityLcInfo(LcInfo):
+        INIT = "init"
+        BEFORE_ONSTART = "before_onstart"
+        END = "end"
+        IS_ACTIVE= "is_active"
+
+        def __init__(self, ts, pc, pc_size):
+            LcInfo.__init__(self, ts, pc, pc_size)
+
+    class FragmentLcInfo(LcInfo):
+        INIT = "init"
+        END = "end"
+        IS_ACTIVE= "is_active"
+
+        def __init__(self, ts, pc, pc_size):
+            LcInfo.__init__(self, ts, pc, pc_size)

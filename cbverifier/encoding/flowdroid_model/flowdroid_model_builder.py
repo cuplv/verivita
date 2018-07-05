@@ -43,16 +43,30 @@ class FlowDroidModelBuilder:
         for c in self.components_set:
             self.components_map[c.get_inst_value()] = c
 
-        # root_components_ids = []
-        # for c in self.components_set:
-        #     if isinstance(c, Activity):
-        #         root_components_ids.append(c.get_inst_value())
-
         all_values = FlowDroidModelBuilder._get_all_values(self.trace)
         self.attach_rel = AttachRelation(self.trace_map,
                                          all_values)
         self.register_rel = RegistrationRelation(self.trace_map,
                                                  all_values)
+
+        # Fill the parent activities for fragments
+        for activity in self.components_set:
+            if (not isinstance(activity, Activity)):
+                continue
+            visited = set()
+            stack = [activity.get_inst_value()]
+            while (len(stack) > 0):
+                c_id = stack.pop()
+                if (c_id in visited):
+                    continue
+                visited.add(c_id)
+                for attached_obj in self.attach_rel.get_related(c_id):
+                    if attached_obj in self.components_map:
+                        fragment = self.components_map[attached_obj]
+                        if isinstance(fragment, Fragment):
+                            fragment.add_parent_activity(activity)
+                    stack.append(attached_obj)
+
 
         # Map from object id to messages where the id is used as a receiver
         self.obj2msg_keys = FlowDroidModelBuilder._get_obj2msg_keys(self.trace)
