@@ -146,6 +146,7 @@ from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.encoding.conversion import TraceSpecConverter
 from cbverifier.encoding.flowdroid_model.flowdroid_model_builder import FlowDroidModelBuilder
+from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
 from cbverifier.utils.stats import Stats
 from cbverifier.helpers import Helper
 
@@ -1455,7 +1456,7 @@ class FlowDroidModelEncoder:
     in the repo secure-software-engineering/FlowDroid,
     commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
 
-      Activity lifecycle: generateActivityLifecycle, line 774
+    Activity lifecycle: generateActivityLifecycle, line 774
 
     We encode the lifecylce of each component forcing that at most one component
     can be active at each time.
@@ -1532,7 +1533,7 @@ class FlowDroidModelEncoder:
         """
         Encode the lifecycle for activity.
 
-        Return an ActivityLcInfo object
+        Return an FlowDroidModelEncoder.ActivityLcInfo object
         """
 
         ts = TransitionSystem()
@@ -1543,13 +1544,13 @@ class FlowDroidModelEncoder:
         # (see how many times pc is incremented there)
         pc_size = 18
         pc = "pc_%s" % activity.get_inst_value()
-        self.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
-        for v in self.cenc.get_counter_var(pc): ts.add_var(v)
+        self.enc.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
+        for v in self.enc.cenc.get_counter_var(pc): ts.add_var(v)
 
         # Start from the initial state
         pc_val = 0
         entry_label = pc_val
-        ts.init = self.cenc.eq_val(pc, pc_val)
+        ts.init = self.enc.cenc.eq_val(pc, pc_val)
 
         ts.trans = FALSE_PYSMT() # disjunction of transitions
 
@@ -1696,14 +1697,14 @@ class FlowDroidModelEncoder:
                                  ts, pc, 0, before_onResume_label,
                                  True)
 
-        lc_info = ActivityLcInfo(ts, pc, pc_size)
-        lc_info.add_label(ActivityLcInfo.INIT,
+        lc_info = FlowDroidModelEncoder.ActivityLcInfo(ts, pc, pc_size)
+        lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.INIT,
                           self._eq_val(pc, entry_label))
-        lc_info.add_label(ActivityLcInfo.BEFORE_ONSTART,
+        lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.BEFORE_ONSTART,
                           self._eq_val(pc, before_onStartStmt_label))
-        lc_info.add_label(ActivityLcInfo.END,
+        lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.END,
                           self._eq_val(pc, pc_val))
-        lc_info.add_label(ActivityLcInfo.IS_ACTIVE,
+        lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.IS_ACTIVE,
                           activity_is_active)
 
         return lc_info
@@ -1712,18 +1713,18 @@ class FlowDroidModelEncoder:
         """
         Encode the lifecycle for activity.
 
-        Return a FragmentLcInfo object
+        Return a FlowDroidModelEncoder.FragmentLcInfo object
         """
         ts = TransitionSystem()
 
         pc_size = 13 # init state + 12 (+ 1) of pc counter
         pc = "pc_%s" % fragment.get_inst_value()
-        self.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
-        for v in self.cenc.get_counter_var(pc): ts.add_var(v)
+        self.enc.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
+        for v in self.enc.cenc.get_counter_var(pc): ts.add_var(v)
 
         pc_val = 0
         entry_label = pc_val
-        ts.init = self.cenc.eq_val(pc, pc_val)
+        ts.init = self.enc.cenc.eq_val(pc, pc_val)
 
         ts.trans = FALSE_PYSMT() # disjunction of transitions
 
@@ -1821,10 +1822,10 @@ class FlowDroidModelEncoder:
                                  Fragment.ONDETACH,
                                  ts, pc, before_onDetach_label, entry_label)
 
-        lc_info = FragmentLcInfo(ts, pc, pc_size)
-        lc_info.add_label(FragmentLcInfo.INIT,
+        lc_info = FlowDroidModelEncoder.FragmentLcInfo(ts, pc, pc_size)
+        lc_info.add_label(FlowDroidModelEncoder.FragmentLcInfo.INIT,
                           self._eq_val(pc, entry_label))
-        lc_info.add_label(Fragment.END,
+        lc_info.add_label(FlowDroidModelEncoder.FragmentLcInfo.END,
                           self._eq_val(pc, pc_val))
         return lc_info
 
@@ -1866,7 +1867,7 @@ class FlowDroidModelEncoder:
                     all_msg_lbl = Or(all_msg_lbl,
                                      self._get_msg_label(msg_key))
                 cb_msg_enc = Implies(all_msg_lbl,
-                                     lifecycle.get_label(Activity.IS_ACTIVE))
+                                     lifecycle.get_label(FlowDroidModelEncoder.ActivityLcInfo.IS_ACTIVE))
                 ts.trans = And(ts.trans, cb_msg_enc)
             elif (isinstance(c, Fragment)):
                 # Do nothing on fragments here
@@ -1893,8 +1894,8 @@ class FlowDroidModelEncoder:
         comp2actflags = {}
         for c in self.fd_builder.get_components():
             c_act = "act_component_%s" % c.get_inst_value()
-            self.cenc.add_var(c_act, 1)
-            counter_vars = self.cenc.get_counter_var(c_act)
+            self.enc.cenc.add_var(c_act, 1)
+            counter_vars = self.enc.cenc.get_counter_var(c_act)
             assert (len(counter_vars) == 1)
             for act_flag in counter_vars:
                 ts_sched.add_var(act_flag)
@@ -1913,10 +1914,10 @@ class FlowDroidModelEncoder:
             if (isinstance(c, Activity)):
                 lc_info = lifecycles[c]
 
-                pc_init = lc_info.get_label(Activity.INIT)
+                pc_init = lc_info.get_label(FlowDroidModelEncoder.ActivityLcInfo.INIT)
                 pc_init_next = self._get_next_formula(ts_sched.state_vars,
                                                       pc_init)
-                pc_before_onstart = lc_info.get_label(Activity.BEFORE_ONSTART)
+                pc_before_onstart = lc_info.get_label(FlowDroidModelEncoder.ActivityLcInfo.BEFORE_ONSTART)
                 pc_before_onstart_next = self._get_next_formula(ts_sched.state_vars,
                                                                 pc_before_onstart)
                 activity_act = And(Not(flag),
@@ -1928,7 +1929,7 @@ class FlowDroidModelEncoder:
 
                 atleastone_frag_act = FALSE_PYSMT()
                 atleatone_frag_deact = FALSE_PYSMT()
-                for fragment in c.get_child_fragments:
+                for fragment in c.get_child_fragments():
                     flag_frag = comp2actflags[fragment]
                     frag_act = And(Not(flag_frag),
                                    self._get_next_formula(ts_sched.state_vars,
@@ -1950,7 +1951,7 @@ class FlowDroidModelEncoder:
                 activity_sched = Implies(activity_deact,
                                          Or(pc_init_next,
                                             And(pc_before_onstart_next,
-                                                atleatone_frag_act)))
+                                                atleastone_frag_act)))
 
                 # when an activity can be activated
                 #
@@ -1975,7 +1976,7 @@ class FlowDroidModelEncoder:
 
                 lc_info = lifecycles[c]
 
-                pc_init = lc_info.get_label(Fragment.INIT)
+                pc_init = lc_info.get_label(FlowDroidModelEncoder.FragmentLcInfo.INIT)
                 pc_init_next = self._get_next_formula(ts_sched.state_vars,
                                                       pc_init)
                 fragment_act = And(Not(flag),
@@ -2004,15 +2005,15 @@ class FlowDroidModelEncoder:
             fc_ts = TRUE_PYSMT()
             for var in lc_info.ts.state_vars:
                 fc_ts = And(Iff(var,
-                                _get_next_formula(lc_info.ts.state_vars,var)),
+                                self._get_next_formula(lc_info.ts.state_vars,var)),
                             fc_ts)
 
             # The automaton moves only when the flag is true
-            lc_info.ts.trans = And(Implies(flag, ts.trans),
+            lc_info.ts.trans = And(Implies(flag, lc_info.ts.trans),
                                    Implies(Not(flag), fc_ts))
 
             # Product with the scheduler
-            ts_sched.product(c)
+            ts_sched.product(lc_info.ts)
 
         return ts_sched
 
@@ -2043,7 +2044,7 @@ class FlowDroidModelEncoder:
 
         has_callback = False
         if component.has_trace_msg(component_callback):
-            cb_msgs = activity.get_trace_msgs(component_callback)
+            cb_msgs = component.get_trace_msgs(component_callback)
 
             if len(cb_msgs) > 0:
                 has_callback = True
@@ -2060,16 +2061,17 @@ class FlowDroidModelEncoder:
 
                 # Move from pc to pc + 1 by observing at least one of the
                 # callback
-                single_trans = And(all_msg_enc, And(current_pc_val, next_pc_val_enc))
+                single_trans = And(all_msg_enc, And(current_pc_val_enc, next_pc_val_enc))
 
                 if not at_least_one:
-                    ts.trans = Or(ts.ts_trans, single_trans)
+                    ts.trans = Or(ts.trans, single_trans)
                 else:
                     # Add a self loop on current_pc_val
                     # It allows to non-determinitically visit more than once
                     # the same set of callbacks
-                    single_trans = And(all_msg_enc, And(current_pc_val, current_pc_val))
-                    ts.trans = Or(ts.ts_trans, single_trans)
+                    single_trans = And(all_msg_enc, And(current_pc_val_enc,
+                                                        current_pc_val_enc))
+                    ts.trans = Or(ts.trans, single_trans)
 
             # Block the execution in this state if the call is not
             # optional
@@ -2099,7 +2101,7 @@ class FlowDroidModelEncoder:
         return self.enc.helper.get_next_formula(state_vars,
                                                 formula)
 
-    class LcInfo:
+    class LcInfo(object):
         def __init__(self, ts, pc, pc_size):
             self.ts = ts
             self.pc = pc
@@ -2120,11 +2122,11 @@ class FlowDroidModelEncoder:
         IS_ACTIVE= "is_active"
 
         def __init__(self, ts, pc, pc_size):
-            LcInfo.__init__(self, ts, pc, pc_size)
+            FlowDroidModelEncoder.LcInfo.__init__(self, ts, pc, pc_size)
 
     class FragmentLcInfo(LcInfo):
         INIT = "init"
         END = "end"
 
         def __init__(self, ts, pc, pc_size):
-            LcInfo.__init__(self, ts, pc, pc_size)
+            FlowDroidModelEncoder.LcInfo.__init__(self, ts, pc, pc_size)

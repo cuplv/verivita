@@ -10,6 +10,9 @@ from cbverifier.test.test_grounding import TestGrounding
 from cbverifier.encoding.encoder import TSEncoder
 from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
 from cbverifier.encoding.flowdroid_model.flowdroid_model_builder import FlowDroidModelBuilder
+from cbverifier.bmc.bmc import BMC
+
+from pysmt.shortcuts import FALSE as FALSE_PYSMT
 
 from cStringIO import StringIO
 
@@ -228,7 +231,60 @@ class TestFlowDroid(unittest.TestCase):
 
 
 
-    # activity: simulate lifecycle
+
+    def test_lifecycle_encoding(self):
+        # activity: simulate lifecycle
+        act = TestGrounding._get_obj("1","android.app.Activity")
+        bundle = TestGrounding._get_obj("2","android.os.Bundle")
+        lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
+
+        trace = CTrace()
+        helper = TestFlowDroid.ActivityHelper("android.app.Activity", act, bundle, lifecycle)
+
+        lifecycle_order = [Activity.ONCREATE,
+                           Activity.ONACTIVITYCREATED,
+                           Activity.ONSTART,
+                           Activity.ONACTIVITYSTARTED,
+                           Activity.ONRESTOREINSTANCESTATE,
+                           Activity.ONPOSTCREATE,
+                           Activity.ONRESUME,
+                           Activity.ONACTIVITYRESUMED,
+                           Activity.ONPOSTRESUME,
+                           Activity.ONPAUSE,
+                           Activity.ONACTIVITYPAUSED,
+                           Activity.ONCREATEDESCRIPTION,
+                           Activity.ONSAVEINSTANCESTATE,
+                           Activity.ONACTIVITYSAVEINSTANCESTATE,
+                           Activity.ONSTOP,
+                           Activity.ONACTIVITYSTOPPED,
+                           Activity.ONRESTART,
+                           Activity.ONDESTROY,
+                           Activity.ONACTIVITYDESTROYED]
+
+        for cb_name in lifecycle_order:
+            cb = helper.get_cb(cb_name)
+            trace.add_msg(cb)
+
+        # try to simulate the trace
+        # enc1 = TSEncoder(trace, [])
+        enc2 = TSEncoder(trace, [], False, None, True)
+
+        # cex = self._simulate(enc1)
+        # self.assertTrue(not cex is None)
+
+        cex = self._simulate(enc2)
+        self.assertTrue(not cex is None)
+
+
+    def _simulate(self, ts_enc):
+        ts = ts_enc.get_ts_encoding()
+        trace_enc = ts_enc.get_trace_encoding()
+        bmc = BMC(ts_enc.helper, ts, FALSE_PYSMT())
+        (step, cex, _) = bmc.simulate(trace_enc)
+        return (step, cex, _)
+
+
+
     # activity: simulate lifecycle + cb only in active
     # activity + activity: seq. lifecycle
     # activity + activity: interleaving lifecycle (fail)

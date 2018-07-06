@@ -956,7 +956,7 @@ class TestEnc(unittest.TestCase):
 
         ts = ts_enc.get_ts_encoding()
         trace_enc = ts_enc.get_trace_encoding()
-        print trace_enc
+
         self.assertTrue(len(trace_enc) == 3)
         bmc = BMC(ts_enc.helper, ts, FALSE())
         (step, cex, _) = bmc.simulate(trace_enc)
