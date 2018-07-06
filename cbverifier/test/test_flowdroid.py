@@ -10,6 +10,7 @@ from cbverifier.test.test_grounding import TestGrounding
 from cbverifier.encoding.encoder import TSEncoder
 from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
 from cbverifier.encoding.flowdroid_model.flowdroid_model_builder import FlowDroidModelBuilder
+from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.bmc.bmc import BMC
 
 from pysmt.shortcuts import FALSE as FALSE_PYSMT
@@ -231,17 +232,8 @@ class TestFlowDroid(unittest.TestCase):
 
 
 
-
-    def test_lifecycle_encoding(self):
-        # activity: simulate lifecycle
-        act = TestGrounding._get_obj("1","android.app.Activity")
-        bundle = TestGrounding._get_obj("2","android.os.Bundle")
-        lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
-
-        trace = CTrace()
-        helper = TestFlowDroid.ActivityHelper("android.app.Activity", act, bundle, lifecycle)
-
-        lifecycle_order = [Activity.ONCREATE,
+    def test_lc_0(self):
+        self._test_lc_enc([Activity.ONCREATE,
                            Activity.ONACTIVITYCREATED,
                            Activity.ONSTART,
                            Activity.ONACTIVITYSTARTED,
@@ -259,22 +251,40 @@ class TestFlowDroid(unittest.TestCase):
                            Activity.ONACTIVITYSTOPPED,
                            Activity.ONRESTART,
                            Activity.ONDESTROY,
-                           Activity.ONACTIVITYDESTROYED]
+                           Activity.ONACTIVITYDESTROYED], True)
 
-        for cb_name in lifecycle_order:
+    def test_lc_1(self):
+        self._test_lc_enc([Activity.ONACTIVITYCREATED], False)
+
+
+    def _test_lc_enc(self, cb_sequence, expected_result):
+        # activity: simulate lifecycle
+        act = TestGrounding._get_obj("1","android.app.Activity")
+        bundle = TestGrounding._get_obj("2","android.os.Bundle")
+        lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
+        helper = TestFlowDroid.ActivityHelper("android.app.Activity", act, bundle, lifecycle)
+
+        trace = CTrace()
+        for cb_name in cb_sequence:
             cb = helper.get_cb(cb_name)
             trace.add_msg(cb)
 
-        # try to simulate the trace
-        # enc1 = TSEncoder(trace, [])
-        enc2 = TSEncoder(trace, [], False, None, True)
+        enc = TSEncoder(trace, [], False, None, True)
+        (step, cex, _) = self._simulate(enc)
 
-        # cex = self._simulate(enc1)
-        # self.assertTrue(not cex is None)
+        if (not cex is None):
+            stringio = StringIO()
+            printer = CexPrinter(enc.mapback, cex, stringio)
+            printer.print_cex()
+            print stringio.getvalue()
 
-        cex = self._simulate(enc2)
-        self.assertTrue(not cex is None)
 
+        self.assertTrue( (not cex is None) == expected_result)
+
+            # It should always simulate, no constraints
+            # enc1 = TSEncoder(trace, [])
+            # cex = self._simulate(enc1)
+            # self.assertTrue(not cex is None)
 
     def _simulate(self, ts_enc):
         ts = ts_enc.get_ts_encoding()

@@ -1161,6 +1161,10 @@ class TSMapback():
         # set of state variables
         self.state_vars = set()
 
+        # Flowdroid model
+        self.pcvars2component = {}
+        self.actvars2component = {}
+
         # used for lazyness to evaluate a formula given a model
         self.pysmt_env = pysmt_env
 
@@ -1309,6 +1313,24 @@ class TSMapback():
 
     def add_state_vars(self, set_vars):
         self.state_vars.update(set_vars)
+
+    def add_pc2component(self, pc_var, component):
+        self.pcvars2component[pc_var] = component
+    def add_actvar2component(self, act_var, component):
+        self.actvars2component[act_var] = component
+
+    def get_component_pcs(self, current_state):
+        res = []
+        for pc_var, component in self.pcvars2component.iteritems():
+            pc_value = self._get_pc_value(pc_var, current_state)
+            res.append((pc_var, component, pc_value))
+        return res
+
+    def get_component_act(self, current_state):
+        res = []
+        for act_var, component in self.actvars2component.iteritems():
+            res.append((act_var, component, current_state[act_var]))
+        return res
 
 class RegExpToAuto():
     """ Utility class to convert a regular expression in an automaton.
@@ -1509,6 +1531,9 @@ class FlowDroidModelEncoder:
         # stuttering!
         ts_scheduler = self._encode_components_scheduler(lifecycles,
                                                          ts_callbacks)
+
+        self.enc.mapback.add_state_vars(ts_scheduler.state_vars)
+
         self.ts = ts_scheduler
 
     def _encode_component_lifecycle(self, component):
@@ -1543,16 +1568,19 @@ class FlowDroidModelEncoder:
         # encoded in the activity lifecycle
         # (see how many times pc is incremented there)
         pc_size = 18
-        pc = "pc_%s" % activity.get_inst_value()
+        pc = "pc_" + (activity.get_inst_value().get_value())
         self.enc.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
         for v in self.enc.cenc.get_counter_var(pc): ts.add_var(v)
+
+        self.enc.mapback.add_pc2component(pc, activity)
+        self.enc.mapback.add_encoder(pc, self.enc.cenc)
 
         # Start from the initial state
         pc_val = 0
         entry_label = pc_val
         ts.init = self.enc.cenc.eq_val(pc, pc_val)
 
-        ts.trans = FALSE_PYSMT() # disjunction of transitions
+        ts.trans = FALSE_PYSMT() # disjunction of automata transitions
 
         # Encode the lifecycle
 
@@ -1560,6 +1588,8 @@ class FlowDroidModelEncoder:
         pc_val = self._enc_component_step(activity,
                                           Activity.ONCREATE,
                                           ts, pc, pc_val, pc_val + 1)
+
+
         # line 795
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYCREATED,
@@ -1694,16 +1724,16 @@ class FlowDroidModelEncoder:
         # line 960 - go back to the beginning
         self._enc_component_step(activity,
                                  Activity.ONACTIVITYDESTROYED,
-                                 ts, pc, 0, before_onResume_label,
+                                 ts, pc, pc_val, entry_label,
                                  True)
 
         lc_info = FlowDroidModelEncoder.ActivityLcInfo(ts, pc, pc_size)
         lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.INIT,
                           self._eq_val(pc, entry_label))
-        lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.BEFORE_ONSTART,
-                          self._eq_val(pc, before_onStartStmt_label))
         lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.END,
                           self._eq_val(pc, pc_val))
+        lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.BEFORE_ONSTART,
+                          self._eq_val(pc, before_onStartStmt_label))
         lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.IS_ACTIVE,
                           activity_is_active)
 
@@ -1718,9 +1748,11 @@ class FlowDroidModelEncoder:
         ts = TransitionSystem()
 
         pc_size = 13 # init state + 12 (+ 1) of pc counter
-        pc = "pc_%s" % fragment.get_inst_value()
+        pc = "pc_" + (fragment.get_inst_value().get_value())
         self.enc.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
         for v in self.enc.cenc.get_counter_var(pc): ts.add_var(v)
+        self.enc.mapback.add_pc2component(pc, fragment)
+        self.enc.mapback.add_encoder(pc, self.enc.cenc)
 
         pc_val = 0
         entry_label = pc_val
@@ -1893,13 +1925,14 @@ class FlowDroidModelEncoder:
         #    component
         comp2actflags = {}
         for c in self.fd_builder.get_components():
-            c_act = "act_component_%s" % c.get_inst_value()
+            c_act = "act_component_%s" % c.get_inst_value().get_value()
             self.enc.cenc.add_var(c_act, 1)
             counter_vars = self.enc.cenc.get_counter_var(c_act)
             assert (len(counter_vars) == 1)
             for act_flag in counter_vars:
                 ts_sched.add_var(act_flag)
                 comp2actflags[c] = act_flag
+                self.enc.mapback.add_actvar2component(act_flag, c)
 
         # 2. Enforce that at most one component is active
         at_most_one = AtMostOne(set(comp2actflags.values()))
@@ -1907,7 +1940,44 @@ class FlowDroidModelEncoder:
                              self._get_next_formula(ts_sched.state_vars,
                                                     at_most_one))
 
-        # 3. Encode when the activity lifecycle and a fragment
+        # 3. Compose the components' lifecycle
+        for c, c_lc in lifecycles.iteritems():
+            lc_info = lifecycles[c]
+            flag = comp2actflags[c]
+
+            # Frame condition for the pc of the lifecycle automaton
+            fc_ts = TRUE_PYSMT()
+            for var in lc_info.ts.state_vars:
+                # Defensive programming - avoid flag in the fc, since it
+                # must change
+                if var == flag:
+                    continue
+                fc_ts = And(Iff(var,
+                                self._get_next_formula(lc_info.ts.state_vars,var)),
+                            fc_ts)
+            # Add the flag to the component ts - avoid issue with
+            # computing next
+            lc_info.ts.add_var(flag)
+
+            # Collect all the component's callback
+            # We encode that the component's callback can be executed only
+            # when the component is active
+            block_lifecycle_msg = TRUE_PYSMT()
+            for msg_key in c.get_lifecycle_msgs():
+                msg_label = self._get_msg_label(msg_key)
+                block_msg = Not(msg_label)
+
+                block_lifecycle_msg = And(block_lifecycle_msg, block_msg)
+
+            # The automaton moves only when the flag is true
+            lc_info.ts.trans = And(Implies(flag, lc_info.ts.trans),
+                                   Implies(Not(flag),
+                                           And(fc_ts, block_lifecycle_msg)))
+
+            # Product with the scheduler
+            ts_sched.product(lc_info.ts)
+
+        # 4. Encode when the activity lifecycle and a fragment
         #    can be interrupted and resumed
         for c in self.fd_builder.get_components():
             flag = comp2actflags[c]
@@ -1973,7 +2043,6 @@ class FlowDroidModelEncoder:
             elif (isinstance(c, Fragment)):
                 # The fragment gets to completion before being
                 # preempted
-
                 lc_info = lifecycles[c]
 
                 pc_init = lc_info.get_label(FlowDroidModelEncoder.FragmentLcInfo.INIT)
@@ -1991,29 +2060,10 @@ class FlowDroidModelEncoder:
             else:
                 raise Exception("Unknown component")
 
-        # Add the encoding of all the callback involved in the
+        # 5. Add the encoding of all the callback involved in the
         # lifecycle
         ts_sched.product(ts_callbacks)
 
-        # Compose the components' lifecycle
-        for c_lc in lifecycles:
-            lc_info = lifecycles[c]
-            flag = comp2actflags[c]
-
-            # Frame condition for the pc of the
-            # lifecycle automaton
-            fc_ts = TRUE_PYSMT()
-            for var in lc_info.ts.state_vars:
-                fc_ts = And(Iff(var,
-                                self._get_next_formula(lc_info.ts.state_vars,var)),
-                            fc_ts)
-
-            # The automaton moves only when the flag is true
-            lc_info.ts.trans = And(Implies(flag, lc_info.ts.trans),
-                                   Implies(Not(flag), fc_ts))
-
-            # Product with the scheduler
-            ts_sched.product(lc_info.ts)
 
         return ts_sched
 
@@ -2050,7 +2100,7 @@ class FlowDroidModelEncoder:
                 has_callback = True
                 current_pc_val_enc = self._eq_val(pc, pc_val)
                 pc_val = next_pc_val
-                next_pc_val_enc = self._eq_val(pc, pc_val)
+                next_pc_val_enc = self._eq_val(pc, next_pc_val)
                 next_pc_val_enc = self._get_next_formula(ts.state_vars,
                                                          next_pc_val_enc)
 
@@ -2070,20 +2120,28 @@ class FlowDroidModelEncoder:
                     # It allows to non-determinitically visit more than once
                     # the same set of callbacks
                     single_trans = And(all_msg_enc, And(current_pc_val_enc,
-                                                        current_pc_val_enc))
+                                                        next_pc_val_enc))
                     ts.trans = Or(ts.trans, single_trans)
 
-            # Block the execution in this state if the call is not
-            # optional
-            if not has_callback:
-                if not optional:
-                    # the ts cannot move in pc_val right now, so there
-                    # is a deadlock
+        # Block the execution in this state if the call is not
+        # optional
+        if not has_callback:
+            if not optional:
+                # the ts cannot move in pc_val right now, so there
+                # is a deadlock
+                current_pc_val_enc = self._eq_val(pc, pc_val)
 
-                    # advance the pc, so that we keep to encode the rest
-                    # of the lifecycle as it is.
-                    # while there is a deadlock in the current pc_val
-                    pc_val += next_pc_val
+                # Do nothing - the automaton does not move
+
+                # advance the pc, so that we keep to encode the rest
+                # of the lifecycle as it is.
+                # while there is a deadlock in the current pc_val
+                pc_val += 1
+
+                logging.debug("Lifecycle callback not found for:\n" \
+                              "\tComponent: %s\n" \
+                              "\tCallback: %s\n" % (component_callback,
+                                                    component.get_inst_value().get_value()))
 
         # note that pc_val may *not* be incremented in the optional case
         # where we do not create the intermediate state

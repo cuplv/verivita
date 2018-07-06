@@ -270,9 +270,10 @@ class FlowDroidModelBuilder:
             if m in free_msg:
                 free_msg.remove(m)
         # add all the non-lifecycle component messages
-        for m in self.obj2msg_keys[component_obj]:
-            if m not in lifecycle_msg:
-                component_msg_keys.add(m)
+        if component_obj in self.obj2msg_keys:
+            for m in self.obj2msg_keys[component_obj]:
+                if m not in lifecycle_msg:
+                    component_msg_keys.add(m)
 
     def get_components(self):
         return list(self.components_set)
