@@ -625,23 +625,26 @@ class TestEnc(unittest.TestCase):
                      [TestGrounding._get_obj(1,"string")],
                      None)
         cb.add_msg(ci)
-        ts_enc = TSEncoder(ctrace, spec_list)
 
-        ts = ts_enc.get_ts_encoding()
-        error = ts_enc.error_prop
-        bmc = BMC(ts_enc.helper, ts, error)
-        cex = bmc.find_bug(4)
-        cex = bmc.find_bug(4,True)
+        enc1 = TSEncoder(ctrace, spec_list)
+        enc2 = TSEncoder(ctrace, spec_list, False, None, True) # flowdroid model
 
-        self.assertFalse(cex is None)
+        for ts_enc in [enc1, enc2]:
+            ts = ts_enc.get_ts_encoding()
+            error = ts_enc.error_prop
+            bmc = BMC(ts_enc.helper, ts, error)
+            cex = bmc.find_bug(4)
+            cex = bmc.find_bug(4,True)
 
-        stringio = StringIO()
-        printer = CexPrinter(ts_enc.mapback, cex, stringio)
-        printer.print_cex()
+            self.assertFalse(cex is None)
 
-        io_string = stringio.getvalue()
-        self.assertTrue("SPEC [CB] [ENTRY] [1] void m1() |- [CB] [EXIT] [1] void m1()" in io_string)
-        self.assertTrue("Reached an error state in step 4" in io_string)
+            stringio = StringIO()
+            printer = CexPrinter(ts_enc.mapback, cex, stringio)
+            printer.print_cex()
+
+            io_string = stringio.getvalue()
+            self.assertTrue("SPEC [CB] [ENTRY] [1] void m1() |- [CB] [EXIT] [1] void m1()" in io_string)
+            self.assertTrue("Reached an error state in step 4" in io_string)
 
 
     def test_init_state(self):
@@ -660,12 +663,17 @@ class TestEnc(unittest.TestCase):
         cb.add_msg(ci)
         ctrace.add_msg(cb)
 
-        ts_enc = TSEncoder(ctrace, spec_list)
-        ts = ts_enc.get_ts_encoding()
-        bmc = BMC(ts_enc.helper, ts, ts_enc.error_prop)
-        self.assertTrue(bmc.find_bug(2) is not None)
-        self.assertTrue(bmc.find_bug(2,True) is not None)
+        enc1 = TSEncoder(ctrace, spec_list)
+        enc2 = TSEncoder(ctrace, spec_list, False, None, True) # flowdroid model
+        for (ts_enc, ris_list) in zip([enc1,enc2],[[True,True],[True, True]]):
+            ts = ts_enc.get_ts_encoding()
+            bmc = BMC(ts_enc.helper, ts, ts_enc.error_prop)
 
+            r1 = bmc.find_bug(2)
+            r2 = bmc.find_bug(2,True)
+
+            self.assertTrue((not r1 is None) == ris_list[0])
+            self.assertTrue((not r2 is None) == ris_list[1])
 
     def test_exception(self):
         """ Test the removal of exception from top-level callbacks
