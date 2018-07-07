@@ -29,9 +29,11 @@ def do_filter(iterable):
         if line.startswith("KeyboardInterrupt"):
             to = True
             time = "Timeout"
-            result = "?"
+            result = "Timeout"
         if line.startswith("Exception: An error happened reading the trace"):
             result = "ReadError"
+        if line.startswith("MemoryError"):
+            result = "MemoryError"
 
 
     return 'result %s time %s steps %s %s' % (result, time, steps, " ".join(extra))
