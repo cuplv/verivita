@@ -25,7 +25,7 @@ from cbverifier.encoding.model_properties import AttachRelation, RegistrationRel
 
 class FlowDroidModelBuilder:
 
-    def __init__(self, trace, trace_map, spec_msgs_keys):
+    def __init__(self, trace, trace_map):
         """ Initialize the model builder taking as input an instance
         of the trace, trace map and a list of the existing messages
         """
@@ -68,23 +68,29 @@ class FlowDroidModelBuilder:
                             fragment.add_parent_activity(activity)
                     stack.append(attached_obj)
 
-
-        # Map from object id to messages where the id is used as a receiver
-        self.obj2msg_keys = FlowDroidModelBuilder._get_obj2msg_keys(self.trace)
-
         # set up all messages -- all messages narrowed down from the specs
         # and all the messages from the lifecycle
-        self.msgs_keys = set(spec_msgs_keys)
+        self.lifecycle_msg = {}
         for c in self.components_set:
             c_msgs = c.get_lifecycle_msgs()
             for msg_key in c_msgs:
-                self.msgs_keys.add(msg_key)
+                self.lifecycle_msg[c] = msg_key
+
+    def init_relation(self, spec_msgs_keys):
+        self.msgs_keys = set(spec_msgs_keys)
+        for c,msg in self.lifecycle_msg.iteritems():
+            self.msgs_keys.add(msg)
+
+        # Map from object id to messages where the id is used as a receiver
+        self.obj2msg_keys = FlowDroidModelBuilder._get_obj2msg_keys(self.trace,
+                                                                    self.msgs_keys)
 
         # Computes where each message can be executed
         (compid2msg_keys, free_msg) = self._compute_msgs_boundaries()
 
         self.compid2msg_keys = compid2msg_keys
         self.free_msg = free_msg
+
 
     def get_msgs_keys(self):
         return self.msgs_keys
@@ -278,6 +284,7 @@ class FlowDroidModelBuilder:
     def get_components(self):
         return list(self.components_set)
 
+
     @staticmethod
     def _get_all_values(trace):
         """
@@ -302,7 +309,7 @@ class FlowDroidModelBuilder:
         return all_values
 
     @staticmethod
-    def _get_obj2msg_keys(trace):
+    def _get_obj2msg_keys(trace, all_msg_map):
         obj2msg = {}
 
         trace_stack = [child for child in trace.children]
@@ -316,8 +323,11 @@ class FlowDroidModelBuilder:
 
                 msg_entry = EncoderUtils.get_key_from_msg(current, EncoderUtils.ENTRY)
                 msg_exit = EncoderUtils.get_key_from_msg(current, EncoderUtils.EXIT)
-                obj2msg[rec].add(msg_entry)
-                obj2msg[rec].add(msg_exit)
+
+                if msg_entry in all_msg_map:
+                    obj2msg[rec].add(msg_entry)
+                if msg_exit in all_msg_map:
+                    obj2msg[rec].add(msg_exit)
 
             for c in current.children:
                 trace_stack.append(c)

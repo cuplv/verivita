@@ -109,7 +109,8 @@ class TestFlowDroid(unittest.TestCase):
 
     def test_component_construction(self):
         enc = self._get_sample_trace()
-        fd_builder = FlowDroidModelBuilder(enc.trace, enc.gs.trace_map, set([]))
+        fd_builder = FlowDroidModelBuilder(enc.trace, enc.gs.trace_map)
+        fd_builder.init_relation(set([]))
 
         # check that it finds the activity component
         components_set = fd_builder.get_components()
@@ -233,6 +234,7 @@ class TestFlowDroid(unittest.TestCase):
 
 
     def test_lc_0(self):
+        # Expect it to be accepted
         self._test_lc_enc([Activity.ONCREATE,
                            Activity.ONACTIVITYCREATED,
                            Activity.ONSTART,
@@ -251,11 +253,11 @@ class TestFlowDroid(unittest.TestCase):
                            Activity.ONACTIVITYSTOPPED,
                            Activity.ONRESTART,
                            Activity.ONDESTROY,
-                           Activity.ONACTIVITYDESTROYED], True)
+                           Activity.ONACTIVITYDESTROYED],True)
 
     def test_lc_1(self):
+        # reject
         self._test_lc_enc([Activity.ONACTIVITYCREATED], False)
-
 
     def _test_lc_enc(self, cb_sequence, expected_result):
         # activity: simulate lifecycle
@@ -269,15 +271,17 @@ class TestFlowDroid(unittest.TestCase):
             cb = helper.get_cb(cb_name)
             trace.add_msg(cb)
 
-        enc = TSEncoder(trace, [], False, None, True)
+        enc = TSEncoder(trace, [], True, None, True)
         (step, cex, _) = self._simulate(enc)
+
+        print "IS CEX NONE"
+        print cex is None
 
         if (not cex is None):
             stringio = StringIO()
             printer = CexPrinter(enc.mapback, cex, stringio)
             printer.print_cex()
             print stringio.getvalue()
-
 
         self.assertTrue( (not cex is None) == expected_result)
 
@@ -305,8 +309,9 @@ class TestFlowDroid(unittest.TestCase):
     def _get_fdm(self, trace):
         enc = TSEncoder(trace, [])
         fd_builder = FlowDroidModelBuilder(enc.trace,
-                                           enc.gs.trace_map,
-                                           set([]))
+                                           enc.gs.trace_map)
+        fd_builder.init_relation(set([]))
+
         return fd_builder
 
 

@@ -224,35 +224,37 @@ class TSEncoder:
                                                            self.stats)
         logging.info("Total specs after grounding: %d" % (len(self.ground_specs)))
 
-        # collect the calls appearing in the ground specs
-        msg_key_sets = set()
-        for spec in self.ground_specs:
-            for call in spec.get_spec_calls():
-                msg_key_sets.add(EncoderUtils.get_key_from_call(call))
 
         if (self.use_flowdroid_model):
             # initializes the informations needed to compute the FlowDroid model
             self.fd_builder = FlowDroidModelBuilder(self.trace,
-                                                    self.gs.trace_map,
-                                                    msg_key_sets)
+                                                    self.gs.trace_map)
             self.ground_specs = TSEncoder._remove_enable_spec(self.ground_specs)
         else:
             self.fd_builder = None
 
+        self.spec_msgs = set()
+        # collect the calls appearing in the ground specs
+        for spec in self.ground_specs:
+            for call in spec.get_spec_calls():
+                self.spec_msgs.add(EncoderUtils.get_key_from_call(call))
+
+        # Add the message to avoid removing them from the trace
+        if (self.use_flowdroid_model):
+            for c in self.fd_builder.get_components():
+                for msg_key in c.get_lifecycle_msgs():
+                    self.spec_msgs.add(msg_key)
+
         # 3. Remove all the messages in the trace that do not
         # appear in the specification.
         if (ignore_msgs):
-            if (self.use_flowdroid_model):
-                self.spec_msgs = self.fd_builder.get_msgs_keys()
-            else:
-                self.spec_msgs = msg_key_sets
-
             # Collect the statistics on the trace
             self._is_msg_visible = self._is_msg_visible_all
-            (trace_length, msgs, fmwk_contr, app_contr) = self.get_trace_stats()
-
+            (trace_length, msgs, fmwk_contr, app_contr) = TSEncoder.get_trace_stats(self.trace,
+                                                                                    self._is_msg_visible)
             self.trace = TSEncoder._simplify_trace(self.trace,
                                                    self.spec_msgs)
+
             self._is_msg_visible = self._is_msg_visible_simpl
             print("\n---Simplified Trace---")
             self.trace.print_trace(sys.stdout)
@@ -261,9 +263,14 @@ class TSEncoder:
             self._is_msg_visible = self._is_msg_visible_all
 
         # 4. Initialize the data structures needed to construct the encoding
-        (trace_length, msgs, fmwk_contr, app_contr) = self.get_trace_stats()
+        (trace_length, msgs, fmwk_contr, app_contr) = TSEncoder.get_trace_stats(self.trace, self._is_msg_visible)
         self.trace_length = trace_length
         self.msgs = msgs
+
+        if (use_flowdroid_model):
+            self.fd_builder.init_relation(self.msgs)
+
+
         # set of messages controlled by the framework
         self.fmwk_contr = fmwk_contr
         # set of messages controlled by the app
@@ -281,7 +288,6 @@ class TSEncoder:
         letters.update(self.msgs)
         self.r2a = RegExpToAuto(self.cenc, letters,
                                 self.mapback, self.auto_env)
-
 
         # Map from regular expression to the correspondent automata, pc and final states
         self.regexp2ts = {}
@@ -506,7 +512,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                     spec_msgs.add(msg_key)
 
         return new_trace
-
 
     def _encode(self):
         """ Function that performs the actual encoding of the TS.
@@ -1056,7 +1061,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             if (can_be_enabled):
                 self.ts.init = And(self.ts.init, msg_var)
 
-    def get_trace_stats(self):
+    @staticmethod
+    def get_trace_stats(trace, _is_msg_visible):
         # count the total number of messages and returns the set of
         # messages of the trace
         trace_length = 0
@@ -1071,7 +1077,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         cb_exit = set()
 
         stack = []
-        for msg in self.trace.children:
+        for msg in trace.children:
             stack.append(msg)
 
         while (len(stack) != 0):
@@ -1079,7 +1085,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
             # Add ENTRY
             key = EncoderUtils.get_key_from_msg(msg, EncoderUtils.ENTRY)
-            if self._is_msg_visible(key):
+            if _is_msg_visible(key):
                 trace_length = trace_length + 1
                 msgs.add(key)
                 if (isinstance(msg, CCallback)):
@@ -1091,7 +1097,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
             # Add EXIT
             key = EncoderUtils.get_key_from_msg(msg, EncoderUtils.EXIT)
-            if self._is_msg_visible(key):
+            if _is_msg_visible(key):
                 trace_length = trace_length + 1
                 msgs.add(key)
                 if (isinstance(msg, CCallback)):
@@ -1112,7 +1118,7 @@ CI-ENTRY: %d
 CI-EXIT: %d
 CB-ENTRY: %d
 CB-EXIT: %d
-        """ % (trace_length, len(self.trace.children),
+        """ % (trace_length, len(trace.children),
                len(ci_entry), len(ci_exit),
                len(cb_entry), len(cb_exit)))
 
@@ -1554,6 +1560,27 @@ class FlowDroidModelEncoder:
 
         return lifecycle_encoding
 
+
+    def _check_for_deadlocks(self, trans, pc, pc_size):
+        """
+        Checks for deadlocks in each state of the generated automaton
+        """
+        solver = self.enc.pysmt_env.factory.Solver(quantified=False,
+                                                   name="z3",
+                                                   logic=QF_BOOL)
+        solver.add_assertion(trans)
+        for i in range(pc_size-1):
+            solver.push()
+            solver.add_assertion(self._eq_val(pc, i))
+            is_sat = solver.solve()
+            solver.pop()
+
+            if (is_sat):
+                result = "%s = %s can move" % (pc, str(i))
+            else:
+                result = "%s = %s is in deadlock" % (pc, str(i))
+            print result
+
     def _encode_activity_lifecycle(self, activity):
         """
         Encode the lifecycle for activity.
@@ -1737,6 +1764,9 @@ class FlowDroidModelEncoder:
         lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.IS_ACTIVE,
                           activity_is_active)
 
+        self._check_for_deadlocks(lc_info.ts.trans,
+                                  lc_info.pc,
+                                  lc_info.pc_size)
         return lc_info
 
     def _encode_fragment_lifecycle(self, fragment):
@@ -1859,8 +1889,8 @@ class FlowDroidModelEncoder:
                           self._eq_val(pc, entry_label))
         lc_info.add_label(FlowDroidModelEncoder.FragmentLcInfo.END,
                           self._eq_val(pc, pc_val))
-        return lc_info
 
+        return lc_info
 
     def _encode_callbacks_in_lifecycle(self, lifecycles):
         """ Encode the enabledness of the callbacks attached to
@@ -1868,7 +1898,13 @@ class FlowDroidModelEncoder:
         """
         ts = TransitionSystem()
 
-        # Loop over all the components
+        # We did not compute the transitive closure of compid2msg_keys.
+        # This allow us to change the callback execution policy (e.g., in the fragment
+        # lifecycle instead of in the activity lifecycle).
+        #
+        # Here we compute thee transitive closure of all the messages
+        # that can be called inside the activity lifecycle
+        #
         for c, lifecycle in lifecycles.iteritems():
             if (isinstance(c, Activity)):
                 # computes all the messages that must be executed
@@ -2064,6 +2100,35 @@ class FlowDroidModelEncoder:
         # lifecycle
         ts_sched.product(ts_callbacks)
 
+        # 6. Encode that callbacks that are not:
+        #    - lifecycle callbacks of a component
+        #    - callbacks that are bound to the lifecycle of a
+        #      component
+        #
+        # can interleave freely.
+        #
+        free_msg_enc = FALSE_PYSMT()
+        for msg in self.fd_builder.free_msg:
+            msg_enc = self._get_msg_label(msg)
+            free_msg_enc = Or(free_msg_enc, msg_enc)
+
+        run_free_msg_name = "_run_free_msg_"
+        self.enc.cenc.add_var(run_free_msg_name, 1)
+        counter_vars = self.enc.cenc.get_counter_var(run_free_msg_name)
+        assert (len(counter_vars) == 1)
+        run_free_msg_flag = None
+        for flag in counter_vars:
+            ts_sched.add_var(flag)
+            run_free_msg_flag = flag
+            # Add the mapback in the map for debug
+            # self.enc.mapback.add_actvar2component(act_flag, c)
+        assert not run_free_msg_flag is None
+
+        # run_free_msg_flag -> free_msg_enc
+        # ! run_free_msg_flag -> existing sched.trans
+        ts_sched.trans = And(Implies(run_free_msg_flag, free_msg_enc),
+                             Implies(Not(run_free_msg_flag), ts_sched.trans))
+        # End of 6
 
         return ts_sched
 
