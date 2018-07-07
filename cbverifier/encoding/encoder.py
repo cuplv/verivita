@@ -352,6 +352,11 @@ class TSEncoder:
                 s0 = And(s0, msg_enabled)
                 s1 = self.cenc.eq_val(pc_name, next_state)
 
+                # strengthen s0 with the label
+                msg_label = self.r2a.get_msg_eq(msg_key)
+                s0 = And(s0, msg_label)
+
+
                 current_step = str(len(trace_encoding) + 1)
                 logging.info("SIMULATION: step %s on %s" % (current_step, msg_key))
                 logging.debug("Simulation debug - transition from %s -> %s" % (current_state,next_state))
@@ -1594,7 +1599,7 @@ class FlowDroidModelEncoder:
         # is the maximum number of states in the automaton
         # encoded in the activity lifecycle
         # (see how many times pc is incremented there)
-        pc_size = 18
+        pc_size = 19
         pc = "pc_" + (activity.get_inst_value().get_value())
         self.enc.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
         for v in self.enc.cenc.get_counter_var(pc): ts.add_var(v)
@@ -1738,9 +1743,9 @@ class FlowDroidModelEncoder:
                                  ts, pc, before_onRestart_label, before_onResume_label)
         # line 958
         before_onDestroy_label = pc_val
-        self._enc_component_step(activity,
-                                 Activity.ONDESTROY,
-                                 ts, pc, pc_val, before_onResume_label)
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONDESTROY,
+                                          ts, pc, pc_val, pc_val + 1)
         # line 948
         self._enc_component_step(activity,
                                  Activity.ONACTIVITYSTOPPED,
@@ -2184,8 +2189,10 @@ class FlowDroidModelEncoder:
                     # Add a self loop on current_pc_val
                     # It allows to non-determinitically visit more than once
                     # the same set of callbacks
-                    single_trans = And(all_msg_enc, And(current_pc_val_enc,
-                                                        next_pc_val_enc))
+                    self_loop = self._get_next_formula(ts.state_vars,
+                                                       current_pc_val_enc)
+                    single_trans = And(all_msg_enc,
+                                       And(current_pc_val_enc, self_loop))
                     ts.trans = Or(ts.trans, single_trans)
 
         # Block the execution in this state if the call is not
