@@ -937,11 +937,56 @@ class TestEnc(unittest.TestCase):
 
         ts = ts_enc.get_ts_encoding()
         trace_enc = ts_enc.get_trace_encoding()
-        print trace_enc
         self.assertTrue(len(trace_enc) == 3)
         bmc = BMC(ts_enc.helper, ts, FALSE())
         (step, cex, _) = bmc.simulate(trace_enc)
         self.assertTrue(cex is not None)
 
+
+
+    def test_iss217(self):
+        spec_list = Spec.get_specs_from_string("SPEC [CB] [ENTRY] [Z] void m1() |- [CB] [ENTRY] [M] void m2();" \
+                                               "SPEC [CB] [ENTRY] [Z] void m1() |+ [CI] [ENTRY] [M] void m3()")
+
+        ctrace = CTrace()
+        cb_m1 = CCallback(1, 1, "", "void m1()", [TestGrounding._get_obj("1","string")],
+                          None,
+                          [TestGrounding._get_fmwkov("","void m1()", False)])
+        ctrace.add_msg(cb_m1)
+
+        cb_m2 = CCallback(1, 1, "", "void m2()", [TestGrounding._get_obj("1","string")],
+                          None,
+                          [TestGrounding._get_fmwkov("","void m2()", False)])
+        ctrace.add_msg(cb_m2)
+
+        ci_m3 = CCallin(1, 1, "", "void m3()",
+                        [TestGrounding._get_obj("1","string")],
+                        None)
+
+        # m1 disable m2.
+        # The trace is only m1, m2.
+        # It should not simulate
+        ts_enc = TSEncoder(ctrace, spec_list, True)
+        ts = ts_enc.get_ts_encoding()
+        trace_enc = ts_enc.get_trace_encoding()
+        bmc = BMC(ts_enc.helper, ts, FALSE())
+        (step, trace, _) = bmc.simulate(trace_enc)
+
+        # printer = CexPrinter(ts_enc.mapback,
+        #                      trace,
+        #                      sys.stdout,
+        #                      True)
+        # printer.print_cex()
+
+        self.assertTrue(trace is None)
+        # Add one ci to m1
+        #
+        cb_m1.add_msg(ci_m3)
+        ts_enc = TSEncoder(ctrace, spec_list, True)
+        ts = ts_enc.get_ts_encoding()
+        trace_enc = ts_enc.get_trace_encoding()
+        bmc = BMC(ts_enc.helper, ts, FALSE())
+        (step, trace, _) = bmc.simulate(trace_enc)
+        self.assertTrue(trace is None)
 
 

@@ -334,6 +334,11 @@ class TSEncoder:
                 s0 = And(s0, msg_enabled)
                 s1 = self.cenc.eq_val(pc_name, next_state)
 
+                # strengthen s0 with the label
+                msg_label = self.r2a.get_msg_eq(msg_key)
+                s0 = And(s0, msg_label)
+
+
                 current_step = str(len(trace_encoding) + 1)
                 logging.info("SIMULATION: step %s on %s" % (current_step, msg_key))
                 logging.debug("Simulation debug - transition from %s -> %s" % (current_state,next_state))
