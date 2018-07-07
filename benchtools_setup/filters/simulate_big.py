@@ -14,11 +14,17 @@ def do_filter(iterable):
         line = line.strip()
         if not line: continue
 
-        if line.startswith('real ') and not to:
-            try: time = float(line.split()[1])
+        elif line.startswith('real ') and not to:
+            try: 
+                time = float(line.split()[1])
+                if time != "?" and time > 3600: #line.startswith("KeyboardInterrupt"):
+                    to = True
+                    time = "Timeout"
+                    result = "?"
+
             except: pass
 
-        if line.startswith('The trace can be simulated in'):
+        elif line.startswith('The trace can be simulated in'):
             result = 'Ok'
             app = re.match("The trace can be simulated (\d+) steps", line)
 
@@ -52,8 +58,4 @@ def do_filter(iterable):
 
 
         # no bug found - unknown result
-        if time > 3600: #line.startswith("KeyboardInterrupt"):
-            to = True
-            time = "Timeout"
-            result = "?"
     return 'result %s time %s steps %s %s' % (result, time, steps, " ".join(extra))
