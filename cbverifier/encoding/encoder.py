@@ -2183,9 +2183,8 @@ class FlowDroidModelEncoder:
                 # callback
                 single_trans = And(all_msg_enc, And(current_pc_val_enc, next_pc_val_enc))
 
-                if not at_least_one:
-                    ts.trans = Or(ts.trans, single_trans)
-                else:
+                ts.trans = Or(ts.trans, single_trans)
+                if at_least_one:
                     # Add a self loop on current_pc_val
                     # It allows to non-determinitically visit more than once
                     # the same set of callbacks

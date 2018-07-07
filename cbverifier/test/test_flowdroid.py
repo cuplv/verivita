@@ -333,28 +333,15 @@ class TestFlowDroid(unittest.TestCase):
             for l in self.full_lifecycle:
                 if l != msg:
                     to_test.append(l) # remove msg
+            to_test.append(Activity.ONCREATE)
             self._test_lc_enc(to_test, False)
 
     # def test_my(self):
     #     full_lifecycle = [Activity.ONCREATE,
     #                       Activity.ONACTIVITYCREATED,
-    #                       Activity.ONSTART,
-    #                       Activity.ONACTIVITYSTARTED,
-    #                       Activity.ONRESTOREINSTANCESTATE,
-    #                       Activity.ONPOSTCREATE,
-    #                       Activity.ONRESUME,
-    #                       Activity.ONACTIVITYRESUMED,
-    #                       Activity.ONPOSTRESUME,
-    #                       Activity.ONPAUSE,
-    #                       Activity.ONACTIVITYPAUSED,
-    #                       Activity.ONCREATEDESCRIPTION,
-    #                       Activity.ONSAVEINSTANCESTATE,
-    #                       Activity.ONACTIVITYSAVEINSTANCESTATE,
-    #                       Activity.ONSTOP,
-    #                       Activity.ONRESTART,
-    #                       Activity.ONDESTROY,
-    #                       Activity.ONACTIVITYDESTROYED]
-    #     self._test_lc_enc(full_lifecycle, False)
+    #                       Activity.ONACTIVITYCREATED,
+    #                       Activity.ONSTART]
+    #     self._test_lc_enc(full_lifecycle, True)
 
     def _test_lc_enc(self, cb_sequence, expected_result):
         # activity: simulate lifecycle
