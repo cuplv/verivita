@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 for f in `ls |grep tar.bz2`
 do
-	(python ~/software/benchtools/analyze/extract_log.py -p -f ~/Documents/source/verivita/benchtools_setup/filters/simulate.py -o results_${f}.txt $f)&
+	(python ~/software/benchtools/analyze/extract_log.py -p -f ~/Documents/source/verivita/benchtools_setup/filters/simulate_big.py -o results_${f}.txt $f)&
 done
 
 for f in `ls |grep txt`

@@ -7,7 +7,7 @@ import pandas
 
 FILE_SUFFIX = ".tar.bz2.txt"
 #This is a cleaned up version of summarize_results which also prints a plot of how many have been proven by a given time
-PRECISION_LEVELS = ["just_disallow","lifecycle","lifestate_va0","lifestate_va1"]
+PRECISION_LEVELS = ["just_disallow","lifecycle","lifestate_va0", "baseline","lifestate_va1"]
 class ResultsFile:
     def __init__(self, fname):
         self.origional_fname = fname
@@ -16,19 +16,23 @@ class ResultsFile:
         assert(filename_split[0] == "results")
         self.method = filename_split[1]
         #parse level
-        if filename_split[2] == "just":
+        precision = filename_split[2]
+        if precision == "just":
             self.precision_level = "just_disallow"
             self.precision_number = 0
-        elif filename_split[2] == "lifecycle" + FILE_SUFFIX:
+        elif precision == "lifecycle" + FILE_SUFFIX:
             self.precision_level = "lifecycle"
             self.precision_number = 1
-        elif filename_split[2] == "lifestate":
+        elif precision == "baseline" + FILE_SUFFIX:
+            self.precision_level = "baseline"
+            self.precision_number = 2
+        elif precision == "lifestate":
             if filename_split[3] == "va0" + FILE_SUFFIX:
                 self.precision_level = "lifestate_va0"
-                self.precision_number = 2
+                self.precision_number = 3
             elif filename_split[3] == "va1" + FILE_SUFFIX:
                 self.precision_level = "lifestate_va1"
-                self.precision_number = 3
+                self.precision_number = 4 #TODO: you just changed this, get results files dumped into same dir and edit rest of code
             else:
                 raise Exception("parse level exception")
         else:
