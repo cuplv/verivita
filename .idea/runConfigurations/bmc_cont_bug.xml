@@ -1,0 +1,22 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="bmc_cont_bug" type="PythonConfigurationType" factoryName="Python">
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="PYTHONUNBUFFERED" value="1" />
+      <env name="PYTHONPATH" value="/Users/s/.smt_solvers/python-bindings-2.7:/Users/s/Documents/source/callback-verification/cbverifier:/Library/Python/2.7/site-packages" />
+    </envs>
+    <option name="SDK_HOME" value="/usr/local/bin/python" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cbverifier" />
+    <option name="IS_MODULE_SDK" value="true" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <module name="callback-verification" />
+    <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cbverifier/driver.py" />
+    <option name="PARAMETERS" value="-m bmc -t $PROJECT_DIR$/../scratch/callback-verification/tests/realApplications/ContractionTimer/bug/trace_140117_0 -s $PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment_combined.spec:$PROJECT_DIR$/cbverifier/android_specs/allowdisallow/fragment/fragment_startActivity.spec:$PROJECT_DIR$/cbverifier/android_specs/allowdisallow/android.support.v4.app.Fragment/fragment_startActivity.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.widget.ListView/listView_setListener.spec -k 50 -n $USER_HOME$/software/nuXmv-1.1.1-Darwin/bin/nuXmv -z -i" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <option name="EMULATE_TERMINAL" value="false" />
+    <method />
+  </configuration>
+</component>
