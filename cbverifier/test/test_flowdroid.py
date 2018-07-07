@@ -232,32 +232,129 @@ class TestFlowDroid(unittest.TestCase):
         fd = self._get_fdm(trace)
 
 
+    # Full lifecylce - wxpect it to be accepted
+    full_lifecycle = [Activity.ONCREATE,
+                      Activity.ONACTIVITYCREATED,
+                      Activity.ONSTART,
+                      Activity.ONACTIVITYSTARTED,
+                      Activity.ONRESTOREINSTANCESTATE,
+                      Activity.ONPOSTCREATE,
+                      Activity.ONRESUME,
+                      Activity.ONACTIVITYRESUMED,
+                      Activity.ONPOSTRESUME,
+                      Activity.ONPAUSE,
+                      Activity.ONACTIVITYPAUSED,
+                      Activity.ONCREATEDESCRIPTION,
+                      Activity.ONSAVEINSTANCESTATE,
+                      Activity.ONACTIVITYSAVEINSTANCESTATE,
+                      Activity.ONSTOP,
+                      Activity.ONACTIVITYSTOPPED,
+                      Activity.ONRESTART,
+                      Activity.ONDESTROY,
+                      Activity.ONACTIVITYDESTROYED]
+
 
     def test_lc_0(self):
-        # Expect it to be accepted
-        self._test_lc_enc([Activity.ONCREATE,
-                           Activity.ONACTIVITYCREATED,
-                           Activity.ONSTART,
-                           Activity.ONACTIVITYSTARTED,
-                           Activity.ONRESTOREINSTANCESTATE,
-                           Activity.ONPOSTCREATE,
-                           Activity.ONRESUME,
-                           Activity.ONACTIVITYRESUMED,
-                           Activity.ONPOSTRESUME,
-                           Activity.ONPAUSE,
-                           Activity.ONACTIVITYPAUSED,
-                           Activity.ONCREATEDESCRIPTION,
-                           Activity.ONSAVEINSTANCESTATE,
-                           Activity.ONACTIVITYSAVEINSTANCESTATE,
-                           Activity.ONSTOP,
-                           Activity.ONACTIVITYSTOPPED,
-                           Activity.ONRESTART,
-                           Activity.ONDESTROY,
-                           Activity.ONACTIVITYDESTROYED],True)
+        # Full lifecylce - wxpect it to be accepted
+        full_lifecycle = list(self.full_lifecycle)
+        self._test_lc_enc(full_lifecycle,True)
+        full_lifecycle.extend(list(full_lifecycle))
+        self._test_lc_enc(full_lifecycle,True)
+        full_lifecycle.extend(list(full_lifecycle))
+        self._test_lc_enc(full_lifecycle,True)
 
     def test_lc_1(self):
-        # reject
+        # reject all in the initial state
         self._test_lc_enc([Activity.ONACTIVITYCREATED], False)
+        self._test_lc_enc([Activity.ONSTART], False)
+        self._test_lc_enc([Activity.ONACTIVITYSTARTED], False)
+        self._test_lc_enc([Activity.ONRESTOREINSTANCESTATE], False)
+        self._test_lc_enc([Activity.ONPOSTCREATE], False)
+        self._test_lc_enc([Activity.ONRESUME], False)
+        self._test_lc_enc([Activity.ONACTIVITYRESUMED], False)
+        self._test_lc_enc([Activity.ONPOSTRESUME], False)
+        self._test_lc_enc([Activity.ONPAUSE], False)
+        self._test_lc_enc([Activity.ONACTIVITYPAUSED], False)
+        self._test_lc_enc([Activity.ONCREATEDESCRIPTION], False)
+        self._test_lc_enc([Activity.ONSAVEINSTANCESTATE], False)
+        self._test_lc_enc([Activity.ONACTIVITYSAVEINSTANCESTATE], False)
+        self._test_lc_enc([Activity.ONSTOP], False)
+        self._test_lc_enc([Activity.ONACTIVITYSTOPPED], False)
+        self._test_lc_enc([Activity.ONRESTART], False)
+        self._test_lc_enc([Activity.ONDESTROY], False)
+        self._test_lc_enc([Activity.ONACTIVITYDESTROYED], False)
+
+
+    def test_lc_optional(self):
+        # test when skipping the optional transitions
+        optional= [[Activity.ONCREATE,
+                    Activity.ONACTIVITYCREATED,
+                    Activity.ONACTIVITYSTARTED,
+                    Activity.ONRESTOREINSTANCESTATE],
+                   [Activity.ONCREATE,
+                    Activity.ONACTIVITYCREATED,
+                    Activity.ONSTART,
+                    Activity.ONRESTOREINSTANCESTATE],
+                   [Activity.ONCREATE,
+                    Activity.ONACTIVITYCREATED,
+                    Activity.ONRESTOREINSTANCESTATE]]
+
+        for optional_seq in optional:
+            self._test_lc_enc(optional_seq, True)
+
+
+    def test_lc_at_least_one(self):
+        # test for multiple instances
+        multiple_msgs = [Activity.ONACTIVITYCREATED,
+                         Activity.ONACTIVITYSTARTED,
+                         Activity.ONACTIVITYRESUMED,
+                         Activity.ONACTIVITYPAUSED,
+                         Activity.ONACTIVITYSAVEINSTANCESTATE,
+                         Activity.ONACTIVITYSTOPPED,
+                         Activity.ONACTIVITYDESTROYED]
+
+        # Test duplication
+        for msg in multiple_msgs:
+            to_test = []
+            for l in self.full_lifecycle:
+                to_test.append(l)
+                if l == msg:
+                    to_test.append(l) # duplicate
+            self._test_lc_enc(to_test, True)
+
+        # Test block
+        for msg in multiple_msgs:
+            if msg == Activity.ONACTIVITYSTARTED:
+                # skip the optional message, simulation will
+                # succeed there
+                continue
+
+            to_test = []
+            for l in self.full_lifecycle:
+                if l != msg:
+                    to_test.append(l) # remove msg
+            self._test_lc_enc(to_test, False)
+
+    # def test_my(self):
+    #     full_lifecycle = [Activity.ONCREATE,
+    #                       Activity.ONACTIVITYCREATED,
+    #                       Activity.ONSTART,
+    #                       Activity.ONACTIVITYSTARTED,
+    #                       Activity.ONRESTOREINSTANCESTATE,
+    #                       Activity.ONPOSTCREATE,
+    #                       Activity.ONRESUME,
+    #                       Activity.ONACTIVITYRESUMED,
+    #                       Activity.ONPOSTRESUME,
+    #                       Activity.ONPAUSE,
+    #                       Activity.ONACTIVITYPAUSED,
+    #                       Activity.ONCREATEDESCRIPTION,
+    #                       Activity.ONSAVEINSTANCESTATE,
+    #                       Activity.ONACTIVITYSAVEINSTANCESTATE,
+    #                       Activity.ONSTOP,
+    #                       Activity.ONRESTART,
+    #                       Activity.ONDESTROY,
+    #                       Activity.ONACTIVITYDESTROYED]
+    #     self._test_lc_enc(full_lifecycle, False)
 
     def _test_lc_enc(self, cb_sequence, expected_result):
         # activity: simulate lifecycle
@@ -273,9 +370,6 @@ class TestFlowDroid(unittest.TestCase):
 
         enc = TSEncoder(trace, [], True, None, True)
         (step, cex, _) = self._simulate(enc)
-
-        print "IS CEX NONE"
-        print cex is None
 
         if (not cex is None):
             stringio = StringIO()
@@ -293,6 +387,11 @@ class TestFlowDroid(unittest.TestCase):
     def _simulate(self, ts_enc):
         ts = ts_enc.get_ts_encoding()
         trace_enc = ts_enc.get_trace_encoding()
+
+        # print "TRACE ENC"
+        # for step in trace_enc:
+        #     print trace_enc
+
         bmc = BMC(ts_enc.helper, ts, FALSE_PYSMT())
         (step, cex, _) = bmc.simulate(trace_enc)
         return (step, cex, _)
