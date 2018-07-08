@@ -7,7 +7,7 @@ import pandas
 
 FILE_SUFFIX = ".tar.bz2.txt"
 #This is a cleaned up version of summarize_results which also prints a plot of how many have been proven by a given time
-PRECISION_LEVELS = ["just_disallow","lifecycle","lifestate_va0", "baseline","lifestate_va1"]
+PRECISION_LEVELS = ["just_disallow","lifecycle","baseline", "lifestate_va0","lifestate_va1"]
 class ResultsFile:
     def __init__(self, fname):
         self.origional_fname = fname
@@ -50,7 +50,6 @@ class ResultLine:
         assert(self.trace_path.endswith("repaired"))
         assert(split_line[1] == "result")
         assert(split_line[3] == "time")
-        pass
         #appname
         self.app_name = summarize_results.pathToAppId(self.trace_path, alias_map)
         #proof status
@@ -59,9 +58,12 @@ class ResultLine:
         time_result = split_line[4]
         if time_result != "Timeout":
             self.time = float(time_result)
-        else:
+            assert(self.proof_status in ["Safe","Unsafe", "MemoryError"])
+        elif time_result == "Timeout":
             self.time = float("inf")
             self.proof_status = "Timeout"
+        else:
+            raise Exception("malformed trace line")
 
 class SimLine:
     def __init__(self,line,alias_map):
@@ -87,7 +89,7 @@ class SimLine:
 #ignore lines at top of results file with comments
 def ignoreLineInResultFile(line):
     stripped_line = line.strip()
-    if line.startswith("#"):
+    if stripped_line.startswith("#"):
         return True
     return False
 
@@ -112,9 +114,9 @@ def loadDirectory(directory, alias_map, trace_exclusions, app_exclusions, isSim=
                         resultsFile,list_resultLine = file_map[fname]
                         list_resultLine.append(resultLine)
                     else:
-                        print "excluding: " + line
+                        print "excluding: " + fname + "--" + line
             else:
-                print "excluding: " + line
+                print "excluding: " + fname + "--" + line
 
     return file_map
 
@@ -133,8 +135,9 @@ def loadAliasMap(alias_file):
 
 # Return buckets with lowest level required for proof
 def getBuckets(file_map):
-    safe = {"lifestate_va0":[],"lifestate_va1":[], "lifecycle":[], "just_disallow":[]} #map from proof level to
-    unsafe = {"lifestate_va0":[],"lifestate_va1":[], "lifecycle":[], "just_disallow":[]} #map from proof level to
+    safe = {"lifestate_va0":[],"lifestate_va1":[], "lifecycle":[], "just_disallow":[], "baseline":[]} #map from proof level to
+    unsafe = {"lifestate_va0":[],"lifestate_va1":[], "lifecycle":[], "just_disallow":[], "baseline":[]} #map from proof level to
+    #TODO: this doesn't include memory errors and timeouts, should it? only used for gnuplot
     for f in file_map:
         file_result = file_map[f]
         file_object = file_result[0]
@@ -206,7 +209,7 @@ def gnuplotTime(loadedResults, sample_time_seconds, outdir):
 
 def isunsafe(trace):
     if(type(trace) == tuple):
-        assert(trace[1].proof_status in {"Unsafe","Safe","Timeout", "ReadError","?"})
+
         if trace[1].proof_status in {"?"}:
             print ""
             print "unknown, manaully evaluate:"
@@ -215,9 +218,14 @@ def isunsafe(trace):
             print trace[0].origional_fname
             print "path:"
             print trace[1].trace_path
-        return trace[1].proof_status in {"Unsafe","Timeout","?"} #We are ignoring read errors since they are bad traces
-    elif(isinstance(trace,ResultLine)):
-        return trace.proof_status in {"Unsafe","Timeout","?"}
+            assert(False)
+
+        #no read error or ? should get to this point (except timeout which has a ? for some reason)
+        proofStatusValid = trace[1].proof_status in {"Unsafe", "Safe", "Timeout", "MemoryError"}
+        assert(proofStatusValid)
+        return trace[1].proof_status in {"Unsafe","Timeout","MemoryError"}
+    # elif(isinstance(trace,ResultLine)):
+    #     return trace.proof_status in {"Unsafe","Timeout","MemoryError"}
     else:
         raise Exception("bad type in isUnsafe")
 
@@ -229,7 +237,8 @@ def genTable(loadedResults, outdir):
             level_sc = precision_level + sc
             column_names.append(level_sc)
     for result_filename in loadedResults:
-        properties.add(loadedResults[result_filename][0].method)
+        method = loadedResults[result_filename][0].method
+        properties.add(method)
 
     properties_list = sorted([p for p in properties])
     df = pandas.DataFrame(index = properties_list, columns=column_names)
@@ -278,7 +287,7 @@ def genTable(loadedResults, outdir):
     #populate dataframe
     for property in property_result_map:
         results_list = property_result_map[property]
-        for level in xrange(len(results_list)):
+        for level in xrange(len(results_list)): #TODO: make sure this level thing is behaving correctly
 
             unsafe_trace_list = [ trace for trace in results_list[level] if isunsafe(trace)]
             unsafe_app_set = set([trace[1].app_name for trace in unsafe_trace_list])
