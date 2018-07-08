@@ -1926,7 +1926,7 @@ class FlowDroidModelEncoder:
 
                         if (c_id in self.fd_builder.compid2msg_keys):
                             c = self.fd_builder.compid2msg_keys[c_id]
-                            if isinstance(c, Fragment):
+                            if isinstance(c, Fragment) or isinstance(c, Activity):
                                 # Remove the instance of lifecycle callbacks
                                 # of the fragment
                                 cb_star.difference(c.get_lifecycle_msgs())
@@ -2112,10 +2112,21 @@ class FlowDroidModelEncoder:
         #
         # can interleave freely.
         #
+        # We also add the frame condition for the other flags in
+        # the scheduler
         free_msg_enc = FALSE_PYSMT()
         for msg in self.fd_builder.free_msg:
             msg_enc = self._get_msg_label(msg)
             free_msg_enc = Or(free_msg_enc, msg_enc)
+
+        fc_comp_flags = TRUE_PYSMT()
+        for c, c_lc in lifecycles.iteritems():
+            lc_info = lifecycles[c]
+            flag = comp2actflags[c]
+            flag_next = self._get_next_formula([flag], flag)
+            fc_comp_flags = And(fc_comp_flags,
+                                Iff(flag, flag_next))
+        free_msg_enc = And(free_msg_enc, fc_comp_flags)
 
         run_free_msg_name = "_run_free_msg_"
         self.enc.cenc.add_var(run_free_msg_name, 1)
