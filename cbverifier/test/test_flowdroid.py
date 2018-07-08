@@ -253,7 +253,6 @@ class TestFlowDroid(unittest.TestCase):
                       Activity.ONDESTROY,
                       Activity.ONACTIVITYDESTROYED]
 
-
     def test_lc_0(self):
         # Full lifecylce - wxpect it to be accepted
         full_lifecycle = list(self.full_lifecycle)
@@ -343,6 +342,212 @@ class TestFlowDroid(unittest.TestCase):
     #                       Activity.ONSTART]
     #     self._test_lc_enc(full_lifecycle, True)
 
+    def test_lc_more_act(self):
+        # test serialization of activities
+        act1 = TestGrounding._get_obj("1","android.app.Activity")
+        act2 = TestGrounding._get_obj("2","android.app.Activity")
+        bundle = TestGrounding._get_obj("2","android.os.Bundle")
+        lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
+
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle)
+        helper2 = TestFlowDroid.ActivityHelper("android.app.Activity", act2, bundle, lifecycle)
+
+
+        to_run = [(helper1, Activity.ONCREATE),
+                  (helper1, Activity.ONACTIVITYCREATED),
+                  (helper1, Activity.ONSTART),
+                  (helper1, Activity.ONACTIVITYSTARTED),
+                  (helper1, Activity.ONRESTOREINSTANCESTATE),
+                  (helper1, Activity.ONPOSTCREATE),
+                  (helper1, Activity.ONRESUME),
+                  (helper1, Activity.ONACTIVITYRESUMED),
+                  (helper1, Activity.ONPOSTRESUME),
+                  (helper1, Activity.ONPAUSE),
+                  (helper1, Activity.ONACTIVITYPAUSED),
+                  (helper1, Activity.ONCREATEDESCRIPTION),
+                  (helper1, Activity.ONSAVEINSTANCESTATE),
+                  (helper1, Activity.ONACTIVITYSAVEINSTANCESTATE),
+                  (helper1, Activity.ONSTOP),
+                  (helper1, Activity.ONACTIVITYSTOPPED),
+                  (helper1, Activity.ONRESTART),
+                  (helper1, Activity.ONDESTROY),
+                  (helper1, Activity.ONACTIVITYDESTROYED),
+                  (helper2, Activity.ONCREATE),
+                  (helper2, Activity.ONACTIVITYCREATED),
+                  (helper2, Activity.ONSTART),
+                  (helper2, Activity.ONACTIVITYSTARTED),
+                  (helper2, Activity.ONRESTOREINSTANCESTATE),
+                  (helper2, Activity.ONPOSTCREATE),
+                  (helper2, Activity.ONRESUME),
+                  (helper2, Activity.ONACTIVITYRESUMED),
+                  (helper2, Activity.ONPOSTRESUME),
+                  (helper2, Activity.ONPAUSE),
+                  (helper2, Activity.ONACTIVITYPAUSED),
+                  (helper2, Activity.ONCREATEDESCRIPTION),
+                  (helper2, Activity.ONSAVEINSTANCESTATE),
+                  (helper2, Activity.ONACTIVITYSAVEINSTANCESTATE),
+                  (helper2, Activity.ONSTOP),
+                  (helper2, Activity.ONACTIVITYSTOPPED),
+                  (helper2, Activity.ONRESTART),
+                  (helper2, Activity.ONDESTROY),
+                  (helper2, Activity.ONACTIVITYDESTROYED),
+                  (helper1, Activity.ONCREATE),
+                  (helper1, Activity.ONACTIVITYCREATED),
+                  (helper1, Activity.ONSTART),
+                  (helper1, Activity.ONACTIVITYSTARTED),
+                  (helper1, Activity.ONRESTOREINSTANCESTATE),
+                  (helper1, Activity.ONPOSTCREATE),
+                  (helper1, Activity.ONRESUME),
+                  (helper1, Activity.ONACTIVITYRESUMED),
+                  (helper1, Activity.ONPOSTRESUME),
+                  (helper1, Activity.ONPAUSE),
+                  (helper1, Activity.ONACTIVITYPAUSED),
+                  (helper1, Activity.ONCREATEDESCRIPTION),
+                  (helper1, Activity.ONSAVEINSTANCESTATE),
+                  (helper1, Activity.ONACTIVITYSAVEINSTANCESTATE),
+                  (helper1, Activity.ONSTOP),
+                  (helper1, Activity.ONACTIVITYSTOPPED),
+                  (helper1, Activity.ONRESTART),
+                  (helper1, Activity.ONDESTROY),
+                  (helper1, Activity.ONACTIVITYDESTROYED)]
+        self._test_lc_multi(to_run, True)
+
+    def test_lc_more_act_2(self):
+        act1 = TestGrounding._get_obj("1","android.app.Activity")
+        act2 = TestGrounding._get_obj("2","android.app.Activity")
+        bundle = TestGrounding._get_obj("2","android.os.Bundle")
+        lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
+
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle)
+        helper2 = TestFlowDroid.ActivityHelper("android.app.Activity", act2, bundle, lifecycle)
+
+        to_run = [(helper1, Activity.ONCREATE),
+                  (helper2, Activity.ONCREATE), # should not move
+                  (helper1, Activity.ONACTIVITYCREATED)]
+# ,
+#                   (helper1, Activity.ONSTART),
+#                   (helper1, Activity.ONACTIVITYSTARTED),
+#                   (helper1, Activity.ONRESTOREINSTANCESTATE),
+#                   (helper1, Activity.ONPOSTCREATE),
+#                   (helper1, Activity.ONRESUME),
+#                   (helper1, Activity.ONACTIVITYRESUMED),
+#                   (helper1, Activity.ONPOSTRESUME),
+#                   (helper1, Activity.ONPAUSE),
+#                   (helper1, Activity.ONACTIVITYPAUSED),
+#                   (helper1, Activity.ONCREATEDESCRIPTION),
+#                   (helper1, Activity.ONSAVEINSTANCESTATE),
+#                   (helper1, Activity.ONACTIVITYSAVEINSTANCESTATE),
+#                   (helper1, Activity.ONSTOP),
+#                   (helper1, Activity.ONACTIVITYSTOPPED),
+#                   (helper1, Activity.ONRESTART),
+#                   (helper1, Activity.ONDESTROY),
+#                   (helper1, Activity.ONACTIVITYDESTROYED),
+#                   (helper2, Activity.ONACTIVITYCREATED),
+#                   (helper2, Activity.ONSTART),
+#                   (helper2, Activity.ONACTIVITYSTARTED),
+#                   (helper2, Activity.ONRESTOREINSTANCESTATE),
+#                   (helper2, Activity.ONPOSTCREATE),
+#                   (helper2, Activity.ONRESUME),
+#                   (helper2, Activity.ONACTIVITYRESUMED),
+#                   (helper2, Activity.ONPOSTRESUME),
+#                   (helper2, Activity.ONPAUSE),
+#                   (helper2, Activity.ONACTIVITYPAUSED),
+#                   (helper2, Activity.ONCREATEDESCRIPTION),
+#                   (helper2, Activity.ONSAVEINSTANCESTATE),
+#                   (helper2, Activity.ONACTIVITYSAVEINSTANCESTATE),
+#                   (helper2, Activity.ONSTOP),
+#                   (helper2, Activity.ONACTIVITYSTOPPED),
+#                   (helper2, Activity.ONRESTART),
+#                   (helper2, Activity.ONDESTROY),
+#                   (helper2, Activity.ONACTIVITYDESTROYED)]
+        self._test_lc_multi(to_run, False)
+
+    def test_activity_cb_out(self):
+        act1 = TestGrounding._get_obj("1","android.app.Activity")
+        objoutlc = TestGrounding._get_obj("2",TestFlowDroid.ObjOutLcHelper.CLASS_NAME)
+        bundle = TestGrounding._get_obj("2","android.os.Bundle")
+        lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle)
+        helper_out = TestFlowDroid.ObjOutLcHelper(objoutlc)
+
+        to_run = [(helper1, Activity.ONCREATE),
+                  (helper_out, TestFlowDroid.ObjOutLcHelper.RANDOMCB)]
+
+        self._test_lc_multi(to_run, True)
+
+    def test_activity_cb_in_lc(self):
+        act1 = TestGrounding._get_obj("1","android.app.Activity")
+        objoutlc = TestGrounding._get_obj("2",TestFlowDroid.ObjOutLcHelper.CLASS_NAME)
+        bundle = TestGrounding._get_obj("2","android.os.Bundle")
+        lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle)
+        helper_out = TestFlowDroid.ObjOutLcHelper(objoutlc)
+
+        # before resume
+        to_run = [(helper1, Activity.ONCREATE),
+                  (helper1, TestFlowDroid.ActivityHelper.RANDOMCB)]
+        self._test_lc_multi(to_run, False)
+
+        # after on resume
+        to_run = [(helper1, Activity.ONCREATE),
+                  (helper1, Activity.ONACTIVITYCREATED),
+                  (helper1, Activity.ONSTART),
+                  (helper1, Activity.ONACTIVITYSTARTED),
+                  (helper1, Activity.ONRESTOREINSTANCESTATE),
+                  (helper1, Activity.ONPOSTCREATE),
+                  (helper1, Activity.ONRESUME),
+                  (helper1, TestFlowDroid.ActivityHelper.RANDOMCB),
+                  (helper1, Activity.ONACTIVITYRESUMED),
+                  (helper1, Activity.ONPOSTRESUME)]
+        # self._test_lc_multi(to_run, True)
+
+
+        # after on pause
+        to_run  = [(helper1, Activity.ONCREATE),
+                   (helper1, Activity.ONACTIVITYCREATED),
+                   (helper1, Activity.ONSTART),
+                   (helper1, Activity.ONACTIVITYSTARTED),
+                   (helper1, Activity.ONRESTOREINSTANCESTATE),
+                   (helper1, Activity.ONPOSTCREATE),
+                   (helper1, Activity.ONRESUME),
+                   (helper1, Activity.ONACTIVITYRESUMED),
+                   (helper1, Activity.ONPOSTRESUME),
+                   (helper1, Activity.ONPAUSE),
+                   (helper1, Activity.ONACTIVITYPAUSED),
+                   (helper1, Activity.ONCREATEDESCRIPTION),
+                   (helper1, Activity.ONSAVEINSTANCESTATE),
+                   (helper1, Activity.ONACTIVITYSAVEINSTANCESTATE),
+                   (helper1, Activity.ONSTOP),
+                   (helper1, Activity.ONACTIVITYSTOPPED),
+                   (helper1, Activity.ONRESTART),
+                   (helper1, Activity.ONDESTROY),
+                   (helper1, Activity.ONACTIVITYDESTROYED)]
+
+
+    def _test_sim(self, trace, expected_result):
+#        enc = TSEncoder(trace, [], True, None, True)
+        enc = TSEncoder(trace, [], False, None, True)
+        (step, cex, _) = self._simulate(enc)
+
+        if (not cex is None):
+            stringio = StringIO()
+            printer = CexPrinter(enc.mapback, cex, stringio)
+            printer.print_cex()
+            print stringio.getvalue()
+
+        self.assertTrue( (not cex is None) == expected_result)
+
+    def _get_trace_multi(self,obj_cb_seq):
+        trace = CTrace()
+        for (helper, cb_name) in obj_cb_seq:
+            cb = helper.get_cb(cb_name)
+            trace.add_msg(cb)
+        return trace
+
+    def _test_lc_multi(self, obj_cb_seq, expected_result):
+        trace = self._get_trace_multi(obj_cb_seq)
+        self._test_sim(trace, expected_result)
+
     def _test_lc_enc(self, cb_sequence, expected_result):
         # activity: simulate lifecycle
         act = TestGrounding._get_obj("1","android.app.Activity")
@@ -355,21 +560,8 @@ class TestFlowDroid(unittest.TestCase):
             cb = helper.get_cb(cb_name)
             trace.add_msg(cb)
 
-        enc = TSEncoder(trace, [], True, None, True)
-        (step, cex, _) = self._simulate(enc)
+        self._test_sim(trace, expected_result)
 
-        if (not cex is None):
-            stringio = StringIO()
-            printer = CexPrinter(enc.mapback, cex, stringio)
-            printer.print_cex()
-            print stringio.getvalue()
-
-        self.assertTrue( (not cex is None) == expected_result)
-
-            # It should always simulate, no constraints
-            # enc1 = TSEncoder(trace, [])
-            # cex = self._simulate(enc1)
-            # self.assertTrue(not cex is None)
 
     def _simulate(self, ts_enc):
         ts = ts_enc.get_ts_encoding()
@@ -384,11 +576,6 @@ class TestFlowDroid(unittest.TestCase):
         return (step, cex, _)
 
 
-
-    # activity: simulate lifecycle + cb only in active
-    # activity + activity: seq. lifecycle
-    # activity + activity: interleaving lifecycle (fail)
-    # activity + fragment: act lifecycle
     # activity + fragment: act lifecycle, frag lifecycle
 
 
@@ -451,6 +638,8 @@ class TestFlowDroid(unittest.TestCase):
 
 
     class ActivityHelper:
+        RANDOMCB = "RANDOMCB"
+
         def __init__(self, class_name, act, bundle, lifecycle):
 
             self.class_name = class_name
@@ -508,10 +697,18 @@ class TestFlowDroid(unittest.TestCase):
                                [TestGrounding._get_fmwkov("void android.app.Application.ActivityLifecycleCallbacks", "%s(%s,android.os.Bundle)" % (method_name, class_name), False)])
                 self.cb_map[key] = cb
 
+            cb = CCallback(1, 1, "", "void %s.randomcb " % class_name,
+                           [act],
+                           None,
+                           [TestGrounding._get_fmwkov("void %s" %  class_name, "randomcb", False)])
+            self.cb_map[TestFlowDroid.ActivityHelper.RANDOMCB] = cb
+
         def get_cb(self, key):
             return self.cb_map[key]
 
     class FragmentHelper:
+        RANDOMCB = "RANDOMCB"
+
         def get_cb(self, key):
             return self.cb_map[key]
 
@@ -576,3 +773,27 @@ class TestFlowDroid(unittest.TestCase):
                            None,
                            [TestGrounding._get_fmwkov("void android.app.Activity", "onAttachFragment(%s)" % class_name, False)])
             self.cb_map[Fragment.ONATTACHFRAGMENT] = cb
+
+            cb = CCallback(1, 1, "", "void %s.randomcb " % class_name,
+                           [act],
+                           None,
+                           [TestGrounding._get_fmwkov("void %s" %  class_name, "randomcb", False)])
+            self.cb_map[TestFlowDroid.FragmentHelper.RANDOMCB] = cb
+
+
+            # add callback defined inside activity, not lifecycle
+
+    class ObjOutLcHelper:
+        RANDOMCB = "RANDOMCB"
+        CLASS_NAME = "android.app.ObjOutLc"
+
+        def get_cb(self, key):
+            return self.cb_map[key]
+
+        def __init__(self, obj):
+            self.cb_map = {}
+            cb = CCallback(1, 1, "", "void %s.randomcb()" % TestFlowDroid.ObjOutLcHelper.CLASS_NAME,
+                           [obj],
+                           None,
+                           [TestGrounding._get_fmwkov("void %s" % TestFlowDroid.ObjOutLcHelper.CLASS_NAME, "randomcb()", False)])
+            self.cb_map[TestFlowDroid.ObjOutLcHelper.RANDOMCB] = cb
