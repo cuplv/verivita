@@ -246,15 +246,6 @@ class TSEncoder:
             for msg_key in self.fd_builder.listener_in_lc:
                 self.spec_msgs.add(msg_key)
 
-
-            # DEBUG
-            print "In component: %d" % len(self.spec_msgs)
-            print "listener in component: %d" % len(self.fd_builder.listener_in_lc)
-
-
-        print self.spec_msgs
-
-
         # 3. Remove all the messages in the trace that do not
         # appear in the specification.
         if (ignore_msgs):
