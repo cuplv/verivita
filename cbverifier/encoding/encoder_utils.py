@@ -148,6 +148,7 @@ class EncoderUtils:
         def enum_types_rec(result, current_subs, submaps_list):
             if len(submaps_list) == 0:
                 # base case
+                result.add(current_subs)
                 return result
             else:
                 current_map = submaps_list[0]
@@ -160,15 +161,29 @@ class EncoderUtils:
                     name2val = {}
                     for (key, val) in zip(subs_obj.subs_list, list_of_values):
                         name2val[key] = val
+
+                    assert not current_subs is None
                     new_candidate = _substitute(current_subs, name2val)
+                    assert not new_candidate is None
+
                     if (1 == len(submaps_list)):
-                        result.add(new_candidate)
+                        enum_types_rec(result, new_candidate, submaps_list[1:])
                     else:
                         enum_types_rec(result, new_candidate, submaps_list[1:])
 
         result = set()
         enum_types_rec(result, src_string, submaps_list)
-        return result
+
+        return list(result)
+
+    @staticmethod
+    def enum_types_list(str_list, submaps_list):
+
+        results = []
+        for string in str_list:
+            results.extend(EncoderUtils.enum_types(string, submaps_list))
+        return results
+
 
 class Subs():
     def __init__(self, subs_list, val_list):

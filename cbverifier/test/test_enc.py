@@ -189,7 +189,7 @@ class TestEnc(unittest.TestCase):
 
     def test_enum_types(self):
 
-        self.assertTrue(len(EncoderUtils.enum_types("", [])) == 0)
+        self.assertTrue(len(EncoderUtils.enum_types("", [])) == 1)
 
         subs = [Subs(["activity_type"],
                      [["android.app.Activity"]])]
