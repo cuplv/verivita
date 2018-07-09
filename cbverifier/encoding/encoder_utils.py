@@ -1,8 +1,12 @@
+import string
 from pysmt.shortcuts import Symbol
 from pysmt.typing import BOOL
 from cbverifier.specs.spec_ast import *
 from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
 from cbverifier.encoding.conversion import TraceSpecConverter
+
+def _substitute(template, substitution):
+    return string.Template(template).safe_substitute(substitution)
 
 class EncoderUtils:
     ENTRY = "ENTRY"
@@ -132,3 +136,44 @@ class EncoderUtils:
         value_repr = value.get_value()
 
         return value_repr
+
+
+    @staticmethod
+    def enum_types(src_string, submaps_list):
+        # generate all the possible combination of
+        # strings from src_string and a list of
+        # substitutions map
+        # Assume maps to be disjoint
+
+        def enum_types_rec(result, current_subs, submaps_list):
+            if len(submaps_list) == 0:
+                # base case
+                return result
+            else:
+                current_map = submaps_list[0]
+                subs_obj = submaps_list[0]
+
+                assert (isinstance(subs_obj, Subs))
+
+                for list_of_values in subs_obj.val_list:
+                    assert len(subs_obj.subs_list) == len(list_of_values)
+                    name2val = {}
+                    for (key, val) in zip(subs_obj.subs_list, list_of_values):
+                        name2val[key] = val
+                    new_candidate = _substitute(current_subs, name2val)
+                    if (1 == len(submaps_list)):
+                        result.add(new_candidate)
+                    else:
+                        enum_types_rec(result, new_candidate, submaps_list[1:])
+
+        result = set()
+        enum_types_rec(result, src_string, submaps_list)
+        return result
+
+class Subs():
+    def __init__(self, subs_list, val_list):
+        # check the right number of substitutions
+        for elem in val_list:
+            assert(len(elem) == len(subs_list))
+        self.subs_list = subs_list
+        self.val_list = val_list

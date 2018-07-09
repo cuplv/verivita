@@ -13,7 +13,7 @@ except ImportError:
     import unittest
 
 from cbverifier.encoding.encoder import TSEncoder, TSMapback
-from cbverifier.encoding.encoder_utils import EncoderUtils
+from cbverifier.encoding.encoder_utils import EncoderUtils, Subs
 from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceException
@@ -187,6 +187,64 @@ class TestEnc(unittest.TestCase):
         self.assertTrue("3=[CI]_[EXIT]_void m1(int,int,int)(1,2,1,2)" == res)
         self.assertTrue(res == res2)
 
+    def test_enum_types(self):
+
+        self.assertTrue(len(EncoderUtils.enum_types("", [])) == 0)
+
+        subs = [Subs(["activity_type"],
+                     [["android.app.Activity"]])]
+        res = EncoderUtils.enum_types("${activity_type}", subs)
+        print res
+        self.assertTrue(len(res) == 1)
+
+        src_string = "${activity_type1} ${view_type1} ${activity_type2} ${view_type2}"
+        subs = [Subs( ["activity_type1", "view_type1"],
+                      [["act_type_1_1", "view_type_1_1"], ["act_type_1_2", "view_type_1_2"]])]
+        self.assertTrue(len(EncoderUtils.enum_types(src_string, subs)) == 2)
+
+        src_string = "${activity_type1} ${activity_type2}"
+        subs = [Subs( ["activity_type1"],
+                      [["act_type_1_1"], ["act_type_1_2"]]),
+                Subs( ["activity_type2"],
+                      [["act_type_2_1"], ["act_type_2_2"]])]
+        res = EncoderUtils.enum_types(src_string, subs)
+        self.assertTrue(len(res) == 4)
+
+        src_string = "${activity_type1} ${activity_type2} ${activity_type3}"
+        subs = [Subs( ["activity_type1"],
+                      [["act_type_1_1"], ["act_type_1_2"]]),
+                Subs( ["activity_type2"],
+                      [["act_type_2_1"], ["act_type_2_2"]])]
+        res = EncoderUtils.enum_types(src_string, subs)
+        self.assertTrue(len(res) == 4)
+
+        src_string = "${activity_type1} ${activity_type2}"
+        subs = [Subs( ["activity_type1"],
+                      [["act_type_1_1"], ["act_type_1_2"]]),
+                Subs( ["activity_type2"],
+                      [["act_type_2_1"], ["act_type_2_2"]]),
+                Subs( ["activity_type3"],
+                      [["act_type_3_1"], ["act_type_3_2"]])]
+        res = EncoderUtils.enum_types(src_string, subs)
+        self.assertTrue(len(res) == 4)
+
+        src_string = "${activity_type1} ${activity_type2} ${activity_type3}"
+        subs = [Subs( ["activity_type1"],
+                      [["act_type_1_1"], ["act_type_1_2"]]),
+                Subs( ["activity_type2"],
+                      [["act_type_2_1"], ["act_type_2_2"]]),
+                Subs( ["activity_type3"],
+                      [["act_type_3_1"], ["act_type_3_2"]])]
+        res = EncoderUtils.enum_types(src_string, subs)
+        self.assertTrue(len(res) == 8)
+
+        src_string = "${activity_type1} ${view_type1} ${activity_type2} ${view_type2}"
+        subs = [Subs( ["activity_type1", "view_type1"],
+                      [["act_type_1_1", "view_type_1_1"], ["act_type_1_2", "view_type_1_2"]]),
+                Subs( ["activity_type2", "view_type2"],
+                      [["act_type_2_1", "view_type_2_1"], ["act_type_2_2", "view_type_2_2"]])]
+        res = EncoderUtils.enum_types(src_string, subs)
+        self.assertTrue(len(res) == 4)
 
     def test_trace_stats(self):
         def _test_eq(ts_enc, length, msgs, fmwk_contr, app_contr):
