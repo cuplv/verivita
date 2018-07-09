@@ -253,14 +253,23 @@ class TestFlowDroid(unittest.TestCase):
                       Activity.ONDESTROY,
                       Activity.ONACTIVITYDESTROYED]
 
+    multiple_msgs = [Activity.ONACTIVITYCREATED,
+                     Activity.ONACTIVITYSTARTED,
+                     Activity.ONACTIVITYRESUMED,
+                     Activity.ONACTIVITYPAUSED,
+                     Activity.ONACTIVITYSAVEINSTANCESTATE,
+                     Activity.ONACTIVITYSTOPPED,
+                     Activity.ONACTIVITYDESTROYED]
+
+
     def test_lc_0(self):
         # Full lifecylce - wxpect it to be accepted
         full_lifecycle = list(self.full_lifecycle)
         self._test_lc_enc(full_lifecycle,True)
-        full_lifecycle.extend(list(full_lifecycle))
-        self._test_lc_enc(full_lifecycle,True)
-        full_lifecycle.extend(list(full_lifecycle))
-        self._test_lc_enc(full_lifecycle,True)
+        # full_lifecycle.extend(list(full_lifecycle))
+        # self._test_lc_enc(full_lifecycle,True)
+        # full_lifecycle.extend(list(full_lifecycle))
+        # self._test_lc_enc(full_lifecycle,True)
 
     def test_lc_1(self):
         # reject all in the initial state
@@ -304,16 +313,12 @@ class TestFlowDroid(unittest.TestCase):
 
     def test_lc_at_least_one(self):
         # test for multiple instances
-        multiple_msgs = [Activity.ONACTIVITYCREATED,
-                         Activity.ONACTIVITYSTARTED,
-                         Activity.ONACTIVITYRESUMED,
-                         Activity.ONACTIVITYPAUSED,
-                         Activity.ONACTIVITYSAVEINSTANCESTATE,
-                         Activity.ONACTIVITYSTOPPED,
-                         Activity.ONACTIVITYDESTROYED]
 
         # Test duplication
-        for msg in multiple_msgs:
+        for msg in TestFlowDroid.multiple_msgs:
+
+            print "TESTING " + msg
+
             to_test = []
             for l in self.full_lifecycle:
                 to_test.append(l)
@@ -321,8 +326,9 @@ class TestFlowDroid(unittest.TestCase):
                     to_test.append(l) # duplicate
             self._test_lc_enc(to_test, True)
 
+    def test_lc_at_least_one_2(self):
         # Test block
-        for msg in multiple_msgs:
+        for msg in TestFlowDroid.multiple_msgs:
             if msg == Activity.ONACTIVITYSTARTED:
                 # skip the optional message, simulation will
                 # succeed there
@@ -424,42 +430,6 @@ class TestFlowDroid(unittest.TestCase):
         to_run = [(helper1, Activity.ONCREATE),
                   (helper2, Activity.ONCREATE), # should not move
                   (helper1, Activity.ONACTIVITYCREATED)]
-# ,
-#                   (helper1, Activity.ONSTART),
-#                   (helper1, Activity.ONACTIVITYSTARTED),
-#                   (helper1, Activity.ONRESTOREINSTANCESTATE),
-#                   (helper1, Activity.ONPOSTCREATE),
-#                   (helper1, Activity.ONRESUME),
-#                   (helper1, Activity.ONACTIVITYRESUMED),
-#                   (helper1, Activity.ONPOSTRESUME),
-#                   (helper1, Activity.ONPAUSE),
-#                   (helper1, Activity.ONACTIVITYPAUSED),
-#                   (helper1, Activity.ONCREATEDESCRIPTION),
-#                   (helper1, Activity.ONSAVEINSTANCESTATE),
-#                   (helper1, Activity.ONACTIVITYSAVEINSTANCESTATE),
-#                   (helper1, Activity.ONSTOP),
-#                   (helper1, Activity.ONACTIVITYSTOPPED),
-#                   (helper1, Activity.ONRESTART),
-#                   (helper1, Activity.ONDESTROY),
-#                   (helper1, Activity.ONACTIVITYDESTROYED),
-#                   (helper2, Activity.ONACTIVITYCREATED),
-#                   (helper2, Activity.ONSTART),
-#                   (helper2, Activity.ONACTIVITYSTARTED),
-#                   (helper2, Activity.ONRESTOREINSTANCESTATE),
-#                   (helper2, Activity.ONPOSTCREATE),
-#                   (helper2, Activity.ONRESUME),
-#                   (helper2, Activity.ONACTIVITYRESUMED),
-#                   (helper2, Activity.ONPOSTRESUME),
-#                   (helper2, Activity.ONPAUSE),
-#                   (helper2, Activity.ONACTIVITYPAUSED),
-#                   (helper2, Activity.ONCREATEDESCRIPTION),
-#                   (helper2, Activity.ONSAVEINSTANCESTATE),
-#                   (helper2, Activity.ONACTIVITYSAVEINSTANCESTATE),
-#                   (helper2, Activity.ONSTOP),
-#                   (helper2, Activity.ONACTIVITYSTOPPED),
-#                   (helper2, Activity.ONRESTART),
-#                   (helper2, Activity.ONDESTROY),
-#                   (helper2, Activity.ONACTIVITYDESTROYED)]
         self._test_lc_multi(to_run, False)
 
     def test_activity_cb_out(self):
@@ -496,11 +466,11 @@ class TestFlowDroid(unittest.TestCase):
                   (helper1, Activity.ONRESTOREINSTANCESTATE),
                   (helper1, Activity.ONPOSTCREATE),
                   (helper1, Activity.ONRESUME),
-                  (helper1, TestFlowDroid.ActivityHelper.RANDOMCB),
                   (helper1, Activity.ONACTIVITYRESUMED),
-                  (helper1, Activity.ONPOSTRESUME)]
-        # self._test_lc_multi(to_run, True)
-
+                  (helper1, Activity.ONPOSTRESUME), # CB can run after ONPOSTONRESUME
+                  (helper1, TestFlowDroid.ActivityHelper.RANDOMCB),
+                  (helper1, Activity.ONPAUSE)]
+        self._test_lc_multi(to_run, True)
 
         # after on pause
         to_run  = [(helper1, Activity.ONCREATE),

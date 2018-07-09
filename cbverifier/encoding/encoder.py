@@ -134,7 +134,7 @@ from pysmt.shortcuts import Symbol
 from pysmt.shortcuts import Solver
 from pysmt.shortcuts import TRUE as TRUE_PYSMT
 from pysmt.shortcuts import FALSE as FALSE_PYSMT
-from pysmt.shortcuts import Not, And, Or, Implies, Iff, AtMostOne
+from pysmt.shortcuts import Not, And, Or, Implies, Iff, ExactlyOne
 from pysmt.shortcuts import simplify
 
 from cbverifier.specs.spec import Spec
@@ -269,7 +269,6 @@ class TSEncoder:
 
         if (use_flowdroid_model):
             self.fd_builder.init_relation(self.msgs)
-
 
         # set of messages controlled by the framework
         self.fmwk_contr = fmwk_contr
@@ -1532,16 +1531,10 @@ class FlowDroidModelEncoder:
         for c in self.fd_builder.get_components():
             lifecycles[c] = self._encode_component_lifecycle(c)
 
-        # The encoding of enabled callback is "global"
-        # since more callback can be enabled in several
-        # components
-        ts_callbacks = self._encode_callbacks_in_lifecycle(lifecycles)
-
         # Encode the component scheduler
         # We must change the ts of the other components to add the
         # stuttering!
-        ts_scheduler = self._encode_components_scheduler(lifecycles,
-                                                         ts_callbacks)
+        ts_scheduler = self._encode_components_scheduler(lifecycles)
 
         self.enc.mapback.add_state_vars(ts_scheduler.state_vars)
 
@@ -1677,6 +1670,21 @@ class FlowDroidModelEncoder:
         # We pass back this condition to encode the scheduling of the
         # activity callbacks
         activity_is_active = self._eq_val(pc, pc_val)
+
+
+        # encode activity-bounded callbacks
+        all_cb_labels = self._encodes_non_lc_callback(activity)
+        current_pc_val_enc = self._eq_val(pc, pc_val)
+        self_loop = self._get_next_formula(ts.state_vars,
+                                           current_pc_val_enc)
+        single_trans = And(all_cb_labels,
+                           And(current_pc_val_enc, self_loop))
+        ts.trans = Or(ts.trans, single_trans)
+
+        self._enc_component_step(activity,
+                                 Activity.ONPAUSE,
+                                 ts, pc, pc_val, pc_val)
+
 
         # line 916
         pc_val = self._enc_component_step(activity,
@@ -1897,70 +1905,72 @@ class FlowDroidModelEncoder:
 
         return lc_info
 
-    def _encode_callbacks_in_lifecycle(self, lifecycles):
-        """ Encode the enabledness of the callbacks attached to
-        Activities and Fragment
+
+    def _encodes_non_lc_callback(self, c):
+        """ Get the list of callbacks bounded by the activity lifecycle
         """
-        ts = TransitionSystem()
+        cb_msg_enc = FALSE_PYSMT()
 
         # We did not compute the transitive closure of compid2msg_keys.
-        # This allow us to change the callback execution policy (e.g., in the fragment
+        # This allow us to change the callback execution policy
+        # (e.g., in the fragment
         # lifecycle instead of in the activity lifecycle).
         #
         # Here we compute thee transitive closure of all the messages
         # that can be called inside the activity lifecycle
         #
-        for c, lifecycle in lifecycles.iteritems():
-            if (isinstance(c, Activity)):
-                # computes all the messages that must be executed
-                # the activity lifecycle.
-                # It includes all the cb from the attached
-                # components
-                cb_star = set()
-                stack = [c.get_inst_value()]
-                while (len(stack) > 0):
-                    c_id = stack.pop()
+        if (isinstance(c, Activity)):
+            # computes all the messages that must be executed
+            # the activity lifecycle.
+            # It includes all the cb from the attached
+            # components
+            cb_star = set()
+            stack = [c.get_inst_value()]
+            while (len(stack) > 0):
+                c_id = stack.pop()
 
-                    if c_id in self.fd_builder.compid2msg_keys:
-                        cb_star.update(self.fd_builder.compid2msg_keys[c_id])
+                if c_id in self.fd_builder.compid2msg_keys:
+                    cb_star.update(self.fd_builder.compid2msg_keys[c_id])
 
-                        if (c_id in self.fd_builder.compid2msg_keys):
-                            c = self.fd_builder.compid2msg_keys[c_id]
-                            if isinstance(c, Fragment) or isinstance(c, Activity):
-                                # Remove the instance of lifecycle callbacks
-                                # of the fragment
-                                cb_star.difference(c.get_lifecycle_msgs())
-                    for attached_obj in self.fd_builder.attach_rel.get_related(c_id):
-                        stack.append(attached_obj)
+                    if (c_id in self.fd_builder.compid2msg_keys):
+                        c = self.fd_builder.compid2msg_keys[c_id]
+                        if isinstance(c, Fragment) or isinstance(c, Activity):
+                            # Remove the instance of lifecycle callbacks
+                            # of the fragment
+                            cb_star.difference(c.get_lifecycle_msgs())
+                for attached_obj in self.fd_builder.attach_rel.get_related(c_id):
+                    stack.append(attached_obj)
 
-                # encodes that these messages are executed only
-                # when the activity is active
-                all_msg_lbl = FALSE_PYSMT()
-                for msg_key in cb_star:
-                    all_msg_lbl = Or(all_msg_lbl,
-                                     self._get_msg_label(msg_key))
-                cb_msg_enc = Implies(all_msg_lbl,
-                                     lifecycle.get_label(FlowDroidModelEncoder.ActivityLcInfo.IS_ACTIVE))
-                ts.trans = And(ts.trans, cb_msg_enc)
-            elif (isinstance(c, Fragment)):
-                # Do nothing on fragments here
-                # Callbacks are encoded inside the activity
-                pass
-            else:
-                raise Exception("Unknown component")
+            # encodes that these messages are executed only
+            # when the activity is active
+            for msg_key in cb_star:
+                cb_msg_enc = Or(cb_msg_enc,
+                                self._get_msg_label(msg_key))
+        elif (isinstance(c, Fragment)):
+            # Do nothing on fragments here
+            # Callbacks are encoded inside the activity
+            pass
+        else:
+            raise Exception("Unknown component")
 
+        return cb_msg_enc
+
+    def _encode_free_messages(self):
+        """ Returns the encoding of the free messages """
         # Do nothing for the other callbacks -- they are free
         # to happen whenever
+        cb_msg_enc = FALSE_PYSMT()
+        for msg in self.fd_builder.free_msg:
+            msg_enc = self._get_msg_label(msg)
+            cb_msg_enc = Or(cb_msg_enc, msg_enc)
+        return cb_msg_enc
 
-        return ts
-
-    def _encode_components_scheduler(self,
-                                     lifecycles,
-                                     ts_callbacks):
+    def _encode_components_scheduler(self, lifecycles):
 
         ts_sched = TransitionSystem()
 
-        """ Encode the order of execution of each component
+        """ Encode a boolean activation variable for each component and
+        for all the other callbacks
         """
         # 1. Encode a Boolean activation variable for each
         #    component
@@ -1975,11 +1985,17 @@ class FlowDroidModelEncoder:
                 comp2actflags[c] = act_flag
                 self.enc.mapback.add_actvar2component(act_flag, c)
 
-        # 2. Enforce that at most one component is active
-        at_most_one = AtMostOne(set(comp2actflags.values()))
-        ts_sched.trans = And(at_most_one,
-                             self._get_next_formula(ts_sched.state_vars,
-                                                    at_most_one))
+        run_free_msg_name = "_run_free_msg_"
+        self.enc.cenc.add_var(run_free_msg_name, 1)
+        counter_vars = self.enc.cenc.get_counter_var(run_free_msg_name)
+        assert (len(counter_vars) == 1)
+        run_free_msg_flag = None
+        for flag in counter_vars:
+            ts_sched.add_var(flag)
+            run_free_msg_flag = flag
+            # Add the mapback in the map for debug
+            # self.enc.mapback.add_actvar2component(act_flag, c)
+        assert not run_free_msg_flag is None
 
         # 3. Compose the components' lifecycle
         for c, c_lc in lifecycles.iteritems():
@@ -1991,30 +2007,22 @@ class FlowDroidModelEncoder:
             for var in lc_info.ts.state_vars:
                 # Defensive programming - avoid flag in the fc, since it
                 # must change
-                if var == flag:
-                    continue
                 fc_ts = And(Iff(var,
                                 self._get_next_formula(lc_info.ts.state_vars,var)),
                             fc_ts)
-            # Add the flag to the component ts - avoid issue with
-            # computing next
-            lc_info.ts.add_var(flag)
 
-            # Collect all the component's callback
             # We encode that the component's callback can be executed only
             # when the component is active
             block_lifecycle_msg = TRUE_PYSMT()
             for msg_key in c.get_lifecycle_msgs():
                 msg_label = self._get_msg_label(msg_key)
                 block_msg = Not(msg_label)
-
                 block_lifecycle_msg = And(block_lifecycle_msg, block_msg)
+            fc_ts = And(fc_ts, block_lifecycle_msg)
 
             # The automaton moves only when the flag is true
             lc_info.ts.trans = And(Implies(flag, lc_info.ts.trans),
-                                   Implies(Not(flag),
-                                           And(fc_ts, block_lifecycle_msg)))
-
+                                   Implies(Not(flag), fc_ts))
             # Product with the scheduler
             ts_sched.product(lc_info.ts)
 
@@ -2038,115 +2046,156 @@ class FlowDroidModelEncoder:
                                      Not(self._get_next_formula(ts_sched.state_vars,
                                                                 flag)))
 
-                atleastone_frag_act = FALSE_PYSMT()
-                atleatone_frag_deact = FALSE_PYSMT()
-                for fragment in c.get_child_fragments():
-                    flag_frag = comp2actflags[fragment]
-                    frag_act = And(Not(flag_frag),
-                                   self._get_next_formula(ts_sched.state_vars,
-                                                          flag_frag))
-                    frag_deact = And(flag_frag,
-                                     Not(self._get_next_formula(ts_sched.state_vars,
-                                                                flag_frag)))
+                atleastone_frag_act_next = self._at_least_one_frag_activates(c, comp2actflags,
+                                                                             ts_sched.state_vars)
 
-                    atleastone_frag_act = Or(atleastone_frag_act,
-                                             frag_act)
-                    atleatone_frag_deact = Or(atleatone_frag_deact,
-                                              frag_deact)
-
-                # when an activity can be de-activated
+                # An activity can be de-activated (preemption) if either:
                 #
-                # Must be in the intial state.
-                # Must be before onstart, and one of its fragment must be
-                # activated next
-                activity_sched = Implies(activity_deact,
-                                         Or(pc_init_next,
-                                            And(pc_before_onstart_next,
-                                                atleastone_frag_act)))
-
-                # when an activity can be activated
-                #
-                # Must be in the intial state
-                # Must be before onstart, and one of its fragment must
-                # be deactivated next
-                #
-                # The final condition ensures that an activity
-                # gets to completion before being preempted or that
-                # it is before onstart and it is preempted by one
-                # of its fragments
-                activity_sched = And(activity_sched,
-                                     Implies(activity_act,
-                                             Or(pc_init_next,
+                # - it is in the initial state
+                # - the next flag is are the "free to run callbacks"
+                # - Must be before onstart, and one of its fragment must be
+                #   activated next
+                activity_deact_enc = Implies(activity_deact,
+                                             Or(Or(pc_init_next,
+                                                   self._get_next_formula(ts_sched.state_vars,
+                                                                          run_free_msg_flag)),
                                                 And(pc_before_onstart_next,
-                                                    atleatone_frag_deact))))
+                                                    atleastone_frag_act_next)))
+
+                # An activity can be activated (pre-empt) another activity
+                # if all other activities are in the initial state state
+                # (this means their fragment are inactive) and if all its
+                # fragment are in an initial state.
+                #
+                # In this way, an activity that has been pre-empted by
+                # a random callback while in a non-initial state will always
+                # get back control (the invariant that other activities are
+                # in the initial state holds).
+                #
+                other_act_in_init = self._other_activities_in_init(c, lifecycles)
+                other_act_in_init_next = self._get_next_formula(ts_sched.state_vars,
+                                                                other_act_in_init)
+                child_fragments_in_init = self._child_fragment_in_init(c, lifecycles)
+                child_fragments_in_init_next = self._get_next_formula(ts_sched.state_vars,
+                                                                      child_fragments_in_init)
+                activity_act_enc = Implies(activity_act,
+                                           And(other_act_in_init_next,
+                                               child_fragments_in_init_next))
+                activity_sched = And(activity_deact_enc, activity_act_enc)
                 ts_sched.trans = And(ts_sched.trans, activity_sched)
 
+                for fragment in c.get_child_fragments():
+                    parent_act = c
+                    frag_flag = comp2actflags[fragment]
+                    frag_lc_info = lifecycles[fragment]
+                    frag_pc_init = frag_lc_info.get_label(FlowDroidModelEncoder.FragmentLcInfo.INIT)
+                    frag_pc_init_next = self._get_next_formula(ts_sched.state_vars,
+                                                               frag_pc_init)
+                    fragment_act = And(Not(frag_flag),
+                                       self._get_next_formula(ts_sched.state_vars,
+                                                              frag_flag))
+                    fragment_deact = And(frag_flag,
+                                         Not(self._get_next_formula(ts_sched.state_vars,
+                                                                    frag_flag)))
+
+                    frag_pc_init = frag_lc_info.get_label(FlowDroidModelEncoder.FragmentLcInfo.INIT)
+                    frag_pc_init_next = self._get_next_formula(ts_sched.state_vars,
+                                                               frag_pc_init)
+
+                    # preempt fragment either if:
+                    # - we will execute a non-controlled callback
+                    # - the fragment gets in its initial state
+                    fragment_deact_enc = Implies(fragment_deact,
+                                                 Or(self._get_next_formula(ts_sched.state_vars,
+                                                                           run_free_msg_flag),
+                                                    frag_pc_init_next))
+
+                    # Activate the fragment only if
+                    # - its activity will be in the right state
+                    # - all the other children fragments are in their initial state
+                    # - all the other activities are in their initial state
+                    act_pc_run_frag = lc_info.get_label(FlowDroidModelEncoder.ActivityLcInfo.BEFORE_ONSTART)
+                    act_pc_run_frag_next = self._get_next_formula(ts_sched.state_vars,
+                                                                  act_pc_run_frag)
+
+                    other_fragment_in_init = self._other_fragments_in_init(activity, fragment, lifecycles)
+                    other_fragment_in_init_next = self._get_next_formula(ts_sched.state_vars,
+                                                                         other_fragment_in_init)
+                    fragment_act_enc = Implies(fragment_act,
+                                               And(act_pc_run_frag_next,
+                                                   other_act_in_init_next,
+                                                   other_fragment_in_init_next))
+
+                    fragment_sched = And(fragment_act_enc, fragment_deact_enc)
+                    ts_sched.trans = And(ts_sched.trans, fragment_sched)
             elif (isinstance(c, Fragment)):
-                # The fragment gets to completion before being
-                # preempted
-                lc_info = lifecycles[c]
-
-                pc_init = lc_info.get_label(FlowDroidModelEncoder.FragmentLcInfo.INIT)
-                pc_init_next = self._get_next_formula(ts_sched.state_vars,
-                                                      pc_init)
-                fragment_act = And(Not(flag),
-                                   self._get_next_formula(ts_sched.state_vars,
-                                                          flag))
-                fragment_deact = And(flag,
-                                     Not(self._get_next_formula(ts_sched.state_vars,
-                                                                flag)))
-
-                fragment_sched = Iff(fragment_deact, pc_init_next)
-                ts_sched.trans = And(ts_sched.trans, fragment_sched)
+                # Already encoded with activity
+                pass
             else:
                 raise Exception("Unknown component")
 
-        # 5. Add the encoding of all the callback involved in the
-        # lifecycle
-        ts_sched.product(ts_callbacks)
+        # Encode the execution of the non lifecycle cb
+        cb_msg_enc = self._encode_free_messages()
+        callback_enc = And(Implies(run_free_msg_flag, cb_msg_enc),
+                           Implies(Not(run_free_msg_flag), Not(cb_msg_enc)))
+        ts_sched.trans = And(ts_sched.trans, callback_enc)
 
-        # 6. Encode that callbacks that are not:
-        #    - lifecycle callbacks of a component
-        #    - callbacks that are bound to the lifecycle of a
-        #      component
-        #
-        # can interleave freely.
-        #
-        # We also add the frame condition for the other flags in
-        # the scheduler
-        free_msg_enc = FALSE_PYSMT()
-        for msg in self.fd_builder.free_msg:
-            msg_enc = self._get_msg_label(msg)
-            free_msg_enc = Or(free_msg_enc, msg_enc)
-
-        fc_comp_flags = TRUE_PYSMT()
-        for c, c_lc in lifecycles.iteritems():
-            lc_info = lifecycles[c]
-            flag = comp2actflags[c]
-            flag_next = self._get_next_formula([flag], flag)
-            fc_comp_flags = And(fc_comp_flags,
-                                Iff(flag, flag_next))
-        free_msg_enc = And(free_msg_enc, fc_comp_flags)
-
-        run_free_msg_name = "_run_free_msg_"
-        self.enc.cenc.add_var(run_free_msg_name, 1)
-        counter_vars = self.enc.cenc.get_counter_var(run_free_msg_name)
-        assert (len(counter_vars) == 1)
-        run_free_msg_flag = None
-        for flag in counter_vars:
-            ts_sched.add_var(flag)
-            run_free_msg_flag = flag
-            # Add the mapback in the map for debug
-            # self.enc.mapback.add_actvar2component(act_flag, c)
-        assert not run_free_msg_flag is None
-
-        # run_free_msg_flag -> free_msg_enc
-        # ! run_free_msg_flag -> existing sched.trans
-        ts_sched.trans = And(Implies(run_free_msg_flag, free_msg_enc),
-                             Implies(Not(run_free_msg_flag), ts_sched.trans))
-        # End of 6
-
+        # Enforce that at most one component is active
+        set_flags = set()
+        for flag in comp2actflags.values():
+            set_flags.add(flag)
+        set_flags.add(run_free_msg_flag)
+        at_most_one = ExactlyOne(set_flags)
+        ts_sched.trans = And(ts_sched.trans,
+                             And(at_most_one,
+                                 self._get_next_formula(ts_sched.state_vars,
+                                                        at_most_one)))
         return ts_sched
+
+    def _other_activities_in_init(self, activity, lifecycles):
+        """ True if all activities are in init state """
+        others_in_init = TRUE_PYSMT()
+        for c in self.fd_builder.get_components():
+            if c == activity:
+                continue
+            if (not isinstance(c, Activity)):
+                continue
+
+            lc_info = lifecycles[c]
+            pc_init = lc_info.get_label(FlowDroidModelEncoder.ActivityLcInfo.INIT)
+            others_in_init = And(others_in_init, pc_init)
+        return others_in_init
+
+    def _other_fragments_in_init(self, activity, my_fragment, lifecycles):
+        """ True if all child fragments are in init state """
+        fragments_in_init = TRUE_PYSMT()
+        for fragment in activity.get_child_fragments():
+            if (not my_fragment is None) and my_fragment == fragment:
+                continue
+
+            lc_info = lifecycles[fragment]
+            pc_init = lc_info.get_label(FlowDroidModelEncoder.FragmentLcInfo.INIT)
+            fragments_in_init = And(fragments_in_init, pc_init)
+        return fragments_in_init
+
+    def _child_fragment_in_init(self, activity, lifecycles):
+        """ True if all child fragments are in init state """
+        return self._other_fragments_in_init(activity, None, lifecycles)
+
+    def _at_least_one_frag_activates(self, activity, comp2actflags, state_vars):
+        """ True if at least one of the child fragments activate 
+        in the next state"""
+        atleastone_frag_act = FALSE_PYSMT()
+        for fragment in activity.get_child_fragments():
+            flag_frag = comp2actflags[fragment]
+
+            frag_act = And(Not(flag_frag),
+                           self._get_next_formula(state_vars,
+                                                  flag_frag))
+            atleastone_frag_act = Or(atleastone_frag_act,
+                                     frag_act)
+        return atleastone_frag_act
+
 
     def _enc_component_step(self, component,
                             component_callback,

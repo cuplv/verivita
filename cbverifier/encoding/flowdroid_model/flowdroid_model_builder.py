@@ -73,13 +73,31 @@ class FlowDroidModelBuilder:
         self.lifecycle_msg = {}
         for c in self.components_set:
             c_msgs = c.get_lifecycle_msgs()
+            self.lifecycle_msg[c] = set()
             for msg_key in c_msgs:
-                self.lifecycle_msg[c] = msg_key
+                self.lifecycle_msg[c].add(msg_key)
+
+        # get the m opposite
+        #
+        # HACK -- the correspondent exit (to an entry) or entry (to an exit)
+        # of a lifecylce message should not be in the messages controlled by
+        # the component.
+        #
+        # The "hack" that we take here is to "put them back" in the
+        # free messages over-approximating the lifecycle behavior
+        #
+        # We should not lose too much precision here (the lifecycle messages
+        # are already there, so the order of their entry and exit are bounded
+        # in the trace.
+        #
+        self.other_lc_msg = self.get_other_lc_msgs(self.trace,
+                                                   self.lifecycle_msg)
 
     def init_relation(self, spec_msgs_keys):
         self.msgs_keys = set(spec_msgs_keys)
-        for c,msg in self.lifecycle_msg.iteritems():
-            self.msgs_keys.add(msg)
+        for c, msg_list in self.lifecycle_msg.iteritems():
+            for msg in msg_list:
+                self.msgs_keys.add(msg)
 
         # Map from object id to messages where the id is used as a receiver
         self.obj2msg_keys = FlowDroidModelBuilder._get_obj2msg_keys(self.trace,
@@ -87,10 +105,8 @@ class FlowDroidModelBuilder:
 
         # Computes where each message can be executed
         (compid2msg_keys, free_msg) = self._compute_msgs_boundaries()
-
         self.compid2msg_keys = compid2msg_keys
         self.free_msg = free_msg
-
 
     def get_msgs_keys(self):
         return self.msgs_keys
@@ -273,13 +289,20 @@ class FlowDroidModelBuilder:
         lifecycle_msg = component.get_lifecycle_msgs()
         # Removes the lifecycle messages
         for m in lifecycle_msg:
+            lifecycle_msg.add(m)
             if m in free_msg:
                 free_msg.remove(m)
+
         # add all the non-lifecycle component messages
         if component_obj in self.obj2msg_keys:
             for m in self.obj2msg_keys[component_obj]:
-                if m not in lifecycle_msg:
+                if ((not m in lifecycle_msg) and
+                    (not m in self.other_lc_msg)):
+                # if ((not m in lifecycle_msg)):
                     component_msg_keys.add(m)
+                    # The message is not "free" anymore but it
+                    # is bound to the component's lifecycle
+                    free_msg.remove(m)
 
     def get_components(self):
         return list(self.components_set)
@@ -333,3 +356,28 @@ class FlowDroidModelBuilder:
                 trace_stack.append(c)
 
         return obj2msg
+
+    def get_other_lc_msgs(self, trace, lifecycle_msg):
+
+        lc_set = set()
+        for msg_list in lifecycle_msg.values():
+            for elem in msg_list:
+                lc_set.add(elem)
+
+        other_lc_msg = set()
+        trace_stack = [child for child in trace.children]
+        while (0 < len(trace_stack)):
+            current = trace_stack.pop()
+
+            msg_entry = EncoderUtils.get_key_from_msg(current, EncoderUtils.ENTRY)
+            msg_exit = EncoderUtils.get_key_from_msg(current, EncoderUtils.EXIT)
+
+            if ((msg_entry in lc_set) and
+                (not msg_exit in lc_set)):
+                other_lc_msg.add(msg_exit)
+            if ((msg_exit in lc_set) and
+                (not msg_entry in lc_set)):
+                other_lc_msg.add(msg_entry)
+            for c in current.children:
+                trace_stack.append(c)
+        return other_lc_msg
