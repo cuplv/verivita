@@ -1808,94 +1808,92 @@ class FlowDroidModelEncoder:
                                  Fragment.ONATTACHFRAGMENT,
                                  ts, pc, pc_val, pc_val)
 
-        before_onAttach_label = pc_val
-
         # line 986
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONATTACH,
-                                          ts, pc, pc_val, pc_val+1,
+                                          ts, pc, pc_val, pc_val + 1,
                                           False, True)
         # line 992
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONCREATE,
-                                          ts, pc, pc_val, pc_val+1,
+                                          ts, pc, pc_val, pc_val + 1,
                                           False, True)
         before_onCreateview_label = pc_val
         # line 998
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONCREATEVIEW,
-                                          ts, pc, pc_val, pc_val+1,
+                                          ts, pc, pc_val, pc_val + 1,
                                           False, True)
         # line 1003
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONVIEWCREATED,
-                                          ts, pc, pc_val, pc_val+1,
+                                          ts, pc, pc_val, pc_val + 1,
                                           False, True)
         # line 1009
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONACTIVITYCREATED,
-                                          ts, pc, pc_val, pc_val+1,
+                                          ts, pc, pc_val, pc_val + 1,
                                           False, True)
         before_onStart_label = pc_val
         # line 1015
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONSTART,
-                                          ts, pc, pc_val, pc_val+1)
+                                          ts, pc, pc_val, pc_val + 1,
+                                          False, True)
         # line 1021
-        before_onResume_label = pc
+        before_onResume_label = pc_val
         # line 1022
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONRESUME,
-                                          ts, pc, pc_val, pc_val+1)
+                                          ts, pc, pc_val, pc_val + 1)
         # line 1025
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONPAUSE,
-                                          ts, pc, pc_val, pc_val+1)
+                                          ts, pc, pc_val, pc_val + 1)
         # line 1026
         self._enc_component_step(fragment,
                                  Fragment.ONPAUSE,
-                                 ts, pc, pc_val, before_onResume_label)
+                                 ts, pc, pc_val,  before_onResume_label)
 
         # line 1029
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONSAVEINSTANCESTATE,
-                                          ts, pc, pc_val, pc_val+1)
+                                          ts, pc, pc_val, pc_val + 1)
         # line 1032
         before_onStop_label = pc_val
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONSTOP,
                                           ts, pc, before_onStop_label,
-                                          pc_val+1)
+                                          pc_val + 1)
         # line 1033
         self._enc_component_step(fragment,
                                  Fragment.ONSTOP,
-                                 ts, pc, before_onStop_label,
+                                 ts, pc, pc_val,
                                  before_onCreateview_label)
         # line 1034
         self._enc_component_step(fragment,
                                  Fragment.ONSTOP,
-                                 ts, pc, before_onStop_label,
+                                 ts, pc, pc_val,
                                  before_onStart_label)
 
         # line 1037
         before_onDestroyView_label = pc_val
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONDESTROYVIEW,
-                                          ts, pc, before_onDestroyView_label, pc_val+1)
+                                          ts, pc, pc_val, pc_val+1)
         # line 1038
         self._enc_component_step(fragment,
                                  Fragment.ONDESTROYVIEW,
-                                 ts, pc, before_onDestroyView_label,
+                                 ts, pc, pc_val,
                                  before_onCreateview_label)
         # line 1041
         pc_val = self._enc_component_step(fragment,
                                           Fragment.ONDESTROY,
-                                          ts, pc, pc_val, pc_val+1)
+                                          ts, pc, pc_val, pc_val + 1)
         # line 1044, 1045
-        before_onDetach_label = pc_val
         self._enc_component_step(fragment,
                                  Fragment.ONDETACH,
-                                 ts, pc, before_onDetach_label, entry_label)
+                                 ts, pc, pc_val, entry_label)
 
         lc_info = FlowDroidModelEncoder.FragmentLcInfo(ts, pc, pc_size)
         lc_info.add_label(FlowDroidModelEncoder.FragmentLcInfo.INIT,
@@ -2118,7 +2116,7 @@ class FlowDroidModelEncoder:
                     act_pc_run_frag_next = self._get_next_formula(ts_sched.state_vars,
                                                                   act_pc_run_frag)
 
-                    other_fragment_in_init = self._other_fragments_in_init(activity, fragment, lifecycles)
+                    other_fragment_in_init = self._other_fragments_in_init(c, fragment, lifecycles)
                     other_fragment_in_init_next = self._get_next_formula(ts_sched.state_vars,
                                                                          other_fragment_in_init)
                     fragment_act_enc = Implies(fragment_act,
