@@ -61,13 +61,10 @@ Possible bottlenecks:
 a. The length of the sequence that must be explored can be huge.
 We need to optimize the encoding as much as we can.
 
-b. We build a single automata for each ground specification.
+b. We build a single automaton for each ground specification.
 This can lead to an explosion in the state space.
 
-c. The construction of each automaton can be expensive, since we
-perform operations on symbolic labels
-
-d. Other standard bottlenecks: e.g. recursive vs. iterative, no
+c. Other standard bottlenecks: e.g. recursive vs. iterative, no
 memoization when visiting specs.
 
 
@@ -107,17 +104,15 @@ Improvements for a)
 
 
 Improvements for b)
-- We can perform the union of different regexp automata to reduce the state space.
+- We already merge together the automata that are equivalent.
+
+  We could further perform the union of different regexp automata to reduce the state space.
   For example, we can perform the union of all the automata that have
   the same effect on the transition system.
   Here we will have a tradeoff between the composed representation of
   the automata and the monolithic one (WARNING: the states of the monolithic
   automaton can explode since we need a complete and deterministic automaton).
 
-Improvements for c)
-- Now we compute the label operations using SAT.
-  We can switch to BDD to increase the sharing and exploit the
-  canonical representation.
 
 
 The module defines the following classes:
@@ -125,7 +120,7 @@ The module defines the following classes:
   - TSEncoder
   - TSMapback
   - RegExpToAuto
-
+  - FlowDroidModelEncoder
 """
 
 import logging
@@ -145,10 +140,13 @@ from pysmt.shortcuts import simplify
 from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
 from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
+from cbverifier.encoding.encoder_utils import EncoderUtils
 from cbverifier.encoding.automata import Automaton, AutoEnv
 from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.encoding.conversion import TraceSpecConverter
+from cbverifier.encoding.flowdroid_model.flowdroid_model_builder import FlowDroidModelBuilder
+from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
 from cbverifier.utils.stats import Stats
 from cbverifier.helpers import Helper
 
@@ -207,41 +205,58 @@ class TSEncoder:
 
     """
 
-    ENTRY = "ENTRY"
-    EXIT = "EXIT"
-
-
-    def __init__(self, trace, specs, ignore_msgs = False, stats = None):
-        # copy the trace removing the top-level exception
+    def __init__(self, trace, specs, ignore_msgs = False,
+                 stats = None, use_flowdroid_model = False):
+        # 1. copy the trace removing the top-level exception
         self.trace = trace.copy(True)
         self.specs = specs
         self.ts = None
         self.error_prop = None
         self.stats = stats
+        self.use_flowdroid_model = use_flowdroid_model
+        self.fd_builder = None
+        self.fd_enc = None
 
+        # 2. computes the ground specification
         logging.info("Total number of specs (before grounding): %d" % (len(specs)))
         self.gs = GroundSpecs(self.trace)
         self.ground_specs = TSEncoder._compute_ground_spec(self.gs, self.specs,
                                                            self.stats)
         logging.info("Total specs after grounding: %d" % (len(self.ground_specs)))
 
-        # Remove all the messages in the trace that do not
+        if (self.use_flowdroid_model):
+            # initializes the informations needed to compute the FlowDroid model
+            self.fd_builder = FlowDroidModelBuilder(self.trace,
+                                                    self.gs.trace_map)
+            self.ground_specs = TSEncoder._remove_enable_spec(self.ground_specs)
+        else:
+            self.fd_builder = None
+
+        self.spec_msgs = set()
+        # collect the calls appearing in the ground specs
+        for spec in self.ground_specs:
+            for call in spec.get_spec_calls():
+                self.spec_msgs.add(EncoderUtils.get_key_from_call(call))
+
+        # Add the message to avoid removing them from the trace
+        if (self.use_flowdroid_model):
+            for c in self.fd_builder.get_components():
+                for msg_key in c.get_lifecycle_msgs():
+                    self.spec_msgs.add(msg_key)
+            for msg_key in self.fd_builder.listener_in_lc:
+                self.spec_msgs.add(msg_key)
+
+
+        # 3. Remove all the messages in the trace that do not
         # appear in the specification.
-        # WARNING: the simplification is UNSOUND - added to make
-        # progresses in the verification.
         if (ignore_msgs):
-            # collect the calls appearing in the ground specs
-            self.spec_msgs = set()
-            for spec in self.ground_specs:
-                for call in spec.get_spec_calls():
-                    self.spec_msgs.add(TSEncoder.get_key_from_call(call))
-
-            # Collect the statistics
+            # Collect the statistics on the trace
             self._is_msg_visible = self._is_msg_visible_all
-            (trace_length, msgs, fmwk_contr, app_contr) = self.get_trace_stats()
-
+            (trace_length, msgs, fmwk_contr, app_contr) = TSEncoder.get_trace_stats(self.trace,
+                                                                                    self._is_msg_visible)
             self.trace = TSEncoder._simplify_trace(self.trace,
                                                    self.spec_msgs)
+
             self._is_msg_visible = self._is_msg_visible_simpl
             print("\n---Simplified Trace---")
             self.trace.print_trace(sys.stdout)
@@ -249,9 +264,14 @@ class TSEncoder:
         else:
             self._is_msg_visible = self._is_msg_visible_all
 
-        (trace_length, msgs, fmwk_contr, app_contr) = self.get_trace_stats()
+        # 4. Initialize the data structures needed to construct the encoding
+        (trace_length, msgs, fmwk_contr, app_contr) = TSEncoder.get_trace_stats(self.trace, self._is_msg_visible)
         self.trace_length = trace_length
         self.msgs = msgs
+
+        if (use_flowdroid_model):
+            self.fd_builder.init_relation(self.msgs)
+
         # set of messages controlled by the framework
         self.fmwk_contr = fmwk_contr
         # set of messages controlled by the app
@@ -269,7 +289,6 @@ class TSEncoder:
         letters.update(self.msgs)
         self.r2a = RegExpToAuto(self.cenc, letters,
                                 self.mapback, self.auto_env)
-
 
         # Map from regular expression to the correspondent automata, pc and final states
         self.regexp2ts = {}
@@ -295,8 +314,8 @@ class TSEncoder:
                 if cb is None:
                     raise Exception("Message id %s not found in the trace" % message_id)
 
-                msg_enc = self.mapback.get_trans2pc((TSEncoder.ENTRY, cb))
-                key = TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY)
+                msg_enc = self.mapback.get_trans2pc((EncoderUtils.ENTRY, cb))
+                key = EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY)
                 if not self._is_msg_visible(key):
                     raise Exception("Message id %s not found in the (simplified) trace" % message_id)
 
@@ -307,20 +326,20 @@ class TSEncoder:
         # encode each callback
         # No trace constraints in the initial state
         trace_encoding = []
-        pc_name = TSEncoder._get_pc_name()
+        pc_name = EncoderUtils._get_pc_name()
         for tl_cb in tl_cbs:
-            stack = [(TSEncoder.EXIT, tl_cb),(TSEncoder.ENTRY, tl_cb)]
+            stack = [(EncoderUtils.EXIT, tl_cb),(EncoderUtils.ENTRY, tl_cb)]
 
             while (len(stack) != 0):
                 (entry_type, msg) = stack.pop()
 
                 # Fill the stack in reverse order
-                if (TSEncoder.ENTRY == entry_type):
+                if (EncoderUtils.ENTRY == entry_type):
                     for i in reversed(range(len(msg.children))):
-                        stack.append((TSEncoder.EXIT, msg.children[i]))
-                        stack.append((TSEncoder.ENTRY, msg.children[i]))
+                        stack.append((EncoderUtils.EXIT, msg.children[i]))
+                        stack.append((EncoderUtils.ENTRY, msg.children[i]))
 
-                msg_key = TSEncoder.get_key_from_msg(msg, entry_type)
+                msg_key = EncoderUtils.get_key_from_msg(msg, entry_type)
                 if not self._is_msg_visible(msg_key):
                     continue
 
@@ -330,7 +349,7 @@ class TSEncoder:
                 (current_state, next_state) = msg_enc
                 s0 = self.cenc.eq_val(pc_name, current_state)
                 # strengthen s0 - progress only if the message is enabled
-                msg_enabled = TSEncoder._get_state_var(msg_key)
+                msg_enabled = EncoderUtils._get_state_var(msg_key)
                 s0 = And(s0, msg_enabled)
                 s1 = self.cenc.eq_val(pc_name, next_state)
 
@@ -350,8 +369,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                     logging.info(info_msg)
                     # if msg_error_enc is not None:
                     #     # this is a possible error state
-                    #     msg_key = TSEncoder.get_key_from_msg(msg, entry_type)
-                    #     msg_enabled = TSEncoder._get_state_var(msg_key)
+                    #     msg_key = EncoderUtils.get_key_from_msg(msg, entry_type)
+                    #     msg_enabled = EncoderUtils._get_state_var(msg_key)
                     #     # progress only if the message is enabled
                     #     s0 = And(s0, msg_enabled)
                 except KeyError:
@@ -414,6 +433,28 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         return ground_specs
 
+    @staticmethod
+    def _remove_enable_spec(spec_set):
+        # Remove all the enable/disable specification
+        #
+        # The flowdroid model replaces the specifications used for
+        # enabling/disabling messages.
+        #
+        # We still use the enable/disable specification to have the
+        # filtering
+        #
+        new_spec_set = set()
+        for spec in spec_set:
+            msg_ast = get_spec_rhs(spec.ast)
+            entry_type = get_node_type(msg_ast)
+            assert (CALL_ENTRY == entry_type or CALL_EXIT == entry_type)
+            call_type = get_node_type(get_call_type(msg_ast))
+            is_in_msg = ((CI == call_type and CALL_ENTRY == entry_type) or
+                         (CB == call_type and CALL_EXIT == entry_type))
+
+            if (is_in_msg):
+                new_spec_set.add(spec)
+        return new_spec_set
 
     def _is_msg_visible_all(self, msg_key):
         return True
@@ -441,8 +482,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         """
         def simplify_msg(parent, trace_msg, spec_msg):
             for child in trace_msg.children:
-                if (TSEncoder.get_key_from_msg(child, TSEncoder.ENTRY) in spec_msg or
-                    TSEncoder.get_key_from_msg(child, TSEncoder.EXIT) in spec_msg):
+                if (EncoderUtils.get_key_from_msg(child, EncoderUtils.ENTRY) in spec_msg or
+                    EncoderUtils.get_key_from_msg(child, EncoderUtils.EXIT) in spec_msg):
                     # Keep both entry and exit for now
                     new_parent = copy.copy(child)
                     new_parent.children = []
@@ -460,24 +501,23 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             simplify_msg(parent, cb, spec_msgs)
 
             # always add the ENTRY of the tl callback
-            if ((TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs or
-                 TSEncoder.get_key_from_msg(cb, TSEncoder.EXIT) in spec_msgs) or
+            if ((EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY) in spec_msgs or
+                 EncoderUtils.get_key_from_msg(cb, EncoderUtils.EXIT) in spec_msgs) or
                 len(parent.children) > 0):
                 new_trace.add_msg(parent)
 
                 # print spec_msgs
-                # print TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs
-                # print TSEncoder.get_key_from_msg(cb, TSEncoder.EXIT) in spec_msgs
+                # print EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY) in spec_msgs
+                # print EncoderUtils.get_key_from_msg(cb, EncoderUtils.EXIT) in spec_msgs
                 # print len(parent.children) > 0
 
-                if ( ( not TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY) in spec_msgs) and
+                if ( ( not EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY) in spec_msgs) and
                      len(parent.children) > 0):
                     # CB included by its children
-                    msg_key = TSEncoder.get_key_from_msg(cb, TSEncoder.ENTRY)
+                    msg_key = EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY)
                     spec_msgs.add(msg_key)
 
         return new_trace
-
 
     def _encode(self):
         """ Function that performs the actual encoding of the TS.
@@ -486,8 +526,11 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         1. Encode all the variables of the system
         2. Encode the effects of the specifications
-        3. Encode the execution of the top-level callbacks and the
-        error conditions
+        3. Encode the FlowDroid model of callbacks, if the option
+           is enabled
+        4. Encode the execution of the top-level callbacks and the
+           error conditions
+        5. Encode the initial condition
         """
         if self.stats is not None:
             self.stats.start_timer(self.stats.ENCODING_TIME)
@@ -508,7 +551,14 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         self.ts.product(spec_ts)
         logging.info("Done encoding the specification.")
 
-        # 3. Encode the execution of the top-level callbacks
+        # 3. Encode the FlowDroid model (if the option is enabled)
+        if (self.use_flowdroid_model):
+            assert self.fd_builder is not None
+            self.fd_enc = FlowDroidModelEncoder(self, self.fd_builder)
+            fd_ts = self.fd_enc.get_ts_encoding()
+            self.ts.product(fd_ts)
+
+        # 4. Encode the execution of the top-level callbacks
         logging.info("Encoding the trace...")
         (cb_ts, errors) = self._encode_cbs(disabled_msg)
         self.ts.product(cb_ts)
@@ -518,6 +568,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         self.mapback.set_error_condition(self.error_prop)
         logging.info("Done encoding the trace.")
 
+        # 5. Encode the initial condition
         self._encode_initial_conditions()
         logging.info("Done generating the encoding.")
 
@@ -555,7 +606,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         spec_id = 0
         for ground_spec in self.ground_specs:
             msg = get_spec_rhs(ground_spec.ast)
-            key = TSEncoder.get_key_from_call(msg)
+            key = EncoderUtils.get_key_from_call(msg)
 
             if ground_spec.is_disable():
                 if key in self.app_contr:
@@ -578,7 +629,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         # the variable do not change, so we must encode the frame
         # condition
         for (msg_key, accepting_for_var) in accepting.iteritems():
-            msg_enabled = TSEncoder._get_state_var(msg_key)
+            msg_enabled = EncoderUtils._get_state_var(msg_key)
 
             # msg_enabled <-> msg_enabled'
             fc_msg = Iff(msg_enabled,
@@ -603,7 +654,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         # specification
         for msg in self.msgs:
             if msg not in accepting:
-                msg_enabled = TSEncoder._get_state_var(msg)
+                msg_enabled = EncoderUtils._get_state_var(msg)
                 fc_msg = Iff(msg_enabled,
                              Helper.get_next_var(msg_enabled,
                                                  self.pysmt_env.formula_manager))
@@ -758,8 +809,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         # rhs of the specifications change
         spec_accepting = []
         msg = get_spec_rhs(ground_spec.ast)
-        key = TSEncoder.get_key_from_call(msg)
-        msg_enabled = TSEncoder._get_state_var(key)
+        key = EncoderUtils.get_key_from_call(msg)
+        msg_enabled = EncoderUtils._get_state_var(key)
         all_vars = set(ts.state_vars)
         all_vars.add(msg_enabled)
         for ts_s in final_states:
@@ -789,7 +840,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         for f in spec_accepting:
             accepting_formula = Or(accepting_formula, f)
         spec = self.gs.get_source_spec(ground_spec)
-        self.mapback.add_var2spec(TSEncoder._get_state_var(key),
+        self.mapback.add_var2spec(EncoderUtils._get_state_var(key),
                                   ground_spec.is_enable(),
                                   ground_spec,
                                   accepting_formula,
@@ -814,7 +865,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         for msg in self.msgs:
             # create the state variable
-            var = TSEncoder._get_state_var(msg)
+            var = EncoderUtils._get_state_var(msg)
             var_ts.add_var(var)
 
             # Add the constraint on the msg
@@ -869,7 +920,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         max_pc_value = pc_size - 1
 
-        pc_name = TSEncoder._get_pc_name()
+        pc_name = EncoderUtils._get_pc_name()
         self.cenc.add_var(pc_name, max_pc_value) # starts from 0
         self.mapback.set_pc_var(pc_name)
         self.mapback.add_encoder(pc_name, self.cenc)
@@ -888,13 +939,13 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
 
         def add_msgs_to_stack(stack, msg):
-            exit_key = TSEncoder.get_key_from_msg(msg, TSEncoder.EXIT)
+            exit_key = EncoderUtils.get_key_from_msg(msg, EncoderUtils.EXIT)
             if self._is_msg_visible(exit_key):
-                stack.append((TSEncoder.EXIT, msg))
+                stack.append((EncoderUtils.EXIT, msg))
 
-            entry_key = TSEncoder.get_key_from_msg(msg, TSEncoder.ENTRY)
+            entry_key = EncoderUtils.get_key_from_msg(msg, EncoderUtils.ENTRY)
             if self._is_msg_visible(entry_key):
-                stack.append((TSEncoder.ENTRY, msg))
+                stack.append((EncoderUtils.ENTRY, msg))
 
         offset = 0
         ts.trans = FALSE_PYSMT() # disjunction of transitions
@@ -910,13 +961,13 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             add_msgs_to_stack(stack, tl_cb)
             while (len(stack) != 0):
                 (entry_type, msg) = stack.pop()
-                msg_key = TSEncoder.get_key_from_msg(msg, entry_type)
-                msg_enabled = TSEncoder._get_state_var(msg_key)
+                msg_key = EncoderUtils.get_key_from_msg(msg, entry_type)
+                msg_enabled = EncoderUtils._get_state_var(msg_key)
                 assert self._is_msg_visible(msg_key)
 
                 # Fill the stack in reverse order
                 # Add the child only if pre-visit
-                if (entry_type == TSEncoder.ENTRY):
+                if (entry_type == EncoderUtils.ENTRY):
                     for i in reversed(range(len(msg.children))):
                         msg_i = msg.children[i]
                         add_msgs_to_stack(stack, msg_i)
@@ -949,8 +1000,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                 logging.debug("Trans: %d -> %d on %s" % (current_state, next_state, msg_key))
 
                 # encode the transition to the error state
-                if (msg_key in disabled_msg and ((isinstance(msg, CCallin) and entry_type == TSEncoder.ENTRY) or
-                                                 (isinstance(msg, CCallback) and entry_type == TSEncoder.EXIT))):
+                if (msg_key in disabled_msg and ((isinstance(msg, CCallin) and entry_type == EncoderUtils.ENTRY) or
+                                                 (isinstance(msg, CCallback) and entry_type == EncoderUtils.EXIT))):
                     logging.debug("Error condition: %s not enabled" % str(msg_enabled))
                     error_label = And(Not(msg_enabled),
                                       self.r2a.get_msg_eq(self.error_label))
@@ -1007,7 +1058,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         solver.add_assertion(self.ts.init)
 
         for msg in self.msgs:
-            msg_var = TSEncoder._get_state_var(msg)
+            msg_var = EncoderUtils._get_state_var(msg)
             solver.push()
             solver.add_assertion(msg_var)
             can_be_enabled = solver.solve()
@@ -1016,133 +1067,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             if (can_be_enabled):
                 self.ts.init = And(self.ts.init, msg_var)
 
-
     @staticmethod
-    def _get_pc_name():
-        atom_name = "pc"
-        return atom_name
-
-    @staticmethod
-    def _get_state_var(key):
-        atom_name = "enabled_" + key
-        return Symbol(atom_name, BOOL)
-
-    @staticmethod
-    def get_key(retval, call_type, entry_type, method_name, params):
-        assert method_name is not None
-        assert params is not None
-        assert method_name != ""
-
-        assert call_type == "CI" or call_type == "CB"
-        assert entry_type == TSEncoder.ENTRY or entry_type == TSEncoder.EXIT
-
-        string_params = [str(f) for f in params]
-
-        if (retval != None and entry_type == TSEncoder.EXIT):
-            # ADD return value only for EXIT
-            key = "%s=[%s]_[%s]_%s(%s)" % (retval,
-                                           call_type,
-                                           entry_type,
-                                           method_name,
-                                           ",".join(string_params))
-        else:
-            key = "[%s]_[%s]_%s(%s)" % (call_type ,
-                                        entry_type,
-                                        method_name,
-                                        ",".join(string_params))
-        return key
-
-    @staticmethod
-    def get_key_from_msg(msg, entry_type):
-        """ The input is a msg from a concrete trace.
-        The output is the key to the message
-
-        The message must also be paired with the entry/exit information.
-        """
-
-        if isinstance(msg, CCallin):
-            msg_type = "CI"
-        elif isinstance(msg, CCallback):
-            msg_type = "CB"
-        else:
-            assert False
-
-        if (msg.return_value is None):
-            retval = None
-        else:
-            retval = TSEncoder.get_value_key(msg.return_value)
-
-        params = []
-        for p in msg.params:
-            p_value = TSEncoder.get_value_key(p)
-            params.append(p_value)
-
-        full_msg_name = msg.get_full_msg_name()
-        return TSEncoder.get_key(retval, msg_type, entry_type, full_msg_name, params)
-
-    @staticmethod
-    def get_key_from_call(call_node):
-        """ Works for grounded call node """
-        assert (get_node_type(call_node) == CALL_ENTRY or
-                get_node_type(call_node) == CALL_EXIT)
-
-        if (get_node_type(call_node) == CALL_EXIT):
-            node_retval = get_call_assignee(call_node)
-            if (new_nil() != node_retval):
-                retval_val = TraceSpecConverter.specnode2traceval(node_retval)
-                retval = TSEncoder.get_value_key(retval_val)
-            else:
-                retval = None
-        else:
-            retval = None
-
-        node_call_type = get_call_type(call_node)
-        if (get_node_type(node_call_type) == CI):
-            call_type = "CI"
-        elif (get_node_type(node_call_type) == CB):
-            call_type = "CB"
-        else:
-            assert False
-
-        entry_type = TSEncoder.ENTRY if get_node_type(call_node) == CALL_ENTRY else TSEncoder.EXIT
-
-        method_name_node = get_call_signature(call_node)
-
-        assert (ID == get_node_type(method_name_node))
-        method_name = get_id_val(method_name_node)
-        receiver = get_call_receiver(call_node)
-
-        if (new_nil() != receiver):
-            param_val = TraceSpecConverter.specnode2traceval(receiver)
-            params = [TSEncoder.get_value_key(param_val)]
-        else:
-            params = []
-
-        node_params = get_call_params(call_node)
-
-        while (PARAM_LIST == get_node_type(node_params)):
-            p_node = get_param_name(node_params)
-            p = TraceSpecConverter.specnode2traceval(p_node)
-            p_value = TSEncoder.get_value_key(p)
-            params.append(p_value)
-            node_params = get_param_tail(node_params)
-
-        return TSEncoder.get_key(retval, call_type, entry_type,
-                                 method_name, params)
-
-
-    @staticmethod
-    def get_value_key(value):
-        """ Given a value returns its representation
-        that will be used in the message key """
-
-        assert (isinstance(value, CValue))
-
-        value_repr = value.get_value()
-
-        return value_repr
-
-    def get_trace_stats(self):
+    def get_trace_stats(trace, _is_msg_visible):
         # count the total number of messages and returns the set of
         # messages of the trace
         trace_length = 0
@@ -1157,15 +1083,15 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         cb_exit = set()
 
         stack = []
-        for msg in self.trace.children:
+        for msg in trace.children:
             stack.append(msg)
 
         while (len(stack) != 0):
             msg = stack.pop()
 
             # Add ENTRY
-            key = TSEncoder.get_key_from_msg(msg, TSEncoder.ENTRY)
-            if self._is_msg_visible(key):
+            key = EncoderUtils.get_key_from_msg(msg, EncoderUtils.ENTRY)
+            if _is_msg_visible(key):
                 trace_length = trace_length + 1
                 msgs.add(key)
                 if (isinstance(msg, CCallback)):
@@ -1176,8 +1102,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                     ci_entry.add(key)
 
             # Add EXIT
-            key = TSEncoder.get_key_from_msg(msg, TSEncoder.EXIT)
-            if self._is_msg_visible(key):
+            key = EncoderUtils.get_key_from_msg(msg, EncoderUtils.EXIT)
+            if _is_msg_visible(key):
                 trace_length = trace_length + 1
                 msgs.add(key)
                 if (isinstance(msg, CCallback)):
@@ -1198,7 +1124,7 @@ CI-ENTRY: %d
 CI-EXIT: %d
 CB-ENTRY: %d
 CB-EXIT: %d
-        """ % (trace_length, len(self.trace.children),
+        """ % (trace_length, len(trace.children),
                len(ci_entry), len(ci_exit),
                len(cb_entry), len(cb_exit)))
 
@@ -1246,6 +1172,10 @@ class TSMapback():
 
         # set of state variables
         self.state_vars = set()
+
+        # Flowdroid model
+        self.pcvars2component = {}
+        self.actvars2component = {}
 
         # used for lazyness to evaluate a formula given a model
         self.pysmt_env = pysmt_env
@@ -1396,6 +1326,24 @@ class TSMapback():
     def add_state_vars(self, set_vars):
         self.state_vars.update(set_vars)
 
+    def add_pc2component(self, pc_var, component):
+        self.pcvars2component[pc_var] = component
+    def add_actvar2component(self, act_var, component):
+        self.actvars2component[act_var] = component
+
+    def get_component_pcs(self, current_state):
+        res = []
+        for pc_var, component in self.pcvars2component.iteritems():
+            pc_value = self._get_pc_value(pc_var, current_state)
+            res.append((pc_var, component, pc_value))
+        return res
+
+    def get_component_act(self, current_state):
+        res = []
+        for act_var, component in self.actvars2component.iteritems():
+            res.append((act_var, component, current_state[act_var]))
+        return res
+
 class RegExpToAuto():
     """ Utility class to convert a regular expression in an automaton.
 
@@ -1413,7 +1361,6 @@ class RegExpToAuto():
         self.cenc = cenc
         self.alphabet = alphabet
 
-        # TODO: get a fresh variable
         self.counter_var = "__msg_var___"
         self.cenc.add_var(self.counter_var, len(self.alphabet))
         mapback.set_msg_ivar(self.counter_var)
@@ -1441,7 +1388,7 @@ class RegExpToAuto():
         return self.alphabet_list[value]
 
     def get_atom_var(self, call_node):
-        key = TSEncoder.get_key_from_call(call_node)
+        key = EncoderUtils.get_key_from_call(call_node)
         eq = self.get_msg_eq(key)
         return eq
 
@@ -1530,3 +1477,845 @@ class RegExpToAuto():
         else:
             raise UnexpectedSymbol(be_node)
 
+
+class FlowDroidModelEncoder:
+    """ We follow the description in Section 3 "Precise Modeling of Lifecycle" of:
+    'FlowDroid: Precise Context, Flow, Field, Object-sensitive
+    and Lifecycle-aware Taint Analysis for Android Apps',
+    Artz et al, PLDI 14
+
+    and in particular the implementation in:
+    soot-infoflow/src/soot/jimple/infoflow/entryPointCreators/
+    AndroidEntryPointCreator.java
+    in the repo secure-software-engineering/FlowDroid,
+    commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
+
+    Activity lifecycle: generateActivityLifecycle, line 774
+
+    We encode the lifecylce of each component forcing that at most one component
+    can be active at each time.
+    For each component, there is a different definition of active. For example,
+    an activity component is active after the onResume and before the onPause
+    callbacks.
+
+    We follow the modeling where callbacks cannot happen if the component
+    that register them is not active.
+    We compute an over-approximation of the registration of components
+    from the trace.
+
+    We model the lifecycle for activity and fragment components since we
+    are interested in components that run in the UI thread.
+
+    As done in flowdroid, we encode the lifecycle component of fragment
+    inside their activity component."""
+
+    def __init__(self, enc, fd_builder):
+        self.enc = enc
+        self.fd_builder = fd_builder
+        self.ts = None
+
+    def get_ts_encoding(self):
+        if (self.ts is None):
+            self._encode()
+        return self.ts
+
+    def _encode(self):
+        """ Create an encoding of the FlowDroid model.
+
+        Returns a transition system representing the FlowDroid model of
+        the callback control-flow.
+
+        The transition system can be composed to the disallow set of
+        specification and to the callback re-ordering from the trace.
+        """
+        # Encode the lifecycle for each component
+        lifecycles = {}
+        for c in self.fd_builder.get_components():
+            lifecycles[c] = self._encode_component_lifecycle(c)
+
+        # Encode the component scheduler
+        # We must change the ts of the other components to add the
+        # stuttering!
+        ts_scheduler = self._encode_components_scheduler(lifecycles)
+
+        self.enc.mapback.add_state_vars(ts_scheduler.state_vars)
+
+        self.ts = ts_scheduler
+
+    def _encode_component_lifecycle(self, component):
+        """ Encode the components' lifecycles
+
+        For now we handle activities and fragments.
+
+        The encoding is compositional and, without additional
+        constraints, allow each component lifecycle to
+        interleave with each other.
+        """
+        if (isinstance(component, Activity)):
+            lifecycle_encoding = self._encode_activity_lifecycle(component)
+        elif (isinstance(component, Fragment)):
+            lifecycle_encoding = self._encode_fragment_lifecycle(component)
+        else:
+            raise Exception("Unknown component!")
+
+        return lifecycle_encoding
+
+
+    def _check_for_deadlocks(self, trans, pc, pc_size):
+        """
+        Checks for deadlocks in each state of the generated automaton
+        """
+        solver = self.enc.pysmt_env.factory.Solver(quantified=False,
+                                                   name="z3",
+                                                   logic=QF_BOOL)
+        solver.add_assertion(trans)
+        for i in range(pc_size-1):
+            solver.push()
+            solver.add_assertion(self._eq_val(pc, i))
+            is_sat = solver.solve()
+            solver.pop()
+
+            if (is_sat):
+                result = "%s = %s can move" % (pc, str(i))
+            else:
+                result = "%s = %s is in deadlock" % (pc, str(i))
+            print result
+
+    def _encode_activity_lifecycle(self, activity):
+        """
+        Encode the lifecycle for activity.
+
+        Return an FlowDroidModelEncoder.ActivityLcInfo object
+        """
+
+        ts = TransitionSystem()
+
+        # Add the program counter variable to encode the lifecycle
+        # is the maximum number of states in the automaton
+        # encoded in the activity lifecycle
+        # (see how many times pc is incremented there)
+        pc_size = 19
+        pc = "pc_" + (activity.get_inst_value().get_value())
+        self.enc.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
+        for v in self.enc.cenc.get_counter_var(pc): ts.add_var(v)
+
+        self.enc.mapback.add_pc2component(pc, activity)
+        self.enc.mapback.add_encoder(pc, self.enc.cenc)
+
+        # Start from the initial state
+        pc_val = 0
+        entry_label = pc_val
+        ts.init = self.enc.cenc.eq_val(pc, pc_val)
+
+        ts.trans = FALSE_PYSMT() # disjunction of automata transitions
+
+        # Encode the lifecycle
+
+        # line 793
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONCREATE,
+                                          ts, pc, pc_val, pc_val + 1)
+
+
+        # line 795
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYCREATED,
+                                          ts, pc, pc_val, pc_val + 1, True)
+
+        # line 840
+        before_onStartStmt_label = pc_val
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONSTART,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          False, True)
+
+        # line 842
+        before_onActivityStarted_label = pc_val
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYSTARTED,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          True, True)
+
+        # line 860
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONRESTOREINSTANCESTATE,
+                                          ts, pc, pc_val, pc_val + 1)
+
+        before_onPostCreate_label = pc_val
+        # line 859 - jump from before before_onActivityStarted_label
+        self._enc_component_step(activity,
+                                 Activity.ONACTIVITYSTARTED,
+                                 ts, pc,
+                                 before_onActivityStarted_label, pc_val,
+                                 True, True)
+        # line 864
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONPOSTCREATE,
+                                          ts, pc, pc_val, pc_val + 1)
+        before_onResume_label = pc_val # 868
+
+        # line 870
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONRESUME,
+                                          ts, pc, pc_val, pc_val + 1)
+        # line 872
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYRESUMED,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          True)
+        # line 876
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONPOSTRESUME,
+                                          ts, pc, pc_val, pc_val + 1)
+
+        # Now we can execute all the activity callbacks
+        # We pass back this condition to encode the scheduling of the
+        # activity callbacks
+        activity_is_active = self._eq_val(pc, pc_val)
+
+
+        # encode activity-bounded callbacks
+        all_cb_labels = self._encodes_non_lc_callback(activity)
+        current_pc_val_enc = self._eq_val(pc, pc_val)
+        self_loop = self._get_next_formula(ts.state_vars,
+                                           current_pc_val_enc)
+        single_trans = And(all_cb_labels,
+                           And(current_pc_val_enc, self_loop))
+        ts.trans = Or(ts.trans, single_trans)
+
+        self._enc_component_step(activity,
+                                 Activity.ONPAUSE,
+                                 ts, pc, pc_val, pc_val)
+
+
+        # line 916
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONPAUSE,
+                                          ts, pc, pc_val, pc_val + 1)
+
+        # line 918
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYPAUSED,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          True)
+
+        # line 921
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONCREATEDESCRIPTION,
+                                          ts, pc, pc_val, pc_val + 1)
+
+        # line 922
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONSAVEINSTANCESTATE,
+                                          ts, pc, pc_val, pc_val + 1)
+
+        # line 924
+        before_onActivitySaveInstanceState_label = pc_val
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYSAVEINSTANCESTATE,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          True)
+        # line 930
+        self._enc_component_step(activity,
+                                 Activity.ONACTIVITYSAVEINSTANCESTATE,
+                                 ts, pc, before_onActivitySaveInstanceState_label,
+                                 before_onResume_label,
+                                 True)
+
+        # line 934
+        before_onStop_label = pc_val
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONSTOP,
+                                          ts, pc, pc_val, pc_val + 1)
+
+        # line 937
+        before_onActivityStopped_label = pc_val
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONACTIVITYSTOPPED,
+                                          ts, pc, before_onActivityStopped_label,
+                                          pc_val + 1,
+                                          True)
+        # line 943
+        self._enc_component_step(activity,
+                                 Activity.ONACTIVITYSTOPPED,
+                                 ts, pc,
+                                 before_onActivityStopped_label,
+                                 before_onStop_label,
+                                 True)
+        # line 952
+        before_onRestart_label = pc_val
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONRESTART,
+                                          ts, pc, before_onRestart_label, pc_val + 1)
+        # line 953
+        self._enc_component_step(activity,
+                                 Activity.ONRESTART,
+                                 ts, pc, before_onRestart_label, before_onResume_label)
+        # line 958
+        before_onDestroy_label = pc_val
+        pc_val = self._enc_component_step(activity,
+                                          Activity.ONDESTROY,
+                                          ts, pc, pc_val, pc_val + 1)
+        # line 948
+        self._enc_component_step(activity,
+                                 Activity.ONACTIVITYSTOPPED,
+                                 ts, pc,
+                                 pc_val,
+                                 before_onDestroy_label,
+                                 True)
+        # line 960 - go back to the beginning
+        self._enc_component_step(activity,
+                                 Activity.ONACTIVITYDESTROYED,
+                                 ts, pc, pc_val, entry_label,
+                                 True)
+
+        lc_info = FlowDroidModelEncoder.ActivityLcInfo(ts, pc, pc_size)
+        lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.INIT,
+                          self._eq_val(pc, entry_label))
+        lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.END,
+                          self._eq_val(pc, pc_val))
+        lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.BEFORE_ONSTART,
+                          self._eq_val(pc, before_onStartStmt_label))
+        lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.IS_ACTIVE,
+                          activity_is_active)
+
+        self._check_for_deadlocks(lc_info.ts.trans,
+                                  lc_info.pc,
+                                  lc_info.pc_size)
+        return lc_info
+
+    def _encode_fragment_lifecycle(self, fragment):
+        """
+        Encode the lifecycle for activity.
+
+        Return a FlowDroidModelEncoder.FragmentLcInfo object
+        """
+        ts = TransitionSystem()
+
+        pc_size = 13 # init state + 12 (+ 1) of pc counter
+        pc = "pc_" + (fragment.get_inst_value().get_value())
+        self.enc.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
+        for v in self.enc.cenc.get_counter_var(pc): ts.add_var(v)
+        self.enc.mapback.add_pc2component(pc, fragment)
+        self.enc.mapback.add_encoder(pc, self.enc.cenc)
+
+        pc_val = 0
+        entry_label = pc_val
+        ts.init = self.enc.cenc.eq_val(pc, pc_val)
+
+        ts.trans = FALSE_PYSMT() # disjunction of transitions
+
+        # line 821, 820
+        self._enc_component_step(fragment,
+                                 Fragment.ONATTACHFRAGMENT,
+                                 ts, pc, pc_val, pc_val)
+
+        # line 986
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONATTACH,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          False, True)
+        # line 992
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONCREATE,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          False, True)
+        before_onCreateview_label = pc_val
+        # line 998
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONCREATEVIEW,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          False, True)
+        # line 1003
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONVIEWCREATED,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          False, True)
+        # line 1009
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONACTIVITYCREATED,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          False, True)
+        before_onStart_label = pc_val
+        # line 1015
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONSTART,
+                                          ts, pc, pc_val, pc_val + 1,
+                                          False, True)
+        # line 1021
+        before_onResume_label = pc_val
+        # line 1022
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONRESUME,
+                                          ts, pc, pc_val, pc_val + 1)
+        # line 1025
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONPAUSE,
+                                          ts, pc, pc_val, pc_val + 1)
+        # line 1026
+        self._enc_component_step(fragment,
+                                 Fragment.ONPAUSE,
+                                 ts, pc, pc_val,  before_onResume_label)
+
+        # line 1029
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONSAVEINSTANCESTATE,
+                                          ts, pc, pc_val, pc_val + 1)
+        # line 1032
+        before_onStop_label = pc_val
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONSTOP,
+                                          ts, pc, before_onStop_label,
+                                          pc_val + 1)
+        # line 1033
+        self._enc_component_step(fragment,
+                                 Fragment.ONSTOP,
+                                 ts, pc, pc_val,
+                                 before_onCreateview_label)
+        # line 1034
+        self._enc_component_step(fragment,
+                                 Fragment.ONSTOP,
+                                 ts, pc, pc_val,
+                                 before_onStart_label)
+
+        # line 1037
+        before_onDestroyView_label = pc_val
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONDESTROYVIEW,
+                                          ts, pc, pc_val, pc_val+1)
+        # line 1038
+        self._enc_component_step(fragment,
+                                 Fragment.ONDESTROYVIEW,
+                                 ts, pc, pc_val,
+                                 before_onCreateview_label)
+        # line 1041
+        pc_val = self._enc_component_step(fragment,
+                                          Fragment.ONDESTROY,
+                                          ts, pc, pc_val, pc_val + 1)
+        # line 1044, 1045
+        self._enc_component_step(fragment,
+                                 Fragment.ONDETACH,
+                                 ts, pc, pc_val, entry_label)
+
+        lc_info = FlowDroidModelEncoder.FragmentLcInfo(ts, pc, pc_size)
+        lc_info.add_label(FlowDroidModelEncoder.FragmentLcInfo.INIT,
+                          self._eq_val(pc, entry_label))
+        lc_info.add_label(FlowDroidModelEncoder.FragmentLcInfo.END,
+                          self._eq_val(pc, pc_val))
+
+        return lc_info
+
+
+    def _encodes_non_lc_callback(self, c):
+        """ Get the list of callbacks bounded by the activity lifecycle
+        """
+        cb_msg_enc = FALSE_PYSMT()
+
+        # We did not compute the transitive closure of compid2msg_keys.
+        # This allow us to change the callback execution policy
+        # (e.g., in the fragment
+        # lifecycle instead of in the activity lifecycle).
+        #
+        # Here we compute thee transitive closure of all the messages
+        # that can be called inside the activity lifecycle
+        #
+        if (isinstance(c, Activity)):
+            # computes all the messages that must be executed
+            # the activity lifecycle.
+            # It includes all the cb from the attached
+            # components
+            cb_star = set()
+            stack = [c.get_inst_value()]
+            while (len(stack) > 0):
+                c_id = stack.pop()
+
+                if c_id in self.fd_builder.compid2msg_keys:
+                    cb_star.update(self.fd_builder.compid2msg_keys[c_id])
+
+                    if (c_id in self.fd_builder.compid2msg_keys):
+                        c = self.fd_builder.components_map[c_id]
+                        if isinstance(c, Fragment) or isinstance(c, Activity):
+                            # Remove the instance of lifecycle callbacks
+                            # of the fragment
+                            cb_star.difference(c.get_lifecycle_msgs())
+                for attached_obj in self.fd_builder.attach_rel.get_related(c_id):
+                    stack.append(attached_obj)
+
+            # encodes that these messages are executed only
+            # when the activity is active
+            for msg_key in cb_star:
+                cb_msg_enc = Or(cb_msg_enc,
+                                self._get_msg_label(msg_key))
+        elif (isinstance(c, Fragment)):
+            # Do nothing on fragments here
+            # Callbacks are encoded inside the activity
+            pass
+        else:
+            raise Exception("Unknown component")
+
+        return cb_msg_enc
+
+    def _encode_free_messages(self):
+        """ Returns the encoding of the free messages """
+        # Do nothing for the other callbacks -- they are free
+        # to happen whenever
+        cb_msg_enc = FALSE_PYSMT()
+        for msg in self.fd_builder.free_msg:
+            msg_enc = self._get_msg_label(msg)
+            cb_msg_enc = Or(cb_msg_enc, msg_enc)
+        return cb_msg_enc
+
+    def _encode_components_scheduler(self, lifecycles):
+
+        ts_sched = TransitionSystem()
+
+        """ Encode a boolean activation variable for each component and
+        for all the other callbacks
+        """
+        # 1. Encode a Boolean activation variable for each
+        #    component
+        comp2actflags = {}
+        for c in self.fd_builder.get_components():
+            c_act = "act_component_%s" % c.get_inst_value().get_value()
+            self.enc.cenc.add_var(c_act, 1)
+            counter_vars = self.enc.cenc.get_counter_var(c_act)
+            assert (len(counter_vars) == 1)
+            for act_flag in counter_vars:
+                ts_sched.add_var(act_flag)
+                comp2actflags[c] = act_flag
+                self.enc.mapback.add_actvar2component(act_flag, c)
+
+        run_free_msg_name = "_run_free_msg_"
+        self.enc.cenc.add_var(run_free_msg_name, 1)
+        counter_vars = self.enc.cenc.get_counter_var(run_free_msg_name)
+        assert (len(counter_vars) == 1)
+        run_free_msg_flag = None
+        for flag in counter_vars:
+            ts_sched.add_var(flag)
+            run_free_msg_flag = flag
+            # Add the mapback in the map for debug
+            # self.enc.mapback.add_actvar2component(act_flag, c)
+        assert not run_free_msg_flag is None
+
+        # 3. Compose the components' lifecycle
+        for c, c_lc in lifecycles.iteritems():
+            lc_info = lifecycles[c]
+            flag = comp2actflags[c]
+
+            # Frame condition for the pc of the lifecycle automaton
+            fc_ts = TRUE_PYSMT()
+            for var in lc_info.ts.state_vars:
+                # Defensive programming - avoid flag in the fc, since it
+                # must change
+                fc_ts = And(Iff(var,
+                                self._get_next_formula(lc_info.ts.state_vars,var)),
+                            fc_ts)
+
+            # We encode that the component's callback can be executed only
+            # when the component is active
+            block_lifecycle_msg = TRUE_PYSMT()
+            for msg_key in c.get_lifecycle_msgs():
+                msg_label = self._get_msg_label(msg_key)
+                block_msg = Not(msg_label)
+                block_lifecycle_msg = And(block_lifecycle_msg, block_msg)
+            fc_ts = And(fc_ts, block_lifecycle_msg)
+
+            # The automaton moves only when the flag is true
+            lc_info.ts.trans = And(Implies(flag, lc_info.ts.trans),
+                                   Implies(Not(flag), fc_ts))
+            # Product with the scheduler
+            ts_sched.product(lc_info.ts)
+
+        # 4. Encode when the activity lifecycle and a fragment
+        #    can be interrupted and resumed
+        for c in self.fd_builder.get_components():
+            flag = comp2actflags[c]
+            if (isinstance(c, Activity)):
+                lc_info = lifecycles[c]
+
+                pc_init = lc_info.get_label(FlowDroidModelEncoder.ActivityLcInfo.INIT)
+                pc_init_next = self._get_next_formula(ts_sched.state_vars,
+                                                      pc_init)
+                pc_before_onstart = lc_info.get_label(FlowDroidModelEncoder.ActivityLcInfo.BEFORE_ONSTART)
+                pc_before_onstart_next = self._get_next_formula(ts_sched.state_vars,
+                                                                pc_before_onstart)
+                activity_act = And(Not(flag),
+                                   self._get_next_formula(ts_sched.state_vars,
+                                                          flag))
+                activity_deact = And(flag,
+                                     Not(self._get_next_formula(ts_sched.state_vars,
+                                                                flag)))
+
+                atleastone_frag_act_next = self._at_least_one_frag_activates(c, comp2actflags,
+                                                                             ts_sched.state_vars)
+
+                # An activity can be de-activated (preemption) if either:
+                #
+                # - it is in the initial state
+                # - the next flag is are the "free to run callbacks"
+                # - Must be before onstart, and one of its fragment must be
+                #   activated next
+                activity_deact_enc = Implies(activity_deact,
+                                             Or(Or(pc_init_next,
+                                                   self._get_next_formula(ts_sched.state_vars,
+                                                                          run_free_msg_flag)),
+                                                And(pc_before_onstart_next,
+                                                    atleastone_frag_act_next)))
+
+                # An activity can be activated (pre-empt) another activity
+                # if all other activities are in the initial state state
+                # (this means their fragment are inactive) and if all its
+                # fragment are in an initial state.
+                #
+                # In this way, an activity that has been pre-empted by
+                # a random callback while in a non-initial state will always
+                # get back control (the invariant that other activities are
+                # in the initial state holds).
+                #
+                other_act_in_init = self._other_activities_in_init(c, lifecycles)
+                other_act_in_init_next = self._get_next_formula(ts_sched.state_vars,
+                                                                other_act_in_init)
+                child_fragments_in_init = self._child_fragment_in_init(c, lifecycles)
+                child_fragments_in_init_next = self._get_next_formula(ts_sched.state_vars,
+                                                                      child_fragments_in_init)
+                activity_act_enc = Implies(activity_act,
+                                           And(other_act_in_init_next,
+                                               child_fragments_in_init_next))
+                activity_sched = And(activity_deact_enc, activity_act_enc)
+                ts_sched.trans = And(ts_sched.trans, activity_sched)
+
+                for fragment in c.get_child_fragments():
+                    parent_act = c
+                    frag_flag = comp2actflags[fragment]
+                    frag_lc_info = lifecycles[fragment]
+                    frag_pc_init = frag_lc_info.get_label(FlowDroidModelEncoder.FragmentLcInfo.INIT)
+                    frag_pc_init_next = self._get_next_formula(ts_sched.state_vars,
+                                                               frag_pc_init)
+                    fragment_act = And(Not(frag_flag),
+                                       self._get_next_formula(ts_sched.state_vars,
+                                                              frag_flag))
+                    fragment_deact = And(frag_flag,
+                                         Not(self._get_next_formula(ts_sched.state_vars,
+                                                                    frag_flag)))
+
+                    frag_pc_init = frag_lc_info.get_label(FlowDroidModelEncoder.FragmentLcInfo.INIT)
+                    frag_pc_init_next = self._get_next_formula(ts_sched.state_vars,
+                                                               frag_pc_init)
+
+                    # preempt fragment either if:
+                    # - we will execute a non-controlled callback
+                    # - the fragment gets in its initial state
+                    fragment_deact_enc = Implies(fragment_deact,
+                                                 Or(self._get_next_formula(ts_sched.state_vars,
+                                                                           run_free_msg_flag),
+                                                    frag_pc_init_next))
+
+                    # Activate the fragment only if
+                    # - its activity will be in the right state
+                    # - all the other children fragments are in their initial state
+                    # - all the other activities are in their initial state
+                    act_pc_run_frag = lc_info.get_label(FlowDroidModelEncoder.ActivityLcInfo.BEFORE_ONSTART)
+                    act_pc_run_frag_next = self._get_next_formula(ts_sched.state_vars,
+                                                                  act_pc_run_frag)
+
+                    other_fragment_in_init = self._other_fragments_in_init(c, fragment, lifecycles)
+                    other_fragment_in_init_next = self._get_next_formula(ts_sched.state_vars,
+                                                                         other_fragment_in_init)
+                    fragment_act_enc = Implies(fragment_act,
+                                               And(act_pc_run_frag_next,
+                                                   other_act_in_init_next,
+                                                   other_fragment_in_init_next))
+
+                    fragment_sched = And(fragment_act_enc, fragment_deact_enc)
+                    ts_sched.trans = And(ts_sched.trans, fragment_sched)
+            elif (isinstance(c, Fragment)):
+                # Already encoded with activity
+                pass
+            else:
+                raise Exception("Unknown component")
+
+        # Encode the execution of the non lifecycle cb
+        cb_msg_enc = self._encode_free_messages()
+        callback_enc = And(Implies(run_free_msg_flag, cb_msg_enc),
+                           Implies(Not(run_free_msg_flag), Not(cb_msg_enc)))
+        ts_sched.trans = And(ts_sched.trans, callback_enc)
+
+        # Enforce that at most one component is active
+        set_flags = set()
+        for flag in comp2actflags.values():
+            set_flags.add(flag)
+        set_flags.add(run_free_msg_flag)
+        at_most_one = ExactlyOne(set_flags)
+        ts_sched.trans = And(ts_sched.trans,
+                             And(at_most_one,
+                                 self._get_next_formula(ts_sched.state_vars,
+                                                        at_most_one)))
+        return ts_sched
+
+    def _other_activities_in_init(self, activity, lifecycles):
+        """ True if all activities are in init state """
+        others_in_init = TRUE_PYSMT()
+        for c in self.fd_builder.get_components():
+            if c == activity:
+                continue
+            if (not isinstance(c, Activity)):
+                continue
+
+            lc_info = lifecycles[c]
+            pc_init = lc_info.get_label(FlowDroidModelEncoder.ActivityLcInfo.INIT)
+            others_in_init = And(others_in_init, pc_init)
+        return others_in_init
+
+    def _other_fragments_in_init(self, activity, my_fragment, lifecycles):
+        """ True if all child fragments are in init state """
+        fragments_in_init = TRUE_PYSMT()
+        for fragment in activity.get_child_fragments():
+            if (not my_fragment is None) and my_fragment == fragment:
+                continue
+
+            lc_info = lifecycles[fragment]
+            pc_init = lc_info.get_label(FlowDroidModelEncoder.FragmentLcInfo.INIT)
+            fragments_in_init = And(fragments_in_init, pc_init)
+        return fragments_in_init
+
+    def _child_fragment_in_init(self, activity, lifecycles):
+        """ True if all child fragments are in init state """
+        return self._other_fragments_in_init(activity, None, lifecycles)
+
+    def _at_least_one_frag_activates(self, activity, comp2actflags, state_vars):
+        """ True if at least one of the child fragments activate 
+        in the next state"""
+        atleastone_frag_act = FALSE_PYSMT()
+        for fragment in activity.get_child_fragments():
+            flag_frag = comp2actflags[fragment]
+
+            frag_act = And(Not(flag_frag),
+                           self._get_next_formula(state_vars,
+                                                  flag_frag))
+            atleastone_frag_act = Or(atleastone_frag_act,
+                                     frag_act)
+        return atleastone_frag_act
+
+
+    def _enc_component_step(self, component,
+                            component_callback,
+                            ts, pc, pc_val, next_pc_val,
+                            at_least_one = False,
+                            optional = False):
+        """ Encode one step of the lifecycle for a component
+
+        component: The component to encode the lifecycle to
+        component_callback: key to get the lifecycle callbacks to observe
+        in the encoded step (e.g., Activity.ONCREATE)
+        ts: the transition system that encodes the lifecycle
+            *WARNING* side effect on TS
+        pc: the program counter variable
+        pc_val: the current program counter value
+
+        at_least_one: at_least_one encodes the fact that the set of lifecycle
+        callback may be executed more than once to go to the next state.
+        It somehow encodes a {cb1, cb2, ..., cbn}+ label
+
+        optional: if true do not stop the execution even if the
+        component does not have the callback
+
+        Return the new value of pc_val
+        """
+
+        has_callback = False
+        if component.has_trace_msg(component_callback):
+            cb_msgs = component.get_trace_msgs(component_callback)
+
+            if len(cb_msgs) > 0:
+                has_callback = True
+                current_pc_val_enc = self._eq_val(pc, pc_val)
+                pc_val = next_pc_val
+                next_pc_val_enc = self._eq_val(pc, next_pc_val)
+                next_pc_val_enc = self._get_next_formula(ts.state_vars,
+                                                         next_pc_val_enc)
+
+                all_cb_msg_enc = FALSE_PYSMT()
+                for cb_msg in cb_msgs:
+                    cb_msg_enc = self._get_msg_label(cb_msg)
+                    all_msg_enc = Or(all_cb_msg_enc, cb_msg_enc)
+
+                # Move from pc to pc + 1 by observing at least one of the
+                # callback
+                single_trans = And(all_msg_enc, And(current_pc_val_enc, next_pc_val_enc))
+
+                ts.trans = Or(ts.trans, single_trans)
+                if at_least_one:
+                    # Add a self loop on current_pc_val
+                    # It allows to non-determinitically visit more than once
+                    # the same set of callbacks
+                    self_loop = self._get_next_formula(ts.state_vars,
+                                                       current_pc_val_enc)
+                    single_trans = And(all_msg_enc,
+                                       And(current_pc_val_enc, self_loop))
+                    ts.trans = Or(ts.trans, single_trans)
+
+        # Block the execution in this state if the call is not
+        # optional
+        if not has_callback:
+            if not optional:
+                # the ts cannot move in pc_val right now, so there
+                # is a deadlock
+                current_pc_val_enc = self._eq_val(pc, pc_val)
+
+                # Do nothing - the automaton does not move
+
+                # advance the pc, so that we keep to encode the rest
+                # of the lifecycle as it is.
+                # while there is a deadlock in the current pc_val
+                pc_val += 1
+
+                logging.debug("Lifecycle callback not found for:\n" \
+                              "\tComponent: %s\n" \
+                              "\tCallback: %s\n" % (component_callback,
+                                                    component.get_inst_value().get_value()))
+
+        # note that pc_val may *not* be incremented in the optional case
+        # where we do not create the intermediate state
+        return pc_val
+
+
+    def _eq_val(self, pc, val):
+        return self.enc.cenc.eq_val(pc, val)
+
+    def _get_msg_label(self, msg_key):
+        label = self.enc.r2a.get_msg_eq(msg_key)
+        return label
+
+    def _get_next_formula(self, state_vars, formula):
+        return self.enc.helper.get_next_formula(state_vars,
+                                                formula)
+
+    class LcInfo(object):
+        def __init__(self, ts, pc, pc_size):
+            self.ts = ts
+            self.pc = pc
+            self.pc_size =  pc_size
+            self.labels = {}
+
+        def add_label(self, label, val):
+            self.labels[label] = val
+
+        def get_label(self, label):
+            # Assume the label is there
+            return self.labels[label]
+
+    class ActivityLcInfo(LcInfo):
+        INIT = "init"
+        BEFORE_ONSTART = "before_onstart"
+        END = "end"
+        IS_ACTIVE= "is_active"
+
+        def __init__(self, ts, pc, pc_size):
+            FlowDroidModelEncoder.LcInfo.__init__(self, ts, pc, pc_size)
+
+    class FragmentLcInfo(LcInfo):
+        INIT = "init"
+        END = "end"
+
+        def __init__(self, ts, pc, pc_size):
+            FlowDroidModelEncoder.LcInfo.__init__(self, ts, pc, pc_size)

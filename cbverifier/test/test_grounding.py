@@ -871,3 +871,46 @@ class TestGrounding(unittest.TestCase):
 
         for test in multiv: TestGrounding.check_sg(test)
 
+    def test_int_match(self):
+        trace = CTrace()
+        cb = CCallback(1, 1, "", "void m1(%s)" % TraceConverter.JAVA_INT,
+                       [TestGrounding._get_null(), TestGrounding._get_int(2)], None,
+                       [TestGrounding._get_fmwkov("", "void m1(%s)" % TraceConverter.JAVA_INT, False)])
+        trace.add_msg(cb)
+        cb = CCallback(1, 1, "", "void m1(%s)" % TraceConverter.JAVA_INT,
+                       [TestGrounding._get_null(), TestGrounding._get_int(3)], None,
+                       [TestGrounding._get_fmwkov("", "void m1(%s)" % TraceConverter.JAVA_INT, False)])
+        trace.add_msg(cb)
+
+        tmap = TraceMap(trace)
+
+        lookups = tmap.lookup_methods(True, new_cb(), "void m1(%s)" % TraceConverter.JAVA_INT, 2, False)
+        self.assertTrue(len(lookups) == 2)
+
+
+    @unittest.skip("Disabled due to issue 215")
+    def test_obj_match(self):
+        trace = CTrace()
+        cb = CCallback(1, 1, "", "void m1(Object)",
+                       [TestGrounding._get_null(), TestGrounding._get_obj("d213ospe","Object")], None,
+                       [TestGrounding._get_fmwkov("", "void m1(Object)", False)])
+        trace.add_msg(cb)
+        cb = CCallback(1, 1, "", "void m1(Object)",
+                       [TestGrounding._get_null(), TestGrounding._get_obj("asdfwe","Object")], None,
+                       [TestGrounding._get_fmwkov("", "void m1(Object)", False)])
+        trace.add_msg(cb)
+
+        tmap = TraceMap(trace)
+
+        lookups = tmap.lookup_methods(True, new_cb(), "void m1(Object)", 2, False)
+        self.assertTrue(len(lookups) == 2)
+
+        call_node = spec_parser.parse_call("[CB] [ENTRY] void m1(d213ospe : Object)")
+        aset = tmap.lookup_assignments(call_node)
+        self.assertTrue(len(aset.assignments) == 1)
+
+        #def lookup_assignments(self, call_node):
+
+
+
+

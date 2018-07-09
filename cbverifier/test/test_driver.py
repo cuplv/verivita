@@ -7,6 +7,7 @@ import logging
 import unittest
 import os
 
+from contextlib import contextmanager
 from cStringIO import StringIO
 
 try:
@@ -21,8 +22,18 @@ from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.utils.stats import Stats
 import cbverifier.test.examples
 
+@contextmanager
+def captured_output():
+    new_out, new_err = StringIO(), StringIO()
+    old_out, old_err = sys.stdout, sys.stderr
+    try:
+        sys.stdout, sys.stderr = new_out, new_err
+        yield sys.stdout, sys.stderr
+    finally:
+        sys.stdout, sys.stderr = old_out, old_err
 
-class TestEnc(unittest.TestCase):
+
+class TestDriver(unittest.TestCase):
     def test_driver(self):
 
         test_path = os.path.dirname(cbverifier.test.examples.__file__)
@@ -34,7 +45,6 @@ class TestEnc(unittest.TestCase):
                 "-m", "bmc", "-k", "2"]
         retval = main(argv)
         self.assertTrue(0 == retval)
-
 
     def test_driver_api(self):
         test_path = os.path.dirname(cbverifier.test.examples.__file__)
@@ -174,7 +184,7 @@ class TestEnc(unittest.TestCase):
         ground_specs_map = driver.get_ground_specs(True)
         assert(ground_specs_map is not None)
 
-        mystream = StringIO()        
+        mystream = StringIO()
         print_ground_spec_map(ground_specs_map, mystream)
 
         self.assertTrue("SPEC [CB] [ENTRY] [l] void m1() |- [CI] [ENTRY] [l] void m2()" in mystream.getvalue())
@@ -189,3 +199,14 @@ class TestEnc(unittest.TestCase):
 
 
 
+    def test_driver_flowdroid(self):
+        test_path = os.path.dirname(cbverifier.test.examples.__file__)
+
+        t1 = os.path.join(test_path, "trace1.json")
+        s1 = os.path.join(test_path, "spec1.spec")
+        argv = ["", "-t", t1, "-f", "json",
+                "-s", s1,
+                "-m", "bmc", "-k", "2",
+                "-r"]
+        retval = main(argv)
+        self.assertTrue(0 == retval)

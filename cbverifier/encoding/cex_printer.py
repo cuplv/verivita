@@ -8,8 +8,10 @@ import logging
 
 from cbverifier.specs.spec import Spec
 from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
-from cbverifier.encoding.encoder import TSMapback, TSEncoder
+from cbverifier.encoding.encoder import TSMapback
+from cbverifier.encoding.encoder_utils import EncoderUtils
 
+from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
 
 
 class CexPrinter:
@@ -100,7 +102,7 @@ class CexPrinter:
                 if (isinstance(trace_msg, str)):
                     self.out_stream.write("[-] %s transition ---\n" % trace_msg)
                 else:
-                   if (is_entry == TSEncoder.ENTRY):
+                   if (is_entry == EncoderUtils.ENTRY):
                        trace_msg._print_entry(self.out_stream, "", False)
                    else:
                        trace_msg._print_exit(self.out_stream, "", False)
@@ -128,6 +130,27 @@ class CexPrinter:
                 if (self._mapback.is_error(step)):
                     # TODO: add precise list of callins that end in error
                     self._print_error(i, [])
+
+                if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
+                    # Print the status of the autoamta and schedulers that encode
+                    # the flowdroid lifecycle (if used)
+                    component_pcs = self._mapback.get_component_pcs(step)
+                    for (pc_var, component, pc_value) in component_pcs:
+                        if isinstance(component, Activity):
+                            ctype = "Activity %s" % component.get_inst_value().get_value()
+                        else:
+                            ctype = "Fragment %s" % component.get_inst_value().get_value()
+                        self.out_stream.write("%s - %s: %s" % (ctype, pc_var, str(pc_value)))
+                        self.out_stream.write("\n")
+
+                    act_pcs = self._mapback.get_component_act(step)
+                    for (act_var, component, act_value) in act_pcs:
+                        if isinstance(component, Activity):
+                            ctype = "Activity %s" % component.get_inst_value().get_value()
+                        else:
+                            ctype = "Fragment %s" % component.get_inst_value().get_value()
+                        self.out_stream.write("%s - %s: %s" % (ctype, act_var, str(act_value)))
+                        self.out_stream.write("\n")
 
                 self._print_sep()
 
