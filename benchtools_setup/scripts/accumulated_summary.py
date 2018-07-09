@@ -254,8 +254,11 @@ def genTable(loadedResults, outdir):
         property = result_file.method
         precision_level = result_file.precision_level
         precision_number = result_file.precision_number
+        f = open("/Users/s/Desktop/instancesout/" + result_filename, 'w') #TODO: remove this, only used to check if instances are OK
         for result in result_list:
             property_result_map[property][precision_number].add((result_file,result))
+            f.write(result.trace_path + "\n")
+
 
 
         #df.set_value('C', 'x', 10)
@@ -264,25 +267,27 @@ def genTable(loadedResults, outdir):
         pass
 
     result_list = -1
-    for property in property_result_map:
-        results_list = property_result_map[property]
-        for level in xrange(len(results_list)):
-            unsafe_trace_count = 0
-            unsafe_app_set = set()
-            iter_level_list = results_list[level].copy()
-            for result in iter_level_list:
-                property = result[0].method
-                trace_path = result[1].trace_path
-                lowerlevels = range(level)
-                #check if a lower level proved this result
-                # proved_inlowerlevel = False
-                for lowerlevel in lowerlevels:
-                    lowerlevelset = results_list[lowerlevel]
-                    #TODO: if result is proved in lower level then remvoe it from results_list
-                    for lower_result in lowerlevelset:
-                        pass
-                        if lower_result[1].trace_path == trace_path and lower_result[1].proof_status == "Safe":
-                            results_list[level].remove(result)
+    level_filter = False
+    if level_filter: #Set to true for level filtering
+        for property in property_result_map:
+            results_list = property_result_map[property]
+            for level in xrange(len(results_list)):
+                unsafe_trace_count = 0
+                unsafe_app_set = set()
+                iter_level_list = results_list[level].copy()
+                for result in iter_level_list:
+                    property = result[0].method
+                    trace_path = result[1].trace_path
+                    lowerlevels = range(level)
+                    #check if a lower level proved this result
+                    # proved_inlowerlevel = False
+                    for lowerlevel in lowerlevels:
+                        lowerlevelset = results_list[lowerlevel]
+                        #TODO: if result is proved in lower level then remvoe it from results_list TODO: remove this behavior
+                        for lower_result in lowerlevelset:
+                            pass
+                            if lower_result[1].trace_path == trace_path and lower_result[1].proof_status == "Safe":
+                                results_list[level].remove(result)
 
     #populate dataframe
     for property in property_result_map:
