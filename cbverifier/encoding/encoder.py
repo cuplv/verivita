@@ -224,6 +224,12 @@ class TSEncoder:
                                                            self.stats)
         logging.info("Total specs after grounding: %d" % (len(self.ground_specs)))
 
+        self.spec_msgs = set()
+        # collect the calls appearing in the ground specs
+        for spec in self.ground_specs:
+            for call in spec.get_spec_calls():
+                self.spec_msgs.add(EncoderUtils.get_key_from_call(call))
+
         if (self.use_flowdroid_model):
             # initializes the informations needed to compute the FlowDroid model
             self.fd_builder = FlowDroidModelBuilder(self.trace,
@@ -231,12 +237,6 @@ class TSEncoder:
             self.ground_specs = TSEncoder._remove_enable_spec(self.ground_specs)
         else:
             self.fd_builder = None
-
-        self.spec_msgs = set()
-        # collect the calls appearing in the ground specs
-        for spec in self.ground_specs:
-            for call in spec.get_spec_calls():
-                self.spec_msgs.add(EncoderUtils.get_key_from_call(call))
 
         # Add the message to avoid removing them from the trace
         if (self.use_flowdroid_model):
@@ -247,13 +247,18 @@ class TSEncoder:
                 self.spec_msgs.add(msg_key)
 
 
+            # DEBUG
+            print "In component: %d" % len(self.spec_msgs)
+            print "listener in component: %d" % len(self.fd_builder.listener_in_lc)
+
+
+        print self.spec_msgs
+
+
         # 3. Remove all the messages in the trace that do not
         # appear in the specification.
         if (ignore_msgs):
             # Collect the statistics on the trace
-            self._is_msg_visible = self._is_msg_visible_all
-            (trace_length, msgs, fmwk_contr, app_contr) = TSEncoder.get_trace_stats(self.trace,
-                                                                                    self._is_msg_visible)
             self.trace = TSEncoder._simplify_trace(self.trace,
                                                    self.spec_msgs)
 
