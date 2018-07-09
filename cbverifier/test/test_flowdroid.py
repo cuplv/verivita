@@ -483,6 +483,7 @@ class TestFlowDroid(unittest.TestCase):
                    (helper1, Activity.ONACTIVITYRESUMED),
                    (helper1, Activity.ONPOSTRESUME),
                    (helper1, Activity.ONPAUSE),
+                   (helper1, Activity.ONPOSTRESUME), # CB cannot run after ONPOSTONRESUME
                    (helper1, Activity.ONACTIVITYPAUSED),
                    (helper1, Activity.ONCREATEDESCRIPTION),
                    (helper1, Activity.ONSAVEINSTANCESTATE),
@@ -492,6 +493,131 @@ class TestFlowDroid(unittest.TestCase):
                    (helper1, Activity.ONRESTART),
                    (helper1, Activity.ONDESTROY),
                    (helper1, Activity.ONACTIVITYDESTROYED)]
+        self._test_lc_multi(to_run, False)
+
+    def test_fragment_lc(self):
+        # test the fragment lifecycle
+        # activity + fragment: act lifecycle, frag lifecycle
+        act1 = TestGrounding._get_obj("1","android.app.Activity")
+        frag1 = TestGrounding._get_obj("2", "android.app.Fragment")
+        bundle = TestGrounding._get_obj("3","android.os.Bundle")
+        inflater = TestGrounding._get_obj("4","android.view.LayoutInflater")
+        viewgroup = TestGrounding._get_obj("5","android.view.ViewGroup")
+        view = TestGrounding._get_obj("6","android.view.View")
+        lifecycle = TestGrounding._get_obj("7","android.app.Application.ActivityLifecycleCallbacks")
+
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle)
+        helper2 = TestFlowDroid.FragmentHelper("android.app.Fragment", frag1, act1, bundle,
+                                               inflater, viewgroup, view)
+
+        # test different entry points for fragment
+        entry_points = [(helper2, Fragment.ONATTACHFRAGMENT),
+                        (helper2, Fragment.ONATTACH)]
+        for ep in entry_points:
+            to_run = [(helper1, Activity.ONCREATE),
+                      (helper1, Activity.ONACTIVITYCREATED), # begin the fragment lifecycle
+                      ep]
+            self._test_lc_multi(to_run, True)
+
+        # test a possible fragment run
+        to_run = [(helper1, Activity.ONCREATE),
+                  (helper1, Activity.ONACTIVITYCREATED), # begin the fragment lifecycle
+                  (helper2, Fragment.ONATTACHFRAGMENT),
+                  (helper2, Fragment.ONATTACH),
+                  (helper2, Fragment.ONCREATE),
+                  (helper2, Fragment.ONCREATEVIEW),
+                  (helper2, Fragment.ONVIEWCREATED),
+                  (helper2, Fragment.ONACTIVITYCREATED),
+                  (helper2, Fragment.ONSTART),
+                  (helper2, Fragment.ONRESUME),
+                  (helper2, Fragment.ONPAUSE),
+                  (helper2, Fragment.ONSAVEINSTANCESTATE),
+                  (helper2, Fragment.ONSTOP),
+                  (helper2, Fragment.ONDESTROYVIEW),
+                  (helper2, Fragment.ONDESTROY),
+                  (helper2, Fragment.ONDETACH),
+                  (helper1, Activity.ONSTART),
+                  (helper1, Activity.ONACTIVITYSTARTED),
+                  (helper1, Activity.ONRESTOREINSTANCESTATE),
+                  (helper1, Activity.ONPOSTCREATE),
+                  (helper1, Activity.ONRESUME),
+                  (helper1, Activity.ONACTIVITYRESUMED),
+                  (helper1, Activity.ONPOSTRESUME)]
+        self._test_lc_multi(to_run, True)
+
+        # test multiple fragment runs
+        to_run = [(helper1, Activity.ONCREATE),
+                  (helper1, Activity.ONACTIVITYCREATED), # begin the fragment lifecycle
+                  (helper2, Fragment.ONATTACHFRAGMENT),
+                  (helper2, Fragment.ONATTACH),
+                  (helper2, Fragment.ONCREATE),
+                  (helper2, Fragment.ONCREATEVIEW),
+                  (helper2, Fragment.ONVIEWCREATED),
+                  (helper2, Fragment.ONACTIVITYCREATED),
+                  (helper2, Fragment.ONSTART),
+                  (helper2, Fragment.ONRESUME),
+                  (helper2, Fragment.ONPAUSE),
+                  (helper2, Fragment.ONSAVEINSTANCESTATE),
+                  (helper2, Fragment.ONSTOP),
+                  (helper2, Fragment.ONDESTROYVIEW),
+                  (helper2, Fragment.ONDESTROY),
+                  (helper2, Fragment.ONDETACH),
+                  (helper1, Activity.ONSTART),
+                  (helper1, Activity.ONACTIVITYSTARTED),
+                  (helper1, Activity.ONRESTOREINSTANCESTATE),
+                  (helper1, Activity.ONPOSTCREATE),
+                  (helper1, Activity.ONRESUME),
+                  (helper1, Activity.ONACTIVITYRESUMED),
+                  (helper1, Activity.ONPOSTRESUME),
+                  (helper1, Activity.ONPAUSE),
+                  (helper1, Activity.ONACTIVITYPAUSED),
+                  (helper1, Activity.ONCREATEDESCRIPTION),
+                  (helper1, Activity.ONSAVEINSTANCESTATE),
+                  (helper1, Activity.ONACTIVITYSAVEINSTANCESTATE),
+                  (helper1, Activity.ONSTOP),
+                  (helper1, Activity.ONACTIVITYSTOPPED),
+                  (helper1, Activity.ONRESTART),
+                  (helper1, Activity.ONDESTROY),
+                  (helper1, Activity.ONACTIVITYDESTROYED),
+                  (helper1, Activity.ONCREATE),
+                  (helper1, Activity.ONACTIVITYCREATED), # begin the fragment lifecycle
+                  (helper2, Fragment.ONATTACHFRAGMENT),
+                  (helper2, Fragment.ONATTACH),
+                  (helper2, Fragment.ONCREATE),
+                  (helper2, Fragment.ONCREATEVIEW),
+                  (helper2, Fragment.ONVIEWCREATED),
+                  (helper2, Fragment.ONACTIVITYCREATED),
+                  (helper2, Fragment.ONSTART),
+                  (helper2, Fragment.ONRESUME),
+                  (helper2, Fragment.ONPAUSE),
+                  (helper2, Fragment.ONSAVEINSTANCESTATE),
+                  (helper2, Fragment.ONSTOP),
+                  (helper2, Fragment.ONDESTROYVIEW),
+                  (helper2, Fragment.ONDESTROY),
+                  (helper2, Fragment.ONDETACH),
+                  (helper1, Activity.ONSTART)]
+        self._test_lc_multi(to_run, True)
+
+    def test_block_fragment_lc(self):
+        # test the fragment lifecycle
+        # activity + fragment: act lifecycle, frag lifecycle
+        act1 = TestGrounding._get_obj("1","android.app.Activity")
+        frag1 = TestGrounding._get_obj("2", "android.app.Fragment")
+        bundle = TestGrounding._get_obj("3","android.os.Bundle")
+        inflater = TestGrounding._get_obj("4","android.view.LayoutInflater")
+        viewgroup = TestGrounding._get_obj("5","android.view.ViewGroup")
+        view = TestGrounding._get_obj("6","android.view.View")
+        lifecycle = TestGrounding._get_obj("7","android.app.Application.ActivityLifecycleCallbacks")
+
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle)
+        helper2 = TestFlowDroid.FragmentHelper("android.app.Fragment", frag1, act1, bundle,
+                                               inflater, viewgroup, view)
+
+        # test an out-of order  fragment run
+        to_run = [(helper1, Activity.ONCREATE),
+                  (helper2, Fragment.ONATTACHFRAGMENT), # cannot run in the "wrong" position
+                  (helper1, Activity.ONACTIVITYCREATED)] # begin the fragment lifecycle
+        self._test_lc_multi(to_run, True)
 
 
     def _test_sim(self, trace, expected_result):
@@ -544,9 +670,6 @@ class TestFlowDroid(unittest.TestCase):
         bmc = BMC(ts_enc.helper, ts, FALSE_PYSMT())
         (step, cex, _) = bmc.simulate(trace_enc)
         return (step, cex, _)
-
-
-    # activity + fragment: act lifecycle, frag lifecycle
 
 
     def _get_fdm(self, trace):
