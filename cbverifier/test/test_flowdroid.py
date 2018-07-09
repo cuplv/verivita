@@ -599,8 +599,7 @@ class TestFlowDroid(unittest.TestCase):
         self._test_lc_multi(to_run, True)
 
     def test_block_fragment_lc(self):
-        # test the fragment lifecycle
-        # activity + fragment: act lifecycle, frag lifecycle
+        # test when activity/lifecycle blocks each other
         act1 = TestGrounding._get_obj("1","android.app.Activity")
         frag1 = TestGrounding._get_obj("2", "android.app.Fragment")
         bundle = TestGrounding._get_obj("3","android.os.Bundle")
@@ -613,11 +612,20 @@ class TestFlowDroid(unittest.TestCase):
         helper2 = TestFlowDroid.FragmentHelper("android.app.Fragment", frag1, act1, bundle,
                                                inflater, viewgroup, view)
 
-        # test an out-of order  fragment run
+        # test an out-of order fragment run
         to_run = [(helper1, Activity.ONCREATE),
-                  (helper2, Fragment.ONATTACHFRAGMENT), # cannot run in the "wrong" position
+                  (helper2, Fragment.ONATTACH), # cannot run in the "wrong" position
                   (helper1, Activity.ONACTIVITYCREATED)] # begin the fragment lifecycle
-        self._test_lc_multi(to_run, True)
+        self._test_lc_multi(to_run, False)
+
+        # test an out-of order activity run
+        to_run = [(helper1, Activity.ONCREATE),
+                  (helper1, Activity.ONACTIVITYCREATED), # begin the fragment lifecycle
+                  (helper2, Fragment.ONATTACH),
+                  (helper1, Activity.ONSTART), # activity cannot be run here
+                  (helper2, Fragment.ONATTACH),
+                  (helper2, Fragment.ONCREATE)]
+        self._test_lc_multi(to_run, False)
 
 
     def _test_sim(self, trace, expected_result):
