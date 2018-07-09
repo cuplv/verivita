@@ -244,6 +244,9 @@ class TSEncoder:
             for c in self.fd_builder.get_components():
                 for msg_key in c.get_lifecycle_msgs():
                     self.spec_msgs.add(msg_key)
+            for msg_key in self.fd_builder.listener_in_lc:
+                self.spec_msgs.add(msg_key)
+
 
         # 3. Remove all the messages in the trace that do not
         # appear in the specification.
@@ -1931,7 +1934,7 @@ class FlowDroidModelEncoder:
                     cb_star.update(self.fd_builder.compid2msg_keys[c_id])
 
                     if (c_id in self.fd_builder.compid2msg_keys):
-                        c = self.fd_builder.compid2msg_keys[c_id]
+                        c = self.fd_builder.components_map[c_id]
                         if isinstance(c, Fragment) or isinstance(c, Activity):
                             # Remove the instance of lifecycle callbacks
                             # of the fragment

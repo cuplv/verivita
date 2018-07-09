@@ -50,10 +50,11 @@ class FlowDroidModelBuilder:
         self.register_rel = RegistrationRelation(self.trace_map,
                                                  all_values)
 
-        # 
-        # self.cb2listener = self._find_listener_in_trace(self.trace,
-        #                                                 self.trace_map)
+        # Map from object id to messages where the id is used as a receiver
+        self.obj2msg_keys = FlowDroidModelBuilder._get_obj2msg_keys(self.trace,
+                                                                    None)
 
+        self.listener_in_lc = set()
         # Fill the parent activities for fragments
         for activity in self.components_set:
             if (not isinstance(activity, Activity)):
@@ -65,6 +66,12 @@ class FlowDroidModelBuilder:
                 if (c_id in visited):
                     continue
                 visited.add(c_id)
+
+                if c_id in self.components_map:
+                    component = self.components_map[c_id]
+                    for m in component.get_lifecycle_msgs():
+                        self._scan_for_listener(self.listener_in_lc, m)
+
                 for attached_obj in self.attach_rel.get_related(c_id):
                     if attached_obj in self.components_map:
                         fragment = self.components_map[attached_obj]
@@ -294,10 +301,8 @@ class FlowDroidModelBuilder:
         lifecycle_msg = component.get_lifecycle_msgs()
         # Removes the lifecycle messages
         for m in lifecycle_msg:
-            lifecycle_msg.add(m)
-
             # Add the listener registred in the component
-            self._scan_for_listener(component_msg_keys, m)
+            self._scan_for_listener(component_msg_keys, m, free_msg)
 
             if m in free_msg:
                 free_msg.remove(m)
@@ -306,12 +311,13 @@ class FlowDroidModelBuilder:
         # where component is used as a receiver
         if component_obj in self.obj2msg_keys:
             for m in self.obj2msg_keys[component_obj]:
-                if ((not m in lifecycle_msg) and
+                if ("[CB]" in m and
+                    (not m in lifecycle_msg) and
                     (not m in self.other_lc_msg)):
                     component_msg_keys.add(m)
 
                     # Add the listener registred in the component
-                    self._scan_for_listener(component_msg_keys, m)
+                    self._scan_for_listener(component_msg_keys, m, free_msg)
 
                     # The message is not "free" anymore but it
                     # is bound to the component's lifecycle
@@ -330,8 +336,10 @@ class FlowDroidModelBuilder:
 
         """
         def _is_listener(obj):
-            return ((not obj.fmwk_type is None) and
-                    (obj.fmwk_type in KnownAndroidListener.listener_classes))
+            return (((not obj.fmwk_type is None) and
+                     (obj.fmwk_type in KnownAndroidListener.listener_classes)) |
+                    ((not obj.type is None) and
+                     (obj.type in KnownAndroidListener.listener_classes)))
 
 
         all_values = set()
@@ -366,7 +374,7 @@ class FlowDroidModelBuilder:
         return (cb2listeners, all_values)
 
     @staticmethod
-    def _get_obj2msg_keys(trace, all_msg_map):
+    def _get_obj2msg_keys(trace, all_msg_map=None):
         obj2msg = {}
 
         trace_stack = [child for child in trace.children]
@@ -381,9 +389,9 @@ class FlowDroidModelBuilder:
                 msg_entry = EncoderUtils.get_key_from_msg(current, EncoderUtils.ENTRY)
                 msg_exit = EncoderUtils.get_key_from_msg(current, EncoderUtils.EXIT)
 
-                if msg_entry in all_msg_map:
+                if (all_msg_map is None) or (msg_entry in all_msg_map):
                     obj2msg[rec].add(msg_entry)
-                if msg_exit in all_msg_map:
+                if (all_msg_map is None) or (msg_exit in all_msg_map):
                     obj2msg[rec].add(msg_exit)
 
             for c in current.children:
@@ -415,8 +423,14 @@ class FlowDroidModelBuilder:
                 trace_stack.append(c)
         return other_lc_msg
 
-    def _scan_for_listener(self, component_msg_keys, msg):
+    def _scan_for_listener(self, component_msg_keys, msg, free_msg = None):
         """ Add the listener registred in the component
         """
         if msg in self.cb2listeners:
-            component_msg_keys.update(self.cb2listeners[msg])
+            for listener_obj in self.cb2listeners[msg]:
+                if listener_obj in self.obj2msg_keys:
+                    for listener_msg in self.obj2msg_keys[listener_obj]:
+                        if "[CB]" in listener_msg:
+                            component_msg_keys.add(listener_msg)
+                            if not free_msg is None and listener_msg in free_msg:
+                                free_msg.remove(listener_msg)

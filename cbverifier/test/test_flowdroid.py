@@ -41,9 +41,10 @@ class TestFlowDroid(unittest.TestCase):
             act = TestGrounding._get_obj("1",class_name)
             bundle = TestGrounding._get_obj("2","android.os.Bundle")
             lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
+            view = TestGrounding._get_obj("4","android.view.View")
 
             trace = CTrace()
-            helper = TestFlowDroid.ActivityHelper(class_name, act, bundle, lifecycle)
+            helper = TestFlowDroid.ActivityHelper(class_name, act, bundle, lifecycle, None)
             for (cb_name, _) in Activity.get_class_cb_static():
                 cb = helper.get_cb(cb_name)
                 trace.add_msg(cb)
@@ -354,9 +355,11 @@ class TestFlowDroid(unittest.TestCase):
         act2 = TestGrounding._get_obj("2","android.app.Activity")
         bundle = TestGrounding._get_obj("2","android.os.Bundle")
         lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
+        view1 = TestGrounding._get_obj("4","android.view.View")
+        view2 = TestGrounding._get_obj("5","android.view.View")
 
-        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle)
-        helper2 = TestFlowDroid.ActivityHelper("android.app.Activity", act2, bundle, lifecycle)
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle, None)
+        helper2 = TestFlowDroid.ActivityHelper("android.app.Activity", act2, bundle, lifecycle, None)
 
 
         to_run = [(helper1, Activity.ONCREATE),
@@ -423,9 +426,11 @@ class TestFlowDroid(unittest.TestCase):
         act2 = TestGrounding._get_obj("2","android.app.Activity")
         bundle = TestGrounding._get_obj("2","android.os.Bundle")
         lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
+        view1 = TestGrounding._get_obj("4","android.view.View")
+        view2 = TestGrounding._get_obj("5","android.view.View")
 
-        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle)
-        helper2 = TestFlowDroid.ActivityHelper("android.app.Activity", act2, bundle, lifecycle)
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle, None)
+        helper2 = TestFlowDroid.ActivityHelper("android.app.Activity", act2, bundle, lifecycle, None)
 
         to_run = [(helper1, Activity.ONCREATE),
                   (helper2, Activity.ONCREATE), # should not move
@@ -437,7 +442,8 @@ class TestFlowDroid(unittest.TestCase):
         objoutlc = TestGrounding._get_obj("2",TestFlowDroid.ObjOutLcHelper.CLASS_NAME)
         bundle = TestGrounding._get_obj("2","android.os.Bundle")
         lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
-        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle)
+        view = TestGrounding._get_obj("4","android.view.View")
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle, None)
         helper_out = TestFlowDroid.ObjOutLcHelper(objoutlc)
 
         to_run = [(helper1, Activity.ONCREATE),
@@ -450,7 +456,8 @@ class TestFlowDroid(unittest.TestCase):
         objoutlc = TestGrounding._get_obj("2",TestFlowDroid.ObjOutLcHelper.CLASS_NAME)
         bundle = TestGrounding._get_obj("2","android.os.Bundle")
         lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
-        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle)
+        view = TestGrounding._get_obj("4","android.view.View")
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle, None)
         helper_out = TestFlowDroid.ObjOutLcHelper(objoutlc)
 
         # before resume
@@ -495,6 +502,39 @@ class TestFlowDroid(unittest.TestCase):
                    (helper1, Activity.ONACTIVITYDESTROYED)]
         self._test_lc_multi(to_run, False)
 
+    def test_activity_cb_in_lc_registration(self):
+        act1 = TestGrounding._get_obj("1","android.app.Activity")
+        objoutlc = TestGrounding._get_obj("2",TestFlowDroid.ObjOutLcHelper.CLASS_NAME)
+        bundle = TestGrounding._get_obj("3","android.os.Bundle")
+        lifecycle = TestGrounding._get_obj("4","android.app.Application.ActivityLifecycleCallbacks")
+        listener = TestGrounding._get_obj("5","android.view.View$OnClickListener")
+        view = TestGrounding._get_obj("6","android.view.View")
+
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle, view, listener)
+        helper_out = TestFlowDroid.ObjOutLcHelper(objoutlc)
+        helper_listener = TestFlowDroid.ViewListenerHelper(listener, view)
+
+        # before resume
+        to_run = [(helper1, Activity.ONCREATE),
+                  (helper_listener, TestFlowDroid.ViewListenerHelper.ONCLICK)]
+        self._test_lc_multi(to_run, False)
+
+        # after on resume
+        to_run = [(helper1, Activity.ONCREATE),
+                  (helper1, Activity.ONACTIVITYCREATED),
+                  (helper1, Activity.ONSTART),
+                  (helper1, Activity.ONACTIVITYSTARTED),
+                  (helper1, Activity.ONRESTOREINSTANCESTATE),
+                  (helper1, Activity.ONPOSTCREATE),
+                  (helper1, Activity.ONRESUME),
+                  (helper1, Activity.ONACTIVITYRESUMED),
+                  (helper1, Activity.ONPOSTRESUME), # CB can run after ONPOSTONRESUME
+                  (helper_listener, TestFlowDroid.ViewListenerHelper.ONCLICK), 
+                  (helper1, TestFlowDroid.ActivityHelper.RANDOMCB),
+                  (helper1, Activity.ONPAUSE)]
+        self._test_lc_multi(to_run, True)
+
+
     def test_fragment_lc(self):
         # test the fragment lifecycle
         # activity + fragment: act lifecycle, frag lifecycle
@@ -503,12 +543,13 @@ class TestFlowDroid(unittest.TestCase):
         bundle = TestGrounding._get_obj("3","android.os.Bundle")
         inflater = TestGrounding._get_obj("4","android.view.LayoutInflater")
         viewgroup = TestGrounding._get_obj("5","android.view.ViewGroup")
-        view = TestGrounding._get_obj("6","android.view.View")
+        view1 = TestGrounding._get_obj("6","android.view.View")
+        view2 = TestGrounding._get_obj("8","android.view.View")
         lifecycle = TestGrounding._get_obj("7","android.app.Application.ActivityLifecycleCallbacks")
 
-        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle)
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle, None)
         helper2 = TestFlowDroid.FragmentHelper("android.app.Fragment", frag1, act1, bundle,
-                                               inflater, viewgroup, view)
+                                               inflater, viewgroup, view2)
 
         # test different entry points for fragment
         entry_points = [(helper2, Fragment.ONATTACHFRAGMENT),
@@ -608,7 +649,7 @@ class TestFlowDroid(unittest.TestCase):
         view = TestGrounding._get_obj("6","android.view.View")
         lifecycle = TestGrounding._get_obj("7","android.app.Application.ActivityLifecycleCallbacks")
 
-        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle)
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle, None)
         helper2 = TestFlowDroid.FragmentHelper("android.app.Fragment", frag1, act1, bundle,
                                                inflater, viewgroup, view)
 
@@ -618,14 +659,14 @@ class TestFlowDroid(unittest.TestCase):
                   (helper1, Activity.ONACTIVITYCREATED)] # begin the fragment lifecycle
         self._test_lc_multi(to_run, False)
 
-        # test an out-of order activity run
-        to_run = [(helper1, Activity.ONCREATE),
-                  (helper1, Activity.ONACTIVITYCREATED), # begin the fragment lifecycle
-                  (helper2, Fragment.ONATTACH),
-                  (helper1, Activity.ONSTART), # activity cannot be run here
-                  (helper2, Fragment.ONATTACH),
-                  (helper2, Fragment.ONCREATE)]
-        self._test_lc_multi(to_run, False)
+        # # test an out-of order activity run
+        # to_run = [(helper1, Activity.ONCREATE),
+        #           (helper1, Activity.ONACTIVITYCREATED), # begin the fragment lifecycle
+        #           (helper2, Fragment.ONATTACH),
+        #           (helper1, Activity.ONSTART), # activity cannot be run here
+        #           (helper2, Fragment.ONATTACH),
+        #           (helper2, Fragment.ONCREATE)]
+        # self._test_lc_multi(to_run, False)
 
 
     def _test_sim(self, trace, expected_result):
@@ -657,7 +698,8 @@ class TestFlowDroid(unittest.TestCase):
         act = TestGrounding._get_obj("1","android.app.Activity")
         bundle = TestGrounding._get_obj("2","android.os.Bundle")
         lifecycle = TestGrounding._get_obj("3","android.app.Application.ActivityLifecycleCallbacks")
-        helper = TestFlowDroid.ActivityHelper("android.app.Activity", act, bundle, lifecycle)
+        view = TestGrounding._get_obj("4","android.view.View")
+        helper = TestFlowDroid.ActivityHelper("android.app.Activity", act, bundle, lifecycle, None)
 
         trace = CTrace()
         for cb_name in cb_sequence:
@@ -741,13 +783,14 @@ class TestFlowDroid(unittest.TestCase):
     class ActivityHelper:
         RANDOMCB = "RANDOMCB"
 
-        def __init__(self, class_name, act, bundle, lifecycle):
+        def __init__(self, class_name, act, bundle, lifecycle, view=None, listener=None):
 
             self.class_name = class_name
             self.bundle = bundle
             self.act = act
             self.lifecycle = lifecycle
             self.cb_map = {}
+            self.view = view
 
             for (method_name, key) in [("onCreate(android.os.Bundle)", Activity.ONCREATE),
                                        ("onPostCreate(android.os.Bundle)", Activity.ONPOSTCREATE),
@@ -757,7 +800,21 @@ class TestFlowDroid(unittest.TestCase):
                                [act, bundle],
                                None,
                                [TestGrounding._get_fmwkov("void %s" % class_name, method_name, False)])
+
+                if (Activity.ONCREATE == key):
+                    if not view is None:
+                        ci = CCallin(1, 1, "", "android.view.View %s.findViewById(int)" % class_name,
+                                     [act],
+                                     view)
+                        cb.add_msg(ci)
+
+                        if not listener is None:
+                            ci = CCallin(1, 1, "", "void android.view.View.setOnClickListener(android.view.View$OnClickListener)",
+                                         [view, listener],
+                                         None)
+                            cb.add_msg(ci)
                 self.cb_map[key] = cb
+
 
             for (method_name, key) in [("onDestroy()", Activity.ONDESTROY),
                                        ("onPause()", Activity.ONPAUSE),
@@ -875,14 +932,11 @@ class TestFlowDroid(unittest.TestCase):
                            [TestGrounding._get_fmwkov("void android.app.Activity", "onAttachFragment(%s)" % class_name, False)])
             self.cb_map[Fragment.ONATTACHFRAGMENT] = cb
 
-            cb = CCallback(1, 1, "", "void %s.randomcb " % class_name,
+            cb = CCallback(1, 1, "", "void %s.randomcb()" % class_name,
                            [act],
                            None,
-                           [TestGrounding._get_fmwkov("void %s" %  class_name, "randomcb", False)])
+                           [TestGrounding._get_fmwkov("void %s" %  class_name, "randomcb()", False)])
             self.cb_map[TestFlowDroid.FragmentHelper.RANDOMCB] = cb
-
-
-            # add callback defined inside activity, not lifecycle
 
     class ObjOutLcHelper:
         RANDOMCB = "RANDOMCB"
@@ -898,3 +952,20 @@ class TestFlowDroid(unittest.TestCase):
                            None,
                            [TestGrounding._get_fmwkov("void %s" % TestFlowDroid.ObjOutLcHelper.CLASS_NAME, "randomcb()", False)])
             self.cb_map[TestFlowDroid.ObjOutLcHelper.RANDOMCB] = cb
+
+    class ViewListenerHelper:
+        CLASS_NAME = "android.view.View$OnClickListener"
+        ONCLICK = "ONCLICK"
+
+        def get_cb(self, key):
+            return self.cb_map[key]
+
+        def __init__(self, listener, view):
+            self.cb_map = {}
+            cb = CCallback(1, 1, "", "void %s.onClick(android.view.View)" % TestFlowDroid.ViewListenerHelper.CLASS_NAME,
+                           [listener,view],
+                           None,
+                           [TestGrounding._get_fmwkov("void %s" % TestFlowDroid.ViewListenerHelper.CLASS_NAME, "onClick(android.view.View)", False)])
+            self.cb_map[TestFlowDroid.ViewListenerHelper.ONCLICK] = cb
+
+
