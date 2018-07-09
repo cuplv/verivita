@@ -349,11 +349,8 @@ class TestEnc(unittest.TestCase):
         cb.add_msg(ci)
 
         enc1 = TSEncoder(ctrace, spec_list)
-        enc2 = TSEncoder(ctrace, spec_list,
-                         False,
-                         None,
-                         True) # flowdroid model
-        return [enc1, enc2]
+
+        return [enc1]
 
     def test_encode_ground_specs(self):
         for ts_enc in self._get_sample_trace():
@@ -627,9 +624,8 @@ class TestEnc(unittest.TestCase):
         cb.add_msg(ci)
 
         enc1 = TSEncoder(ctrace, spec_list)
-        enc2 = TSEncoder(ctrace, spec_list, False, None, True) # flowdroid model
 
-        for ts_enc in [enc1, enc2]:
+        for ts_enc in [enc1]:
             ts = ts_enc.get_ts_encoding()
             error = ts_enc.error_prop
             bmc = BMC(ts_enc.helper, ts, error)
@@ -664,8 +660,7 @@ class TestEnc(unittest.TestCase):
         ctrace.add_msg(cb)
 
         enc1 = TSEncoder(ctrace, spec_list)
-        enc2 = TSEncoder(ctrace, spec_list, False, None, True) # flowdroid model
-        for (ts_enc, ris_list) in zip([enc1,enc2],[[True,True],[True, True]]):
+        for (ts_enc, ris_list) in zip([enc1],[[True,True],[True, True]]):
             ts = ts_enc.get_ts_encoding()
             bmc = BMC(ts_enc.helper, ts, ts_enc.error_prop)
 
@@ -769,12 +764,8 @@ class TestEnc(unittest.TestCase):
         cb.add_msg(ci)
 
         enc1 = TSEncoder(ctrace, spec_list)
-        enc2 = TSEncoder(ctrace, spec_list,
-                         False,
-                         None,
-                         True) # flowdroid model
 
-        for (ts_enc, expected_res) in zip([enc1, enc2],[True, False]):
+        for (ts_enc, expected_res) in zip([enc1],[True]):
             ts = ts_enc.get_ts_encoding()
             error = ts_enc.error_prop
             bmc = BMC(ts_enc.helper, ts, error)
