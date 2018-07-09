@@ -257,7 +257,6 @@ class Fragment(Component):
                    for (key, list_to_repl) in cb_to_repl]
 
 
-
     @staticmethod
     def is_class(class_name):
         return class_name in Fragment.class_names

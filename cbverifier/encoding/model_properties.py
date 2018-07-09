@@ -6,7 +6,9 @@ specific trace.
 from cbverifier.specs.spec_ast import *
 from cbverifier.encoding.grounding import TraceMap
 from cbverifier.specs.spec_parser import spec_parser
-import string
+from cbverifier.encoding.encoder_utils import EncoderUtils, Subs
+from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
+
 
 class BinRelation:
     """ Generic class used to compute binary relations of
@@ -83,13 +85,8 @@ class BinRelation:
                     var_to_filter = new_id(self.dst_var_name)
                     subs = {var_to_filter : obj}
 
-                # m_replaced_str = string.Template(m_template).safe_substitute(subs)
-                # parse m_replaced
-                # m_ast = spec_parser.parse_call(m_replaced_str)
-
                 m_ast = spec_parser.parse_call(m_template)
                 if (m_ast is None):
-#                    raise Exception("Error parsing %s" % m_replaced_str)
                     raise Exception("Error parsing %s" % m_template)
                 related_objs = self.trace_map.find_all_vars(m_ast,
                                                             var_to_search_for,
@@ -117,8 +114,20 @@ class BinRelation:
 
 class AttachRelation(BinRelation):
 
-    attach_methods_fwd = {'android.app.Activity' : ['L = [CI] [EXIT] [CONTAINER] android.view.View android.app.Activity.findViewById(# : int)']}
-    attach_methods_bwd = {'android.app.Fragment' : ['[CB] [ENTRY] [L] void android.app.Fragment.onAttach(CONTAINER : android.app.Activity)']}
+    attach_methods_fwd = {}
+    for class_name in Activity.class_names:
+        to_proc = ['L = [CI] [EXIT] [CONTAINER] android.view.View ${MYTYPE}.findViewById(# : int)']
+        processed = EncoderUtils.enum_types_list(to_proc, [Subs(["MYTYPE"], [[class_name]])])
+        attach_methods_fwd[class_name] = processed
+
+    attach_methods_bwd = {}
+    for class_name in Fragment.class_names:
+        to_proc = ['[CB] [ENTRY] [L] void ${MYTYPE}.onAttach(CONTAINER : ${ACTIVITY_TYPE})']
+        processed = EncoderUtils.enum_types_list(to_proc, [Subs(["MYTYPE"], [[class_name]]),
+                                                           Subs(["ACTIVITY_TYPE"],[[c] for c in Activity.class_names])])
+        attach_methods_bwd[class_name] = processed
+
+
 
     """ Computes the attachment relation between objects """
     def __init__(self, trace_map, root_components):
@@ -137,6 +146,8 @@ class AttachRelation(BinRelation):
 
 
 class RegistrationRelation(BinRelation):
+    # Not important for flowdroid now
+    # We use the name of the onclick listener to register everything as it is doine
     register_methods_fwd = {'android.view.View' : ['[CI] [ENTRY] [CONTAINER] void android.view.View.setOnClickListener(L : android.view.View$OnClickListener)']}
     register_methods_bwd = {}
 

@@ -224,7 +224,6 @@ class TSEncoder:
                                                            self.stats)
         logging.info("Total specs after grounding: %d" % (len(self.ground_specs)))
 
-
         if (self.use_flowdroid_model):
             # initializes the informations needed to compute the FlowDroid model
             self.fd_builder = FlowDroidModelBuilder(self.trace,
