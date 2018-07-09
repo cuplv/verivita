@@ -15,6 +15,7 @@ from cbverifier.specs.spec_lex import lexer
 from cbverifier.specs.spec_lex import tokens
 from cbverifier.specs.spec_ast import *
 import ply.yacc as yacc
+import string
 
 
 
@@ -366,8 +367,36 @@ class SpecParser(object):
         if (self.in_error): spec_list = None
         return spec_list
 
+    def parse_call(self, call_str):
+        """ Parse a call """
+        self.in_error = False
+
+        # Build a fake spec to parse
+        fake_spec_template = "SPEC ${call} |- [CB] [ENTRY] [l] type l(b : type)"
+        fake_spec = string.Template(fake_spec_template).safe_substitute({"call" : call_str})
+        spec_list = parser.parse(fake_spec)
+        if (self.in_error): parsed_call = None
+
+        if (spec_list is None):
+            return None
+        if (get_node_type(spec_list) != SPEC_LIST):
+            return None
+        spec = spec_list[1]
+        if (get_node_type(spec) != SPEC_SYMB):
+            return none
+
+        spec_lhs = get_regexp_node(spec)
+        if (spec_lhs is None):
+            return None
+
+        if not (get_node_type(spec_lhs) == CALL_ENTRY or 
+                get_node_type(spec_lhs) == CALL_EXIT):
+            return None
+
+        return spec_lhs
+
+
     def set_in_error(self, t_value, t_lineno):
-        # DEBUG
         print("Syntax error at '%s' at line %d." % (t_value, t_lineno))
 
         # store the error status

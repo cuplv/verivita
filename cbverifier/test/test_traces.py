@@ -368,6 +368,7 @@ class TestTraces(unittest.TestCase):
         self.assertTrue(cb.return_value.type == TraceConverter.JAVA_INT_PRIMITIVE)
         self.assertTrue(cb.return_value.value == "0")
 
+    @unittest.skip("Disabled due to wrong trace")
     def test_truncated(self):
         test_path = os.path.dirname(cbverifier.test.examples.__file__)
 

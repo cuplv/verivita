@@ -553,3 +553,12 @@ SPEC pollo(l) |- TRUE ALIASES method_name = [subs1]""")
         specs = Spec.get_specs_from_string(spec_string)
         self.assertTrue(len(specs) == 1)
         self.assertTrue(str(specs[0]) == res)
+
+
+    def test_parse_call(self):
+        res = spec_parser.parse_call("[CB] [ENTRY] [1] type methodName(y : boolean)")
+        self.assertTrue(get_node_type(res) == CALL_ENTRY)
+
+        stringio = StringIO()
+        pretty_print(res, stringio)
+        self.assertTrue(stringio.getvalue() == "[CB] [ENTRY] [1] type methodName(y : boolean)")
