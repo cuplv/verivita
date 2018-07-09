@@ -28,7 +28,8 @@ class DriverOptions:
                  simplify_trace,
                  debug,
                  filter_msgs,
-                 allow_exception=True):
+                 allow_exception=True,
+                 use_flowdroid_model = False):
         self.tracefile = tracefile
         self.traceformat = traceformat
         self.spec_file_list = spec_file_list
@@ -36,6 +37,7 @@ class DriverOptions:
         self.debug = debug
         self.filter_msgs = filter_msgs
         self.allow_exception = allow_exception
+        self.use_flowdroid_model = use_flowdroid_model
 
 class NoDisableException(Exception):
     def __init__(self,*args,**kwargs):
@@ -87,7 +89,7 @@ class Driver:
         stream.write("\n")
 
     def get_ground_specs(self, get_map = False):
-        ts_enc = TSEncoder(self.trace, self.spec_list, False, self.stats)
+        ts_enc = TSEncoder(self.trace, self.spec_list, False, self.stats, self.opts.use_flowdroid_model)
         if not get_map:
             ground_specs = ts_enc.get_ground_spec()
         else:
@@ -96,7 +98,7 @@ class Driver:
 
     def run_bmc(self, depth, inc=False):
         ts_enc = TSEncoder(self.trace, self.spec_list, self.opts.simplify_trace,
-                           self.stats)
+                           self.stats, self.opts.use_flowdroid_model)
 
         self.stats.start_timer(Stats.VERIFICATION_TIME)
 
@@ -115,7 +117,8 @@ class Driver:
     def to_smv(self, smv_file_name):
         ts_enc = TSEncoder(self.trace, self.spec_list,
                            self.opts.simplify_trace,
-                           self.stats)
+                           self.stats,
+                           self.opts.use_flowdroid_model)
         ts = ts_enc.get_ts_encoding()
         ts2smv = SmvTranslator(ts_enc.pysmt_env,
                                ts.state_vars,
@@ -131,7 +134,8 @@ class Driver:
     def run_ic3(self, nuxmv_path, ic3_frames):
         ts_enc = TSEncoder(self.trace, self.spec_list,
                            self.opts.simplify_trace,
-                           self.stats)
+                           self.stats,
+                           self.opts.use_flowdroid_model)
         ts = ts_enc.get_ts_encoding()
 
         self.stats.start_timer(Stats.VERIFICATION_TIME,True)
@@ -148,7 +152,8 @@ class Driver:
     def run_simulation(self, cb_sequence = None): 
         ts_enc = TSEncoder(self.trace, self.spec_list,
                            self.opts.simplify_trace,
-                           self.stats)
+                           self.stats,
+                           self.opts.use_flowdroid_model)
 
         self.stats.start_timer(Stats.SIMULATION_TIME)
 
@@ -249,10 +254,13 @@ def main(input_args=None):
     p.add_option('-s', '--specfile', help="Colon (:) seperated list" \
                  "of specifications.")
 
-    # Encoding options
-    p.add_option('-c', '--enc_coi', action="store_true",
-                 default=False, help="Apply cone of influence")
+    p.add_option('-r', '--use_flowdroid_model', action="store_true",
+                 default=False, help="Use the flowdroid lifecycle model "\
+                 "to encode the enabled callbacks.\n " \
+                 "Warning: we ignore the enabled/disable rules in the "\
+                 "encoding in this case")
 
+    # Encoding options
     p.add_option('-z', '--simplify_trace', action="store_true",
                  default=False, help="Simplify the trace (possibly unsound)")
 
@@ -372,12 +380,12 @@ def main(input_args=None):
     if (opts.debug):
         logging.basicConfig(level=logging.DEBUG)
     else:
-        logging.basicConfig(level=logging.INFO)
+        logging.basicConfig(level=logging.WARNING)
 
     if (opts.print_orig_spec):
         print_orig_spec = True
     else:
-        print_orig_spec = False        
+        print_orig_spec = False
 
     driver_opts = DriverOptions(opts.tracefile,
                                 opts.traceformat,
@@ -385,9 +393,12 @@ def main(input_args=None):
                                 opts.simplify_trace,
                                 opts.debug,
                                 opts.filter,
-                                opts.mode != "check-trace-relevance")
-
+                                opts.mode != "check-trace-relevance",
+                                opts.use_flowdroid_model)
     driver = Driver(driver_opts)
+
+    if opts.use_flowdroid_model:
+        logging.warning("\nUSING THE FLOWDROID MODEL...\n")
 
     if (opts.mode == "check-files"):
         driver.check_files(sys.stdout)

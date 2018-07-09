@@ -22,6 +22,8 @@ class TestKnownTraces(unittest.TestCase):
         ,"button.spec","countdowntimer.spec","fragment.spec","mediaplayer.spec"]
     test_path = os.path.dirname(cbverifier.android_specs.__file__)
     s1 = [os.path.join(test_path, filename) for filename in allspecfiles]
+
+    @unittest.skip("Disabled due to issue 168")
     def test_contraction_timer_bug(self):
         t1 = os.path.join(self.test_path, "testTraces", "ContractionTimerDistilled", "trace")
 
@@ -42,6 +44,8 @@ class TestKnownTraces(unittest.TestCase):
         trace = driver.run_bmc(20)
         assert (trace is not None)
         assert(trace[0] is not None)
+
+    @unittest.skip("Disabled due to issue 168")
     def test_contraction_timer_fix(self):
         t1 = os.path.join(self.test_path, "testTraces", "ContractionTimerDistilledFix", "trace")
 
@@ -62,6 +66,8 @@ class TestKnownTraces(unittest.TestCase):
         trace = driver.run_bmc(20)
         assert (trace is not None)
         assert(trace[0] is None)
+
+    @unittest.skip("Disabled due to issue 168")
     def test_media_fix(self):
         t1 = os.path.join(self.test_path, "testTraces", "MediaPlayerExample", "trace")
 
@@ -83,6 +89,7 @@ class TestKnownTraces(unittest.TestCase):
         assert (trace is not None)
         assert(trace[0] is None)
 
+    @unittest.skip("Disabled due to issue 168")
     def test_media_bug(self):
         t1 = os.path.join(self.test_path, "testTraces", "MediaPlayerExampleBug", "trace")
 

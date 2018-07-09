@@ -149,7 +149,9 @@ class GroundSpecs(object):
         inside substitution to spec.
 
         It also returns a subset of the variables assigned in substitution
-        that are sufficient to make the spec inconsistent
+        that are sufficient to make the spec inconsistent (we do a sort of "conflict clause"
+        learning as in SAT).
+        This subset is used to possibly rule out a set of assignments.
         """
 
         def substitute_rec(node, substitution):
@@ -164,7 +166,7 @@ class GroundSpecs(object):
             node_type = get_node_type(node)
             if (node_type in leaf_nodes):
                 # reasons is empty: no matter what substitution,
-                # we always get the same resul
+                # we always get the same result
                 return (node, GroundSpecs._get_empty_reason())
             elif (node_type == CALL_ENTRY or node_type == CALL_EXIT):
                 is_entry = True if node_type == CALL_ENTRY else False
@@ -1025,13 +1027,15 @@ class TraceMap(object):
     the method returns all the possible assignments to the free
     variables in the AST node that can be built by looking at the
     method calls found in the trace.
+
+    3. Finds all the messages in the trace that are compatible with
+    call_ast.
     """
 
     ENTRY_TYPE = "ENTRY"
     EXIT_TYPE = "EXIT"
 
     def __init__(self, trace):
-        # 3-level index with method name and arity of paramters
         self.trace_map = {}
         for child in trace.children:
             self.trace_map = self._fill_map(child, self.trace_map)
@@ -1167,11 +1171,11 @@ class TraceMap(object):
                     key_index = key_index + 1
                     method_list = lookupres
             else:
-                key_index += 1
                 # exit the loop if the element was not found
                 if lookupres is None:
                     break
                 else:
+                    key_index += 1
                     current_map = lookupres
 
         if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
@@ -1189,15 +1193,18 @@ class TraceMap(object):
             elif key_index == 5:
                 stop_lookup = None
 
-            logging.debug("Lookup %s for %s" \
-                          "%s %s %s with arity %d: %s"
-                          % ("succeded" if stop_lookup is None else "failed",
-                             "retval = " if has_retval else "",
-                             msg_type_node,
-                             "ENTRY" if is_entry else "EXIT",
-                             method_name,
-                             arity,
-                             ",".join([str(m.message_id) for m in method_list])))
+            failure_reason = "" if stop_lookup is None else "\nFailure: different %s\n" % stop_lookup
+
+            debug_msg = "Lookup %s for %s%s" \
+                        "%s %s %s with arity %d: %s" % ("succeded" if stop_lookup is None else "failed",
+                                                        failure_reason,
+                                                        "retval = " if has_retval else "",
+                                                        msg_type_node,
+                                                        "ENTRY" if is_entry else "EXIT",
+                                                        method_name,
+                                                        arity,
+                                                        ",".join([str(m.message_id) for m in method_list]))
+            logging.debug(debug_msg)
         return method_list
 
     def _get_formal_assignment(self, method_assignments, formal, actual):
@@ -1280,6 +1287,7 @@ class TraceMap(object):
                                                method_signature,
                                                arity,
                                                (retval is not None) and (retval != new_nil()))
+
         # For each method, find:
         #   - the assignments to the variables in params
         #   - the assignment to the return value
@@ -1299,7 +1307,7 @@ class TraceMap(object):
             for formal, actual in zip(param_list, method.params):
                 match = match and self._get_formal_assignment(method_assignments,
                                                               formal, actual)
-            # return value (only for exit
+            # return value (only for exit)
             if (not is_entry) and match and retval != new_nil():
                 match = match and self._get_formal_assignment(method_assignments,
                                                               retval,
@@ -1316,3 +1324,86 @@ class TraceMap(object):
 
         return set_assignments
 
+
+    def find_methods(self, call_ast, filter_map):
+        """
+        Finds all the messages in the trace that are compatible with
+        call_ast.
+        """
+        # find the concrete methods in the trace that are compatible
+        # with call_ast
+        node_type = get_node_type(call_ast)
+        assert (node_type == CALL_ENTRY or node_type == CALL_EXIT)
+        asets = self.lookup_assignments(call_ast)
+
+        msg_list = []
+        # get the ci/cb from the trace
+        for aset in asets:
+            mapback = None
+
+            # Assume a unique assignment to each var in asets
+            to_match = set(filter_map.keys())
+
+            for (fvar, fval) in aset.assignments.iteritems():
+                if (fval == bottom_value):
+                    continue
+                elif get_node_type(fvar) == ID:
+                    if fvar in filter_map:
+                        if filter_map[fvar] == fval:
+                            to_match.remove(fvar)
+                elif (type(fvar) == tuple):
+                    if fval != bottom_value:
+                        # fval is the mapback to the trace message
+                        assert fval is not None
+                        assert (isinstance(fval, CCallin) or
+                                isinstance(fval, CCallback))
+                        mapback = fval
+
+            if (len(to_match) == 0 and not mapback is None):
+                msg_list.append(mapback)
+
+
+        return msg_list
+
+    def find_all_vars(self, call_ast, var_name_ast, filter_map):
+        """
+        call_ast is a call node
+        var_name_ast is an ID node.
+
+        Finds all the messages in the trace that are compatible with
+        call_ast, returns a list of all the possible values took
+        by var_name_ast in the found messages, and agrees on the variable
+        values in filter_map
+        """
+
+        # find the concrete methods in the trace that are compatible
+        # with call_ast
+        node_type = get_node_type(call_ast)
+        assert (node_type == CALL_ENTRY or node_type == CALL_EXIT)
+        asets = self.lookup_assignments(call_ast)
+
+        var_assignments = set()
+
+        # get the ci/cb from the trace
+        for aset in asets:
+            to_match = set(filter_map.keys())
+
+            app_var_assignments = set()
+
+            for (fvar, fval) in aset.assignments.iteritems():
+                if (fval == bottom_value):
+                    pass
+                elif (get_node_type(fvar) == ID):
+                    # get the var value
+                    if (fvar == var_name_ast):
+                        app_var_assignments.add(fval)
+
+                    # check the filter
+                    if fvar in filter_map:
+                        if filter_map[fvar] == fval:
+                            to_match.remove(fvar)
+
+            if len(to_match) == 0:
+                var_assignments.update(app_var_assignments)
+
+        return var_assignments
