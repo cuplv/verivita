@@ -1620,7 +1620,8 @@ class FlowDroidModelEncoder:
         # line 795
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYCREATED,
-                                          ts, pc, pc_val, pc_val + 1, True)
+                                          ts, pc, pc_val, pc_val + 1, True,
+                                          True)
 
         # line 840
         before_onStartStmt_label = pc_val
@@ -1639,7 +1640,8 @@ class FlowDroidModelEncoder:
         # line 860
         pc_val = self._enc_component_step(activity,
                                           Activity.ONRESTOREINSTANCESTATE,
-                                          ts, pc, pc_val, pc_val + 1)
+                                          ts, pc, pc_val, pc_val + 1,
+                                          False, True)
 
         before_onPostCreate_label = pc_val
         # line 859 - jump from before before_onActivityStarted_label
@@ -1662,7 +1664,7 @@ class FlowDroidModelEncoder:
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYRESUMED,
                                           ts, pc, pc_val, pc_val + 1,
-                                          True)
+                                          True, True)
         # line 876
         pc_val = self._enc_component_step(activity,
                                           Activity.ONPOSTRESUME,
@@ -1697,7 +1699,7 @@ class FlowDroidModelEncoder:
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYPAUSED,
                                           ts, pc, pc_val, pc_val + 1,
-                                          True)
+                                          True, True)
 
         # line 921
         pc_val = self._enc_component_step(activity,
@@ -1714,13 +1716,13 @@ class FlowDroidModelEncoder:
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYSAVEINSTANCESTATE,
                                           ts, pc, pc_val, pc_val + 1,
-                                          True)
+                                          True, True)
         # line 930
         self._enc_component_step(activity,
                                  Activity.ONACTIVITYSAVEINSTANCESTATE,
                                  ts, pc, before_onActivitySaveInstanceState_label,
                                  before_onResume_label,
-                                 True)
+                                 True, True)
 
         # line 934
         before_onStop_label = pc_val
@@ -1734,14 +1736,14 @@ class FlowDroidModelEncoder:
                                           Activity.ONACTIVITYSTOPPED,
                                           ts, pc, before_onActivityStopped_label,
                                           pc_val + 1,
-                                          True)
+                                          True, True)
         # line 943
         self._enc_component_step(activity,
                                  Activity.ONACTIVITYSTOPPED,
                                  ts, pc,
                                  before_onActivityStopped_label,
                                  before_onStop_label,
-                                 True)
+                                 True, True)
         # line 952
         before_onRestart_label = pc_val
         pc_val = self._enc_component_step(activity,
@@ -1762,12 +1764,12 @@ class FlowDroidModelEncoder:
                                  ts, pc,
                                  pc_val,
                                  before_onDestroy_label,
-                                 True)
+                                 True, True)
         # line 960 - go back to the beginning
         self._enc_component_step(activity,
                                  Activity.ONACTIVITYDESTROYED,
                                  ts, pc, pc_val, entry_label,
-                                 True)
+                                 True, True)
 
         lc_info = FlowDroidModelEncoder.ActivityLcInfo(ts, pc, pc_size)
         lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.INIT,

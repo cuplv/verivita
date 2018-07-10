@@ -511,18 +511,10 @@ class CTrace:
             rec = current.get_receiver()
             if not rec is None:
                 self.all_values.add(rec)
-
-                print "VALUE " + str(rec.get_value())
-                print current.method_name
-
                 if not rec in self.val2fmwk_type:
                     fmwk_types_set = set()
                     self.val2fmwk_type[rec] = fmwk_types_set
                 fmwk_types = self._get_val_fmwk_overrides(current)
-
-                print "ADDING"
-                print fmwk_types
-
                 fmwk_types_set.update(fmwk_types)
 
             for par in current.get_other_params():
