@@ -1487,16 +1487,28 @@ class FlowDroidModelEncoder:
     an activity component is active after the onResume and before the onPause
     callbacks.
 
-    We follow the modeling where callbacks cannot happen if the component
-    that register them is not active.
-    We compute an over-approximation of the registration of components
-    from the trace.
+    We relax the contraint that callbacks in the
+    android.app.Application.ActivityLifecycleCallbacks must exist and executed at
+    least one.
+
+    We follow the modeling where registered callbacks cannot happen outside
+    the activity lifecycle.
+
+    We assume that non-registered callbacks can happen at any time.
+    This over-approximate the resulting model.
+    The consequence is:
+      - our model is "more sound" than the flowdroid one: we do not block
+        the execution of callbacks for which we did not find a registration
+      - our model may be "less precise" than the flowdroid one, since it
+        may allow more spurious trace.
+    In practice, we are "fair" in the comparison with respect to
 
     We model the lifecycle for activity and fragment components since we
     are interested in components that run in the UI thread.
 
     As done in flowdroid, we encode the lifecycle component of fragment
-    inside their activity component."""
+    inside their activity component.
+    """
 
     def __init__(self, enc, fd_builder):
         self.enc = enc
