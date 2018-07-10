@@ -36,6 +36,10 @@ class FlowDroidModelBuilder:
         self.trace = trace
         self.trace_map = trace_map
 
+        # Get all listeners and all the values
+        all_values = self.trace.get_all_trace_values()
+        cb2listeners = FlowDroidModelBuilder._get_all_listeners(self.trace)
+
         # Populate the map of all components from the trace
         self.components_set = set([])
         FlowDroidModelBuilder._get_all_components(self.trace,
@@ -47,11 +51,12 @@ class FlowDroidModelBuilder:
         for c in self.components_set:
             self.components_map[c.get_inst_value()] = c
 
-        (cb2listeners, all_values) = FlowDroidModelBuilder._get_all_values(self.trace)
         self.cb2listeners = cb2listeners
         self.attach_rel = AttachRelation(self.trace_map,
+                                         self.trace,
                                          all_values)
         self.register_rel = RegistrationRelation(self.trace_map,
+                                                 self.trace,
                                                  all_values)
 
         # Map from object id to messages where the id is used as a receiver
@@ -116,6 +121,9 @@ class FlowDroidModelBuilder:
                 self.msgs_keys.add(msg)
 
         # Map from object id to messages where the id is used as a receiver
+        # Recompute only on the set of "important" messages
+        # Messages from spec grounding + lifecycle messages (not available
+        # when creating the flowdroidmodelbuilder)
         self.obj2msg_keys = FlowDroidModelBuilder._get_obj2msg_keys(self.trace,
                                                                     self.msgs_keys)
 
@@ -152,13 +160,25 @@ class FlowDroidModelBuilder:
                 if value in component_ids:
                     continue
 
-                if Activity.is_class(value.type):
-                    component = Activity(value.type, value, trace_map)
+                is_act = trace._is_in_class_names(Activity.class_names, value)
+                is_frag = trace._is_in_class_names(Fragment.class_names, value)
+                if ( is_act and is_frag):
+                    logging.warning("Object %s is both an activity (%s) and " \
+                                    "a fragment (%s)" % (value.get_value(), act_type, frag_type))
+
+                if is_act:
+                    act_types = trace._get_class_names(Activity.class_names, value)
+                    assert len(act_types) != 0
+                    act_type = next(iter(act_types))
+                    component = Activity(act_type, value, trace_map)
                     components.add(component)
                     component_ids.add(value)
 
-                if Fragment.is_class(value.type):
-                    component = Fragment(value.type, value, trace_map)
+                if is_frag:
+                    frag_types = trace._get_class_names(Fragment.class_names, value)
+                    assert len(frag_types) != 0
+                    frag_type = next(iter(frag_types))
+                    component = Fragment(frag_type, value, trace_map)
                     components.add(component)
                     component_ids.add(value)
 
@@ -338,22 +358,11 @@ class FlowDroidModelBuilder:
         return list(self.components_set)
 
     @staticmethod
-    def _get_all_values(trace):
+    def _get_all_listeners(trace):
         """
-        Get all the objects used in the trace.
-
-        Find all the listener objects and associate them with
+        Get all the listener objects and associate them with
         the callback that calls them
-
         """
-        def _is_listener(obj):
-            return (((not obj.fmwk_type is None) and
-                     (obj.fmwk_type in KnownAndroidListener.listener_classes)) |
-                    ((not obj.type is None) and
-                     (obj.type in KnownAndroidListener.listener_classes)))
-
-
-        all_values = set()
         cb2listeners = {}
 
         # always keep the top-level callback
@@ -368,22 +377,17 @@ class FlowDroidModelBuilder:
 
                 rec = current.get_receiver()
                 if rec is not None:
-                    all_values.add(rec)
-
-                    if (_is_listener(rec)):
+                    if (trace._is_in_class_names(KnownAndroidListener.listener_classes, rec)):
                         cb2listeners[cb_entry_msg].add(rec)
 
                 for par in current.get_other_params():
-                    all_values.add(par)
-
-                    if (_is_listener(par)):
+                    if (trace._is_in_class_names(KnownAndroidListener.listener_classes, par)):
                         cb2listeners[cb_entry_msg].add(par)
 
                 for c in current.children:
                     msg_stack.append(c)
 
-        return (cb2listeners, all_values)
-
+        return cb2listeners
     @staticmethod
     def _get_obj2msg_keys(trace, all_msg_map=None):
         obj2msg = {}
@@ -513,7 +517,3 @@ class FlowDroidModelBuilder:
                 #   list of registered callbacks
                 #   list of attached objects
             _print_sep(stream)
-
-
-    def _print_relation(self, relation, stream):
-        """ print a relation """

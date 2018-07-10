@@ -148,6 +148,7 @@ from cbverifier.encoding.conversion import TraceSpecConverter
 from cbverifier.encoding.flowdroid_model.flowdroid_model_builder import FlowDroidModelBuilder
 from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
 from cbverifier.utils.stats import Stats
+from cbverifier.utils.utils import is_debug
 from cbverifier.helpers import Helper
 
 # Set to true this constant to have the debug output for the
@@ -504,11 +505,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                 len(parent.children) > 0):
                 new_trace.add_msg(parent)
 
-                # print spec_msgs
-                # print EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY) in spec_msgs
-                # print EncoderUtils.get_key_from_msg(cb, EncoderUtils.EXIT) in spec_msgs
-                # print len(parent.children) > 0
-
                 if ( ( not EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY) in spec_msgs) and
                      len(parent.children) > 0):
                     # CB included by its children
@@ -794,11 +790,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             ts.state_vars = ts_auto.state_vars
             ts.input_vars = ts_auto.input_vars
         else:
-            # # DEBUG
-            # stringio = StringIO()
-            # pretty_print(regexp, stringio)
-            # logging.info("Creating automata for spec: %s\n" % (stringio.getvalue()))
-
             (auto_pc, final_states, ts_auto) = self._get_regexp_ts(regexp, spec_id)
             self.regexp2ts[regexp] = (auto_pc, final_states, ts_auto)
             ts.product(ts_auto)
@@ -1577,7 +1568,6 @@ class FlowDroidModelEncoder:
                 result = "%s = %s can move" % (pc, str(i))
             else:
                 result = "%s = %s is in deadlock" % (pc, str(i))
-            print result
 
     def _encode_activity_lifecycle(self, activity):
         """
@@ -1593,7 +1583,7 @@ class FlowDroidModelEncoder:
         # encoded in the activity lifecycle
         # (see how many times pc is incremented there)
         pc_size = 19
-        pc = "pc_" + (activity.get_inst_value().get_value())
+        pc = "pc_act_" + (activity.get_inst_value().get_value())
         self.enc.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
         for v in self.enc.cenc.get_counter_var(pc): ts.add_var(v)
 
@@ -1777,9 +1767,10 @@ class FlowDroidModelEncoder:
         lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.IS_ACTIVE,
                           activity_is_active)
 
-        self._check_for_deadlocks(lc_info.ts.trans,
-                                  lc_info.pc,
-                                  lc_info.pc_size)
+        if is_debug():
+            self._check_for_deadlocks(lc_info.ts.trans,
+                                      lc_info.pc,
+                                      lc_info.pc_size)
         return lc_info
 
     def _encode_fragment_lifecycle(self, fragment):
@@ -1791,7 +1782,7 @@ class FlowDroidModelEncoder:
         ts = TransitionSystem()
 
         pc_size = 13 # init state + 12 (+ 1) of pc counter
-        pc = "pc_" + (fragment.get_inst_value().get_value())
+        pc = "pc_frag_" + (fragment.get_inst_value().get_value())
         self.enc.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
         for v in self.enc.cenc.get_counter_var(pc): ts.add_var(v)
         self.enc.mapback.add_pc2component(pc, fragment)
