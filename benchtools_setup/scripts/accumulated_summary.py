@@ -38,6 +38,8 @@ class ResultsFile:
         else:
             raise Exception("parse level exception")
 
+
+
 class ResultLine:
     #line: line created by benchtools
     #alias_map Dictionary[String,String]: map from directory names to actual name
@@ -64,6 +66,15 @@ class ResultLine:
             self.proof_status = "Timeout"
         else:
             raise Exception("malformed trace line")
+
+        #exctract manual annotation
+        splithash = line.split("#")
+        if splithash[0].strip() == "":
+            raise Exception("trying to parse comment line")
+        if len(splithash) == 2:
+            annotation = splithash[1].strip()
+            assert(annotation in {"MSafe", "MReproduce","MBug"})
+            self.annotation = annotation
 
 class SimLine:
     def __init__(self,line,alias_map):
@@ -233,15 +244,16 @@ def genTable(loadedResults, outdir):
     column_names = []
     properties = set()
     for precision_level in PRECISION_LEVELS:
-        for sc in ["-trace", "-app", "-perc"]:
-            level_sc = precision_level + sc
-            column_names.append(level_sc)
+        for sc in ["-trace", "-perc"]:
+            if precision_level != "lifestate_va0":
+                level_sc = precision_level + sc
+                column_names.append(level_sc)
     for result_filename in loadedResults:
         method = loadedResults[result_filename][0].method
         properties.add(method)
 
     properties_list = sorted([p for p in properties])
-    df = pandas.DataFrame(index = properties_list, columns=column_names)
+    df = pandas.DataFrame(index = properties_list + ["sum"], columns=["total", "verifiable"] + column_names)
 
     #create mapping from property to list of results at each level
     property_result_map = {}
@@ -266,7 +278,7 @@ def genTable(loadedResults, outdir):
 
         pass
 
-    result_list = -1
+    del result_list
     level_filter = False
     if level_filter: #Set to true for level filtering
         for property in property_result_map:
@@ -289,20 +301,55 @@ def genTable(loadedResults, outdir):
                             if lower_result[1].trace_path == trace_path and lower_result[1].proof_status == "Safe":
                                 results_list[level].remove(result)
 
+
+
+    sum_total_traces = 0
+    sum_verifiable_traces = 0
+    sum_prop = {}
     #populate dataframe
     for property in property_result_map:
         results_list = property_result_map[property]
-        for level in xrange(len(results_list)): #TODO: make sure this level thing is behaving correctly
+        totalTraces = len(results_list[0])
+        df.set_value(property, "total", totalTraces)
+        verifiable_list = [trace for trace in results_list[-1] if
+                            (trace[1].proof_status in ["Timeout","Safe","MemoryError"]) or (trace[1].annotation == "MSafe")]
 
+        verifiable_count = len(verifiable_list)
+        sum_verifiable_traces += verifiable_count
+        sum_total_traces += totalTraces
+        df.set_value(property, "verifiable", verifiable_count)
+        for level in xrange(len(results_list)):
+            assert(totalTraces == len(results_list[level]))
+
+        for level in xrange(len(results_list)): #TODO: make sure this level thing is behaving correctly
+            levelname = PRECISION_LEVELS[level]
+            if levelname == "lifestate_va0":
+                continue
+            if levelname not in sum_prop:
+                sum_prop[levelname] = 0
             unsafe_trace_list = [ trace for trace in results_list[level] if isunsafe(trace)]
             unsafe_app_set = set([trace[1].app_name for trace in unsafe_trace_list])
+            safe_trace_list = [trace for trace in results_list[level] if trace[1].proof_status == "Safe"]
+            safe_trace_count = len(safe_trace_list)
+            sum_prop[levelname] += safe_trace_count
+
 
             unsafe_trace_count = len(unsafe_trace_list)
             unsafe_app_count = len(unsafe_app_set)
-            df.set_value(property,PRECISION_LEVELS[level] + "-trace", unsafe_trace_count)
-            df.set_value(property,PRECISION_LEVELS[level] + "-app", unsafe_app_count)
+            precision_level_string = levelname
+            df.set_value(property, precision_level_string + "-trace", safe_trace_count)
+            frac = float(safe_trace_count) / verifiable_count if verifiable_count != 0 else float("NaN")
+            df.set_value(property, precision_level_string + "-perc", round(frac*100,1))
+            # df.set_value(property, precision_level_string + "-app", unsafe_app_count)
 
+    df.set_value("sum","total",sum_total_traces)
+    df.set_value("sum","verifiable",sum_verifiable_traces)
+    for levelname in sum_prop:
+        df.set_value("sum",levelname + "-trace", sum_prop[levelname])
+        df.set_value("sum", levelname + "-perc", float(sum_prop[levelname] / sum_verifiable_traces) if sum_verifiable_traces != 0 else float("NaN"))
+    print "main paper table"
     print tabulate.tabulate(df, headers="keys", tablefmt="latex_booktabs")
+    print "TODO: appendix table"
 
 
 def gnuplotAllTime(loadedResults, out):
