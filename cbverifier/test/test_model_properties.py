@@ -52,7 +52,7 @@ class TestModelProperties(unittest.TestCase):
 
 
         (ctrace, enc, root_components, attach_relation) = _get()
-        rel = AttachRelation(enc.gs.trace_map, root_components)
+        rel = AttachRelation(enc.gs.trace_map, ctrace, root_components)
 
         for (a,b) in attach_relation:
             self.assertTrue(rel.is_related(a,b))
@@ -97,7 +97,7 @@ class TestModelProperties(unittest.TestCase):
             return (ctrace, ts_enc, root_components, relation)
 
         (ctrace, enc, root_components, relation) = _get()
-        rel = RegistrationRelation(enc.gs.trace_map, root_components)
+        rel = RegistrationRelation(enc.gs.trace_map, ctrace, root_components)
 
         for (a,b) in relation:
             self.assertTrue(rel.is_related(a,b))

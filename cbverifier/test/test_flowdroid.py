@@ -327,28 +327,6 @@ class TestFlowDroid(unittest.TestCase):
                     to_test.append(l) # duplicate
             self._test_lc_enc(to_test, True)
 
-    def test_lc_at_least_one_2(self):
-        # Test block
-        for msg in TestFlowDroid.multiple_msgs:
-            if msg == Activity.ONACTIVITYSTARTED:
-                # skip the optional message, simulation will
-                # succeed there
-                continue
-
-            to_test = []
-            for l in self.full_lifecycle:
-                if l != msg:
-                    to_test.append(l) # remove msg
-            to_test.append(Activity.ONCREATE)
-            self._test_lc_enc(to_test, False)
-
-    # def test_my(self):
-    #     full_lifecycle = [Activity.ONCREATE,
-    #                       Activity.ONACTIVITYCREATED,
-    #                       Activity.ONACTIVITYCREATED,
-    #                       Activity.ONSTART]
-    #     self._test_lc_enc(full_lifecycle, True)
-
     def test_lc_more_act(self):
         # test serialization of activities
         act1 = TestGrounding._get_obj("1","android.app.Activity")
@@ -667,6 +645,38 @@ class TestFlowDroid(unittest.TestCase):
         #           (helper2, Fragment.ONATTACH),
         #           (helper2, Fragment.ONCREATE)]
         # self._test_lc_multi(to_run, False)
+
+
+    def test_print_model(self):
+        act1 = TestGrounding._get_obj("1","android.app.Activity")
+        objoutlc = TestGrounding._get_obj("2",TestFlowDroid.ObjOutLcHelper.CLASS_NAME)
+        bundle = TestGrounding._get_obj("3","android.os.Bundle")
+        lifecycle = TestGrounding._get_obj("4","android.app.Application.ActivityLifecycleCallbacks")
+        listener = TestGrounding._get_obj("5","android.view.View$OnClickListener")
+        view = TestGrounding._get_obj("6","android.view.View")
+
+        helper1 = TestFlowDroid.ActivityHelper("android.app.Activity", act1, bundle, lifecycle, view, listener)
+        helper_out = TestFlowDroid.ObjOutLcHelper(objoutlc)
+        helper_listener = TestFlowDroid.ViewListenerHelper(listener, view)
+
+        # after on resume
+        to_run = [(helper1, Activity.ONCREATE),
+                  (helper1, Activity.ONACTIVITYCREATED),
+                  (helper1, Activity.ONSTART),
+                  (helper1, Activity.ONACTIVITYSTARTED),
+                  (helper1, Activity.ONRESTOREINSTANCESTATE),
+                  (helper1, Activity.ONPOSTCREATE),
+                  (helper1, Activity.ONRESUME),
+                  (helper1, Activity.ONACTIVITYRESUMED),
+                  (helper1, Activity.ONPOSTRESUME), # CB can run after ONPOSTONRESUME
+                  (helper_listener, TestFlowDroid.ViewListenerHelper.ONCLICK), 
+                  (helper1, TestFlowDroid.ActivityHelper.RANDOMCB),
+                  (helper1, Activity.ONPAUSE)]
+
+        trace = self._get_trace_multi(to_run)
+        enc = TSEncoder(trace, [], False, None, True)
+        # TODO: check if output works
+        enc.fd_builder.print_model(sys.stdout)
 
 
     def _test_sim(self, trace, expected_result):

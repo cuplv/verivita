@@ -16,6 +16,7 @@ class BinRelation:
     """
 
     def __init__(self, trace_map,
+                 trace,
                  src_placeholder,
                  dst_var_name,
                  relation_map_forward,
@@ -31,10 +32,13 @@ class BinRelation:
         src object id.
         """
         self.trace_map = trace_map
+        self.trace = trace
         self.src_placeholder = src_placeholder
         self.dst_var_name = dst_var_name
         self.relation_map_forward = relation_map_forward
         self.relation_map_backward = relation_map_backward
+        self.relation_map_forward_keys = set(relation_map_forward.keys())
+        self.relation_map_backward_keys = set(relation_map_backward.keys())
         self.root_objects = root_objects
 
         self.relation = {}
@@ -49,6 +53,7 @@ class BinRelation:
             # compute the forward relation
             related_objects = self._get_related_objs(obj_val,
                                                      self.relation_map_forward,
+                                                     self.relation_map_forward_keys,
                                                      True)
             if not obj_val in self.relation:
                 ro = set()
@@ -62,19 +67,23 @@ class BinRelation:
             # compute the backward relation
             related_objects = self._get_related_objs(obj_val,
                                                      self.relation_map_backward,
+                                                     self.relation_map_backward_keys,
                                                      False)
             for dst_obj in related_objects:
                 if dst_obj not in self.relation:
                     self.relation[dst_obj] = set()
                 self.relation[dst_obj].add(obj_val)
 
-    def _get_related_objs(self, obj, relation_map, forward=True):
+    def _get_related_objs(self, obj, relation_map, relation_keys, forward=True):
         """
         Get the list of objects that can be used to attach something
         to obj.
         """
-        if (obj.type in relation_map):
-            generic_method_list = relation_map[obj.type]
+        related_objs = set()
+
+        types_of_obj = self.trace._get_class_names(relation_keys, obj)
+        for obj_type in types_of_obj:
+            generic_method_list = relation_map[obj_type]
             for m_template in generic_method_list:
                 if (forward):
                     var_to_search_for = new_id(self.dst_var_name)
@@ -88,12 +97,12 @@ class BinRelation:
                 m_ast = spec_parser.parse_call(m_template)
                 if (m_ast is None):
                     raise Exception("Error parsing %s" % m_template)
-                related_objs = self.trace_map.find_all_vars(m_ast,
-                                                            var_to_search_for,
-                                                            subs)
-                return related_objs
-        else:
-            return []
+                app_objs = self.trace_map.find_all_vars(m_ast,
+                                                        var_to_search_for,
+                                                        subs)
+                related_objs.update(app_objs)
+
+        return related_objs
 
 
     """
@@ -130,14 +139,14 @@ class AttachRelation(BinRelation):
 
 
     """ Computes the attachment relation between objects """
-    def __init__(self, trace_map, root_components):
+    def __init__(self, trace_map, trace, root_components):
         """ List of concrete object values of root components
         used to start the reachability analysis.
 
         They should be Activity objects.
         """
 
-        BinRelation.__init__(self, trace_map,
+        BinRelation.__init__(self, trace_map, trace,
                              "CONTAINER",
                              "L",
                              AttachRelation.attach_methods_fwd,
@@ -151,8 +160,8 @@ class RegistrationRelation(BinRelation):
     register_methods_fwd = {'android.view.View' : ['[CI] [ENTRY] [CONTAINER] void android.view.View.setOnClickListener(L : android.view.View$OnClickListener)']}
     register_methods_bwd = {}
 
-    def __init__(self, trace_map, root_components):
-        BinRelation.__init__(self, trace_map,
+    def __init__(self, trace_map, trace, root_components):
+        BinRelation.__init__(self, trace_map, trace,
                              "CONTAINER",
                              "L",
                              RegistrationRelation.register_methods_fwd,

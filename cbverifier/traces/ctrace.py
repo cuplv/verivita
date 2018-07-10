@@ -411,6 +411,16 @@ class CTrace:
         self.app_info = None
         self.id_to_cb = None
 
+        self.all_values = None
+        # Map from values to their first framework type
+        # It is not recorded in the trace, so we have to
+        # infer it as much as we can from the method calls
+        #
+        # WARNING: the map is not complete, since it is inferred
+        # from the existing method calls in the trace, so we have to
+        # be careful when using it!
+        self.val2fmwk_type = None
+
     def print_trace(self, stream, debug_info=False, filter=None):
         """ Print the trace """
         for child in self.children:
@@ -468,6 +478,90 @@ class CTrace:
             return self.id_to_cb[message_id]
         except KeyError:
             return None
+
+    def get_all_trace_values(self):
+        if (self.all_values is None):
+            self._collect_all_trace_values()
+
+        return self.all_values
+
+    def _get_fmwk_types(self, value):
+        if (self.val2fmwk_type is None):
+            self._collect_all_trace_values()
+
+        if value in self.val2fmwk_type:
+            return self.val2fmwk_type[value]
+        else:
+            return None
+
+    def _collect_all_trace_values(self):
+        """
+        Collect all trace values and try to reconstruct
+        the information about the first framework types
+        """
+        self.all_values = set()
+        self.val2fmwk_type = {}
+
+        # Fill the self.all_values set
+        #
+        msg_stack = [trace_msg for trace_msg in self.children]
+        while (0 < len(msg_stack)):
+            current = msg_stack.pop()
+
+            rec = current.get_receiver()
+            if not rec is None:
+                self.all_values.add(rec)
+                if not rec in self.val2fmwk_type:
+                    fmwk_types_set = set()
+                    self.val2fmwk_type[rec] = fmwk_types_set
+                fmwk_types = self._get_val_fmwk_overrides(current)
+                fmwk_types_set.update(fmwk_types)
+
+            for par in current.get_other_params():
+                if not par is None:
+                    self.all_values.add(par)
+
+            for c in current.children: # visit the rest
+                msg_stack.append(c)
+
+    def _get_val_fmwk_overrides(self, trace_msg):
+        overrides_set = set()
+        if not (isinstance(trace_msg, CCallback)):
+            return overrides_set
+
+        for override in trace_msg.fmwk_overrides:
+            assert override is not None
+            overrides_set.add(override.class_name)
+
+        return overrides_set
+
+    def _is_in_class_names(self, class_names, obj):
+        is_in_class_names = ( ((not obj.type is None) and
+                               (obj.type in class_names)) |
+                              ((not obj.fmwk_type is None) and
+                               (obj.fmwk_type in class_names)))
+        if is_in_class_names:
+            return is_in_class_names
+
+        # use the framework types inferred from the trace
+        obj_fmwk_type = self._get_fmwk_types(obj)
+        if (not obj_fmwk_type is None):
+            return (not class_names.isdisjoint(obj_fmwk_type))
+
+    def _get_class_names(self, class_names, obj):
+        new_set = set()
+        if (not obj.type is None) and (obj.type in class_names):
+            new_set.add(obj.type)
+        if (not obj.fmwk_type is None) and (obj.fmwk_type in class_names):
+            new_set.add(obj.fmwk_type)
+        else:
+            # use the framework types inferred from the trace
+            obj_fmwk_type = self._get_fmwk_types(obj)
+            if (not obj_fmwk_type is None):
+                int_set = obj_fmwk_type.intersection(class_names)
+                new_set.update(int_set)
+        return new_set
+
 
 class CTraceSerializer:
     """

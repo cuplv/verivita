@@ -380,7 +380,7 @@ def main(input_args=None):
     if (opts.debug):
         logging.basicConfig(level=logging.DEBUG)
     else:
-        logging.basicConfig(level=logging.WARNING)
+        logging.basicConfig(level=logging.INFO)
 
     if (opts.print_orig_spec):
         print_orig_spec = True
