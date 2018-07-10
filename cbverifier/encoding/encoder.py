@@ -148,8 +148,11 @@ from cbverifier.encoding.conversion import TraceSpecConverter
 from cbverifier.encoding.flowdroid_model.flowdroid_model_builder import FlowDroidModelBuilder
 from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
 from cbverifier.utils.stats import Stats
+from cbverifier.utils.utils import is_debug
 from cbverifier.helpers import Helper
 
+# Set to true this constant to have the debug output for the
+# automata construction.
 DEBUG_AUTO = False
 
 class TransitionSystem:
@@ -245,15 +248,6 @@ class TSEncoder:
                     self.spec_msgs.add(msg_key)
             for msg_key in self.fd_builder.listener_in_lc:
                 self.spec_msgs.add(msg_key)
-
-
-            # DEBUG
-            print "In component: %d" % len(self.spec_msgs)
-            print "listener in component: %d" % len(self.fd_builder.listener_in_lc)
-
-
-        print self.spec_msgs
-
 
         # 3. Remove all the messages in the trace that do not
         # appear in the specification.
@@ -510,11 +504,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                  EncoderUtils.get_key_from_msg(cb, EncoderUtils.EXIT) in spec_msgs) or
                 len(parent.children) > 0):
                 new_trace.add_msg(parent)
-
-                # print spec_msgs
-                # print EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY) in spec_msgs
-                # print EncoderUtils.get_key_from_msg(cb, EncoderUtils.EXIT) in spec_msgs
-                # print len(parent.children) > 0
 
                 if ( ( not EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY) in spec_msgs) and
                      len(parent.children) > 0):
@@ -801,11 +790,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             ts.state_vars = ts_auto.state_vars
             ts.input_vars = ts_auto.input_vars
         else:
-            # # DEBUG
-            # stringio = StringIO()
-            # pretty_print(regexp, stringio)
-            # logging.info("Creating automata for spec: %s\n" % (stringio.getvalue()))
-
             (auto_pc, final_states, ts_auto) = self._get_regexp_ts(regexp, spec_id)
             self.regexp2ts[regexp] = (auto_pc, final_states, ts_auto)
             ts.product(ts_auto)
@@ -1503,16 +1487,28 @@ class FlowDroidModelEncoder:
     an activity component is active after the onResume and before the onPause
     callbacks.
 
-    We follow the modeling where callbacks cannot happen if the component
-    that register them is not active.
-    We compute an over-approximation of the registration of components
-    from the trace.
+    We relax the contraint that callbacks in the
+    android.app.Application.ActivityLifecycleCallbacks must exist and executed at
+    least one.
+
+    We follow the modeling where registered callbacks cannot happen outside
+    the activity lifecycle.
+
+    We assume that non-registered callbacks can happen at any time.
+    This over-approximate the resulting model.
+    The consequence is:
+      - our model is "more sound" than the flowdroid one: we do not block
+        the execution of callbacks for which we did not find a registration
+      - our model may be "less precise" than the flowdroid one, since it
+        may allow more spurious trace.
+    In practice, we are "fair" in the comparison with respect to
 
     We model the lifecycle for activity and fragment components since we
     are interested in components that run in the UI thread.
 
     As done in flowdroid, we encode the lifecycle component of fragment
-    inside their activity component."""
+    inside their activity component.
+    """
 
     def __init__(self, enc, fd_builder):
         self.enc = enc
@@ -1584,7 +1580,6 @@ class FlowDroidModelEncoder:
                 result = "%s = %s can move" % (pc, str(i))
             else:
                 result = "%s = %s is in deadlock" % (pc, str(i))
-            print result
 
     def _encode_activity_lifecycle(self, activity):
         """
@@ -1600,7 +1595,7 @@ class FlowDroidModelEncoder:
         # encoded in the activity lifecycle
         # (see how many times pc is incremented there)
         pc_size = 19
-        pc = "pc_" + (activity.get_inst_value().get_value())
+        pc = "pc_act_" + (activity.get_inst_value().get_value())
         self.enc.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
         for v in self.enc.cenc.get_counter_var(pc): ts.add_var(v)
 
@@ -1625,7 +1620,8 @@ class FlowDroidModelEncoder:
         # line 795
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYCREATED,
-                                          ts, pc, pc_val, pc_val + 1, True)
+                                          ts, pc, pc_val, pc_val + 1, True,
+                                          True)
 
         # line 840
         before_onStartStmt_label = pc_val
@@ -1644,7 +1640,8 @@ class FlowDroidModelEncoder:
         # line 860
         pc_val = self._enc_component_step(activity,
                                           Activity.ONRESTOREINSTANCESTATE,
-                                          ts, pc, pc_val, pc_val + 1)
+                                          ts, pc, pc_val, pc_val + 1,
+                                          False, True)
 
         before_onPostCreate_label = pc_val
         # line 859 - jump from before before_onActivityStarted_label
@@ -1667,7 +1664,7 @@ class FlowDroidModelEncoder:
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYRESUMED,
                                           ts, pc, pc_val, pc_val + 1,
-                                          True)
+                                          True, True)
         # line 876
         pc_val = self._enc_component_step(activity,
                                           Activity.ONPOSTRESUME,
@@ -1702,7 +1699,7 @@ class FlowDroidModelEncoder:
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYPAUSED,
                                           ts, pc, pc_val, pc_val + 1,
-                                          True)
+                                          True, True)
 
         # line 921
         pc_val = self._enc_component_step(activity,
@@ -1719,13 +1716,13 @@ class FlowDroidModelEncoder:
         pc_val = self._enc_component_step(activity,
                                           Activity.ONACTIVITYSAVEINSTANCESTATE,
                                           ts, pc, pc_val, pc_val + 1,
-                                          True)
+                                          True, True)
         # line 930
         self._enc_component_step(activity,
                                  Activity.ONACTIVITYSAVEINSTANCESTATE,
                                  ts, pc, before_onActivitySaveInstanceState_label,
                                  before_onResume_label,
-                                 True)
+                                 True, True)
 
         # line 934
         before_onStop_label = pc_val
@@ -1739,14 +1736,14 @@ class FlowDroidModelEncoder:
                                           Activity.ONACTIVITYSTOPPED,
                                           ts, pc, before_onActivityStopped_label,
                                           pc_val + 1,
-                                          True)
+                                          True, True)
         # line 943
         self._enc_component_step(activity,
                                  Activity.ONACTIVITYSTOPPED,
                                  ts, pc,
                                  before_onActivityStopped_label,
                                  before_onStop_label,
-                                 True)
+                                 True, True)
         # line 952
         before_onRestart_label = pc_val
         pc_val = self._enc_component_step(activity,
@@ -1767,12 +1764,12 @@ class FlowDroidModelEncoder:
                                  ts, pc,
                                  pc_val,
                                  before_onDestroy_label,
-                                 True)
+                                 True, True)
         # line 960 - go back to the beginning
         self._enc_component_step(activity,
                                  Activity.ONACTIVITYDESTROYED,
                                  ts, pc, pc_val, entry_label,
-                                 True)
+                                 True, True)
 
         lc_info = FlowDroidModelEncoder.ActivityLcInfo(ts, pc, pc_size)
         lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.INIT,
@@ -1784,9 +1781,10 @@ class FlowDroidModelEncoder:
         lc_info.add_label(FlowDroidModelEncoder.ActivityLcInfo.IS_ACTIVE,
                           activity_is_active)
 
-        self._check_for_deadlocks(lc_info.ts.trans,
-                                  lc_info.pc,
-                                  lc_info.pc_size)
+        if is_debug():
+            self._check_for_deadlocks(lc_info.ts.trans,
+                                      lc_info.pc,
+                                      lc_info.pc_size)
         return lc_info
 
     def _encode_fragment_lifecycle(self, fragment):
@@ -1798,7 +1796,7 @@ class FlowDroidModelEncoder:
         ts = TransitionSystem()
 
         pc_size = 13 # init state + 12 (+ 1) of pc counter
-        pc = "pc_" + (fragment.get_inst_value().get_value())
+        pc = "pc_frag_" + (fragment.get_inst_value().get_value())
         self.enc.cenc.add_var(pc, pc_size - 1) # -1 since it starts from 0
         for v in self.enc.cenc.get_counter_var(pc): ts.add_var(v)
         self.enc.mapback.add_pc2component(pc, fragment)
@@ -1937,7 +1935,7 @@ class FlowDroidModelEncoder:
                 if c_id in self.fd_builder.compid2msg_keys:
                     cb_star.update(self.fd_builder.compid2msg_keys[c_id])
 
-                    if (c_id in self.fd_builder.compid2msg_keys):
+                    if (c_id in self.fd_builder.compid2msg_keys): # redundant if, remove
                         c = self.fd_builder.components_map[c_id]
                         if isinstance(c, Fragment) or isinstance(c, Activity):
                             # Remove the instance of lifecycle callbacks
