@@ -16,6 +16,9 @@ secure-software-engineering/FlowDroid,
 commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
 """
 
+import sys
+import logging
+
 from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceException
 from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment, KnownAndroidListener
 from cbverifier.specs.spec_ast import get_node_type, CALL_ENTRY, CALL_EXIT, ID
@@ -23,8 +26,6 @@ from cbverifier.encoding.grounding import bottom_value
 from cbverifier.encoding.encoder_utils import EncoderUtils
 from cbverifier.encoding.model_properties import AttachRelation, RegistrationRelation
 from cbverifier.utils.utils import is_debug
-
-import logging
 
 class FlowDroidModelBuilder:
 
