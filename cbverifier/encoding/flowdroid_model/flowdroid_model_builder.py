@@ -22,6 +22,9 @@ from cbverifier.specs.spec_ast import get_node_type, CALL_ENTRY, CALL_EXIT, ID
 from cbverifier.encoding.grounding import bottom_value
 from cbverifier.encoding.encoder_utils import EncoderUtils
 from cbverifier.encoding.model_properties import AttachRelation, RegistrationRelation
+from cbverifier.utils.utils import is_debug
+
+import logging
 
 class FlowDroidModelBuilder:
 
@@ -119,6 +122,13 @@ class FlowDroidModelBuilder:
         (compid2msg_keys, free_msg) = self._compute_msgs_boundaries()
         self.compid2msg_keys = compid2msg_keys
         self.free_msg = free_msg
+
+        if is_debug():
+            try:
+                self.print_model(sys.stdout)
+            except:
+                sys.stdout.write("Error printing the model...")
+
 
     def get_msgs_keys(self):
         return self.msgs_keys
@@ -434,3 +444,75 @@ class FlowDroidModelBuilder:
                             component_msg_keys.add(listener_msg)
                             if not free_msg is None and listener_msg in free_msg:
                                 free_msg.remove(listener_msg)
+
+
+    def print_model(self, stream):
+        """ Prints a summary of the flowdroid model """
+
+        def _print_comp(comp, stream):
+            comp_type = "Activity" if isinstance(c, Activity) else "Fragment"
+            comp_obj = c.get_inst_value()
+            comp_value = comp_obj.get_value()
+            stream.write("%s: %s\n" % (comp_type, str(comp_value)))
+
+        def _print_sep(stream):
+            for i in range(80): stream.write("-")
+            stream.write("\n")
+
+        stream.write("\n--- Flowdroid model summary ---\n")
+        for c in self.components_set:
+
+            # type, object id
+            _print_sep(stream)
+            _print_comp(c, stream)
+
+            # For all activities
+            if isinstance(c, Activity):
+                # attached fragments
+                stream.write("Attached fragments:")
+                for frag in c.get_child_fragments():
+                    stream.write(" %s" % frag.get_inst_value().get_value())
+                stream.write("\n")
+
+            # list of lifecycle methods
+            lc_msgs = c.get_lifecycle_msgs()
+            stream.write("Lifecycle msg (%d):\n" % len(lc_msgs))
+            for msg_key in lc_msgs:
+                stream.write(" %s\n" % msg_key)
+
+            if isinstance(c, Activity):
+                # list of controlled callbacks
+                # --- TODO: fix code duplication with encoder.py,
+                #           _encode_non_lc_callback
+                #           Not refactored to not introduce regression now
+                stream.write("Messages in component:\n")
+                # collect controlled cb
+                cb_star = set()
+                stack = [c.get_inst_value()]
+                while (len(stack) > 0):
+                    c_id = stack.pop()
+                    if c_id in self.compid2msg_keys:
+                        cb_star.update(self.compid2msg_keys[c_id])
+                        other_c = self.components_map[c_id]
+                        if isinstance(other_c, Fragment) or isinstance(other_c, Activity):
+                            # Remove the instance of lifecycle callbacks
+                            # of the fragment
+                            cb_star.difference(other_c.get_lifecycle_msgs())
+                    # loop on the attached objects
+                    for attached_obj in self.attach_rel.get_related(c_id):
+                        stack.append(attached_obj)
+                for msg_key in cb_star:
+                    stream.write(" %s\n" % msg_key)
+
+                #   list of registered listener
+                stream.write("List of callbacks from listener (%d):\n" % len(self.cb2listeners))
+                for msg_key in self.cb2listeners:
+                    stream.write(" %s\n" % msg_key)
+
+                #   list of registered callbacks
+                #   list of attached objects
+            _print_sep(stream)
+
+
+    def _print_relation(self, relation, stream):
+        """ print a relation """

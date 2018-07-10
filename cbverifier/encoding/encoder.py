@@ -150,6 +150,8 @@ from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fr
 from cbverifier.utils.stats import Stats
 from cbverifier.helpers import Helper
 
+# Set to true this constant to have the debug output for the
+# automata construction.
 DEBUG_AUTO = False
 
 class TransitionSystem:
@@ -1928,7 +1930,7 @@ class FlowDroidModelEncoder:
                 if c_id in self.fd_builder.compid2msg_keys:
                     cb_star.update(self.fd_builder.compid2msg_keys[c_id])
 
-                    if (c_id in self.fd_builder.compid2msg_keys):
+                    if (c_id in self.fd_builder.compid2msg_keys): # redundant if, remove
                         c = self.fd_builder.components_map[c_id]
                         if isinstance(c, Fragment) or isinstance(c, Activity):
                             # Remove the instance of lifecycle callbacks
