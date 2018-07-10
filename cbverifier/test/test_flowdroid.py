@@ -327,21 +327,6 @@ class TestFlowDroid(unittest.TestCase):
                     to_test.append(l) # duplicate
             self._test_lc_enc(to_test, True)
 
-    def test_lc_at_least_one_2(self):
-        # Test block
-        for msg in TestFlowDroid.multiple_msgs:
-            if msg == Activity.ONACTIVITYSTARTED:
-                # skip the optional message, simulation will
-                # succeed there
-                continue
-
-            to_test = []
-            for l in self.full_lifecycle:
-                if l != msg:
-                    to_test.append(l) # remove msg
-            to_test.append(Activity.ONCREATE)
-            self._test_lc_enc(to_test, False)
-
     def test_lc_more_act(self):
         # test serialization of activities
         act1 = TestGrounding._get_obj("1","android.app.Activity")
