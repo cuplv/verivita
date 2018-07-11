@@ -163,8 +163,9 @@ class FlowDroidModelBuilder:
                 is_act = trace._is_in_class_names(Activity.class_names, value)
                 is_frag = trace._is_in_class_names(Fragment.class_names, value)
                 if ( is_act and is_frag):
-                    logging.warning("Object %s is both an activity (%s) and " \
-                                    "a fragment (%s)" % (value.get_value(), act_type, frag_type))
+                    logging.warning("Object %s is both an activity and " \
+                                    "a fragment" % (value.get_value()))
+                    assert False
 
                 if is_act:
                     act_types = trace._get_class_names(Activity.class_names, value)
@@ -246,17 +247,18 @@ class FlowDroidModelBuilder:
 
         # get all the msg keys registered to parent
         for registered_obj in self.register_rel.get_related(parent_obj):
-            registered_msg_keys = self.obj2msg_keys(registered_obj)
+            if registered_obj in self.obj2msg_keys:
+                registered_msg_keys = self.obj2msg_keys[registered_obj]
 
-            for msg_key in registered_msg_keys:
-                lifecycle_comp_msgs_keys.add(msg_key)
+                for msg_key in registered_msg_keys:
+                    lifecycle_comp_msgs_keys.add(msg_key)
 
-            # TODO - check
-            # Transitive closure on the registered relation
-            self._add_registered_msgs(compid2msg_keys,
-                                      visited_registered,
-                                      lifecycle_comp,
-                                      (None, registered_obj))
+                # TODO - check
+                # Transitive closure on the registered relation
+                self._add_registered_msgs(compid2msg_keys,
+                                          visited_registered,
+                                          lifecycle_comp,
+                                          (None, registered_obj))
 
 
     def _add_attached_msgs(self, free_msg, compid2msg_keys,
@@ -301,21 +303,22 @@ class FlowDroidModelBuilder:
                 # The obj should have been visited before
                 assert(lifecycle_obj in compid2msg_keys)
                 lifecycle_comp_msgs_keys = compid2msg_keys[lifecycle_obj]
-                attached_msg_keys = self.obj2msg_keys[attached_obj]
+                if attached_obj in self.obj2msg_keys:
+                    attached_msg_keys = self.obj2msg_keys[attached_obj]
 
-                for msg_key in attached_msg_keys:
-                    lifecycle_comp_msgs_keys.add(msg_key)
+                    for msg_key in attached_msg_keys:
+                        lifecycle_comp_msgs_keys.add(msg_key)
 
-                self._add_registered_msgs(compid2msg_keys,
-                                          visited_registered,
-                                          lifecycle_comp,
-                                          (None, attached_obj))
+                    self._add_registered_msgs(compid2msg_keys,
+                                              visited_registered,
+                                              lifecycle_comp,
+                                              (None, attached_obj))
 
-                self._add_attached_msgs(free_msg, compid2msg_keys,
-                                        visited_attached,
-                                        visited_registered,
-                                        lifecycle_comp,
-                                        (None, attached_obj))
+                    self._add_attached_msgs(free_msg, compid2msg_keys,
+                                            visited_attached,
+                                            visited_registered,
+                                            lifecycle_comp,
+                                            (None, attached_obj))
 
     def _process_msgs_component(self,
                                 free_msg,
@@ -334,7 +337,6 @@ class FlowDroidModelBuilder:
         for m in lifecycle_msg:
             # Add the listener registred in the component
             self._scan_for_listener(component_msg_keys, m, free_msg)
-
             if m in free_msg:
                 free_msg.remove(m)
 
@@ -352,7 +354,8 @@ class FlowDroidModelBuilder:
 
                     # The message is not "free" anymore but it
                     # is bound to the component's lifecycle
-                    free_msg.remove(m)
+                    if m in free_msg:
+                        free_msg.remove(m)
 
     def get_components(self):
         return list(self.components_set)
@@ -448,7 +451,8 @@ class FlowDroidModelBuilder:
                         if "[CB]" in listener_msg:
                             component_msg_keys.add(listener_msg)
                             if not free_msg is None and listener_msg in free_msg:
-                                free_msg.remove(listener_msg)
+                                if listener_msg in free_msg:
+                                    free_msg.remove(listener_msg)
 
 
     def print_model(self, stream):
