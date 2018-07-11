@@ -511,9 +511,13 @@ class CTrace:
             rec = current.get_receiver()
             if not rec is None:
                 self.all_values.add(rec)
+
                 if not rec in self.val2fmwk_type:
                     fmwk_types_set = set()
                     self.val2fmwk_type[rec] = fmwk_types_set
+                else:
+                    fmwk_types_set = self.val2fmwk_type[rec]
+
                 fmwk_types = self._get_val_fmwk_overrides(current)
                 fmwk_types_set.update(fmwk_types)
 
@@ -540,6 +544,7 @@ class CTrace:
                                (obj.type in class_names)) |
                               ((not obj.fmwk_type is None) and
                                (obj.fmwk_type in class_names)))
+
         if is_in_class_names:
             return is_in_class_names
 
