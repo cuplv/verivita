@@ -49,6 +49,7 @@ enable_disable_rules = {
 	"cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask_justinit.spec"
     ],
     "baseline" : [
+        "cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec",
         "cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer_baseline.spec",
         "cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifecycle.spec",
         "cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec",
