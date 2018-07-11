@@ -342,6 +342,9 @@ class TSEncoder:
                 if not self._is_msg_visible(msg_key):
                     continue
 
+                # DEBUG
+                # print "Looking up for %s %s" % (msg_key, str(msg))
+
                 msg_enc = self.mapback.get_trans2pc((entry_type, msg))
                 assert(msg_enc is not None)
 
@@ -929,12 +932,21 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
         def add_msgs_to_stack(stack, msg):
             exit_key = EncoderUtils.get_key_from_msg(msg, EncoderUtils.EXIT)
-            if self._is_msg_visible(exit_key):
-                stack.append((EncoderUtils.EXIT, msg))
+            stack.append((EncoderUtils.EXIT, msg))
 
             entry_key = EncoderUtils.get_key_from_msg(msg, EncoderUtils.ENTRY)
-            if self._is_msg_visible(entry_key):
-                stack.append((EncoderUtils.ENTRY, msg))
+            stack.append((EncoderUtils.ENTRY, msg))
+
+
+        # # DEBUG
+        # for tl_cb in self.trace.children:
+        #     stack = [tl_cb]
+        #     while len(stack) > 0:
+        #         current = stack.pop()
+        #         print "VISITING %s" % str(current)
+        #         for c in current.children:
+        #             stack.append(c)
+
 
         offset = 0
         ts.trans = FALSE_PYSMT() # disjunction of transitions
@@ -950,9 +962,8 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             add_msgs_to_stack(stack, tl_cb)
             while (len(stack) != 0):
                 (entry_type, msg) = stack.pop()
+
                 msg_key = EncoderUtils.get_key_from_msg(msg, entry_type)
-                msg_enabled = EncoderUtils._get_state_var(msg_key)
-                assert self._is_msg_visible(msg_key)
 
                 # Fill the stack in reverse order
                 # Add the child only if pre-visit
@@ -960,6 +971,13 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                     for i in reversed(range(len(msg.children))):
                         msg_i = msg.children[i]
                         add_msgs_to_stack(stack, msg_i)
+
+                if not self._is_msg_visible(msg_key):
+                    # skip messages that are not visible in the
+                    # trace - we still explore their children
+                    continue
+
+                msg_enabled = EncoderUtils._get_state_var(msg_key)
 
                 # encode the transition
                 if (len(stack) == 0):
@@ -1198,6 +1216,16 @@ class TSMapback():
         self.pc2trace[(self.pc_var, value, next_value, msg_key)] = trace_msg
 
     def add_trans2pc(self, msg, current_state, next_state):
+        # DEBUG
+        # assert len(msg) == 2
+        # (entry_type, app) = msg
+        # if not (isinstance(app, CCallin) or isinstance(app, CCallback)):
+        #     print app
+        #     print type(app)
+        # else:
+        #     msg_key = EncoderUtils.get_key_from_msg(app, entry_type)
+        #     print "INSERTING " + str(msg_key) + " " + str(app)
+
         self.msg2trans[msg] = (current_state, next_state)
 
     def set_error_condition(self, error_condition):
@@ -1947,6 +1975,8 @@ class FlowDroidModelEncoder:
             # encodes that these messages are executed only
             # when the activity is active
             for msg_key in cb_star:
+                if "<init>" in msg_key:
+                    continue
                 cb_msg_enc = Or(cb_msg_enc,
                                 self._get_msg_label(msg_key))
         elif (isinstance(c, Fragment)):
