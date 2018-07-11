@@ -7,7 +7,7 @@ import pandas
 
 FILE_SUFFIX = ".tar.bz2.txt"
 #This is a cleaned up version of summarize_results which also prints a plot of how many have been proven by a given time
-PRECISION_LEVELS = ["just_disallow","lifecycle","baseline", "lifestate_va0","lifestate_va1"]
+PRECISION_LEVELS = ["just_disallow","lifecycle","flowdroid","baseline", "lifestate_va0","lifestate_va1"]
 class ResultsFile:
     def __init__(self, fname):
         self.origional_fname = fname
@@ -25,14 +25,14 @@ class ResultsFile:
             self.precision_number = 1
         elif precision == "baseline" + FILE_SUFFIX:
             self.precision_level = "baseline"
-            self.precision_number = 2
+            self.precision_number = 3
         elif precision == "lifestate":
             if filename_split[3] == "va0" + FILE_SUFFIX:
                 self.precision_level = "lifestate_va0"
-                self.precision_number = 3
+                self.precision_number = 4
             elif filename_split[3] == "va1" + FILE_SUFFIX:
                 self.precision_level = "lifestate_va1"
-                self.precision_number = 4 #TODO: you just changed this, get results files dumped into same dir and edit rest of code
+                self.precision_number = 5 #TODO: you just changed this, get results files dumped into same dir and edit rest of code
             else:
                 raise Exception("parse level exception")
         else:
@@ -318,8 +318,8 @@ def genTable(loadedResults, outdir):
         sum_verifiable_traces += verifiable_count
         sum_total_traces += totalTraces
         df.set_value(property, "verifiable", verifiable_count)
-        for level in xrange(len(results_list)):
-            assert(totalTraces == len(results_list[level]))
+        # for level in xrange(len(results_list)):#TODO: put this check back in when we get flowdroid data
+        #     assert(totalTraces == len(results_list[level]))
 
         for level in xrange(len(results_list)): #TODO: make sure this level thing is behaving correctly
             levelname = PRECISION_LEVELS[level]
@@ -339,14 +339,15 @@ def genTable(loadedResults, outdir):
             precision_level_string = levelname
             df.set_value(property, precision_level_string + "-trace", safe_trace_count)
             frac = float(safe_trace_count) / verifiable_count if verifiable_count != 0 else float("NaN")
-            df.set_value(property, precision_level_string + "-perc", round(frac*100,1))
+            df.set_value(property, precision_level_string + "-perc", round(frac*100))
             # df.set_value(property, precision_level_string + "-app", unsafe_app_count)
 
     df.set_value("sum","total",sum_total_traces)
     df.set_value("sum","verifiable",sum_verifiable_traces)
     for levelname in sum_prop:
         df.set_value("sum",levelname + "-trace", sum_prop[levelname])
-        df.set_value("sum", levelname + "-perc", float(sum_prop[levelname] / sum_verifiable_traces) if sum_verifiable_traces != 0 else float("NaN"))
+        percentage = float(sum_prop[levelname]) / sum_verifiable_traces if sum_verifiable_traces != 0 else float("NaN")
+        df.set_value("sum", levelname + "-perc", round(percentage*100))
     print "main paper table"
     print tabulate.tabulate(df, headers="keys", tablefmt="latex_booktabs")
     print "TODO: appendix table"
