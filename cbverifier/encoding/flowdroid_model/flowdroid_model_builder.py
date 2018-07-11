@@ -114,6 +114,10 @@ class FlowDroidModelBuilder:
         self.other_lc_msg = self.get_other_lc_msgs(self.trace,
                                                    self.lifecycle_msg)
 
+        # map from activity to active callbacks
+        self.activity2active_callback = {}
+
+
     def init_relation(self, spec_msgs_keys):
         self.msgs_keys = set(spec_msgs_keys)
         for c, msg_list in self.lifecycle_msg.iteritems():
@@ -128,16 +132,74 @@ class FlowDroidModelBuilder:
                                                                     self.msgs_keys)
 
         # Computes where each message can be executed
-        (compid2msg_keys, free_msg) = self._compute_msgs_boundaries()
-        self.compid2msg_keys = compid2msg_keys
-        self.free_msg = free_msg
-
+        (self.compid2msg_keys, free_msg) = self._compute_msgs_boundaries()
+        (self.activity2active_callback, self.free_msg) = self._tc_components(self.compid2msg_keys,
+                                                                             free_msg)
         if is_debug():
             try:
                 self.print_model(sys.stdout)
             except:
                 sys.stdout.write("Error printing the model...")
 
+
+    def _tc_components(self, compid2msg_keys, free_msg):
+        # We did not compute the transitive closure of compid2msg_keys.
+        # This allow us to change the callback execution policy
+        # (e.g., in the fragment
+        # lifecycle instead of in the activity lifecycle).
+        #
+        # Here we compute the transitive closure of all the messages
+        # that can be called inside the activity lifecycle
+        #
+
+        activity2active_callback = {}
+
+        missing_fragment = set()
+        for c in self.components_set:
+            if (isinstance(c, Fragment)):
+                missing_fragment.add(c)
+
+        for c in self.components_set:
+            if (isinstance(c, Activity)):
+                # computes all the messages that must be executed
+                # the activity lifecycle.
+                # It includes all the cb from the attached
+                # components
+                cb_star = set()
+                stack = [c.get_inst_value()]
+                while (len(stack) > 0):
+                    n_id = stack.pop()
+
+                    is_component = n_id in self.components_map
+                    if is_component:
+                        n = self.components_map[n_id]
+                        if isinstance(n, Fragment):
+                            if n in missing_fragment:
+                                missing_fragment.remove(n)
+
+                    # Add the callbacks of object c_id
+                    if n_id in compid2msg_keys:
+                        for msg in compid2msg_keys[n_id]:
+                            # TODO: FILTER BY...
+                            cb_star.add(msg)
+
+                        # Remove the lifecycle callbacks
+                        if isinstance(n, Fragment) or isinstance(n, Activity):
+                            cb_star.difference(n.get_lifecycle_msgs())
+
+                    # recur on the attached objects
+                    for attached_obj in self.attach_rel.get_related(n_id):
+                        stack.append(attached_obj)
+
+                c_id = c.get_inst_value()
+                assert not c_id in activity2active_callback
+
+                activity2active_callback[c_id] = cb_star
+
+        # process messages from missing fragments
+        # TODO
+
+        return (activity2active_callback, free_msg)
 
     def get_msgs_keys(self):
         return self.msgs_keys
@@ -337,13 +399,20 @@ class FlowDroidModelBuilder:
         for m in lifecycle_msg:
             # Add the listener registred in the component
             self._scan_for_listener(component_msg_keys, m, free_msg)
-            if m in free_msg:
-                free_msg.remove(m)
+            if not "<init>" in m:
+                if m in free_msg:
+                    free_msg.remove(m)
 
         # add all the non-lifecycle messages
         # where component is used as a receiver
         if component_obj in self.obj2msg_keys:
             for m in self.obj2msg_keys[component_obj]:
+                if ("<init>" in m):
+                    # do not remove the constructor from the free messages
+                    # they appear as a cb, but they are not bounded by the
+                    # lifecycle
+                    continue
+
                 if ("[CB]" in m and
                     (not m in lifecycle_msg) and
                     (not m in self.other_lc_msg)):
@@ -442,17 +511,20 @@ class FlowDroidModelBuilder:
         return other_lc_msg
 
     def _scan_for_listener(self, component_msg_keys, msg, free_msg = None):
-        """ Add the listener registred in the component
+        """ Add the messages of then listeners registred in the component
+        
         """
         if msg in self.cb2listeners:
             for listener_obj in self.cb2listeners[msg]:
                 if listener_obj in self.obj2msg_keys:
                     for listener_msg in self.obj2msg_keys[listener_obj]:
                         if "[CB]" in listener_msg:
-                            component_msg_keys.add(listener_msg)
+                            if not "<init>" in listener_msg:
+                                component_msg_keys.add(listener_msg)
                             if not free_msg is None and listener_msg in free_msg:
                                 if listener_msg in free_msg:
-                                    free_msg.remove(listener_msg)
+                                    if not "<init>" in listener_msg:
+                                        free_msg.remove(listener_msg)
 
 
     def print_model(self, stream):
@@ -496,28 +568,25 @@ class FlowDroidModelBuilder:
                 #           Not refactored to not introduce regression now
                 stream.write("Messages in component:\n")
                 # collect controlled cb
-                cb_star = set()
-                stack = [c.get_inst_value()]
-                while (len(stack) > 0):
-                    c_id = stack.pop()
-                    if c_id in self.compid2msg_keys:
-                        cb_star.update(self.compid2msg_keys[c_id])
-                        other_c = self.components_map[c_id]
-                        if isinstance(other_c, Fragment) or isinstance(other_c, Activity):
-                            # Remove the instance of lifecycle callbacks
-                            # of the fragment
-                            cb_star.difference(other_c.get_lifecycle_msgs())
-                    # loop on the attached objects
-                    for attached_obj in self.attach_rel.get_related(c_id):
-                        stack.append(attached_obj)
-                for msg_key in cb_star:
-                    stream.write(" %s\n" % msg_key)
+                c_id = c.get_inst_value()
+                if c_id in self.activity2active_callback:
+                    cb_star = self.activity2active_callback[c_id]
+                    for msg_key in cb_star:
+                        if "<init>" in msg_key:
+                            continue
+                        stream.write(" %s\n" % msg_key)
 
                 #   list of registered listener
-                stream.write("List of callbacks from listener (%d):\n" % len(self.cb2listeners))
-                for msg_key in self.cb2listeners:
-                    stream.write(" %s\n" % msg_key)
+                # stream.write("List of callbacks from listener (%d):\n" % len(self.cb2listeners))
+                # for msg_key in self.cb2listeners:
+                #     stream.write(" %s\n" % msg_key)
 
                 #   list of registered callbacks
                 #   list of attached objects
             _print_sep(stream)
+
+        stream.write("--- Free messages ---\n")
+        for msg_key in self.free_msg:
+            stream.write(" %s\n" % msg_key)
+        _print_sep(stream)
+        stream.flush()

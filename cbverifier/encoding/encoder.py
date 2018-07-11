@@ -1942,35 +1942,9 @@ class FlowDroidModelEncoder:
         """
         cb_msg_enc = FALSE_PYSMT()
 
-        # We did not compute the transitive closure of compid2msg_keys.
-        # This allow us to change the callback execution policy
-        # (e.g., in the fragment
-        # lifecycle instead of in the activity lifecycle).
-        #
-        # Here we compute thee transitive closure of all the messages
-        # that can be called inside the activity lifecycle
-        #
-        if (isinstance(c, Activity)):
-            # computes all the messages that must be executed
-            # the activity lifecycle.
-            # It includes all the cb from the attached
-            # components
-            cb_star = set()
-            stack = [c.get_inst_value()]
-            while (len(stack) > 0):
-                c_id = stack.pop()
-
-                if c_id in self.fd_builder.compid2msg_keys:
-                    cb_star.update(self.fd_builder.compid2msg_keys[c_id])
-
-                    if (c_id in self.fd_builder.compid2msg_keys): # redundant if, remove
-                        c = self.fd_builder.components_map[c_id]
-                        if isinstance(c, Fragment) or isinstance(c, Activity):
-                            # Remove the instance of lifecycle callbacks
-                            # of the fragment
-                            cb_star.difference(c.get_lifecycle_msgs())
-                for attached_obj in self.fd_builder.attach_rel.get_related(c_id):
-                    stack.append(attached_obj)
+        c_id = c.get_inst_value()
+        if c_id in self.fd_builder.activity2active_callback:
+            cb_star = self.fd_builder.activity2active_callback[c_id]
 
             # encodes that these messages are executed only
             # when the activity is active
@@ -1979,13 +1953,6 @@ class FlowDroidModelEncoder:
                     continue
                 cb_msg_enc = Or(cb_msg_enc,
                                 self._get_msg_label(msg_key))
-        elif (isinstance(c, Fragment)):
-            # Do nothing on fragments here
-            # Callbacks are encoded inside the activity
-            pass
-        else:
-            raise Exception("Unknown component")
-
         return cb_msg_enc
 
     def _encode_free_messages(self):
