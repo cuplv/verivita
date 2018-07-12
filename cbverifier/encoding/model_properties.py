@@ -126,7 +126,10 @@ class AttachRelation(BinRelation):
     attach_methods_fwd = {}
     for class_name in Activity.class_names:
         to_proc = ['L = [CI] [EXIT] [CONTAINER] android.view.View ${MYTYPE}.findViewById(# : int)']
-        processed = EncoderUtils.enum_types_list(to_proc, [Subs(["MYTYPE"], [[class_name]])])
+        to_proc.append('[CB] [ENTRY] [CONTAINER] void ${MYTYPE}.onAttachFragment(L : ${FRAGMENT_TYPE})')
+
+        processed = EncoderUtils.enum_types_list(to_proc, [Subs(["MYTYPE"], [[class_name]]),
+                                                           Subs(["FRAGMENT_TYPE"],[[c] for c in Fragment.class_names])])
         attach_methods_fwd[class_name] = processed
 
     attach_methods_bwd = {}
@@ -135,7 +138,6 @@ class AttachRelation(BinRelation):
         processed = EncoderUtils.enum_types_list(to_proc, [Subs(["MYTYPE"], [[class_name]]),
                                                            Subs(["ACTIVITY_TYPE"],[[c] for c in Activity.class_names])])
         attach_methods_bwd[class_name] = processed
-
 
 
     """ Computes the attachment relation between objects """
