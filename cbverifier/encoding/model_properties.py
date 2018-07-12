@@ -62,7 +62,6 @@ class BinRelation:
                 ro = self.relation[obj_val]
             for dst_obj in related_objects:
                 ro.add(dst_obj)
-                stack.append(dst_obj)
 
             # compute the backward relation
             related_objects = self._get_related_objs(obj_val,
@@ -160,6 +159,18 @@ class RegistrationRelation(BinRelation):
     # Not important for flowdroid now
     # We use the name of the onclick listener to register everything as it is doine
     register_methods_fwd = {'android.view.View' : ['[CI] [ENTRY] [CONTAINER] void android.view.View.setOnClickListener(L : android.view.View$OnClickListener)']}
+    register_methods_bwd = {}
+
+    def __init__(self, trace_map, trace, root_components):
+        BinRelation.__init__(self, trace_map, trace,
+                             "CONTAINER",
+                             "L",
+                             RegistrationRelation.register_methods_fwd,
+                             RegistrationRelation.register_methods_bwd,
+                             root_components)
+
+class EmptyRelation(BinRelation):
+    register_methods_fwd = {}
     register_methods_bwd = {}
 
     def __init__(self, trace_map, trace, root_components):
