@@ -19,13 +19,20 @@ commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
 import sys
 import logging
 
-from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceException
-from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment, KnownAndroidListener
+from cbverifier.traces.ctrace import (
+    CTrace, CCallback, CCallin, CValue, CTraceException
+)
+from cbverifier.encoding.flowdroid_model.lifecycle_constants import (
+    Activity, Fragment, KnownAndroidListener
+)
 from cbverifier.specs.spec_ast import get_node_type, CALL_ENTRY, CALL_EXIT, ID
 from cbverifier.encoding.grounding import bottom_value
 from cbverifier.encoding.encoder_utils import EncoderUtils
-from cbverifier.encoding.model_properties import AttachRelation, RegistrationRelation
+from cbverifier.encoding.model_properties import (
+    AttachRelation, RegistrationRelation, EmptyRelation
+)
 from cbverifier.utils.utils import is_debug
+
 
 class FlowDroidModelBuilder:
 
@@ -119,6 +126,19 @@ class FlowDroidModelBuilder:
 
 
     def init_relation(self, spec_msgs_keys):
+        """
+        Initializes the flowdroid model builder.
+
+        The creation of the builder and its initialization are interleaved
+        with the creation of the simplified trace.
+
+        The creation of the simplified trace needs to keep the lifecycle
+        callbacks from the components
+
+        TODO: take as input the new simplified trace, reduce the data
+        structures.
+        """
+
         self.msgs_keys = set(spec_msgs_keys)
         for c, msg_list in self.lifecycle_msg.iteritems():
             for msg in msg_list:
@@ -130,33 +150,30 @@ class FlowDroidModelBuilder:
         # when creating the flowdroidmodelbuilder)
         self.obj2msg_keys = FlowDroidModelBuilder._get_obj2msg_keys(self.trace,
                                                                     self.msgs_keys)
-
         # Computes where each message can be executed
         (self.compid2msg_keys, free_msg) = self._compute_msgs_boundaries()
         (self.activity2active_callback, self.free_msg) = self._tc_components(self.compid2msg_keys,
                                                                              free_msg)
-
-        # Always printing the model - it will help triaging!
-        self.print_model(sys.stdout)
-        # if is_debug():
-        #     try:
-        #         self.print_model(sys.stdout)
-        #     except:
-        #         sys.stdout.write("Error printing the model...")
-
+        # print the model
+        if (logging.getLogger().getEffectiveLevel() >= logging.INFO):
+            self.print_model(sys.stdout)
 
     def _tc_components(self, compid2msg_keys, free_msg):
-        # We did not compute the transitive closure of compid2msg_keys.
+        # We did not compute the full transitive closure
+        # in compid2msg_keys -- in practice, when we have nested fragment
+        # we attach the callbacks to them and not to their root object.
+        #
+        # _tc_components computes this closure for messages
+        #
         # This allow us to change the callback execution policy
         # (e.g., in the fragment
         # lifecycle instead of in the activity lifecycle).
         #
-        # Here we compute the transitive closure of all the messages
-        # that can be called inside the activity lifecycle
+        # Here we compute the transitive closure (with respect to the
+        # attachment relation) of all the messages that can be called
+        # inside the activity lifecycle.
         #
-
         activity2active_callback = {}
-
         missing_fragment = set()
         for c in self.components_set:
             if (isinstance(c, Fragment)):
@@ -180,19 +197,22 @@ class FlowDroidModelBuilder:
                             if n in missing_fragment:
                                 missing_fragment.remove(n)
 
-                    # Add the callbacks of object c_id
-                    if n_id in compid2msg_keys:
-                        for msg in compid2msg_keys[n_id]:
-                            # Only add messages that are from listener
-                            if (msg in self.msg_in_listener):
-                                cb_star.add(msg)
-                            else:
-                                # let the message free to run!
-                                free_msg.add(msg)
+                        free_msg.difference_update(n.get_lifecycle_msgs())
 
-                        # Remove the lifecycle callbacks
-                        if isinstance(n, Fragment) or isinstance(n, Activity):
-                            cb_star.difference(n.get_lifecycle_msgs())
+                        # Add the callbacks of object c_id
+                        if n_id in compid2msg_keys:
+                            for msg in compid2msg_keys[n_id]:
+                                # Only add messages that are from listener
+                                if msg in n.get_lifecycle_msgs():
+                                    if msg in free_msg:
+                                        free_msg.remove(msg)
+                                    continue
+
+                                if (msg in self.msg_in_listener):
+                                    cb_star.add(msg)
+                                else:
+                                    # let the message free to run!
+                                    free_msg.add(msg)
 
                     # recur on the attached objects
                     for attached_obj in self.attach_rel.get_related(n_id):
@@ -468,13 +488,15 @@ class FlowDroidModelBuilder:
                     if (trace._is_in_class_names(KnownAndroidListener.listener_classes, rec)):
                         cb2listeners[cb_entry_msg].add(rec)
 
-                        # The receiver is in the class names defined by flowdroid
-                        msg_key = EncoderUtils.get_key_from_msg(current, EncoderUtils.ENTRY)
-                        msg_in_listener.add(msg_key)
-
                 for par in current.get_other_params():
                     if (trace._is_in_class_names(KnownAndroidListener.listener_classes, par)):
                         cb2listeners[cb_entry_msg].add(par)
+
+                if (isinstance(current, CCallback)):
+                    if (trace._is_in_class_msg(KnownAndroidListener.listener_classes, current)):
+                        # The receiver is in the class names defined by flowdroid
+                        msg_key = EncoderUtils.get_key_from_msg(current, EncoderUtils.ENTRY)
+                        msg_in_listener.add(msg_key)
 
                 for c in current.children:
                     msg_stack.append(c)
@@ -595,14 +617,6 @@ class FlowDroidModelBuilder:
                         if "<init>" in msg_key:
                             continue
                         stream.write(" %s\n" % msg_key)
-
-                #   list of registered listener
-                # stream.write("List of callbacks from listener (%d):\n" % len(self.cb2listeners))
-                # for msg_key in self.cb2listeners:
-                #     stream.write(" %s\n" % msg_key)
-
-                #   list of registered callbacks
-                #   list of attached objects
             _print_sep(stream)
 
         stream.write("--- Free messages ---\n")
