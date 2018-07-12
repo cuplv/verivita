@@ -317,9 +317,6 @@ class TestFlowDroid(unittest.TestCase):
 
         # Test duplication
         for msg in TestFlowDroid.multiple_msgs:
-
-            print "TESTING " + msg
-
             to_test = []
             for l in self.full_lifecycle:
                 to_test.append(l)
@@ -429,6 +426,7 @@ class TestFlowDroid(unittest.TestCase):
 
         self._test_lc_multi(to_run, True)
 
+    @unittest.skip("Disabled: we consider a coarser abstraction")
     def test_activity_cb_in_lc(self):
         act1 = TestGrounding._get_obj("1","android.app.Activity")
         objoutlc = TestGrounding._get_obj("2",TestFlowDroid.ObjOutLcHelper.CLASS_NAME)

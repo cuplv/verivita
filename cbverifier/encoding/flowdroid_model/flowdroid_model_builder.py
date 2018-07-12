@@ -38,7 +38,7 @@ class FlowDroidModelBuilder:
 
         # Get all listeners and all the values
         all_values = self.trace.get_all_trace_values()
-        cb2listeners = FlowDroidModelBuilder._get_all_listeners(self.trace)
+        (self.cb2listeners, self.msg_in_listener) = FlowDroidModelBuilder._get_all_listeners(self.trace)
 
         # Populate the map of all components from the trace
         self.components_set = set([])
@@ -51,10 +51,10 @@ class FlowDroidModelBuilder:
         for c in self.components_set:
             self.components_map[c.get_inst_value()] = c
 
-        self.cb2listeners = cb2listeners
         self.attach_rel = AttachRelation(self.trace_map,
                                          self.trace,
                                          all_values)
+
         self.register_rel = RegistrationRelation(self.trace_map,
                                                  self.trace,
                                                  all_values)
@@ -135,11 +135,14 @@ class FlowDroidModelBuilder:
         (self.compid2msg_keys, free_msg) = self._compute_msgs_boundaries()
         (self.activity2active_callback, self.free_msg) = self._tc_components(self.compid2msg_keys,
                                                                              free_msg)
-        if is_debug():
-            try:
-                self.print_model(sys.stdout)
-            except:
-                sys.stdout.write("Error printing the model...")
+
+        # Always printing the model - it will help triaging!
+        self.print_model(sys.stdout)
+        # if is_debug():
+        #     try:
+        #         self.print_model(sys.stdout)
+        #     except:
+        #         sys.stdout.write("Error printing the model...")
 
 
     def _tc_components(self, compid2msg_keys, free_msg):
@@ -180,8 +183,12 @@ class FlowDroidModelBuilder:
                     # Add the callbacks of object c_id
                     if n_id in compid2msg_keys:
                         for msg in compid2msg_keys[n_id]:
-                            # TODO: FILTER BY...
-                            cb_star.add(msg)
+                            # Only add messages that are from listener
+                            if (msg in self.msg_in_listener):
+                                cb_star.add(msg)
+                            else:
+                                # let the message free to run!
+                                free_msg.add(msg)
 
                         # Remove the lifecycle callbacks
                         if isinstance(n, Fragment) or isinstance(n, Activity):
@@ -197,7 +204,11 @@ class FlowDroidModelBuilder:
                 activity2active_callback[c_id] = cb_star
 
         # process messages from missing fragments
-        # TODO
+        for fragment in missing_fragment:
+            fid = fragment.get_inst_value()
+            if fid in compid2msg_keys:
+                for msg in compid2msg_keys[fid]:
+                    free_msg.add(msg)
 
         return (activity2active_callback, free_msg)
 
@@ -313,6 +324,7 @@ class FlowDroidModelBuilder:
                 registered_msg_keys = self.obj2msg_keys[registered_obj]
 
                 for msg_key in registered_msg_keys:
+                    # TODO: filter?
                     lifecycle_comp_msgs_keys.add(msg_key)
 
                 # TODO - check
@@ -369,6 +381,7 @@ class FlowDroidModelBuilder:
                     attached_msg_keys = self.obj2msg_keys[attached_obj]
 
                     for msg_key in attached_msg_keys:
+                        # TODO: filter
                         lifecycle_comp_msgs_keys.add(msg_key)
 
                     self._add_registered_msgs(compid2msg_keys,
@@ -399,32 +412,33 @@ class FlowDroidModelBuilder:
         for m in lifecycle_msg:
             # Add the listener registred in the component
             self._scan_for_listener(component_msg_keys, m, free_msg)
-            if not "<init>" in m:
-                if m in free_msg:
-                    free_msg.remove(m)
+            # Remove the lifecycle from the free messages
+            if m in free_msg:
+                free_msg.remove(m)
 
-        # add all the non-lifecycle messages
-        # where component is used as a receiver
-        if component_obj in self.obj2msg_keys:
-            for m in self.obj2msg_keys[component_obj]:
-                if ("<init>" in m):
-                    # do not remove the constructor from the free messages
-                    # they appear as a cb, but they are not bounded by the
-                    # lifecycle
-                    continue
+        # Do not process the other messages of the component
+        # We just coonstrain to the active lifecycle the
+        # messages that are from a listener interface
+        # if component_obj in self.obj2msg_keys:
+        #     for m in self.obj2msg_keys[component_obj]:
+        #         if ("<init>" in m):
+        #             # do not remove the constructor from the free messages
+        #             # they appear as a cb, but they are not bounded by the
+        #             # lifecycle
+        #             continue
 
-                if ("[CB]" in m and
-                    (not m in lifecycle_msg) and
-                    (not m in self.other_lc_msg)):
-                    component_msg_keys.add(m)
+        #         if ("[CB]" in m and
+        #             (not m in lifecycle_msg) and
+        #             (not m in self.other_lc_msg)):
+        #             component_msg_keys.add(m)
 
-                    # Add the listener registred in the component
-                    self._scan_for_listener(component_msg_keys, m, free_msg)
+        #             # Add the listener registred in the component
+        #             self._scan_for_listener(component_msg_keys, m, free_msg)
 
-                    # The message is not "free" anymore but it
-                    # is bound to the component's lifecycle
-                    if m in free_msg:
-                        free_msg.remove(m)
+        #             # The message is not "free" anymore but it
+        #             # is bound to the component's lifecycle
+        #             if m in free_msg:
+        #                 free_msg.remove(m)
 
     def get_components(self):
         return list(self.components_set)
@@ -436,6 +450,8 @@ class FlowDroidModelBuilder:
         the callback that calls them
         """
         cb2listeners = {}
+        msg_in_listener = set()
+
 
         # always keep the top-level callback
         for cb_trace in trace.children:
@@ -452,6 +468,10 @@ class FlowDroidModelBuilder:
                     if (trace._is_in_class_names(KnownAndroidListener.listener_classes, rec)):
                         cb2listeners[cb_entry_msg].add(rec)
 
+                        # The receiver is in the class names defined by flowdroid
+                        msg_key = EncoderUtils.get_key_from_msg(current, EncoderUtils.ENTRY)
+                        msg_in_listener.add(msg_key)
+
                 for par in current.get_other_params():
                     if (trace._is_in_class_names(KnownAndroidListener.listener_classes, par)):
                         cb2listeners[cb_entry_msg].add(par)
@@ -459,7 +479,7 @@ class FlowDroidModelBuilder:
                 for c in current.children:
                     msg_stack.append(c)
 
-        return cb2listeners
+        return (cb2listeners, msg_in_listener)
     @staticmethod
     def _get_obj2msg_keys(trace, all_msg_map=None):
         obj2msg = {}
@@ -512,7 +532,7 @@ class FlowDroidModelBuilder:
 
     def _scan_for_listener(self, component_msg_keys, msg, free_msg = None):
         """ Add the messages of then listeners registred in the component
-        
+
         """
         if msg in self.cb2listeners:
             for listener_obj in self.cb2listeners[msg]:
