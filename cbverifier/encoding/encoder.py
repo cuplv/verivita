@@ -342,9 +342,6 @@ class TSEncoder:
                 if not self._is_msg_visible(msg_key):
                     continue
 
-                # DEBUG
-                # print "Looking up for %s %s" % (msg_key, str(msg))
-
                 msg_enc = self.mapback.get_trans2pc((entry_type, msg))
                 assert(msg_enc is not None)
 
@@ -937,17 +934,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
             entry_key = EncoderUtils.get_key_from_msg(msg, EncoderUtils.ENTRY)
             stack.append((EncoderUtils.ENTRY, msg))
 
-
-        # # DEBUG
-        # for tl_cb in self.trace.children:
-        #     stack = [tl_cb]
-        #     while len(stack) > 0:
-        #         current = stack.pop()
-        #         print "VISITING %s" % str(current)
-        #         for c in current.children:
-        #             stack.append(c)
-
-
         offset = 0
         ts.trans = FALSE_PYSMT() # disjunction of transitions
         # encode each cb
@@ -979,8 +965,24 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
 
                 msg_enabled = EncoderUtils._get_state_var(msg_key)
 
+                # Lookup the stack to see if there is a visible
+                # message in front
+                #
+                # If not, we have to reset the counter and go back to
+                # the initial state.
+                #
+                # This is a "hack" we can avoid this if we rewrite the
+                # encoding loop
+                no_visible_msgs = True
+                for stack_element in stack:
+                    (app_type, app_msg) = stack_element
+                    app_key = EncoderUtils.get_key_from_msg(app_msg, app_type)
+                    if self._is_msg_visible(app_key):
+                        no_visible_msgs = False
+                        break
+
                 # encode the transition
-                if (len(stack) == 0):
+                if (no_visible_msgs):
                     # visited all the cb/ci of the top-level cb
                     if offset < current_state:
                         # handle 0 -> 0 transition used for callbacks with no ci
@@ -1026,8 +1028,6 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
                                               error_state_id,
                                               (entry_type,msg),
                                               self.error_label)
-                    # self.mapback.add_trans2pc((entry_type,msg), current_state, error_state_id)
-                    # DEBUG
                     self.mapback.add_trans2pc((entry_type,msg,self.error_label), current_state, error_state_id)
 
                 current_state = next_state
@@ -1216,16 +1216,6 @@ class TSMapback():
         self.pc2trace[(self.pc_var, value, next_value, msg_key)] = trace_msg
 
     def add_trans2pc(self, msg, current_state, next_state):
-        # DEBUG
-        # assert len(msg) == 2
-        # (entry_type, app) = msg
-        # if not (isinstance(app, CCallin) or isinstance(app, CCallback)):
-        #     print app
-        #     print type(app)
-        # else:
-        #     msg_key = EncoderUtils.get_key_from_msg(app, entry_type)
-        #     print "INSERTING " + str(msg_key) + " " + str(app)
-
         self.msg2trans[msg] = (current_state, next_state)
 
     def set_error_condition(self, error_condition):
