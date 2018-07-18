@@ -11,9 +11,42 @@ We follow the description in Section 3 "Precise Modeling of Lifecycle" of:
 and Lifecycle-aware Taint Analysis for Android Apps',
 Artz et al, PLDI 14
 
-We further consulted the source code of flowdroid in the repo
+We follow the source code of flowdroid in the repo
 secure-software-engineering/FlowDroid,
 commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
+
+
+The construction of the FlowDroid model follows the following steps.
+
+1. Identifies the components (Activity and Fragment) existing in the
+   trace.
+
+2. Builds the attachment relation.
+   A pair (a,b) of objects from the trace is in the relation if
+   a attach b (b is attached to a).
+
+   The attachment relation is defined in the module
+   cbverifier.encoding.model_properties.
+
+   The attachment relation is build by FlowDroid looking at the XML
+   file of the app and the call of some methods like findViewById.
+   Since we have the entire trace of the app, we perform this operation
+   on the methods seen in the trace.
+
+3. Collects the set of messages that belong to a listener object.
+   The set of listener objects classes and interfaces is defined
+   in cbverifier.encoding.flowdroid_model.lifecycle_constants
+   module.
+
+4. Builds the flowdroid model as follows:
+   - The model contains all the components (Activity, Fragments)
+   - For each component the model:
+     - contains the list of lifecycle messages of the component
+   - For each activity component the model contains:
+     - The fragments attached to the activity
+       A fragment can be attached to more activities
+     - The set of callbacks that must be executed when the activity
+       is active.
 """
 
 import sys
@@ -43,15 +76,18 @@ class FlowDroidModelBuilder:
         self.trace = trace
         self.trace_map = trace_map
 
+        self.components = None
+        self.components_set = None
+        self.msg_in_listener = None
+
         # Get all listeners and all the values
         all_values = self.trace.get_all_trace_values()
         (self.cb2listeners, self.msg_in_listener) = FlowDroidModelBuilder._get_all_listeners(self.trace)
 
         # Populate the map of all components from the trace
-        self.components_set = set([])
-        FlowDroidModelBuilder._get_all_components(self.trace,
-                                                  self.components_set,
-                                                  self.trace_map)
+        res = FlowDroidModelBuilder._get_all_components(self.trace,
+                                                        self.trace_map)
+        (self.components_set, self.components_map) = res
 
         # map from component address to its representation
         self.components_map = {}
@@ -96,8 +132,8 @@ class FlowDroidModelBuilder:
                             fragment.add_parent_activity(activity)
                     stack.append(attached_obj)
 
-        # set up all messages -- all messages narrowed down from the specs
-        # and all the messages from the lifecycle
+        # Add to the set of all the messages in the specification the
+        # messages from the lifecycle
         self.lifecycle_msg = {}
         for c in self.components_set:
             c_msgs = c.get_lifecycle_msgs()
@@ -236,21 +272,32 @@ class FlowDroidModelBuilder:
         return self.msgs_keys
 
     @staticmethod
-    def _get_all_components(trace, components, trace_map):
+    def _get_all_components(trace, trace_map):
         """ Populate the list of all components from the trace.
+
+        Returns a pair (components, components_map),
+
+        components is the set of all object components (i.e., the
+        Activity and Fragment object declarede in the lifecycle_constants
+        module)
+
+        components_map is a map from the component object value to
+        the component object
         """
+
+        components = set()
+        components_map = {}
+
         trace_stack = []
         for msg in trace.children:
             trace_stack.append(msg)
-
-        component_ids = set()
 
         # Finds all the components in the trace
         while (0 != len(trace_stack)):
             msg = trace_stack.pop()
             # Collect the list of compnents
             for value in msg.params:
-                if value in component_ids:
+                if value in components_map:
                     continue
 
                 is_act = trace._is_in_class_names(Activity.class_names, value)
@@ -261,23 +308,29 @@ class FlowDroidModelBuilder:
                     assert False
 
                 if is_act:
-                    act_types = trace._get_class_names(Activity.class_names, value)
+                    act_types = trace._get_class_names(Activity.class_names,
+                                                       value)
                     assert len(act_types) != 0
                     act_type = next(iter(act_types))
                     component = Activity(act_type, value, trace_map)
                     components.add(component)
-                    component_ids.add(value)
+                    components_map[value] = component
+
 
                 if is_frag:
-                    frag_types = trace._get_class_names(Fragment.class_names, value)
+                    frag_types = trace._get_class_names(Fragment.class_names,
+                                                        value)
                     assert len(frag_types) != 0
                     frag_type = next(iter(frag_types))
                     component = Fragment(frag_type, value, trace_map)
                     components.add(component)
-                    component_ids.add(value)
+                    components_map[value] = component
 
             for child in msg.children:
                 trace_stack.append(child)
+        # end of while loop
+
+        return (components, components_map)
 
     def _compute_msgs_boundaries(self):
         """
@@ -472,12 +525,12 @@ class FlowDroidModelBuilder:
         cb2listeners = {}
         msg_in_listener = set()
 
-
         # always keep the top-level callback
         for cb_trace in trace.children:
-
-            cb_entry_msg = EncoderUtils.get_key_from_msg(cb_trace, EncoderUtils.ENTRY)
-            cb2listeners[cb_entry_msg] = set()
+            cb_entry_msg = EncoderUtils.get_key_from_msg(cb_trace,
+                                                         EncoderUtils.ENTRY)
+            cb_listener_set = set()
+            cb2listeners[cb_entry_msg] = cb_listener_set
 
             msg_stack = [cb_trace]
             while (0 < len(msg_stack)):
@@ -485,16 +538,21 @@ class FlowDroidModelBuilder:
 
                 rec = current.get_receiver()
                 if rec is not None:
-                    if (trace._is_in_class_names(KnownAndroidListener.listener_classes, rec)):
-                        cb2listeners[cb_entry_msg].add(rec)
+                    # The receiver is a listener
+                    if (trace._is_in_class_names(KnownAndroidListener.listener_classes,
+                                                 rec)):
+                        cb_listener_set.add(rec)
 
                 for par in current.get_other_params():
-                    if (trace._is_in_class_names(KnownAndroidListener.listener_classes, par)):
-                        cb2listeners[cb_entry_msg].add(par)
+                    if (trace._is_in_class_names(KnownAndroidListener.listener_classes,
+                                                 par)):
+                        cb_listener_set.add(par)
 
                 if (isinstance(current, CCallback)):
-                    if (trace._is_in_class_msg(KnownAndroidListener.listener_classes, current)):
-                        # The receiver is in the class names defined by flowdroid
+                    if (trace._is_in_class_msg(KnownAndroidListener.listener_classes,
+                                               current)):
+                        # The messages is a method declared in one
+                        # of the listener classes defined by flowdroid
                         msg_key = EncoderUtils.get_key_from_msg(current, EncoderUtils.ENTRY)
                         msg_in_listener.add(msg_key)
 
@@ -502,8 +560,19 @@ class FlowDroidModelBuilder:
                     msg_stack.append(c)
 
         return (cb2listeners, msg_in_listener)
+
     @staticmethod
-    def _get_obj2msg_keys(trace, all_msg_map=None):
+    def _get_obj2msg_keys(trace, all_msg_set=None):
+        """
+        Creates a map from object values to messages that use
+        the value as receiver.
+
+        If all_msg_set is not None, restricts the map to only contain
+        objects in all_msg_set
+
+        The function returns the map.
+        """
+
         obj2msg = {}
 
         trace_stack = [child for child in trace.children]
@@ -518,9 +587,9 @@ class FlowDroidModelBuilder:
                 msg_entry = EncoderUtils.get_key_from_msg(current, EncoderUtils.ENTRY)
                 msg_exit = EncoderUtils.get_key_from_msg(current, EncoderUtils.EXIT)
 
-                if (all_msg_map is None) or (msg_entry in all_msg_map):
+                if (all_msg_set is None) or (msg_entry in all_msg_set):
                     obj2msg[rec].add(msg_entry)
-                if (all_msg_map is None) or (msg_exit in all_msg_map):
+                if (all_msg_set is None) or (msg_exit in all_msg_set):
                     obj2msg[rec].add(msg_exit)
 
             for c in current.children:
@@ -529,6 +598,12 @@ class FlowDroidModelBuilder:
         return obj2msg
 
     def get_other_lc_msgs(self, trace, lifecycle_msg):
+        """
+        Given a set of message in lifecycle_msg, create the correspondent
+        list of entry/exit messages.
+
+        The method returns this list
+        """
         lc_set = set()
         for msg_list in lifecycle_msg.values():
             for elem in msg_list:
