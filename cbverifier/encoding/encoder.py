@@ -223,6 +223,14 @@ class TSEncoder:
         # 2. computes the ground specification
         logging.info("Total number of specs (before grounding): %d" % (len(specs)))
         self.gs = GroundSpecs(self.trace)
+
+        if (self.use_flowdroid_model):
+            # initializes the FlowDroid model
+            self.fd_builder = FlowDroidModelBuilder(self.trace,
+                                                    self.gs.trace_map)
+        else:
+            self.fd_builder = None
+
         self.ground_specs = TSEncoder._compute_ground_spec(self.gs, self.specs,
                                                            self.stats)
         logging.info("Total specs after grounding: %d" % (len(self.ground_specs)))
@@ -234,12 +242,8 @@ class TSEncoder:
                 self.spec_msgs.add(EncoderUtils.get_key_from_call(call))
 
         if (self.use_flowdroid_model):
-            # initializes the informations needed to compute the FlowDroid model
-            self.fd_builder = FlowDroidModelBuilder(self.trace,
-                                                    self.gs.trace_map)
+            # Remove all the enabled specifications and use the flowdroid model
             self.ground_specs = TSEncoder._remove_enable_spec(self.ground_specs)
-        else:
-            self.fd_builder = None
 
         # Add the message to avoid removing them from the trace
         if (self.use_flowdroid_model):
