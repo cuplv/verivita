@@ -103,17 +103,27 @@ class BinRelation:
 
         return related_objs
 
+    def add_relation(self, obj_a, obj_b):
+        """
+        Says that obj_a is related to obj_b
+        """
+        if (not obj_a in self.relation):
+            self.relation[obj_a] = set()
+        self.relation[obj_a].add(obj_b)
 
-    """
-    Returns the list of components attached to obj
-    """
     def get_related(self, obj):
+        """
+        Returns the list of components attached to obj
+        """
         if obj in self.relation:
             return self.relation[obj]
         else:
             return []
 
     def is_related(self, obj_a, obj_b):
+        """
+        Returns true if obj_a is related to obj_b
+        """
         if obj_a in self.relation:
             return obj_b in self.relation[obj_a]
         else:
@@ -156,9 +166,11 @@ class AttachRelation(BinRelation):
 
 
 class RegistrationRelation(BinRelation):
-    # Not important for flowdroid now
-    # We use the name of the onclick listener to register everything as it is doine
-    register_methods_fwd = {'android.view.View' : ['[CI] [ENTRY] [CONTAINER] void android.view.View.setOnClickListener(L : android.view.View$OnClickListener)']}
+    onClickListener = "[CI] [ENTRY] [CONTAINER] void " \
+                      "android.view.View.setOnClickListener" \
+                      "(L : android.view.View$OnClickListener)"
+
+    register_methods_fwd = {'android.view.View' : [onClickListener]}
     register_methods_bwd = {}
 
     def __init__(self, trace_map, trace, root_components):

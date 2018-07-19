@@ -111,7 +111,6 @@ class TestFlowDroid(unittest.TestCase):
     def test_component_construction(self):
         enc = self._get_sample_trace()
         fd_builder = FlowDroidModelBuilder(enc.trace, enc.gs.trace_map)
-        fd_builder.init_relation(set([]))
 
         # check that it finds the activity component
         components_set = fd_builder.get_components()
@@ -151,14 +150,10 @@ class TestFlowDroid(unittest.TestCase):
 
         fd = self._get_fdm(trace)
 
-        # No "free messages"
-        self.assertTrue(len(fd.free_msg) == 0)
-
-        self.assertTrue(act1 in fd.compid2msg_keys)
-        self.assertTrue(0 < fd.compid2msg_keys[act1])
-        self.assertTrue(act2 in fd.compid2msg_keys)
-        self.assertTrue(0 < fd.compid2msg_keys[act2])
-        self.assertTrue(fd.compid2msg_keys[act1].isdisjoint(fd.compid2msg_keys[act2]))
+        self.assertTrue(len(fd.get_comp_callbacks(act1)) == 0)
+        self.assertTrue(len(fd.get_comp_callbacks(act2)) == 0)
+        self.assertTrue(len(fd.attach_rel.get_related(act1)) == 0)
+        self.assertTrue(len(fd.attach_rel.get_related(act2)) == 0)
 
 
     def test_fragment_in_act(self):
@@ -184,28 +179,20 @@ class TestFlowDroid(unittest.TestCase):
 
         fd = self._get_fdm(trace)
 
-        self.assertTrue(act1 in fd.compid2msg_keys)
-        self.assertTrue(0 < fd.compid2msg_keys[act1])
+        self.assertTrue(len(fd.get_comp_callbacks(act1)) == 0)
+        self.assertTrue(len(fd.get_comp_callbacks(act2)) == 0)
+        self.assertTrue(len(fd.get_comp_callbacks(frag1)) == 0)
+        self.assertTrue(len(fd.get_comp_callbacks(frag2)) == 0)
 
-        self.assertTrue(act2 in fd.compid2msg_keys)
-        self.assertTrue(0 < fd.compid2msg_keys[act2])
+        act1_attach = fd.attach_rel.get_related(act1)
+        act2_attach = fd.attach_rel.get_related(act2)
 
-        self.assertTrue(frag1 in fd.compid2msg_keys)
-        self.assertTrue(0 < fd.compid2msg_keys[frag1])
+        self.assertTrue(len(act1_attach) == 1)
+        self.assertTrue(len(act2_attach) == 1)
+        self.assertTrue(act1_attach.isdisjoint(act2_attach))
 
-        self.assertTrue(frag2 in fd.compid2msg_keys)
-        self.assertTrue(0 < fd.compid2msg_keys[frag2])
-
-
-        self.assertTrue(fd.compid2msg_keys[act1].isdisjoint(fd.compid2msg_keys[act2]))
-        self.assertTrue(fd.compid2msg_keys[act1].isdisjoint(fd.compid2msg_keys[frag1]))
-        self.assertTrue(fd.compid2msg_keys[act1].isdisjoint(fd.compid2msg_keys[frag2]))
-
-        self.assertTrue(fd.compid2msg_keys[act2].isdisjoint(fd.compid2msg_keys[frag1]))
-        self.assertTrue(fd.compid2msg_keys[act2].isdisjoint(fd.compid2msg_keys[frag2]))
-
-        self.assertTrue(fd.compid2msg_keys[frag1].isdisjoint(fd.compid2msg_keys[frag2]))
-
+        self.assertTrue(len(fd.attach_rel.get_related(frag1)) == 0)
+        self.assertTrue(len(fd.attach_rel.get_related(frag2)) == 0)
 
 
     def test_act_frag_view(self):
@@ -734,7 +721,6 @@ class TestFlowDroid(unittest.TestCase):
         enc = TSEncoder(trace, [])
         fd_builder = FlowDroidModelBuilder(enc.trace,
                                            enc.gs.trace_map)
-        fd_builder.init_relation(set([]))
 
         return fd_builder
 

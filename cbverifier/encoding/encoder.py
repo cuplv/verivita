@@ -243,11 +243,10 @@ class TSEncoder:
 
         # Add the message to avoid removing them from the trace
         if (self.use_flowdroid_model):
-            for c in self.fd_builder.get_components():
-                for msg_key in c.get_lifecycle_msgs():
-                    self.spec_msgs.add(msg_key)
-            for msg_key in self.fd_builder.listener_in_lc:
-                self.spec_msgs.add(msg_key)
+            cons_msg = self.fd_builder.get_const_msgs()
+
+            # Add all the messages included in the flowdroid model
+            self.spec_msgs.update(cons_msg)
 
         # 3. Remove all the messages in the trace that do not
         # appear in the specification.
@@ -267,9 +266,6 @@ class TSEncoder:
         (trace_length, msgs, fmwk_contr, app_contr) = TSEncoder.get_trace_stats(self.trace, self._is_msg_visible)
         self.trace_length = trace_length
         self.msgs = msgs
-
-        if (use_flowdroid_model):
-            self.fd_builder.init_relation(self.msgs)
 
         # set of messages controlled by the framework
         self.fmwk_contr = fmwk_contr
@@ -355,7 +351,6 @@ class TSEncoder:
                 # strengthen s0 with the label
                 msg_label = self.r2a.get_msg_eq(msg_key)
                 s0 = And(s0, msg_label)
-
 
                 current_step = str(len(trace_encoding) + 1)
                 logging.info("SIMULATION: step %s on %s" % (current_step, msg_key))
@@ -1931,28 +1926,23 @@ class FlowDroidModelEncoder:
         """ Get the list of callbacks bounded by the activity lifecycle
         """
         cb_msg_enc = FALSE_PYSMT()
-
-        c_id = c.get_inst_value()
-        if c_id in self.fd_builder.activity2active_callback:
-            cb_star = self.fd_builder.activity2active_callback[c_id]
-
-            # encodes that these messages are executed only
-            # when the activity is active
-            for msg_key in cb_star:
-                if "<init>" in msg_key:
-                    continue
-                cb_msg_enc = Or(cb_msg_enc,
-                                self._get_msg_label(msg_key))
+        for msg_key in self.fd_builder.get_comp_callbacks(c.get_inst_value()):
+            cb_msg_enc = Or(cb_msg_enc,
+                            self._get_msg_label(msg_key))
         return cb_msg_enc
 
     def _encode_free_messages(self):
         """ Returns the encoding of the free messages """
         # Do nothing for the other callbacks -- they are free
         # to happen whenever
-        cb_msg_enc = FALSE_PYSMT()
-        for msg in self.fd_builder.free_msg:
-            msg_enc = self._get_msg_label(msg)
-            cb_msg_enc = Or(cb_msg_enc, msg_enc)
+        #
+        # We block all the messages that are part of the
+        # lifecycle
+        cb_msg_enc = TRUE_PYSMT()
+        for msg in self.fd_builder.get_const_msgs():
+            msg_enc = Not(self._get_msg_label(msg))
+            cb_msg_enc = And(cb_msg_enc, msg_enc)
+
         return cb_msg_enc
 
     def _encode_components_scheduler(self, lifecycles):

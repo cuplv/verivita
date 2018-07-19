@@ -16,12 +16,18 @@ secure-software-engineering/FlowDroid,
 commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
 
 
+The code in FlowDroid that implements the model is mainly in the files:
+soot-infoflow-android/src/soot/jimple/infoflow/android/SetupApplication.java
+and
+soot-infoflow-android/src/soot/jimple/infoflow/android/callbacks/AbstractCallbackAnalyzer.java
+
+The lifecycle constraints (which are encoded in the encoder) are in the file:
+soot-infoflow/src/soot/jimple/infoflow/entryPointCreators/AndroidEntryPointCreator.java
+
+
 The construction of the FlowDroid model follows the following steps.
 
-1. Identifies the components (Activity and Fragment) existing in the
-   trace.
-
-2. Builds the attachment relation.
+1. Builds the attachment relation.
    A pair (a,b) of objects from the trace is in the relation if
    a attach b (b is attached to a).
 
@@ -30,23 +36,104 @@ The construction of the FlowDroid model follows the following steps.
 
    The attachment relation is build by FlowDroid looking at the XML
    file of the app and the call of some methods like findViewById.
-   Since we have the entire trace of the app, we perform this operation
-   on the methods seen in the trace.
 
-3. Collects the set of messages that belong to a listener object.
-   The set of listener objects classes and interfaces is defined
+   We ignore the XML related attachment relation.
+   In the built model, we will let all the non-attached objects to execute
+   their callbacks freely.
+
+   We capture the "code" attachment instead, since we have the entire
+   trace of the app. We use the methods such as findViewById and
+   onAttachedFragment to reconstruct the attachment relation.
+
+   Creates the self.attach_rel
+
+
+2. Collects the set of messages that belongs to a listener object.
+   The set of listener object classes and interfaces is defined
    in cbverifier.encoding.flowdroid_model.lifecycle_constants
    module.
 
-4. Builds the flowdroid model as follows:
-   - The model contains all the components (Activity, Fragments)
-   - For each component the model:
-     - contains the list of lifecycle messages of the component
-   - For each activity component the model contains:
-     - The fragments attached to the activity
-       A fragment can be attached to more activities
-     - The set of callbacks that must be executed when the activity
-       is active.
+   Creates self.listener2cb
+
+3. Builds the registration relation for listeners.
+
+   A pair (a,b) of objects from the trace is in the relation if
+   a registers b as a listener (b is registered to a).
+
+   FlowDroid over-approximate the registration relation looking at
+   the XML file and the dynamic listener registration done
+   calling the Android APIs.
+
+   For the dynamic registration, the implementation of FlowDroid is mainly in
+   the files:
+   soot-infoflow-android/src/soot/jimple/infoflow/android/SetupApplication.java
+   (line 476 (calculateCallbacks method))
+   and
+   soot-infoflow-android/src/soot/jimple/infoflow/android/callbacks/AbstractCallbackAnalyzer.java
+
+   At line 182 of AbstractCallbackAnalyzer.java (method analyzeMethodForCallbackRegistrations)
+   FlowDroid:
+     - builds the the points-to relation and the call graph and from
+       the lifecycle callbacks of each component
+     - it visits each method called from the lifecycle callback to collect a
+       set of concrete types that can be used as listener inside the
+       component.
+       A concrete type is considered if one of the object implementing
+       it is used (overapprox. with the points-to set) as actual
+       parameter of a formal parameter of listener type (one of the
+       types such as OnClickListener defined by FlowDroid)
+     - Finds and add the callbacks found in the implementation of the types
+       found before (see line 261 and 547)
+       The callbacks are all the methods that are concrete, non system
+       class, not constructor or static (line 614).
+     - The iteration of the model construction is handled in the
+       calculateCallbacks method of SetupApplication
+
+   We are agnostic of the listener registration through the XML
+   (thus, the callbacks of a listener that is registered in the XML
+   can happen at any point in time for us).
+
+   We discover the dynamic registration as follows.
+   If a method involving a listener object l is used in a *callback*
+   of another object o (the receiver is o), then we add (o,l) to the
+   registered relation.
+
+   We discover the callbacks methods of the receiver as in step 2.
+
+   We build the final relation "this activity can call a method from
+   a listener" when computing the transitive closure in step 5.
+
+   Creates self.reg_rel
+
+
+4. Identifies the components (Activity and Fragment) existing in the
+   trace and fills the activity/fragment parent/child relation.
+
+   Creates: self.components, self.components_set
+
+
+5. Builds the list of active callbacks for each activity as follows:
+
+   For each activity visit transitively all the attached and registered
+   objects.
+   For all the objects, get the registered listener callbacks and add them
+   to the set of active callbacks.
+
+   Creates: self.act2active_callback
+
+6. Build the set of constrained messages that are constrained by the lifecycle.
+   The set of constrained message is the set of all messages minus:
+     - the set of lifecycle messages by each activity
+     - the set of lifecycle messages by fragments that are attached to
+       the at least one activity.
+     - the set of callbacks in the active part of each activity
+
+   Creates: self.constrained_msgs
+
+The encoding will use the set of callbacks that must be executed in the
+active state of an activity, the activity/fragment parent child relation and
+the set of all the free messages.
+
 """
 
 import sys
@@ -76,203 +163,65 @@ class FlowDroidModelBuilder:
         self.trace = trace
         self.trace_map = trace_map
 
+        self.attach_rel = None
+        self.listener2cb = None
+        self.reg_rel = None
+
         self.components = None
         self.components_set = None
-        self.msg_in_listener = None
+
+        self.act2active_callback = None
+        self.constrained_msgs = None
 
         # Get all listeners and all the values
         all_values = self.trace.get_all_trace_values()
-        (self.cb2listeners, self.msg_in_listener) = FlowDroidModelBuilder._get_all_listeners(self.trace)
 
-        # Populate the map of all components from the trace
-        res = FlowDroidModelBuilder._get_all_components(self.trace,
-                                                        self.trace_map)
-        (self.components_set, self.components_map) = res
-
-        # map from component address to its representation
-        self.components_map = {}
-        for c in self.components_set:
-            self.components_map[c.get_inst_value()] = c
-
+        # 1. Computes the attachment relation
         self.attach_rel = AttachRelation(self.trace_map,
                                          self.trace,
                                          all_values)
 
-        self.register_rel = RegistrationRelation(self.trace_map,
-                                                 self.trace,
-                                                 all_values)
+        # 2. Collects the set of callbacks for the listener objects
+        self.listener2cb = FlowDroidModelBuilder._get_all_listeners(self.trace)
 
-        # Map from object id to messages where the id is used as a receiver
-        self.obj2msg_keys = FlowDroidModelBuilder._get_obj2msg_keys(self.trace,
-                                                                    None)
+        # 3. Builds the registration relation for listeners
+        self.reg_rel = EmptyRelation(self.trace_map, self.trace, all_values)
+        FlowDroidModelBuilder._build_reg_rel(self.reg_rel,
+                                             self.trace,
+                                             self.listener2cb)
 
-        self.listener_in_lc = set()
-        # Fill the parent activities for fragments
-        for activity in self.components_set:
-            if (not isinstance(activity, Activity)):
-                continue
-            visited = set()
-            stack = [activity.get_inst_value()]
-            while (len(stack) > 0):
-                c_id = stack.pop()
-                if (c_id in visited):
-                    continue
-                visited.add(c_id)
+        # 4. Populate the map of all components from the trace
+        res = FlowDroidModelBuilder._get_all_components(self.trace,
+                                                        self.trace_map,
+                                                        self.attach_rel)
+        (self.components_set, self.components_map) = res
 
-                if c_id in self.components_map:
-                    component = self.components_map[c_id]
-                    for m in component.get_lifecycle_msgs():
-                        self._scan_for_listener(self.listener_in_lc, m)
+        # 5. Builds the list of active callbacks for each activity
+        self.act2active_callback = self._compute_active_cb()
 
-                for attached_obj in self.attach_rel.get_related(c_id):
-                    if attached_obj in self.components_map:
-                        fragment = self.components_map[attached_obj]
-                        if isinstance(fragment, Fragment):
-                            activity.add_child_fragment(fragment)
-                            fragment.add_parent_activity(activity)
-                    stack.append(attached_obj)
+        # Compute the set of messages constrained by
+        # the flowdroid model.
+        # All the other messages will be free to move
+        self.constrained_msgs = self._compute_const_msg()
 
-        # Add to the set of all the messages in the specification the
-        # messages from the lifecycle
-        self.lifecycle_msg = {}
-        for c in self.components_set:
-            c_msgs = c.get_lifecycle_msgs()
-            self.lifecycle_msg[c] = set()
-            for msg_key in c_msgs:
-                self.lifecycle_msg[c].add(msg_key)
-
-        # get the m opposite
-        #
-        # HACK -- the correspondent exit (to an entry) or entry (to an exit)
-        # of a lifecylce message should not be in the messages controlled by
-        # the component.
-        #
-        # The "hack" that we take here is to "put them back" in the
-        # free messages over-approximating the lifecycle behavior
-        #
-        # We should not lose too much precision here (the lifecycle messages
-        # are already there, so the order of their entry and exit are bounded
-        # in the trace.
-        #
-        self.other_lc_msg = self.get_other_lc_msgs(self.trace,
-                                                   self.lifecycle_msg)
-
-        # map from activity to active callbacks
-        self.activity2active_callback = {}
-
-
-    def init_relation(self, spec_msgs_keys):
-        """
-        Initializes the flowdroid model builder.
-
-        The creation of the builder and its initialization are interleaved
-        with the creation of the simplified trace.
-
-        The creation of the simplified trace needs to keep the lifecycle
-        callbacks from the components
-
-        TODO: take as input the new simplified trace, reduce the data
-        structures.
-        """
-
-        self.msgs_keys = set(spec_msgs_keys)
-        for c, msg_list in self.lifecycle_msg.iteritems():
-            for msg in msg_list:
-                self.msgs_keys.add(msg)
-
-        # Map from object id to messages where the id is used as a receiver
-        # Recompute only on the set of "important" messages
-        # Messages from spec grounding + lifecycle messages (not available
-        # when creating the flowdroidmodelbuilder)
-        self.obj2msg_keys = FlowDroidModelBuilder._get_obj2msg_keys(self.trace,
-                                                                    self.msgs_keys)
-        # Computes where each message can be executed
-        (self.compid2msg_keys, free_msg) = self._compute_msgs_boundaries()
-        (self.activity2active_callback, self.free_msg) = self._tc_components(self.compid2msg_keys,
-                                                                             free_msg)
         # print the model
         if (logging.getLogger().getEffectiveLevel() >= logging.INFO):
             self.print_model(sys.stdout)
 
-    def _tc_components(self, compid2msg_keys, free_msg):
-        # We did not compute the full transitive closure
-        # in compid2msg_keys -- in practice, when we have nested fragment
-        # we attach the callbacks to them and not to their root object.
-        #
-        # _tc_components computes this closure for messages
-        #
-        # This allow us to change the callback execution policy
-        # (e.g., in the fragment
-        # lifecycle instead of in the activity lifecycle).
-        #
-        # Here we compute the transitive closure (with respect to the
-        # attachment relation) of all the messages that can be called
-        # inside the activity lifecycle.
-        #
-        activity2active_callback = {}
-        missing_fragment = set()
-        for c in self.components_set:
-            if (isinstance(c, Fragment)):
-                missing_fragment.add(c)
+    def get_components(self):
+        return list(self.components_set)
 
-        for c in self.components_set:
-            if (isinstance(c, Activity)):
-                # computes all the messages that must be executed
-                # the activity lifecycle.
-                # It includes all the cb from the attached
-                # components
-                cb_star = set()
-                stack = [c.get_inst_value()]
-                while (len(stack) > 0):
-                    n_id = stack.pop()
+    def get_const_msgs(self):
+        return self.constrained_msgs
 
-                    is_component = n_id in self.components_map
-                    if is_component:
-                        n = self.components_map[n_id]
-                        if isinstance(n, Fragment):
-                            if n in missing_fragment:
-                                missing_fragment.remove(n)
-
-                        free_msg.difference_update(n.get_lifecycle_msgs())
-
-                        # Add the callbacks of object c_id
-                        if n_id in compid2msg_keys:
-                            for msg in compid2msg_keys[n_id]:
-                                # Only add messages that are from listener
-                                if msg in n.get_lifecycle_msgs():
-                                    if msg in free_msg:
-                                        free_msg.remove(msg)
-                                    continue
-
-                                if (msg in self.msg_in_listener):
-                                    cb_star.add(msg)
-                                else:
-                                    # let the message free to run!
-                                    free_msg.add(msg)
-
-                    # recur on the attached objects
-                    for attached_obj in self.attach_rel.get_related(n_id):
-                        stack.append(attached_obj)
-
-                c_id = c.get_inst_value()
-                assert not c_id in activity2active_callback
-
-                activity2active_callback[c_id] = cb_star
-
-        # process messages from missing fragments
-        for fragment in missing_fragment:
-            fid = fragment.get_inst_value()
-            if fid in compid2msg_keys:
-                for msg in compid2msg_keys[fid]:
-                    free_msg.add(msg)
-
-        return (activity2active_callback, free_msg)
-
-    def get_msgs_keys(self):
-        return self.msgs_keys
+    def get_comp_callbacks(self, component_object):
+        if (component_object in self.act2active_callback):
+            return self.act2active_callback[component_object]
+        else:
+            return set()
 
     @staticmethod
-    def _get_all_components(trace, trace_map):
+    def _get_all_components(trace, trace_map, attach_rel):
         """ Populate the list of all components from the trace.
 
         Returns a pair (components, components_map),
@@ -330,319 +279,179 @@ class FlowDroidModelBuilder:
                 trace_stack.append(child)
         # end of while loop
 
+        FlowDroidModelBuilder._link_act_to_frag(components,
+                                                components_map,
+                                                attach_rel)
+
         return (components, components_map)
 
-    def _compute_msgs_boundaries(self):
+    @staticmethod
+    def _link_act_to_frag(components_set,
+                          components_map,
+                          attach_rel):
+        """ Fill the parent activities for fragments
         """
-        Determines where each message can be executed in the
-        activity/fragment lifecycle
-        """
-        # Messages that can be executed everywhere in the lifecycle
-        free_msg = set(self.msgs_keys)
-
-        # Map from object id of a component to a set of messages that
-        # can only be called inside that component lifecycle
-        compid2msg_keys = {}
-
-        visited_registered = set()
-        visited_attached = set()
-
-        # Loop on all the activities
-        for c in self.components_set:
-            if not isinstance(c, Activity):
+        for activity in components_set:
+            if (not isinstance(activity, Activity)):
                 continue
-            activity = c
-            activity_obj = activity.get_inst_value()
 
-            self._process_msgs_component(free_msg,
-                                         compid2msg_keys,
-                                         activity)
+            visited = set()
+            stack = [activity.get_inst_value()]
+            while (len(stack) > 0):
+                c_id = stack.pop()
+                if (c_id in visited):
+                    continue
+                visited.add(c_id)
 
-            # Process all the registered callbacks to the activity
-            self._add_registered_msgs(compid2msg_keys,
-                                      visited_registered,
-                                      activity,
-                                      (activity, activity_obj))
-
-            # Process all the attached components
-            self._add_attached_msgs(free_msg, compid2msg_keys,
-                                    visited_attached,
-                                    visited_registered,
-                                    activity,
-                                    (activity, activity_obj))
-
-        return (compid2msg_keys, free_msg)
-
-
-    def _add_registered_msgs(self,
-                             compid2msg_keys,
-                             visited_registered,
-                             lifecycle_comp, parent_pair):
-        (parent_comp, parent_obj) = parent_pair
-        assert lifecycle_comp is not None
-        assert parent_obj is not None
-        lifecycle_obj = lifecycle_comp.get_inst_value()
-
-        key = (lifecycle_obj, parent_obj)
-        if key in visited_registered:
-            return
-        visited_registered.add(key)
-
-        assert(lifecycle_obj in compid2msg_keys)
-        lifecycle_comp_msgs_keys = compid2msg_keys[lifecycle_obj]
-
-        # get all the msg keys registered to parent
-        for registered_obj in self.register_rel.get_related(parent_obj):
-            if registered_obj in self.obj2msg_keys:
-                registered_msg_keys = self.obj2msg_keys[registered_obj]
-
-                for msg_key in registered_msg_keys:
-                    # TODO: filter?
-                    lifecycle_comp_msgs_keys.add(msg_key)
-
-                # TODO - check
-                # Transitive closure on the registered relation
-                self._add_registered_msgs(compid2msg_keys,
-                                          visited_registered,
-                                          lifecycle_comp,
-                                          (None, registered_obj))
-
-
-    def _add_attached_msgs(self, free_msg, compid2msg_keys,
-                           visited_attached,
-                           visited_registered,
-                           lifecycle_comp, parent_pair):
-        (parent_comp, parent_obj) = parent_pair
-        assert lifecycle_comp is not None
-        assert parent_obj is not None
-        lifecycle_obj = lifecycle_comp.get_inst_value()
-
-        key = (lifecycle_obj, parent_obj)
-        if key in visited_attached:
-            return
-        visited_attached.add(key)
-
-        for attached_obj in self.attach_rel.get_related(parent_obj):
-            is_fragment = False
-            fragment = None
-
-            if attached_obj in self.components_map:
-                fragment = self.components_map[attached_obj]
-                is_fragment = isinstance(fragment, Fragment)
-
-            if is_fragment:
-                self._process_msgs_component(free_msg,
-                                             compid2msg_keys,
-                                             fragment)
-
-                # Process all the registered callbacks to the activity
-                self._add_registered_msgs(compid2msg_keys,
-                                          visited_registered, fragment,
-                                          (fragment, fragment.get_inst_value()))
-
-                # Process all the attached components
-                self._add_attached_msgs(free_msg, compid2msg_keys,
-                                        visited_attached,
-                                        visited_registered,
-                                        fragment,
-                                        (fragment, fragment.get_inst_value()))
-            else:
-                # The obj should have been visited before
-                assert(lifecycle_obj in compid2msg_keys)
-                lifecycle_comp_msgs_keys = compid2msg_keys[lifecycle_obj]
-                if attached_obj in self.obj2msg_keys:
-                    attached_msg_keys = self.obj2msg_keys[attached_obj]
-
-                    for msg_key in attached_msg_keys:
-                        # TODO: filter
-                        lifecycle_comp_msgs_keys.add(msg_key)
-
-                    self._add_registered_msgs(compid2msg_keys,
-                                              visited_registered,
-                                              lifecycle_comp,
-                                              (None, attached_obj))
-
-                    self._add_attached_msgs(free_msg, compid2msg_keys,
-                                            visited_attached,
-                                            visited_registered,
-                                            lifecycle_comp,
-                                            (None, attached_obj))
-
-    def _process_msgs_component(self,
-                                free_msg,
-                                compid2msg_keys,
-                                component):
-        component_obj = component.get_inst_value()
-
-        if (component_obj in compid2msg_keys):
-            component_msg_keys = compid2msg_keys[component_obj]
-        else:
-            component_msg_keys = set()
-            compid2msg_keys[component_obj] = component_msg_keys
-
-        lifecycle_msg = component.get_lifecycle_msgs()
-        # Removes the lifecycle messages
-        for m in lifecycle_msg:
-            # Add the listener registred in the component
-            self._scan_for_listener(component_msg_keys, m, free_msg)
-            # Remove the lifecycle from the free messages
-            if m in free_msg:
-                free_msg.remove(m)
-
-        # Do not process the other messages of the component
-        # We just coonstrain to the active lifecycle the
-        # messages that are from a listener interface
-        # if component_obj in self.obj2msg_keys:
-        #     for m in self.obj2msg_keys[component_obj]:
-        #         if ("<init>" in m):
-        #             # do not remove the constructor from the free messages
-        #             # they appear as a cb, but they are not bounded by the
-        #             # lifecycle
-        #             continue
-
-        #         if ("[CB]" in m and
-        #             (not m in lifecycle_msg) and
-        #             (not m in self.other_lc_msg)):
-        #             component_msg_keys.add(m)
-
-        #             # Add the listener registred in the component
-        #             self._scan_for_listener(component_msg_keys, m, free_msg)
-
-        #             # The message is not "free" anymore but it
-        #             # is bound to the component's lifecycle
-        #             if m in free_msg:
-        #                 free_msg.remove(m)
-
-    def get_components(self):
-        return list(self.components_set)
+                for attached_obj in attach_rel.get_related(c_id):
+                    if attached_obj in components_map:
+                        fragment = components_map[attached_obj]
+                        if isinstance(fragment, Fragment):
+                            activity.add_child_fragment(fragment)
+                            fragment.add_parent_activity(activity)
+                    stack.append(attached_obj)
 
     @staticmethod
     def _get_all_listeners(trace):
         """
-        Get all the listener objects and associate them with
-        the callback that calls them
+        Scan the trace and get all the callback entry messages
+        that are defined in a listener class.
+
+        These messages are the possible listener objects we seen in the
+        trace.
+
+        Return a map from listener object to its set of callbacks.
         """
-        cb2listeners = {}
-        msg_in_listener = set()
+        listener2cb = {}
 
-        # always keep the top-level callback
-        for cb_trace in trace.children:
-            cb_entry_msg = EncoderUtils.get_key_from_msg(cb_trace,
-                                                         EncoderUtils.ENTRY)
-            cb_listener_set = set()
-            cb2listeners[cb_entry_msg] = cb_listener_set
-
-            msg_stack = [cb_trace]
-            while (0 < len(msg_stack)):
-                current = msg_stack.pop()
-
-                rec = current.get_receiver()
-                if rec is not None:
-                    # The receiver is a listener
-                    if (trace._is_in_class_names(KnownAndroidListener.listener_classes,
-                                                 rec)):
-                        cb_listener_set.add(rec)
-
-                for par in current.get_other_params():
-                    if (trace._is_in_class_names(KnownAndroidListener.listener_classes,
-                                                 par)):
-                        cb_listener_set.add(par)
-
-                if (isinstance(current, CCallback)):
-                    if (trace._is_in_class_msg(KnownAndroidListener.listener_classes,
-                                               current)):
-                        # The messages is a method declared in one
-                        # of the listener classes defined by flowdroid
-                        msg_key = EncoderUtils.get_key_from_msg(current, EncoderUtils.ENTRY)
-                        msg_in_listener.add(msg_key)
-
-                for c in current.children:
-                    msg_stack.append(c)
-
-        return (cb2listeners, msg_in_listener)
-
-    @staticmethod
-    def _get_obj2msg_keys(trace, all_msg_set=None):
-        """
-        Creates a map from object values to messages that use
-        the value as receiver.
-
-        If all_msg_set is not None, restricts the map to only contain
-        objects in all_msg_set
-
-        The function returns the map.
-        """
-
-        obj2msg = {}
-
-        trace_stack = [child for child in trace.children]
-        while (0 < len(trace_stack)):
-            current = trace_stack.pop()
+        msg_stack = [cb_trace for cb_trace in trace.children]
+        while (0 < len(msg_stack)):
+            current = msg_stack.pop()
 
             rec = current.get_receiver()
-            if rec is not None:
-                if not rec in obj2msg:
-                    obj2msg[rec] = set()
+            if ((not rec is None) and
+                isinstance(current, CCallback) and
+                trace._is_in_class_msg(KnownAndroidListener.listener_classes,
+                                       current)):
 
-                msg_entry = EncoderUtils.get_key_from_msg(current, EncoderUtils.ENTRY)
-                msg_exit = EncoderUtils.get_key_from_msg(current, EncoderUtils.EXIT)
-
-                if (all_msg_set is None) or (msg_entry in all_msg_set):
-                    obj2msg[rec].add(msg_entry)
-                if (all_msg_set is None) or (msg_exit in all_msg_set):
-                    obj2msg[rec].add(msg_exit)
+                # The messages is a method declared in one
+                # of the listener classes defined by flowdroid
+                msg_key = EncoderUtils.get_key_from_msg(current,
+                                                        EncoderUtils.ENTRY)
+                if (not rec in listener2cb):
+                    listener2cb[rec] = set()
+                listener2cb[rec].add(msg_key)
 
             for c in current.children:
-                trace_stack.append(c)
+                msg_stack.append(c)
 
-        return obj2msg
+        return listener2cb
 
-    def get_other_lc_msgs(self, trace, lifecycle_msg):
+    @staticmethod
+    def _build_reg_rel(reg_rel, trace, listener2cb):
         """
-        Given a set of message in lifecycle_msg, create the correspondent
-        list of entry/exit messages.
+        A pair (a,b) of objects from the trace is in the relation if
+        a registers b as a listener (b is registered to a).
 
-        The method returns this list
+        If a method involving a listener object l is used in a *callback*
+        of another object o (the receiver is o), then we add (o,l) to the
+        registered relation.
         """
-        lc_set = set()
-        for msg_list in lifecycle_msg.values():
-            for elem in msg_list:
-                lc_set.add(elem)
 
-        other_lc_msg = set()
-        trace_stack = [child for child in trace.children]
-        while (0 < len(trace_stack)):
-            current = trace_stack.pop()
+        def _add_relations(reg_rel, cb_receivers, listener):
+            for rec in cb_receivers:
+                reg_rel.add_relation(rec, listener)
 
-            msg_entry = EncoderUtils.get_key_from_msg(current, EncoderUtils.ENTRY)
-            msg_exit = EncoderUtils.get_key_from_msg(current, EncoderUtils.EXIT)
+        def _br_rec(trace_msg, cb_receivers, reg_rel):
+            if (isinstance(trace_msg, CCallback) and
+                not trace_msg.get_receiver() is None):
+                cb_receivers = list(cb_receivers)
+                cb_receivers.append(trace_msg.get_receiver())
 
-            if ((msg_entry in lc_set) and
-                (not msg_exit in lc_set)):
-                other_lc_msg.add(msg_exit)
-            if ((msg_exit in lc_set) and
-                (not msg_entry in lc_set)):
-                other_lc_msg.add(msg_entry)
-            for c in current.children:
-                trace_stack.append(c)
-        return other_lc_msg
+            for child in trace_msg.children:
+                # Add the object to the relation, if that's the case
+                for par in child.get_other_params():
+                    if (par in listener2cb):
+                        _add_relations(reg_rel, cb_receivers, par)
 
-    def _scan_for_listener(self, component_msg_keys, msg, free_msg = None):
-        """ Add the messages of then listeners registred in the component
+                # Process children -- not tail recursive, not efficient
+                _br_rec(child, cb_receivers, reg_rel)
 
+        for trace_msg in trace.children:
+            _br_rec(trace_msg, [], reg_rel)
+
+
+    def _compute_active_cb(self):
         """
-        if msg in self.cb2listeners:
-            for listener_obj in self.cb2listeners[msg]:
-                if listener_obj in self.obj2msg_keys:
-                    for listener_msg in self.obj2msg_keys[listener_obj]:
-                        if "[CB]" in listener_msg:
-                            if not "<init>" in listener_msg:
-                                component_msg_keys.add(listener_msg)
-                            if not free_msg is None and listener_msg in free_msg:
-                                if listener_msg in free_msg:
-                                    if not "<init>" in listener_msg:
-                                        free_msg.remove(listener_msg)
+        For each activity visits transitively all the attached and registered
+        objects.
 
+        For all the objects, get the registered listener callbacks and add them
+        to the set of active callbacks.
+        """
+        act2active_callback = {}
+
+        for act in self.get_components():
+            if not isinstance(act, Activity):
+                continue
+
+            act_object = act.get_inst_value()
+
+            assert act_object not in act2active_callback
+            active_callback = set()
+            act2active_callback[act_object] = active_callback
+
+            stack = [act_object]
+            visited = set()
+            while (len(stack) > 0):
+                current_obj = stack.pop()
+                if (current_obj in visited):
+                    continue
+                else:
+                    visited.add(current_obj)
+
+                # Add the callbacks of the listener
+                if (current_obj in self.listener2cb):
+                    active_callback.update(self.listener2cb[current_obj])
+
+                # Reachability on the attachment relation
+                for attached_obj in self.attach_rel.get_related(current_obj):
+                    stack.append(attached_obj)
+
+                # Reachability on the registration relation
+                for reg_obj in self.reg_rel.get_related(current_obj):
+                    stack.append(reg_obj)
+
+        return act2active_callback
+
+    def _compute_const_msg(self):
+        """
+        Compute the set of constrained messages:
+
+        The set of constrained message is the set of all messages minus:
+        - the set of lifecycle messages by each activity
+        - the set of lifecycle messages by fragments that are attached to
+        the at least one activity.
+        - the set of callbacks in the active part of each activity
+        """
+
+        const_msg = set()
+
+        for c in self.get_components():
+            # add the activity lifecycle messages
+            if isinstance(c, Activity):
+                const_msg.update(c.get_lifecycle_msgs())
+            # add the fragment lifecycle messages,
+            # if the fragment is attached to some activity
+            if (isinstance(c, Fragment) and
+                0 < len(c.get_parent_activities())):
+                const_msg.update(c.get_lifecycle_msgs())
+
+        # Add the set of callbacks in the active part of each activity
+        for (act, msg_list) in self.act2active_callback.iteritems():
+            const_msg.update(msg_list)
+
+        return const_msg
 
     def print_model(self, stream):
         """ Prints a summary of the flowdroid model """
@@ -686,16 +495,16 @@ class FlowDroidModelBuilder:
                 stream.write("Messages in component:\n")
                 # collect controlled cb
                 c_id = c.get_inst_value()
-                if c_id in self.activity2active_callback:
-                    cb_star = self.activity2active_callback[c_id]
+                if c_id in self.act2active_callback:
+                    cb_star = self.act2active_callback[c_id]
                     for msg_key in cb_star:
                         if "<init>" in msg_key:
                             continue
                         stream.write(" %s\n" % msg_key)
             _print_sep(stream)
 
-        stream.write("--- Free messages ---\n")
-        for msg_key in self.free_msg:
+        stream.write("--- Constrained messages ---\n")
+        for msg_key in self.constrained_msgs:
             stream.write(" %s\n" % msg_key)
         _print_sep(stream)
         stream.flush()
