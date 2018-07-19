@@ -27,49 +27,51 @@ def _substitute(template, substitution):
 
 
 class Component:
-    def __init__(self, class_name, inst_value, trace_map, my_var_name, my_type_const):
-        self.class_name = class_name
+    def __init__(self, class_names, inst_value, trace_map, my_var_name,
+                 my_type_const):
+        self.class_names = class_names
         self.inst_value = inst_value
         self.trace_map = trace_map
         self.my_var_name = my_var_name
         self.my_type_const = my_type_const
         self.methods_msgs = {}
 
-        for (key, cb_names) in self.get_class_cb():
-            for cb_name in cb_names:
-                # parse the message
-                cb_name_subs = _substitute(cb_name,
-                                           {self.get_mytype_const() : class_name})
-                call_ast = spec_parser.parse_call(cb_name_subs)
+        for class_name in self.class_names:
+            for (key, cb_names) in self.get_class_cb():
+                for cb_name in cb_names:
+                    # parse the message
+                    cb_name_subs = _substitute(cb_name,
+                                               {self.get_mytype_const() : class_name})
+                    call_ast = spec_parser.parse_call(cb_name_subs)
 
-                if call_ast is None:
-                    error_msg = "Error parsing the back message %s.\n\n" \
-                                "The original template message was %s\n" \
-                                "\tSubstitution: " \
-                                "%s = %s\n\n" % (cb_name_subs, cb_name,
-                                                 self.get_mytype_const(),
-                                                 class_name)
-                    raise Exception(error_msg)
+                    if call_ast is None:
+                        error_msg = "Error parsing the back message %s.\n\n" \
+                                    "The original template message was %s\n" \
+                                    "\tSubstitution: " \
+                                    "%s = %s\n\n" % (cb_name_subs, cb_name,
+                                                     self.get_mytype_const(),
+                                                     class_name)
+                        raise Exception(error_msg)
 
-                # filter the message for assignments such that
-                # self.my_var_name is assigned to inst_value
+                    # filter the message for assignments such that
+                    # self.my_var_name is assigned to inst_value
 
-                # find the methods
-                my_var_name_ast = new_id(self.my_var_name)
-                trace_msg_list = trace_map.find_methods(call_ast, {my_var_name_ast :
-                                                                   self.get_inst_value()})
+                    # find the methods
+                    my_var_name_ast = new_id(self.my_var_name)
+                    trace_msg_list = trace_map.find_methods(call_ast, {my_var_name_ast :
+                                                                       self.get_inst_value()})
 
-                call_type = get_node_type(call_ast)
-                if (CALL_ENTRY == call_type):
-                    call_type_enc = EncoderUtils.ENTRY
-                elif (CALL_EXIT == call_type):
-                    call_type_enc = EncoderUtils.EXIT
-                else:
-                    raise Exception("Unkonwn node " + str(call_ast))
+                    call_type = get_node_type(call_ast)
+                    if (CALL_ENTRY == call_type):
+                        call_type_enc = EncoderUtils.ENTRY
+                    elif (CALL_EXIT == call_type):
+                        call_type_enc = EncoderUtils.EXIT
+                    else:
+                        raise Exception("Unkonwn node " + str(call_ast))
 
-                for m_trace in trace_msg_list:
-                    msg = EncoderUtils.get_key_from_msg(m_trace, call_type_enc)
-                    self.add_trace_msg(key, msg)
+                    for m_trace in trace_msg_list:
+                        msg = EncoderUtils.get_key_from_msg(m_trace, call_type_enc)
+                        self.add_trace_msg(key, msg)
 
     def get_inst_value(self):
         return self.inst_value
@@ -152,6 +154,8 @@ class Activity(Component):
                   (ONDESTROY, ["[CB] [ENTRY] [L] void ${MYTYPE}.onDestroy()"]),
                   (ONPAUSE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onPause()"]),
                   (ONPOSTCREATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onPostCreate(f : android.os.Bundle)"]),
+                  # FlowDroid misses
+                  # onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState)
                   (ONPOSTRESUME, ["[CB] [ENTRY] [L] void ${MYTYPE}.onPostResume()"]),
                   (ONRESTART, ["[CB] [ENTRY] [L] void ${MYTYPE}.onRestart()"]),
                   (ONRESUME, ["[CB] [ENTRY] [L] void ${MYTYPE}.onResume()"]),
@@ -159,6 +163,8 @@ class Activity(Component):
                   (ONSTART, ["[CB] [ENTRY] [L] void ${MYTYPE}.onStart()"]),
                   (ONSTOP, ["[CB] [ENTRY] [L] void ${MYTYPE}.onStop()"]),
                   (ONRESTOREINSTANCESTATE, ["[CB] [ENTRY] [L] void ${MYTYPE}.onRestoreInstanceState(f : android.os.Bundle)"]),
+                  # FlowDroid misses the onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) version
+                  # called if R.attr.persistableMode set to persistAcrossReboots
                   #
                   (ONACTIVITYSTARTED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityStarted(L : ${MYTYPE})"]),
                   (ONACTIVITYSTOPPED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityStopped(L : ${MYTYPE})"]),
@@ -192,8 +198,9 @@ class Activity(Component):
 
         return Activity.cb_to_find
 
-    def __init__(self, class_name, inst_value, trace_map):
-        Component.__init__(self, class_name, inst_value, trace_map, "L", "MYTYPE")
+    def __init__(self, class_names, inst_value, trace_map):
+        Component.__init__(self, class_names, inst_value, trace_map, "L",
+                           "MYTYPE")
         self._child_fragments = set()
 
     def add_child_fragment(self, fragment):
@@ -254,8 +261,8 @@ class Fragment(Component):
     def get_class_names(self):
         return Fragment.class_names
 
-    def __init__(self, class_name, inst_value, trace_map):
-        Component.__init__(self, class_name, inst_value, trace_map, "L", "MYTYPE")
+    def __init__(self, class_names, inst_value, trace_map):
+        Component.__init__(self, class_names, inst_value, trace_map, "L", "MYTYPE")
         self._parent_activities = set()
 
     def get_class_cb(self):

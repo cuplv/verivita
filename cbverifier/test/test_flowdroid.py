@@ -54,7 +54,7 @@ class TestFlowDroid(unittest.TestCase):
             (trace, act) = _gen_activity_trace(class_name)
             traceMap = TraceMap(trace)
 
-            activity = Activity(class_name, act, traceMap)
+            activity = Activity([class_name], act, traceMap)
             for (cb_name, _) in Activity.get_class_cb_static():
                 self.assertTrue(activity.has_trace_msg(cb_name))
 
@@ -81,7 +81,7 @@ class TestFlowDroid(unittest.TestCase):
             (trace, act) = _gen_fragment_trace(class_name)
             traceMap = TraceMap(trace)
 
-            fragment = Fragment(class_name, act, traceMap)
+            fragment = Fragment([class_name], act, traceMap)
             for (cb_name, _) in Fragment.get_class_cb_static():
                 self.assertTrue(fragment.has_trace_msg(cb_name))
 

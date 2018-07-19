@@ -260,18 +260,15 @@ class FlowDroidModelBuilder:
                     act_types = trace._get_class_names(Activity.class_names,
                                                        value)
                     assert len(act_types) != 0
-                    act_type = next(iter(act_types))
-                    component = Activity(act_type, value, trace_map)
+                    component = Activity(act_types, value, trace_map)
                     components.add(component)
                     components_map[value] = component
-
 
                 if is_frag:
                     frag_types = trace._get_class_names(Fragment.class_names,
                                                         value)
                     assert len(frag_types) != 0
-                    frag_type = next(iter(frag_types))
-                    component = Fragment(frag_type, value, trace_map)
+                    component = Fragment(frag_types, value, trace_map)
                     components.add(component)
                     components_map[value] = component
 
