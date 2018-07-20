@@ -431,16 +431,14 @@ def main(input_args=None):
             print("The trace cannot be simulated (it gets stuck at the " +
                   "%d-th transition)" % (steps))
 
+            if steps == 1:
+                print("Cannot simulate the first event!")
+            else:
+                print("Last simulable trace:")
+                printer = CexPrinter(mapback, last_cex, sys.stdout, print_orig_spec)
+                printer.print_cex()
 
-            if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
-                if steps == 1:
-                    print("Cannot simulate the first event!")
-                else:
-                    print("Last simulable trace:")
-                    printer = CexPrinter(mapback, last_cex, sys.stdout, print_orig_spec)
-                    printer.print_cex()
-
-                    print("\n--- WARNING: the trace *CANNOT* be simulated! ---")
+                print("\n--- WARNING: the trace *CANNOT* be simulated! ---")
 
         return 0
     elif (opts.mode == "check-trace-relevance"):
