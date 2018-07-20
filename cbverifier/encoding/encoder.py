@@ -144,8 +144,8 @@ from cbverifier.encoding.counter_enc import CounterEnc
 from cbverifier.encoding.grounding import GroundSpecs
 from cbverifier.encoding.conversion import TraceSpecConverter
 from cbverifier.encoding.ts import TransitionSystem
-from cbverifier.encoding.flowdroid_model.flowdroid_model_builder import FlowDroidModelBuilder
-from cbverifier.encoding.flowdroid_model.flowdroid_encoder import FlowDroidEncoder
+from cbverifier.encoding.flowdroid_model.model_builder import FlowDroidModelBuilder
+from cbverifier.encoding.flowdroid_model.encoder import FlowDroidEncoder
 
 from cbverifier.utils.stats import Stats
 from cbverifier.utils.utils import is_debug

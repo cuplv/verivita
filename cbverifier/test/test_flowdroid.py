@@ -9,7 +9,7 @@ from cbverifier.traces.ctrace import CTrace, CCallback, CCallin, CValue, CTraceE
 from cbverifier.test.test_grounding import TestGrounding
 from cbverifier.encoding.encoder import TSEncoder
 from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
-from cbverifier.encoding.flowdroid_model.flowdroid_model_builder import FlowDroidModelBuilder
+from cbverifier.encoding.flowdroid_model.model_builder import FlowDroidModelBuilder
 from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.bmc.bmc import BMC
 
