@@ -464,8 +464,23 @@ class FlowDroidModelBuilder:
             stream.write("\n")
 
         stream.write("\n--- Flowdroid model summary ---\n")
-        for c in self.components_set:
 
+        count_activities = 0
+        count_fragments = 0
+
+        for c in self.components_set:
+            if isinstance(c, Activity):
+                count_activities += 1
+            if isinstance(c, Fragment):
+                count_fragments += 1
+
+        stream.write("--- Activities: %d\n" \
+                     "--- Fragments: %d\n" \
+                     "--- Constrained msgs: %d\n" % (count_activities,
+                                                     count_fragments,
+                                                     len(self.constrained_msgs)))
+
+        for c in self.components_set:
             # type, object id
             _print_sep(stream)
             _print_comp(c, stream)
