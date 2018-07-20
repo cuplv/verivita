@@ -1,3 +1,45 @@
+""" Encodes a "FlowDroid-like" lifecycle model.
+
+
+We follow the description in Section 3 "Precise Modeling of Lifecycle" of:
+
+'FlowDroid: Precise Context, Flow, Field, Object-sensitive and Lifecycle-aware
+Taint Analysis for Android Apps',
+Artz et al, PLDI 14
+
+and in particular the implementation in:
+soot-infoflow/src/soot/jimple/infoflow/entryPointCreators/AndroidEntryPointCreator.java
+in the repository http://github.com/secure-software-engineering/FlowDroid,
+commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
+
+
+We encode the lifecylce of each component forcing that at most one
+component can be active at each time. For each component, there is a
+different definition of active. For example, an activity component is
+active after the onResume and before the onPause callbacks.
+
+We relax the contraint that callbacks in the
+android.app.Application.ActivityLifecycleCallbacks must exist and
+executed at least one.
+
+We follow the modeling where registered callbacks cannot happen
+outside the activity lifecycle.
+
+We assume that non-registered callbacks can happen at any time. This
+over-approximate the resulting model.
+The consequence is:
+- our model is "more sound" than the flowdroid one: we do not block the
+  execution of callbacks for which we did not find a registration
+- our model may be "less precise" than the flowdroid one, since it may allow
+  more spurious trace.
+
+We model the lifecycle for activity and fragment components since we are
+interested in components that run in the UI thread.
+
+As done in FlowDroid, we encode the lifecycle component of fragment inside
+their attaching activity component.
+"""
+
 import logging
 
 from pysmt.logics import QF_BOOL
@@ -17,50 +59,7 @@ from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fr
 from cbverifier.utils.utils import is_debug
 
 
-
 class FlowDroidEncoder:
-    """ We follow the description in Section 3 "Precise Modeling of Lifecycle" of:
-    'FlowDroid: Precise Context, Flow, Field, Object-sensitive
-    and Lifecycle-aware Taint Analysis for Android Apps',
-    Artz et al, PLDI 14
-
-    and in particular the implementation in:
-    soot-infoflow/src/soot/jimple/infoflow/entryPointCreators/
-    AndroidEntryPointCreator.java
-    in the repo secure-software-engineering/FlowDroid,
-    commit a1438c2b38a6ba453b91e38b2f7927b6670a2702.
-
-    Activity lifecycle: generateActivityLifecycle, line 774
-
-    We encode the lifecylce of each component forcing that at most one component
-    can be active at each time.
-    For each component, there is a different definition of active. For example,
-    an activity component is active after the onResume and before the onPause
-    callbacks.
-
-    We relax the contraint that callbacks in the
-    android.app.Application.ActivityLifecycleCallbacks must exist and executed at
-    least one.
-
-    We follow the modeling where registered callbacks cannot happen outside
-    the activity lifecycle.
-
-    We assume that non-registered callbacks can happen at any time.
-    This over-approximate the resulting model.
-    The consequence is:
-      - our model is "more sound" than the flowdroid one: we do not block
-        the execution of callbacks for which we did not find a registration
-      - our model may be "less precise" than the flowdroid one, since it
-        may allow more spurious trace.
-    In practice, we are "fair" in the comparison with respect to
-
-    We model the lifecycle for activity and fragment components since we
-    are interested in components that run in the UI thread.
-
-    As done in flowdroid, we encode the lifecycle component of fragment
-    inside their activity component.
-    """
-
     def __init__(self, enc, fd_builder):
         self.enc = enc
         self.fd_builder = fd_builder
