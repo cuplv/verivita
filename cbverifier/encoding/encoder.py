@@ -254,38 +254,47 @@ class TSEncoder:
         if (self.ts is None): self._encode()
         return self.ts
 
-    def get_trace_encoding(self, tl_cb_ids = None):
-        """ Returns the encoding of the trace formed by the callbacks
-        """
-        # the ts encoding should be built
-        self.get_ts_encoding()
 
+    def _get_linear_trace(self, tl_cb_ids = None):
+        """
+        Construct a linear version of the trace identified by the trace
+        messages contains in tl_cb_ids.
+
+        The linear version of the trace is a list containing elements
+        like (EncoderUtils.ENTRY, trace_message) identifying that the trace
+        requires to see the entry or the exit of the trace_message.
+
+        Use tl_cb_ids (a list of user-defined callbacks), otherwise the
+        top-level callbacks from the current list.
+        """
+
+        # Collects the list of top-level callbacks to consider
         tl_cbs = []
         if tl_cb_ids is not None:
             for message_id in tl_cb_ids:
                 cb = self.trace.get_tl_cb_from_id(message_id)
 
                 if cb is None:
-                    raise Exception("Message id %s not found in the trace" % message_id)
+                    raise Exception("Message id %s not found in " \
+                                    "the trace" % message_id)
 
                 msg_enc = self.mapback.get_trans2pc((EncoderUtils.ENTRY, cb))
                 key = EncoderUtils.get_key_from_msg(cb, EncoderUtils.ENTRY)
                 if not self._is_msg_visible(key):
-                    raise Exception("Message id %s not found in the (simplified) trace" % message_id)
-
+                    raise Exception("Message id %s not found in the "\
+                                    "(simplified) trace" % message_id)
                 tl_cbs.append(cb)
         else:
             tl_cbs = self.trace.children
 
-        # encode each callback
-        # No trace constraints in the initial state
-        trace_encoding = []
-        pc_name = EncoderUtils._get_pc_name()
+        linear_trace = []
         for tl_cb in tl_cbs:
             stack = [(EncoderUtils.EXIT, tl_cb),(EncoderUtils.ENTRY, tl_cb)]
 
             while (len(stack) != 0):
                 (entry_type, msg) = stack.pop()
+
+                linear_trace.append( (entry_type, msg) )
 
                 # Fill the stack in reverse order
                 if (EncoderUtils.ENTRY == entry_type):
@@ -293,42 +302,58 @@ class TSEncoder:
                         stack.append((EncoderUtils.EXIT, msg.children[i]))
                         stack.append((EncoderUtils.ENTRY, msg.children[i]))
 
-                msg_key = EncoderUtils.get_key_from_msg(msg, entry_type)
-                if not self._is_msg_visible(msg_key):
-                    continue
+        return linear_trace
 
-                msg_enc = self.mapback.get_trans2pc((entry_type, msg))
-                assert(msg_enc is not None)
+    def get_trace_encoding(self, tl_cb_ids = None):
+        """ Returns the encoding of the trace formed by the callbacks
+        """
+        # the ts encoding should be built
+        self.get_ts_encoding()
 
-                (current_state, next_state) = msg_enc
-                s0 = self.cenc.eq_val(pc_name, current_state)
-                # strengthen s0 - progress only if the message is enabled
-                msg_enabled = EncoderUtils._get_state_var(msg_key)
-                s0 = And(s0, msg_enabled)
-                s1 = self.cenc.eq_val(pc_name, next_state)
+        linear_trace = self._get_linear_trace(tl_cb_ids)
 
-                # strengthen s0 with the label
-                msg_label = self.r2a.get_msg_eq(msg_key)
-                s0 = And(s0, msg_label)
+        # encode each callback
+        # No trace constraints in the initial state
+        trace_encoding = []
+        pc_name = EncoderUtils._get_pc_name()
 
-                current_step = str(len(trace_encoding) + 1)
-                logging.info("SIMULATION: step %s on %s" % (current_step, msg_key))
-                logging.debug("Simulation debug - transition from %s -> %s" % (current_state,next_state))
-                try:
-                    msg_error_enc = self.mapback.get_trans2pc((entry_type, msg, self.error_label))
-                    info_msg = """SIMULATION - transition at step %s could not happen if %s is not allowed (%s -> %s in the encoding).
+        for (entry_type, msg) in linear_trace:
+            msg_key = EncoderUtils.get_key_from_msg(msg, entry_type)
+            if not self._is_msg_visible(msg_key):
+                continue
+
+            msg_enc = self.mapback.get_trans2pc((entry_type, msg))
+            assert(msg_enc is not None)
+
+            (current_state, next_state) = msg_enc
+            s0 = self.cenc.eq_val(pc_name, current_state)
+            # strengthen s0 - progress only if the message is enabled
+            msg_enabled = EncoderUtils._get_state_var(msg_key)
+            s0 = And(s0, msg_enabled)
+            s1 = self.cenc.eq_val(pc_name, next_state)
+
+            # strengthen s0 with the label
+            msg_label = self.r2a.get_msg_eq(msg_key)
+            s0 = And(s0, msg_label)
+
+            current_step = str(len(trace_encoding) + 1)
+            logging.info("SIMULATION: step %s on %s" % (current_step, msg_key))
+            logging.debug("Simulation debug - transition from %s -> %s" % (current_state,next_state))
+            try:
+                msg_error_enc = self.mapback.get_trans2pc((entry_type, msg, self.error_label))
+                info_msg = """SIMULATION - transition at step %s could not happen if %s is not allowed (%s -> %s in the encoding).
 Simulation only executes the nominal trace and disregards errors.
 If simulation iterrupts here, it could be due to the bug""" % (current_step, msg_key, str(current_state), str(next_state))
-                    logging.info(info_msg)
-                    # if msg_error_enc is not None:
-                    #     # this is a possible error state
-                    #     msg_key = EncoderUtils.get_key_from_msg(msg, entry_type)
-                    #     msg_enabled = EncoderUtils._get_state_var(msg_key)
-                    #     # progress only if the message is enabled
-                    #     s0 = And(s0, msg_enabled)
-                except KeyError:
-                    pass
-                trace_encoding.append((s0,s1))
+                logging.info(info_msg)
+                # if msg_error_enc is not None:
+                #     # this is a possible error state
+                #     msg_key = EncoderUtils.get_key_from_msg(msg, entry_type)
+                #     msg_enabled = EncoderUtils._get_state_var(msg_key)
+                #     # progress only if the message is enabled
+                #     s0 = And(s0, msg_enabled)
+            except KeyError:
+                pass
+            trace_encoding.append((s0,s1))
 
         return trace_encoding
 
