@@ -220,6 +220,52 @@ class FlowDroidModelBuilder:
         else:
             return set()
 
+    def get_msg_properties(self, msg):
+        """
+        Returns the information about msg in the FlowDroid model
+
+        It returns a tuple:
+        (is_constrained, is_lifecycle, owner_activity, owner_fragment)
+
+        where:
+        - is_constrained is True iff msg is a controlled messages
+        - is_lifecycle is True iff msg is a lifecycle message
+        - owner_activities is the set of Activities owning the message
+        - owner_fragments is the set of Fragments owning the message
+
+        Warning: we assume fragments and activity lifecycle objects and
+        methods to be dijoints
+        """
+
+        is_constrained = msg in self.get_const_msgs()
+        is_lifecycle = False
+        owner_activities = set()
+        owner_fragments = set()
+
+        for c in self.get_components():
+            is_activity = isinstance(c, Activity)
+            is_fragment = isinstance(c, Fragment)
+
+            lc_msg = c.get_lifecycle_msgs()
+            msg_in_c_lc = msg in lc_msg
+            is_lifecycle = is_lifecycle or msg_in_c_lc
+
+            if msg_in_c_lc:
+                if is_activity:
+                    owner_activities.add(c)
+                elif is_fragment:
+                    owner_fragments.add(c)
+                    for parent in c.get_parent_activities():
+                        owner_activities.add(parent)
+
+            c_object = c.get_inst_value()
+            if msg in self.get_comp_callbacks(c_object):
+                assert is_activity
+                owner_activities.add(c)
+
+        return (is_constrained, is_lifecycle,
+                owner_activities, owner_fragments)
+
     @staticmethod
     def _get_all_components(trace, trace_map, attach_rel):
         """ Populate the list of all components from the trace.

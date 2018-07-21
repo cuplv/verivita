@@ -1038,9 +1038,7 @@ If simulation iterrupts here, it could be due to the bug""" % (current_step, msg
         All the messages that are not specifically disabled/disallowed are
         enalbed/allowed
         """
-        solver = self.pysmt_env.factory.Solver(quantified=False,
-                                               name="z3",
-                                               logic=QF_BOOL)
+        solver = EncoderUtils.get_new_solver(self.pysmt_env)
         solver.add_assertion(self.ts.init)
 
         for msg in self.msgs:
@@ -1261,9 +1259,7 @@ class TSMapback():
         def same_model(var, mod1, mod2):
             return mod1[var] == mod2[var]
 
-        solver = self.pysmt_env.factory.Solver(quantified=False,
-                                               name="z3",
-                                               logic=QF_BOOL)
+        solver = EncoderUtils.get_new_solver(self.pysmt_env)
 
         for (var, value) in next_state.iteritems():
             if (value):
@@ -1294,9 +1290,7 @@ class TSMapback():
 
     def is_error(self, state):
         """ Return true if the state is an error state. """
-        solver = self.pysmt_env.factory.Solver(quantified=False,
-                                               name="z3",
-                                               logic=QF_BOOL)
+        solver = EncoderUtils.get_new_solver(self.pysmt_env)
 
         for (var, value) in state.iteritems():
             if (value):

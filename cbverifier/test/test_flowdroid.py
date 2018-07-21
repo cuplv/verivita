@@ -10,6 +10,16 @@ from cbverifier.test.test_grounding import TestGrounding
 from cbverifier.encoding.encoder import TSEncoder
 from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
 from cbverifier.encoding.flowdroid_model.model_builder import FlowDroidModelBuilder
+from cbverifier.encoding.flowdroid_model.explainer import (
+    Explainer,
+    FailureUnknown,
+    FailureInit,
+    FailureCbNonActive,
+    FailureActLc,
+    FailureActInterleaving,
+    FailureFragLc,
+    FailureFragNonActive,
+    FailureFragInterleaving)
 from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.bmc.bmc import BMC
 
@@ -261,24 +271,42 @@ class TestFlowDroid(unittest.TestCase):
 
     def test_lc_1(self):
         # reject all in the initial state
-        self._test_lc_enc([Activity.ONACTIVITYCREATED], False)
-        self._test_lc_enc([Activity.ONSTART], False)
-        self._test_lc_enc([Activity.ONACTIVITYSTARTED], False)
-        self._test_lc_enc([Activity.ONRESTOREINSTANCESTATE], False)
-        self._test_lc_enc([Activity.ONPOSTCREATE], False)
-        self._test_lc_enc([Activity.ONRESUME], False)
-        self._test_lc_enc([Activity.ONACTIVITYRESUMED], False)
-        self._test_lc_enc([Activity.ONPOSTRESUME], False)
-        self._test_lc_enc([Activity.ONPAUSE], False)
-        self._test_lc_enc([Activity.ONACTIVITYPAUSED], False)
-        self._test_lc_enc([Activity.ONCREATEDESCRIPTION], False)
-        self._test_lc_enc([Activity.ONSAVEINSTANCESTATE], False)
-        self._test_lc_enc([Activity.ONACTIVITYSAVEINSTANCESTATE], False)
-        self._test_lc_enc([Activity.ONSTOP], False)
-        self._test_lc_enc([Activity.ONACTIVITYSTOPPED], False)
-        self._test_lc_enc([Activity.ONRESTART], False)
-        self._test_lc_enc([Activity.ONDESTROY], False)
-        self._test_lc_enc([Activity.ONACTIVITYDESTROYED], False)
+        self._test_lc_enc([Activity.ONACTIVITYCREATED], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONSTART], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONACTIVITYSTARTED], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONRESTOREINSTANCESTATE], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONPOSTCREATE], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONRESUME], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONACTIVITYRESUMED], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONPOSTRESUME], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONPAUSE], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONACTIVITYPAUSED], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONCREATEDESCRIPTION], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONSAVEINSTANCESTATE], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONACTIVITYSAVEINSTANCESTATE], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONSTOP], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONACTIVITYSTOPPED], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONRESTART], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONDESTROY], False,
+                          FailureActLc)
+        self._test_lc_enc([Activity.ONACTIVITYDESTROYED], False,
+                          FailureActLc)
 
 
     def test_lc_optional(self):
@@ -397,7 +425,7 @@ class TestFlowDroid(unittest.TestCase):
         to_run = [(helper1, Activity.ONCREATE),
                   (helper2, Activity.ONCREATE), # should not move
                   (helper1, Activity.ONACTIVITYCREATED)]
-        self._test_lc_multi(to_run, False)
+        self._test_lc_multi(to_run, False, FailureActInterleaving)
 
     def test_activity_cb_out(self):
         act1 = TestGrounding._get_obj("1","android.app.Activity")
@@ -480,7 +508,7 @@ class TestFlowDroid(unittest.TestCase):
         # before resume
         to_run = [(helper1, Activity.ONCREATE),
                   (helper_listener, TestFlowDroid.ViewListenerHelper.ONCLICK)]
-        self._test_lc_multi(to_run, False)
+        self._test_lc_multi(to_run, False, FailureCbNonActive)
 
         # after on resume
         to_run = [(helper1, Activity.ONCREATE),
@@ -620,7 +648,7 @@ class TestFlowDroid(unittest.TestCase):
         to_run = [(helper1, Activity.ONCREATE),
                   (helper2, Fragment.ONATTACH), # cannot run in the "wrong" position
                   (helper1, Activity.ONACTIVITYCREATED)] # begin the fragment lifecycle
-        self._test_lc_multi(to_run, False)
+        self._test_lc_multi(to_run, False, FailureFragNonActive)
 
         # # test an out-of order activity run
         # to_run = [(helper1, Activity.ONCREATE),
@@ -664,16 +692,112 @@ class TestFlowDroid(unittest.TestCase):
         enc.fd_builder.print_model(sys.stdout)
 
 
-    def _test_sim(self, trace, expected_result):
-#        enc = TSEncoder(trace, [], True, None, True)
+
+    def test_explainer(self):
+        # Use integer for the set of activities, ....
+        # The triage function just look at set properties
+
+        res = Explainer._triage_failure("",
+                                        False, False,
+                                        set(), set(),
+                                        set(), set(),
+                                        set(), set())
+        self.assertTrue(isinstance(res, FailureUnknown))
+
+        # lifecycle
+        res = Explainer._triage_failure("",
+                                        False, True,
+                                        set([1,2,3]), set(),
+                                        set([2,6]), set(),
+                                        set(), set())
+        self.assertTrue(isinstance(res, FailureActLc))
+        self.assertTrue("FailureActLc" in str(res))
+
+        res = Explainer._triage_failure("",
+                                        False, True,
+                                        set([1,2,3]), set(),
+                                        set([5,6]), set(),
+                                        set(), set())
+        self.assertTrue(isinstance(res, FailureActInterleaving))
+        self.assertTrue("FailureActInterleaving" in str(res))
+
+        res = Explainer._triage_failure("",
+                                        False, True,
+                                        set([1,2,3]), set([10]),
+                                        set([2,6]), set(),
+                                        set([2]), set())
+        self.assertTrue(isinstance(res, FailureFragInterleaving))
+        self.assertTrue("FailureFragInterleaving" in str(res))
+
+        res = Explainer._triage_failure("",
+                                        False, True,
+                                        set([1,2,3]), set([10]),
+                                        set([2,6]), set(),
+                                        set([6]), set())
+        self.assertTrue(isinstance(res, FailureFragNonActive))
+        self.assertTrue("FailureFragNonActive" in str(res))
+
+        res = Explainer._triage_failure("",
+                                        False, True,
+                                        set([1,2,3]), set([10]),
+                                        set([5,6]), set(),
+                                        set([6]), set())
+        self.assertTrue(isinstance(res, FailureActInterleaving))
+        self.assertTrue("FailureActInterleaving" in str(res))
+
+
+        # Constrained messages
+        res = Explainer._triage_failure("",
+                                        True, False,
+                                        set([1,2,3]), set([10,11]),
+                                        set([2,6]), set(),
+                                        set(), set([10]))
+        self.assertTrue(isinstance(res, FailureFragInterleaving))
+        self.assertTrue("FailureFragInterleaving" in str(res))
+
+        res = Explainer._triage_failure("",
+                                        True, False,
+                                        set([1,2,3]), set([10,11]),
+                                        set([2,6]), set(),
+                                        set(), set())
+        self.assertTrue(isinstance(res, FailureCbNonActive))
+        self.assertTrue("FailureCbNonActive" in str(res))
+
+        res = Explainer._triage_failure("",
+                                        True, False,
+                                        set([1,2,3]), set(),
+                                        set([2,6]), set([2]),
+                                        set(), set())
+        self.assertTrue(isinstance(res, FailureUnknown))
+        self.assertTrue("FailureUnknown" in str(res))
+
+        res = Explainer._triage_failure("",
+                                        True, False,
+                                        set([1,2,3]), set(),
+                                        set([6]), set(),
+                                        set(), set())
+        self.assertTrue(isinstance(res, FailureActInterleaving))
+        self.assertTrue("FailureActInterleaving" in str(res))
+
+
+    def _test_sim(self, trace, expected_result, expected_failure=None):
         enc = TSEncoder(trace, [], False, None, True)
-        (step, cex, _) = self._simulate(enc)
+        (step, cex, last_trace) = self._simulate(enc)
 
         if (not cex is None):
             stringio = StringIO()
             printer = CexPrinter(enc.mapback, cex, stringio)
             printer.print_cex()
             print stringio.getvalue()
+        else:
+            # test the explainer
+            explainer = Explainer(enc, enc.mapback,
+                                  last_trace,
+                                  trace, None)
+            failure = explainer.find_failure()
+            if (not expected_failure is None):
+                print failure
+                self.assertTrue(expected_failure == type(failure))
 
         self.assertTrue( (not cex is None) == expected_result)
 
@@ -684,11 +808,13 @@ class TestFlowDroid(unittest.TestCase):
             trace.add_msg(cb)
         return trace
 
-    def _test_lc_multi(self, obj_cb_seq, expected_result):
+    def _test_lc_multi(self, obj_cb_seq, expected_result,
+                       expected_failure = None):
         trace = self._get_trace_multi(obj_cb_seq)
-        self._test_sim(trace, expected_result)
+        self._test_sim(trace, expected_result, expected_failure)
 
-    def _test_lc_enc(self, cb_sequence, expected_result):
+    def _test_lc_enc(self, cb_sequence, expected_result,
+                     expected_failure = None):
         # activity: simulate lifecycle
         act = TestGrounding._get_obj("1","android.app.Activity")
         bundle = TestGrounding._get_obj("2","android.os.Bundle")
@@ -701,7 +827,7 @@ class TestFlowDroid(unittest.TestCase):
             cb = helper.get_cb(cb_name)
             trace.add_msg(cb)
 
-        self._test_sim(trace, expected_result)
+        self._test_sim(trace, expected_result, expected_failure)
 
 
     def _simulate(self, ts_enc):
@@ -713,8 +839,8 @@ class TestFlowDroid(unittest.TestCase):
         #     print trace_enc
 
         bmc = BMC(ts_enc.helper, ts, FALSE_PYSMT())
-        (step, cex, _) = bmc.simulate(trace_enc)
-        return (step, cex, _)
+        (step, cex, last_trace) = bmc.simulate(trace_enc, True)
+        return (step, cex, last_trace)
 
 
     def _get_fdm(self, trace):

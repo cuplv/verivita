@@ -1,6 +1,8 @@
 import string
 from pysmt.shortcuts import Symbol
 from pysmt.typing import BOOL
+from pysmt.logics import QF_BOOL
+
 from cbverifier.specs.spec_ast import *
 from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
 from cbverifier.encoding.conversion import TraceSpecConverter
@@ -136,6 +138,14 @@ class EncoderUtils:
         value_repr = value.get_value()
 
         return value_repr
+
+
+    @staticmethod
+    def get_new_solver(pysmt_env):
+        solver = pysmt_env.factory.Solver(quantified=False,
+                                          name="z3",
+                                          logic=QF_BOOL)
+        return solver
 
 
     @staticmethod

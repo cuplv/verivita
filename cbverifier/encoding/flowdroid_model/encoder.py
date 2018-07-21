@@ -42,7 +42,6 @@ their attaching activity component.
 
 import logging
 
-from pysmt.logics import QF_BOOL
 from pysmt.environment import get_env
 from pysmt.typing import BOOL
 from pysmt.shortcuts import Symbol
@@ -55,6 +54,7 @@ from pysmt.shortcuts import simplify
 from cbverifier.encoding.ts import TransitionSystem
 from cbverifier.encoding.flowdroid_model.flowdroid_model_builder import FlowDroidModelBuilder
 from cbverifier.encoding.flowdroid_model.lifecycle_constants import Activity, Fragment
+from cbverifier.encoding.encoder_utils import EncoderUtils
 
 from cbverifier.utils.utils import is_debug
 
@@ -64,6 +64,7 @@ class FlowDroidEncoder:
         self.enc = enc
         self.fd_builder = fd_builder
         self.ts = None
+        self.lifecycles = {}
 
     def get_ts_encoding(self):
         if (self.ts is None):
@@ -80,14 +81,14 @@ class FlowDroidEncoder:
         specification and to the callback re-ordering from the trace.
         """
         # Encode the lifecycle for each component
-        lifecycles = {}
+        self.lifecycles = {}
         for c in self.fd_builder.get_components():
-            lifecycles[c] = self._encode_component_lifecycle(c)
+            self.lifecycles[c] = self._encode_component_lifecycle(c)
 
         # Encode the component scheduler
         # We must change the ts of the other components to add the
         # stuttering!
-        ts_scheduler = self._encode_components_scheduler(lifecycles)
+        ts_scheduler = self._encode_components_scheduler()
 
         self.enc.mapback.add_state_vars(ts_scheduler.state_vars)
 
@@ -116,9 +117,8 @@ class FlowDroidEncoder:
         """
         Checks for deadlocks in each state of the generated automaton
         """
-        solver = self.enc.pysmt_env.factory.Solver(quantified=False,
-                                                   name="z3",
-                                                   logic=QF_BOOL)
+        solver = EncoderUtils.get_new_solver(self.enc.pysmt_env)
+
         solver.add_assertion(trans)
         for i in range(pc_size-1):
             solver.push()
@@ -482,7 +482,7 @@ class FlowDroidEncoder:
 
         return cb_msg_enc
 
-    def _encode_components_scheduler(self, lifecycles):
+    def _encode_components_scheduler(self):
 
         ts_sched = TransitionSystem()
 
@@ -515,8 +515,7 @@ class FlowDroidEncoder:
         assert not run_free_msg_flag is None
 
         # 3. Compose the components' lifecycle
-        for c, c_lc in lifecycles.iteritems():
-            lc_info = lifecycles[c]
+        for c, lc_info in self.lifecycles.iteritems():
             flag = comp2actflags[c]
 
             # Frame condition for the pc of the lifecycle automaton
@@ -548,7 +547,7 @@ class FlowDroidEncoder:
         for c in self.fd_builder.get_components():
             flag = comp2actflags[c]
             if (isinstance(c, Activity)):
-                lc_info = lifecycles[c]
+                lc_info = self.lifecycles[c]
 
                 pc_init = lc_info.get_label(FlowDroidEncoder.ActivityLcInfo.INIT)
                 pc_init_next = self._get_next_formula(ts_sched.state_vars,
@@ -589,10 +588,10 @@ class FlowDroidEncoder:
                 # get back control (the invariant that other activities are
                 # in the initial state holds).
                 #
-                other_act_in_init = self._other_activities_in_init(c, lifecycles)
+                other_act_in_init = self._other_activities_in_init(c)
                 other_act_in_init_next = self._get_next_formula(ts_sched.state_vars,
                                                                 other_act_in_init)
-                child_fragments_in_init = self._child_fragment_in_init(c, lifecycles)
+                child_fragments_in_init = self._child_fragment_in_init(c)
                 child_fragments_in_init_next = self._get_next_formula(ts_sched.state_vars,
                                                                       child_fragments_in_init)
                 activity_act_enc = Implies(activity_act,
@@ -604,7 +603,7 @@ class FlowDroidEncoder:
                 for fragment in c.get_child_fragments():
                     parent_act = c
                     frag_flag = comp2actflags[fragment]
-                    frag_lc_info = lifecycles[fragment]
+                    frag_lc_info = self.lifecycles[fragment]
                     frag_pc_init = frag_lc_info.get_label(FlowDroidEncoder.FragmentLcInfo.INIT)
                     frag_pc_init_next = self._get_next_formula(ts_sched.state_vars,
                                                                frag_pc_init)
@@ -635,7 +634,7 @@ class FlowDroidEncoder:
                     act_pc_run_frag_next = self._get_next_formula(ts_sched.state_vars,
                                                                   act_pc_run_frag)
 
-                    other_fragment_in_init = self._other_fragments_in_init(c, fragment, lifecycles)
+                    other_fragment_in_init = self._other_fragments_in_init(c, fragment)
                     other_fragment_in_init_next = self._get_next_formula(ts_sched.state_vars,
                                                                          other_fragment_in_init)
                     fragment_act_enc = Implies(fragment_act,
@@ -669,7 +668,7 @@ class FlowDroidEncoder:
                                                         at_most_one)))
         return ts_sched
 
-    def _other_activities_in_init(self, activity, lifecycles):
+    def _other_activities_in_init(self, activity):
         """ True if all activities are in init state """
         others_in_init = TRUE_PYSMT()
         for c in self.fd_builder.get_components():
@@ -678,26 +677,26 @@ class FlowDroidEncoder:
             if (not isinstance(c, Activity)):
                 continue
 
-            lc_info = lifecycles[c]
+            lc_info = self.lifecycles[c]
             pc_init = lc_info.get_label(FlowDroidEncoder.ActivityLcInfo.INIT)
             others_in_init = And(others_in_init, pc_init)
         return others_in_init
 
-    def _other_fragments_in_init(self, activity, my_fragment, lifecycles):
+    def _other_fragments_in_init(self, activity, my_fragment):
         """ True if all child fragments are in init state """
         fragments_in_init = TRUE_PYSMT()
         for fragment in activity.get_child_fragments():
             if (not my_fragment is None) and my_fragment == fragment:
                 continue
 
-            lc_info = lifecycles[fragment]
+            lc_info = self.lifecycles[fragment]
             pc_init = lc_info.get_label(FlowDroidEncoder.FragmentLcInfo.INIT)
             fragments_in_init = And(fragments_in_init, pc_init)
         return fragments_in_init
 
-    def _child_fragment_in_init(self, activity, lifecycles):
+    def _child_fragment_in_init(self, activity):
         """ True if all child fragments are in init state """
-        return self._other_fragments_in_init(activity, None, lifecycles)
+        return self._other_fragments_in_init(activity, None)
 
     def _at_least_one_frag_activates(self, activity, comp2actflags, state_vars):
         """ True if at least one of the child fragments activate 
