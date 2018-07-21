@@ -397,8 +397,11 @@ def simulationTimePlot(loadedResults, out):
     #plot percentage of traces proven for a given time budget
     for simset in ['results_simulation_lifestate_va1.tar.bz2.txt']:
         lifestate_sim = [r  for r in loadedResults[simset][1] if r.proof_status=="Ok"]
+        lifestate_other = [r  for r in loadedResults[simset][1] if r.proof_status not in ["Ok"]]
         lifestate_all = [r for r in loadedResults[simset][1] if r.proof_status in {"Ok","?","Timeout"}]
 
+        #count number of apps
+        all_apps = [r for r in loadedResults[simset][1]]
         # lifestate_wtf = [r for r in loadedResults[simset][1] if r.proof_status not in {"Ok","?","ReadError"}]
         lifestate_sim_sorted = sorted(lifestate_sim, key= lambda x : x.time)
 
@@ -509,6 +512,7 @@ if __name__ == "__main__":
     trace_exclusions = [f.strip() for f in trace_exclusions_file.readlines()]
 
 
+    # if args.mode not in ["timeSafe","timeAll"]:
     loadedResults = loadDirectory(args.dir, alias_map, trace_exclusions, app_exclusions, isSim)
     if args.mode == "timeSafe":
         gnuplotTime(loadedResults, 10, args.out)
@@ -526,3 +530,6 @@ if __name__ == "__main__":
         simulationTimePlot(loadedResults,args.out)
     else:
         raise Exception("Please specify mode with --mode")
+
+    #count all apps
+    pass
