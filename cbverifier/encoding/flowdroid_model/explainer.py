@@ -165,13 +165,13 @@ class Explainer:
 
         # trace from bmc counts states, not transitions
         simulated_length = len(self.last_cex) - 1
-
         i = 0
         for (entry_type, msg) in linear_trace:
-            i = i + 1
             msg_key = EncoderUtils.get_key_from_msg(msg, entry_type)
             if not self.encoder._is_msg_visible(msg_key):
                 continue
+
+            i = i + 1
             if (i == (simulated_length + 1)):
                 # Returns the first message that was not
                 # simualted
@@ -273,8 +273,10 @@ class FailureUnknown(FailureType):
 
     def __repr__(self):
         msg = """Failure: FailureUnknown
+        Blocked message: %s
         Explanation: %s
-        """ % (self.explanation)
+        """ % (self.stuck_msg,
+               self.explanation)
         return msg
 
 class FailureInit(FailureType):
