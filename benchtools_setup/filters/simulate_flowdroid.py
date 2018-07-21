@@ -8,12 +8,15 @@ def do_filter(iterable):
     steps = '?'
     total_steps = '?'
 
+    failure_reason = '?'
+
     to = False
 
     can_simulate_re = re.compile("The trace can be simulated (\d+) steps")
     can_simulate_re_2 = re.compile("The trace can be simulated in (\d+) steps")
     cannot_simulate_re = re.compile("The trace cannot be simulated \(it gets stuck at the (\d+)-th transition\)")
     simulate_steps_re = re.compile("INFO:root:Simulating step (\d+)/(\d+)")
+    failure_re = re.compile("Failure: (\w+)")
 
     p = None
     for line in iterable:
@@ -56,9 +59,17 @@ def do_filter(iterable):
                 total_steps = match_step_line.group(2)
                 if (type(total_steps) == type((),)):
                     total_steps = total_steps[0]
+
         elif line.startswith("The trace can be simulated in 0 steps"):
             steps = 0
             total_steps = 0
+
+        elif line.startswith("Failure:"):
+            match_failure_re = failure_re.match(line)
+            if match_failure_re:
+                failure_reason = match_failure_re.group(1)
+                if (type(failure_reason) == type((),)):
+                    failure_reason = failure_reason[0]
 
         elif line.startswith("Exception: An error happened reading the trace"):
             result = "ReadError"
@@ -74,4 +85,4 @@ def do_filter(iterable):
             result = "KeyError"
 
 
-    return 'result %s time %s steps %s totalsteps %s %s' % (result, time, steps, total_steps, " ".join(extra))
+    return 'result %s time %s steps %s totalsteps %s failure_reason %s %s' % (result, time, steps, total_steps, failure_reason, " ".join(extra))
