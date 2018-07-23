@@ -34,13 +34,17 @@ def do_filter(iterable):
 
         elif line.startswith('The trace can be simulated in'):
             result = 'Ok'
-            # app = can_simulate_re.match(line)
-            # if (app):
-            #     steps = app.groups(1)
-            # else:
-            #     app = can_simulate_re_2.match(line)
-            #     if(app):
-            #         steps = app.groups(1)
+            app = can_simulate_re.match(line)
+            if (app):
+                steps = app.groups(1)
+            else:
+                app = can_simulate_re_2.match(line)
+                if(app):
+                    steps = app.groups(1)
+            if type(steps) == type((),):
+                steps = steps[0].strip()
+            if (steps == "0"):
+                total_steps = 0
 
         elif line.startswith('The trace cannot be simulated'):
             result = 'Block'
@@ -61,6 +65,7 @@ def do_filter(iterable):
                     total_steps = total_steps[0]
 
         elif line.startswith("The trace can be simulated in 0 steps"):
+
             steps = 0
             total_steps = 0
 
