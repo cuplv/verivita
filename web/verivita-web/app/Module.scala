@@ -2,7 +2,7 @@ import com.google.inject.AbstractModule
 import java.time.Clock
 
 import com.google.inject.name.Names
-import edu.colorado.plv.{FakeManager, TraceManager, VerivitaManager}
+import edu.colorado.plv.{FakeManager, RestTraceManager, TraceManager}
 import services.{AtomicCounter, Counter}
 
 
@@ -30,7 +30,7 @@ class Module extends AbstractModule {
       }
       case _ => {
         println("===real manager")
-        bind(classOf[TraceManager]).to(classOf[VerivitaManager])
+        bind(classOf[TraceManager]).to(classOf[RestTraceManager])
       }
     }
 

@@ -9,3 +9,7 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.12")
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.3.4")
 
 addSbtPlugin("io.finstack" % "sbt-elm" % "0.1.3")
+
+addSbtPlugin("com.thesamet" % "sbt-protoc" % "0.99.18")
+
+libraryDependencies += "com.thesamet.scalapb" %% "compilerplugin" % "0.7.4"

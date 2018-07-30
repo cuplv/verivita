@@ -10,10 +10,7 @@ import services.Counter
 import scala.collection.immutable
 
 /**
-  * This controller demonstrates how to use dependency injection to
-  * bind a component into a controller class. The class creates an
-  * `Action` that shows an incrementing count to users. The [[Counter]]
-  * object is injected by the Guice dependency injection system.
+  * This controller is responsible for getting traces, searching traces with a query, searching query completions etc
   */
 @Singleton
 class TraceController @Inject()(counter: Counter, traceManager : TraceManager) extends InjectedController {

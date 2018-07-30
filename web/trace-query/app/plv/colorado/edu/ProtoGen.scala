@@ -1,6 +1,6 @@
 package plv.colorado.edu
 
-import edu.colorado.plv.QueryTrace.{CCallback, CParam, CTrace, CVariable}
+import edu.colorado.plv.QueryTrace._
 import scalapb.json4s.JsonFormat
 
 object ProtoGen {
@@ -19,7 +19,8 @@ object ProtoGen {
     val callbacks = List(
       CCallback(methodSignature = "onCreate", receiver = "a")
     )
-    val a = CTrace(appName = "test", callbacks = callbacks)
+    val identifier = Some(TraceIdentifier(appName = "test"))
+    val a = CTrace(id = identifier, callbacks = callbacks)
     println(JsonFormat.toJsonString(a))
   }
 }
