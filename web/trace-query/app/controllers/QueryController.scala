@@ -15,6 +15,7 @@ class QueryController @Inject()(cc: ControllerComponents, traceQuery : TraceDbQu
     request.body match{
       case AnyContentAsJson(a) => {
         val protoparse = Try(JsonFormat.fromJsonString[CTrace](a.toString()))
+        traceQuery.testDb()
         Ok(a.toString())
       }
       case _ => BadRequest("Json Required")
