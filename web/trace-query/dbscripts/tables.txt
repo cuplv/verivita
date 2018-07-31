@@ -1,0 +1,12 @@
+CREATE TABLE method(
+	method_id SERIAL PRIMARY KEY,
+	signature VARCHAR(255) NOT NULL,
+	is_callback BOOLEAN,
+	is_callin BOOLEAN
+);
+CREATE TABLE method_param(
+	param_id SERIAL PRIMARY KEY,
+	method_id integer NOT NULL,
+	CONSTRAINT method_param_method_id_fkey FOREIGN KEY (method_id) 
+		REFERENCES method (method_id) MATCH SIMPLE
+)

@@ -70,7 +70,7 @@ override def callbackCompletionSearch(completion_query: CTrace): List[CCallback]
 //        }
 //      }
 
-      ???
+      true
     }
 
   }

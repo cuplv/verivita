@@ -17,7 +17,7 @@ object ProtoGen {
 
   def main(args: Array[String]): Unit = {
     val callbacks = List(
-      CCallback(methodSignature = "onCreate", receiver = "a")
+      CallbackOrHole().withCallback(CCallback(methodSignature = "onCreate", receiver = "a"))
     )
     val identifier = Some(TraceIdentifier(appName = "test"))
     val a = CTrace(id = identifier, callbacks = callbacks)
