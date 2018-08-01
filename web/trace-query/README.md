@@ -13,8 +13,7 @@ run postgres docker container with ``web/run_postgres_docker.sh``
 set up docker image with data
 -----------------------------
 * install psycopg2 ``pip install psycopg2``
-* create database with TODO
-* create tables with ``python dbscripts/create_tables.py [password]``
+* create database with TODO * create tables with ``python dbscripts/create_tables.py [password]``
 
 
 
@@ -33,3 +32,7 @@ run tracesearch with
 sbt run
 ```
 
+
+notes for later
+---------------
+* look into materialized views to store raw trace data and generate graphs: https://docs.microsoft.com/en-us/azure/architecture/patterns/materialized-view
