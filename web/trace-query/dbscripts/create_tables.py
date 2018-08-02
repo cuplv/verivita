@@ -47,24 +47,43 @@ class TraceDb:
             cur = conn.cursor()
             cur.execute(create_commands)
 
-    def import_message(connection, object_method_param_map):
-            #store relationship between trace objects and message positions
+    def import_message(self,connection, object_method_param_map, message):
+            #TODO: add message to method table
+            cur = connection.cursor()
+            framework_override=None
+            if len(message.fmwk_overrides) > 0:
+                #TODO: we should probably figure out what to do on a list of these
+                #for now it makes sense to just use the first one
+                framework_override = message.fmwk_overrides[0] 
+            signature = message.method_name
+            application_class = message.class_name
+            is_callback = isinstance(message,CCallback)
+            is_callin = isinstance(message,CCallin) #TODO: you were writing this insert query
+            cur.execute("""
+                INSERT INTO method (signature,first_framework_override,application_class,is_callback,is_callin)
+                VALUES (
+            """)
+            #TODO: add relevant method_param entries to table
+
             #TODO:loop over messages in ctrace (tree structure so probably recursive)
-            while False:
-                #TODO: add message to method table
-                #TODO: add relevant method_param entries to table
+
+
+            cur.close()
+            for child in message.children:
                 #TODO: put all objects in object_method_param_map
                 #TODO: add edges for all methods already in object_method_param_map - aggrigate edge - trace_edge
                 pass
 
 
     def import_trace(self,ctrace, connection):
+        #store relationship between trace objects and message positions
         object_method_param_map = {} #concrete objects in trace mapped to set of MethodParam objects
-        i_import_trace(connection)
+        for child in ctrace.children:
+            self.import_message(connection,object_method_param_map, child)
 
 
 
-    def import_trace_data(self,trace_basepath):
+    def import_trace_data(self,trace_basepath,strict=True):
         with psycopg2.connect(user=pg_user, password=pg_pass, dbname=self.dbname, host='localhost') as conn:
             trace_directory = TraceDirectory(trace_basepath)
             #loop over traces
@@ -76,21 +95,28 @@ class TraceDb:
                 # serialize to ctrace
                 ctrace = CTraceSerializer.read_trace_file_name(trace['full_path'], False, True)
                 # check if trace already added
-                cur = connection.cursor()
+                cur = conn.cursor()
                 cur.execute('SELECT trace_id FROM traces WHERE trace_name = %s AND app_name = %s;', (trace_name,app_name)) 
                 if cur.fetchone() is not None:
-                    raise Exception("Trace already added") #TODO: should we do something better here?
-                cur.close()
-                # add trace to traces table
-                cur = connection.cursor()
-                trace_runner_version = trace['trace_runner_version']
-                cur.execute("INSERT INTO traces (app_name,trace_name,git_repo,trace_runner_version) VALUES (%s,%s,%s,%s);", 
-                        (app_name,trace_name,git_repo,trace_runner_version))
-                cur.close()
-
+                    if(strict):
+                        raise Exception("Trace already added") #TODO: should we do something better here?
+                    cur.close()
+                else:
+                    cur.close()
+                    # add trace to traces table
+                    cur = conn.cursor()
+                    trace_runner_version = trace['trace_runner_version']
+                    query="""
+                        INSERT INTO traces (app_name,trace_name,git_repo,trace_runner_version) 
+                        VALUES (%s,%s,%s,%s);
+                        """
+                    cur.execute(query,(app_name,trace_name,git_repo,trace_runner_version))
+                    
+                    cur.close()
+                self.import_trace(ctrace,conn)
+                conn.commit()
+                break #TODO:
             
-                raise Exception("dbg_done")
-                import_trace(ctrace,conn)
 
 #loads a directory of traces and maps to names and github repos
 class TraceDirectory:
@@ -108,7 +134,7 @@ class TraceDirectory:
                         "relative_path":rel_trace_path, 
                         "app_name":self.pathToAppId(trace_path,{}), 
                         'trace_name':rel_trace_path.split(os.sep)[-1],
-                        'git_repo':"",
+                        'git_repo':"todo",
                         'trace_runner_version':0}
         self.tracefiles = tracefiles
     def __iter__(self):

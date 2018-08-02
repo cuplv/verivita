@@ -31,9 +31,9 @@ CREATE TABLE aggrigate_edge(
 	FOREIGN KEY (end_method_param) REFERENCES method_param (param_id)
 );
 CREATE TABLE trace_edge(
+	edge_id SERIAL PRIMARY KEY,
 	start_method_param integer NOT NULL,
 	end_method_param integer NOT NULL,
-	PRIMARY KEY (start_method_param, end_method_param),
 	trace_id integer NOT NULL,
 	FOREIGN KEY (trace_id) REFERENCES traces (trace_id),
 	FOREIGN KEY (start_method_param) REFERENCES method_param (param_id),
