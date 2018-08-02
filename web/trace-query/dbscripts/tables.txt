@@ -2,7 +2,7 @@ CREATE TABLE method(
 	method_id SERIAL PRIMARY KEY,
 	signature VARCHAR(1024) NOT NULL,
 	first_framework_override VARCHAR(1024),
-	application_class VARCHAR(1024),
+	/*application_class VARCHAR(1024), excluding so messages merge between traces*/
 	is_callback BOOLEAN,
 	is_callin BOOLEAN
 );

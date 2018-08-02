@@ -47,28 +47,83 @@ class TraceDb:
             cur = conn.cursor()
             cur.execute(create_commands)
 
+    def get_method_id(self,method_dat, connection):
+        exists_cur = connection.cursor()
+        exists_cur.execute("""
+            SELECT method_id FROM method 
+            WHERE 
+                signature = %s AND 
+                first_framework_override = %s AND
+                is_callback = %s AND
+                is_callin = %s
+        """,method_dat)
+        method_list = exists_cur.fetchall()
+        exists_cur.close()
+        results = len(method_list)
+        assert(results < 2)
+        return method_list[0][0] if results == 1 else None
+    def get_method_param_id(self, method_param_dat, connection):
+        cur = connection.cursor()
+
+        cur.execute("""
+            SELECT param_id FROM method_param
+            WHERE
+                method_id = %s AND
+                param_position = %s
+        """,method_param_dat)
+        param_list = cur.fetchall()
+        results = len(param_list)
+        assert(results < 2)
+        return param_list[0][0] if results == 1 else None
+
+        cur.close()
+
     def import_message(self,connection, object_method_param_map, message):
-            #TODO: add message to method table
-            cur = connection.cursor()
+            # add message to method table
             framework_override=None
             if len(message.fmwk_overrides) > 0:
                 #TODO: we should probably figure out what to do on a list of these
                 #for now it makes sense to just use the first one
-                framework_override = message.fmwk_overrides[0] 
-            signature = message.method_name
-            application_class = message.class_name
+                framework_override = str(message.fmwk_overrides[0])
+            signature = str(message.method_name)
+            #application_class = str(message.class_name)
             is_callback = isinstance(message,CCallback)
-            is_callin = isinstance(message,CCallin) #TODO: you were writing this insert query
-            cur.execute("""
-                INSERT INTO method (signature,first_framework_override,application_class,is_callback,is_callin)
-                VALUES (
-            """)
+            is_callin = isinstance(message,CCallin) 
+            # check if method already inserted
+            #TODO: this code will fail on concurrent imports, fix later, needs own transaction and lock on methods table
+
+            method_dat = (signature,framework_override, is_callback, is_callin)
+            method_identifier = self.get_method_id(method_dat, connection) 
+            if method_identifier is None:
+                cur = connection.cursor()
+                cur.execute("""
+                    INSERT INTO method (signature,first_framework_override,is_callback,is_callin)
+                    VALUES (%s,%s,%s,%s);
+                """, method_dat)
+                cur.close()
+            method_identifier = self.get_method_id(method_dat, connection) 
+            assert(method_identifier is not None)
+            
             #TODO: add relevant method_param entries to table
+
+            #TODO: return value
+            if message.return_value != "NULL":
+                method_param_dat = (method_id,0) #0 for return value
+                method_param_id = get_method_param_id(method_param_dat, connection) #TODO: create this method
+                if method_param_id is None:
+                    pass #TODO: insert into database
+            #TODO: reciever
+            print "reciever"
+            #TODO: parameters
+            for param in message.params:
+                if param in object_method_param_map:
+                    pass #TODO: case where param exists
+                else:
+                    pass #TODO: case for new object
 
             #TODO:loop over messages in ctrace (tree structure so probably recursive)
 
 
-            cur.close()
             for child in message.children:
                 #TODO: put all objects in object_method_param_map
                 #TODO: add edges for all methods already in object_method_param_map - aggrigate edge - trace_edge
