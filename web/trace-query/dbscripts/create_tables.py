@@ -87,10 +87,10 @@ class TraceDb:
             cur.close()
             method_param_id = self.get_method_param_id(method_param_dat,connection)
         return method_param_id
-    def get_edge_id(trace_edge_dat, connection):
+    def get_edge_id(self,trace_edge_dat, connection):
         cur = connection.cursor()
         cur.execute("""
-            SELECT edge_id FROM trace_edge WHERE start_method_param = %s AND end_method_param = %s;
+            SELECT edge_id FROM trace_edge WHERE start_method_param = %s AND end_method_param = %s AND trace_id = %s;
         """, trace_edge_dat)
         edge_list = cur.fetchall()
         cur.close()
@@ -103,22 +103,29 @@ class TraceDb:
             d2 = (old_method_id, method_param_id, trace_id)
             d1_id = self.get_edge_id(d1,connection)
             d2_id = self.get_edge_id(d2,connection)
+            inslist = [d1,d2] if method_param_id != old_method_id else [d1]
             if (d1_id is None) and (d2_id is None):
-                for d in [d1,d2]:
+                for d in inslist:
                     cur = connection.cursor() #TODO: finish me
                     cur.execute("""
                         INSERT INTO trace_edge (start_method_param,end_method_param,trace_id)
                         VALUES (%s,%s,%s);
                     """,d)
                     cur.close()
+            else:
+                assert( (d1_id is not None) and (d2_id is not None))
 
     def import_message(self,connection, object_method_param_map, message, trace_id):
             # add message to method table
             framework_override=None
-            if len(message.fmwk_overrides) > 0:
-                #TODO: we should probably figure out what to do on a list of these
-                #for now it makes sense to just use the first one
-                framework_override = str(message.fmwk_overrides[0])
+            if isinstance(message, CCallback):
+                if len(message.fmwk_overrides) > 0:
+                    #TODO: we should probably figure out what to do on a list of these
+                    #for now it makes sense to just use the first one
+                    framework_override = str(message.fmwk_overrides[0])
+            else:
+                pass
+                raise Exception("todo")
             signature = str(message.method_name)
             #application_class = str(message.class_name)
             is_callback = isinstance(message,CCallback)
@@ -141,7 +148,9 @@ class TraceDb:
             # add relevant method_param entries to table
 
             # return value
-            rval = message.return_value.object_id
+            rval = None
+            if message.return_value is not None:
+                rval = message.return_value.object_id
             if rval is not None:
                 if type(rval) != unicode:
                     assert(False)
@@ -175,6 +184,7 @@ class TraceDb:
 
 
             for child in message.children:
+                self.import_message(connection, object_method_param_map, child, trace_id)
                 #TODO: put all objects in object_method_param_map
                 #TODO: add edges for all methods already in object_method_param_map - aggrigate edge - trace_edge
                 pass
@@ -231,7 +241,7 @@ class TraceDb:
                 existing_trace_id = self.get_trace_id(trace_dat_id, conn)
                 self.import_trace(ctrace,conn, existing_trace_id)
                 conn.commit()
-                break #TODO:
+                break
             
 
 #loads a directory of traces and maps to names and github repos
