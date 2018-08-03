@@ -4,6 +4,7 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 import argparse
 import fnmatch
 from cbverifier.traces.ctrace import CTraceSerializer, CCallin, CMessage, CCallback
+import time
 
 home_dir = os.getenv("HOME")
 pg_pass = ""
@@ -17,6 +18,17 @@ class TraceDb:
     def __init__(self,dbname,tables_file):
         self.dbname = dbname
         self.tables_file = tables_file
+    def create_index(self):
+        pass 
+        # trace_edge : 141297
+        # create index edge_idx on trace_edge (start_method_param, end_method_param,trace_id); #similar speed to start (done in isolation)
+        # CREATE INDEX trace_edge_trace_id_idx on trace_edge (trace_id); 
+        # create index trace_edge_start_idx on trace_edge (start_method_param); # large improvement
+        # create index trace_edge_end_idx on trace_edge (end_method_param); #smaller improvement
+
+        # method_param : 1402
+        # CREATE INDEX method_id_param_position_idx ON method_param (method_id,param_position); #no noticeable improvement
+        # method : 605
     def drop_tables(self):
         with psycopg2.connect(user=pg_user, password=pg_pass, dbname=self.dbname, host='localhost') as conn:
             cur = conn.cursor()
@@ -118,15 +130,18 @@ class TraceDb:
     def import_message(self,connection, object_method_param_map, message, trace_id):
             # add message to method table
             framework_override=None
+            signature = str(message.method_name)
             if isinstance(message, CCallback):
                 if len(message.fmwk_overrides) > 0:
                     #TODO: we should probably figure out what to do on a list of these
-                    #for now it makes sense to just use the first one
+                    #for now it makes sense to just use the first one #'class void android.app.Application.<init>()'
                     framework_override = str(message.fmwk_overrides[0])
+                else:
+                    assert(signature == '<clinit>') #clinit does not have first framework override 
+                    framework_override = str(message.get_full_msg_name())
             else:
                 pass
-                raise Exception("todo")
-            signature = str(message.method_name)
+                framework_override = str(message.get_full_msg_name())
             #application_class = str(message.class_name)
             is_callback = isinstance(message,CCallback)
             is_callin = isinstance(message,CCallin) 
@@ -134,6 +149,7 @@ class TraceDb:
             #TODO: this code will fail on concurrent imports, fix later, needs own transaction and lock on methods table
 
             method_dat = (signature,framework_override, is_callback, is_callin)
+            #print method_dat
             method_id = self.get_method_id(method_dat, connection) 
             if method_id is None:
                 cur = connection.cursor()
@@ -182,19 +198,32 @@ class TraceDb:
 
                 #TODO:loop over messages in ctrace (tree structure so probably recursive)
 
-
+            imported = 1
             for child in message.children:
-                self.import_message(connection, object_method_param_map, child, trace_id)
+                imported += self.import_message(connection, object_method_param_map, child, trace_id)
                 #TODO: put all objects in object_method_param_map
                 #TODO: add edges for all methods already in object_method_param_map - aggrigate edge - trace_edge
                 pass
+            return imported
 
 
-    def import_trace(self,ctrace, connection, trace_id):
+    def import_trace(self,ctrace, connection, trace_id,limit):
         #store relationship between trace objects and message positions
         object_method_param_map = {} #concrete objects in trace mapped to set of MethodParam objects
+        tlcb_to_import = len(ctrace.children)
+        current_import = -1
         for child in ctrace.children:
-            self.import_message(connection,object_method_param_map, child, trace_id)
+            if limit != None and current_import > limit:
+                return
+            current_import +=1
+            starttime = time.time()
+            subchildren = self.import_message(connection,object_method_param_map, child, trace_id)
+            importtime=time.time() - starttime
+            importtime_s = importtime/1000.
+            child_per_second = float(subchildren)/float(importtime_s)
+            print "%s / %s children: %s time: %s child/second: %s" % (current_import, tlcb_to_import, str(subchildren), str(importtime), str(child_per_second))
+            if current_import %10 == 0:
+                connection.commit()
     #trace_dat_id is tuple of (trace_name,app_name)
     def get_trace_id(self,trace_dat_id, connection):
         cur = connection.cursor()
@@ -207,7 +236,7 @@ class TraceDb:
         assert(resultsize<2)
         return None if resultsize == 0 else trace_ids[0][0]
 
-    def import_trace_data(self,trace_basepath,strict=True):
+    def import_trace_data(self,trace_basepath,limit = None, strict=False):
         with psycopg2.connect(user=pg_user, password=pg_pass, dbname=self.dbname, host='localhost') as conn:
             trace_directory = TraceDirectory(trace_basepath)
             #loop over traces
@@ -215,9 +244,9 @@ class TraceDb:
                 trace_name = trace['trace_name']
                 app_name = trace['app_name']
                 relative_path = trace['relative_path']
+                print "importing: %s" % relative_path
                 git_repo = trace['git_repo']
                 # serialize to ctrace
-                ctrace = CTraceSerializer.read_trace_file_name(trace['full_path'], False, True)
                 # check if trace already added
                 trace_dat_id = (trace_name,app_name)
                 #cur = conn.cursor()
@@ -229,19 +258,19 @@ class TraceDb:
                         raise Exception("Trace already added") #TODO: should we do something better here?
                 else:
                     # add trace to traces table
+                    ctrace = CTraceSerializer.read_trace_file_name(trace['full_path'], False, True)
                     cur = conn.cursor()
                     trace_runner_version = trace['trace_runner_version']
                     query="""
-                        INSERT INTO traces (app_name,trace_name,git_repo,trace_runner_version) 
-                        VALUES (%s,%s,%s,%s);
+                        INSERT INTO traces (app_name,trace_name,git_repo,trace_runner_version, trace_data_path) 
+                        VALUES (%s,%s,%s,%s,%s);
                         """
-                    cur.execute(query,(app_name,trace_name,git_repo,trace_runner_version))
+                    cur.execute(query,(app_name,trace_name,git_repo,trace_runner_version,relative_path))
                     
                     cur.close()
-                existing_trace_id = self.get_trace_id(trace_dat_id, conn)
-                self.import_trace(ctrace,conn, existing_trace_id)
-                conn.commit()
-                break
+                    existing_trace_id = self.get_trace_id(trace_dat_id, conn)
+                    self.import_trace(ctrace,conn, existing_trace_id,limit)
+                    conn.commit()
             
 
 #loads a directory of traces and maps to names and github repos
