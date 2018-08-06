@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package edu.colorado.plv;
+
+message QueryTrace {
+    string app_name = 1;
+    string git_repo = 2;
+    string trace_name = 3;
+    repeated CCallback callbacks = 4;
+}
+{intentionally broken bit to check if compiling
+message CCallback{
+    string method_signature = 1;
+    string first_framework_overrride_class = 2;
+    string application_class = 3;
+    repeated CParam parameters = 4;
+    CParam receiver = 5;
+    CParam return_value = 6;
+    CException exception = 7;
+    repeated CCommand nested_commands = 8; //command will be extended later to include assume assert assign etc
+}
+
+message CCommand{
+    oneof command{
+        CCallin callin = 1;
+    }
+}
+
+message CCallin{
+    string method_signature = 1;
+    string framework_class = 2;
+    repeated CParam parameters = 3;
+    CParam receiver = 4;
+    CParam return_value = 5;
+    CException exception = 6;
+    repeated CCallback nested_callbacks = 8; //not CCommand since nested callbacks not controlled by app code
+}
+
+message CParam{
+    oneof param{
+        CVariable variable = 1;
+        CPrimitive primitive = 2;
+        CObject object = 3;
+        CDontcare dontcare = 4;
+    }
+}
+message CVariable{
+    string name = 1;
+}
+message CObject{
+    int64 id = 1; //Null if not set
+}
+message CPRimitive{
+    oneof primitive{
+        int32 int_val = 1;
+        int64 long_val = 2;
+        string string_val = 3;
+
+    }
+}
+message CDontcare{} //intentionally empty
+
+message CException{
+
+}
