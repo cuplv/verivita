@@ -17,7 +17,14 @@ set up docker image with data
 * create database with * create tables with ``python dbscripts/create_tables.py [password]`` TODO: command line interface for this script, currently just run with ipython
 
 
+data locations
+------------------------
+**docker images**
+100.120.0.2:5005/fixr_verivita_web_search
+100.120.0.2:5005/fixr_verivita_tracedb
 
+**psql data**
+/Users/s/Documents/data/trace_query_data_psql.tgz (shawn's computer, this is generated from trace corpus on aws s3)
 
 
 clone and build trace-serializer

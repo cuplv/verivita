@@ -2,8 +2,6 @@ version : '3'
 services:
         db:
                 image: 100.120.0.2:5005/fixr_verivita_tracedb
-                ports:
-                        - "5432:5432"
                 environment:
                         - POSTGRES_PASSWORD=72kjnnasi83yhsmmdfh238
                         - PGDATA=/home
