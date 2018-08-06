@@ -13,7 +13,10 @@ run postgres docker container with ``web/run_postgres_docker.sh``
 set up docker image with data
 -----------------------------
 * install psycopg2 ``pip install psycopg2``
-* create database with TODO * create tables with ``python dbscripts/create_tables.py [password]``
+* run docker container with ``docker run --name $NAME -e POSTGRES_PASSWORD=${PASS} -e PGDATA=/home -d -p 5432:5432 fixr_verivita_tracedb``
+* create database with * create tables with ``python dbscripts/create_tables.py [password]`` TODO: command line interface for this script, currently just run with ipython
+
+
 
 
 

@@ -22,6 +22,7 @@ RUN chown -R muse:muse /home/muse
 #ENV PYTHONPATH "/root/.smt_solvers/python-bindings-2.7:/home/muse/cbverifier:/home/muse/pysmt:/home/muse"
 ENV JAVA_HOME "/usr/lib/jvm/java-8-openjdk-amd64"
 ENV DATABASE_URL jdbc:postgresql://database:5432/trace_query
+ENV PATH="/home/muse/mgmtcommands:${PATH}"
 #ENV TRACE_DIR "/home/muse/testTrace"
 #ENV LD_LIBRARY_PATH "/usr/local/lib/python2.7/dist-packages/jep"
 RUN apt-get install -y openjdk-8-jdk-headless
