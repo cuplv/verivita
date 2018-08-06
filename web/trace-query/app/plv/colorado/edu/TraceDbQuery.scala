@@ -33,4 +33,12 @@ trait TraceDbQuery {
     */
   def getTrace(identifier: TraceIdentifier) : CTrace
 
+  def getTraceId(params : Seq[DBParam]) : Set[Int]
+
+  def getConnectedMethods(method : CCallback): (List[CCallback], List[CCallin])
+  def getConnectedMethods(method : CCallin) : (List[CCallback], List[CCallin])
+  def getMethod(method : CCallback): Seq[DBMethod]
+  def getAllParams(methods: Seq[DBMethod]): Seq[DBParam]
+  case class DBMethod(method_id : Int, signature: String, firstFramework: String)
+  case class DBParam(param_id: Int, param_position : Int, method_id : Int)
 }

@@ -4,9 +4,10 @@ import java.sql.Connection
 import edu.colorado.plv.QueryTrace.{CCallback, CCallin, CTrace, TraceIdentifier}
 import javax.inject.Inject
 import play.api.db.Database
-
 import anorm._
-import anorm.SqlParser.{ str, float , get , scalar }
+import anorm.SqlParser.{float, get, scalar, str}
+
+import scala.collection.immutable
 
 /**
   * note this seems to be the best example of how to draw the rest of the owl:
@@ -52,26 +53,91 @@ override def callbackCompletionSearch(completion_query: CTrace): List[CCallback]
       case  first_name => first_name
     }
   }
+  private val count_parse = {
+    get[Int]("count") map {
+      case count => count
+    }
+  }
+  override def getConnectedMethods(method : CCallback): (List[CCallback], List[CCallin]) = {
+    ???
+  }
+  override def getConnectedMethods(method: CCallin): (List[CCallback], List[CCallin]) = ???
+
+
+
+
+  override def getTraceId(params : Seq[DBParam]): Set[Int] = {
+    val traceIdParse = {
+      get[Int]("trace_id")
+    }
+    db.withConnection{ conn =>
+      implicit val c = conn
+      params.flatMap { param =>
+        SQL("""SELECT trace_id FROM trace_edge WHERE start_method_param = {param}""")
+          .on('param -> param.param_id)
+          .as(traceIdParse.*)
+      }
+    }.toSet
+  }
+
+  private val method_id_parse: RowParser[DBMethod] = {
+    get[Int]("method_id") ~
+      get[String] ("signature") ~
+      get[String] ("first_framework_override")map {
+      case id ~ sig ~ ov => DBMethod(id,sig,ov)
+    }
+  }
+  override def getMethod(method : CCallback): Seq[DBMethod] = {
+    val sig: String = method.methodSignature
+    //.on("sig" -> sig)
+    db.withConnection { conn =>
+      implicit val b = conn
+      val sql2: SimpleSql[Row] =
+        SQL("""SELECT * FROM method
+              WHERE signature = {sig};
+           """)
+
+      val sql = sql2.on('sig -> sig)
+
+//      val sql: SimpleSql[Row] =
+//        SQL("""SELECT * FROM method
+//              WHERE signature = {sig};
+//           """).on('sig -> sig)
+      val res: immutable.Seq[DBMethod] =
+        sql.as(method_id_parse.*)
+      res
+    }
+  }
+  val param_parse = {
+    get[Int]("param_id")~
+    get[Int]("method_id")~
+    get[Int]("param_position") map {
+      case param_id ~ method_id ~ param_position => DBParam(param_id, param_position, method_id)
+    }
+  }
+  override def getAllParams(methods : Seq[DBMethod]): Seq[DBParam] = {
+    db.withConnection{ conn =>
+      implicit val connection = conn
+      methods.flatMap{ method =>
+        SQL("""SELECT * FROM method_param WHERE method_id = {id}""")
+          .on('id -> method.method_id).as(param_parse.*)
+      }
+    }
+  }
   override def testDb(): Boolean = {
     db.withConnection{ conn =>
 //      val stmt = conn.createStatement
 //      val rs = stmt.executeQuery("""select * from pg_catalog.pg_tables;""")
 //      val string = rs.toString
       implicit val b: Connection = conn
-      val a = SQL"""select first_name from actor where actor_id > 190;""".as(simple.*)
-//      val query = SQL("""select first_name from actor where actor_id > 190;""")
-//      val result = query(conn)
-//      val result2 = query.executeQuery()(conn).as(SqlParser.str("first_name").collect)(conn)
-//      result2 match{
-//        case SqlQueryResult(a,b) => {
-//          println(a)
-//          println(b)
-//          ???
-//        }
-//      }
+//      val a = SQL"""select first_name from actor where actor_id > 190;""".as(simple.*)
 
-      true
+        val a = SQL"""select count(*) from traces;""".as(count_parse.single)
+
+      a > 0
     }
 
   }
+
+
 }

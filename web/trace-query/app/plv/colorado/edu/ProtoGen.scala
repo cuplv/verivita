@@ -15,12 +15,21 @@ object ProtoGen {
     Some(value)
   }
 
-  def main(args: Array[String]): Unit = {
+  def q1 = {
     val callbacks = List(
-      CallbackOrHole().withCallback(CCallback(methodSignature = "onCreate", receiver = "a"))
+      CallbackOrHole().withCallback(
+        CCallback(
+          methodSignature = "void onCreate(android.os.Bundle)",
+          receiver = "a", nestedCommands = Seq(
+            CCommand().withCallin(CCallin(methodSignature = ""))
+          )))
     )
     val identifier = Some(TraceIdentifier(appName = "test"))
     val a = CTrace(id = identifier, callbacks = callbacks)
-    println(JsonFormat.toJsonString(a))
+    JsonFormat.toJsonString(a)
+  }
+  def main(args: Array[String]): Unit = {
+    println("q1")
+    println(q1)
   }
 }
