@@ -1,12 +1,20 @@
 version : '3'
 services:
-        vvweb:
-                image: fixr_verivita_web_search
-                ports:
-                        - "5432:5432"
-                links:
-                        - "db:database"
         db:
                 image: 100.120.0.2:5005/fixr_verivita_tracedb
                 ports:
+                        - "5432:5432"
+                environment:
+                        - POSTGRES_PASSWORD=72kjnnasi83yhsmmdfh238
+                        - PGDATA=/home
+        vvweb:
+                image: fixr_verivita_web_search
+                ports:
                         - "9000:9000"
+                links:
+                        - "db:database"
+                environment:
+                        - APPLICATION_SECRET=akjlsdy737yh2u7y3hsdfkjasdfjhasd83y3urkuaghkjfhdsafiuysdfaykujh3kjh37uhdfhssaaqqqq1223ng
+                        - DATABASE_URL=jdbc:postgresql://database:5432/trace_query
+                command:
+                        - run.sh

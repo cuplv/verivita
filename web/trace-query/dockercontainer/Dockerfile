@@ -1,6 +1,5 @@
 FROM ubuntu:16.04
 WORKDIR /home/muse
-COPY . /home/muse/
 RUN apt-get update
 RUN apt-get install -y openssh-server vim emacs gcc make sudo curl python2.7
 RUN apt-get install -y openssh-server vim python2.7
@@ -26,6 +25,7 @@ ENV DATABASE_URL jdbc:postgresql://database:5432/trace_query
 #ENV TRACE_DIR "/home/muse/testTrace"
 #ENV LD_LIBRARY_PATH "/usr/local/lib/python2.7/dist-packages/jep"
 RUN apt-get install -y openjdk-8-jdk-headless
+COPY . /home/muse/
 #RUN pip install jep
 #TODO
 
@@ -34,7 +34,8 @@ RUN apt-get install -y openjdk-8-jdk-headless
 
 EXPOSE 9000
 # overwrite this with 'CMD []' in a dependent Dockerfile
-CMD ["sleep", "9999"]
+#CMD ["bash", "/home/muse/trace-query-1.0-SNAPSHOT/bin/trace-query"]
+CMD ["sleep", "999999999999999999"]
 
 
 #FROM ysihaoy/scala-play:2.12.2-2.6.0-sbt-0.13.15
