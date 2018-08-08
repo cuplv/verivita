@@ -303,4 +303,37 @@ override def callbackCompletionSearch(completion_query: CTrace): List[CCallback]
   }
 
 
+  def findEnabledHole_(c :CallbackOrHole) : Option[Boolean] = {
+    if(c.command.isHole){
+      Some(true)
+    }else{
+      val maybeBooleans: Seq[Option[Boolean]] =
+        c.getCallback.nestedCommands.map(findEnabledHole).filter(a => !a.isEmpty)
+      maybeBooleans match {
+        case Seq() => None
+        case a => a.head
+      }
+    }
+  }
+  def findEnabledHole(c : CCommand) : Option[Boolean] = {
+    if(c.command.isHole){
+      Some(false)
+    }else{
+      //TODO: nested callbacks ignored, is this reasonable?
+      None
+    }
+  }
+
+  /**
+    *
+    * @param c
+    * @return Some(true) if hole is callback Some(false) if callin None if malformed
+    */
+  override def isCallbackQuery(c: CTrace): Option[Boolean] = {
+    c.callbacks.map(findEnabledHole_).filter(a => !a.isEmpty) match{
+      case Seq() => None
+      case a => a.head
+
+    }
+  }
 }

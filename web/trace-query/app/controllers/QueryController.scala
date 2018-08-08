@@ -56,7 +56,14 @@ class QueryController @Inject()(cc: ControllerComponents, traceQuery : TraceDbQu
   def completionSearch() = Action{ request : Request[AnyContent] =>
     withParsedCTrace(request.body, {p => p match{
       case Success(p) => {
-        ???
+        traceQuery.isCallbackQuery(p) match {
+          case Some(true) =>
+            ???
+          case Some(false) =>
+            ???
+          case None =>
+            ???
+        }
       }
       case _ => ???
     }})

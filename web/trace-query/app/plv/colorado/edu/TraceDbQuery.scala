@@ -29,6 +29,8 @@ trait TraceDbQuery {
 
   def dbTrace2TraceIdentifier(dbtrace : DBTrace) : TraceIdentifier
 
+  def isCallbackQuery(c : CTrace): Option[Boolean]
+
   /**
     * search for completions to missing callbacks
     * @param completion_query

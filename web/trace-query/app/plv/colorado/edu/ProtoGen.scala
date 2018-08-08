@@ -59,10 +59,35 @@ object ProtoGen {
     ctraceFromCallbacks(callbacks)
 
   }
+  def q_with_hole = {
+    val callbacks = List(
+      CallbackOrHole().withCallback(
+        CCallback(
+          methodSignature = "void onCreate(android.os.Bundle)",
+          firstFrameworkOverrrideClass = "class void android.app.Activity.onCreate(android.os.Bundle)",
+          receiver = "a",
+          nestedCommands = Seq(
+            CCommand().withCallin(CCallin(methodSignature = "java.lang.Object getSystemService(java.lang.String)",
+              frameworkClass = "java.lang.Object android.app.Activity.getSystemService(java.lang.String)",
+              receiver = "a")),
+            CCommand().withCallin(CCallin(methodSignature = "android.view.View findViewById(int)",
+              frameworkClass = "android.view.View android.app.Activity.findViewById(int)",
+              receiver = "a"
+            )),
+            CCommand().withHole(Hole(true))
+          )
+        )
+      ),
+      CallbackOrHole().withHole(Hole(false))
+    )
+    ctraceFromCallbacks(callbacks)
+  }
   def main(args: Array[String]): Unit = {
     println("q1")
     println(q1)
     println("q2")
     println(q2)
+    println("q_withcallin_hole")
+    println(q_with_hole)
   }
 }
