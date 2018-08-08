@@ -1,0 +1,42 @@
+{
+    "callbacks": [
+        {
+            "callback": {
+                "firstFrameworkOverrrideClass": "class void android.app.Activity.onCreate(android.os.Bundle)",
+                "methodSignature": "void onCreate(android.os.Bundle)",
+                "nestedCommands": [
+                    {
+                        "callin": {
+                            "frameworkClass": "java.lang.Object android.app.Activity.getSystemService(java.lang.String)",
+                            "methodSignature": "java.lang.Object getSystemService(java.lang.String)",
+                            "receiver": {
+                                "variable": {
+                                    "name": "a"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "callin": {
+                            "frameworkClass": "android.view.View android.app.Activity.findViewById(int)",
+                            "methodSignature": "android.view.View findViewById(int)",
+                            "receiver": {
+                                "variable": {
+                                    "name": "a"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "receiver": {
+                    "variable": {
+                        "name": "a"
+                    }
+                }
+            }
+        }
+    ],
+    "id": {
+        "appName": "test"
+    }
+}
