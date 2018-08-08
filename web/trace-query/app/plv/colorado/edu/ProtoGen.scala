@@ -15,21 +15,54 @@ object ProtoGen {
     Some(value)
   }
 
+  def ctraceFromCallbacks(callbacks : List[CallbackOrHole]) = {
+    val identifier = Some(TraceIdentifier(appName = "test"))
+    val a = CTrace(id = identifier, callbacks = callbacks)
+    JsonFormat.toJsonString(a)
+  }
   def q1 = {
     val callbacks = List(
       CallbackOrHole().withCallback(
         CCallback(
           methodSignature = "void onCreate(android.os.Bundle)",
-          receiver = "a", nestedCommands = Seq(
-            CCommand().withCallin(CCallin(methodSignature = ""))
-          )))
+          firstFrameworkOverrrideClass = "class void android.app.Activity.onCreate(android.os.Bundle)",
+          receiver = "a",
+          nestedCommands = Seq(
+            CCommand().withCallin(CCallin(methodSignature = "java.lang.Object getSystemService(java.lang.String)",
+              frameworkClass = "java.lang.Object android.app.Activity.getSystemService(java.lang.String)",
+              receiver = "a"))
+          )
+        ))
     )
-    val identifier = Some(TraceIdentifier(appName = "test"))
-    val a = CTrace(id = identifier, callbacks = callbacks)
-    JsonFormat.toJsonString(a)
+    ctraceFromCallbacks(callbacks)
+
+  }
+  def q2 = {
+    val callbacks = List(
+      CallbackOrHole().withCallback(
+        CCallback(
+          methodSignature = "void onCreate(android.os.Bundle)",
+          firstFrameworkOverrrideClass = "class void android.app.Activity.onCreate(android.os.Bundle)",
+          receiver = "a",
+          nestedCommands = Seq(
+            CCommand().withCallin(CCallin(methodSignature = "java.lang.Object getSystemService(java.lang.String)",
+              frameworkClass = "java.lang.Object android.app.Activity.getSystemService(java.lang.String)",
+              receiver = "a")),
+            CCommand().withCallin(CCallin(methodSignature = "android.view.View findViewById(int)",
+              frameworkClass = "android.view.View android.app.Activity.findViewById(int)",
+              receiver = "a"
+            ))
+
+          )
+        ))
+    )
+    ctraceFromCallbacks(callbacks)
+
   }
   def main(args: Array[String]): Unit = {
     println("q1")
     println(q1)
+    println("q2")
+    println(q2)
   }
 }

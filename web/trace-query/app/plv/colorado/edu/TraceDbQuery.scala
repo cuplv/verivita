@@ -8,9 +8,26 @@ trait TraceDbQuery {
   /**
     * search for similar traces to parameterized query
     * @param trace_query parameterized trace to search for similar
-    * @return list of CTrace without callbacks populated, used to identify traces
+    * @return list of traces sharing any connection with query
     */
-  def traceSearch(trace_query : CTrace) : List[TraceIdentifier]
+  def traceAnySearch(trace_query : CTrace) : Seq[DBTrace]
+
+  /**
+    * search for traces including most edges
+    * @param trace_query
+    * @return results ranked by number of edges included by trace
+    */
+  def traceRankSearch(trace_query : CTrace) : Seq[(DBTrace, Int)]
+
+  /**
+    * Search for traces with a given connection
+    * @param trace_query
+    * @return edges from query, represented by int pair mapped to traces
+    */
+  def traceSearch(trace_query : CTrace) : Map[(Int,Int), Set[DBTrace]]
+
+
+  def dbTrace2TraceIdentifier(dbtrace : DBTrace) : TraceIdentifier
 
   /**
     * search for completions to missing callbacks
@@ -39,6 +56,8 @@ trait TraceDbQuery {
   def getConnectedMethods(method : CCallin) : (List[CCallback], List[CCallin])
   def getMethod(method : CCallback): Seq[DBMethod]
   def getAllParams(methods: Seq[DBMethod]): Seq[DBParam]
+  case class DBEdge(edge_id : Int, start_method_param : Int, end_method_param : Int)
   case class DBMethod(method_id : Int, signature: String, firstFramework: String)
   case class DBParam(param_id: Int, param_position : Int, method_id : Int)
+  case class DBTrace(trace_id : Int)
 }

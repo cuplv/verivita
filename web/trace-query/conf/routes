@@ -10,5 +10,7 @@ POST    /get_traces_methods         controllers.QueryController.getTracesFromAll
 
 POST    /get_methods                controllers.QueryController.getMethods
 
+GET     /traces_search/:rank        controllers.QueryController.traceSearch(rank : String)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
