@@ -56,19 +56,28 @@ class QueryController @Inject()(cc: ControllerComponents, traceQuery : TraceDbQu
   def completionSearch() = Action{ request : Request[AnyContent] =>
     withParsedCTrace(request.body, {p => p match{
       case Success(p) => {
-        traceQuery.isCallbackQuery(p) match {
+        val isCallback = traceQuery.isCallbackQuery(p)
+        val cicb = isCallback match{
+          case Some(true) => "callback"
+          case Some(false) => "callin"
+          case None => "error"
+        }
+        //        val traceIDS = traceQuery.traceRankSearch(p)
+        val list_res = isCallback match {
           case Some(true) =>
-            ???
+            Some(traceQuery.callbackCompletionSearch(p))
           case Some(false) =>
-            ???
+            Some(traceQuery.callinCompletionSearch(p))
           case None =>
-            ???
+            None
+        }
+        list_res match{
+          case None => BadRequest("""{"message" : "hole not found"}""")
+          case Some(v) => Ok(s"[${v.map(a => s"""{"rank" : ${a._1}, "${cicb}": ${JsonFormat.toJsonString(a._2)} """)}")
         }
       }
       case _ => ???
     }})
-    ???
-
   }
   /**
     * Find all methods that contain any of the methods in the query

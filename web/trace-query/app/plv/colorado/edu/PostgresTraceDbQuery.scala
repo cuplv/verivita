@@ -6,6 +6,7 @@ import javax.inject.Inject
 import play.api.db.Database
 import anorm._
 import anorm.SqlParser.{float, get, scalar, str}
+import edu.colorado.plv.QueryTrace
 import edu.colorado.plv.QueryTrace.CParam.Param
 
 import scala.collection.immutable
@@ -61,6 +62,9 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
               AND param_position = {position};
         """).on('method_id -> method_id).on('position -> position).as(param_parse.single)
     }
+  }
+  def varsFromCCallback(cmd : CallbackOrHole) : Seq[(String,DBParam)] = {
+    if(cmd.command.isCallback) varsFromCCallback(cmd.getCallback) else Seq()
   }
   def varsFromCCallback(callback : CCallback): Seq[(String, DBParam)] ={
     //Note can be multiple methods if not fully specified
@@ -141,7 +145,16 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
   }
   override def traceSearch(trace_query: CTrace): Map[(Int, Int), Set[DBTrace]] = {
     trace_query.callbacks.map { a =>
-      val vars : Seq[(String, DBParam)] = (a.command.callback map varsFromCCallback).getOrElse(???)
+      val varAttempt = a.command.callback map varsFromCCallback
+      val vars : Seq[(String, DBParam)] = varAttempt match{
+        case Some(v) => v
+        case None => {
+          Seq()
+        }
+      }
+//        varAttempt.getOrElse(
+//          ???
+//        )
       //Generate all pairs where variables are the same and dbparam is different
       //TODO: Note that if something is used twice in one method it will show up as an edge is this a problem?
       val edges = for (x <- vars ; y <- vars
@@ -177,7 +190,15 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
     * @param completion_query
     * @return
     */
-  override def callinCompletionSearch(completion_query: CTrace): List[CCallin] = {
+  override def callinCompletionSearch(completion_query: CTrace): List[(Int,CCallin)] = {
+    val traceIDs = traceRankSearch(completion_query)
+    val methodsInQuery: Seq[(String, DBParam)] =
+      completion_query.callbacks.flatMap(varsFromCCallback)
+    val everypair = for( traceId <- traceIDs; method <- methodsInQuery)
+      yield (traceId,method)
+    //TODO: query for method and one of the methods,
+    // join together the method/var,
+    // rank based on connections as well as trace score (multiply?)
     ???
   }
 
@@ -187,7 +208,7 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
     * @param completion_query query where a callin
     * @return
     */
-override def callbackCompletionSearch(completion_query: CTrace): List[CCallback] = {
+override def callbackCompletionSearch(completion_query: CTrace): List[(Int,CCallback)] = {
   ???
 }
 

@@ -36,14 +36,14 @@ trait TraceDbQuery {
     * @param completion_query
     * @return
     */
-  def callinCompletionSearch( completion_query : CTrace) : List[CCallin]
+  def callinCompletionSearch( completion_query : CTrace) : List[(Int,CCallin)]
 
   /**
     * search for completions to missing callins
     * @param completion_query query where a callin
     * @return
     */
-  def callbackCompletionSearch( completion_query : CTrace) : List[CCallback]
+  def callbackCompletionSearch( completion_query : CTrace) : List[(Int,CCallback)]
 
   /**
     * get trace data based on identifier, note the traceIdentifier is a unique key
