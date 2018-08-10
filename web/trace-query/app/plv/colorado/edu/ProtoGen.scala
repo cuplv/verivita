@@ -10,10 +10,12 @@ object ProtoGen {
     * @param varname
     * @return
     */
-  implicit def string2CParam(varname : String): Option[CParam] = {
+  implicit def string2OCParam(varname : String): Option[CParam] = {
     val value = CParam().withVariable(CVariable(varname))
     Some(value)
   }
+  implicit def string2CParam(varname : String) : CParam = CParam().withVariable(CVariable(varname))
+
 
   def ctraceFromCallbacks(callbacks : List[CallbackOrHole]) = {
     val identifier = Some(TraceIdentifier(appName = "test"))
@@ -44,6 +46,7 @@ object ProtoGen {
           methodSignature = "void onCreate(android.os.Bundle)",
           firstFrameworkOverrrideClass = "class void android.app.Activity.onCreate(android.os.Bundle)",
           receiver = "a",
+          parameters = Seq("b"),
           nestedCommands = Seq(
             CCommand().withCallin(CCallin(methodSignature = "java.lang.Object getSystemService(java.lang.String)",
               frameworkClass = "java.lang.Object android.app.Activity.getSystemService(java.lang.String)",
@@ -66,6 +69,7 @@ object ProtoGen {
           methodSignature = "void onCreate(android.os.Bundle)",
           firstFrameworkOverrrideClass = "class void android.app.Activity.onCreate(android.os.Bundle)",
           receiver = "a",
+          parameters = Seq("b"),
           nestedCommands = Seq(
             CCommand().withCallin(CCallin(methodSignature = "java.lang.Object getSystemService(java.lang.String)",
               frameworkClass = "java.lang.Object android.app.Activity.getSystemService(java.lang.String)",

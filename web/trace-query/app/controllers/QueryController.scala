@@ -3,7 +3,7 @@ package controllers
 import edu.colorado.plv.QueryTrace.{CCallback, CTrace}
 import javax.inject._
 import play.api.mvc._
-import plv.colorado.edu.TraceDbQuery
+import plv.colorado.edu.{CallbackWrapper, CallinWrapper, TraceDbQuery}
 import scalapb.json4s.JsonFormat
 
 import scala.util.{Success, Try}
@@ -45,12 +45,15 @@ class QueryController @Inject()(cc: ControllerComponents, traceQuery : TraceDbQu
             //.map(traceQuery.dbTrace2TraceIdentifier).map(JsonFormat.toJsonString)
           Ok("[" + traceIdentifiers.mkString(",") + "]")
         }else {
-          BadRequest("""{"message": "Valid values: any/rank" """)
+          badRequest("Valid values: any/rank")
         }
       }
       case _ => ???
       }
     })
+  }
+  def badRequest(message : String) ={
+    BadRequest(s"""{"message":"${message}"}""")
   }
 
   def completionSearch() = Action{ request : Request[AnyContent] =>
@@ -64,19 +67,25 @@ class QueryController @Inject()(cc: ControllerComponents, traceQuery : TraceDbQu
         }
         //        val traceIDS = traceQuery.traceRankSearch(p)
         val list_res = isCallback match {
-          case Some(true) =>
-            Some(traceQuery.callbackCompletionSearch(p))
-          case Some(false) =>
-            Some(traceQuery.callinCompletionSearch(p))
+          case Some(b) =>
+            Some(traceQuery.completionSearch(p,b))
           case None =>
             None
         }
         list_res match{
-          case None => BadRequest("""{"message" : "hole not found"}""")
-          case Some(v) => Ok(s"[${v.map(a => s"""{"rank" : ${a._1}, "${cicb}": ${JsonFormat.toJsonString(a._2)} """)}")
+          case None => badRequest("hole not found")
+          case Some(v) =>
+            val results = v.map(a => {
+              val value = a._2 match {
+                case CallbackWrapper(c) => ???
+                case CallinWrapper(c) => c
+              }
+              s"""{"rank" : ${a._1}, "${cicb}": ${JsonFormat.toJsonString(value)} }"""
+            })
+            Ok(s"[${results.mkString(",")}]")
         }
       }
-      case _ => ???
+      case _ => badRequest("query parese error")
     }})
   }
   /**
