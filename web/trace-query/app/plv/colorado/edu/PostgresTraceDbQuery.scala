@@ -330,7 +330,7 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
           ))
         }
       }
-      acc ++ method_completions.toList
+      acc ++ method_completions.toList.filter(a => a._1 > 0)
     }.sortWith( (a,b) => a._1 > b._1)
   out
   }
