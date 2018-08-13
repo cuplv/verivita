@@ -1,4 +1,4 @@
-module ServerCounter exposing (..)
+module TraceSearch exposing (..)
 
 import Html exposing (..)
 import Html.Events exposing (onClick)
@@ -6,6 +6,8 @@ import Http
 import Json.Decode as Json
 import Dict as Dict exposing (Dict)
 import Html.Events exposing (onInput)
+import Bootstrap.CDN as CDN
+import Bootstrap.Grid as Grid
 
 
 main : Program Never Model Msg
@@ -38,6 +40,7 @@ init =
 
 
 -- UPDATE
+
 
 type alias TraceMsg = Dict String String
 type alias Trace = List TraceMsg
