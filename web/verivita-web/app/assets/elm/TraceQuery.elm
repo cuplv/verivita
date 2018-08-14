@@ -50,7 +50,8 @@ type alias QueryCallinData =
     {
         frameworkClass: String,
         signature : String,
-        receiver : Param
+        receiver : Param,
+        return : Param
     }
 
 
@@ -73,7 +74,7 @@ type alias Model =
 emptyCallback =
     QueryCallback( { frameworkClass = "", signature = "", receiver = Hole, commands = []})
 emptyCallin =
-    QueryCallin({ frameworkClass = "", signature = "", receiver = Hole})
+    QueryCallin({ frameworkClass = "", signature = "", receiver = Hole , return = Hole})
 
 init : ( Model, Cmd Msg)
 init =
@@ -144,6 +145,18 @@ callbackFmwkSet cblist cbpos framework =
         else v
         ) cblist
 
+iSetCallinFmwk framework old pos =
+    case (old,pos) of
+        (QueryCallin(v) :: t, 0) -> QueryCallin({v | frameworkClass = framework}) :: t
+        (h :: t, a) -> h :: (iSetCallinFmwk framework t (pos - 1))
+        (nil, a) -> nil -- TODO: error state
+iSetCallinSig sig old pos =
+    case (old,pos) of
+        (QueryCallin(v) :: t, 0) -> QueryCallin({v | signature = sig}) :: t
+        (h :: t, a) -> h :: (iSetCallinSig sig t (pos-1))
+        (nil, a) -> nil
+
+
 type Msg
     = AddQueryCallbackAfter (Int)
     | AddQueryCallinAfter (Int, Int)
@@ -153,7 +166,8 @@ type Msg
     | RemoveQueryCallin (Int,Int)
     | SetQueryCallbackSig (Int, String)
     | SetQueryCallbackFmwk (Int,String)
-    | SetQueryCallin (Int,Int, String,String)
+    | SetQueryCallinSig (Int,Int, String)
+    | SetQueryCallinFmwk (Int,Int, String)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -170,8 +184,10 @@ update msg model =
             ({model | query = callbackSigSet model.query cbpos signature}, Cmd.none)
         SetQueryCallbackFmwk (cbpos, framework) ->
             ({model |query = callbackFmwkSet model.query cbpos framework}, Cmd.none)
-        SetQueryCallin  (cbpos, cipos, signature, framework) -> (model,Cmd.none) --TODO
-
+        SetQueryCallinSig (cbpos, cipos, sig) ->
+            ({model | query = doCallin model.query cbpos cipos (iSetCallinSig sig)},Cmd.none)
+        SetQueryCallinFmwk  (cbpos, cipos, framework) ->
+            ({model | query = doCallin model.query cbpos cipos (iSetCallinFmwk framework)},Cmd.none)
 
 -- View
 
@@ -208,12 +224,14 @@ callbackCard d pos =
                     [ Block.titleH4 [] [ text "Callback" ]
                         , Block.custom (text "Signature")
                         ,Block.custom <|
-                            Input.text [ Input.onInput (\sig -> SetQueryCallbackSig (pos, sig)) ]
+                            Input.text [ Input.value d.signature
+                                ,Input.onInput (\sig -> SetQueryCallbackSig (pos, sig)) ]
 --                        , Block.custom <| Button.button [ Button.primary ] [ text "Set" ]
 --                        , newline, sp, newline
                         , Block.custom (text "Framework Object")
                         , Block.custom <|
-                            Input.text [ Input.onInput <| \fmwk -> SetQueryCallbackFmwk (pos,fmwk) ]
+                            Input.text [ Input.value d.frameworkClass
+                                ,Input.onInput <| \fmwk -> SetQueryCallbackFmwk (pos,fmwk) ]
                         , newline, sp, newline
                     ]
                     ++
@@ -251,6 +269,17 @@ callinCard callin cbpos cipos =
         Card.config [ Card.attrs callinOrHoleAttrs ]
             |> Card.header [ class "text-center" ]
                 [ h5 [ ] [ text "Callin" ]
+                ]
+            |> Card.block []
+                [
+                    Block.custom (text "Signature")
+                    , Block.custom <|
+                        Input.text [ Input.value callin.signature
+                            , Input.onInput (\sig -> SetQueryCallinSig (cbpos, cipos, sig))]
+                    , Block.custom (text "Framework Object")
+                    , Block.custom <|
+                        Input.text [ Input.value callin.frameworkClass
+                            , Input.onInput (\fmwk -> SetQueryCallinFmwk (cbpos, cipos, fmwk))]
                 ]
             |> callinButtons cbpos cipos
             |> Card.view
