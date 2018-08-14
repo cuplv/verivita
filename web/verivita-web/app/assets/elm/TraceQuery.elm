@@ -13,6 +13,8 @@ import Html.Attributes exposing (class, src, style)
 import Bootstrap.Card.Block as Block
 import Bootstrap.Button as Button
 import Bootstrap.ListGroup as ListGroup
+import Bootstrap.Form as Form
+import Bootstrap.Form.Input as Input
 
 
 main : Program Never Model Msg
@@ -127,6 +129,21 @@ fillHole old pos =
         (h :: old, a) -> h :: fillHole old (a-1)
         (nil,a) -> nil --TODO: eror state
 
+callbackSigSet cblist cbpos signature =
+    case (cblist,cbpos) of
+        (QueryCallback(d) :: t, 0) -> QueryCallback({d | signature = signature}) :: t
+        (h :: t, a) -> h :: callbackSigSet t (cbpos - 1) signature
+        (nil,a) -> nil --TODO: error state
+
+callbackFmwkSet cblist cbpos framework =
+    List.indexedMap (\idx -> \v ->
+        if idx == cbpos then
+            case v of
+                QueryCallback(v) -> QueryCallback ({v | frameworkClass = framework})
+                QueryCallbackHole -> QueryCallbackHole -- TODO: error state
+        else v
+        ) cblist
+
 type Msg
     = AddQueryCallbackAfter (Int)
     | AddQueryCallinAfter (Int, Int)
@@ -134,6 +151,9 @@ type Msg
     | FillQueryCallinhole (Int,Int)
     | RemoveQueryCallback (Int)
     | RemoveQueryCallin (Int,Int)
+    | SetQueryCallbackSig (Int, String)
+    | SetQueryCallbackFmwk (Int,String)
+    | SetQueryCallin (Int,Int, String,String)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -146,18 +166,30 @@ update msg model =
         RemoveQueryCallback(callbackPos) -> ({model | query = removeCOH model.query callbackPos}, Cmd.none)
         RemoveQueryCallin(callbackPos, callinPos) ->
             ({model | query = doCallin model.query callbackPos callinPos iRemoveCallin}, Cmd.none)
+        SetQueryCallbackSig (cbpos, signature) ->
+            ({model | query = callbackSigSet model.query cbpos signature}, Cmd.none)
+        SetQueryCallbackFmwk (cbpos, framework) ->
+            ({model |query = callbackFmwkSet model.query cbpos framework}, Cmd.none)
+        SetQueryCallin  (cbpos, cipos, signature, framework) -> (model,Cmd.none) --TODO
 
 
 -- View
 
 sp =
     Block.custom (text " ")
+newline =
+    Block.custom (Html.br [] [])
+
+type CiCb = Callin | Callback
+
+
+
 holeCard pos =
     Card.block []
                 [ Block.titleH4 [] [ text "Hole" ]
                 , Block.text [] [ text (toString pos) ]
                 , Block.custom <|
-                    Button.button [ Button.primary, Button.onClick (AddQueryCallbackAfter pos)] [ text "+" ] --
+                    Button.button [ Button.primary, Button.onClick (AddQueryCallbackAfter pos)] [ text "+" ]
                 , sp
                 , Block.custom <|
                     Button.button [ Button.primary, Button.onClick (RemoveQueryCallback pos) ] [ text "-" ]
@@ -173,12 +205,25 @@ holeCard pos =
 callbackCard d pos =
     Card.block []
                 (
-                    [ Block.titleH4 [] [ text "Callback" ] ] ++
+                    [ Block.titleH4 [] [ text "Callback" ]
+                        , Block.custom (text "Signature")
+                        ,Block.custom <|
+                            Input.text [ Input.onInput (\sig -> SetQueryCallbackSig (pos, sig)) ]
+--                        , Block.custom <| Button.button [ Button.primary ] [ text "Set" ]
+--                        , newline, sp, newline
+                        , Block.custom (text "Framework Object")
+                        , Block.custom <|
+                            Input.text [ Input.onInput <| \fmwk -> SetQueryCallbackFmwk (pos,fmwk) ]
+                        , newline, sp, newline
+                    ]
+                    ++
 
                     (List.indexedMap (\i -> \a -> Block.custom (callinOrHoleCard pos i a) ) d.commands) ++
 
-                    [ Block.custom <|
-                        Button.button [ Button.primary, Button.onClick (AddQueryCallinAfter (pos, -1)) ] [ text "+ callin"]
+                    [ newline, Block.custom <|
+                        Button.button [
+                            Button.primary, Button.onClick (AddQueryCallinAfter (pos, -1))
+                        ] [ text "+ callin"]
                     , sp
                     , Block.custom <|
                         Button.button [ Button.primary, Button.onClick (AddQueryCallbackAfter pos)  ] [ text "+ callback" ]
@@ -200,8 +245,10 @@ callinButtons cbpos cipos =
             ,Block.custom <|
                 Button.button [ Button.secondary, Button.onClick (FillQueryCallinhole (cbpos,cipos)) ] [ text "fill"]
         ]
+
+callinOrHoleAttrs = [ style [ ( "width", "25rem" ) ] ]
 callinCard callin cbpos cipos =
-        Card.config [ Card.attrs [ style [ ( "width", "25rem" ) ] ] ]
+        Card.config [ Card.attrs callinOrHoleAttrs ]
             |> Card.header [ class "text-center" ]
                 [ h5 [ ] [ text "Callin" ]
                 ]
@@ -209,7 +256,7 @@ callinCard callin cbpos cipos =
             |> Card.view
 
 callinHoleCard cbpos cipos =
-        Card.config [ Card.attrs [ style [ ( "width", "25rem" ) ] ] ]
+        Card.config [ Card.attrs callinOrHoleAttrs ]
             |> Card.header [ class "text-center" ]
                 [ h5 [ ] [ text "Callin Hole" ]
                 ]
