@@ -4,7 +4,6 @@ import Html exposing (..)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode as Json
-import Html.Events exposing (onInput)
 
 import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
@@ -13,7 +12,6 @@ import Html.Attributes exposing (class, src, style)
 import Bootstrap.Card.Block as Block
 import Bootstrap.Button as Button
 import Bootstrap.ListGroup as ListGroup
-import Bootstrap.Form as Form
 import Bootstrap.Form.Input as Input
 
 
@@ -27,14 +25,14 @@ main =
 
 -- Model
 
-type Param
-    = SelectedHole
-    | NamedVar(String)
+type Param -- note selected hole removed since query will be by clicking on a hole
+    = NamedVar(String)
     | Hole
 
 
 type QueryCallbackOrHole = QueryCallback(QueryCallbackData)
     | QueryCallbackHole
+    | QueryCallbackHoleResults(List QueryCallbackData)
 type alias QueryCallbackData =
     {
         frameworkClass : String,
@@ -89,38 +87,38 @@ iAddCallin old cipos =
         (h :: t , 0) -> h :: QueryCommandHole :: t
         (nil , 0) -> QueryCommandHole :: nil
         (h :: t, a) -> h :: (iAddCallin t (a - 1))
-        (nil , a) -> nil -- TODO: error state
+        (nil , a) -> nil
 
 iRemoveCallin old cipos =
     case (old,cipos) of
         (h :: t, 0) -> t
         (h :: t, a) -> h :: (iRemoveCallin t (cipos - 1))
-        (nil,a) -> nil -- TODO: error state
+        (nil,a) -> nil
 
 iFill old cipos =
     case (old,cipos) of
         (h :: t, 0) -> emptyCallin :: t
         (h :: t, a) -> h :: iFill t (a - 1)
-        (nil,a) -> nil -- TODO: error state
+        (nil,a) -> nil
 
 
 doCallin old cbpos cipos fn =
     case (old,cbpos) of
         (QueryCallback(d) :: t, 0) -> (QueryCallback({d | commands = fn d.commands cipos})) :: t
         (h :: t, a) -> h :: (doCallin t (cbpos - 1) cipos fn)
-        (nil, a) -> nil --TODO: error state
+        (nil, a) -> nil
 
 addHole old pos =
     case (old,pos) of
         (h :: old, 0) -> h :: QueryCallbackHole :: old
         (nil, 0) -> QueryCallbackHole :: nil
         (h :: t, a) -> h :: addHole t (a-1)
-        (nil, a) -> nil -- TODO: error state
+        (nil, a) -> nil
 removeCOH old pos =
     case (old,pos) of
         (h :: old, 0) -> old
         (h :: old, a) -> h :: (removeCOH old (a-1))
-        (nil,a) -> nil --TODO: error state
+        (nil,a) -> nil
 
 
 fillHole old pos =
@@ -128,20 +126,22 @@ fillHole old pos =
         (QueryCallbackHole :: old , 0) ->
             emptyCallback :: old
         (h :: old, a) -> h :: fillHole old (a-1)
-        (nil,a) -> nil --TODO: eror state
+        (nil,a) -> nil
 
+--TODO: replace following two with doCallback
 callbackSigSet cblist cbpos signature =
     case (cblist,cbpos) of
         (QueryCallback(d) :: t, 0) -> QueryCallback({d | signature = signature}) :: t
         (h :: t, a) -> h :: callbackSigSet t (cbpos - 1) signature
-        (nil,a) -> nil --TODO: error state
+        (nil,a) -> nil
 
 callbackFmwkSet cblist cbpos framework =
     List.indexedMap (\idx -> \v ->
         if idx == cbpos then
             case v of
                 QueryCallback(v) -> QueryCallback ({v | frameworkClass = framework})
-                QueryCallbackHole -> QueryCallbackHole -- TODO: error state
+                QueryCallbackHole -> QueryCallbackHole
+                QueryCallbackHoleResults(v) -> QueryCallbackHoleResults(v)
         else v
         ) cblist
 
@@ -156,6 +156,18 @@ iSetCallinSig sig old pos =
         (h :: t, a) -> h :: (iSetCallinSig sig t (pos-1))
         (nil, a) -> nil
 
+iSetCallin opr old pos =
+    case (old,pos) of
+        (QueryCallin(v) :: t, 0) -> QueryCallin(opr v) :: t
+        (h :: t, a) -> h :: (iSetCallin opr old pos)
+        (nil, a) -> nil
+
+doCallback opr old pos =
+    case (old,pos) of
+        (QueryCallback(v) :: t , 0) -> QueryCallback(opr v) :: t
+        (h :: t, a) -> h :: (doCallback opr t (a-1))
+        (nil, a) -> nil
+
 
 type Msg
     = AddQueryCallbackAfter (Int)
@@ -164,10 +176,18 @@ type Msg
     | FillQueryCallinhole (Int,Int)
     | RemoveQueryCallback (Int)
     | RemoveQueryCallin (Int,Int)
-    | SetQueryCallbackSig (Int, String)
-    | SetQueryCallbackFmwk (Int,String)
-    | SetQueryCallinSig (Int,Int, String)
-    | SetQueryCallinFmwk (Int,Int, String)
+    | Set(Setter)
+    | SearchCallinHole (Int,Int)
+
+type Setter
+    = QueryCallbackSig (Int, String)
+    | QueryCallbackFmwk (Int,String)
+    | QueryCallinSig (Int,Int, String)
+    | QueryCallinFmwk (Int,Int, String)
+    | QueryCallinRec (Int,Int, Param)
+    | QueryCallinRet (Int,Int, Param)
+    | QueryCallbackRec (Int, Param)
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -180,14 +200,22 @@ update msg model =
         RemoveQueryCallback(callbackPos) -> ({model | query = removeCOH model.query callbackPos}, Cmd.none)
         RemoveQueryCallin(callbackPos, callinPos) ->
             ({model | query = doCallin model.query callbackPos callinPos iRemoveCallin}, Cmd.none)
-        SetQueryCallbackSig (cbpos, signature) ->
+        Set(QueryCallbackSig (cbpos, signature)) ->
             ({model | query = callbackSigSet model.query cbpos signature}, Cmd.none)
-        SetQueryCallbackFmwk (cbpos, framework) ->
+        Set(QueryCallbackFmwk (cbpos, framework)) ->
             ({model |query = callbackFmwkSet model.query cbpos framework}, Cmd.none)
-        SetQueryCallinSig (cbpos, cipos, sig) ->
+        Set(QueryCallinSig (cbpos, cipos, sig)) ->
             ({model | query = doCallin model.query cbpos cipos (iSetCallinSig sig)},Cmd.none)
-        SetQueryCallinFmwk  (cbpos, cipos, framework) ->
+        Set(QueryCallinFmwk  (cbpos, cipos, framework)) ->
             ({model | query = doCallin model.query cbpos cipos (iSetCallinFmwk framework)},Cmd.none)
+        Set(QueryCallinRec (cbpos, cipos, param)) ->
+            ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | receiver = param}))}, Cmd.none)
+        Set(QueryCallinRet (cbpos, cipos, param)) ->
+            ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | return = param}))}, Cmd.none)
+        Set(QueryCallbackRec (cbpos, param)) ->
+            ({model | query = doCallback (\v -> {v | receiver = param}) model.query cbpos }, Cmd.none)
+        SearchCallinHole (cbpos, cipos) -> (model, Cmd.none)
+
 
 -- View
 
@@ -202,8 +230,7 @@ type CiCb = Callin | Callback
 
 holeCard pos =
     Card.block []
-                [ Block.titleH4 [] [ text "Hole" ]
-                , Block.text [] [ text (toString pos) ]
+                [ Block.titleH6 [] [ text "Hole" ]
                 , Block.custom <|
                     Button.button [ Button.primary, Button.onClick (AddQueryCallbackAfter pos)] [ text "+" ]
                 , sp
@@ -225,14 +252,18 @@ callbackCard d pos =
                         , Block.custom (text "Signature")
                         ,Block.custom <|
                             Input.text [ Input.value d.signature
-                                ,Input.onInput (\sig -> SetQueryCallbackSig (pos, sig)) ]
+                                ,Input.onInput (\sig -> Set(QueryCallbackSig (pos, sig))) ]
 --                        , Block.custom <| Button.button [ Button.primary ] [ text "Set" ]
 --                        , newline, sp, newline
                         , Block.custom (text "Framework Object")
                         , Block.custom <|
                             Input.text [ Input.value d.frameworkClass
-                                ,Input.onInput <| \fmwk -> SetQueryCallbackFmwk (pos,fmwk) ]
-                        , newline, sp, newline
+                                ,Input.onInput <| \fmwk -> Set(QueryCallbackFmwk (pos,fmwk)) ]
+                        , Block.custom (text "Receiver")
+                        , Block.custom <|
+                            Input.text [paramString d.receiver
+                                , Input.onInput <| \name -> Set(QueryCallbackRec (pos, NamedVar(name) ))]
+                        , newline
                     ]
                     ++
 
@@ -260,11 +291,15 @@ callinButtons cbpos cipos =
             ,Block.custom <|
                 Button.button [ Button.primary, Button.onClick (AddQueryCallinAfter (cbpos,cipos)) ] [ text "+ after"]
             ,sp
-            ,Block.custom <|
-                Button.button [ Button.secondary, Button.onClick (FillQueryCallinhole (cbpos,cipos)) ] [ text "fill"]
         ]
 
 callinOrHoleAttrs = [ style [ ( "width", "25rem" ) ] ]
+
+paramString p =
+    case p of
+        NamedVar(s) -> Input.value s
+        Hole -> Input.placeholder "***hole***"
+
 callinCard callin cbpos cipos =
         Card.config [ Card.attrs callinOrHoleAttrs ]
             |> Card.header [ class "text-center" ]
@@ -275,11 +310,19 @@ callinCard callin cbpos cipos =
                     Block.custom (text "Signature")
                     , Block.custom <|
                         Input.text [ Input.value callin.signature
-                            , Input.onInput (\sig -> SetQueryCallinSig (cbpos, cipos, sig))]
+                            , Input.onInput (\sig -> Set(QueryCallinSig (cbpos, cipos, sig)))]
                     , Block.custom (text "Framework Object")
                     , Block.custom <|
                         Input.text [ Input.value callin.frameworkClass
-                            , Input.onInput (\fmwk -> SetQueryCallinFmwk (cbpos, cipos, fmwk))]
+                            , Input.onInput (\fmwk -> Set(QueryCallinFmwk (cbpos, cipos, fmwk)))]
+                    , Block.custom (text "Receiver")
+                    , Block.custom <|
+                        Input.text [ paramString callin.receiver
+                            , Input.onInput (\name -> Set(QueryCallinRec (cbpos, cipos, NamedVar(name) )))]
+                    , Block.custom (text "Return")
+                    , Block.custom <|
+                        Input.text [ paramString callin.return
+                            , Input.onInput (\name -> Set(QueryCallinRet (cbpos, cipos, NamedVar(name) )))]
                 ]
             |> callinButtons cbpos cipos
             |> Card.view
@@ -291,6 +334,13 @@ callinHoleCard cbpos cipos =
                 ]
 
             |> callinButtons cbpos cipos
+            |> Card.block [] [
+                Block.custom <|
+                      Button.button [ Button.secondary, Button.onClick (FillQueryCallinhole (cbpos,cipos)) ] [ text "Fill"]
+                , sp
+                , Block.custom <|
+                      Button.button [ Button.secondary, Button.onClick (SearchCallinHole (cbpos, cipos))] [text "Search"]
+            ]
             |> Card.view
 
 
@@ -302,7 +352,7 @@ callinOrHoleCard cbpos cipos c =
 callbackOhrHoleCard contents =
     Card.config [ Card.attrs [ style [ ( "width", "30rem" ) ] ] ]
         |> Card.header [ class "text-center" ]
-            [ h3 [ ] [ text "Callback" ]
+            [ h6 [ ] [ text "Callback" ]
             ]
         |> contents
         |> Card.view
@@ -311,6 +361,7 @@ drawCallbackOrHole pos c =
     case c of
         QueryCallback(d) -> callbackOhrHoleCard (callbackCard d pos)
         QueryCallbackHole -> callbackOhrHoleCard (holeCard pos)
+        QueryCallbackHoleResults(v) -> callbackOhrHoleCard (holeCard pos) --TODO: display results
 
 
 view : Model -> Html Msg
