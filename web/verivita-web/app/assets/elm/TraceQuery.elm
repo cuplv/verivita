@@ -1,18 +1,19 @@
 module TraceQuery exposing (..)
 
 import Html exposing (..)
-import Html.Events exposing (onClick)
-import Http
-import Json.Decode as Json
-
+--import Html.Events exposing (onClick)
+--import Http
+--import Json.Decode as Json
 import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
 import Bootstrap.Card as Card
 import Html.Attributes exposing (class, src, style)
 import Bootstrap.Card.Block as Block
 import Bootstrap.Button as Button
-import Bootstrap.ListGroup as ListGroup
+--import Bootstrap.ListGroup as ListGroup
 import Bootstrap.Form.Input as Input
+--import Json.Encode exposing (Value)
+import QueryTrace as Qt
 
 
 main : Program Never Model Msg
@@ -178,6 +179,7 @@ type Msg
     | RemoveQueryCallin (Int,Int)
     | Set(Setter)
     | SearchCallinHole (Int,Int)
+    | ResponseCallinHole (Int, Int, List QueryCallbackData)
 
 type Setter
     = QueryCallbackSig (Int, String)
@@ -215,6 +217,7 @@ update msg model =
         Set(QueryCallbackRec (cbpos, param)) ->
             ({model | query = doCallback (\v -> {v | receiver = param}) model.query cbpos }, Cmd.none)
         SearchCallinHole (cbpos, cipos) -> (model, Cmd.none)
+        ResponseCallinHole (cbpos, cipos, callbacks) -> (model, Cmd.none)
 
 
 -- View
@@ -223,8 +226,6 @@ sp =
     Block.custom (text " ")
 newline =
     Block.custom (Html.br [] [])
-
-type CiCb = Callin | Callback
 
 
 
@@ -377,3 +378,61 @@ view model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
+
+-- HTTP
+
+
+
+
+-- Serialization
+
+queryParamAsQ : Param -> Maybe Qt.CParam
+queryParamAsQ p =
+    case p of
+        NamedVar(s) -> Just {param = Qt.Variable ({name = s}) }
+        Hole -> Just {param = Qt.PrHole(Qt.Hole False)}
+
+queryCommandAsQ : QueryCommand -> Bool -> Qt.CCommand
+queryCommandAsQ cmd select =
+    case cmd of
+        QueryCallin(d) -> {
+            ciCommand = Qt.Callin {methodSignature = d.signature, --
+                frameworkClass = d.frameworkClass,
+                parameters = [], --TODO
+                receiver = queryParamAsQ d.receiver,
+                returnValue = queryParamAsQ d.return,
+                exception = Nothing,
+                nestedCallbacks = []} }
+        QueryCommandHole -> {ciCommand = Qt.CiHole (Qt.Hole select)}
+
+queryCallbackOrHoleAsQ : QueryCallbackOrHole -> Maybe Int -> Bool -> Qt.CallbackOrHole
+queryCallbackOrHoleAsQ cb opt_cipos selected_callback =
+    case cb of
+        QueryCallbackHole -> {cbCommand = Qt.CbHole {isSelected = selected_callback}}
+        QueryCallbackHoleResults(d) -> {cbCommand = Qt.CbHole {isSelected = False}}
+        QueryCallback(d) -> {cbCommand = Qt.Callback { methodSignature = d.signature,
+            firstFrameworkOverrrideClass = d.frameworkClass,
+            applicationClass = "",
+            parameters = [],
+            receiver = queryParamAsQ d.receiver,
+            returnValue = Nothing,
+            exception = Nothing,
+            nestedCommands = (
+                case opt_cipos of
+                    Just(v) -> List.indexedMap (\idx -> \cmd -> queryCommandAsQ cmd (idx == v)) d.commands
+                    Nothing -> List.map (\cmd -> queryCommandAsQ cmd False) d.commands
+            )}}
+
+queryAsQ : Maybe Int -> Maybe Int -> List QueryCallbackOrHole -> Qt.CTrace
+queryAsQ cbpos cipos query =
+    let
+        cbs =
+            case (cbpos,cipos) of
+                (Nothing, cipos) -> List.map (\cb -> queryCallbackOrHoleAsQ cb cipos False) query
+                (Just cbpos, Nothing) ->
+                    List.indexedMap (\idx -> \cb -> queryCallbackOrHoleAsQ cb Nothing (idx == cbpos)) query
+                (Just cbpos, Just cipos) ->
+                    List.indexedMap (\idx -> \cb ->
+                        queryCallbackOrHoleAsQ cb (if idx == cbpos then Just cipos else Nothing) False) query
+    in
+        {id = Nothing, callbacks = cbs}

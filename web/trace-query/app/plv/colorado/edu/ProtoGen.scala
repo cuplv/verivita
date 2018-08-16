@@ -86,6 +86,19 @@ object ProtoGen {
     )
     ctraceFromCallbacks(callbacks)
   }
+  def singleCallin = {
+    val c = CCommand().withCallin(CCallin(methodSignature = "java.lang.Object getSystemService(java.lang.String)",
+        frameworkClass = "java.lang.Object android.app.Activity.getSystemService(java.lang.String)",
+        receiver = "a",
+        returnValue = "b"
+      )
+      )
+    JsonFormat.toJsonString(c)
+  }
+  def singleCmdHole = {
+    val c = CCommand().withHole(Hole(false))
+    JsonFormat.toJsonString(c)
+  }
   def main(args: Array[String]): Unit = {
     println("q1")
     println(q1)

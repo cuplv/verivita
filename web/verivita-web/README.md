@@ -31,7 +31,15 @@ Include jep.so in the library path for java
 
 * In Linux this is the environment variable LD_LIBRARY_PATH
 
+Install elm protocol buffers
+----------------------------
+https://github.com/tiziano88/elm-protobuf
 
+```
+protoc --elm_out=. *.proto
+```
+
+move QueryTrace.elm into verivita-web project
 
 Running
 -------
