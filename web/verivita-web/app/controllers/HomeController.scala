@@ -21,4 +21,8 @@ class HomeController @Inject() extends InjectedController {
     Ok(views.html.main())
   }
 
+  def completionSearch = Action { request : Request[AnyContent] =>
+    ???
+  }
+
 }

@@ -381,7 +381,9 @@ subscriptions model =
 
 -- HTTP
 
-
+--getCallinCompletionSearch : Maybe Int -> Maybe Int -> List QueryCallbackOrHole -> List Qt.CTrace
+--getCallinCompletionSearch cbpos cipos query =
+--
 
 
 -- Serialization

@@ -1,1 +1,0 @@
-curl -X POST --header 'Host: localhost' http://100.120.0.6:30070/get_traces_methods -d '{"id":{"appName":"test"},"callbacks":[{"methodSignature":"onCreate","receiver":{"variable":{"name":"a"}}}]}' -H "Content-Type: application/JSON"
