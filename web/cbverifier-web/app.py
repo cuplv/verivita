@@ -46,7 +46,7 @@ def specASTtoCTrace(ast):
         pb.parameters.extend(paramlist_vals)
         pb.receiver.CopyFrom(receiver)
         pb.return_value.CopyFrom(returnval)
-        ccommand.c_callin.CopyFrom(pb)
+        ccommand.m_callin.CopyFrom(pb)
     else:
         pb = CCallback()
         pb.method_signature = signature
@@ -54,7 +54,7 @@ def specASTtoCTrace(ast):
         pb.parameters.extend(paramlist_vals)
         pb.receiver.CopyFrom(receiver)
         pb.return_value.CopyFrom(returnval)
-        ccommand.c_callback.CopyFrom(pb)
+        ccommand.m_callback.CopyFrom(pb)
 
 
 
@@ -91,7 +91,7 @@ def parse_task():
         assert(parsed is not None)
     except:
         em = CMessage()
-        em.c_problem.description = "parse failure"
+        em.m_problem.description = "parse failure"
         return MessageToJson(em)
     c_trace = specASTtoCTrace(parsed)
     # return jsonify({"stuff": "stuff"})
