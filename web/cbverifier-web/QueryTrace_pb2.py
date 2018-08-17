@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='QueryTrace.proto',
   package='edu.colorado.plv',
   syntax='proto3',
-  serialized_pb=_b('\n\x10QueryTrace.proto\x12\x10\x65\x64u.colorado.plv\"l\n\x06\x43Trace\x12-\n\x02id\x18\x01 \x01(\x0b\x32!.edu.colorado.plv.TraceIdentifier\x12\x33\n\tcallbacks\x18\x02 \x03(\x0b\x32 .edu.colorado.plv.CallbackOrHole\"I\n\x0fTraceIdentifier\x12\x10\n\x08\x61pp_name\x18\x01 \x01(\t\x12\x10\n\x08git_repo\x18\x02 \x01(\t\x12\x12\n\ntrace_name\x18\x03 \x01(\t\"z\n\x0e\x43\x61llbackOrHole\x12/\n\x08\x63\x61llback\x18\x01 \x01(\x0b\x32\x1b.edu.colorado.plv.CCallbackH\x00\x12)\n\x07\x63\x62_hole\x18\x02 \x01(\x0b\x32\x16.edu.colorado.plv.HoleH\x00\x42\x0c\n\ncb_command\"\xd9\x02\n\tCCallback\x12\x18\n\x10method_signature\x18\x01 \x01(\t\x12\'\n\x1f\x66irst_framework_overrride_class\x18\x02 \x01(\t\x12\x19\n\x11\x61pplication_class\x18\x03 \x01(\t\x12,\n\nparameters\x18\x04 \x03(\x0b\x32\x18.edu.colorado.plv.CParam\x12*\n\x08receiver\x18\x05 \x01(\x0b\x32\x18.edu.colorado.plv.CParam\x12.\n\x0creturn_value\x18\x06 \x01(\x0b\x32\x18.edu.colorado.plv.CParam\x12/\n\texception\x18\x07 \x01(\x0b\x32\x1c.edu.colorado.plv.CException\x12\x33\n\x0fnested_commands\x18\x08 \x03(\x0b\x32\x1a.edu.colorado.plv.CCommand\"p\n\x08\x43\x43ommand\x12+\n\x06\x63\x61llin\x18\x01 \x01(\x0b\x32\x19.edu.colorado.plv.CCallinH\x00\x12)\n\x07\x63i_hole\x18\x02 \x01(\x0b\x32\x16.edu.colorado.plv.HoleH\x00\x42\x0c\n\nci_command\"\x1b\n\x04Hole\x12\x13\n\x0bis_selected\x18\x01 \x01(\x08\"\xae\x02\n\x07\x43\x43\x61llin\x12\x18\n\x10method_signature\x18\x01 \x01(\t\x12\x17\n\x0f\x66ramework_class\x18\x02 \x01(\t\x12,\n\nparameters\x18\x03 \x03(\x0b\x32\x18.edu.colorado.plv.CParam\x12*\n\x08receiver\x18\x04 \x01(\x0b\x32\x18.edu.colorado.plv.CParam\x12.\n\x0creturn_value\x18\x05 \x01(\x0b\x32\x18.edu.colorado.plv.CParam\x12/\n\texception\x18\x06 \x01(\x0b\x32\x1c.edu.colorado.plv.CException\x12\x35\n\x10nested_callbacks\x18\x08 \x03(\x0b\x32\x1b.edu.colorado.plv.CCallback\"\xcd\x01\n\x06\x43Param\x12/\n\x08variable\x18\x01 \x01(\x0b\x32\x1b.edu.colorado.plv.CVariableH\x00\x12\x31\n\tprimitive\x18\x02 \x01(\x0b\x32\x1c.edu.colorado.plv.CPrimitiveH\x00\x12+\n\x06object\x18\x03 \x01(\x0b\x32\x19.edu.colorado.plv.CObjectH\x00\x12)\n\x07pr_hole\x18\x04 \x01(\x0b\x32\x16.edu.colorado.plv.HoleH\x00\x42\x07\n\x05param\"\x19\n\tCVariable\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x15\n\x07\x43Object\x12\n\n\x02id\x18\x01 \x01(\x03\"V\n\nCPrimitive\x12\x11\n\x07int_val\x18\x01 \x01(\x05H\x00\x12\x12\n\x08long_val\x18\x02 \x01(\x03H\x00\x12\x14\n\nstring_val\x18\x03 \x01(\tH\x00\x42\x0b\n\tprimitive\"\x0c\n\nCException\"\xa4\x01\n\x08\x43Message\x12-\n\x08\x63_callin\x18\x01 \x01(\x0b\x32\x19.edu.colorado.plv.CCallinH\x00\x12\x31\n\nc_callback\x18\x02 \x01(\x0b\x32\x1b.edu.colorado.plv.CCallbackH\x00\x12/\n\tc_problem\x18\x03 \x01(\x0b\x32\x1a.edu.colorado.plv.CProblemH\x00\x42\x05\n\x03msg\"8\n\x0c\x43MessageList\x12(\n\x04msgs\x18\x01 \x03(\x0b\x32\x1a.edu.colorado.plv.CMessage\"\x1f\n\x08\x43Problem\x12\x13\n\x0b\x64\x65scription\x18\x01 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x10QueryTrace.proto\x12\x10\x65\x64u.colorado.plv\"l\n\x06\x43Trace\x12-\n\x02id\x18\x01 \x01(\x0b\x32!.edu.colorado.plv.TraceIdentifier\x12\x33\n\tcallbacks\x18\x02 \x03(\x0b\x32 .edu.colorado.plv.CallbackOrHole\"I\n\x0fTraceIdentifier\x12\x10\n\x08\x61pp_name\x18\x01 \x01(\t\x12\x10\n\x08git_repo\x18\x02 \x01(\t\x12\x12\n\ntrace_name\x18\x03 \x01(\t\"z\n\x0e\x43\x61llbackOrHole\x12/\n\x08\x63\x61llback\x18\x01 \x01(\x0b\x32\x1b.edu.colorado.plv.CCallbackH\x00\x12)\n\x07\x63\x62_hole\x18\x02 \x01(\x0b\x32\x16.edu.colorado.plv.HoleH\x00\x42\x0c\n\ncb_command\"\xd9\x02\n\tCCallback\x12\x18\n\x10method_signature\x18\x01 \x01(\t\x12\'\n\x1f\x66irst_framework_overrride_class\x18\x02 \x01(\t\x12\x19\n\x11\x61pplication_class\x18\x03 \x01(\t\x12,\n\nparameters\x18\x04 \x03(\x0b\x32\x18.edu.colorado.plv.CParam\x12*\n\x08receiver\x18\x05 \x01(\x0b\x32\x18.edu.colorado.plv.CParam\x12.\n\x0creturn_value\x18\x06 \x01(\x0b\x32\x18.edu.colorado.plv.CParam\x12/\n\texception\x18\x07 \x01(\x0b\x32\x1c.edu.colorado.plv.CException\x12\x33\n\x0fnested_commands\x18\x08 \x03(\x0b\x32\x1a.edu.colorado.plv.CCommand\"p\n\x08\x43\x43ommand\x12+\n\x06\x63\x61llin\x18\x01 \x01(\x0b\x32\x19.edu.colorado.plv.CCallinH\x00\x12)\n\x07\x63i_hole\x18\x02 \x01(\x0b\x32\x16.edu.colorado.plv.HoleH\x00\x42\x0c\n\nci_command\"\x1b\n\x04Hole\x12\x13\n\x0bis_selected\x18\x01 \x01(\x08\"\xae\x02\n\x07\x43\x43\x61llin\x12\x18\n\x10method_signature\x18\x01 \x01(\t\x12\x17\n\x0f\x66ramework_class\x18\x02 \x01(\t\x12,\n\nparameters\x18\x03 \x03(\x0b\x32\x18.edu.colorado.plv.CParam\x12*\n\x08receiver\x18\x04 \x01(\x0b\x32\x18.edu.colorado.plv.CParam\x12.\n\x0creturn_value\x18\x05 \x01(\x0b\x32\x18.edu.colorado.plv.CParam\x12/\n\texception\x18\x06 \x01(\x0b\x32\x1c.edu.colorado.plv.CException\x12\x35\n\x10nested_callbacks\x18\x08 \x03(\x0b\x32\x1b.edu.colorado.plv.CCallback\"\xcd\x01\n\x06\x43Param\x12/\n\x08variable\x18\x01 \x01(\x0b\x32\x1b.edu.colorado.plv.CVariableH\x00\x12\x31\n\tprimitive\x18\x02 \x01(\x0b\x32\x1c.edu.colorado.plv.CPrimitiveH\x00\x12+\n\x06object\x18\x03 \x01(\x0b\x32\x19.edu.colorado.plv.CObjectH\x00\x12)\n\x07pr_hole\x18\x04 \x01(\x0b\x32\x16.edu.colorado.plv.HoleH\x00\x42\x07\n\x05param\"\x19\n\tCVariable\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x15\n\x07\x43Object\x12\n\n\x02id\x18\x01 \x01(\x03\"V\n\nCPrimitive\x12\x11\n\x07int_val\x18\x01 \x01(\x05H\x00\x12\x12\n\x08long_val\x18\x02 \x01(\x03H\x00\x12\x14\n\nstring_val\x18\x03 \x01(\tH\x00\x42\x0b\n\tprimitive\"\x0c\n\nCException\"\xa4\x01\n\x08\x43Message\x12-\n\x08m_callin\x18\x01 \x01(\x0b\x32\x19.edu.colorado.plv.CCallinH\x00\x12\x31\n\nm_callback\x18\x02 \x01(\x0b\x32\x1b.edu.colorado.plv.CCallbackH\x00\x12/\n\tm_problem\x18\x03 \x01(\x0b\x32\x1a.edu.colorado.plv.CProblemH\x00\x42\x05\n\x03msg\"8\n\x0c\x43MessageList\x12(\n\x04msgs\x18\x01 \x03(\x0b\x32\x1a.edu.colorado.plv.CMessage\"\x1f\n\x08\x43Problem\x12\x13\n\x0b\x64\x65scription\x18\x01 \x01(\tb\x06proto3')
 )
 
 
@@ -571,21 +571,21 @@ _CMESSAGE = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='c_callin', full_name='edu.colorado.plv.CMessage.c_callin', index=0,
+      name='m_callin', full_name='edu.colorado.plv.CMessage.m_callin', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='c_callback', full_name='edu.colorado.plv.CMessage.c_callback', index=1,
+      name='m_callback', full_name='edu.colorado.plv.CMessage.m_callback', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='c_problem', full_name='edu.colorado.plv.CMessage.c_problem', index=2,
+      name='m_problem', full_name='edu.colorado.plv.CMessage.m_problem', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -725,18 +725,18 @@ _CPRIMITIVE.fields_by_name['long_val'].containing_oneof = _CPRIMITIVE.oneofs_by_
 _CPRIMITIVE.oneofs_by_name['primitive'].fields.append(
   _CPRIMITIVE.fields_by_name['string_val'])
 _CPRIMITIVE.fields_by_name['string_val'].containing_oneof = _CPRIMITIVE.oneofs_by_name['primitive']
-_CMESSAGE.fields_by_name['c_callin'].message_type = _CCALLIN
-_CMESSAGE.fields_by_name['c_callback'].message_type = _CCALLBACK
-_CMESSAGE.fields_by_name['c_problem'].message_type = _CPROBLEM
+_CMESSAGE.fields_by_name['m_callin'].message_type = _CCALLIN
+_CMESSAGE.fields_by_name['m_callback'].message_type = _CCALLBACK
+_CMESSAGE.fields_by_name['m_problem'].message_type = _CPROBLEM
 _CMESSAGE.oneofs_by_name['msg'].fields.append(
-  _CMESSAGE.fields_by_name['c_callin'])
-_CMESSAGE.fields_by_name['c_callin'].containing_oneof = _CMESSAGE.oneofs_by_name['msg']
+  _CMESSAGE.fields_by_name['m_callin'])
+_CMESSAGE.fields_by_name['m_callin'].containing_oneof = _CMESSAGE.oneofs_by_name['msg']
 _CMESSAGE.oneofs_by_name['msg'].fields.append(
-  _CMESSAGE.fields_by_name['c_callback'])
-_CMESSAGE.fields_by_name['c_callback'].containing_oneof = _CMESSAGE.oneofs_by_name['msg']
+  _CMESSAGE.fields_by_name['m_callback'])
+_CMESSAGE.fields_by_name['m_callback'].containing_oneof = _CMESSAGE.oneofs_by_name['msg']
 _CMESSAGE.oneofs_by_name['msg'].fields.append(
-  _CMESSAGE.fields_by_name['c_problem'])
-_CMESSAGE.fields_by_name['c_problem'].containing_oneof = _CMESSAGE.oneofs_by_name['msg']
+  _CMESSAGE.fields_by_name['m_problem'])
+_CMESSAGE.fields_by_name['m_problem'].containing_oneof = _CMESSAGE.oneofs_by_name['msg']
 _CMESSAGELIST.fields_by_name['msgs'].message_type = _CMESSAGE
 DESCRIPTOR.message_types_by_name['CTrace'] = _CTRACE
 DESCRIPTOR.message_types_by_name['TraceIdentifier'] = _TRACEIDENTIFIER
