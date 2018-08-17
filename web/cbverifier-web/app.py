@@ -86,9 +86,13 @@ def index():
 @app.route('/parse_ls', methods=['GET'])
 def parse_task():
     content = request.json
-    parsed = spec_parser.parse_call(content["specline"])
-    if parsed is None:
-        return jsonify
+    try:
+        parsed = spec_parser.parse_call(content["specline"])
+        assert(parsed is not None)
+    except:
+        em = CMessage()
+        em.c_problem.description = "parse failure"
+        return MessageToJson(em)
     c_trace = specASTtoCTrace(parsed)
     # return jsonify({"stuff": "stuff"})
     return MessageToJson(c_trace)
