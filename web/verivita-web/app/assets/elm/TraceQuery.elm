@@ -4,6 +4,7 @@ import Html exposing (..)
 --import Html.Events exposing (onClick)
 import Http
 --import Json.Decode as Json
+import Json.Decode
 import Json.Encode as Encode
 import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
@@ -234,7 +235,7 @@ type Msg
     | SetParsedCallback(Int, QueryCallbackData)
     | UnSetParsedCallin(Int,Int)
     | UnSetParsedCallback(Int)
-    | GetParsedCallback(Int,String)
+    | GetParsedCallback(Int, QueryCallbackData)
     | SearchCallinHole (Int,Int)
     | ResponseCallinHole (Int, Int, List QueryCallbackData)
 
@@ -263,7 +264,7 @@ update msg model =
             ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> d))},Cmd.none)
         SetParsedCallback(cbpos,d) ->
             ({model | query = doCallback (\v -> d) model.query cbpos}, Cmd.none)
-        GetParsedCallback(cbpos, s) -> (model, parseCallback cbpos s) -- TODO
+        GetParsedCallback(cbpos, oldcbdat) -> (model, parseCallback cbpos oldcbdat) -- TODO
         SetCallbackInput(cbpos, s) -> ({model | query = doCallback (\v -> {v | input = s}) model.query cbpos}, Cmd.none)
         SetCallinInput(cbpos, cipos, s) ->
             ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | input = s}))},Cmd.none)
@@ -341,10 +342,12 @@ callbackCard d pos =
                         , Block.custom <|
                             Checkbox.checkbox [Checkbox.onCheck (\b ->
                                 if b then
-                                    GetParsedCallback(pos, d.input)
+                                    GetParsedCallback(pos, d)
                                 else
                                     UnSetParsedCallback(pos)
                                 )] "Set"
+                        , Block.custom <|
+                            text (if d.parsed then "set" else "unset")
 --                        , Block.custom (text "Signature")
 --                        ,Block.custom <|
 --                            Input.text [ Input.value d.signature
@@ -486,6 +489,7 @@ subscriptions model =
 
 -- HTTP
 --reqHdr : String -> Http.Body -> Decode.Decoder a -> Http.Request a
+reqHdr : String -> Http.Body -> Json.Decode.Decoder a -> Http.Request a
 reqHdr url body decoder =
   Http.request
     { method = "POST"
@@ -497,27 +501,46 @@ reqHdr url body decoder =
     , withCredentials = False
     }
 -- get callin and callback
-parsedCallbackResponse : Int -> Result Http.Error Qt.CMessage -> Msg
-parsedCallbackResponse cbpos result =
+parsedCallbackResponse : Int -> QueryCallbackData -> Result Http.Error Qt.CMessage -> Msg
+parsedCallbackResponse cbpos oldcb result =
     case result of
-        Ok(v) -> SetParsedCallback(cbpos, { frameworkClass = ""
-                                                  , signature = ""
-                                                  , receiver = Hole
-                                                  , return = Hole, commands = [], input="", parsed = False, params = []}) -- TODO: set parse result
+        Ok(result) ->
+            case result.msg of
+                Qt.MCallback(v) ->
+                    SetParsedCallback(cbpos, { frameworkClass = v.firstFrameworkOverrrideClass
+                                                          , signature = v.methodSignature
+                                                          , receiver = Hole
+                                                          , return = Hole
+                                                          , commands = oldcb.commands
+                                                          , input = oldcb.input
+                                                          , parsed = True
+                                                          , params = []}) -- TODO: set parse result
+                Qt.MProblem(p) -> UnSetParsedCallback(cbpos)
+                Qt.MCallin(v) -> UnSetParsedCallback(cbpos)
+                Qt.MsgUnspecified -> UnSetParsedCallback(cbpos)
+
         Err(v) -> UnSetParsedCallback(cbpos)
 
 
 
-parseCallback : Int -> String -> Cmd Msg
+parseCallback : Int -> QueryCallbackData -> Cmd Msg
 parseCallback cbpos input =
-    Http.send (parsedCallbackResponse cbpos) <|
+    Http.send (parsedCallbackResponse cbpos input) <|
         reqHdr "/parse_ls"
-            (Http.jsonBody (Encode.object [("specline", Encode.string input)] ))
+            (Http.jsonBody (Encode.object [("specline", Encode.string input.input)] ))
             (Qt.cMessageDecoder)
 
 --getCallinCompletionSearch : Maybe Int -> Maybe Int -> List QueryCallbackOrHole -> List Qt.CTrace
 --getCallinCompletionSearch cbpos cipos query =
 --
+
+-- Deserialization
+qAsQueryParam : Qt.CParam -> Param
+qAsQueryParam p =
+    case p.param of
+        Qt.Variable(cvar) -> NamedVar(cvar.name)
+        _ -> Hole
+
 
 
 -- Serialization

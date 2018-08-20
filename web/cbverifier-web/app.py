@@ -83,7 +83,7 @@ def astToCParam(var_place):
 def index():
     return "Verivita verifier web server."
 
-@app.route('/parse_ls', methods=['GET'])
+@app.route('/parse_ls', methods=['POST'])
 def parse_task():
     content = request.json
     try:
