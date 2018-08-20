@@ -3,6 +3,8 @@ package controllers
 import javax.inject._
 import play.api._
 import play.api.mvc._
+import play.filters.csrf.CSRF
+import play.filters.csrf.CSRF.Token
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -22,6 +24,12 @@ class HomeController @Inject() extends InjectedController {
   }
 
   def completionSearch = Action { request : Request[AnyContent] =>
+    ???
+  }
+
+  //TODO: this is a get because of CSRF filter issues, should fix later
+  def parseLs = Action { request : Request[AnyContent]  =>
+//    val Token(name, value) = CSRF.getToken.get
     ???
   }
 

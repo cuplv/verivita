@@ -11,6 +11,7 @@ libraryDependencies ++= Seq(
   guice,
   "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test,
   "edu.colorado.plv" %% "trace-serializer" % "0.1.0-SNAPSHOT",
+  filters
   //jbcd,
   //"black.ninia" % "jep" % "3.7.1",
   //"com.thesamet.scalapb" %% "scalapb-runtime" % "0.7.4",

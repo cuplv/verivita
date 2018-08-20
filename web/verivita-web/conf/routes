@@ -14,7 +14,11 @@ GET     /cxe                        controllers.TraceController.cxe(traceId: Str
 
 GET     /tracelist                  controllers.TraceController.getTraceList
 
++ nocsrf
+POST    /parse_ls                   controllers.HomeController.parseLs
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 GET     /completion_search          controllers.HomeController.completionSearch
+
