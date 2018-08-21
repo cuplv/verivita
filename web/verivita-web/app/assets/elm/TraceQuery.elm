@@ -236,6 +236,7 @@ type Msg
     | UnSetParsedCallin(Int,Int)
     | UnSetParsedCallback(Int)
     | GetParsedCallback(Int, QueryCallbackData)
+    | GetParsedCallin(Int, Int, QueryCallinData)
     | SearchCallinHole (Int,Int)
     | ResponseCallinHole (Int, Int, List QueryCallbackData)
 
@@ -264,24 +265,11 @@ update msg model =
             ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> d))},Cmd.none)
         SetParsedCallback(cbpos,d) ->
             ({model | query = doCallback (\v -> d) model.query cbpos}, Cmd.none)
-        GetParsedCallback(cbpos, oldcbdat) -> (model, parseCallback cbpos oldcbdat) -- TODO
+        GetParsedCallback(cbpos, oldcbdat) -> (model, parseCallback cbpos oldcbdat)
+        GetParsedCallin(cbpos, cipos, oldcidat) -> (model, parseCallin cbpos cipos oldcidat)
         SetCallbackInput(cbpos, s) -> ({model | query = doCallback (\v -> {v | input = s}) model.query cbpos}, Cmd.none)
         SetCallinInput(cbpos, cipos, s) ->
             ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | input = s}))},Cmd.none)
---        Set(QueryCallbackSig (cbpos, signature)) ->
---            ({model | query = callbackSigSet model.query cbpos signature}, Cmd.none)
---        Set(QueryCallbackFmwk (cbpos, framework)) ->
---            ({model |query = callbackFmwkSet model.query cbpos framework}, Cmd.none)
---        Set(QueryCallinSig (cbpos, cipos, sig)) ->
---            ({model | query = doCallin model.query cbpos cipos (iSetCallinSig sig)},Cmd.none)
---        Set(QueryCallinFmwk  (cbpos, cipos, framework)) ->
---            ({model | query = doCallin model.query cbpos cipos (iSetCallinFmwk framework)},Cmd.none)
---        Set(QueryCallinRec (cbpos, cipos, param)) ->
---            ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | receiver = param}))}, Cmd.none)
---        Set(QueryCallinRet (cbpos, cipos, param)) ->
---            ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | return = param}))}, Cmd.none)
---        Set(QueryCallbackRec (cbpos, param)) ->
---            ({model | query = doCallback (\v -> {v | receiver = param}) model.query cbpos }, Cmd.none)
         SearchCallinHole (cbpos, cipos) -> (model, Cmd.none) -- TODO
         ResponseCallinHole (cbpos, cipos, callbacks) -> (model, Cmd.none) --TODO
         UnSetParsedCallback (cbpos) ->
@@ -413,6 +401,15 @@ callinCard callin cbpos cipos =
                 [
                     Block.custom <|
                         Input.text  (ciInputBox callin (Input.onInput (\s -> SetCallinInput(cbpos, cipos, s))))
+                    , Block.custom <|
+                        Checkbox.checkbox [Checkbox.onCheck (\b ->
+                            if b then
+                                GetParsedCallin(cbpos, cipos, callin)
+                            else
+                                UnSetParsedCallin(cbpos,cipos)
+                            )] "Set"
+                    , Block.custom <|
+                        text (if callin.parsed then "set" else "unset")
 --                    Block.custom <|
 --                        Input.text [ Input.value callin.signature
 --                            , Input.onInput (\sig -> Set(QueryCallinSig (cbpos, cipos, sig)))]
@@ -501,6 +498,26 @@ reqHdr url body decoder =
     , withCredentials = False
     }
 -- get callin and callback
+
+parsedCallinResponse : Int -> Int -> QueryCallinData -> Result Http.Error Qt.CMessage -> Msg
+parsedCallinResponse cbpos cipos oldcb result =
+    case result of
+        Ok(result) ->
+            case result.msg of
+                Qt.MCallin(v) ->
+                    SetParsedCallin(cbpos, cipos, { frameworkClass = v.frameworkClass
+                                                        , signature = v.methodSignature
+                                                        , receiver = qoAsQueryParam v.receiver
+                                                        , return = qoAsQueryParam v.returnValue
+                                                        , input = oldcb.input
+                                                        , parsed = True
+                                                        , params = List.map qAsQueryParam v.parameters })
+                Qt.MCallback(v) -> UnSetParsedCallin(cbpos, cipos)
+                Qt.MProblem(v) -> UnSetParsedCallin(cbpos,cipos)
+                Qt.MsgUnspecified -> UnSetParsedCallin(cbpos,cipos)
+        Err(v) -> UnSetParsedCallin(cbpos,cipos)
+
+
 parsedCallbackResponse : Int -> QueryCallbackData -> Result Http.Error Qt.CMessage -> Msg
 parsedCallbackResponse cbpos oldcb result =
     case result of
@@ -509,12 +526,12 @@ parsedCallbackResponse cbpos oldcb result =
                 Qt.MCallback(v) ->
                     SetParsedCallback(cbpos, { frameworkClass = v.firstFrameworkOverrrideClass
                                                           , signature = v.methodSignature
-                                                          , receiver = Hole
-                                                          , return = Hole
+                                                          , receiver = qoAsQueryParam v.receiver
+                                                          , return = qoAsQueryParam v.returnValue
                                                           , commands = oldcb.commands
                                                           , input = oldcb.input
                                                           , parsed = True
-                                                          , params = []}) -- TODO: set parse result
+                                                          , params = List.map qAsQueryParam v.parameters }) -- TODO: set parse result
                 Qt.MProblem(p) -> UnSetParsedCallback(cbpos)
                 Qt.MCallin(v) -> UnSetParsedCallback(cbpos)
                 Qt.MsgUnspecified -> UnSetParsedCallback(cbpos)
@@ -527,7 +544,15 @@ parseCallback : Int -> QueryCallbackData -> Cmd Msg
 parseCallback cbpos input =
     Http.send (parsedCallbackResponse cbpos input) <|
         reqHdr "/parse_ls"
-            (Http.jsonBody (Encode.object [("specline", Encode.string input.input)] ))
+            (Http.jsonBody (Encode.object [("specline", Encode.string input.input)
+                , ("msg", Encode.string "callback")]))
+            (Qt.cMessageDecoder)
+parseCallin : Int -> Int -> QueryCallinData -> Cmd Msg
+parseCallin cbpos cipos cbdat =
+    Http.send (parsedCallinResponse cbpos cipos cbdat) <|
+        reqHdr "/parse_ls"
+            (Http.jsonBody (Encode.object [("specline", Encode.string cbdat.input)
+                , ("msg", Encode.string "callin")]))
             (Qt.cMessageDecoder)
 
 --getCallinCompletionSearch : Maybe Int -> Maybe Int -> List QueryCallbackOrHole -> List Qt.CTrace
@@ -535,6 +560,12 @@ parseCallback cbpos input =
 --
 
 -- Deserialization
+qoAsQueryParam : Maybe Qt.CParam -> Param
+qoAsQueryParam p =
+    case p of
+        Just(p) -> qAsQueryParam p
+        Nothing -> Hole
+
 qAsQueryParam : Qt.CParam -> Param
 qAsQueryParam p =
     case p.param of

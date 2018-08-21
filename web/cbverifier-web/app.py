@@ -87,7 +87,19 @@ def index():
 def parse_task():
     content = request.json
     try:
-        parsed = spec_parser.parse_call(content["specline"])
+        if "msg" in content:
+            if content["msg"] == "callback":
+                joinm = "= [CB] [EXIT]"
+            elif content["msg"] == "callin":
+                joinm = "= [CI] [EXIT]"
+            else:
+                raise Exception("too msg must be callback or callin")
+            cbm = joinm.join(content['specline'].split("="))
+            parsed = spec_parser.parse_call(cbm)
+
+
+        else:
+            parsed = spec_parser.parse_call(content["specline"])
         assert(parsed is not None)
     except:
         em = CMessage()
