@@ -78,11 +78,11 @@ object ProtoGen {
               frameworkClass = "android.view.View android.app.Activity.findViewById(int)",
               receiver = "a"
             )),
-            CCommand().withHole(Hole(true))
+            CCommand().withCiHole(Hole(true))
           )
         )
       ),
-      CallbackOrHole().withHole(Hole(false))
+      CallbackOrHole().withCbHole(Hole(false))
     )
     ctraceFromCallbacks(callbacks)
   }
@@ -96,7 +96,7 @@ object ProtoGen {
     JsonFormat.toJsonString(c)
   }
   def singleCmdHole = {
-    val c = CCommand().withHole(Hole(false))
+    val c = CCommand().withCiHole(Hole(false))
     JsonFormat.toJsonString(c)
   }
   def main(args: Array[String]): Unit = {

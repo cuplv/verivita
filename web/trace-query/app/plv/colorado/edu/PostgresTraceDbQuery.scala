@@ -72,7 +72,7 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
     }
   }
   def varsFromCCallback(cmd : CallbackOrHole) : Seq[(String,DBParam)] = {
-    if(cmd.command.isCallback) varsFromCCallback(cmd.getCallback) else Seq()
+    if(cmd.cbCommand.isCallback) varsFromCCallback(cmd.getCallback) else Seq()
   }
   def varsFromCCallback(callback : CCallback): Seq[(String, DBParam)] ={
     //Note can be multiple methods if not fully specified
@@ -102,7 +102,7 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
     out
   }
   def varsFromCCallin( cmd : CCommand): Seq[(String,DBParam)] = {
-    if(cmd.command.isCallin) {
+    if(cmd.ciCommand.isCallin) {
       val callin = cmd.getCallin
       val methods = getMethod(callin)
       def protoParams2DBParam(a: Seq[CParam], loc : Symbol) =
@@ -136,7 +136,7 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
     */
   override def traceAnySearch(trace_query: CTrace): Seq[DBTrace] = {
     trace_query.callbacks.flatMap { a =>
-      val vars : Seq[(String, DBParam)] = (a.command.callback map varsFromCCallback).getOrElse(???)
+      val vars : Seq[(String, DBParam)] = (a.cbCommand.callback map varsFromCCallback).getOrElse(???)
       //Generate all pairs where variables are the same and dbparam is different
       //TODO: Note that if something is used twice in one method it will show up as an edge is this a problem?
       val edges = for (x <- vars ; y <- vars
@@ -168,7 +168,7 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
   }
   override def traceSearch(trace_query: CTrace): Map[(Int, Int), Set[DBTrace]] = {
     trace_query.callbacks.map { a =>
-      val varAttempt = a.command.callback map varsFromCCallback
+      val varAttempt = a.cbCommand.callback map varsFromCCallback
       val vars : Seq[(String, DBParam)] = varAttempt match{
         case Some(v) => v
         case None => {
@@ -322,7 +322,7 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
               parameters = if(hasParams) (2 to paramKeys.max).map{ b =>
                 a.get(b) match{
                   case Some(v) => CParam().withVariable(CVariable(v._1))
-                  case None => CParam().withHole(Hole(false))
+                  case None => CParam().withPrHole(Hole(false))
                 }
               } else Nil
 
@@ -450,7 +450,7 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
 
 
   def findEnabledHole_(c :CallbackOrHole) : Option[Boolean] = {
-    if(c.command.isHole){
+    if(c.cbCommand.isCbHole){
       Some(true)
     }else{
       val maybeBooleans: Seq[Option[Boolean]] =
@@ -462,7 +462,7 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
     }
   }
   def findEnabledHole(c : CCommand) : Option[Boolean] = {
-    if(c.command.isHole){
+    if(c.ciCommand.isCiHole){
       Some(false)
     }else{
       //TODO: nested callbacks ignored, is this reasonable?

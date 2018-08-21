@@ -52,6 +52,7 @@ type alias QueryCallbackData =
 type QueryCommand
     = QueryCallin(QueryCallinData)
     | QueryCommandHole
+    | QueryCommandHoleResults(List QueryCallinData)
 type alias QueryCallinData =
     {
         frameworkClass: String,
@@ -233,12 +234,16 @@ type Msg
     | SetCallinInput (Int,Int, String)
     | SetParsedCallin(Int, Int, QueryCallinData)
     | SetParsedCallback(Int, QueryCallbackData)
+    | SetCallinHoleResults(Int,Int, List QueryCallinData)
     | UnSetParsedCallin(Int,Int)
     | UnSetParsedCallback(Int)
     | GetParsedCallback(Int, QueryCallbackData)
     | GetParsedCallin(Int, Int, QueryCallinData)
     | SearchCallinHole (Int,Int)
     | ResponseCallinHole (Int, Int, List QueryCallbackData)
+    | DisplayCallbackError(Int,String)
+    | DisplayCallinError(Int, Int, String)
+
 
 type Setter
     = QueryCallbackSig (Int, String)
@@ -270,13 +275,33 @@ update msg model =
         SetCallbackInput(cbpos, s) -> ({model | query = doCallback (\v -> {v | input = s}) model.query cbpos}, Cmd.none)
         SetCallinInput(cbpos, cipos, s) ->
             ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | input = s}))},Cmd.none)
-        SearchCallinHole (cbpos, cipos) -> (model, Cmd.none) -- TODO
+        SearchCallinHole (cbpos, cipos) -> (model, searchCallinHole cbpos cipos model.query) -- TODO
         ResponseCallinHole (cbpos, cipos, callbacks) -> (model, Cmd.none) --TODO
         UnSetParsedCallback (cbpos) ->
             ({model | query = doCallback (\v -> {v | parsed = False}) model.query cbpos}, Cmd.none)
         UnSetParsedCallin (cbpos, cipos) ->
             ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | parsed = False}))}, Cmd.none)
+        SetCallinHoleResults(cbpos,cipos, resList) ->
+            ({model | query = doCallinHole model.query cbpos cipos resList}, Cmd.none)
+        DisplayCallbackError(cbpos, string) -> (model,Cmd.none) --TODO
+        DisplayCallinError(cbpos, cipos, string) ->
+            (model, Cmd.none) -- TODO
 
+iDoCallinHole : List QueryCommand -> Int -> List QueryCallinData -> List QueryCommand
+iDoCallinHole olist cipos res =
+    List.indexedMap (\idx -> \v ->
+        (case (idx, v) of
+            (cipos, QueryCommandHole) -> QueryCommandHoleResults(res)
+            (a,b) -> b
+        )) olist
+
+doCallinHole : List QueryCallbackOrHole -> Int -> Int -> List QueryCallinData -> List QueryCallbackOrHole
+doCallinHole olist cbpos cipos res =
+    List.indexedMap (\idx -> \v ->
+        ( case (idx, v) of
+            (cbpos, QueryCallback(d)) -> QueryCallback({d | commands = iDoCallinHole d.commands cipos res})
+            (a,b) -> b --TODO: callins within callback holes
+        )) olist
 
 -- View
 
@@ -410,6 +435,7 @@ callinCard callin cbpos cipos =
                             )] "Set"
                     , Block.custom <|
                         text (if callin.parsed then "set" else "unset")
+
 --                    Block.custom <|
 --                        Input.text [ Input.value callin.signature
 --                            , Input.onInput (\sig -> Set(QueryCallinSig (cbpos, cipos, sig)))]
@@ -429,12 +455,25 @@ callinCard callin cbpos cipos =
             |> callinButtons cbpos cipos
             |> Card.view
 
-callinHoleCard : Int -> Int -> Html Msg
-callinHoleCard cbpos cipos =
+
+
+resultListDisplay resultDat =
+    Card.block []
+        (case resultDat of
+            Just v -> [Block.custom <| text "..."] -- TODO: display results
+            Nothing -> []
+        )
+
+
+
+callinHoleCard : Int -> Int -> Maybe (List QueryCallinData) -> Html Msg
+callinHoleCard cbpos cipos resultDat =
         Card.config [ Card.attrs callinOrHoleAttrs ]
             |> Card.header [ class "text-center" ]
                 [ h5 [ ] [ text "Callin Hole" ]
                 ]
+
+            |> resultListDisplay resultDat
 
             |> callinButtons cbpos cipos
             |> Card.block [] [
@@ -451,7 +490,8 @@ callinOrHoleCard : Int -> Int -> QueryCommand -> Html Msg
 callinOrHoleCard cbpos cipos c =
     case c of
         QueryCallin(d) -> callinCard d cbpos cipos
-        QueryCommandHole -> callinHoleCard cbpos cipos
+        QueryCommandHole -> callinHoleCard cbpos cipos Nothing
+        QueryCommandHoleResults(r) -> callinHoleCard cbpos cipos (Just r)
 
 callbackOhrHoleCard : (Card.Config msg -> Card.Config msg1) -> Html msg1
 callbackOhrHoleCard contents =
@@ -497,6 +537,9 @@ reqHdr url body decoder =
     , timeout = Nothing
     , withCredentials = False
     }
+
+
+
 -- get callin and callback
 
 parsedCallinResponse : Int -> Int -> QueryCallinData -> Result Http.Error Qt.CMessage -> Msg
@@ -531,14 +574,25 @@ parsedCallbackResponse cbpos oldcb result =
                                                           , commands = oldcb.commands
                                                           , input = oldcb.input
                                                           , parsed = True
-                                                          , params = List.map qAsQueryParam v.parameters }) -- TODO: set parse result
+                                                          , params = List.map qAsQueryParam v.parameters })
                 Qt.MProblem(p) -> UnSetParsedCallback(cbpos)
                 Qt.MCallin(v) -> UnSetParsedCallback(cbpos)
                 Qt.MsgUnspecified -> UnSetParsedCallback(cbpos)
 
-        Err(v) -> UnSetParsedCallback(cbpos)
+        Err(v) -> UnSetParsedCallback(cbpos) --TODO: display error
 
+setCallinHoleResults : Int -> Int -> Result Http.Error Qt.CMessageList -> Msg
+setCallinHoleResults cbpos cipos result =
+    case result of
+        Ok(result) -> SetCallinHoleResults(cbpos, cipos, cMessageListAsCallinHole result)
+        Err(v) -> DisplayCallinError(cbpos, cipos, "http error") -- TODO: display error
 
+searchCallinHole : Int -> Int -> List QueryCallbackOrHole -> Cmd Msg
+searchCallinHole cbpos cipos model =
+        Http.send (setCallinHoleResults cbpos cipos)
+            (reqHdr "/completion_search"
+                (Http.jsonBody <| Qt.cTraceEncoder <| queryAsQ (Just cbpos) (Just cipos) model)
+                Qt.cMessageListDecoder)
 
 parseCallback : Int -> QueryCallbackData -> Cmd Msg
 parseCallback cbpos input =
@@ -560,6 +614,24 @@ parseCallin cbpos cipos cbdat =
 --
 
 -- Deserialization
+
+cMessageListAsCallinHole : Qt.CMessageList -> List QueryCallinData
+cMessageListAsCallinHole c =
+        List.filterMap cMessageAsQueryCallinData c.msgs
+
+cMessageAsQueryCallinData : Qt.CMessage -> Maybe QueryCallinData
+cMessageAsQueryCallinData m =
+    case m.msg of
+        Qt.MCallin(v) -> Just  {frameworkClass = v.frameworkClass
+            , signature = v.methodSignature
+            , input = "auto fill" --TODO populate this field with something reasonable
+            , parsed = True
+            , receiver = qoAsQueryParam v.receiver
+            , return = qoAsQueryParam v.returnValue
+            , params = List.map qAsQueryParam v.parameters}
+        _ -> Nothing
+
+
 qoAsQueryParam : Maybe Qt.CParam -> Param
 qoAsQueryParam p =
     case p of
@@ -594,6 +666,7 @@ queryCommandAsQ cmd select =
                 exception = Nothing,
                 nestedCallbacks = []} }
         QueryCommandHole -> {ciCommand = Qt.CiHole (Qt.Hole select)}
+        QueryCommandHoleResults(r) -> {ciCommand = Qt.CiHole (Qt.Hole select)}
 
 queryCallbackOrHoleAsQ : QueryCallbackOrHole -> Maybe Int -> Bool -> Qt.CallbackOrHole
 queryCallbackOrHoleAsQ cb opt_cipos selected_callback =

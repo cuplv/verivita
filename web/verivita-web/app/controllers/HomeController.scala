@@ -25,24 +25,25 @@ class HomeController @Inject() (ws : WSClient) (implicit ec : ExecutionContext) 
     Ok(views.html.main())
   }
 
-  def completionSearch = Action { request : Request[AnyContent] =>
-    ???
+  def completionSearch = Action { req : Request[AnyContent] =>
+    val verivitaWebUrl = sys.env("TRACEQUERY_WEB_URL")
+    forwardRequest(req, "/completion_search", verivitaWebUrl)
   }
 
-
-  //TODO: this is a get because of CSRF filter issues, should fix later
   def parseLs = Action { req : Request[AnyContent]  =>
 //    val Token(name, value) = CSRF.getToken.get
     val verivitaWebUrl = sys.env("VERIVITA_WEB_URL")
-    val request: Future[WSResponse] = ws.url(verivitaWebUrl + "/parse_ls")
+    val urltail = "/parse_ls"
+    forwardRequest(req, urltail, verivitaWebUrl)
+  }
+
+
+  private def forwardRequest(req: Request[AnyContent], urltail: String, baseurl : String) = {
+
+    val request: Future[WSResponse] = ws.url(baseurl + urltail)
       .withHttpHeaders("Content-Type" -> "application/json")
       .post(req.body.asJson.getOrElse(???))
-//    val crequest : WSRequest = request.addHttpHeaders("Accept" -> "application/json")
-//      .withMethod("POST")
-//      .withBody(req.body.asJson)
-
     val res = Await.result(request, Duration(1, "minutes"))
     Ok(res.body)
   }
-
 }
