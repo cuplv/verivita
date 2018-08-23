@@ -1,9 +1,12 @@
 package controllers
 
+import edu.colorado.plv.PreSetQueries
 import javax.inject._
 import play.api.libs.ws.{WSBody, WSClient, WSRequest, WSResponse}
 import play.api.mvc._
+
 import scala.concurrent.duration.Duration
+import play.api.libs.json.Json
 
 import scala.concurrent.{Await, ExecutionContext, Future}
 
@@ -36,6 +39,9 @@ class HomeController @Inject() (ws : WSClient) (implicit ec : ExecutionContext) 
     val urltail = "/parse_ls"
     forwardRequest(req, urltail, verivitaWebUrl)
   }
+  def queryList = Action {req =>
+    Ok(Json.toJson(PreSetQueries.getQueries))
+  }
 
 
   private def forwardRequest(req: Request[AnyContent], urltail: String, baseurl : String) = {
@@ -45,5 +51,11 @@ class HomeController @Inject() (ws : WSClient) (implicit ec : ExecutionContext) 
       .post(req.body.asJson.getOrElse(???))
     val res = Await.result(request, Duration(1, "minutes"))
     Ok(res.body)
+  }
+  def getQuery(id : String) = Action{ req : Request[AnyContent] =>
+    PreSetQueries.getQuery(id) match{
+      case Some(v) => Ok(v)
+      case None => BadRequest("Query does not exist.")
+    }
   }
 }

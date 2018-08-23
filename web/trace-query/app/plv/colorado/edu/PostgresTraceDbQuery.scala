@@ -72,7 +72,7 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
     }
   }
   def varsFromCCallback(cmd : CallbackOrHole) : Seq[(String,DBParam)] = {
-    if(cmd.cbCommand.isCallback) varsFromCCallback(cmd.getCallback) else Seq()
+    if(cmd.cbCommand.isCallback) varsFromCCallback(cmd.getCallback) else Seq() //empty sequence for hole
   }
   def varsFromCCallback(callback : CCallback): Seq[(String, DBParam)] ={
     //Note can be multiple methods if not fully specified
@@ -82,19 +82,19 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
       a.zipWithIndex flatMap { b => b match{
         case (Some(CParam(Param.Variable(CVariable(name)))), indexpos) =>
           val position: Int = if(loc == 'rec) 1 else if(loc=='ret) 0 else indexpos + 2
-          val a: Seq[(String, DBParam)] = methods.flatMap{ a =>
+          methods.flatMap{ a =>
             getDBParam(position, a) match{
-              case Some(v) => Some(name,v)
+              case Some(v) =>
+                Some(name,v)
               case None => None
             }
           }
-          a
         case _ => Seq[(String,DBParam)]()
         }
       }
 
-    val retList: Seq[(String,DBParam)] = protoParams2DBParam(Seq(callback.returnValue), 'rec)
-    val recList: Seq[(String, DBParam)] = protoParams2DBParam(Seq(callback.receiver), 'ret)
+    val retList: Seq[(String,DBParam)] = protoParams2DBParam(Seq(callback.returnValue), 'ret)
+    val recList: Seq[(String, DBParam)] = protoParams2DBParam(Seq(callback.receiver), 'rec)
     val paramList: Seq[(String, DBParam)] = protoParams2DBParam(callback.parameters.map(a => Some(a)), 'param)
 
     val out: Seq[(String,DBParam)] =
@@ -239,10 +239,7 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
     */
   override def completionSearch(completion_query: CTrace, isCallback : Boolean): List[(Int,CallinOrCallback)] = {
     val traceToRank: Map[DBTrace, Int] = traceRankSearch(completion_query).toMap
-    val methodsInQuery =
-      completion_query.callbacks.flatMap{a =>
-        varsFromCCallback(a)
-      }
+    val methodsInQuery = completion_query.callbacks.flatMap(varsFromCCallback)
 //    val everyPair = for( traceId <- traceIDs; method <- methodsInQuery)
 //      yield (traceId,method)
 
@@ -386,7 +383,8 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
     getMethod(sig, fmwk,true)
   }
 
-  private def getMethod(sig: String, fmwk: String, isCallback : Boolean) = {
+  private def getMethod(sig: String, fmwkin: String, isCallback : Boolean) = {
+    val fmwk = if(isCallback && !fmwkin.startsWith("class")) s"class ${fmwkin}" else fmwkin
     db.withConnection { conn =>
       implicit val b = conn
 

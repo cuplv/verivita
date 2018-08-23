@@ -21,5 +21,8 @@ POST    /parse_ls                   controllers.HomeController.parseLs
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 + nocsrf
-POST     /completion_search          controllers.HomeController.completionSearch
+POST     /completion_search         controllers.HomeController.completionSearch
 
+GET      /query_list                controllers.HomeController.queryList
+
+GET      /get_query/:id             controllers.HomeController.getQuery(id : String)

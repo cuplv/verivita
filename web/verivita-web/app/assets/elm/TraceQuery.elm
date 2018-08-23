@@ -1,22 +1,21 @@
 module TraceQuery exposing (..)
 
 import Html exposing (..)
---import Html.Events exposing (onClick)
+import Html.Events
 import Http
---import Json.Decode as Json
-import Json.Decode
+import Json.Decode as Decode
 import Json.Encode as Encode
 import Bootstrap.CDN as CDN
-import Bootstrap.Grid as Grid
 import Bootstrap.Card as Card
-import Html.Attributes exposing (class, src, style)
 import Bootstrap.Card.Block as Block
+import Bootstrap.Dropdown as Dropdown
+import Bootstrap.Grid as Grid
+import Html.Attributes exposing (class, src, style)
 import Bootstrap.Button as Button
---import Bootstrap.ListGroup as ListGroup
 import Bootstrap.Form.Input as Input
 import Bootstrap.Form.Checkbox as Checkbox
---import Json.Encode exposing (Value)
 import QueryTrace as Qt
+import Debug
 
 
 main : Program Never Model Msg
@@ -79,6 +78,8 @@ type alias TraceCallback =
 
 type alias Model =
     {
+        querySelectionList : List String,
+        querySelectDropDownState : Dropdown.State,
         query : List QueryCallbackOrHole
     }
 
@@ -97,7 +98,7 @@ emptyCallin =
 
 init : ( Model, Cmd Msg)
 init =
-    ( Model [QueryCallbackHole], Cmd.none)
+    ( Model [] Dropdown.initialState [QueryCallbackHole],  getQueryList)
 
 
 -- UPDATE
@@ -243,6 +244,11 @@ type Msg
     | ResponseCallinHole (Int, Int, List QueryCallbackData)
     | DisplayCallbackError(Int,String)
     | DisplayCallinError(Int, Int, String)
+    | GetQueryList
+    | SetQueryList(List String)
+    | QuerySelectDropToggle Dropdown.State
+    | SetQuerySelection String
+    | SetQuery (List QueryCallbackOrHole)
 
 
 type Setter
@@ -286,6 +292,11 @@ update msg model =
         DisplayCallbackError(cbpos, string) -> (model,Cmd.none) --TODO
         DisplayCallinError(cbpos, cipos, string) ->
             (model, Cmd.none) -- TODO
+        SetQueryList(l) -> ({model | querySelectionList = l},Cmd.none)
+        GetQueryList -> (model, getQueryList)
+        QuerySelectDropToggle t -> ({model | querySelectDropDownState = t}, Cmd.none)
+        SetQuerySelection name -> (model, getQuery name)
+        SetQuery q -> ({model | query = q}, Cmd.none)
 
 iDoCallinHole : List QueryCommand -> Int -> List QueryCallinData -> List QueryCommand
 iDoCallinHole olist cipos res =
@@ -361,21 +372,6 @@ callbackCard d pos =
                                 )] "Set"
                         , Block.custom <|
                             text (if d.parsed then "set" else "unset")
---                        , Block.custom (text "Signature")
---                        ,Block.custom <|
---                            Input.text [ Input.value d.signature
---                                ,Input.onInput (\sig -> Set(QueryCallbackSig (pos, sig))) ]
-----                        , Block.custom <| Button.button [ Button.primary ] [ text "Set" ]
-----                        , newline, sp, newline
---                        , Block.custom (text "Framework Object")
---                        , Block.custom <|
---                            Input.text [ Input.value d.frameworkClass
---                                ,Input.onInput <| \fmwk -> Set(QueryCallbackFmwk (pos,fmwk)) ]
---                        , Block.custom (text "Receiver")
---                        , Block.custom <|
---                            Input.text [paramString d.receiver
---                                , Input.onInput <| \name -> Set(QueryCallbackRec (pos, NamedVar(name) ))]
---                        , newline
                     ]
                     ++
 
@@ -394,6 +390,8 @@ callbackCard d pos =
 
                     ]
                 )
+
+
 
 callinButtons : Int -> Int -> Card.Config Msg -> Card.Config Msg
 callinButtons cbpos cipos =
@@ -435,28 +433,12 @@ callinCard callin cbpos cipos =
                             )] "Set"
                     , Block.custom <|
                         text (if callin.parsed then "set" else "unset")
-
---                    Block.custom <|
---                        Input.text [ Input.value callin.signature
---                            , Input.onInput (\sig -> Set(QueryCallinSig (cbpos, cipos, sig)))]
---                    , Block.custom (text "Framework Object")
---                    , Block.custom <|
---                        Input.text [ Input.value callin.frameworkClass
---                            , Input.onInput (\fmwk -> Set(QueryCallinFmwk (cbpos, cipos, fmwk)))]
---                    , Block.custom (text "Receiver")
---                    , Block.custom <|
---                        Input.text [ paramString callin.receiver
---                            , Input.onInput (\name -> Set(QueryCallinRec (cbpos, cipos, NamedVar(name) )))]
---                    , Block.custom (text "Return")
---                    , Block.custom <|
---                        Input.text [ paramString callin.return
---                            , Input.onInput (\name -> Set(QueryCallinRet (cbpos, cipos, NamedVar(name) )))]
                 ]
             |> callinButtons cbpos cipos
             |> Card.view
 
 
-
+resultListDisplay : Maybe a -> Card.Config msg -> Card.Config msg
 resultListDisplay resultDat =
     Card.block []
         (case resultDat of
@@ -510,10 +492,23 @@ drawCallbackOrHole pos c =
         QueryCallbackHoleResults(v) -> callbackOhrHoleCard (holeCard pos) --TODO: display results
 
 
+queryHeader : Model -> Html Msg
+queryHeader model =
+    div []
+        [ Dropdown.dropdown model.querySelectDropDownState
+            {
+                options = [ ]
+                , toggleMsg = QuerySelectDropToggle
+                , toggleButton =
+                    Dropdown.toggle [ Button.primary ] [ text "Select Pre Defined Query" ]
+                , items = List.map (\name -> Dropdown.buttonItem [ Html.Events.onClick <| SetQuerySelection name ] [text name] ) model.querySelectionList
+            }
+        ]
+
 view : Model -> Html Msg
 view model =
     Grid.container []
-        (CDN.stylesheet :: (List.indexedMap drawCallbackOrHole model.query))
+        (CDN.stylesheet :: (queryHeader model) :: (List.indexedMap drawCallbackOrHole model.query))
 --        , Grid.row[] [ Grid.col [] [ text ".."] ]
 --        , Grid.row[] [ Grid.col [] [ text "..."] ]
 
@@ -526,7 +521,7 @@ subscriptions model =
 
 -- HTTP
 --reqHdr : String -> Http.Body -> Decode.Decoder a -> Http.Request a
-reqHdr : String -> Http.Body -> Json.Decode.Decoder a -> Http.Request a
+reqHdr : String -> Http.Body -> Decode.Decoder a -> Http.Request a
 reqHdr url body decoder =
   Http.request
     { method = "POST"
@@ -537,7 +532,6 @@ reqHdr url body decoder =
     , timeout = Nothing
     , withCredentials = False
     }
-
 
 
 -- get callin and callback
@@ -587,6 +581,28 @@ setCallinHoleResults cbpos cipos result =
         Ok(result) -> SetCallinHoleResults(cbpos, cipos, cMessageListAsCallinHole result)
         Err(v) -> DisplayCallinError(cbpos, cipos, "http error") -- TODO: display error
 
+setQueryList : Result Http.Error (List String) -> Msg
+setQueryList result =
+    case result of
+        Ok(lst) -> SetQueryList(lst)
+        Err(v) -> SetQueryList([]) --TODO: display better error than empty list
+
+setQuery : Result Http.Error Qt.CTrace -> Msg
+setQuery result =
+    case result of
+        Ok(ctr) -> SetQuery(cTraceAsQuery ctr)
+        Err(v) -> SetQuery([]) -- TODO: display error
+
+getQueryList : Cmd Msg
+getQueryList =
+    Http.send setQueryList <| Http.get "/query_list" (Decode.list Decode.string)
+
+
+
+getQuery : String -> Cmd Msg
+getQuery name =
+    Http.send setQuery <| Http.get ("/get_query/" ++ name) Qt.cTraceDecoder
+
 searchCallinHole : Int -> Int -> List QueryCallbackOrHole -> Cmd Msg
 searchCallinHole cbpos cipos model =
         Http.send (setCallinHoleResults cbpos cipos)
@@ -615,20 +631,96 @@ parseCallin cbpos cipos cbdat =
 
 -- Deserialization
 
+cTraceAsQuery: Qt.CTrace -> List QueryCallbackOrHole
+cTraceAsQuery ctrace =
+    List.map (\c -> cCommandAsQueryCallbackOrHole c.cbCommand) ctrace.callbacks
+
+
+cCommandAsQueryCallbackOrHole : Qt.CbCommand -> QueryCallbackOrHole
+cCommandAsQueryCallbackOrHole c =
+    case c of
+        Qt.CbCommandUnspecified -> QueryCallbackHole
+        Qt.Callback(c) -> cCallbackAsQuery c
+        Qt.CbHole(h) -> QueryCallbackHole
+
+queryParamToInput : Param -> String
+queryParamToInput p =
+    case p of
+        NamedVar(n) -> n
+        Hole -> "#"
+
+queryFrameworkClassToInput : List Param -> String -> String
+queryFrameworkClassToInput params fmwk =
+    let
+        parstrings = List.map queryParamToInput params
+        parsplit = String.split "(" fmwk
+    in
+        case parsplit of
+            front :: paramtypes :: t ->
+                let
+                    zpars = List.map2 (\pstr -> \ptyp -> pstr ++ " : " ++ ptyp) parstrings (String.split "," paramtypes)
+                    pjoin = String.join " , " zpars
+                in
+                    front ++ ("(" ++ pjoin) -- ++ "   DBG: " ++ (List.head (String.split "," paramtypes))
+            nil -> "error"
+
+queryCallbackDataToInput : QueryCallbackData -> String
+queryCallbackDataToInput qc =
+    let
+        rval = queryParamToInput qc.return
+        rec = queryParamToInput qc.receiver
+    in
+        rval ++ " = [" ++ rec ++ "] " ++ (queryFrameworkClassToInput qc.params qc.frameworkClass)
+queryCallinDataToInput : QueryCallinData -> String
+queryCallinDataToInput qc =
+    let
+        rval = queryParamToInput qc.return
+        rec = queryParamToInput qc.receiver
+    in
+        rval ++ " = [" ++ rec ++ "] " ++ (queryFrameworkClassToInput qc.params qc.frameworkClass)
+
+cCallbackAsQuery : Qt.CCallback -> QueryCallbackOrHole
+cCallbackAsQuery c =
+    let d = { frameworkClass = c.firstFrameworkOverrrideClass
+                        , signature = c.methodSignature
+                        , input = ""
+                        , parsed = True
+                        , receiver = qoAsQueryParam c.receiver
+                        , return = qoAsQueryParam c.returnValue
+                        , commands = List.map cCommandAsQueryCommand c.nestedCommands
+                        , params = List.map qAsQueryParam c.parameters
+                    }
+    in
+        QueryCallback( {d | input = queryCallbackDataToInput d} )
+
+cCommandAsQueryCommand : Qt.CCommand -> QueryCommand
+cCommandAsQueryCommand c =
+    case c.ciCommand of
+        Qt.CiCommandUnspecified -> QueryCommandHole
+        Qt.Callin(c) -> QueryCallin(cCallinAsQuery c)
+        Qt.CiHole(_) -> QueryCommandHole
+
 cMessageListAsCallinHole : Qt.CMessageList -> List QueryCallinData
 cMessageListAsCallinHole c =
         List.filterMap cMessageAsQueryCallinData c.msgs
 
-cMessageAsQueryCallinData : Qt.CMessage -> Maybe QueryCallinData
-cMessageAsQueryCallinData m =
-    case m.msg of
-        Qt.MCallin(v) -> Just  {frameworkClass = v.frameworkClass
+
+cCallinAsQuery v =
+    let
+        d = {frameworkClass = v.frameworkClass
             , signature = v.methodSignature
-            , input = "auto fill" --TODO populate this field with something reasonable
+            , input = "auto fill"
             , parsed = True
             , receiver = qoAsQueryParam v.receiver
             , return = qoAsQueryParam v.returnValue
             , params = List.map qAsQueryParam v.parameters}
+    in
+        {d | input = queryCallinDataToInput d}
+
+cMessageAsQueryCallinData : Qt.CMessage -> Maybe QueryCallinData
+cMessageAsQueryCallinData m =
+    case m.msg of
+        Qt.MCallin(v) -> Just <| cCallinAsQuery v
         _ -> Nothing
 
 
@@ -648,11 +740,13 @@ qAsQueryParam p =
 
 -- Serialization
 
-queryParamAsQ : Param -> Maybe Qt.CParam
+queryParamAsQ : Param -> Qt.CParam
 queryParamAsQ p =
     case p of
-        NamedVar(s) -> Just {param = Qt.Variable ({name = s}) }
-        Hole -> Just {param = Qt.PrHole(Qt.Hole False)}
+        NamedVar(s) -> {param = Qt.Variable ({name = s}) }
+        Hole -> {param = Qt.PrHole(Qt.Hole False)}
+
+
 
 queryCommandAsQ : QueryCommand -> Bool -> Qt.CCommand
 queryCommandAsQ cmd select =
@@ -660,9 +754,9 @@ queryCommandAsQ cmd select =
         QueryCallin(d) -> {
             ciCommand = Qt.Callin {methodSignature = d.signature, --
                 frameworkClass = d.frameworkClass,
-                parameters = [], --TODO
-                receiver = queryParamAsQ d.receiver,
-                returnValue = queryParamAsQ d.return,
+                parameters =  List.map queryParamAsQ d.params, --TODO
+                receiver = Just <| queryParamAsQ d.receiver,
+                returnValue = Just <| queryParamAsQ d.return,
                 exception = Nothing,
                 nestedCallbacks = []} }
         QueryCommandHole -> {ciCommand = Qt.CiHole (Qt.Hole select)}
@@ -676,8 +770,8 @@ queryCallbackOrHoleAsQ cb opt_cipos selected_callback =
         QueryCallback(d) -> {cbCommand = Qt.Callback { methodSignature = d.signature,
             firstFrameworkOverrrideClass = d.frameworkClass,
             applicationClass = "",
-            parameters = [],
-            receiver = queryParamAsQ d.receiver,
+            parameters = List.map queryParamAsQ d.params,
+            receiver = Just <| queryParamAsQ d.receiver,
             returnValue = Nothing,
             exception = Nothing,
             nestedCommands = (
