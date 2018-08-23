@@ -51,7 +51,7 @@ type alias QueryCallbackData =
 type QueryCommand
     = QueryCallin(QueryCallinData)
     | QueryCommandHole
-    | QueryCommandHoleResults(List QueryCallinData)
+    | QueryCommandHoleResults(List RankedCallin)
 type alias QueryCallinData =
     {
         frameworkClass: String,
@@ -74,6 +74,12 @@ type alias TraceCallback =
     {
         frameworkClass : Maybe String,
         signature : Maybe String
+    }
+
+type alias RankedCallin =
+    {
+        rank : Int
+        , callin : QueryCallinData
     }
 
 type alias Model =
@@ -162,48 +168,6 @@ fillHole old pos =
         (h :: old, a) -> h :: fillHole old (a-1)
         (nil,a) -> nil
 
---TODO: replace following two with doCallback
-
-callbackSigSet
-    : List QueryCallbackOrHole
-    -> Int
-    -> String
-    -> List QueryCallbackOrHole
-callbackSigSet cblist cbpos signature =
-    case (cblist,cbpos) of
-        (QueryCallback(d) :: t, 0) -> QueryCallback({d | signature = signature}) :: t
-        (h :: t, a) -> h :: callbackSigSet t (cbpos - 1) signature
-        (nil,a) -> nil
-
-callbackFmwkSet
-    : List QueryCallbackOrHole
-    -> Int
-    -> String
-    -> List QueryCallbackOrHole
-callbackFmwkSet cblist cbpos framework =
-    List.indexedMap (\idx -> \v ->
-        if idx == cbpos then
-            case v of
-                QueryCallback(v) -> QueryCallback ({v | frameworkClass = framework})
-                QueryCallbackHole -> QueryCallbackHole
-                QueryCallbackHoleResults(v) -> QueryCallbackHoleResults(v)
-        else v
-        ) cblist
-
-iSetCallinFmwk : String -> List QueryCommand -> Int -> List QueryCommand
-iSetCallinFmwk framework old pos =
-    case (old,pos) of
-        (QueryCallin(v) :: t, 0) -> QueryCallin({v | frameworkClass = framework}) :: t
-        (h :: t, a) -> h :: (iSetCallinFmwk framework t (pos - 1))
-        (nil, a) -> nil -- TODO: error state
-
-iSetCallinSig : String -> List QueryCommand -> number -> List QueryCommand
-iSetCallinSig sig old pos =
-    case (old,pos) of
-        (QueryCallin(v) :: t, 0) -> QueryCallin({v | signature = sig}) :: t
-        (h :: t, a) -> h :: (iSetCallinSig sig t (pos-1))
-        (nil, a) -> nil
-
 iSetCallin: (QueryCallinData -> QueryCallinData)
     -> List QueryCommand
     -> Int
@@ -235,13 +199,12 @@ type Msg
     | SetCallinInput (Int,Int, String)
     | SetParsedCallin(Int, Int, QueryCallinData)
     | SetParsedCallback(Int, QueryCallbackData)
-    | SetCallinHoleResults(Int,Int, List QueryCallinData)
+    | SetCallinHoleResults(Int,Int, List RankedCallin)
     | UnSetParsedCallin(Int,Int)
     | UnSetParsedCallback(Int)
     | GetParsedCallback(Int, QueryCallbackData)
     | GetParsedCallin(Int, Int, QueryCallinData)
     | SearchCallinHole (Int,Int)
-    | ResponseCallinHole (Int, Int, List QueryCallbackData)
     | DisplayCallbackError(Int,String)
     | DisplayCallinError(Int, Int, String)
     | GetQueryList
@@ -249,16 +212,6 @@ type Msg
     | QuerySelectDropToggle Dropdown.State
     | SetQuerySelection String
     | SetQuery (List QueryCallbackOrHole)
-
-
-type Setter
-    = QueryCallbackSig (Int, String)
-    | QueryCallbackFmwk (Int,String)
-    | QueryCallinSig (Int,Int, String)
-    | QueryCallinFmwk (Int,Int, String)
-    | QueryCallinRec (Int,Int, Param)
-    | QueryCallinRet (Int,Int, Param)
-    | QueryCallbackRec (Int, Param)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -281,8 +234,7 @@ update msg model =
         SetCallbackInput(cbpos, s) -> ({model | query = doCallback (\v -> {v | input = s}) model.query cbpos}, Cmd.none)
         SetCallinInput(cbpos, cipos, s) ->
             ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | input = s}))},Cmd.none)
-        SearchCallinHole (cbpos, cipos) -> (model, searchCallinHole cbpos cipos model.query) -- TODO
-        ResponseCallinHole (cbpos, cipos, callbacks) -> (model, Cmd.none) --TODO
+        SearchCallinHole (cbpos, cipos) -> (model, searchCallinHole cbpos cipos model.query)
         UnSetParsedCallback (cbpos) ->
             ({model | query = doCallback (\v -> {v | parsed = False}) model.query cbpos}, Cmd.none)
         UnSetParsedCallin (cbpos, cipos) ->
@@ -298,7 +250,7 @@ update msg model =
         SetQuerySelection name -> (model, getQuery name)
         SetQuery q -> ({model | query = q}, Cmd.none)
 
-iDoCallinHole : List QueryCommand -> Int -> List QueryCallinData -> List QueryCommand
+iDoCallinHole : List QueryCommand -> Int -> List RankedCallin -> List QueryCommand
 iDoCallinHole olist cipos res =
     List.indexedMap (\idx -> \v ->
         (case (idx, v) of
@@ -306,7 +258,7 @@ iDoCallinHole olist cipos res =
             (a,b) -> b
         )) olist
 
-doCallinHole : List QueryCallbackOrHole -> Int -> Int -> List QueryCallinData -> List QueryCallbackOrHole
+doCallinHole : List QueryCallbackOrHole -> Int -> Int -> List RankedCallin -> List QueryCallbackOrHole
 doCallinHole olist cbpos cipos res =
     List.indexedMap (\idx -> \v ->
         ( case (idx, v) of
@@ -448,7 +400,7 @@ resultListDisplay resultDat =
 
 
 
-callinHoleCard : Int -> Int -> Maybe (List QueryCallinData) -> Html Msg
+callinHoleCard : Int -> Int -> Maybe (List RankedCallin) -> Html Msg
 callinHoleCard cbpos cipos resultDat =
         Card.config [ Card.attrs callinOrHoleAttrs ]
             |> Card.header [ class "text-center" ]
@@ -522,7 +474,8 @@ view model =
 -- SUBSCRIPTIONS
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Sub.batch
+        [ Dropdown.subscriptions model.querySelectDropDownState QuerySelectDropToggle ]
 
 -- HTTP
 --reqHdr : String -> Http.Body -> Decode.Decoder a -> Http.Request a
@@ -580,10 +533,10 @@ parsedCallbackResponse cbpos oldcb result =
 
         Err(v) -> UnSetParsedCallback(cbpos) --TODO: display error
 
-setCallinHoleResults : Int -> Int -> Result Http.Error Qt.CMessageList -> Msg
+setCallinHoleResults : Int -> Int -> Result Http.Error (List RankedCallinProto) -> Msg
 setCallinHoleResults cbpos cipos result =
     case result of
-        Ok(result) -> SetCallinHoleResults(cbpos, cipos, cMessageListAsCallinHole result)
+        Ok(result) -> SetCallinHoleResults(cbpos, cipos, List.map rankedCallinProtoToQuery result)
         Err(v) -> DisplayCallinError(cbpos, cipos, "http error") -- TODO: display error
 
 setQueryList : Result Http.Error (List String) -> Msg
@@ -608,12 +561,24 @@ getQuery : String -> Cmd Msg
 getQuery name =
     Http.send setQuery <| Http.get ("/get_query/" ++ name) Qt.cTraceDecoder
 
+type alias RankedCallinProto =
+    {
+        rank : Int
+        , callin : Qt.CCallin
+    }
+rankedCallinProtoToQuery : RankedCallinProto -> RankedCallin
+rankedCallinProtoToQuery r =
+    {rank = r.rank, callin = cCallinAsQuery r.callin}
 searchCallinHole : Int -> Int -> List QueryCallbackOrHole -> Cmd Msg
 searchCallinHole cbpos cipos model =
         Http.send (setCallinHoleResults cbpos cipos)
             (reqHdr "/completion_search"
                 (Http.jsonBody <| Qt.cTraceEncoder <| queryAsQ (Just cbpos) (Just cipos) model)
-                Qt.cMessageListDecoder)
+                (Decode.list
+                    (Decode.map2 RankedCallinProto
+                        (Decode.field "rank" Decode.int)
+                        (Decode.field "callin" Qt.cCallinDecoder))))
+--                Qt.cMessageListDecoder) -- TODO: you were here
 
 parseCallback : Int -> QueryCallbackData -> Cmd Msg
 parseCallback cbpos input =

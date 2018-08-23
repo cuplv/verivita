@@ -1,6 +1,6 @@
 package controllers
 
-import edu.colorado.plv.QueryTrace.{CCallback, CTrace}
+import edu.colorado.plv.QueryTrace.{CCallback, CCallin, CTrace}
 import javax.inject._
 import play.api.mvc._
 import plv.colorado.edu.{CallbackWrapper, CallinWrapper, TraceDbQuery}
@@ -76,7 +76,7 @@ class QueryController @Inject()(cc: ControllerComponents, traceQuery : TraceDbQu
           case None => badRequest("hole not found")
           case Some(v) =>
             val results = v.map(a => {
-              val value = a._2 match {
+              val value: CCallin = a._2 match {
                 case CallbackWrapper(c) => ???
                 case CallinWrapper(c) => c
               }
