@@ -406,7 +406,7 @@ callinButtons cbpos cipos =
         ]
 
 callinOrHoleAttrs : List (Attribute msg)
-callinOrHoleAttrs = [ style [ ( "width", "25rem" ) ] ]
+callinOrHoleAttrs = [ style [ ( "width", "55rem" ) ] ]
 
 paramString : Param -> Input.Option msg
 paramString p =
@@ -477,7 +477,7 @@ callinOrHoleCard cbpos cipos c =
 
 callbackOhrHoleCard : (Card.Config msg -> Card.Config msg1) -> Html msg1
 callbackOhrHoleCard contents =
-    Card.config [ Card.attrs [ style [ ( "width", "30rem" ) ] ] ]
+    Card.config [ Card.attrs [ style [ ( "width", "60rem" ) ] ] ]
         |> Card.header [ class "text-center" ]
             [ h6 [ ] [ text "Callback" ]
             ]
@@ -494,21 +494,26 @@ drawCallbackOrHole pos c =
 
 queryHeader : Model -> Html Msg
 queryHeader model =
-    div []
-        [ Dropdown.dropdown model.querySelectDropDownState
-            {
-                options = [ ]
-                , toggleMsg = QuerySelectDropToggle
-                , toggleButton =
-                    Dropdown.toggle [ Button.primary ] [ text "Select Pre Defined Query" ]
-                , items = List.map (\name -> Dropdown.buttonItem [ Html.Events.onClick <| SetQuerySelection name ] [text name] ) model.querySelectionList
-            }
-        ]
+    Grid.container []
+        [ Grid.row [] (List.map (\a -> Grid.col [] [a])
+            [ Dropdown.dropdown model.querySelectDropDownState
+                {
+                    options = [ ]
+                    , toggleMsg = QuerySelectDropToggle
+                    , toggleButton =
+                        Dropdown.toggle [ Button.primary ] [ text "Select Pre Defined Query" ]
+                    , items = List.map (\name -> Dropdown.buttonItem [ Html.Events.onClick <| SetQuerySelection name ] [text name] ) model.querySelectionList
+                }
+            , Button.button [Button.primary] [ text "Verify" ]
+            , Button.button [Button.primary] [ text "Search Traces" ] ] )
+         , Grid.row [] [ Grid.col [][text " "] ] ] --TODO: pad with some space
 
 view : Model -> Html Msg
 view model =
     Grid.container []
-        (CDN.stylesheet :: (queryHeader model) :: (List.indexedMap drawCallbackOrHole model.query))
+        (CDN.stylesheet
+            :: (queryHeader model)
+            :: (List.indexedMap drawCallbackOrHole model.query))
 --        , Grid.row[] [ Grid.col [] [ text ".."] ]
 --        , Grid.row[] [ Grid.col [] [ text "..."] ]
 
@@ -754,7 +759,7 @@ queryCommandAsQ cmd select =
         QueryCallin(d) -> {
             ciCommand = Qt.Callin {methodSignature = d.signature, --
                 frameworkClass = d.frameworkClass,
-                parameters =  List.map queryParamAsQ d.params, --TODO
+                parameters =  List.map queryParamAsQ d.params,
                 receiver = Just <| queryParamAsQ d.receiver,
                 returnValue = Just <| queryParamAsQ d.return,
                 exception = Nothing,

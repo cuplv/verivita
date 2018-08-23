@@ -22,7 +22,12 @@ object PreSetQueries {
         |                            },
         |                            "returnValue": {
         |                                "prHole": {}
-        |                            }
+        |                            },
+        |                            "parameters": [
+        |                               {
+        |                                 "prHole":{}
+        |                               }
+        |                            ]
         |                        }
         |                    },
         |                    {
