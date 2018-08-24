@@ -23,6 +23,9 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 + nocsrf
 POST     /completion_search         controllers.HomeController.completionSearch
 
++ nocsrf
+POST     /verify                    controllers.HomeController.verify
+
 GET      /query_list                controllers.HomeController.queryList
 
 GET      /get_query/:id             controllers.HomeController.getQuery(id : String)

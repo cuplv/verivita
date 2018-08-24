@@ -86,7 +86,8 @@ type alias Model =
     {
         querySelectionList : List String,
         querySelectDropDownState : Dropdown.State,
-        query : List QueryCallbackOrHole
+        query : List QueryCallbackOrHole,
+        verificationResults : Maybe (List QueryCallbackOrHole)
     }
 
 emptyCallback : QueryCallbackOrHole
@@ -104,7 +105,7 @@ emptyCallin =
 
 init : ( Model, Cmd Msg)
 init =
-    ( Model [] Dropdown.initialState [QueryCallbackHole],  getQueryList)
+    ( Model [] Dropdown.initialState [QueryCallbackHole] Nothing,  getQueryList)
 
 
 -- UPDATE
@@ -189,7 +190,9 @@ doCallback opr old pos =
 
 
 type Msg
-    = AddQueryCallbackAfter (Int)
+    =
+    -- User Input Model Updates
+    AddQueryCallbackAfter (Int)
     | AddQueryCallinAfter (Int, Int)
     | FillQueryCallbackHole (Int)
     | FillQueryCallinhole (Int,Int)
@@ -197,21 +200,27 @@ type Msg
     | RemoveQueryCallin (Int,Int)
     | SetCallbackInput (Int, String)
     | SetCallinInput (Int,Int, String)
+    | UnSetParsedCallin(Int,Int)
+    | UnSetParsedCallback(Int)
+    | QuerySelectDropToggle Dropdown.State
+
+    -- Update From Http Requests
     | SetParsedCallin(Int, Int, QueryCallinData)
     | SetParsedCallback(Int, QueryCallbackData)
     | SetCallinHoleResults(Int,Int, List RankedCallin)
-    | UnSetParsedCallin(Int,Int)
-    | UnSetParsedCallback(Int)
+    | DisplayCallbackError(Int,String)
+    | DisplayCallinError(Int, Int, String)
+    | SetQueryList(List String)
+    | SetQuerySelection String
+    | SetQuery (List QueryCallbackOrHole)
+    | SetVerificationResults (Maybe (List QueryCallbackOrHole))
+
+    -- Send Http Requests
     | GetParsedCallback(Int, QueryCallbackData)
     | GetParsedCallin(Int, Int, QueryCallinData)
     | SearchCallinHole (Int,Int)
-    | DisplayCallbackError(Int,String)
-    | DisplayCallinError(Int, Int, String)
     | GetQueryList
-    | SetQueryList(List String)
-    | QuerySelectDropToggle Dropdown.State
-    | SetQuerySelection String
-    | SetQuery (List QueryCallbackOrHole)
+    | GetVerificationResults
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -249,6 +258,8 @@ update msg model =
         QuerySelectDropToggle t -> ({model | querySelectDropDownState = t}, Cmd.none)
         SetQuerySelection name -> (model, getQuery name)
         SetQuery q -> ({model | query = q}, Cmd.none)
+        GetVerificationResults -> (model, getVerificationResults model.query )
+        SetVerificationResults (r) -> ({model | verificationResults = r}, Cmd.none)
 
 iDoCallinHole : List QueryCommand -> Int -> List RankedCallin -> List QueryCommand
 iDoCallinHole olist cipos res =
@@ -456,7 +467,7 @@ queryHeader model =
                         Dropdown.toggle [ Button.primary ] [ text "Select Pre Defined Query" ]
                     , items = List.map (\name -> Dropdown.buttonItem [ Html.Events.onClick <| SetQuerySelection name ] [text name] ) model.querySelectionList
                 }
-            , Button.button [Button.primary] [ text "Verify" ]
+            , Button.button [Button.primary, Button.onClick GetVerificationResults] [ text "Verify" ]
             , Button.button [Button.primary] [ text "Search Traces" ] ] )
          , Grid.row [] [ Grid.col [][text " "] ] ] --TODO: pad with some space
 
@@ -543,7 +554,7 @@ setQueryList : Result Http.Error (List String) -> Msg
 setQueryList result =
     case result of
         Ok(lst) -> SetQueryList(lst)
-        Err(v) -> SetQueryList([]) --TODO: display better error than empty list
+        Err(v) -> Debug.crash "display setQueryList get error" SetQueryList([]) --TODO: display better error than empty list
 
 setQuery : Result Http.Error Qt.CTrace -> Msg
 setQuery result =
@@ -569,6 +580,21 @@ type alias RankedCallinProto =
 rankedCallinProtoToQuery : RankedCallinProto -> RankedCallin
 rankedCallinProtoToQuery r =
     {rank = r.rank, callin = cCallinAsQuery r.callin}
+
+setVerificationResults : Result Http.Error Qt.CTrace -> Msg
+setVerificationResults c =
+    case c of
+        Ok(ctr) -> SetVerificationResults (Just (cTraceAsQuery ctr))
+        Err(v) -> Debug.crash "getVerificationResults http error" SetVerificationResults(Nothing) --TODO
+
+getVerificationResults : List QueryCallbackOrHole -> Cmd Msg
+getVerificationResults q =
+    Http.send setVerificationResults
+        (reqHdr "/verify"
+            (Http.jsonBody <| Qt.cTraceEncoder <| queryAsQ Nothing Nothing q)
+            Qt.cTraceDecoder)
+
+
 searchCallinHole : Int -> Int -> List QueryCallbackOrHole -> Cmd Msg
 searchCallinHole cbpos cipos model =
         Http.send (setCallinHoleResults cbpos cipos)
@@ -578,7 +604,6 @@ searchCallinHole cbpos cipos model =
                     (Decode.map2 RankedCallinProto
                         (Decode.field "rank" Decode.int)
                         (Decode.field "callin" Qt.cCallinDecoder))))
---                Qt.cMessageListDecoder) -- TODO: you were here
 
 parseCallback : Int -> QueryCallbackData -> Cmd Msg
 parseCallback cbpos input =
@@ -594,10 +619,6 @@ parseCallin cbpos cipos cbdat =
             (Http.jsonBody (Encode.object [("specline", Encode.string cbdat.input)
                 , ("msg", Encode.string "callin")]))
             (Qt.cMessageDecoder)
-
---getCallinCompletionSearch : Maybe Int -> Maybe Int -> List QueryCallbackOrHole -> List Qt.CTrace
---getCallinCompletionSearch cbpos cipos query =
---
 
 -- Deserialization
 
@@ -675,6 +696,7 @@ cMessageListAsCallinHole c =
         List.filterMap cMessageAsQueryCallinData c.msgs
 
 
+cCallinAsQuery : Qt.CCallin -> QueryCallinData
 cCallinAsQuery v =
     let
         d = {frameworkClass = v.frameworkClass

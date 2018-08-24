@@ -28,19 +28,23 @@ class HomeController @Inject() (ws : WSClient) (implicit ec : ExecutionContext) 
     Ok(views.html.main())
   }
 
-  def completionSearch = Action { req : Request[AnyContent] =>
-    val verivitaWebUrl = sys.env("TRACEQUERY_WEB_URL")
-    forwardRequest(req, "/completion_search", verivitaWebUrl)
-  }
+  val verivitaWebUrl = sys.env("VERIVITA_WEB_URL")
+  val queryUrl = sys.env("TRACEQUERY_WEB_URL")
 
+  def completionSearch = Action { req : Request[AnyContent] =>
+    forwardRequest(req, "/completion_search", queryUrl)
+  }
   def parseLs = Action { req : Request[AnyContent]  =>
-//    val Token(name, value) = CSRF.getToken.get
-    val verivitaWebUrl = sys.env("VERIVITA_WEB_URL")
+    //    val Token(name, value) = CSRF.getToken.get
     val urltail = "/parse_ls"
     forwardRequest(req, urltail, verivitaWebUrl)
   }
   def queryList = Action {req =>
     Ok(Json.toJson(PreSetQueries.getQueries))
+  }
+
+  def verify = Action { req : Request[AnyContent] =>
+    forwardRequest(req, "/verify", verivitaWebUrl)
   }
 
 
