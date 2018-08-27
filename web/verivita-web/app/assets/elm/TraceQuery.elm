@@ -731,7 +731,7 @@ queryFrameworkClassToInput params fmwk =
         parstrings = List.map queryParamToInput params
         parsplit = String.split "(" fmwk
     in
-        case parsplit of
+        case parsplit of --TODO: bug here when no params
             front :: paramtypes :: t ->
                 let
                     zpars = List.map2 (\pstr -> \ptyp -> pstr ++ " : " ++ ptyp) parstrings (String.split "," paramtypes)
