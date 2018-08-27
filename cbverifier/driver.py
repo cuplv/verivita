@@ -45,27 +45,30 @@ class NoDisableException(Exception):
 
 
 class Driver:
-    def __init__(self, opts):
+    def __init__(self, opts, ctrace_input=None):
         self.opts = opts
 
         self.stats = Stats()
         self.stats.enable()
 
-        # Parse the trace
-        try:
-            self.stats.start_timer(Stats.PARSING_TIME)
-            self.trace = CTraceSerializer.read_trace_file_name(self.opts.tracefile,
-                                                               self.opts.traceformat == "json",
-                                                               self.opts.allow_exception)
-            self.stats.stop_timer(Stats.PARSING_TIME)
-            self.stats.write_times(sys.stdout, Stats.PARSING_TIME)
-        except MalformedTraceException as e:
-            raise
-        except TraceEndsInErrorException as e:
-            raise
-        except Exception as e:
-            raise Exception("An error happened reading the trace in %s (%s)" % (self.opts.tracefile,
+        if ctrace_input is None:
+            # Parse the trace
+            try:
+                self.stats.start_timer(Stats.PARSING_TIME)
+                self.trace = CTraceSerializer.read_trace_file_name(self.opts.tracefile,
+                                                                   self.opts.traceformat == "json",
+                                                                   self.opts.allow_exception)
+                self.stats.stop_timer(Stats.PARSING_TIME)
+                self.stats.write_times(sys.stdout, Stats.PARSING_TIME)
+            except MalformedTraceException as e:
+                raise
+            except TraceEndsInErrorException as e:
+                raise
+            except Exception as e:
+                raise Exception("An error happened reading the trace in %s (%s)" % (self.opts.tracefile,
                                                                                 e.message))
+        else:
+            self.trace = ctrace_input
 
 
         # Parse the specs

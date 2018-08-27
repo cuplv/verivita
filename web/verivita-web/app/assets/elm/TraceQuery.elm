@@ -85,7 +85,9 @@ type alias RankedCallin =
 type alias Model =
     {
         querySelectionList : List String,
+        disallowSelectionList : List String,
         querySelectDropDownState : Dropdown.State,
+        disallowSelectDropDownState : Dropdown.State,
         query : List QueryCallbackOrHole,
         verificationResults : Maybe (List QueryCallbackOrHole)
     }
@@ -105,7 +107,8 @@ emptyCallin =
 
 init : ( Model, Cmd Msg)
 init =
-    ( Model [] Dropdown.initialState [QueryCallbackHole] Nothing,  getQueryList)
+    ( Model [] [] Dropdown.initialState Dropdown.initialState [QueryCallbackHole] Nothing
+        , Cmd.batch [getQueryList, getDisallowList])
 
 
 -- UPDATE
@@ -203,6 +206,7 @@ type Msg
     | UnSetParsedCallin(Int,Int)
     | UnSetParsedCallback(Int)
     | QuerySelectDropToggle Dropdown.State
+    | DisallowSelectDropToggle Dropdown.State
 
     -- Update From Http Requests
     | SetParsedCallin(Int, Int, QueryCallinData)
@@ -211,6 +215,7 @@ type Msg
     | DisplayCallbackError(Int,String)
     | DisplayCallinError(Int, Int, String)
     | SetQueryList(List String)
+    | SetDisallowList(List String)
     | SetQuerySelection String
     | SetQuery (List QueryCallbackOrHole)
     | SetVerificationResults (Maybe (List QueryCallbackOrHole))
@@ -220,7 +225,8 @@ type Msg
     | GetParsedCallin(Int, Int, QueryCallinData)
     | SearchCallinHole (Int,Int)
     | GetQueryList
-    | GetVerificationResults
+    | GetDisallowList
+    | GetVerificationResults(String)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -254,11 +260,14 @@ update msg model =
         DisplayCallinError(cbpos, cipos, string) ->
             (model, Cmd.none) -- TODO
         SetQueryList(l) -> ({model | querySelectionList = l},Cmd.none)
+        SetDisallowList(l) -> ({model | disallowSelectionList = l}, Cmd.none)
         GetQueryList -> (model, getQueryList)
+        GetDisallowList -> (model, getDisallowList)
         QuerySelectDropToggle t -> ({model | querySelectDropDownState = t}, Cmd.none)
+        DisallowSelectDropToggle t -> ({model | disallowSelectDropDownState = t}, Cmd.none)
         SetQuerySelection name -> (model, getQuery name)
         SetQuery q -> ({model | query = q}, Cmd.none)
-        GetVerificationResults -> (model, getVerificationResults model.query )
+        GetVerificationResults(disallow) -> (model, getVerificationResults model.query disallow)
         SetVerificationResults (r) -> ({model | verificationResults = r}, Cmd.none)
 
 iDoCallinHole : List QueryCommand -> Int -> List RankedCallin -> List QueryCommand
@@ -467,7 +476,15 @@ queryHeader model =
                         Dropdown.toggle [ Button.primary ] [ text "Select Pre Defined Query" ]
                     , items = List.map (\name -> Dropdown.buttonItem [ Html.Events.onClick <| SetQuerySelection name ] [text name] ) model.querySelectionList
                 }
-            , Button.button [Button.primary, Button.onClick GetVerificationResults] [ text "Verify" ]
+            , Dropdown.dropdown model.disallowSelectDropDownState
+                {
+                    options = [ ]
+                    , toggleMsg = DisallowSelectDropToggle
+                    , toggleButton =
+                        Dropdown.toggle [ Button.primary ] [ text "Select a disallow rule" ]
+                    , items = List.map (\name -> Dropdown.buttonItem [ Html.Events.onClick <| GetVerificationResults name] [text name] ) model.disallowSelectionList
+                }
+            , Button.button [Button.primary, Button.onClick (GetVerificationResults "") ] [ text "Verify" ]
             , Button.button [Button.primary] [ text "Search Traces" ] ] )
          , Grid.row [] [ Grid.col [][text " "] ] ] --TODO: pad with some space
 
@@ -486,7 +503,9 @@ view model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ Dropdown.subscriptions model.querySelectDropDownState QuerySelectDropToggle ]
+        [ Dropdown.subscriptions model.querySelectDropDownState QuerySelectDropToggle
+         , Dropdown.subscriptions model.disallowSelectDropDownState DisallowSelectDropToggle
+        ]
 
 -- HTTP
 --reqHdr : String -> Http.Body -> Decode.Decoder a -> Http.Request a
@@ -556,6 +575,12 @@ setQueryList result =
         Ok(lst) -> SetQueryList(lst)
         Err(v) -> Debug.crash "display setQueryList get error" SetQueryList([]) --TODO: display better error than empty list
 
+setDisallowList : Result Http.Error (List String) -> Msg
+setDisallowList result =
+    case result of
+        Ok(lst) -> SetDisallowList(lst)
+        Err(v) -> SetDisallowList([])
+
 setQuery : Result Http.Error Qt.CTrace -> Msg
 setQuery result =
     case result of
@@ -565,6 +590,10 @@ setQuery result =
 getQueryList : Cmd Msg
 getQueryList =
     Http.send setQueryList <| Http.get "/query_list" (Decode.list Decode.string)
+
+getDisallowList : Cmd Msg
+getDisallowList =
+    Http.send setDisallowList <| Http.get "/get_disallow_list" (Decode.list Decode.string)
 
 
 
@@ -587,10 +616,12 @@ setVerificationResults c =
         Ok(ctr) -> SetVerificationResults (Just (cTraceAsQuery ctr))
         Err(v) -> Debug.crash "getVerificationResults http error" SetVerificationResults(Nothing) --TODO
 
-getVerificationResults : List QueryCallbackOrHole -> Cmd Msg
-getVerificationResults q =
+--postVerificationTask : List QueryCallbac
+
+getVerificationResults : List QueryCallbackOrHole -> String -> Cmd Msg
+getVerificationResults q rule=
     Http.send setVerificationResults
-        (reqHdr "/verify"
+        (reqHdr ("/verify?rule=" ++ rule)
             (Http.jsonBody <| Qt.cTraceEncoder <| queryAsQ Nothing Nothing q)
             Qt.cTraceDecoder)
 

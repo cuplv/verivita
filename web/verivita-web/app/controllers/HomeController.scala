@@ -32,28 +32,48 @@ class HomeController @Inject() (ws : WSClient) (implicit ec : ExecutionContext) 
   val queryUrl = sys.env("TRACEQUERY_WEB_URL")
 
   def completionSearch = Action { req : Request[AnyContent] =>
-    forwardRequest(req, "/completion_search", queryUrl)
+    forwardPostRequest(req, "/completion_search", queryUrl)
   }
   def parseLs = Action { req : Request[AnyContent]  =>
     //    val Token(name, value) = CSRF.getToken.get
     val urltail = "/parse_ls"
-    forwardRequest(req, urltail, verivitaWebUrl)
+    forwardPostRequest(req, urltail, verivitaWebUrl)
   }
   def queryList = Action {req =>
     Ok(Json.toJson(PreSetQueries.getQueries))
   }
+  def getDisallowList = Action {req =>
+    forwardGetRequest(req, "/get_disallow_list", verivitaWebUrl)
+  }
 
   def verify = Action { req : Request[AnyContent] =>
-    forwardRequest(req, "/verify", verivitaWebUrl)
+    req.queryString.get("rule").flatMap(a =>  {
+      a.headOption.map { (a: String) =>
+        forwardPostRequest(req, s"/verify?rule=${a}", verivitaWebUrl)
+      }
+    }
+    ).getOrElse(BadRequest("Specify rule."))
   }
 
 
-  private def forwardRequest(req: Request[AnyContent], urltail: String, baseurl : String) = {
+  private val timeout = Duration(10, "minutes")
+
+  private def forwardPostRequest(req: Request[AnyContent], urltail: String, baseurl : String) = {
 
     val request: Future[WSResponse] = ws.url(baseurl + urltail)
       .withHttpHeaders("Content-Type" -> "application/json")
-      .post(req.body.asJson.getOrElse(???))
-    val res = Await.result(request, Duration(1, "minutes"))
+      .withRequestTimeout(timeout)
+      .post(req.body.asJson.getOrElse(Json.parse("{}")))
+    val res = Await.result(request, timeout)
+    Ok(res.body)
+  }
+  private def forwardGetRequest(req: Request[AnyContent], urltail: String, baseurl : String) = {
+
+    val request: Future[WSResponse] = ws.url(baseurl + urltail)
+      .withHttpHeaders("Content-Type" -> "application/json")
+      .withRequestTimeout(timeout)
+      .get()
+    val res = Await.result(request, timeout)
     Ok(res.body)
   }
   def getQuery(id : String) = Action{ req : Request[AnyContent] =>

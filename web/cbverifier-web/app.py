@@ -1,11 +1,21 @@
 #!flask/bin/python
+import subprocess
+
 from flask import Flask, jsonify, request
 from cbverifier.specs.spec_parser import spec_parser
 import cbverifier.specs.spec_ast as sast
 from QueryTrace_pb2 import CCallback, CVariable, Hole, CCommand, CCallin, CParam, CMessage, CTrace
 from google.protobuf.json_format import MessageToJson
-from google.protobuf.json_format import Parse
-import cbverifier.traces.ctrace as vtr
+import cbverifier.android_specs.gen_config as Speclist
+import vv_database as db
+import subprocess
+
+NUM_WORKERS = 1
+
+for i in xrange(NUM_WORKERS):
+    subprocess.Popen(["python", "verify_task.py"])
+
+
 
 
 app = Flask(__name__)
@@ -111,98 +121,66 @@ def parse_task():
     # return jsonify({"stuff": "stuff"})
     return MessageToJson(c_trace)
 
-def fullSigConv(s):
-    s = s.strip()
-    s = " ".join([c for c in s.split(" ") if c != ""]) #remove duplicate spaces
-    rtype = s.split(" ")[0]
-    methodname = s.split("(")[0].split(".")[-1]
-    params = s.split("(")[1]
-    sig = "%s %s(%s" % (rtype, methodname, params)
-    withoutreturn = " ".join(s.split(" ")[1:])
-    fmwk = ".".join(withoutreturn.split("(")[0].split(".")[:-1])
-    return (sig, fmwk)
-
-def cTracePrototoVTrace(ctr,objmap):
-    vtrace = vtr.CTrace()
-    for cb in ctr.callbacks:
-        cb = cCallbackOrHoleProtoToVTrace(cb,objmap)
-        if cb is not None:
-            vtrace.add_msg(cb)
-def cCommandProtoToVTrace(corh, objmap):
-    typeof = corh.WhichOneof("ci_command")
-    if typeof == "callin":
-        callin = corh.callin
-        sig,fmwk = fullSigConv(callin.framework_class)
-        pr = [convertToCParam(p,objmap) for p in callin.parameters]
-        pr.insert(0, convertToCParam(callin.receiver, objmap))
-        
-        raise Exception("unimp")
-    elif typeof == "ci_hole":
-        return None #ignore holes in verif
 
 
-#TODO: current behavior is to replace holes with a new object, we may want something else here
-def convertToCParam(p, objmap):
-    paramtype = p.WhichOneof("param")
-    c = vtr.CValue()
-    c.is_null = False
-    c.fmwk_type = "java.lang.Object"
-    if paramtype == "pr_hole":
-        c.object_id = objmap.new_noname_obj()
-    elif paramtype == "variable":
-        c.object_id = objmap.new_obj(p.variable.name)
-    elif paramtype == "primitive":
-        raise Exception("unimp")
-    elif paramtype == "object":
-        raise Exception("unimp")
-    else:
-        raise Exception("unknown param type")
-    return c
-def cCallbackOrHoleProtoToVTrace(cbh,objmap):
-    if cbh.WhichOneof("cb_command") == 'callback':
-        callback = cbh.callback
-        # sig,fmwk = callback.method_signature
-        full_sig = "class " + callback.first_framework_overrride_class
-        sig,fmwk = fullSigConv(full_sig)
-        pr = [convertToCParam(p, objmap) for p in callback.parameters]
-        pr.insert(0, convertToCParam(callback.receiver, objmap))
-        cb = vtr.CCallback(class_name=fmwk,
-                           method_name=sig,
-                           thread_id=1,
-                           fmwk_overrides=[full_sig],
-                           params=pr,
-                           return_value=convertToCParam(callback.return_value, objmap))
-        for ci in callback.nested_commands:
-            vcallin = cCommandProtoToVTrace(ci, objmap)
-            if vcallin is not None:
-                cb.add(vcallin)
-        return cb
-    else:
-        return None
 
-class ObjMap:
-    def __init__(self):
-        self.current = 0
-        self.objmap = {}
-    def new_obj(self, name):
-        v = self.current
-        self.current += 1
-        self.objmap[v] = name
-        return v
-    def new_noname_obj(self):
-        name = str(self.current)
-        return self.newObj(name)
-    def getName(self,value):
-        return self.objmap[value]
+
+
+
+@app.route('/get_disallow_list', methods = ['GET'])
+def get_disallow_list_task():
+    return jsonify(Speclist.allow_disallow_rules.keys())
+
+
+class InvalidUsage(Exception):
+    status_code = 400
+
+    def __init__(self, message, status_code=None, payload=None):
+        Exception.__init__(self)
+        self.message = message
+        if status_code is not None:
+            self.status_code = status_code
+        self.payload = payload
+
+    def to_dict(self):
+        rv = dict(self.payload or ())
+        rv['message'] = self.message
+        return rv
+
+
+@app.errorhandler(InvalidUsage)
+def handle_invalid_usage(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response
 
 @app.route('/verify', methods=['POST'])
 def verify_task():
+    print "verify start"
+    rule = request.args.get('rule')
+    if rule is None:
+        raise InvalidUsage("Please specify disallow rule")
     content = request.data
-    proto_ctrace = Parse(content, CTrace())
-    objmap = ObjMap()
-    cTracePrototoVTrace(proto_ctrace, objmap)
-    return "[]"
 
+    id = db.create_task(content, rule)
+    return jsonify({"id":id})
+
+
+@app.route('/status', methods=['GET'])
+def get_task():
+    id = request.args.get('id')
+    if id is None:
+        raise InvalidUsage("Please specify disallow rule")
+    status = db.get_status(id)
+
+    res = {"status" : status.status()}
+
+    if isinstance(status, db.TaskCompleteError):
+        res["msg"] = status.msg
+    elif isinstance(status, db.TaskCompleteUnsafe):
+        res["counter_example"] = status.counter_example
+
+    return jsonify(res)
 
 
 if __name__ == '__main__':
