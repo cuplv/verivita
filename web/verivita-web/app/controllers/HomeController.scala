@@ -55,6 +55,15 @@ class HomeController @Inject() (ws : WSClient) (implicit ec : ExecutionContext) 
     ).getOrElse(BadRequest("Specify rule."))
   }
 
+  def getStatus = Action {req : Request[AnyContent] =>
+    req.queryString.get("id").flatMap(a =>  {
+      a.headOption.map { (a: String) =>
+        forwardGetRequest(req, s"/status?id=${a}", verivitaWebUrl)
+      }
+    }
+    ).getOrElse(BadRequest("Specify rule."))
+  }
+
 
   private val timeout = Duration(10, "minutes")
 

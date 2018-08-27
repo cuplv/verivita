@@ -44,7 +44,7 @@ def claim_task():
 
 def finish_task_safe(id):
     with sqlite3.connect(sqlitefile) as conn:
-        conn.execute("UPDATE tasks SET running=2,safe=0 WHERE id=?",(id,))
+        conn.execute("UPDATE tasks SET running=2,safe=1 WHERE id=?",(id,))
         conn.commit()
 def finish_task_unsafe(id, counter_example):
     with sqlite3.connect(sqlitefile) as conn:
@@ -61,28 +61,28 @@ class TaskCompleteSafe:
     pass
 
     def status(self):
-        return "Safe"
+        return "SAFE"
 
 
 class TaskRunning:
     pass
 
     def status(self):
-        return "Running"
+        return "RUNNING"
 
 class TaskCompleteUnsafe:
     def __init__(self, counterexample):
         self.counter_example = counterexample
 
     def status(self):
-        return "Unsafe"
+        return "UNSAFE"
 
 class TaskCompleteError:
     def __init__(self, msg):
         self.msg = msg
 
     def status(self):
-        return "Error"
+        return "ERROR"
 
 def get_task(id):
     with sqlite3.connect(sqlitefile) as conn:

@@ -11,7 +11,7 @@ import vv_database as db
 import subprocess
 
 NUM_WORKERS = 1
-
+#launch worker threads for verivita, note that flask seems to run this file twice
 for i in xrange(NUM_WORKERS):
     subprocess.Popen(["python", "verify_task.py"])
 
@@ -105,8 +105,10 @@ def parse_task():
             elif content["msg"] == "callin":
                 joinm = "= [CI] [EXIT]"
             else:
+                print "Exception"
                 raise Exception("too msg must be callback or callin")
             cbm = joinm.join(content['specline'].split("="))
+            print "parse line: %s" % cbm
             parsed = spec_parser.parse_call(cbm)
 
 
@@ -171,7 +173,7 @@ def get_task():
     id = request.args.get('id')
     if id is None:
         raise InvalidUsage("Please specify disallow rule")
-    status = db.get_status(id)
+    status = db.get_task(id)
 
     res = {"status" : status.status()}
 

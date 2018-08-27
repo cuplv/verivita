@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Events
 import Http
 import Json.Decode as Decode
+import Json.Decode.Pipeline as Pipeline
 import Json.Encode as Encode
 import Bootstrap.CDN as CDN
 import Bootstrap.Card as Card
@@ -16,6 +17,7 @@ import Bootstrap.Form.Input as Input
 import Bootstrap.Form.Checkbox as Checkbox
 import QueryTrace as Qt
 import Debug
+import Time
 
 
 main : Program Never Model Msg
@@ -82,6 +84,14 @@ type alias RankedCallin =
         , callin : QueryCallinData
     }
 
+type VerificationResults
+    = VerificationError String
+    | VerificationSafe
+    | VerificationUnsafe (List QueryCallbackOrHole)
+    | VerificationPending(Int)
+    | VerificationNoResults
+
+
 type alias Model =
     {
         querySelectionList : List String,
@@ -89,7 +99,7 @@ type alias Model =
         querySelectDropDownState : Dropdown.State,
         disallowSelectDropDownState : Dropdown.State,
         query : List QueryCallbackOrHole,
-        verificationResults : Maybe (List QueryCallbackOrHole)
+        verificationResults : VerificationResults
     }
 
 emptyCallback : QueryCallbackOrHole
@@ -107,7 +117,7 @@ emptyCallin =
 
 init : ( Model, Cmd Msg)
 init =
-    ( Model [] [] Dropdown.initialState Dropdown.initialState [QueryCallbackHole] Nothing
+    ( Model [] [] Dropdown.initialState Dropdown.initialState [QueryCallbackHole] VerificationNoResults
         , Cmd.batch [getQueryList, getDisallowList])
 
 
@@ -170,7 +180,7 @@ fillHole old pos =
         (QueryCallbackHole :: old , 0) ->
             emptyCallback :: old
         (h :: old, a) -> h :: fillHole old (a-1)
-        (nil,a) -> nil
+        (nil,a) -> Debug.crash "mismatched list length"
 
 iSetCallin: (QueryCallinData -> QueryCallinData)
     -> List QueryCommand
@@ -179,8 +189,8 @@ iSetCallin: (QueryCallinData -> QueryCallinData)
 iSetCallin opr old pos =
     case (old,pos) of
         (QueryCallin(v) :: t, 0) -> QueryCallin(opr v) :: t
-        (h :: t, a) -> h :: (iSetCallin opr old pos)
-        (nil, a) -> nil
+        (h :: t, a) -> h :: (iSetCallin opr t (pos - 1))
+        (nil, a) -> Debug.crash "mismatched list length"
 
 
 doCallback: (QueryCallbackData -> QueryCallbackData) -> List QueryCallbackOrHole -> Int -> List QueryCallbackOrHole
@@ -188,7 +198,7 @@ doCallback opr old pos =
     case (old,pos) of
         (QueryCallback(v) :: t , 0) -> QueryCallback(opr v) :: t
         (h :: t, a) -> h :: (doCallback opr t (a-1))
-        (nil, a) -> nil
+        (nil, a) -> Debug.crash "mismatched list length"
 
 
 
@@ -207,6 +217,7 @@ type Msg
     | UnSetParsedCallback(Int)
     | QuerySelectDropToggle Dropdown.State
     | DisallowSelectDropToggle Dropdown.State
+    | Nop
 
     -- Update From Http Requests
     | SetParsedCallin(Int, Int, QueryCallinData)
@@ -218,7 +229,7 @@ type Msg
     | SetDisallowList(List String)
     | SetQuerySelection String
     | SetQuery (List QueryCallbackOrHole)
-    | SetVerificationResults (Maybe (List QueryCallbackOrHole))
+    | SetVerificationResults (VerificationResults)
 
     -- Send Http Requests
     | GetParsedCallback(Int, QueryCallbackData)
@@ -226,7 +237,8 @@ type Msg
     | SearchCallinHole (Int,Int)
     | GetQueryList
     | GetDisallowList
-    | GetVerificationResults(String)
+    | GetVerificationResults (Int) -- periodic update checks for results --TODO: swap with id, add timer to trigger and update
+    | PostVerificationTask (String) -- initialize the verification with a rule
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -267,8 +279,10 @@ update msg model =
         DisallowSelectDropToggle t -> ({model | disallowSelectDropDownState = t}, Cmd.none)
         SetQuerySelection name -> (model, getQuery name)
         SetQuery q -> ({model | query = q}, Cmd.none)
-        GetVerificationResults(disallow) -> (model, getVerificationResults model.query disallow)
+        GetVerificationResults(id) -> (model, getVerificationResults model.query id)
         SetVerificationResults (r) -> ({model | verificationResults = r}, Cmd.none)
+        PostVerificationTask (r) -> (model, postVerificationTask model.query r)
+        Nop -> (model,Cmd.none)
 
 iDoCallinHole : List QueryCommand -> Int -> List RankedCallin -> List QueryCommand
 iDoCallinHole olist cipos res =
@@ -482,9 +496,9 @@ queryHeader model =
                     , toggleMsg = DisallowSelectDropToggle
                     , toggleButton =
                         Dropdown.toggle [ Button.primary ] [ text "Select a disallow rule" ]
-                    , items = List.map (\name -> Dropdown.buttonItem [ Html.Events.onClick <| GetVerificationResults name] [text name] ) model.disallowSelectionList
+                    , items = List.map (\name -> Dropdown.buttonItem [ Html.Events.onClick <| PostVerificationTask name] [text name] ) model.disallowSelectionList
                 }
-            , Button.button [Button.primary, Button.onClick (GetVerificationResults "") ] [ text "Verify" ]
+            , Button.button [Button.primary, Button.onClick (PostVerificationTask "") ] [ text "Verify" ]
             , Button.button [Button.primary] [ text "Search Traces" ] ] )
          , Grid.row [] [ Grid.col [][text " "] ] ] --TODO: pad with some space
 
@@ -503,9 +517,16 @@ view model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ Dropdown.subscriptions model.querySelectDropDownState QuerySelectDropToggle
-         , Dropdown.subscriptions model.disallowSelectDropDownState DisallowSelectDropToggle
-        ]
+        (
+            (
+                case model.verificationResults of
+                    VerificationPending(id) -> [Time.every (5 * Time.second) (\a -> GetVerificationResults(id))] --TODO: increase time here
+                    _ -> []
+            )
+            ++
+            [ Dropdown.subscriptions model.querySelectDropDownState QuerySelectDropToggle
+            , Dropdown.subscriptions model.disallowSelectDropDownState DisallowSelectDropToggle]
+        )
 
 -- HTTP
 --reqHdr : String -> Http.Body -> Decode.Decoder a -> Http.Request a
@@ -610,20 +631,53 @@ rankedCallinProtoToQuery : RankedCallinProto -> RankedCallin
 rankedCallinProtoToQuery r =
     {rank = r.rank, callin = cCallinAsQuery r.callin}
 
-setVerificationResults : Result Http.Error Qt.CTrace -> Msg
+type alias RespVerificationResults =
+    {
+        status : String,
+        msg : String,
+        cxe : Qt.CTrace
+    }
+
+setVerificationResults : Result Http.Error RespVerificationResults -> Msg
 setVerificationResults c =
     case c of
-        Ok(ctr) -> SetVerificationResults (Just (cTraceAsQuery ctr))
-        Err(v) -> Debug.crash "getVerificationResults http error" SetVerificationResults(Nothing) --TODO
+        Ok(ctr) ->
+            case (ctr.status, ctr.msg, ctr.cxe) of
+                ("SAFE",_,_) -> SetVerificationResults (VerificationSafe)
+                ("UNSAFE", _, cxe) -> SetVerificationResults (VerificationUnsafe( cTraceAsQuery cxe))
+                ("ERROR", er, _) -> SetVerificationResults (VerificationError (er))
+                ("RUNNING", _, _) -> Nop
+                (_,_,_) -> SetVerificationResults (VerificationError ("Corrupted server response."))
+        Err(v) -> SetVerificationResults(VerificationError(toString v))
 
---postVerificationTask : List QueryCallbac
+setVerificationTaskId : Result Http.Error Int -> Msg
+setVerificationTaskId c =
+    case c of
+        Ok(id) -> SetVerificationResults(VerificationPending(id))
+        Err(v) -> SetVerificationResults(VerificationError(toString v))
 
-getVerificationResults : List QueryCallbackOrHole -> String -> Cmd Msg
-getVerificationResults q rule=
-    Http.send setVerificationResults
+
+decodeVerificationResults : Decode.Decoder RespVerificationResults
+decodeVerificationResults =
+    Decode.succeed RespVerificationResults
+        |> Pipeline.required "status" Decode.string
+        |> Pipeline.optional "msg" Decode.string ""
+        |> Pipeline.optional "counter_example" Qt.cTraceDecoder {id = Nothing, callbacks = []}
+
+
+postVerificationTask : List QueryCallbackOrHole -> String -> Cmd Msg
+postVerificationTask q rule =
+    Http.send setVerificationTaskId
         (reqHdr ("/verify?rule=" ++ rule)
             (Http.jsonBody <| Qt.cTraceEncoder <| queryAsQ Nothing Nothing q)
-            Qt.cTraceDecoder)
+            (Decode.field "id" Decode.int))
+
+
+getVerificationResults : List QueryCallbackOrHole -> Int -> Cmd Msg
+getVerificationResults q id=
+    Http.send setVerificationResults
+        (Http.get ("/status?id=" ++ (toString id))
+            decodeVerificationResults)
 
 
 searchCallinHole : Int -> Int -> List QueryCallbackOrHole -> Cmd Msg

@@ -153,14 +153,14 @@ if __name__ == "__main__":
         if task is not None:
             id,query,rule = task
             try:
-                print "starting task: %s" % str(id)
+                print "starting task: %s on thread %i" % (str(id), os.getpid())
                 ctr = ctrace_from_proto(query)
                 rules = Speclist.allow_disallow_rules[rule][1]
                 spec_file_list = []
                 for s in [enable_rules, rules, Speclist.subexpressions]:
                     spec_file_list += [os.path.join(basepath, v) for v in s]
-                (res, cex, mapback) = verify_rule(spec_file_list, ctr)
 
+                (res, cex, mapback) = verify_rule(spec_file_list, ctr)
                 if res == 'SAFE':
                     db.finish_task_safe(id)
                 elif res == 'UNSAFE':
@@ -170,26 +170,3 @@ if __name__ == "__main__":
                     db.finish_task_error()
             except Exception as e:
                 db.finish_task_error(id, "Thrown error: {}".format(e))
-
-# print "verif process: %s" % str(r)
-
-# print "verif task done: %s" % str(r)
-# f.write("{}") #TODO: serialize here
-# f.close()
-#
-# elif r > 0:
-# f.close()
-# pid,status = os.waitpid(r,0)
-# if status == 0:
-#     print "success fork closed"
-#     f = open(fname,'r')
-#     dat = f.read()
-# else:
-#     print "fail verifier fork"
-# try:
-#     os.remove(fname)
-# except:
-#     pass # ignore error here
-# else:
-# raise InvalidUsage("internal error")
-# pass
