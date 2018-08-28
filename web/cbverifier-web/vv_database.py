@@ -3,8 +3,8 @@ import time
 import sqlite3
 
 sqlitefile = "vvserver.db"
-if os.path.isfile(sqlitefile):
-    os.remove(sqlitefile)
+# if os.path.isfile(sqlitefile):
+#     os.remove(sqlitefile)
 TASKTIMEOUT_MS = 600 * 1000 # only serve tasks created in the last 10 minutes
 
 def current_db_timestamp():
@@ -34,12 +34,15 @@ def claim_task():
     with sqlite3.connect(sqlitefile) as conn:
         ctime = current_db_timestamp()
         deadtime = ctime-TASKTIMEOUT_MS
+        conn.isolation_level = 'EXCLUSIVE'
+        conn.execute('BEGIN EXCLUSIVE')
         for row in conn.execute(
                 "SELECT id,query,rule FROM tasks WHERE id > ? AND running=0", (deadtime,)):
             conn.execute("UPDATE tasks SET running=1 WHERE id=?", (row[0],))
             #TODO: check that this works
             conn.commit()
             return row
+        conn.commit()
     return None
 
 def finish_task_safe(id):
@@ -120,4 +123,4 @@ with sqlite3.connect(sqlitefile) as conn:
         );
     """)
     conn.commit()
-    clear_timeout()
+    # clear_timeout()

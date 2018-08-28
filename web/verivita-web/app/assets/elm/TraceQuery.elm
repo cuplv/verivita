@@ -737,7 +737,9 @@ queryFrameworkClassToInput params fmwk =
                     zpars = List.map2 (\pstr -> \ptyp -> pstr ++ " : " ++ ptyp) parstrings (String.split "," paramtypes)
                     pjoin = String.join " , " zpars
                 in
-                    front ++ ("(" ++ pjoin) -- ++ "   DBG: " ++ (List.head (String.split "," paramtypes))
+                    case zpars of
+                        h :: t -> front ++ ("(" ++ pjoin) -- ++ "   DBG: " ++ (List.head (String.split "," paramtypes))
+                        _ -> front ++ ("()")
             nil -> "error"
 
 queryCallbackDataToInput : QueryCallbackData -> String

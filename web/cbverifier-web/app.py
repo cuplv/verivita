@@ -10,10 +10,12 @@ import cbverifier.android_specs.gen_config as Speclist
 import vv_database as db
 import subprocess
 
-NUM_WORKERS = 1
-#launch worker threads for verivita, note that flask seems to run this file twice
-for i in xrange(NUM_WORKERS):
-    subprocess.Popen(["python", "verify_task.py"])
+
+# TODO: launch workers and kill server if workers go down
+# NUM_WORKERS = 1
+# #launch worker threads for verivita, note that flask seems to run this file twice
+# for i in xrange(NUM_WORKERS):
+#     subprocess.Popen(["python", "verify_task.py"])
 
 
 

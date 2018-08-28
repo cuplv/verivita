@@ -5,19 +5,25 @@ import cbverifier.traces.ctrace as vtr
 from cbverifier.driver import DriverOptions, Driver
 import cbverifier.android_specs.gen_config as Speclist
 import os
-from QueryTrace_pb2 import CCallback, CVariable, Hole, CCommand, CCallin, CParam, CMessage, CTrace
+from QueryTrace_pb2 import CCallback, CVariable, Hole, CCommand, CCallin, CParam, CMessage, CTrace, CallbackOrHole
 from google.protobuf.json_format import MessageToJson
 
 import vv_database as db
+from cbverifier.encoding.cex_printer import CexPrinter
+import json
+
 
 def fullSigConv(s):
     s = s.strip()
     s = " ".join([c for c in s.split(" ") if c != ""]) #remove duplicate spaces
     rtype = s.split(" ")[0]
+    withoutreturn = " ".join(s.split(" ")[1:])
+    if rtype == "class" or rtype == "interface":
+        rtype = s.split(" ")[1]
+        withoutreturn = " ".join(s.split(" ")[2:])
     methodname = s.split("(")[0].split(".")[-1]
     params = s.split("(")[1]
     sig = "%s %s(%s" % (rtype, methodname, params)
-    withoutreturn = " ".join(s.split(" ")[1:])
     fmwk = ".".join(withoutreturn.split("(")[0].split(".")[:-1])
     return (sig, fmwk)
 
@@ -100,26 +106,31 @@ class ObjMap:
     def __init__(self):
         self.current = 0
         self.objmap = {}
+        self.namemap = {}
 
     def new_obj(self, name):
-        v = self.current
-        self.current += 1
-        self.objmap[v] = name
-        return v
+        if name not in self.namemap:
+            v = self.current
+            self.current += 1
+            self.objmap[v] = name
+            self.namemap[name] = v
+            return v
+        else:
+            return self.namemap[name]
 
     def new_noname_obj(self):
         name = str(self.current)
         return self.new_obj(name)
 
-    def getName(self,value):
-        return self.objmap[value]
+    def get_name(self, name):
+        return self.objmap[name]
 
 
 def ctrace_from_proto(content):
     proto_ctrace = Parse(content, CTrace())
     objmap = ObjMap()
     vtrace = cTracePrototoVTrace(proto_ctrace, objmap)
-    return vtrace
+    return (vtrace, objmap)
 
 
 def verify_rule(spec_file_list, ctrace):
@@ -137,6 +148,54 @@ def verify_rule(spec_file_list, ctrace):
     print "done"
     return res
 
+def ccallin_as_proto(callin, objmap):
+    cio = CCommand()
+    pass
+    return cio
+
+
+def fmwk_from_classmethod(classname, methodname):
+    """return pair of (fmwk, sig)"""
+    sp_split = methodname.split(" ")
+    rettype = sp_split[0]
+    rest = " ".join(sp_split[1:])
+    return ("%s %s.%s" % (rettype, classname, methodname), methodname)
+
+
+def cValue_to_proto(c, objmap):
+    cp = CParam()
+    if c is None:
+        param = Hole()
+        cp.variable.CopyFrom(param)
+    elif c.value is not None:
+        raise Exception("TODO: implement value back serialize")
+    elif not c.is_null:
+        param = CVariable()
+        param.name = objmap.get_name(c.object_id)
+        cp.variable.CopyFrom(param)
+    return cp
+
+def ctrace_as_proto(ctr, objmap): # TODO: rename to callback_as_proto
+    cb = ctr[1]
+    cbo = CCallback()
+    proto_children = [ ccallin_as_proto(f, objmap) for f in cb.children ]
+    cbo.nested_commands.extend(proto_children)
+    classname = cb.class_name
+    params = [cValue_to_proto(f,objmap) for f in cb.params]
+    return_value = cValue_to_proto(cb.return_value, objmap)
+    method_name = cb.method_name
+
+    cbo.return_value.CopyFrom(return_value)
+    cbo.receiver.CopyFrom(params[0])
+    cbo.parameters.extend(params[1:])
+
+    (fmwk,sig) = fmwk_from_classmethod(classname, method_name)
+    cbo.method_signature = sig
+    cbo.first_framework_overrride_class = fmwk
+    cbho = CallbackOrHole()
+    cbho.callback.CopyFrom(cbo)
+    pass
+    return cbho
 
 if __name__ == "__main__":
     # import argparse
@@ -154,7 +213,7 @@ if __name__ == "__main__":
             id,query,rule = task
             try:
                 print "starting task: %s on thread %i" % (str(id), os.getpid())
-                ctr = ctrace_from_proto(query)
+                ctr, objmap = ctrace_from_proto(query)
                 rules = Speclist.allow_disallow_rules[rule][1]
                 spec_file_list = []
                 for s in [enable_rules, rules, Speclist.subexpressions]:
@@ -164,8 +223,25 @@ if __name__ == "__main__":
                 if res == 'SAFE':
                     db.finish_task_safe(id)
                 elif res == 'UNSAFE':
+                    import sys
+                    printer = CexPrinter(mapback, cex, sys.stdout, False)
+                    printer.print_cex()
+
+                    cex_ctrace = []
+                    i = 0
+                    prev_step = None
+                    for step in cex:
+                        if i == 0:
+                            pass
+                        else:
+                            val = mapback.get_fired_trace_msg(prev_step, step)
+                            cex_ctrace.append(ctrace_as_proto(val,objmap))
+                        prev_step = step
+                        i += 1
                     print "TODO"
-                    db.finish_task_unsafe(id, "{}")
+                    ctr = CTrace()
+                    ctr.callbacks = cex_ctrace
+                    db.finish_task_unsafe(id, MessageToJson(ctr))
                 else:
                     db.finish_task_error()
             except Exception as e:
