@@ -561,6 +561,18 @@ resultsView model =
             , searchTab model, Button.onClick (SelectResultsTab ResultsSearch)] [ text "Search" ]
         ]
 
+
+callinView : Int -> Int -> QueryCommand -> Html Msg
+callinView cbpos cipos callin =
+    let
+        contents =
+            case callin of
+                QueryCallin c -> Input.text (ciInputBox c (Input.onInput (\s -> SetCallinInput (cbpos, cipos, s))))
+                _ -> text "..."
+    in
+        Grid.container [] [Grid.row [] [Grid.col [] [contents]]]
+
+
 callbackView : Int -> QueryCallbackOrHole -> Html Msg
 callbackView cbpos callback =
     let
@@ -571,30 +583,26 @@ callbackView cbpos callback =
                     div [] [Button.button [Button.attrs [Spacing.ml1], Button.small, Button.onClick (FillQueryCallbackHole cbpos)] [text "*"],
                         Button.button [ Button.attrs [Spacing.ml1], Button.small ] [text "?"] ] --TODO: search click
                 QueryCallbackHoleResults(r) -> text "TODO" -- TODO: display search results
+        callins =
+            case callback of
+                QueryCallback(d) -> [ Grid.row [] [Grid.col [] [ListGroup.ul (List.indexedMap (\idx -> \a -> ListGroup.li [ListGroup.warning] [(callinView cbpos idx a)]) d.commands)] ] ]
+                _ -> []
     in
-        Grid.container [] [ Grid.row [] [
-            Grid.col [] [ contents ]
-            , Grid.col [Col.sm2] [
-                Grid.container []
-                    [ Grid.row [ ]
-                        [
-                            Grid.col [Col.sm1] []
-                            ,Grid.col [Col.sm1] [ Button.button [Button.attrs [ Spacing.ml1], Button.small
-                                , Button.onClick (RemoveQueryCallback cbpos) ] [text "x"] ]
-                        ]
-                    , Grid.row [] [ Grid.col [] [text " "]]
-                    , Grid.row[]
-                        [
-                            Grid.col [Col.sm1] [Button.button [Button.attrs [ Spacing.ml1 ], Button.small, Button.onClick (AddQueryCallinAfter (cbpos, 0))] [ text "<" ] ]
-                            ,Grid.col [Col.sm1] [
-                                Button.button [Button.attrs [ Spacing.ml1], Button.small
-                                    , Button.onClick (AddQueryCallbackAfter cbpos)] [text "v"]
-                            ]
-                        ]
-
+        Grid.container [] ([
+            Grid.row [] [
+                Grid.col [] [ contents ]
+--                ,Grid.col [Col.sm1] []
+                ,Grid.col [Col.sm3] [
+                    div [] [
+                    Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallback cbpos) ] [text "x"]
+    --                        ]
+    --                    , Grid.row [] [ Grid.col [] [text " "]]
+    --                    , Grid.row[]
+    --                        [
+                    ,Button.button [Button.attrs [ Spacing.ml1 ], Button.small, Button.onClick (AddQueryCallinAfter (cbpos, 0))] [ text "<" ]
+                    ,Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (AddQueryCallbackAfter cbpos)] [text "v"]
                     ]
-            ]
-        ] ]
+                ] ] ] ++ callins)
 --        Card.config []
 --            |> Card.block [] [Block.custom contents]
 --            |> Card.view
