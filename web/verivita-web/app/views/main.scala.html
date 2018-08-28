@@ -20,6 +20,28 @@
     height 100px;
     background: #ffffcc;
   }
+
+  .container {
+    max-width: 11409999999px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .list-group-item {
+    position: relative;
+    display: block;
+    padding: 2px 13px;
+    margin-bottom: -1px;
+    border: 1px solid rgba(0,0,0,.125);
+  }
+  .col {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
   </style>
 </head>
 <body>
@@ -39,7 +61,7 @@
                 <a class="nav-link" href="#">Try it</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Publications</a>
+                <a class="nav-link" href="#">Tutorial</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
@@ -49,33 +71,33 @@
 </nav>
 
 <div class="container" style="margin-top:30px">
-    <div class = "row">
-        <div class = "col-6">
-            <h3>Intro</h3>
-            <p>Verivita is a tool for verifying event driven programming protocols.
-                An Android application consists of a set of callbacks,
-                each of which can invoke methods on the framework called callins.
-                The query here is represented by a list of callbacks each with a list of callins.
-                Each method can have variables placed in the position of return value receiver or parameters.
-                (TODO)
-                </p>
+    <!--<div class = "row">-->
+        <!--<div class = "col-6">-->
+            <!--<h3>Intro</h3>-->
+            <!--<p>Verivita is a tool for verifying event driven programming protocols.-->
+                <!--An Android application consists of a set of callbacks,-->
+                <!--each of which can invoke methods on the framework called callins.-->
+                <!--The query here is represented by a list of callbacks each with a list of callins.-->
+                <!--Each method can have variables placed in the position of return value receiver or parameters.-->
+                <!--(TODO)-->
+                <!--</p>-->
 
-        </div>
-        <div class="col-6">
-            <h3>Syntax</h3>
-            <p>To enter a callback or callin use the following syntax (TODO: bnf from docs).
-                For example</p>
-            <code># = [a] void android.app.Activity.onCreate(# : android.os.Bundle)</code>
-            <p>represents the callback used to create an activity.</p>
-        </div>
-    </div>
-    <div>
-        <h2>Query</h2>
-        <div id="app"></div>
-        <script type="text/javascript">
-        Elm.TraceQuery.embed(document.getElementById("app"))
-        </script>
-    </div>
+        <!--</div>-->
+        <!--<div class="col-6">-->
+            <!--<h3>Syntax</h3>-->
+            <!--<p>To enter a callback or callin use the following syntax (TODO: bnf from docs).-->
+                <!--For example</p>-->
+            <!--<code># = [a] void android.app.Activity.onCreate(# : android.os.Bundle)</code>-->
+            <!--<p>represents the callback used to create an activity.</p>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div>-->
+        <!--<h2>Query</h2>-->
+    <div id="app"></div>
+    <script type="text/javascript">
+    Elm.TraceQuery.embed(document.getElementById("app"))
+    </script>
+    <!--</div>-->
     <!--<div class="row">-->
         <!--<div class="col-6">-->
             <!--<h2>Query</h2>-->

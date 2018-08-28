@@ -15,6 +15,11 @@ import Html.Attributes exposing (class, src, style)
 import Bootstrap.Button as Button
 import Bootstrap.Form.Input as Input
 import Bootstrap.Form.Checkbox as Checkbox
+import Bootstrap.Utilities.Spacing as Spacing
+import Bootstrap.Utilities.Size as Size
+import Bootstrap.Grid.Col as Col
+import Bootstrap.Grid.Row as Row
+import Bootstrap.ListGroup as ListGroup
 import QueryTrace as Qt
 import Debug
 import Time
@@ -91,6 +96,9 @@ type VerificationResults
     | VerificationPending(Int)
     | VerificationNoResults
 
+type ResultsTab
+    = ResultsVerify
+    | ResultsSearch
 
 type alias Model =
     {
@@ -99,7 +107,8 @@ type alias Model =
         querySelectDropDownState : Dropdown.State,
         disallowSelectDropDownState : Dropdown.State,
         query : List QueryCallbackOrHole,
-        verificationResults : VerificationResults
+        verificationResults : VerificationResults,
+        resultsTabSelected : ResultsTab
     }
 
 emptyCallback : QueryCallbackOrHole
@@ -117,7 +126,11 @@ emptyCallin =
 
 init : ( Model, Cmd Msg)
 init =
-    ( Model [] [] Dropdown.initialState Dropdown.initialState [QueryCallbackHole] VerificationNoResults
+    ( Model [] []
+        Dropdown.initialState Dropdown.initialState
+        [QueryCallbackHole]
+        VerificationNoResults
+        ResultsVerify
         , Cmd.batch [getQueryList, getDisallowList])
 
 
@@ -218,6 +231,7 @@ type Msg
     | QuerySelectDropToggle Dropdown.State
     | DisallowSelectDropToggle Dropdown.State
     | Nop
+    | SelectResultsTab ResultsTab
 
     -- Update From Http Requests
     | SetParsedCallin(Int, Int, QueryCallinData)
@@ -283,6 +297,7 @@ update msg model =
         SetVerificationResults (r) -> ({model | verificationResults = r}, Cmd.none)
         PostVerificationTask (r) -> (model, postVerificationTask model.query r)
         Nop -> (model,Cmd.none)
+        SelectResultsTab (r) -> ({model | resultsTabSelected = r}, Cmd.none)
 
 iDoCallinHole : List QueryCommand -> Int -> List RankedCallin -> List QueryCommand
 iDoCallinHole olist cipos res =
@@ -332,9 +347,9 @@ holeCard pos =
 inputBox : QueryCallbackData -> Input.Option msg -> List (Input.Option msg)
 inputBox d upd=
     case (d.parsed, d.input) of
-        (False,"") -> [ Input.placeholder "--input method query--", upd]
-        (False, s) -> [ Input.value s, upd ]
-        (True, s) -> [ Input.value s, upd ]
+        (False,"") -> [ Input.attrs [ Spacing.ml2 ], Input.placeholder "--input method query--", upd]
+        (False, s) -> [ Input.attrs [ Spacing.ml2 ], Input.value s, upd ]
+        (True, s) -> [ Input.attrs [ Spacing.ml2 ], Input.value s, upd ]
 ciInputBox : QueryCallinData -> Input.Option msg -> List (Input.Option msg)
 ciInputBox d upd=
     case (d.parsed, d.input) of
@@ -502,14 +517,112 @@ queryHeader model =
             , Button.button [Button.primary] [ text "Search Traces" ] ] )
          , Grid.row [] [ Grid.col [][text " "] ] ] --TODO: pad with some space
 
+--view : Model -> Html Msg
+--view model =
+--    Grid.container []
+--        (CDN.stylesheet
+--            :: (queryHeader model)
+--            :: (List.indexedMap drawCallbackOrHole model.query))
+----        , Grid.row[] [ Grid.col [] [ text ".."] ]
+----        , Grid.row[] [ Grid.col [] [ text "..."] ]
+
+-- Card.attrs [ style [ ( "width", "40rem" ) ] ]
+columnCard contents =
+    Card.config [  ] |> Card.block [] contents |> Card.view
+
+
+queryEntry model =
+    div [] [text "Trace Template",
+            Dropdown.dropdown model.querySelectDropDownState
+                {options = [ Dropdown.attrs [Spacing.ml1] ]
+                , toggleMsg = QuerySelectDropToggle
+                , toggleButton =
+                    Dropdown.toggle [ Button.primary ] [ text "Custom" ]
+                , items = List.map (\name -> Dropdown.buttonItem [ Html.Events.onClick <|
+                    SetQuerySelection name ] [text name] ) model.querySelectionList
+                }
+            ]
+
+verifyTab model =
+    case model.resultsTabSelected of
+        ResultsVerify -> Button.primary
+        ResultsSearch -> Button.secondary
+
+searchTab model =
+    case model.resultsTabSelected of
+        ResultsSearch -> Button.primary
+        ResultsVerify -> Button.secondary
+
+resultsView model =
+     div [] [
+        Button.button [Button.attrs [ Spacing.ml1]
+            , verifyTab model, Button.onClick (SelectResultsTab ResultsVerify)] [ text "Verify" ]
+        , Button.button [Button.attrs [ Spacing.ml1]
+            , searchTab model, Button.onClick (SelectResultsTab ResultsSearch)] [ text "Search" ]
+        ]
+
+callbackView : Int -> QueryCallbackOrHole -> Html Msg
+callbackView cbpos callback =
+    let
+        contents =
+            case callback of
+                QueryCallback(d) -> Input.text (inputBox d (Input.onInput (\s -> SetCallbackInput(cbpos, s))))
+                QueryCallbackHole ->
+                    div [] [Button.button [Button.attrs [Spacing.ml1], Button.small, Button.onClick (FillQueryCallbackHole cbpos)] [text "*"],
+                        Button.button [ Button.attrs [Spacing.ml1], Button.small ] [text "?"] ] --TODO: search click
+                QueryCallbackHoleResults(r) -> text "TODO" -- TODO: display search results
+    in
+        Grid.container [] [ Grid.row [] [
+            Grid.col [] [ contents ]
+            , Grid.col [Col.sm2] [
+                Grid.container []
+                    [ Grid.row [ ]
+                        [
+                            Grid.col [Col.sm1] []
+                            ,Grid.col [Col.sm1] [ Button.button [Button.attrs [ Spacing.ml1], Button.small
+                                , Button.onClick (RemoveQueryCallback cbpos) ] [text "x"] ]
+                        ]
+                    , Grid.row [] [ Grid.col [] [text " "]]
+                    , Grid.row[]
+                        [
+                            Grid.col [Col.sm1] [Button.button [Button.attrs [ Spacing.ml1 ], Button.small, Button.onClick (AddQueryCallinAfter (cbpos, 0))] [ text "<" ] ]
+                            ,Grid.col [Col.sm1] [
+                                Button.button [Button.attrs [ Spacing.ml1], Button.small
+                                    , Button.onClick (AddQueryCallbackAfter cbpos)] [text "v"]
+                            ]
+                        ]
+
+                    ]
+            ]
+        ] ]
+--        Card.config []
+--            |> Card.block [] [Block.custom contents]
+--            |> Card.view
+
 view : Model -> Html Msg
 view model =
+--    div [] [
+--        columnCard [ Block.custom (queryEntry model) ]
+--        , columnCard (resultsView model)
+--    ]
     Grid.container []
-        (CDN.stylesheet
-            :: (queryHeader model)
-            :: (List.indexedMap drawCallbackOrHole model.query))
---        , Grid.row[] [ Grid.col [] [ text ".."] ]
---        , Grid.row[] [ Grid.col [] [ text "..."] ]
+        [ Grid.row []
+            [ Grid.col [ Col.orderXlFirst] [ columnCard [ Block.custom (queryEntry model)
+                , Block.text [] [ text "..."]
+                , Block.custom (
+                    ListGroup.ul (List.indexedMap (\idx -> \a -> ListGroup.li [ ListGroup.dark ] [callbackView idx a]) model.query )
+--                        [ ListGroup.li [] [ text "List item 1" ]
+--                        , ListGroup.li [] [ text "List item 2" ]
+--                        , ListGroup.li [] [ text "List item 3" ]
+--                        ]
+                )]
+                ]
+            , Grid.col [ Col.orderXlLast ] [ columnCard [ Block.custom (resultsView model)
+                , Block.text [] [ text "..."] ]
+                ]
+            ]
+        ]
+
 
 
 
