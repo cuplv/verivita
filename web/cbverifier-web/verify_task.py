@@ -138,7 +138,7 @@ def verify_rule(spec_file_list, ctrace):
     driver_opts = DriverOptions("",
                                 "",
                                 spec_file_list,
-                                True, #TODO: would like to turn off simplify
+                                False, #TODO: would like to turn off simplify
                                 False, #debug
                                 None, #filter
                                 True,
@@ -147,11 +147,6 @@ def verify_rule(spec_file_list, ctrace):
     res = driver.run_ic3(os.environ['NUXMV_PATH'], 40)
     print "done"
     return res
-
-def ccallin_as_proto(callin, objmap):
-    cio = CCommand()
-    pass
-    return cio
 
 
 def fmwk_from_classmethod(classname, methodname):
@@ -163,17 +158,43 @@ def fmwk_from_classmethod(classname, methodname):
 
 
 def cValue_to_proto(c, objmap):
-    cp = CParam()
     if c is None:
-        param = Hole()
-        cp.variable.CopyFrom(param)
+        return param_hole()
     elif c.value is not None:
         raise Exception("TODO: implement value back serialize")
     elif not c.is_null:
+        cp = CParam()
         param = CVariable()
         param.name = objmap.get_name(c.object_id)
         cp.variable.CopyFrom(param)
+        return cp
+
+def param_hole():
+    cp = CParam()
+    param = Hole()
+    cp.pr_hole.CopyFrom(param)
     return cp
+
+def ccallin_as_proto(callin, objmap):
+    cio = CCommand()
+    ci = CCallin()
+    classname = callin.class_name
+    method_name = callin.method_name
+
+    params = [cValue_to_proto(f,objmap) for f in callin.params]
+    return_value = cValue_to_proto(callin.return_value, objmap)
+
+    ci.parameters.extend(params[1:])
+    ci.receiver.CopyFrom(params[0] if len(params) > 0 else param_hole())
+    ci.return_value.CopyFrom(return_value)
+    (fmwk,sig) = fmwk_from_classmethod(classname,method_name)
+    ci.framework_class = fmwk
+    ci.method_signature = sig
+    cio.callin.CopyFrom(ci)
+    return cio
+
+
+
 
 def ctrace_as_proto(ctr, objmap): # TODO: rename to callback_as_proto
     cb = ctr[1]
@@ -240,7 +261,7 @@ if __name__ == "__main__":
                         i += 1
                     print "TODO"
                     ctr = CTrace()
-                    ctr.callbacks = cex_ctrace
+                    ctr.callbacks.extend(cex_ctrace)
                     db.finish_task_unsafe(id, MessageToJson(ctr))
                 else:
                     db.finish_task_error()
