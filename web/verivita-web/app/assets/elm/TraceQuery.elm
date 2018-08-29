@@ -393,7 +393,6 @@ displayQueryResults cbpos cipos limit filter results =
         firstn = List.take limit hightolow
         rank_string_list : List (String,String)
         rank_string_list = List.map (\a -> ((toString a.rank) , (rankedMessageToInput a))  ) firstn
---        _ = Debug.crash ("cbpos: " ++ (toString cbpos) ++ "cipos: " ++ (toString cipos) )
     in
         ListGroup.custom
             (List.map
@@ -448,6 +447,20 @@ callbackView cbpos callback =
                     ]
                 ] ] ] ++ callins)
 
+
+verifyView : Model -> Html Msg
+verifyView model =
+    Grid.container [] [
+        Grid.row [] [
+            Grid.col [] [
+                ListGroup.ul (List.map (\a -> ListGroup.li [] [text a] ) model.disallowSelectionList )
+            ]
+        ]
+    ]
+
+searchView : Model -> Html Msg
+searchView model = div [] [text "search view"]
+
 view : Model -> Html Msg
 view model =
     Grid.container []
@@ -459,7 +472,11 @@ view model =
                 )]
                 ]
             , Grid.col [ Col.orderXlLast ] [ columnCard [ Block.custom (resultsView model)
-                , Block.text [] [ text "..."] ]
+                , Block.custom (
+                    case model.resultsTabSelected of
+                        ResultsVerify -> verifyView model
+                        ResultsSearch -> searchView model
+                ) ]
                 ]
             ]
         ]
@@ -688,13 +705,7 @@ queryFrameworkClassToInput params fmwk =
         case parsplit of --TODO: bug here when no params
             front :: paramtypes :: t ->
                 let
-                    _ = Debug.log "-------------------" "______"
-                    _ = Debug.log "queryFrameworkClassToInput front: " front
-                    _ = Debug.log "queryFrameworkClassToInput paramtypes: " paramtypes
-                    _ = Debug.log "queryFrameworkClassToInput t: " t
-                    _ = Debug.log "queryFrameworkClassToInput parstrings: " parstrings
                     zpars = List.map2 (\pstr -> \ptyp -> pstr ++ " : " ++ ptyp) parstrings (String.split "," paramtypes)
-                    _ = Debug.log "queryFrameworkClassToInput zpars: " zpars
                     pjoin = String.join " , " zpars
                 in
                     case zpars of
