@@ -58,7 +58,7 @@ type alias QueryCallbackData =
 type QueryCommand
     = QueryCallin(QueryCallinData)
     | QueryCommandHole
-    | QueryCommandHoleResults(List RankedCallin)
+    | QueryCommandHoleResults(List RankedMessage)
 type alias QueryCallinData =
     {
         frameworkClass: String,
@@ -66,8 +66,8 @@ type alias QueryCallinData =
         input : String, -- Nothing when parsed successfully Just "" initially
         parsed : Bool,
         receiver : Param,
-        return : Param,
-        params : List Param
+        params : List Param,
+        return : Param
     }
 
 
@@ -83,11 +83,15 @@ type alias TraceCallback =
         signature : Maybe String
     }
 
-type alias RankedCallin =
+type alias RankedMessage =
     {
         rank : Int
-        , callin : QueryCallinData
+        , msg : MessageResponse
     }
+type MessageResponse
+    = MessageResponseCi(QueryCallinData)
+    | MessageResponseCb(QueryCallbackData)
+
 
 type VerificationResults
     = VerificationError String
@@ -236,7 +240,7 @@ type Msg
     -- Update From Http Requests
     | SetParsedCallin(Int, Int, QueryCallinData)
     | SetParsedCallback(Int, QueryCallbackData)
-    | SetCallinHoleResults(Int,Int, List RankedCallin)
+    | SetCallinHoleResults(Int,Int, List RankedMessage)
     | DisplayCallbackError(Int,String)
     | DisplayCallinError(Int, Int, String)
     | SetQueryList(List String)
@@ -299,7 +303,7 @@ update msg model =
         Nop -> (model,Cmd.none)
         SelectResultsTab (r) -> ({model | resultsTabSelected = r}, Cmd.none)
 
-iDoCallinHole : List QueryCommand -> Int -> List RankedCallin -> List QueryCommand
+iDoCallinHole : List QueryCommand -> Int -> List RankedMessage -> List QueryCommand
 iDoCallinHole olist cipos res =
     List.indexedMap (\idx -> \v ->
         (case (idx, v) of
@@ -307,7 +311,7 @@ iDoCallinHole olist cipos res =
             (a,b) -> b
         )) olist
 
-doCallinHole : List QueryCallbackOrHole -> Int -> Int -> List RankedCallin -> List QueryCallbackOrHole
+doCallinHole : List QueryCallbackOrHole -> Int -> Int -> List RankedMessage -> List QueryCallbackOrHole
 doCallinHole olist cbpos cipos res =
     List.indexedMap (\idx -> \v ->
         ( case (idx, v) of
@@ -449,7 +453,7 @@ resultListDisplay resultDat =
 
 
 
-callinHoleCard : Int -> Int -> Maybe (List RankedCallin) -> Html Msg
+callinHoleCard : Int -> Int -> Maybe (List RankedMessage) -> Html Msg
 callinHoleCard cbpos cipos resultDat =
         Card.config [ Card.attrs callinOrHoleAttrs ]
             |> Card.header [ class "text-center" ]
@@ -561,6 +565,22 @@ resultsView model =
             , searchTab model, Button.onClick (SelectResultsTab ResultsSearch)] [ text "Search" ]
         ]
 
+ciholeButtons : Int -> Int -> Html Msg
+ciholeButtons cbpos cipos =
+    div [] [
+        Button.button
+            [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (FillQueryCallinhole(cbpos,cipos))]
+            [ text "*" ]
+        , Button.button
+            [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (SearchCallinHole(cbpos,cipos))] [text "?"]]
+
+
+displayQueryResults : Int -> String -> List RankedMessage -> Html Msg
+displayQueryResults limit filter results =
+    let
+        strlist = []
+    in
+        Debug.crash "not implemented"
 
 callinView : Int -> Int -> QueryCommand -> Html Msg
 callinView cbpos cipos callin =
@@ -568,9 +588,16 @@ callinView cbpos cipos callin =
         contents =
             case callin of
                 QueryCallin c -> Input.text (ciInputBox c (Input.onInput (\s -> SetCallinInput (cbpos, cipos, s))))
-                _ -> text "..."
+                QueryCommandHole -> ciholeButtons cbpos cipos
+                QueryCommandHoleResults(l) -> displayQueryResults 20 "" l
     in
-        Grid.container [] [Grid.row [] [Grid.col [] [contents]]]
+        Grid.container[] [Grid.row [] [Grid.col [Col.middleXl] [contents], Grid.col [Col.sm2] [
+            div [] [Button.button
+                        [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallin(cbpos,cipos)) ]
+                        [text "x"]
+                    , Button.button
+                        [Button.attrs [Spacing.ml1], Button.small, Button.onClick (AddQueryCallinAfter(cbpos,cipos)) ]
+                        [text "v"] ] ]] ]
 
 
 callbackView : Int -> QueryCallbackOrHole -> Html Msg
@@ -585,7 +612,11 @@ callbackView cbpos callback =
                 QueryCallbackHoleResults(r) -> text "TODO" -- TODO: display search results
         callins =
             case callback of
-                QueryCallback(d) -> [ Grid.row [] [Grid.col [] [ListGroup.ul (List.indexedMap (\idx -> \a -> ListGroup.li [ListGroup.warning] [(callinView cbpos idx a)]) d.commands)] ] ]
+                QueryCallback(d) -> [ Grid.row [] [
+                    Grid.col [] [
+                        ListGroup.ul (List.indexedMap
+                            (\idx -> \a -> ListGroup.li [ListGroup.warning] [(callinView cbpos idx a)])
+                            d.commands)] ] ]
                 _ -> []
     in
         Grid.container [] ([
@@ -599,7 +630,7 @@ callbackView cbpos callback =
     --                    , Grid.row [] [ Grid.col [] [text " "]]
     --                    , Grid.row[]
     --                        [
-                    ,Button.button [Button.attrs [ Spacing.ml1 ], Button.small, Button.onClick (AddQueryCallinAfter (cbpos, 0))] [ text "<" ]
+                    ,Button.button [Button.attrs [ Spacing.ml1 ], Button.small, Button.onClick (AddQueryCallinAfter (cbpos, -1))] [ text "<" ]
                     ,Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (AddQueryCallbackAfter cbpos)] [text "v"]
                     ]
                 ] ] ] ++ callins)
@@ -748,9 +779,9 @@ type alias RankedCallinProto =
         rank : Int
         , callin : Qt.CCallin
     }
-rankedCallinProtoToQuery : RankedCallinProto -> RankedCallin
+rankedCallinProtoToQuery : RankedCallinProto -> RankedMessage
 rankedCallinProtoToQuery r =
-    {rank = r.rank, callin = cCallinAsQuery r.callin}
+    {rank = r.rank, msg = MessageResponseCi (cCallinAsQuery r.callin)}
 
 type alias RespVerificationResults =
     {
