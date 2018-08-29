@@ -1,7 +1,7 @@
 module TraceQuery exposing (..)
 
 import Html exposing (..)
-import Html.Events
+import Html.Events exposing (onClick)
 import Http
 import Json.Decode as Decode
 import Json.Decode.Pipeline as Pipeline
@@ -122,11 +122,15 @@ emptyCallback =
         , receiver = Hole
         , return = Hole, commands = [], input="", parsed = False, params = []})
 
+emptyCallinDat : QueryCallinData
+emptyCallinDat =
+    { frameworkClass = ""
+            , signature = ""
+            , receiver = Hole , return = Hole, input="", parsed = False, params = []}
+
 emptyCallin : QueryCommand
 emptyCallin =
-    QueryCallin({ frameworkClass = ""
-        , signature = ""
-        , receiver = Hole , return = Hole, input="", parsed = False, params = []})
+    QueryCallin(emptyCallinDat)
 
 init : ( Model, Cmd Msg)
 init =
@@ -197,7 +201,7 @@ fillHole old pos =
         (QueryCallbackHole :: old , 0) ->
             emptyCallback :: old
         (h :: old, a) -> h :: fillHole old (a-1)
-        (nil,a) -> Debug.crash "mismatched list length"
+        (nil,a) -> Debug.crash "mismatched list length fillHole"
 
 iSetCallin: (QueryCallinData -> QueryCallinData)
     -> List QueryCommand
@@ -206,8 +210,10 @@ iSetCallin: (QueryCallinData -> QueryCallinData)
 iSetCallin opr old pos =
     case (old,pos) of
         (QueryCallin(v) :: t, 0) -> QueryCallin(opr v) :: t
+        (QueryCommandHole :: t, 0) -> QueryCallin(opr emptyCallinDat) :: t
+        (QueryCommandHoleResults(r) :: t, 0) -> QueryCallin(opr emptyCallinDat) :: t
         (h :: t, a) -> h :: (iSetCallin opr t (pos - 1))
-        (nil, a) -> Debug.crash "mismatched list length"
+        (nil, a) -> Debug.crash "mismatched list length iSetCallin"
 
 
 doCallback: (QueryCallbackData -> QueryCallbackData) -> List QueryCallbackOrHole -> Int -> List QueryCallbackOrHole
@@ -215,7 +221,7 @@ doCallback opr old pos =
     case (old,pos) of
         (QueryCallback(v) :: t , 0) -> QueryCallback(opr v) :: t
         (h :: t, a) -> h :: (doCallback opr t (a-1))
-        (nil, a) -> Debug.crash "mismatched list length"
+        (nil, a) -> Debug.crash "mismatched list length doCallback"
 
 
 
@@ -378,12 +384,21 @@ ciholeButtons cbpos cipos =
             [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (SearchCallinHole(cbpos,cipos))] [text "?"]]
 
 
-displayQueryResults : Int -> String -> List RankedMessage -> Html Msg
-displayQueryResults limit filter results =
+displayQueryResults : Int -> Int -> Int -> String -> List RankedMessage -> Html Msg
+displayQueryResults cbpos cipos limit filter results =
     let
-        strlist = []
+        hightolow : List RankedMessage
+        hightolow = List.reverse (List.sortBy .rank results)
+        firstn : List RankedMessage
+        firstn = List.take limit hightolow
+        rank_string_list : List (String,String)
+        rank_string_list = List.map (\a -> ((toString a.rank) , (rankedMessageToInput a))  ) firstn
+--        _ = Debug.crash ("cbpos: " ++ (toString cbpos) ++ "cipos: " ++ (toString cipos) )
     in
-        Debug.crash "not implemented"
+        ListGroup.custom
+            (List.map
+               (\a -> ListGroup.button [ListGroup.success, ListGroup.attrs [onClick (SetCallinInput (cbpos, cipos, Tuple.second a))] ] [ text ((Tuple.first a) ++ (Tuple.second a)) ])
+               rank_string_list)
 
 callinView : Int -> Int -> QueryCommand -> Html Msg
 callinView cbpos cipos callin =
@@ -392,7 +407,7 @@ callinView cbpos cipos callin =
             case callin of
                 QueryCallin c -> Input.text (ciInputBox c (Input.onInput (\s -> SetCallinInput (cbpos, cipos, s))))
                 QueryCommandHole -> ciholeButtons cbpos cipos
-                QueryCommandHoleResults(l) -> displayQueryResults 20 "" l
+                QueryCommandHoleResults(l) -> displayQueryResults cbpos cipos 20 "" l
     in
         Grid.container[] [Grid.row [] [Grid.col [Col.middleXl] [contents], Grid.col [Col.sm2] [
             div [] [Button.button
@@ -425,38 +440,22 @@ callbackView cbpos callback =
         Grid.container [] ([
             Grid.row [] [
                 Grid.col [] [ contents ]
---                ,Grid.col [Col.sm1] []
                 ,Grid.col [Col.sm3] [
                     div [] [
                     Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallback cbpos) ] [text "x"]
-    --                        ]
-    --                    , Grid.row [] [ Grid.col [] [text " "]]
-    --                    , Grid.row[]
-    --                        [
                     ,Button.button [Button.attrs [ Spacing.ml1 ], Button.small, Button.onClick (AddQueryCallinAfter (cbpos, -1))] [ text "<" ]
                     ,Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (AddQueryCallbackAfter cbpos)] [text "v"]
                     ]
                 ] ] ] ++ callins)
---        Card.config []
---            |> Card.block [] [Block.custom contents]
---            |> Card.view
 
 view : Model -> Html Msg
 view model =
---    div [] [
---        columnCard [ Block.custom (queryEntry model) ]
---        , columnCard (resultsView model)
---    ]
     Grid.container []
         [ Grid.row []
             [ Grid.col [ Col.orderXlFirst] [ columnCard [ Block.custom (queryEntry model)
                 , Block.text [] [ text "..."]
                 , Block.custom (
                     ListGroup.ul (List.indexedMap (\idx -> \a -> ListGroup.li [ ListGroup.dark ] [callbackView idx a]) model.query )
---                        [ ListGroup.li [] [ text "List item 1" ]
---                        , ListGroup.li [] [ text "List item 2" ]
---                        , ListGroup.li [] [ text "List item 3" ]
---                        ]
                 )]
                 ]
             , Grid.col [ Col.orderXlLast ] [ columnCard [ Block.custom (resultsView model)
@@ -689,13 +688,25 @@ queryFrameworkClassToInput params fmwk =
         case parsplit of --TODO: bug here when no params
             front :: paramtypes :: t ->
                 let
+                    _ = Debug.log "-------------------" "______"
+                    _ = Debug.log "queryFrameworkClassToInput front: " front
+                    _ = Debug.log "queryFrameworkClassToInput paramtypes: " paramtypes
+                    _ = Debug.log "queryFrameworkClassToInput t: " t
+                    _ = Debug.log "queryFrameworkClassToInput parstrings: " parstrings
                     zpars = List.map2 (\pstr -> \ptyp -> pstr ++ " : " ++ ptyp) parstrings (String.split "," paramtypes)
+                    _ = Debug.log "queryFrameworkClassToInput zpars: " zpars
                     pjoin = String.join " , " zpars
                 in
                     case zpars of
                         h :: t -> front ++ ("(" ++ pjoin) -- ++ "   DBG: " ++ (List.head (String.split "," paramtypes))
                         _ -> front ++ ("()")
             nil -> "error"
+
+rankedMessageToInput : RankedMessage -> String
+rankedMessageToInput msg =
+    case msg.msg of
+        MessageResponseCi(d) -> queryCallinDataToInput d
+        MessageResponseCb(d) -> queryCallbackDataToInput d
 
 queryCallbackDataToInput : QueryCallbackData -> String
 queryCallbackDataToInput qc =

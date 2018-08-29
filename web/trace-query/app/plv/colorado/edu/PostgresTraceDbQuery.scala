@@ -316,7 +316,7 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
               frameworkClass = method.firstFramework,
               returnValue = a.get(0).map(a => CParam().withVariable(CVariable(a._1))),
               receiver = a.get(1).map(a => CParam().withVariable(CVariable(a._1))),
-              parameters = if(hasParams) (2 to paramKeys.max).map{ b =>
+              parameters = if(hasParams) (2 to (numParamsFromSig(method.signature)+1)).map{ b =>
                 a.get(b) match{
                   case Some(v) => CParam().withVariable(CVariable(v._1))
                   case None => CParam().withPrHole(Hole(false))
@@ -330,6 +330,13 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
       acc ++ method_completions.toList.filter(a => a._1 > 0)
     }.sortWith( (a,b) => a._1 > b._1)
   out
+  }
+  def numParamsFromSig(sig : String): Int ={
+//    sig.split("""\(""") match{
+//      case h :: (n : String) :: nil => n.split(",").size
+//      case _ => ???
+//    }
+    sig.split("""\(""")(1).split(",").length
   }
 
 
