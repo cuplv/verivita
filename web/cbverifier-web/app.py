@@ -4,7 +4,8 @@ import subprocess
 from flask import Flask, jsonify, request
 from cbverifier.specs.spec_parser import spec_parser
 import cbverifier.specs.spec_ast as sast
-from QueryTrace_pb2 import CCallback, CVariable, Hole, CCommand, CCallin, CParam, CMessage, CTrace, VerificationResult
+from QueryTrace_pb2 import CCallback, CVariable, Hole, CCommand, CCallin, CParam, CMessage, CTrace, VerificationResult, \
+    CPrimitive
 from google.protobuf.json_format import MessageToJson
 from google.protobuf.json_format import Parse
 import cbverifier.android_specs.gen_config as Speclist
@@ -89,6 +90,14 @@ def astToCParam(var_place):
         # hole.is_selected = False
         # v.pr_hole.CopyFrom(hole)
         v.pr_hole.is_selected = False  # TODO: this seems strange, test it
+    elif lv == sast.FALSE:
+        intprim = CPrimitive()
+        intprim.bool_val = False
+        v.primitive.CopyFrom(intprim)
+    elif lv == sast.TRUE:
+        boolprim = CPrimitive()
+        boolprim.bool_val = True
+        v.primitive.CopyFrom(boolprim)
     else:
         raise Exception("unimplemented")  # TODO: handle other cases
     return v
@@ -184,7 +193,7 @@ def get_task():
 
     if isinstance(status, db.TaskCompleteError):
         res.msg = status.msg
-        res.counter_example = CTrace()
+        res.counter_example.CopyFrom(CTrace())
     elif isinstance(status, db.TaskCompleteUnsafe):
         cex = Parse(status.counter_example, CTrace())
         res.msg = ""

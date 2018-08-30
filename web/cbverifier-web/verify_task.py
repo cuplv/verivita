@@ -69,7 +69,17 @@ def convertToCParam(p, objmap):
     elif paramtype is None:
         return None #TODO: when does it do this instead of hole?
     elif paramtype == "primitive":
-        raise Exception("unimp")
+        c.object_id = objmap.new_noname_obj()
+        c.type = u'boolean'
+        cPrimitive = p.primitive
+        primtype = cPrimitive.WhichOneof("primitive")
+        if primtype == "bool_val":
+            bval = p.primitive.bool_val
+            c.value = "true" if bval else "false"
+        else:
+            # c.value =
+            # TODO: primitive type
+            raise Exception("unimp")
     elif paramtype == "object":
         raise Exception("unimp")
     else:
@@ -279,7 +289,6 @@ if __name__ == "__main__":
                                     cex_ctrace.append(ctrace_as_proto(val,objmap))
                         prev_step = step
                         i += 1
-                    print "TODO"
                     ctr = CTrace()
                     ctr.callbacks.extend(cex_ctrace)
                     db.finish_task_unsafe(id, MessageToJson(ctr))

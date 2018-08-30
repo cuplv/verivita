@@ -39,6 +39,10 @@ main =
 
 type Param -- note selected hole removed since query will be by clicking on a hole
     = NamedVar(String)
+    | BooleanPrimitive(Bool)
+    | IntegerPrimitive(Int)
+    | LongPrimitive(Int)
+    | StringPrimitive(String)
     | Hole
 
 
@@ -893,6 +897,10 @@ queryParamToInput : Param -> String
 queryParamToInput p =
     case p of
         NamedVar(n) -> n
+        BooleanPrimitive(b) -> if b then "TRUE" else "FALSE"
+        IntegerPrimitive(i) -> toString i
+        LongPrimitive(i) -> toString i
+        StringPrimitive(s) -> s
         Hole -> "#"
 
 queryFrameworkClassToInput : List Param -> String -> String
@@ -989,7 +997,17 @@ qAsQueryParam : Qt.CParam -> Param
 qAsQueryParam p =
     case p.param of
         Qt.Variable(cvar) -> NamedVar(cvar.name)
+        Qt.Primitive(prim) -> qAsQueryPrimitive prim.primitive
         _ -> Hole
+
+qAsQueryPrimitive : Qt.Primitive -> Param
+qAsQueryPrimitive qprim =
+    case qprim of
+        Qt.PrimitiveUnspecified -> Hole
+        Qt.BoolVal(v) -> BooleanPrimitive(v)
+        Qt.IntVal(v) -> IntegerPrimitive(v)
+        Qt.LongVal(v) -> LongPrimitive(v)
+        Qt.StringVal(v) -> StringPrimitive(v)
 
 
 
@@ -997,9 +1015,17 @@ qAsQueryParam p =
 
 queryParamAsQ : Param -> Qt.CParam
 queryParamAsQ p =
-    case p of
-        NamedVar(s) -> {param = Qt.Variable ({name = s}) }
-        Hole -> {param = Qt.PrHole(Qt.Hole False)}
+    let
+        primize = \a -> {param = Qt.Primitive ({primitive = a} )}
+    in
+        case p of
+            NamedVar(s) -> {param = Qt.Variable ({name = s}) }
+            BooleanPrimitive(b) -> primize (Qt.BoolVal b)
+            IntegerPrimitive(i) -> primize (Qt.IntVal i)
+            LongPrimitive(l) -> primize (Qt.LongVal l)
+            StringPrimitive(s) -> primize (Qt.StringVal s)
+            Hole -> {param = Qt.PrHole(Qt.Hole False)}
+
 
 
 

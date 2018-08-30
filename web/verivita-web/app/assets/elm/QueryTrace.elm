@@ -335,6 +335,7 @@ type Primitive
     | IntVal Int
     | LongVal Int
     | StringVal String
+    | BoolVal Bool
 
 
 primitiveDecoder : JD.Decoder Primitive
@@ -343,6 +344,7 @@ primitiveDecoder =
         [ JD.map IntVal (JD.field "intVal" intDecoder)
         , JD.map LongVal (JD.field "longVal" intDecoder)
         , JD.map StringVal (JD.field "stringVal" JD.string)
+        , JD.map BoolVal (JD.field "boolVal" JD.bool)
         , JD.succeed PrimitiveUnspecified
         ]
 
@@ -358,6 +360,8 @@ primitiveEncoder v =
             Just ( "longVal", numericStringEncoder x )
         StringVal x ->
             Just ( "stringVal", JE.string x )
+        BoolVal x ->
+            Just ( "boolVal", JE.bool x )
 
 
 cPrimitiveDecoder : JD.Decoder CPrimitive
