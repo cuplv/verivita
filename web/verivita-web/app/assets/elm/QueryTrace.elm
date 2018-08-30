@@ -472,3 +472,27 @@ cProblemEncoder v =
     JE.object <| List.filterMap identity <|
         [ (requiredFieldEncoder "description" JE.string "" v.description)
         ]
+
+
+type alias VerificationResult =
+    { msg : String -- 1
+    , counterExample : Maybe CTrace -- 2
+    , status : String -- 3
+    }
+
+
+verificationResultDecoder : JD.Decoder VerificationResult
+verificationResultDecoder =
+    JD.lazy <| \_ -> decode VerificationResult
+        |> required "msg" JD.string ""
+        |> optional "counterExample" cTraceDecoder
+        |> required "status" JD.string ""
+
+
+verificationResultEncoder : VerificationResult -> JE.Value
+verificationResultEncoder v =
+    JE.object <| List.filterMap identity <|
+        [ (requiredFieldEncoder "msg" JE.string "" v.msg)
+        , (optionalEncoder "counterExample" cTraceEncoder v.counterExample)
+        , (requiredFieldEncoder "status" JE.string "" v.status)
+        ]

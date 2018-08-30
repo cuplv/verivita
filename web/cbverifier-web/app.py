@@ -4,7 +4,7 @@ import subprocess
 from flask import Flask, jsonify, request
 from cbverifier.specs.spec_parser import spec_parser
 import cbverifier.specs.spec_ast as sast
-from QueryTrace_pb2 import CCallback, CVariable, Hole, CCommand, CCallin, CParam, CMessage, CTrace
+from QueryTrace_pb2 import CCallback, CVariable, Hole, CCommand, CCallin, CParam, CMessage, CTrace, VerificationResult
 from google.protobuf.json_format import MessageToJson
 from google.protobuf.json_format import Parse
 import cbverifier.android_specs.gen_config as Speclist
@@ -177,17 +177,20 @@ def get_task():
     if id is None:
         raise InvalidUsage("Please specify disallow rule")
     status = db.get_task(id)
-
-    res = {"status" : status.status()}
-    res["counter_example"] = MessageToJson(CTrace())
-    res["msg"] = ""
+    res = VerificationResult()
+    res.status = status.status()
+    # res["counter_example"] = MessageToJson(CTrace())
+    # res["msg"] = ""
 
     if isinstance(status, db.TaskCompleteError):
-        res["msg"] = status.msg
+        res.msg = status.msg
+        res.counter_example = CTrace()
     elif isinstance(status, db.TaskCompleteUnsafe):
-        res["counter_example"] = status.counter_example  #TODO: protobuf for ctrace gets dumped here as if it were a string
+        cex = Parse(status.counter_example, CTrace())
+        res.msg = ""
+        res.counter_example.CopyFrom(cex)  #TODO: protobuf for ctrace gets dumped here as if it were a string
 
-    return jsonify(res)
+    return MessageToJson(res)
 
 
 if __name__ == '__main__':

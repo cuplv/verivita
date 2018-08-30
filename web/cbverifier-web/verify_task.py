@@ -27,14 +27,14 @@ def fullSigConv(s):
     fmwk = ".".join(withoutreturn.split("(")[0].split(".")[:-1])
     return (sig, fmwk)
 
-def cTracePrototoVTrace(ctr,objmap):
+def cTracePrototoVTrace(ctr,objmap, msgCounter):
     vtrace = vtr.CTrace()
     for cb in ctr.callbacks:
-        cb = cCallbackOrHoleProtoToVTrace(cb,objmap)
+        cb = cCallbackOrHoleProtoToVTrace(cb,objmap, msgCounter)
         if cb is not None:
             vtrace.add_msg(cb)
     return vtrace
-def cCommandProtoToVTrace(corh, objmap):
+def cCommandProtoToVTrace(corh, objmap, msgCounter):
     typeof = corh.WhichOneof("ci_command")
     if typeof == "callin":
         callin = corh.callin
@@ -45,7 +45,8 @@ def cCommandProtoToVTrace(corh, objmap):
                          method_name=sig, #TODO: make sure this format is right
                          thread_id=1,
                          params=pr,
-                         return_value=convertToCParam(callin.return_value, objmap)
+                         return_value=convertToCParam(callin.return_value, objmap),
+                         message_id=msgCounter.next()
                          )
         for cb in callin.nested_callbacks:
             cbv = cCallbackProtoToVTrace(cb, objmap)
@@ -74,14 +75,14 @@ def convertToCParam(p, objmap):
     else:
         raise Exception("unknown param type")
     return c
-def cCallbackOrHoleProtoToVTrace(cbh,objmap):
+def cCallbackOrHoleProtoToVTrace(cbh,objmap,msgCounter):
     if cbh.WhichOneof("cb_command") == 'callback':
-        return cCallbackProtoToVTrace(cbh, objmap)
+        return cCallbackProtoToVTrace(cbh, objmap, msgCounter)
     else:
         return None
 
 
-def cCallbackProtoToVTrace(cbh, objmap):
+def cCallbackProtoToVTrace(cbh, objmap, msgCounter):
     callback = cbh.callback
     # sig,fmwk = callback.method_signature
     full_sig = "class " + callback.first_framework_overrride_class
@@ -94,9 +95,10 @@ def cCallbackProtoToVTrace(cbh, objmap):
                        thread_id=1,
                        fmwk_overrides=[override],
                        params=pr,
-                       return_value=convertToCParam(callback.return_value, objmap))
+                       return_value=convertToCParam(callback.return_value, objmap),
+                       message_id= msgCounter.next())
     for ci in callback.nested_commands:
-        vcallin = cCommandProtoToVTrace(ci, objmap)
+        vcallin = cCommandProtoToVTrace(ci, objmap, msgCounter)
         if vcallin is not None:
             cb.add_msg(vcallin)
     return cb
@@ -126,10 +128,20 @@ class ObjMap:
         return self.objmap[name]
 
 
+class MessageCounter():
+    def __init__(self):
+        self.count = 0
+    def next(self):
+        tmp = self.count
+        self.count += 1
+        return tmp
+
+
 def ctrace_from_proto(content):
     proto_ctrace = Parse(content, CTrace())
     objmap = ObjMap()
-    vtrace = cTracePrototoVTrace(proto_ctrace, objmap)
+    msgCounter = MessageCounter()
+    vtrace = cTracePrototoVTrace(proto_ctrace, objmap,msgCounter)
     return (vtrace, objmap)
 
 
@@ -196,8 +208,8 @@ def ccallin_as_proto(callin, objmap):
 
 
 
-def ctrace_as_proto(ctr, objmap): # TODO: rename to callback_as_proto
-    cb = ctr[1]
+def ctrace_as_proto(cb, objmap): # TODO: rename to callback_as_proto
+    # cb = ctr[1]
     cbo = CCallback()
     proto_children = [ ccallin_as_proto(f, objmap) for f in cb.children ]
     cbo.nested_commands.extend(proto_children)
@@ -251,12 +263,20 @@ if __name__ == "__main__":
                     cex_ctrace = []
                     i = 0
                     prev_step = None
+                    last_entry = None
                     for step in cex:
                         if i == 0:
                             pass
                         else:
-                            val = mapback.get_fired_trace_msg(prev_step, step)
-                            cex_ctrace.append(ctrace_as_proto(val,objmap))
+                            dir,val = mapback.get_fired_trace_msg(prev_step, step)
+                            if isinstance(val,vtr.CCallback):
+                                if (dir == 'EXIT') and (val.message_id == last_entry):
+                                    pass #don't add if same as last entry
+                                elif dir == 'ENTRY':
+                                    last_entry = val.message_id
+                                    cex_ctrace.append(ctrace_as_proto(val,objmap))
+                                else:
+                                    cex_ctrace.append(ctrace_as_proto(val,objmap))
                         prev_step = step
                         i += 1
                     print "TODO"

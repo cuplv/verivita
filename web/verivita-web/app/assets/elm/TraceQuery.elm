@@ -521,9 +521,8 @@ displayCounterExample qc =
                     ListGroup.li [] [
                         Grid.container [] [
                             Grid.row [] [
-                                Grid.col [] [text cbdat.input]
-                                , Grid.col [] [ListGroup.ul (List.map cidisp cbdat.commands) ]
-                            ]
+                                Grid.col [] [text cbdat.input]]
+                            ,Grid.row [] [ Grid.col [] [ListGroup.ul (List.map cidisp cbdat.commands) ]]
                         ]
                     ]
                 _ -> Debug.crash ""
@@ -764,24 +763,25 @@ rankedCallinProtoToQuery : RankedCallinProto -> RankedMessage
 rankedCallinProtoToQuery r =
     {rank = r.rank, msg = MessageResponseCi (cCallinAsQuery r.callin)}
 
-type alias RespVerificationResults =
-    {
-        status : String,
-        msg : String,
-        cxe : Qt.CTrace
-    }
+--type alias RespVerificationResults =
+--    {
+--        status : String,
+--        msg : String,
+--        cxe : Qt.CTrace
+--    }
 
-setVerificationResults : String -> Result Http.Error RespVerificationResults -> Msg
+setVerificationResults : String -> Result Http.Error Qt.VerificationResult -> Msg
 setVerificationResults name c =
     let
-        _ = Debug.log "name is : " name
-        _ = Debug.log "ctr is : " c
+        _ = 1
+--        _ = Debug.log "name is : " name
+--        _ = Debug.log "ctr is : " c
     in
         case c of
             Ok(ctr) ->
-                case (ctr.status, ctr.msg, ctr.cxe) of
+                case (ctr.status, ctr.msg, ctr.counterExample) of
                     ("SAFE",_,_) -> SetVerificationResults (name, VerificationSafe)
-                    ("UNSAFE", _, cxe) -> SetVerificationResults (name, VerificationUnsafe( cTraceAsQuery cxe))
+                    ("UNSAFE", _, Just cxe) -> SetVerificationResults (name, VerificationUnsafe( cTraceAsQuery cxe))
                     ("ERROR", er, _) -> SetVerificationResults (name, VerificationError (er))
                     ("RUNNING", _, _) -> Nop
                     (_,_,_) -> SetVerificationResults (name, VerificationError ("Corrupted server response."))
@@ -794,12 +794,12 @@ setVerificationTaskId name c =
         Err(v) -> SetVerificationResults(name, VerificationError(toString v))
 
 
-decodeVerificationResults : Decode.Decoder RespVerificationResults
-decodeVerificationResults =
-    Decode.map3 RespVerificationResults
-        (Decode.field "status" Decode.string)
-        (Decode.field "msg" Decode.string)
-        (Decode.field "counter_example" Qt.cTraceDecoder)
+--decodeVerificationResults : Decode.Decoder RespVerificationResults
+--decodeVerificationResults =
+--    Decode.map3 RespVerificationResults
+--        (Decode.field "status" Decode.string)
+--        (Decode.field "msg" Decode.string)
+--        (Decode.field "counter_example" Qt.cTraceDecoder)
 
 --    Decode.succeed RespVerificationResults
 --        |> Pipeline.required "status" Decode.string
@@ -819,7 +819,7 @@ getVerificationResults : List QueryCallbackOrHole -> Int -> String -> Cmd Msg
 getVerificationResults q id name=
     Http.send (setVerificationResults name)
         (Http.get ("/status?id=" ++ (toString id))
-            decodeVerificationResults)
+            Qt.verificationResultDecoder)
 
 
 searchCallinHole : Int -> Int -> List QueryCallbackOrHole -> Cmd Msg
