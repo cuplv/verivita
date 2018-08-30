@@ -22,7 +22,9 @@ import Bootstrap.Grid.Row as Row
 import Bootstrap.ListGroup as ListGroup
 import QueryTrace as Qt
 import Debug
-import Time
+import Time exposing (Time)
+import Dict
+import Html.Attributes as Attributes
 
 
 main : Program Never Model Msg
@@ -43,12 +45,18 @@ type Param -- note selected hole removed since query will be by clicking on a ho
 type QueryCallbackOrHole = QueryCallback(QueryCallbackData)
     | QueryCallbackHole
     | QueryCallbackHoleResults(List QueryCallbackData)
+
+
+type ParseStatus
+    = NotParsed(Float)
+    |Parsed
+    |ParseError
 type alias QueryCallbackData =
     {
         frameworkClass : String,
         signature : String,
         input : String, -- Nothing when parsed successfully Just "" initially
-        parsed : Bool,
+        parsed : ParseStatus,
         receiver : Param,
         commands : List QueryCommand,
         params : List Param,
@@ -64,7 +72,7 @@ type alias QueryCallinData =
         frameworkClass: String,
         signature : String,
         input : String, -- Nothing when parsed successfully Just "" initially
-        parsed : Bool,
+        parsed : ParseStatus,
         receiver : Param,
         params : List Param,
         return : Param
@@ -101,32 +109,32 @@ type VerificationResults
     | VerificationNoResults
 
 type ResultsTab
-    = ResultsVerify
+    = ResultsVerify (Maybe Int)
     | ResultsSearch
 
 type alias Model =
     {
         querySelectionList : List String,
-        disallowSelectionList : List String,
+        disallowSelectionList : (Dict.Dict String VerificationResults),
         querySelectDropDownState : Dropdown.State,
-        disallowSelectDropDownState : Dropdown.State,
         query : List QueryCallbackOrHole,
-        verificationResults : VerificationResults,
-        resultsTabSelected : ResultsTab
+        resultsTabSelected : ResultsTab,
+        ctime : Float
     }
 
+-- initial callback and callin set to parse error so no parse until something reasonable is entered
 emptyCallback : QueryCallbackOrHole
 emptyCallback =
     QueryCallback( { frameworkClass = ""
         , signature = ""
         , receiver = Hole
-        , return = Hole, commands = [], input="", parsed = False, params = []})
+        , return = Hole, commands = [], input="", parsed = ParseError, params = []})
 
 emptyCallinDat : QueryCallinData
 emptyCallinDat =
     { frameworkClass = ""
             , signature = ""
-            , receiver = Hole , return = Hole, input="", parsed = False, params = []}
+            , receiver = Hole , return = Hole, input="", parsed = ParseError, params = []}
 
 emptyCallin : QueryCommand
 emptyCallin =
@@ -134,15 +142,29 @@ emptyCallin =
 
 init : ( Model, Cmd Msg)
 init =
-    ( Model [] []
-        Dropdown.initialState Dropdown.initialState
+    ( Model [] Dict.empty
+        Dropdown.initialState
         [QueryCallbackHole]
-        VerificationNoResults
-        ResultsVerify
+        (ResultsVerify Nothing)
+        (1/0)
         , Cmd.batch [getQueryList, getDisallowList])
 
 
 -- UPDATE
+incrCxe : ResultsTab -> ResultsTab
+incrCxe c =
+    case c of
+        ResultsSearch -> ResultsVerify(Just 0)
+        ResultsVerify Nothing -> ResultsVerify(Just 0)
+        ResultsVerify (Just n) -> ResultsVerify (Just (n + 1))
+decrCxe : ResultsTab -> ResultsTab
+decrCxe c =
+    case c of
+        ResultsSearch -> ResultsVerify(Just 0)
+        ResultsVerify Nothing -> ResultsVerify(Just 0)
+        ResultsVerify (Just n) -> ResultsVerify (Just (n - 1))
+
+
 
 iAddCallin : List QueryCommand -> Int -> List QueryCommand
 iAddCallin old cipos =
@@ -239,9 +261,11 @@ type Msg
     | UnSetParsedCallin(Int,Int)
     | UnSetParsedCallback(Int)
     | QuerySelectDropToggle Dropdown.State
-    | DisallowSelectDropToggle Dropdown.State
     | Nop
     | SelectResultsTab ResultsTab
+    | ParseAll(Float)
+    | DecrCxe
+    | IncrCxe
 
     -- Update From Http Requests
     | SetParsedCallin(Int, Int, QueryCallinData)
@@ -253,7 +277,7 @@ type Msg
     | SetDisallowList(List String)
     | SetQuerySelection String
     | SetQuery (List QueryCallbackOrHole)
-    | SetVerificationResults (VerificationResults)
+    | SetVerificationResults (String, VerificationResults)
 
     -- Send Http Requests
     | GetParsedCallback(Int, QueryCallbackData)
@@ -261,8 +285,10 @@ type Msg
     | SearchCallinHole (Int,Int)
     | GetQueryList
     | GetDisallowList
-    | GetVerificationResults (Int) -- periodic update checks for results --TODO: swap with id, add timer to trigger and update
+    | GetVerificationResults (String, Int) -- periodic update checks for results --TODO: swap with id, add timer to trigger and update
     | PostVerificationTask (String) -- initialize the verification with a rule
+
+
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -282,32 +308,39 @@ update msg model =
             ({model | query = doCallback (\v -> d) model.query cbpos}, Cmd.none)
         GetParsedCallback(cbpos, oldcbdat) -> (model, parseCallback cbpos oldcbdat)
         GetParsedCallin(cbpos, cipos, oldcidat) -> (model, parseCallin cbpos cipos oldcidat)
-        SetCallbackInput(cbpos, s) -> ({model | query = doCallback (\v -> {v | input = s}) model.query cbpos}, Cmd.none)
+        SetCallbackInput(cbpos, s) -> ({model | query = doCallback (\v -> {v | input = s, parsed = NotParsed(model.ctime)}) model.query cbpos}, Cmd.none)
         SetCallinInput(cbpos, cipos, s) ->
-            ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | input = s}))},Cmd.none)
+            ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | input = s, parsed = NotParsed(model.ctime)}))},Cmd.none)
         SearchCallinHole (cbpos, cipos) -> (model, searchCallinHole cbpos cipos model.query)
         UnSetParsedCallback (cbpos) ->
-            ({model | query = doCallback (\v -> {v | parsed = False}) model.query cbpos}, Cmd.none)
+            ({model | query = doCallback (\v -> {v | parsed = ParseError}) model.query cbpos}, Cmd.none)
         UnSetParsedCallin (cbpos, cipos) ->
-            ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | parsed = False}))}, Cmd.none)
+            ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | parsed = ParseError}))}, Cmd.none)
         SetCallinHoleResults(cbpos,cipos, resList) ->
             ({model | query = doCallinHole model.query cbpos cipos resList}, Cmd.none)
         DisplayCallbackError(cbpos, string) -> (model,Cmd.none) --TODO
         DisplayCallinError(cbpos, cipos, string) ->
             (model, Cmd.none) -- TODO
         SetQueryList(l) -> ({model | querySelectionList = l},Cmd.none)
-        SetDisallowList(l) -> ({model | disallowSelectionList = l}, Cmd.none)
+        SetDisallowList(l) -> (
+            {model | disallowSelectionList =
+                Dict.fromList (List.map (\a -> (a,VerificationNoResults)) l)
+            }, Cmd.none)
         GetQueryList -> (model, getQueryList)
         GetDisallowList -> (model, getDisallowList)
         QuerySelectDropToggle t -> ({model | querySelectDropDownState = t}, Cmd.none)
-        DisallowSelectDropToggle t -> ({model | disallowSelectDropDownState = t}, Cmd.none)
         SetQuerySelection name -> (model, getQuery name)
         SetQuery q -> ({model | query = q}, Cmd.none)
-        GetVerificationResults(id) -> (model, getVerificationResults model.query id)
-        SetVerificationResults (r) -> ({model | verificationResults = r}, Cmd.none)
-        PostVerificationTask (r) -> (model, postVerificationTask model.query r)
+        GetVerificationResults(name, id) -> (model, getVerificationResults model.query id name)
+        SetVerificationResults (name, r) ->
+            ({model | disallowSelectionList = Dict.insert name r model.disallowSelectionList}, Cmd.none)
+        PostVerificationTask (r) ->
+            (model, postVerificationTask model.query r)
         Nop -> (model,Cmd.none)
         SelectResultsTab (r) -> ({model | resultsTabSelected = r}, Cmd.none)
+        ParseAll(t) -> ({model| ctime = t}, parseAll t model.query)
+        IncrCxe -> ({model | resultsTabSelected = incrCxe model.resultsTabSelected} , Cmd.none)
+        DecrCxe -> ({model | resultsTabSelected = decrCxe model.resultsTabSelected}, Cmd.none)
 
 iDoCallinHole : List QueryCommand -> Int -> List RankedMessage -> List QueryCommand
 iDoCallinHole olist cipos res =
@@ -330,16 +363,17 @@ doCallinHole olist cbpos cipos res =
 inputBox : QueryCallbackData -> Input.Option msg -> List (Input.Option msg)
 inputBox d upd=
     case (d.parsed, d.input) of
-        (False,"") -> [ Input.attrs [ Spacing.ml2 ], Input.placeholder "--input method query--", upd]
-        (False, s) -> [ Input.attrs [ Spacing.ml2 ], Input.value s, upd ]
-        (True, s) -> [ Input.attrs [ Spacing.ml2 ], Input.value s, upd ]
+        (NotParsed _,"") -> [ Input.attrs [ Spacing.ml2 ], Input.placeholder "--input method query--", upd]
+        (NotParsed _, s) -> [ Input.attrs [ Spacing.ml2 ], Input.value s, upd ]
+        (Parsed, s) -> [ Input.attrs [ Spacing.ml2 ], Input.value s, upd ]
+        (ParseError, s) -> [ Input.attrs [ Spacing.ml2 ], Input.value s, upd]
 ciInputBox : QueryCallinData -> Input.Option msg -> List (Input.Option msg)
 ciInputBox d upd=
     case (d.parsed, d.input) of
-        (False,"") -> [ Input.placeholder "--input method query--", upd]
-        (False, s) -> [ Input.value s, upd ]
-        (True, s) -> [ Input.value s, upd ]
-
+        (NotParsed _,"") -> [ Input.placeholder "--input method query--", upd]
+        (NotParsed _, s) -> [ Input.value s, upd ]
+        (Parsed, s) -> [ Input.value s, upd ]
+        (ParseError, s) -> [ Input.attrs [ Spacing.ml2 ], Input.value s, upd]
 columnCard contents =
     Card.config [  ] |> Card.block [] contents |> Card.view
 
@@ -358,18 +392,18 @@ queryEntry model =
 
 verifyTab model =
     case model.resultsTabSelected of
-        ResultsVerify -> Button.primary
+        ResultsVerify _ -> Button.primary
         ResultsSearch -> Button.secondary
 
 searchTab model =
     case model.resultsTabSelected of
         ResultsSearch -> Button.primary
-        ResultsVerify -> Button.secondary
+        ResultsVerify _ -> Button.secondary
 
 resultsView model =
      div [] [
         Button.button [Button.attrs [ Spacing.ml1]
-            , verifyTab model, Button.onClick (SelectResultsTab ResultsVerify)] [ text "Verify" ]
+            , verifyTab model, Button.onClick (SelectResultsTab (ResultsVerify Nothing))] [ text "Verify" ]
         , Button.button [Button.attrs [ Spacing.ml1]
             , searchTab model, Button.onClick (SelectResultsTab ResultsSearch)] [ text "Search" ]
         ]
@@ -399,34 +433,49 @@ displayQueryResults cbpos cipos limit filter results =
                (\a -> ListGroup.button [ListGroup.success, ListGroup.attrs [onClick (SetCallinInput (cbpos, cipos, Tuple.second a))] ] [ text ((Tuple.first a) ++ (Tuple.second a)) ])
                rank_string_list)
 
+isperr : ParseStatus -> String
+isperr a =
+    case a of
+        ParseError -> "div-red"
+        NotParsed(_) -> "div-grey"
+        _ -> "div-green"
+
 callinView : Int -> Int -> QueryCommand -> Html Msg
 callinView cbpos cipos callin =
     let
-        contents =
+        (contents, displayerr) =
             case callin of
-                QueryCallin c -> Input.text (ciInputBox c (Input.onInput (\s -> SetCallinInput (cbpos, cipos, s))))
-                QueryCommandHole -> ciholeButtons cbpos cipos
-                QueryCommandHoleResults(l) -> displayQueryResults cbpos cipos 20 "" l
+                QueryCallin c -> (Input.text (ciInputBox c (Input.onInput (\s -> SetCallinInput (cbpos, cipos, s)))), isperr c.parsed)
+                QueryCommandHole -> (ciholeButtons cbpos cipos, "div-grey")
+                QueryCommandHoleResults(l) -> (displayQueryResults cbpos cipos 20 "" l, "div-grey")
+        buttons = [Button.button
+                      [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallin(cbpos,cipos)) ]
+                      [text "x"]
+                  , Button.button
+                      [Button.attrs [Spacing.ml1], Button.small, Button.onClick (AddQueryCallinAfter(cbpos,cipos)) ]
+                      [text "v"] ]
+--        displayerr =
+--            case callin.parsed of
+--                ParseError -> True
+--                _ -> False
     in
-        Grid.container[] [Grid.row [] [Grid.col [Col.middleXl] [contents], Grid.col [Col.sm2] [
-            div [] [Button.button
-                        [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallin(cbpos,cipos)) ]
-                        [text "x"]
-                    , Button.button
-                        [Button.attrs [Spacing.ml1], Button.small, Button.onClick (AddQueryCallinAfter(cbpos,cipos)) ]
-                        [text "v"] ] ]] ]
+        Grid.container[Attributes.attribute "class" displayerr] [Grid.row [ ] [Grid.col [Col.middleXl] [contents], Grid.col [Col.sm2] [
+            div [] buttons] ] ]
+--            div [] (if displayerr then (div [Attributes.attribute "class" "div-red"] [text "E"]) :: buttons else buttons) ]] ]
 
 
 callbackView : Int -> QueryCallbackOrHole -> Html Msg
 callbackView cbpos callback =
     let
-        contents =
+        (contents, displayerr) =
             case callback of
-                QueryCallback(d) -> Input.text (inputBox d (Input.onInput (\s -> SetCallbackInput(cbpos, s))))
+                QueryCallback(d) -> (Input.text (inputBox d
+                    (Input.onInput (\s -> SetCallbackInput(cbpos, s)))
+                    ), isperr d.parsed)
                 QueryCallbackHole ->
-                    div [] [Button.button [Button.attrs [Spacing.ml1], Button.small, Button.onClick (FillQueryCallbackHole cbpos)] [text "*"],
-                        Button.button [ Button.attrs [Spacing.ml1], Button.small ] [text "?"] ] --TODO: search click
-                QueryCallbackHoleResults(r) -> text "TODO" -- TODO: display search results
+                    (div [] [Button.button [Button.attrs [Spacing.ml1], Button.small, Button.onClick (FillQueryCallbackHole cbpos)] [text "*"],
+                        Button.button [ Button.attrs [Spacing.ml1], Button.small ] [text "?"] ], "div-grey") --TODO: search click
+                QueryCallbackHoleResults(r) -> (text "TODO", "div-grey") -- TODO: display search results
         callins =
             case callback of
                 QueryCallback(d) -> [ Grid.row [] [
@@ -436,7 +485,7 @@ callbackView cbpos callback =
                             d.commands)] ] ]
                 _ -> []
     in
-        Grid.container [] ([
+        Grid.container [Attributes.attribute "class" displayerr] ([
             Grid.row [] [
                 Grid.col [] [ contents ]
                 ,Grid.col [Col.sm3] [
@@ -447,16 +496,109 @@ callbackView cbpos callback =
                     ]
                 ] ] ] ++ callins)
 
+verifRunningDisp : Model -> String -> Html Msg
+verifRunningDisp model name =
+    case Dict.get name model.disallowSelectionList of
+        Just VerificationNoResults -> text "[not run]" --TODO: replace these with icons
+        Just (VerificationPending _ ) -> text "[running]"
+        Just (VerificationUnsafe _ ) -> text "[unsafe]"
+        Just VerificationSafe -> text "[safe]"
+        Just (VerificationError(string)) -> text "[error]"
+        _ -> Debug.crash "verify rule not in list"
 
-verifyView : Model -> Html Msg
-verifyView model =
-    Grid.container [] [
-        Grid.row [] [
-            Grid.col [] [
-                ListGroup.ul (List.map (\a -> ListGroup.li [] [text a] ) model.disallowSelectionList )
+
+displayCounterExample : List QueryCallbackOrHole -> Html Msg
+displayCounterExample qc =
+    let
+        cidisp = \c ->
+            case c of
+                QueryCallin (cidat) ->
+                    ListGroup.li [] [text cidat.input]
+                _ -> Debug.crash ""
+        cbdisp = \a ->
+            case a of
+                QueryCallback(cbdat) ->
+                    ListGroup.li [] [
+                        Grid.container [] [
+                            Grid.row [] [
+                                Grid.col [] [text cbdat.input]
+                                , Grid.col [] [ListGroup.ul (List.map cidisp cbdat.commands) ]
+                            ]
+                        ]
+                    ]
+                _ -> Debug.crash ""
+    in
+        ListGroup.ul (List.map cbdisp qc)
+
+displayVerificationResult : Maybe VerificationResults -> String -> Html Msg
+displayVerificationResult v rule =
+    case v of
+        Just (VerificationError m) -> text m
+        Just VerificationSafe -> text ("Trace is safe for " ++ rule ++ ".")
+        Just (VerificationUnsafe c) -> Grid.container [] [Grid.row [] [ Grid.col [] [text ("Trace is unsafe for " ++ rule ++ ", counter example:")]]
+                , Grid.row [] [Grid.col [] [displayCounterExample c] ]
+            ]
+        Just (VerificationPending _) -> text ("Results are pending for " ++ rule ++ ".")
+        Just VerificationNoResults -> text ("Please select the checkbox for " ++ rule ++ " to run.")
+        Nothing -> text ""
+
+nameFromRulePos : Int -> Model -> String
+nameFromRulePos p model =
+    let
+        keys = Dict.keys model.disallowSelectionList
+     in
+        case List.head (List.drop p keys) of
+            Just v -> v
+            _ -> ""
+
+verifyView : Maybe Int -> Model -> Html Msg
+verifyView s model =
+    let
+        selectedName =
+            case s of
+                Nothing -> "lakjsdflkahsdfjhasdfkjhasdkjfhasdkfjh"
+                Just v -> nameFromRulePos v model
+        incrEnabled =
+            case s of
+                Nothing -> Button.disabled False
+                Just (sz) -> Button.disabled (Dict.size model.disallowSelectionList == (sz-2))
+        decrEnabled =
+            case s of
+                Nothing -> Button.disabled True
+                Just (sz) -> Button.disabled (sz == 0)
+        cxe_display =
+            case s of
+                Nothing -> div [] []
+                Just v ->
+                    let
+                        n = nameFromRulePos v model
+                    in
+                        displayVerificationResult (Dict.get n model.disallowSelectionList) n
+        b_attr = [Button.attrs [Spacing.ml1], Button.primary, Button.small]
+    in
+        Grid.container [] [
+            Grid.row [] [
+                Grid.col [] [
+                    ListGroup.ul (
+                        List.map
+                            (\a -> ListGroup.li [] [Grid.container [] [
+                                Grid.row [] [Grid.col [Col.sm1] [ if selectedName == a then text "#" else text ""]
+                                    ,Grid.col [Col.sm8] [
+                                        Checkbox.checkbox [Checkbox.onCheck
+                                            (\b -> if b then (PostVerificationTask a) else Nop)] a], --TODO: uncheck
+                                        Grid.col [] [(verifRunningDisp model a) ]
+                                ] ] ] )
+                            (Dict.keys model.disallowSelectionList) )
+                ]
+            ]
+            , Grid.row [] [Grid.col [] [text " "]]
+            , Grid.row [] [Grid.col [] [div [] [
+                Button.button ((Button.onClick DecrCxe) :: decrEnabled :: b_attr) [text "<"]
+                , Button.button ((Button.onClick IncrCxe) :: incrEnabled :: b_attr) [text ">"]]] ]
+            , Grid.row [] [
+                Grid.col [] [cxe_display]
             ]
         ]
-    ]
 
 searchView : Model -> Html Msg
 searchView model = div [] [text "search view"]
@@ -474,7 +616,7 @@ view model =
             , Grid.col [ Col.orderXlLast ] [ columnCard [ Block.custom (resultsView model)
                 , Block.custom (
                     case model.resultsTabSelected of
-                        ResultsVerify -> verifyView model
+                        ResultsVerify s -> verifyView s model
                         ResultsSearch -> searchView model
                 ) ]
                 ]
@@ -485,18 +627,38 @@ view model =
 
 
 -- SUBSCRIPTIONS
+
+pendingVerifications : Dict.Dict String VerificationResults -> List (String,Int)
+pendingVerifications verificationResults =
+    let
+        dmap = Dict.toList
+            (Dict.filter (\key -> \v ->
+                    case v of
+                        VerificationPending(i) -> True
+                        _ -> False
+                )
+                verificationResults)
+    in
+        List.map (\a ->
+            case a of
+                (name, VerificationPending(i)) -> (name,i)
+                _ -> Debug.crash "..."
+        ) dmap
+
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         (
-            (
-                case model.verificationResults of
-                    VerificationPending(id) -> [Time.every (5 * Time.second) (\a -> GetVerificationResults(id))] --TODO: increase time here
-                    _ -> []
-            )
-            ++
-            [ Dropdown.subscriptions model.querySelectDropDownState QuerySelectDropToggle
-            , Dropdown.subscriptions model.disallowSelectDropDownState DisallowSelectDropToggle]
+            (Dropdown.subscriptions model.querySelectDropDownState QuerySelectDropToggle)
+            ::
+            (Time.every (3 * Time.second) ParseAll)
+            ::
+            (List.map (\nid ->(
+                    Time.every
+                        (5 * Time.second)  --TODO: increase time here
+                        (\time ->
+                                GetVerificationResults(Tuple.first nid, Tuple.second nid)) ))
+                    (pendingVerifications model.disallowSelectionList))
         )
 
 -- HTTP
@@ -527,7 +689,7 @@ parsedCallinResponse cbpos cipos oldcb result =
                                                         , receiver = qoAsQueryParam v.receiver
                                                         , return = qoAsQueryParam v.returnValue
                                                         , input = oldcb.input
-                                                        , parsed = True
+                                                        , parsed = Parsed
                                                         , params = List.map qAsQueryParam v.parameters })
                 Qt.MCallback(v) -> UnSetParsedCallin(cbpos, cipos)
                 Qt.MProblem(v) -> UnSetParsedCallin(cbpos,cipos)
@@ -547,7 +709,7 @@ parsedCallbackResponse cbpos oldcb result =
                                                           , return = qoAsQueryParam v.returnValue
                                                           , commands = oldcb.commands
                                                           , input = oldcb.input
-                                                          , parsed = True
+                                                          , parsed = Parsed
                                                           , params = List.map qAsQueryParam v.parameters })
                 Qt.MProblem(p) -> UnSetParsedCallback(cbpos)
                 Qt.MCallin(v) -> UnSetParsedCallback(cbpos)
@@ -609,44 +771,53 @@ type alias RespVerificationResults =
         cxe : Qt.CTrace
     }
 
-setVerificationResults : Result Http.Error RespVerificationResults -> Msg
-setVerificationResults c =
-    case c of
-        Ok(ctr) ->
-            case (ctr.status, ctr.msg, ctr.cxe) of
-                ("SAFE",_,_) -> SetVerificationResults (VerificationSafe)
-                ("UNSAFE", _, cxe) -> SetVerificationResults (VerificationUnsafe( cTraceAsQuery cxe))
-                ("ERROR", er, _) -> SetVerificationResults (VerificationError (er))
-                ("RUNNING", _, _) -> Nop
-                (_,_,_) -> SetVerificationResults (VerificationError ("Corrupted server response."))
-        Err(v) -> SetVerificationResults(VerificationError(toString v))
+setVerificationResults : String -> Result Http.Error RespVerificationResults -> Msg
+setVerificationResults name c =
+    let
+        _ = Debug.log "name is : " name
+        _ = Debug.log "ctr is : " c
+    in
+        case c of
+            Ok(ctr) ->
+                case (ctr.status, ctr.msg, ctr.cxe) of
+                    ("SAFE",_,_) -> SetVerificationResults (name, VerificationSafe)
+                    ("UNSAFE", _, cxe) -> SetVerificationResults (name, VerificationUnsafe( cTraceAsQuery cxe))
+                    ("ERROR", er, _) -> SetVerificationResults (name, VerificationError (er))
+                    ("RUNNING", _, _) -> Nop
+                    (_,_,_) -> SetVerificationResults (name, VerificationError ("Corrupted server response."))
+            Err(v) -> SetVerificationResults(name, VerificationError(toString v))
 
-setVerificationTaskId : Result Http.Error Int -> Msg
-setVerificationTaskId c =
+setVerificationTaskId : String -> Result Http.Error Int -> Msg
+setVerificationTaskId name c =
     case c of
-        Ok(id) -> SetVerificationResults(VerificationPending(id))
-        Err(v) -> SetVerificationResults(VerificationError(toString v))
+        Ok(id) -> SetVerificationResults(name, VerificationPending( id))
+        Err(v) -> SetVerificationResults(name, VerificationError(toString v))
 
 
 decodeVerificationResults : Decode.Decoder RespVerificationResults
 decodeVerificationResults =
-    Decode.succeed RespVerificationResults
-        |> Pipeline.required "status" Decode.string
-        |> Pipeline.optional "msg" Decode.string ""
-        |> Pipeline.optional "counter_example" Qt.cTraceDecoder {id = Nothing, callbacks = []}
+    Decode.map3 RespVerificationResults
+        (Decode.field "status" Decode.string)
+        (Decode.field "msg" Decode.string)
+        (Decode.field "counter_example" Qt.cTraceDecoder)
+
+--    Decode.succeed RespVerificationResults
+--        |> Pipeline.required "status" Decode.string
+--        |> Pipeline.optional "msg" Decode.string ""
+--        |> Pipeline.optional "counter_example" Qt.cTraceDecoder {id = Nothing, callbacks = []} --TODO: this is not decoding, WHY!!!???
 
 
 postVerificationTask : List QueryCallbackOrHole -> String -> Cmd Msg
 postVerificationTask q rule =
-    Http.send setVerificationTaskId
+    Http.send (setVerificationTaskId rule)
         (reqHdr ("/verify?rule=" ++ rule)
             (Http.jsonBody <| Qt.cTraceEncoder <| queryAsQ Nothing Nothing q)
             (Decode.field "id" Decode.int))
 
 
-getVerificationResults : List QueryCallbackOrHole -> Int -> Cmd Msg
-getVerificationResults q id=
-    Http.send setVerificationResults
+getVerificationResults : List QueryCallbackOrHole -> Int -> String -> Cmd Msg
+getVerificationResults q id name=
+    Http.send (setVerificationResults name)
         (Http.get ("/status?id=" ++ (toString id))
             decodeVerificationResults)
 
@@ -660,6 +831,34 @@ searchCallinHole cbpos cipos model =
                     (Decode.map2 RankedCallinProto
                         (Decode.field "rank" Decode.int)
                         (Decode.field "callin" Qt.cCallinDecoder))))
+
+
+readyToParse :Float -> ParseStatus -> Bool
+readyToParse ctime s =
+    case s of
+        Parsed -> False
+        ParseError -> False -- Don't reparse until text is changed
+        NotParsed(t) -> (ctime - t) > (Time.second * 3)
+
+recParseCallin : Time -> Int -> Int -> QueryCommand -> Maybe (Cmd Msg)
+recParseCallin ctime cbpos cipos c =
+    case c of
+        QueryCallin(d) -> if readyToParse ctime d.parsed then (Just (parseCallin cbpos cipos d)) else Nothing
+        _ -> Nothing
+
+recParseCallback : Float -> Int -> QueryCallbackOrHole -> Cmd Msg
+recParseCallback ctime cbpos cbh =
+    case cbh of
+        QueryCallback(d) ->
+            let
+                subcommands =  List.filterMap (\a -> a) (List.indexedMap (recParseCallin ctime cbpos) d.commands)
+            in
+                Cmd.batch (if readyToParse ctime d.parsed then parseCallback cbpos d :: subcommands else subcommands )
+        _ -> Cmd.batch []
+
+parseAll: Float -> List QueryCallbackOrHole -> Cmd Msg
+parseAll ctime query =
+    Cmd.batch (List.indexedMap (recParseCallback ctime) query)
 
 parseCallback : Int -> QueryCallbackData -> Cmd Msg
 parseCallback cbpos input =
@@ -739,7 +938,7 @@ cCallbackAsQuery c =
     let d = { frameworkClass = c.firstFrameworkOverrrideClass
                         , signature = c.methodSignature
                         , input = ""
-                        , parsed = True
+                        , parsed = Parsed
                         , receiver = qoAsQueryParam c.receiver
                         , return = qoAsQueryParam c.returnValue
                         , commands = List.map cCommandAsQueryCommand c.nestedCommands
@@ -766,7 +965,7 @@ cCallinAsQuery v =
         d = {frameworkClass = v.frameworkClass
             , signature = v.methodSignature
             , input = "auto fill"
-            , parsed = True
+            , parsed = Parsed
             , receiver = qoAsQueryParam v.receiver
             , return = qoAsQueryParam v.returnValue
             , params = List.map qAsQueryParam v.parameters}

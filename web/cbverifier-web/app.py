@@ -6,6 +6,7 @@ from cbverifier.specs.spec_parser import spec_parser
 import cbverifier.specs.spec_ast as sast
 from QueryTrace_pb2 import CCallback, CVariable, Hole, CCommand, CCallin, CParam, CMessage, CTrace
 from google.protobuf.json_format import MessageToJson
+from google.protobuf.json_format import Parse
 import cbverifier.android_specs.gen_config as Speclist
 import vv_database as db
 import subprocess
@@ -178,11 +179,13 @@ def get_task():
     status = db.get_task(id)
 
     res = {"status" : status.status()}
+    res["counter_example"] = MessageToJson(CTrace())
+    res["msg"] = ""
 
     if isinstance(status, db.TaskCompleteError):
         res["msg"] = status.msg
     elif isinstance(status, db.TaskCompleteUnsafe):
-        res["counter_example"] = status.counter_example
+        res["counter_example"] = status.counter_example  #TODO: protobuf for ctrace gets dumped here as if it were a string
 
     return jsonify(res)
 
