@@ -71,7 +71,7 @@ type alias QueryCallbackData =
 type QueryCommand
     = QueryCallin(QueryCallinData)
     | QueryCommandHole
-    | QueryCommandHoleResults(List RankedMessage)
+    | QueryCommandHoleResults(List RankedMessage, String)
 type alias QueryCallinData =
     {
         frameworkClass: String,
@@ -240,7 +240,7 @@ iSetCallin opr old pos =
     case (old,pos) of
         (QueryCallin(v) :: t, 0) -> QueryCallin(opr v) :: t
         (QueryCommandHole :: t, 0) -> QueryCallin(opr emptyCallinDat) :: t
-        (QueryCommandHoleResults(r) :: t, 0) -> QueryCallin(opr emptyCallinDat) :: t
+        (QueryCommandHoleResults(r,_) :: t, 0) -> QueryCallin(opr emptyCallinDat) :: t
         (h :: t, a) -> h :: (iSetCallin opr t (pos - 1))
         (nil, a) -> Debug.crash "mismatched list length iSetCallin"
 
@@ -273,6 +273,7 @@ type Msg
     | ParseAll(Float)
     | DecrCxe
     | IncrCxe
+    | SetFilter(Int,Int,String)
 
     -- Update From Http Requests
     | SetParsedCallin(Int, Int, QueryCallinData)
@@ -302,6 +303,8 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        SetFilter(cbpos, cipos, filt) ->
+            ({model | query = doCallin model.query cbpos cipos (iSetCallinHoleFilter filt)}, Cmd.none)
         AddQueryCallinAfter (callbackPos, callinPos) ->
             ({model | query = doCallin model.query callbackPos callinPos iAddCallin
                 ,disallowSelectionList = deselectQueryResults model.disallowSelectionList
@@ -384,9 +387,17 @@ iDoCallinHole : List QueryCommand -> Int -> List RankedMessage -> List QueryComm
 iDoCallinHole olist cipos res =
     List.indexedMap (\idx -> \v ->
         (case (idx, v) of
-            (cipos, QueryCommandHole) -> QueryCommandHoleResults(res)
+            (cipos, QueryCommandHole) -> QueryCommandHoleResults(res,"")
             (a,b) -> b
         )) olist
+
+iSetCallinHoleFilter : String -> List QueryCommand -> Int ->  List QueryCommand
+iSetCallinHoleFilter filt olist cipos =
+    List.indexedMap (\idx -> \v ->
+        case (idx,v) of
+            (cipos, QueryCommandHoleResults(res,_)) -> QueryCommandHoleResults(res,filt)
+            (a,b)->b
+    ) olist
 
 doCallinHole : List QueryCallbackOrHole -> Int -> Int -> List RankedMessage -> List QueryCallbackOrHole
 doCallinHole olist cbpos cipos res =
@@ -456,20 +467,30 @@ ciholeButtons cbpos cipos =
             [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (SearchCallinHole(cbpos,cipos))] [text "?"]]
 
 
+filterRankedMessages: String -> RankedMessage -> Bool
+filterRankedMessages filt m =
+    case m.msg of
+        MessageResponseCi(d) -> String.contains filt d.input
+        MessageResponseCb(d) -> String.contains filt d.input
+
 displayQueryResults : Int -> Int -> Int -> String -> List RankedMessage -> Html Msg
 displayQueryResults cbpos cipos limit filter results =
     let
         hightolow : List RankedMessage
         hightolow = List.reverse (List.sortBy .rank results)
         firstn : List RankedMessage
-        firstn = List.take limit hightolow
+        firstn = List.take limit (List.filter (\a -> filterRankedMessages filter a) hightolow)
         rank_string_list : List (String,String)
         rank_string_list = List.map (\a -> ((toString a.rank) , (rankedMessageToInput a))  ) firstn
     in
-        ListGroup.custom
-            (List.map
-               (\a -> ListGroup.button [ListGroup.success, ListGroup.attrs [onClick (SetCallinInput (cbpos, cipos, Tuple.second a))] ] [ text ((Tuple.first a) ++ (Tuple.second a)) ])
-               rank_string_list)
+        div [] [
+
+            Input.text [Input.onInput (\newfilt -> SetFilter(cbpos, cipos, newfilt))]
+            ,ListGroup.custom
+                (List.map
+                   (\a -> ListGroup.button [ListGroup.success, ListGroup.attrs [onClick (SetCallinInput (cbpos, cipos, Tuple.second a))] ] [ text ((Tuple.first a) ++ (Tuple.second a)) ])
+                   rank_string_list)
+        ]
 
 
 
@@ -489,7 +510,7 @@ callinView cbpos cipos callin =
                     ((Input.attrs [Attributes.attribute "class" "ci-entry"])
                         ::(ciInputBox c (Input.onInput (\s -> SetCallinInput (cbpos, cipos, s)))))), isperr c.parsed)
                 QueryCommandHole -> (ciholeButtons cbpos cipos, [])
-                QueryCommandHoleResults(l) -> (displayQueryResults cbpos cipos 20 "" l, [])
+                QueryCommandHoleResults(l, filt) -> (displayQueryResults cbpos cipos 20 filt l, [])
         buttons = [Button.button
                       [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallin(cbpos,cipos)) ]
                       [text "x"]
@@ -1116,7 +1137,7 @@ queryCommandAsQ cmd select =
                 exception = Nothing,
                 nestedCallbacks = []} }
         QueryCommandHole -> {ciCommand = Qt.CiHole (Qt.Hole select)}
-        QueryCommandHoleResults(r) -> {ciCommand = Qt.CiHole (Qt.Hole select)}
+        QueryCommandHoleResults(r,_) -> {ciCommand = Qt.CiHole (Qt.Hole select)}
 
 queryCallbackOrHoleAsQ : QueryCallbackOrHole -> Maybe Int -> Bool -> Qt.CallbackOrHole
 queryCallbackOrHoleAsQ cb opt_cipos selected_callback =
