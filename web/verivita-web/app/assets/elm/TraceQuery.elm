@@ -515,9 +515,13 @@ callbackView cbpos callback =
                     (Input.onInput (\s -> SetCallbackInput(cbpos, s)))
                     )), isperr d.parsed)
                 QueryCallbackHole ->
-                    (div [] [Button.button [Button.attrs [Spacing.ml1], Button.small, Button.onClick (FillQueryCallbackHole cbpos)] [text "*"],
-                        Button.button [ Button.attrs [Spacing.ml1], Button.small ] [text "?"] ], []) --TODO: search click
+                    (div [] [Button.button [Button.attrs [Spacing.ml1], Button.small, Button.onClick (FillQueryCallbackHole cbpos)] [text "*"]], [])
+--                        Button.button [ Button.attrs [Spacing.ml1], Button.small ] [text "?"] ], []) --TODO: add callback hole search back in when time to implement exists
                 QueryCallbackHoleResults(r) -> (text "TODO", []) -- TODO: display search results
+        nothole =
+            case callback of
+                QueryCallback(_) -> True
+                _ -> False
         callins =
             case callback of
                 QueryCallback(d) -> [ Grid.row [] [
@@ -534,10 +538,12 @@ callbackView cbpos callback =
                 ,Grid.col [Col.sm4] [
                     div [Attributes.attribute "class" "cb-buttons"] (
                     displayerr ++
-                    [Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallback cbpos) ] [text "x"]
-                    ,Button.button [Button.attrs [ Spacing.ml1 ], Button.small, Button.onClick (AddQueryCallinAfter (cbpos, -1))] [ text "<" ]
-                    ,Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (AddQueryCallbackAfter cbpos)] [text "v"]
-                    ] )
+                    ([Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallback cbpos) ] [text "x"] ]
+                    ++
+                    (if nothole then [Button.button [Button.attrs [ Spacing.ml1 ], Button.small, Button.onClick (AddQueryCallinAfter (cbpos, -1))] [ text "<" ]] else [])
+                    ++ --TODO: add callin button on callback hole when callback hole search implemented, no use for it otherwise
+                    [Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (AddQueryCallbackAfter cbpos)] [text "v"]
+                    ]) )
                 ] ] ] ++ callins)
 
 verifRunningDisp : Int -> Model -> String -> Html Msg

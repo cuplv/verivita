@@ -27,6 +27,9 @@ class HomeController @Inject() (ws : WSClient) (implicit ec : ExecutionContext) 
   def index = Action {
     Ok(views.html.main())
   }
+  def tutorial = Action{
+    Ok(views.html.tutorial(getGithubDoc("tutorial")))
+  }
 
   val verivitaWebUrl = sys.env("VERIVITA_WEB_URL")
   val queryUrl = sys.env("TRACEQUERY_WEB_URL")

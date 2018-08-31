@@ -257,17 +257,21 @@ class PostgresTraceDbQuery @Inject()(db: Database) extends TraceDbQuery {
       }
     }
     //create end_method_param X trace pairs based on start_method_param and convert them into dbparam X rank
-    val param_rank_list = db.withConnection{implicit conn =>
+    val param_rank_list: Seq[((String, DBParam), Int)] = db.withConnection{ implicit conn =>
       methodsInQuery.flatMap { a =>
-        val list = traceToRank.keys.map(_.trace_id).toList
+        val list = (traceToRank.keys.map(_.trace_id).toList).mkString(",")
         //Get distinct methods that share data with methods in the query
-        SQL(
-          """SELECT DISTINCT end_method_param, trace_id FROM trace_edge
-            WHERE trace_id IN ({traces})  AND start_method_param = {start};""")
-          .on('traces -> list)
-          .on('start -> a._2.param_id)
-          .as(parse_destination.*)
-          .map(v => ((a._1,v._1),v._2)) //retain variable name
+        if (list.size > 0) {
+          val q =
+            s"""SELECT DISTINCT end_method_param, trace_id FROM trace_edge
+            WHERE trace_id IN (${list})  AND start_method_param = {start};"""
+          SQL(
+            q) //TODO: sql exception may be here, was ({traces})
+            //          .on('traces -> list)
+            .on('start -> a._2.param_id)
+            .as(parse_destination.*)
+            .map(v => ((a._1, v._1), v._2)) //retain variable name
+        }else Seq()
       }
     }.filter{ _._1._2.d.isCallback == isCallback}
     //sum the ranks for a given dbparam
