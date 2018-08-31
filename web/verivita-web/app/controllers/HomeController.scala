@@ -40,7 +40,8 @@ class HomeController @Inject() (ws : WSClient) (implicit ec : ExecutionContext) 
     forwardPostRequest(req, urltail, verivitaWebUrl)
   }
   def queryList = Action {req =>
-    Ok(Json.toJson(PreSetQueries.getQueries))
+//    Ok(Json.toJson(PreSetQueries.getQueries))
+      Ok(Json.toJson(getGithubDoc("list").split("\n")))
   }
   def getDisallowList = Action {req =>
     forwardGetRequest(req, "/get_disallow_list", verivitaWebUrl)
@@ -85,10 +86,35 @@ class HomeController @Inject() (ws : WSClient) (implicit ec : ExecutionContext) 
     val res = Await.result(request, timeout)
     Ok(res.body)
   }
+  private def getGithubDoc(name :String) = {
+    val request : Future[WSResponse] =
+      ws.url(s"https://raw.githubusercontent.com/cuplv/verivita/master/docs/${name}")
+        .withRequestTimeout(timeout)
+        .get()
+    val res = Await.result(request,timeout)
+    if (res.status == 200)
+      res.body
+    else
+      ""
+  }
+
+
   def getQuery(id : String) = Action{ req : Request[AnyContent] =>
-    PreSetQueries.getQuery(id) match{
-      case Some(v) => Ok(v)
-      case None => BadRequest("Query does not exist.")
-    }
+//    PreSetQueries.getQuery(id) match{
+//      case Some(v) => Ok(v)
+//      case None => BadRequest("Query does not exist.")
+//    }
+    val r  = getGithubDoc(id)
+    if (r != "")
+      Ok(r)
+    else
+      BadRequest("Error retrieving query")
+  }
+  def getQueryDescription(id : String) = Action { req : Request[AnyContent] =>
+    val r = getGithubDoc(s"${id}_description")
+    if (r != "")
+      Ok(r)
+    else
+      BadRequest("Error retrieving doc.")
   }
 }

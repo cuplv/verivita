@@ -20,6 +20,7 @@ import Bootstrap.Utilities.Size as Size
 import Bootstrap.Grid.Col as Col
 import Bootstrap.Grid.Row as Row
 import Bootstrap.ListGroup as ListGroup
+import Bootstrap.Badge as Badge
 import QueryTrace as Qt
 import Debug
 import Time exposing (Time)
@@ -123,7 +124,8 @@ type alias Model =
         querySelectDropDownState : Dropdown.State,
         query : List QueryCallbackOrHole,
         resultsTabSelected : ResultsTab,
-        ctime : Float
+        ctime : Float,
+        queryDescription : String
     }
 
 -- initial callback and callin set to parse error so no parse until something reasonable is entered
@@ -151,6 +153,7 @@ init =
         [QueryCallbackHole]
         (ResultsVerify Nothing)
         (1/0)
+        ""
         , Cmd.batch [getQueryList, getDisallowList])
 
 
@@ -282,6 +285,7 @@ type Msg
     | SetQuerySelection String
     | SetQuery (List QueryCallbackOrHole)
     | SetVerificationResults (String, VerificationResults)
+    | SetQueryDescription(String)
 
     -- Send Http Requests
     | GetParsedCallback(Int, QueryCallbackData)
@@ -291,6 +295,7 @@ type Msg
     | GetDisallowList
     | GetVerificationResults (String, Int) -- periodic update checks for results --TODO: swap with id, add timer to trigger and update
     | PostVerificationTask (String) -- initialize the verification with a rule
+    | GetQueryDescription(String)
 
 
 
@@ -298,23 +303,44 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         AddQueryCallinAfter (callbackPos, callinPos) ->
-            ({model | query = doCallin model.query callbackPos callinPos iAddCallin}, Cmd.none)
-        AddQueryCallbackAfter(callbackPos) -> ({model | query = addHole model.query callbackPos}, Cmd.none)
-        FillQueryCallbackHole(callbackPos) -> ({model | query = fillHole model.query callbackPos}, Cmd.none)
+            ({model | query = doCallin model.query callbackPos callinPos iAddCallin
+                ,disallowSelectionList = deselectQueryResults model.disallowSelectionList
+            }, Cmd.none)
+        AddQueryCallbackAfter(callbackPos) -> ({model | query = addHole model.query callbackPos
+                ,disallowSelectionList = deselectQueryResults model.disallowSelectionList
+            }, Cmd.none)
+        FillQueryCallbackHole(callbackPos) -> ({model | query = fillHole model.query callbackPos
+                ,disallowSelectionList = deselectQueryResults model.disallowSelectionList
+            }, Cmd.none)
         FillQueryCallinhole(callbackPos, callinPos) ->
-            ({model | query = doCallin model.query callbackPos callinPos iFill}, Cmd.none)
-        RemoveQueryCallback(callbackPos) -> ({model | query = removeCOH model.query callbackPos}, Cmd.none)
+            ({model | query = doCallin model.query callbackPos callinPos iFill
+                ,disallowSelectionList = deselectQueryResults model.disallowSelectionList
+            }, Cmd.none)
+        RemoveQueryCallback(callbackPos) -> ({model | query = removeCOH model.query callbackPos
+                ,disallowSelectionList = deselectQueryResults model.disallowSelectionList
+            }, Cmd.none)
         RemoveQueryCallin(callbackPos, callinPos) ->
-            ({model | query = doCallin model.query callbackPos callinPos iRemoveCallin}, Cmd.none)
+            ({model | query = doCallin model.query callbackPos callinPos iRemoveCallin
+                ,disallowSelectionList = deselectQueryResults model.disallowSelectionList
+            }, Cmd.none)
         SetParsedCallin(cbpos, cipos, d) ->
-            ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> d))},Cmd.none)
+            ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> d))
+                ,disallowSelectionList = deselectQueryResults model.disallowSelectionList
+            },Cmd.none)
         SetParsedCallback(cbpos,d) ->
-            ({model | query = doCallback (\v -> d) model.query cbpos}, Cmd.none)
+            ({model | query = doCallback (\v -> d) model.query cbpos
+                ,disallowSelectionList = deselectQueryResults model.disallowSelectionList
+            }, Cmd.none)
         GetParsedCallback(cbpos, oldcbdat) -> (model, parseCallback cbpos oldcbdat)
         GetParsedCallin(cbpos, cipos, oldcidat) -> (model, parseCallin cbpos cipos oldcidat)
-        SetCallbackInput(cbpos, s) -> ({model | query = doCallback (\v -> {v | input = s, parsed = NotParsed(model.ctime)}) model.query cbpos}, Cmd.none)
+        SetCallbackInput(cbpos, s) ->
+            ({model | query = doCallback (\v -> {v | input = s, parsed = NotParsed(model.ctime)}) model.query cbpos
+                ,disallowSelectionList = deselectQueryResults model.disallowSelectionList}, Cmd.none)
         SetCallinInput(cbpos, cipos, s) ->
-            ({model | query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | input = s, parsed = NotParsed(model.ctime)}))},Cmd.none)
+            ({model |
+                query = doCallin model.query cbpos cipos (iSetCallin (\v -> {v | input = s, parsed = NotParsed(model.ctime)}))
+                ,disallowSelectionList = deselectQueryResults model.disallowSelectionList
+            },Cmd.none)
         SearchCallinHole (cbpos, cipos) -> (model, searchCallinHole cbpos cipos model.query)
         UnSetParsedCallback (cbpos) ->
             ({model | query = doCallback (\v -> {v | parsed = ParseError}) model.query cbpos}, Cmd.none)
@@ -333,7 +359,8 @@ update msg model =
         GetQueryList -> (model, getQueryList)
         GetDisallowList -> (model, getDisallowList)
         QuerySelectDropToggle t -> ({model | querySelectDropDownState = t}, Cmd.none)
-        SetQuerySelection name -> (model, getQuery name)
+        SetQuerySelection name -> ({model | disallowSelectionList = deselectQueryResults model.disallowSelectionList}
+            , Cmd.batch [getQuery name, getQueryDescription name])
         SetQuery q -> ({model | query = q}, Cmd.none)
         GetVerificationResults(name, id) -> (model, getVerificationResults model.query id name)
         SetVerificationResults (name, r) ->
@@ -345,6 +372,13 @@ update msg model =
         ParseAll(t) -> ({model| ctime = t}, parseAll t model.query)
         IncrCxe -> ({model | resultsTabSelected = incrCxe model.resultsTabSelected} , Cmd.none)
         DecrCxe -> ({model | resultsTabSelected = decrCxe model.resultsTabSelected}, Cmd.none)
+        SetQueryDescription(description) -> ({model | queryDescription= description} , Cmd.none)
+        GetQueryDescription(qname) -> (model, getQueryDescription qname)
+
+deselectQueryResults : (Dict.Dict String VerificationResults) -> (Dict.Dict String VerificationResults)
+deselectQueryResults vr =
+    Dict.map (\prop -> \old -> VerificationNoResults) vr
+
 
 iDoCallinHole : List QueryCommand -> Int -> List RankedMessage -> List QueryCommand
 iDoCallinHole olist cipos res =
@@ -383,15 +417,15 @@ columnCard contents =
 
 
 queryEntry model =
-    div [] [text "Trace Template",
+    div [] [
             Dropdown.dropdown model.querySelectDropDownState
                 {options = [ Dropdown.attrs [Spacing.ml1] ]
                 , toggleMsg = QuerySelectDropToggle
                 , toggleButton =
-                    Dropdown.toggle [ Button.primary ] [ text "Custom" ]
+                    Dropdown.toggle [ Button.primary ] [ text "Trace Template" ]
                 , items = List.map (\name -> Dropdown.buttonItem [ Html.Events.onClick <|
-                    SetQuerySelection name ] [text name] ) model.querySelectionList
-                }
+                    (SetQuerySelection name) ] [text name] ) model.querySelectionList
+                } -- , GetQueryDescription name] --TODO: chain these together
             ]
 
 verifyTab model =
@@ -406,10 +440,10 @@ searchTab model =
 
 resultsView model =
      div [] [
-        Button.button [Button.attrs [ Spacing.ml1]
-            , verifyTab model, Button.onClick (SelectResultsTab (ResultsVerify Nothing))] [ text "Verify" ]
-        , Button.button [Button.attrs [ Spacing.ml1]
-            , searchTab model, Button.onClick (SelectResultsTab ResultsSearch)] [ text "Search" ]
+--        Button.button [Button.attrs [ Spacing.ml1]
+--            , verifyTab model, Button.onClick (SelectResultsTab (ResultsVerify Nothing))] [ text "Verify" ]
+--        , Button.button [Button.attrs [ Spacing.ml1]
+--            , searchTab model, Button.onClick (SelectResultsTab ResultsSearch)] [ text "Search" ]
         ]
 
 ciholeButtons : Int -> Int -> Html Msg
@@ -437,21 +471,25 @@ displayQueryResults cbpos cipos limit filter results =
                (\a -> ListGroup.button [ListGroup.success, ListGroup.attrs [onClick (SetCallinInput (cbpos, cipos, Tuple.second a))] ] [ text ((Tuple.first a) ++ (Tuple.second a)) ])
                rank_string_list)
 
-isperr : ParseStatus -> String
+
+
+isperr : ParseStatus -> List (Html Msg)
 isperr a =
     case a of
-        ParseError -> "div-red"
-        NotParsed(_) -> "div-grey"
-        _ -> "div-green"
+        ParseError -> [ Badge.badgeDanger [] [text "Er"] ]
+        NotParsed(_) -> [ Badge.badgeSecondary [] [text "In"] ]
+        _ -> [ Badge.badgeSuccess [] [text "Ok"] ]
 
 callinView : Int -> Int -> QueryCommand -> Html Msg
 callinView cbpos cipos callin =
     let
         (contents, displayerr) =
             case callin of
-                QueryCallin c -> (Input.text (ciInputBox c (Input.onInput (\s -> SetCallinInput (cbpos, cipos, s)))), isperr c.parsed)
-                QueryCommandHole -> (ciholeButtons cbpos cipos, "div-grey")
-                QueryCommandHoleResults(l) -> (displayQueryResults cbpos cipos 20 "" l, "div-grey")
+                QueryCallin c -> ((Input.text
+                    ((Input.attrs [Attributes.attribute "class" "ci-entry"])
+                        ::(ciInputBox c (Input.onInput (\s -> SetCallinInput (cbpos, cipos, s)))))), isperr c.parsed)
+                QueryCommandHole -> (ciholeButtons cbpos cipos, [])
+                QueryCommandHoleResults(l) -> (displayQueryResults cbpos cipos 20 "" l, [])
         buttons = [Button.button
                       [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallin(cbpos,cipos)) ]
                       [text "x"]
@@ -463,8 +501,8 @@ callinView cbpos cipos callin =
 --                ParseError -> True
 --                _ -> False
     in
-        Grid.container[Attributes.attribute "class" displayerr] [Grid.row [ ] [Grid.col [Col.middleXl] [contents], Grid.col [Col.sm2] [
-            div [] buttons] ] ]
+        Grid.container[] [Grid.row [ ] [Grid.col [Col.middleXl] [contents], Grid.col [Col.sm3] [
+            div [Attributes.attribute "class" "ci-buttons"] (displayerr ++ buttons)] ] ]
 --            div [] (if displayerr then (div [Attributes.attribute "class" "div-red"] [text "E"]) :: buttons else buttons) ]] ]
 
 
@@ -473,13 +511,13 @@ callbackView cbpos callback =
     let
         (contents, displayerr) =
             case callback of
-                QueryCallback(d) -> (Input.text (inputBox d
+                QueryCallback(d) -> (Input.text ((Input.attrs [Attributes.attribute "class" "cb-entry"])::(inputBox d
                     (Input.onInput (\s -> SetCallbackInput(cbpos, s)))
-                    ), isperr d.parsed)
+                    )), isperr d.parsed)
                 QueryCallbackHole ->
                     (div [] [Button.button [Button.attrs [Spacing.ml1], Button.small, Button.onClick (FillQueryCallbackHole cbpos)] [text "*"],
-                        Button.button [ Button.attrs [Spacing.ml1], Button.small ] [text "?"] ], "div-grey") --TODO: search click
-                QueryCallbackHoleResults(r) -> (text "TODO", "div-grey") -- TODO: display search results
+                        Button.button [ Button.attrs [Spacing.ml1], Button.small ] [text "?"] ], []) --TODO: search click
+                QueryCallbackHoleResults(r) -> (text "TODO", []) -- TODO: display search results
         callins =
             case callback of
                 QueryCallback(d) -> [ Grid.row [] [
@@ -489,26 +527,38 @@ callbackView cbpos callback =
                             d.commands)] ] ]
                 _ -> []
     in
-        Grid.container [Attributes.attribute "class" displayerr] ([
+--        Grid.container [Attributes.attribute "class" displayerr] ([
+        Grid.container [] ([
             Grid.row [] [
                 Grid.col [] [ contents ]
-                ,Grid.col [Col.sm3] [
-                    div [] [
-                    Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallback cbpos) ] [text "x"]
+                ,Grid.col [Col.sm4] [
+                    div [Attributes.attribute "class" "cb-buttons"] (
+                    displayerr ++
+                    [Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallback cbpos) ] [text "x"]
                     ,Button.button [Button.attrs [ Spacing.ml1 ], Button.small, Button.onClick (AddQueryCallinAfter (cbpos, -1))] [ text "<" ]
                     ,Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (AddQueryCallbackAfter cbpos)] [text "v"]
-                    ]
+                    ] )
                 ] ] ] ++ callins)
 
-verifRunningDisp : Model -> String -> Html Msg
-verifRunningDisp model name =
+verifRunningDisp : Int -> Model -> String -> Html Msg
+verifRunningDisp idx model name =
     case Dict.get name model.disallowSelectionList of
-        Just VerificationNoResults -> text "[not run]" --TODO: replace these with icons
-        Just (VerificationPending _ ) -> text "[running]"
-        Just (VerificationUnsafe _ ) -> text "[unsafe]"
-        Just VerificationSafe -> text "[safe]"
-        Just (VerificationError(string)) -> text "[error]"
-        _ -> Debug.crash "verify rule not in list"
+        Just VerificationNoResults -> (Button.button
+            [Button.small, Button.onClick (SelectResultsTab (ResultsVerify (Just idx))), Button.primary ]
+            [text "Not Run"])
+        Just (VerificationPending _ ) -> (Button.button
+            [Button.small, Button.onClick (SelectResultsTab (ResultsVerify (Just idx))), Button.secondary]
+            [text "Running"])
+        Just (VerificationUnsafe _ ) -> (Button.button
+            [Button.small, Button.onClick (SelectResultsTab (ResultsVerify (Just idx))), Button.danger]
+            [text "Unsafe Trace"])
+        Just VerificationSafe -> (Button.button
+            [Button.small, Button.onClick (SelectResultsTab (ResultsVerify (Just idx))), Button.success]
+            [text "Safe Trace"])
+        Just (VerificationError(string)) -> (Button.button
+            [Button.small, Button.onClick (SelectResultsTab (ResultsVerify (Just idx))), Button.warning]
+            [text "Internal Error"])
+        _ -> text ""
 
 
 displayCounterExample : List QueryCallbackOrHole -> Html Msg
@@ -583,21 +633,28 @@ verifyView s model =
             Grid.row [] [
                 Grid.col [] [
                     ListGroup.ul (
-                        List.map
-                            (\a -> ListGroup.li [] [Grid.container [] [
-                                Grid.row [] [Grid.col [Col.sm1] [ if selectedName == a then text "#" else text ""]
-                                    ,Grid.col [Col.sm8] [
-                                        Checkbox.checkbox [Checkbox.onCheck
-                                            (\b -> if b then (PostVerificationTask a) else Nop)] a], --TODO: uncheck
-                                        Grid.col [] [(verifRunningDisp model a) ]
-                                ] ] ] )
+                        List.indexedMap
+                            (\idx -> \a ->
+                                let
+                                    dis =
+                                        case Dict.get a model.disallowSelectionList of
+                                            Nothing -> True
+                                            Just VerificationNoResults -> False
+                                            _ -> True
+                                in
+                                    ListGroup.li [] [Grid.container [] [
+                                        Grid.row [] [Grid.col [Col.sm1] [ if selectedName == a then (Badge.badgeDark [] [text "Sel"]) else (text "")]
+                                            ,Grid.col [Col.sm2] [ Button.button [Button.onClick (PostVerificationTask a), Button.disabled dis, Button.primary, Button.small] [text "Verify"] ]
+                                            ,Grid.col [Col.sm4] [text (String.join ". " (String.split "." a))]
+                                            ,Grid.col [] [(verifRunningDisp idx model a) ] ] ] ] )
                             (Dict.keys model.disallowSelectionList) )
                 ]
             ]
             , Grid.row [] [Grid.col [] [text " "]]
             , Grid.row [] [Grid.col [] [div [] [
-                Button.button ((Button.onClick DecrCxe) :: decrEnabled :: b_attr) [text "<"]
-                , Button.button ((Button.onClick IncrCxe) :: incrEnabled :: b_attr) [text ">"]]] ]
+--                Button.button ((Button.onClick DecrCxe) :: decrEnabled :: b_attr) [text "<"] --Note: these are buttons to toggle displayed result
+--                , Button.button ((Button.onClick IncrCxe) :: incrEnabled :: b_attr) [text ">"]
+            ] ]]
             , Grid.row [] [
                 Grid.col [] [cxe_display]
             ]
@@ -611,7 +668,7 @@ view model =
     Grid.container []
         [ Grid.row []
             [ Grid.col [ Col.orderXlFirst] [ columnCard [ Block.custom (queryEntry model)
-                , Block.text [] [ text "..."]
+                , Block.text [] [ text model.queryDescription ]
                 , Block.custom (
                     ListGroup.ul (List.indexedMap (\idx -> \a -> ListGroup.li [ ListGroup.dark ] [callbackView idx a]) model.query )
                 )]
@@ -824,6 +881,18 @@ getVerificationResults q id name=
     Http.send (setVerificationResults name)
         (Http.get ("/status?id=" ++ (toString id))
             Qt.verificationResultDecoder)
+
+setQueryDescription : Result Http.Error String -> Msg
+setQueryDescription r =
+    case r of
+        Ok(r) -> SetQueryDescription(r)
+        Err(v) -> SetQueryDescription("An error occurred while retrieving the documentation.")
+
+getQueryDescription : String -> Cmd Msg
+getQueryDescription name =
+    Http.send setQueryDescription
+        (Http.getString ("/get_query_doc/" ++ name))
+--        (Decode.field "doc" Decode.string)
 
 
 searchCallinHole : Int -> Int -> List QueryCallbackOrHole -> Cmd Msg

@@ -30,6 +30,8 @@ GET      /query_list                controllers.HomeController.queryList
 
 GET      /get_query/:id             controllers.HomeController.getQuery(id : String)
 
+GET      /get_query_doc/:id         controllers.HomeController.getQueryDescription(id : String)
+
 GET      /get_disallow_list         controllers.HomeController.getDisallowList
 
 GET      /status                    controllers.HomeController.getStatus

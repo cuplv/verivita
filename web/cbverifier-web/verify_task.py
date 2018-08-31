@@ -119,6 +119,7 @@ class ObjMap:
         self.current = 0
         self.objmap = {}
         self.namemap = {}
+        self.generated = set()
 
     def new_obj(self, name):
         if name not in self.namemap:
@@ -131,11 +132,16 @@ class ObjMap:
             return self.namemap[name]
 
     def new_noname_obj(self):
-        name = str(self.current)
+        name = str(self.current) + "________"
+        self.generated.add(name)
         return self.new_obj(name)
 
     def get_name(self, name):
-        return self.objmap[name]
+        n = self.objmap[name]
+        if n not in self.generated:
+            return n
+        else:
+            return None
 
 
 class MessageCounter():
@@ -187,7 +193,10 @@ def cValue_to_proto(c, objmap):
     elif not c.is_null:
         cp = CParam()
         param = CVariable()
-        param.name = objmap.get_name(c.object_id)
+        pname = objmap.get_name(c.object_id)
+        if pname is None:
+            return param_hole()
+        param.name = pname
         cp.variable.CopyFrom(param)
         return cp
 
