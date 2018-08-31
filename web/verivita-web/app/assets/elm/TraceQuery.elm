@@ -119,7 +119,7 @@ type ResultsTab
 
 type alias Model =
     {
-        querySelectionList : List String,
+        querySelectionList : List (String, String),
         disallowSelectionList : (Dict.Dict String VerificationResults),
         querySelectDropDownState : Dropdown.State,
         query : List QueryCallbackOrHole,
@@ -281,7 +281,7 @@ type Msg
     | SetCallinHoleResults(Int,Int, List RankedMessage)
     | DisplayCallbackError(Int,String)
     | DisplayCallinError(Int, Int, String)
-    | SetQueryList(List String)
+    | SetQueryList(List (String,String))
     | SetDisallowList(List String)
     | SetQuerySelection String
     | SetQuery (List QueryCallbackOrHole)
@@ -435,7 +435,7 @@ queryEntry model =
                 , toggleButton =
                     Dropdown.toggle [ Button.primary ] [ text "Trace Template" ]
                 , items = List.map (\name -> Dropdown.buttonItem [ Html.Events.onClick <|
-                    (SetQuerySelection name) ] [text name] ) model.querySelectionList
+                    (SetQuerySelection (Tuple.first name)) ] [text (Tuple.second name)] ) model.querySelectionList
                 } -- , GetQueryDescription name] --TODO: chain these together
             ]
 
@@ -615,7 +615,9 @@ displayVerificationResult v rule =
     case v of
         Just (VerificationError m) -> text m
         Just VerificationSafe -> text ("Trace is safe for " ++ rule ++ ".")
-        Just (VerificationUnsafe c) -> Grid.container [] [Grid.row [] [ Grid.col [] [text ("Trace is unsafe for " ++ rule ++ ", counter example:")]]
+        Just (VerificationUnsafe c) ->
+            Grid.container [] [Grid.row [] [ Grid.col [] [text
+                    ("Trace is unsafe for " ++ rule ++ ". The counter example is shown below.")]]
                 , Grid.row [] [Grid.col [] [displayCounterExample c] ]
             ]
         Just (VerificationPending _) -> text ("Results are pending for " ++ rule ++ ".")
@@ -813,8 +815,15 @@ setCallinHoleResults cbpos cipos result =
 setQueryList : Result Http.Error (List String) -> Msg
 setQueryList result =
     case result of
-        Ok(lst) -> SetQueryList(lst)
-        Err(v) -> Debug.crash "display setQueryList get error" SetQueryList([]) --TODO: display better error than empty list
+        Ok(lst) ->
+            let
+                spl a =
+                    case String.split "`" a of
+                        h1 :: h2 :: nil -> (h1,h2)
+                        _ -> ("","")
+            in
+                SetQueryList(List.map spl lst)
+        Err(v) -> SetQueryList([]) --TODO: display better error than empty list
 
 setDisallowList : Result Http.Error (List String) -> Msg
 setDisallowList result =
