@@ -1,5 +1,9 @@
 #!flask/bin/python
 import subprocess
+import os
+if "THISISWHEREZSOIS" in os.environ:
+    import __builtin__
+    __builtin__.Z3_LIB_DIRS = [ os.environ["THISISWHEREZSOIS"]]
 
 from flask import Flask, jsonify, request
 from cbverifier.specs.spec_parser import spec_parser
@@ -12,12 +16,12 @@ import cbverifier.android_specs.gen_config as Speclist
 import vv_database as db
 import subprocess
 
-
 # TODO: launch workers and kill server if workers go down
-# NUM_WORKERS = 1
-# #launch worker threads for verivita, note that flask seems to run this file twice
-# for i in xrange(NUM_WORKERS):
-#     subprocess.Popen(["python", "verify_task.py"])
+NUM_WORKERS = 1
+#launch worker threads for verivita, note that flask seems to run this file twice
+scriptpath = os.sep.join(os.path.realpath(__file__).split(os.sep)[:-1])
+for i in xrange(NUM_WORKERS):
+    subprocess.Popen(["python", os.path.join(scriptpath,"verify_task.py")])
 
 
 
@@ -203,5 +207,5 @@ def get_task():
 
 
 if __name__ == '__main__':
-        app.run(debug=True)
+        app.run(host="0.0.0.0",debug=True)
 

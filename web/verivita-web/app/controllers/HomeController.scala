@@ -91,7 +91,7 @@ class HomeController @Inject() (ws : WSClient) (implicit ec : ExecutionContext) 
   }
   private def getGithubDoc(name :String) = {
     val request : Future[WSResponse] =
-      ws.url(s"https://raw.githubusercontent.com/cuplv/verivita/master/docs/${name}")
+      ws.url(s"https://raw.githubusercontent.com/cuplv/verivita/master/webresources/${name}")
         .withRequestTimeout(timeout)
         .get()
     val res = Await.result(request,timeout)
