@@ -10,7 +10,7 @@ from google.protobuf.json_format import MessageToJson
 
 import vv_database as db
 from cbverifier.encoding.cex_printer import CexPrinter
-import json
+import signal
 
 
 def fullSigConv(s):
@@ -258,50 +258,61 @@ if __name__ == "__main__":
 
     enable_rules = Speclist.enable_disable_rules["lifestate_va1"]
     basepath = os.environ['VERIVITA_PATH']
-    while True:
-        time.sleep(0.5)
-        task = db.claim_task()
-        if task is not None:
-            id,query,rule = task
-            try:
-                print "starting task: %s on thread %i" % (str(id), os.getpid())
-                ctr, objmap = ctrace_from_proto(query)
-                rules = Speclist.allow_disallow_rules[rule][1]
-                spec_file_list = []
-                for s in [enable_rules, rules, Speclist.subexpressions]:
-                    spec_file_list += [os.path.join(basepath, v) for v in s]
 
-                (res, cex, mapback) = verify_rule(spec_file_list, ctr)
-                if res == 'SAFE':
-                    db.finish_task_safe(id)
-                elif res == 'UNSAFE':
-                    import sys
-                    printer = CexPrinter(mapback, cex, sys.stdout, False)
-                    printer.print_cex()
+    # time.sleep(0.5)
+    task = db.claim_task()
 
-                    cex_ctrace = []
-                    i = 0
-                    prev_step = None
-                    last_entry = None
-                    for step in cex:
-                        if i == 0:
-                            pass
-                        else:
-                            dir,val = mapback.get_fired_trace_msg(prev_step, step)
-                            if isinstance(val,vtr.CCallback):
-                                if (dir == 'EXIT') and (val.message_id == last_entry):
-                                    pass #don't add if same as last entry
-                                elif dir == 'ENTRY':
-                                    last_entry = val.message_id
-                                    cex_ctrace.append(ctrace_as_proto(val,objmap))
-                                else:
-                                    cex_ctrace.append(ctrace_as_proto(val,objmap))
-                        prev_step = step
-                        i += 1
-                    ctr = CTrace()
-                    ctr.callbacks.extend(cex_ctrace)
-                    db.finish_task_unsafe(id, MessageToJson(ctr))
-                else:
-                    db.finish_task_error()
-            except Exception as e:
-                db.finish_task_error(id, "Thrown error: {}".format(e))
+
+
+    if task is not None:
+        id,query,rule = task
+        def handler(signum, frame):
+            db.finish_task_error("Timeout")
+            exit()
+
+
+        signal.signal(signal.SIGTERM, handler)
+        signal.signal(signal.SIGINT, handler)
+        try:
+            print "starting task: %s on thread %i" % (str(id), os.getpid())
+            ctr, objmap = ctrace_from_proto(query)
+            rules = Speclist.allow_disallow_rules[rule][1]
+            spec_file_list = []
+            for s in [enable_rules, rules, Speclist.subexpressions]:
+                spec_file_list += [os.path.join(basepath, v) for v in s]
+            (res, cex, mapback) = verify_rule(spec_file_list, ctr)
+            if res == 'SAFE':
+                db.finish_task_safe(id)
+            elif res == 'UNSAFE':
+                import sys
+                printer = CexPrinter(mapback, cex, sys.stdout, False)
+                printer.print_cex()
+
+                cex_ctrace = []
+                i = 0
+                prev_step = None
+                last_entry = None
+                for step in cex:
+                    if i == 0:
+                        pass
+                    else:
+                        dir,val = mapback.get_fired_trace_msg(prev_step, step)
+                        if isinstance(val,vtr.CCallback):
+                            if (dir == 'EXIT') and (val.message_id == last_entry):
+                                pass #don't add if same as last entry
+                            elif dir == 'ENTRY':
+                                last_entry = val.message_id
+                                cex_ctrace.append(ctrace_as_proto(val,objmap))
+                            else:
+                                cex_ctrace.append(ctrace_as_proto(val,objmap))
+                    prev_step = step
+                    i += 1
+                ctr = CTrace()
+                ctr.callbacks.extend(cex_ctrace)
+                db.finish_task_unsafe(id, MessageToJson(ctr))
+            else:
+                db.finish_task_error()
+        except MemoryError as e:
+            db.finish_task_error("Memory limit exceeded")
+        except Exception as e:
+            db.finish_task_error(id, "Thrown error: {}".format(e))

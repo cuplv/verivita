@@ -1,9 +1,6 @@
 #!flask/bin/python
 import subprocess
 import os
-if "THISISWHEREZSOIS" in os.environ:
-    import __builtin__
-    __builtin__.Z3_LIB_DIRS = [ os.environ["THISISWHEREZSOIS"]]
 
 from flask import Flask, jsonify, request
 from cbverifier.specs.spec_parser import spec_parser
@@ -17,11 +14,25 @@ import vv_database as db
 import subprocess
 
 # TODO: launch workers and kill server if workers go down
-NUM_WORKERS = 1
+# NUM_WORKERS = 1
 #launch worker threads for verivita, note that flask seems to run this file twice
 scriptpath = os.sep.join(os.path.realpath(__file__).split(os.sep)[:-1])
-for i in xrange(NUM_WORKERS):
-    subprocess.Popen(["python", os.path.join(scriptpath,"verify_task.py")])
+workers = [None]
+# for i in xrange(len(workers)):
+#     p = subprocess.Popen(["python", os.path.join(scriptpath,"verify_task.py")])
+#     workers[i] = p
+
+# def launchWorkerIfNotRunning():
+#     for i in xrange(len(workers)):
+#         worker = workers[i]
+#         if worker is None:
+#             p = subprocess.Popen(["python", os.path.join(scriptpath,"verify_task.py")])
+#             workers[i] = p
+#         elif worker.poll() is not None:
+#             p = subprocess.Popen(["python", os.path.join(scriptpath,"verify_task.py")])
+#             workers[i] = p
+#
+# launchWorkerIfNotRunning()
 
 
 
@@ -174,6 +185,7 @@ def handle_invalid_usage(error):
 
 @app.route('/verify', methods=['POST'])
 def verify_task():
+    # launchWorkerIfNotRunning()
     print "verify start"
     rule = request.args.get('rule')
     if rule is None:
@@ -186,6 +198,7 @@ def verify_task():
 
 @app.route('/status', methods=['GET'])
 def get_task():
+    # launchWorkerIfNotRunning()
     id = request.args.get('id')
     if id is None:
         raise InvalidUsage("Please specify disallow rule")

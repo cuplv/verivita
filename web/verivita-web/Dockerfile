@@ -11,29 +11,29 @@ RUN groupadd admin
 RUN usermod -a -G admin muse
 RUN mkdir -p /home/muse
 RUN chown -R muse:muse /home/muse
-RUN apt-get install -y python-pip 
+#RUN apt-get install -y python-pip 
 #RUN pip install --upgrade pip #left out because failure https://github.com/pypa/pip/issues/5240
-RUN pip install six
-RUN pip install ply
-RUN pip install protobuf
+#RUN pip install six
+#RUN pip install ply
+#RUN pip install protobuf
 #RUN apt-get install -y python-six
 #RUN apt-get install -y python-ply
 #RUN apt-get install -y python-protobuf
-RUN yes | python /home/muse/pysmt/install.py --z3
-ENV PYTHONPATH "/root/.smt_solvers/python-bindings-2.7:/home/muse/cbverifier:/home/muse/pysmt:/home/muse"
+#RUN yes | python /home/muse/pysmt/install.py --z3
+#ENV PYTHONPATH "/root/.smt_solvers/python-bindings-2.7:/home/muse/cbverifier:/home/muse/pysmt:/home/muse"
+RUN apt-get install -y openjdk-8-jdk-headless
 ENV JAVA_HOME "/usr/lib/jvm/java-8-openjdk-amd64"
 ENV TRACE_DIR "/home/muse/testTrace"
 ENV LD_LIBRARY_PATH "/usr/local/lib/python2.7/dist-packages/jep"
-RUN apt-get install -y openjdk-8-jdk-headless
-RUN pip install jep
+#RUN pip install jep
 #TODO
 
 
 
 
 EXPOSE 9000
-# overwrite this with 'CMD []' in a dependent Dockerfile
-CMD ["sleep", "9999"]
+CMD ["/home/muse/vvweb-1.0-SNAPSHOT/bin/vvweb"]
+#CMD ["sleep", "9999"]
 
 
 #FROM ysihaoy/scala-play:2.12.2-2.6.0-sbt-0.13.15
@@ -78,7 +78,6 @@ CMD ["sleep", "9999"]
 ##CMD ["echo", "container start"]
 ##CMD ["sbt", "dist"]
 ##CMD ["unzip", "/root/app/target/universal/play-elm-example-1.0-SNAPSHOT.zip"]
-##CMD ["/root/app/play-elm-example-1.0-SNAPSHOT/bin/play-elm-example"]
 ##CMD ["echo", "container command complete"]
 #
 ##block exit of docker container

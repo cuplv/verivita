@@ -526,7 +526,6 @@ callinView cbpos cipos callin =
             div [Attributes.attribute "class" "ci-buttons"] (displayerr ++ buttons)] ] ]
 --            div [] (if displayerr then (div [Attributes.attribute "class" "div-red"] [text "E"]) :: buttons else buttons) ]] ]
 
-
 callbackView : Int -> QueryCallbackOrHole -> Html Msg
 callbackView cbpos callback =
     let
@@ -538,7 +537,7 @@ callbackView cbpos callback =
                 QueryCallbackHole ->
                     (div [] [Button.button [Button.attrs [Spacing.ml1], Button.small, Button.onClick (FillQueryCallbackHole cbpos)] [text "*"]], [])
 --                        Button.button [ Button.attrs [Spacing.ml1], Button.small ] [text "?"] ], []) --TODO: add callback hole search back in when time to implement exists
-                QueryCallbackHoleResults(r) -> (text "TODO", []) -- TODO: display search results
+                QueryCallbackHoleResults(r) -> (text "", []) -- TODO: display search results
         nothole =
             case callback of
                 QueryCallback(_) -> True
@@ -555,16 +554,16 @@ callbackView cbpos callback =
 --        Grid.container [Attributes.attribute "class" displayerr] ([
         Grid.container [] ([
             Grid.row [] [
-                Grid.col [] [ contents ]
-                ,Grid.col [Col.sm4] [
+                Grid.col [Col.attrs [Attributes.attribute "class" "cb-buttons"]] [div []
+                         ((if nothole then [Button.button [Button.attrs [ Spacing.ml1 ], Button.small, Button.onClick (AddQueryCallinAfter (cbpos, -1))] [ text "<" ]] else [])
+                         ++ --TODO: add callin button on callback hole when callback hole search implemented, no use for it otherwise
+                         [Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (AddQueryCallbackAfter cbpos)] [text "v"]])
+                    ]
+                ,Grid.col [] [ contents ]
+                ,Grid.col [Col.attrs [Attributes.attribute "class" "cb-buttons"] ] [
                     div [Attributes.attribute "class" "cb-buttons"] (
                     displayerr ++
-                    ([Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallback cbpos) ] [text "x"] ]
-                    ++
-                    (if nothole then [Button.button [Button.attrs [ Spacing.ml1 ], Button.small, Button.onClick (AddQueryCallinAfter (cbpos, -1))] [ text "<" ]] else [])
-                    ++ --TODO: add callin button on callback hole when callback hole search implemented, no use for it otherwise
-                    [Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (AddQueryCallbackAfter cbpos)] [text "v"]
-                    ]) )
+                    ([Button.button [Button.attrs [ Spacing.ml1, Attributes.class "button-on-right"], Button.small, Button.onClick (RemoveQueryCallback cbpos) ] [text "x"] ]) )
                 ] ] ] ++ callins)
 
 verifRunningDisp : Int -> Model -> String -> Html Msg
@@ -621,7 +620,7 @@ displayVerificationResult v rule =
                 , Grid.row [] [Grid.col [] [displayCounterExample c] ]
             ]
         Just (VerificationPending _) -> text ("Results are pending for " ++ rule ++ ".")
-        Just VerificationNoResults -> text ("Please select the checkbox for " ++ rule ++ " to run.")
+        Just VerificationNoResults -> text ("Please select the verify button for " ++ rule ++ " to run.")
         Nothing -> text ""
 
 nameFromRulePos : Int -> Model -> String
@@ -744,7 +743,7 @@ subscriptions model =
             ::
             (List.map (\nid ->(
                     Time.every
-                        (5 * Time.second)  --TODO: increase time here
+                        (15 * Time.second)  --TODO: increase time here
                         (\time ->
                                 GetVerificationResults(Tuple.first nid, Tuple.second nid)) ))
                     (pendingVerifications model.disallowSelectionList))

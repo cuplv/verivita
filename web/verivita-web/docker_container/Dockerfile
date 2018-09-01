@@ -11,21 +11,21 @@ RUN groupadd admin
 RUN usermod -a -G admin muse
 RUN mkdir -p /home/muse
 RUN chown -R muse:muse /home/muse
-RUN apt-get install -y python-pip 
+#RUN apt-get install -y python-pip 
 #RUN pip install --upgrade pip #left out because failure https://github.com/pypa/pip/issues/5240
-RUN pip install six
-RUN pip install ply
-RUN pip install protobuf
+#RUN pip install six
+#RUN pip install ply
+#RUN pip install protobuf
 #RUN apt-get install -y python-six
 #RUN apt-get install -y python-ply
 #RUN apt-get install -y python-protobuf
-RUN yes | python /home/muse/pysmt/install.py --z3
-ENV PYTHONPATH "/root/.smt_solvers/python-bindings-2.7:/home/muse/cbverifier:/home/muse/pysmt:/home/muse"
+#RUN yes | python /home/muse/pysmt/install.py --z3
+#ENV PYTHONPATH "/root/.smt_solvers/python-bindings-2.7:/home/muse/cbverifier:/home/muse/pysmt:/home/muse"
 ENV JAVA_HOME "/usr/lib/jvm/java-8-openjdk-amd64"
-ENV TRACE_DIR "/home/muse/testTrace"
-ENV LD_LIBRARY_PATH "/usr/local/lib/python2.7/dist-packages/jep"
-RUN apt-get install -y openjdk-8-jdk-headless
-RUN pip install jep
+#ENV TRACE_DIR "/home/muse/testTrace"
+#ENV LD_LIBRARY_PATH "/usr/local/lib/python2.7/dist-packages/jep"
+#RUN apt-get install -y openjdk-8-jdk-headless
+#RUN pip install jep
 #TODO
 
 
