@@ -1,20 +1,32 @@
 version : '3'
 services:
         db:
-                image: 100.120.0.2:5005/fixr_verivita_tracedb
+                image: 100.120.0.2:5005/fixr_verivita_tracedb:latest
                 environment:
                         - POSTGRES_PASSWORD=72kjnnasi83yhsmmdfh238
                         - PGDATA=/home
                 ports:
                         - "5432:5432"
-        vvweb:
-                image: 100.120.0.2:5005/fixr_verivita_web_search
+        vvsearch:
+                image: 100.120.0.2:5005/fixr_verivita_web_search:latest
                 ports:
-                        - "9000:9000"
-                links:
-                        - "db:database"
+                        - "8080:8080"
+                depends_on:
+                        - "db"
                 environment:
                         - APPLICATION_SECRET=akjlsdy737yh2u7y3hsdfkjasdfjhasd83y3urkuaghkjfhdsafiuysdfaykujh3kjh37uhdfhssaaqqqq1223ng
-                        - DATABASE_URL=jdbc:postgresql://database:5432/trace_query
-                command:
-                        - run.sh
+                        - DATABASE_URL=jdbc:postgresql://db:5432/trace_query
+        cbverif:
+                image: 100.120.0.2:5005/fixr_cbverifier:latest
+                ports:
+                        - "5000:5000"
+        vvweb:
+                image: 100.120.0.2:5005/fixr_verivita_vvweb:latest
+                ports:
+                        - "9002:9000"
+                depends_on:
+                        - "vvsearch"
+                        - "cbverif"
+                environment:
+                        - VERIVITA_WEB_URL=http://cbverif:5000
+                        - TRACEQUERY_WEB_URL=http://vvsearch:8080

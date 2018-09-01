@@ -35,8 +35,8 @@ COPY . /home/muse/
 
 EXPOSE 9000
 # overwrite this with 'CMD []' in a dependent Dockerfile
-#CMD ["bash", "/home/muse/trace-query-1.0-SNAPSHOT/bin/trace-query"]
-CMD ["sleep", "999999999999999999"]
+CMD ["bash", "/home/muse/mgmtcommands/run.sh"]
+#CMD ["sleep", "999999999999999999"]
 
 
 #FROM ysihaoy/scala-play:2.12.2-2.6.0-sbt-0.13.15
