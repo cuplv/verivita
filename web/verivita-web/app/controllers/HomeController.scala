@@ -33,6 +33,10 @@ class HomeController @Inject() (ws : WSClient) (implicit ec : ExecutionContext) 
 
   val verivitaWebUrl = sys.env("VERIVITA_WEB_URL")
   val queryUrl = sys.env("TRACEQUERY_WEB_URL")
+  val queryExampleSource =
+    if (sys.env.contains("QUERY_SOURCE"))
+      sys.env("QUERY_SOURCE")
+    else "https://raw.githubusercontent.com/cuplv/verivita/master/webresources/"
 
   def completionSearch = Action { req : Request[AnyContent] =>
     forwardPostRequest(req, "/completion_search", queryUrl)
@@ -90,8 +94,9 @@ class HomeController @Inject() (ws : WSClient) (implicit ec : ExecutionContext) 
     Ok(res.body)
   }
   private def getGithubDoc(name :String) = {
+    val pathtoget = s"${queryExampleSource}/${name}"
     val request : Future[WSResponse] =
-      ws.url(s"https://raw.githubusercontent.com/cuplv/verivita/master/webresources/${name}")
+      ws.url(pathtoget)
         .withRequestTimeout(timeout)
         .get()
     val res = Await.result(request,timeout)

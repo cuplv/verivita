@@ -11,7 +11,7 @@ import Bootstrap.Card as Card
 import Bootstrap.Card.Block as Block
 import Bootstrap.Dropdown as Dropdown
 import Bootstrap.Grid as Grid
-import Html.Attributes exposing (class, src, style)
+import Html.Attributes exposing (class, height, src, style, width)
 import Bootstrap.Button as Button
 import Bootstrap.Form.Input as Input
 import Bootstrap.Form.Checkbox as Checkbox
@@ -408,6 +408,15 @@ doCallinHole olist cbpos cipos res =
         )) olist
 
 -- View
+buttonDim : Int
+buttonDim = 12
+
+newCallin : Html Msg
+newCallin = img [src "assets/images/cbentry.png", width buttonDim, height buttonDim] []
+
+newCallback : Html Msg
+newCallback = img [src "assets/images/cientry.png", width buttonDim, height buttonDim] []
+
 
 inputBox : QueryCallbackData -> Input.Option msg -> List (Input.Option msg)
 inputBox d upd=
@@ -511,19 +520,21 @@ callinView cbpos cipos callin =
                         ::(ciInputBox c (Input.onInput (\s -> SetCallinInput (cbpos, cipos, s)))))), isperr c.parsed)
                 QueryCommandHole -> (ciholeButtons cbpos cipos, [])
                 QueryCommandHoleResults(l, filt) -> (displayQueryResults cbpos cipos 20 filt l, [])
-        buttons = [Button.button
-                      [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallin(cbpos,cipos)) ]
+        rm_buttons = Button.button
+                      [Button.attrs [class "button-on-right", Spacing.ml1], Button.small, Button.onClick (RemoveQueryCallin(cbpos,cipos)) ]
                       [text "x"]
-                  , Button.button
+        ci_button_add = Button.button
                       [Button.attrs [Spacing.ml1], Button.small, Button.onClick (AddQueryCallinAfter(cbpos,cipos)) ]
-                      [text "v"] ]
+                      [newCallin]
 --        displayerr =
 --            case callin.parsed of
 --                ParseError -> True
 --                _ -> False
     in
-        Grid.container[] [Grid.row [ ] [Grid.col [Col.middleXl] [contents], Grid.col [Col.sm3] [
-            div [Attributes.attribute "class" "ci-buttons"] (displayerr ++ buttons)] ] ]
+        Grid.container[] [Grid.row [ ] [ Grid.col [Col.attrs [class "col-fixed-14"]] [div [class "l-ci-buttons"] [ci_button_add] ]
+            , Grid.col [Col.middleXl] [contents]
+            , Grid.col [Col.attrs [class "col-fixed-15"]] [
+                div [Attributes.attribute "class" "ci-buttons"] (displayerr ++ [rm_buttons])] ] ]
 --            div [] (if displayerr then (div [Attributes.attribute "class" "div-red"] [text "E"]) :: buttons else buttons) ]] ]
 
 callbackView : Int -> QueryCallbackOrHole -> Html Msg
@@ -555,9 +566,9 @@ callbackView cbpos callback =
         Grid.container [] ([
             Grid.row [] [
                 Grid.col [Col.attrs [Attributes.attribute "class" "cb-buttons"]] [div []
-                         ((if nothole then [Button.button [Button.attrs [ Spacing.ml1 ], Button.small, Button.onClick (AddQueryCallinAfter (cbpos, -1))] [ text "<" ]] else [])
+                         ((if nothole then [Button.button [Button.attrs [ Spacing.ml1 ], Button.small, Button.onClick (AddQueryCallinAfter (cbpos, -1))] [ newCallin ]] else [])
                          ++ --TODO: add callin button on callback hole when callback hole search implemented, no use for it otherwise
-                         [Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (AddQueryCallbackAfter cbpos)] [text "v"]])
+                         [Button.button [Button.attrs [ Spacing.ml1], Button.small, Button.onClick (AddQueryCallbackAfter cbpos)] [newCallback]])
                     ]
                 ,Grid.col [] [ contents ]
                 ,Grid.col [Col.attrs [Attributes.attribute "class" "cb-buttons"] ] [
