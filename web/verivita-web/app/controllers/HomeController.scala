@@ -120,9 +120,7 @@ class HomeController @Inject() (ws : WSClient) (implicit ec : ExecutionContext) 
   }
   def getQueryDescription(id : String) = Action { req : Request[AnyContent] =>
     val r = getGithubDoc(s"${id}_description")
-    if (r != "")
-      Ok(r)
-    else
-      BadRequest("Error retrieving doc.")
+
+    Ok(r)
   }
 }
