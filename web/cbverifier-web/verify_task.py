@@ -5,7 +5,8 @@ import cbverifier.traces.ctrace as vtr
 from cbverifier.driver import DriverOptions, Driver
 import cbverifier.android_specs.gen_config as Speclist
 import os
-from QueryTrace_pb2 import CCallback, CVariable, Hole, CCommand, CCallin, CParam, CMessage, CTrace, CallbackOrHole
+from QueryTrace_pb2 import CCallback, CVariable, Hole, CCommand, CCallin, CParam, CMessage, CTrace, CallbackOrHole, \
+    CPrimitive
 from google.protobuf.json_format import MessageToJson
 
 import vv_database as db
@@ -41,11 +42,16 @@ def cCommandProtoToVTrace(corh, objmap, msgCounter):
         sig,fmwk = fullSigConv(callin.framework_class)
         pr = [convertToCParam(p,objmap) for p in callin.parameters]
         pr.insert(0, convertToCParam(callin.receiver, objmap))
+        if not sig.startswith("void"):
+            retval = convertToCParam(callin.return_value, objmap)
+        else:
+            retval = None
+
         ci = vtr.CCallin(class_name=fmwk,
                          method_name=sig, #TODO: make sure this format is right
                          thread_id=1,
                          params=pr,
-                         return_value=convertToCParam(callin.return_value, objmap),
+                         return_value=retval,
                          message_id=msgCounter.next()
                          )
         for cb in callin.nested_callbacks:
@@ -97,15 +103,21 @@ def cCallbackProtoToVTrace(cbh, objmap, msgCounter):
     # sig,fmwk = callback.method_signature
     full_sig = "class " + callback.first_framework_overrride_class
     sig, fmwk = fullSigConv(full_sig)
+
     pr = [convertToCParam(p, objmap) for p in callback.parameters]
     pr.insert(0, convertToCParam(callback.receiver, objmap))
     override = vtr.FrameworkOverride(fmwk, sig, False) # TODO: is_interface?
+
+    if not sig.startswith("void"):
+        retval = convertToCParam(callback.return_value, objmap)
+    else:
+        retval = None
     cb = vtr.CCallback(class_name=fmwk,
                        method_name=sig,
                        thread_id=1,
                        fmwk_overrides=[override],
                        params=pr,
-                       return_value=convertToCParam(callback.return_value, objmap),
+                       return_value=retval,
                        message_id= msgCounter.next())
     for ci in callback.nested_commands:
         vcallin = cCommandProtoToVTrace(ci, objmap, msgCounter)
@@ -123,7 +135,7 @@ class ObjMap:
 
     def new_obj(self, name):
         if name not in self.namemap:
-            v = self.current
+            v = unicode(self.current)
             self.current += 1
             self.objmap[v] = name
             self.namemap[name] = v
@@ -167,12 +179,16 @@ def verify_rule(spec_file_list, ctrace):
                                 "",
                                 spec_file_list,
                                 False, #TODO: would like to turn off simplify
-                                False, #debug
+                                True, #debug
                                 None, #filter
                                 True,
                                 False)
     driver = Driver(driver_opts, ctrace)
     res = driver.run_ic3(os.environ['NUXMV_PATH'], 40)
+
+    from cbverifier.driver import print_ground_spec
+    ground_specs = driver.get_ground_specs()
+    print_ground_spec(ground_specs)
     print "done"
     return res
 
@@ -189,7 +205,17 @@ def cValue_to_proto(c, objmap):
     if c is None:
         return param_hole()
     elif c.value is not None:
-        raise Exception("TODO: implement value back serialize")
+        cp = CParam()
+        param = CPrimitive()
+        if c.type == 'boolean':
+            param.bool_val = c.value == 'true'
+        elif c.type == 'int':
+            param.int_val = int(c.value)
+        else:
+            pass #raise Exception () #TODO: other primitive values
+        cp.primitive.CopyFrom(param)
+        return cp
+
     elif not c.is_null:
         cp = CParam()
         param = CVariable()
@@ -267,7 +293,7 @@ if __name__ == "__main__":
     if task is not None:
         id,query,rule = task
         def handler(signum, frame):
-            db.finish_task_error("Timeout")
+            db.finish_task_error(id,"Timeout")
             exit()
 
 
