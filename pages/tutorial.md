@@ -1,2 +1,0 @@
-Verivita Web Demo Tutorial
-==========================
