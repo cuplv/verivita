@@ -6,7 +6,7 @@ To create apps that behave as expected, developers must follow complex and often
 
 A detailed walkthrough of a defect we found can be seen in the [Verivita_yamba_explanation](https://github.com/cuplv/verivita_yamba_explanation).
 
-A web demo tutorial is available at [pages/tutorial].
+[pages/tutorial](A web demo tutorial is available at).
 
 # High Level Process For Use
 
