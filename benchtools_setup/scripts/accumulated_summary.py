@@ -266,10 +266,12 @@ def genTable(loadedResults, outdir):
         property = result_file.method
         precision_level = result_file.precision_level
         precision_number = result_file.precision_number
-        f = open("/Users/s/Desktop/instancesout/" + result_filename, 'w') #TODO: remove this, only used to check if instances are OK
+
+
+        # f = open("/Users/s/Desktop/instancesout/" + result_filename, 'w') #TODO: remove this, only used to check if instances are OK
         for result in result_list:
             property_result_map[property][precision_number].add((result_file,result))
-            f.write(result.trace_path + "\n")
+            # f.write(result.trace_path + "\n")
 
 
 

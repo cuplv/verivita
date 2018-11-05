@@ -9,6 +9,7 @@ SPEC TRUE[*];[CI] [ENTRY] [a] android.os.AsyncTask android.os.AsyncTask.executeO
 SPEC TRUE[*];[CB] [ENTRY] [a] void android.os.AsyncTask.onPreExecute() |- [CB] [ENTRY] [a] void android.os.AsyncTask.onPreExecute();
 SPEC TRUE[*];[CB] [ENTRY] [a] void android.os.AsyncTask.onPreExecute() |+ [CB] [ENTRY] [a] void android.os.AsyncTask.onPostExecute(# : java.lang.Object);
 SPEC TRUE[*];[CB] [ENTRY] [a] void android.os.AsyncTask.onPostExecute(# : java.lang.Object) |- [CB] [ENTRY] [a] void android.os.AsyncTask.onPostExecute(# : java.lang.Object);
+SPEC TRUE[*];[CI] [ENTRY] [a] boolean android.os.AsyncTask.cancel(# : boolean) |- [CB] [ENTRY] [a] void android.os.AsyncTask.onPreExecute();
 SPEC TRUE[*];[CI] [ENTRY] [a] boolean android.os.AsyncTask.cancel(# : boolean) |- [CB] [ENTRY] [a] void android.os.AsyncTask.onPostExecute(# : java.lang.Object)
 
 

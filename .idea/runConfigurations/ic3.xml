@@ -1,17 +1,17 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="ic3" type="PythonConfigurationType" factoryName="Python">
-    <module name="callback-verification" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
     <envs>
       <env name="PYTHONUNBUFFERED" value="1" />
-      <env name="PYTHONPATH" value="$USER_HOME$/.smt_solvers/python-bindings-2.7:$PROJECT_DIR$/cbverifier:$PROJECT_DIR$" />
+      <env name="PYTHONPATH" value="$USER_HOME$/.smt_solvers/python-bindings-2.7:$USER_HOME$/.smt_solvers/python-bindings-2.7::$PROJECT_DIR$/cbverifier:$PROJECT_DIR$/../verivita:$USER_HOME$/software/pysmt:$PROJECT_DIR$/cbverifier:$PROJECT_DIR$/../verivita:$USER_HOME$/software/pysmt" />
     </envs>
-    <option name="SDK_HOME" value="" />
+    <option name="SDK_HOME" value="$USER_HOME$/.pyenv/versions/2.7.14/bin/python" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cbverifier" />
-    <option name="IS_MODULE_SDK" value="true" />
+    <option name="IS_MODULE_SDK" value="false" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
+    <module name="" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
     <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cbverifier/driver.py" />
     <option name="PARAMETERS" value="-m ic3 -t $PROJECT_DIR$/../../data/fdroid_manually_curated/apps_man_corp/trikita.slide/4/traces/manual25.trace.repaired -s $PROJECT_DIR$/cbverifier/android_specs/allowdisallow/android.os.AsyncTask/execute.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec --ic3_frames 40 -n $USER_HOME$/software/nuXmv-1.1.1-Darwin/bin/nuXmv -z" />
