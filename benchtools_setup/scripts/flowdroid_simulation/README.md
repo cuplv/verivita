@@ -7,7 +7,7 @@ The folder contains the script used to run the validation and verification using
 ## Run validation
 
 ```
-cd <verivita-repo>/ TODO: fix the current path!
+cd <verivita-repo>/benchtools_setup/results_tables/popl/flowdroid/simulation
 python <benchtools_path>/exec/run_group.py config_simulation_s
 ```
 
@@ -21,7 +21,7 @@ python <benchtools_path>/exec/run_group.py config_simulation_s
 - Collect the log of the results:
 
 ```
-cd <verivita-repo>/ TODO: fix the current path!
+cd <verivita-repo>/benchtools_setup/results_tables/popl/flowdroid/simulation
 tar xjf simulation_flowdroid.tar.bz2
 python <benchtools_path>/analyze/extract_log.py -p -f <verivita-repo>/benchtools_setup/filters/simulate_flowdroid.py -o simulation_flowdroid.log simulation_flowdroid
 ```
@@ -30,9 +30,11 @@ python <benchtools_path>/analyze/extract_log.py -p -f <verivita-repo>/benchtools
 
 The script generates the plot in the same folder and prints the name of the generated plots.
 ```
-cd <verivita-repo>/ TODO: fix the current path!
+cd <verivita-repo>/benchtools_setup/results_tables/popl/flowdroid/simulation/
 python <verivita-repo>/benchtools_setup/scripts/flowdroid_simulation/gen_flowdroid_validation_plot.py -f simulation_flowdroid.log
 ```
+
+
 
 
 # Run verification
