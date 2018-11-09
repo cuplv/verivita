@@ -7,16 +7,20 @@ def do_filter(iterable):
     extra = []
     steps = '?'
     total_steps = '?'
-
     failure_reason = '?'
+    blocked_msg = '?'
 
     to = False
 
     can_simulate_re = re.compile("The trace can be simulated (\d+) steps")
     can_simulate_re_2 = re.compile("The trace can be simulated in (\d+) steps")
-    cannot_simulate_re = re.compile("The trace cannot be simulated \(it gets stuck at the (\d+)-th transition\)")
+    re_str = "The trace cannot be simulated " \
+             "\(it gets stuck at the (\d+)-th transition\)"
+    cannot_simulate_re = re.compile(re_str)
     simulate_steps_re = re.compile("INFO:root:Simulating step (\d+)/(\d+)")
     failure_re = re.compile("Failure: (\w+)")
+    blocked_msg_re = re.compile("Blocked message:\s+([\[\]\(\)\w\s\.,\$]+)$")
+
 
     p = None
     for line in iterable:
@@ -65,7 +69,6 @@ def do_filter(iterable):
                     total_steps = total_steps[0]
 
         elif line.startswith("The trace can be simulated in 0 steps"):
-
             steps = 0
             total_steps = 0
 
@@ -76,13 +79,22 @@ def do_filter(iterable):
                 if (type(failure_reason) == type((),)):
                     failure_reason = failure_reason[0]
 
+        elif line.startswith("Blocked message:"):
+            match_blocked_msg_re = blocked_msg_re.match(line)
+            if match_blocked_msg_re:
+                blocked_msg = match_blocked_msg_re.group(1)
+                if (type(blocked_msg) == type((),)):
+                    blocked_msg = blocked_msg[0]
+                blocked_msg = "\"%s\"" % blocked_msg
+
         elif line.startswith("Exception: An error happened reading the trace"):
             result = "ReadError"
         elif line.startswith("MemoryError"):
             result = "MemoryError"
         elif line.startswith("z3types.Z3Exception: out of memory"):
             result = "MemoryError"
-        elif line.startswith("cbverifier.traces.ctrace.MalformedTraceException"):
+        elif line.startswith("cbverifier.traces.ctrace."\
+                             "MalformedTraceException"):
             result = "ReadError"
         elif line.startswith("Exception MemoryError: MemoryError()"):
             result = "MemoryError"
@@ -90,4 +102,8 @@ def do_filter(iterable):
             result = "KeyError"
 
 
-    return 'result %s time %s steps %s totalsteps %s failure_reason %s %s' % (result, time, steps, total_steps, failure_reason, " ".join(extra))
+    return "result %s time %s steps %s totalsteps %s " \
+        "failure_reason %s blocked_msg %s %s" % (result, time, steps,
+                                                 total_steps,
+                                                 failure_reason, blocked_msg,
+                                                 " ".join(extra))
