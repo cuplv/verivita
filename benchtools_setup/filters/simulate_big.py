@@ -10,9 +10,6 @@ def do_filter(iterable):
 
     to = False
 
-    can_simulate_re = re.compile("The trace can be simulated (\d+) steps")
-    can_simulate_re_2 = re.compile("The trace can be simulated in (\d+) steps")
-    cannot_simulate_re = re.compile("The trace cannot be simulated \(it gets stuck at the (\d+)-th transition\)")
     simulate_steps_re = re.compile("INFO:root:Simulating step (\d+)/(\d+)")
 
     p = None
@@ -31,19 +28,9 @@ def do_filter(iterable):
 
         elif line.startswith('The trace can be simulated in'):
             result = 'Ok'
-            # app = can_simulate_re.match(line)
-            # if (app):
-            #     steps = app.groups(1)
-            # else:
-            #     app = can_simulate_re_2.match(line)
-            #     if(app):
-            #         steps = app.groups(1)
 
         elif line.startswith('The trace cannot be simulated'):
             result = 'Block'
-            # app = cannot_simulate_re.match(line)
-            # if (app):
-            #     steps = app.group(1)
 
         elif line.startswith('INFO:root:Simulating'):
             match_step_line = simulate_steps_re.match(line)
