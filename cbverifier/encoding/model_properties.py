@@ -62,7 +62,6 @@ class BinRelation:
                 ro = self.relation[obj_val]
             for dst_obj in related_objects:
                 ro.add(dst_obj)
-                stack.append(dst_obj)
 
             # compute the backward relation
             related_objects = self._get_related_objs(obj_val,
@@ -104,17 +103,27 @@ class BinRelation:
 
         return related_objs
 
+    def add_relation(self, obj_a, obj_b):
+        """
+        Says that obj_a is related to obj_b
+        """
+        if (not obj_a in self.relation):
+            self.relation[obj_a] = set()
+        self.relation[obj_a].add(obj_b)
 
-    """
-    Returns the list of components attached to obj
-    """
     def get_related(self, obj):
+        """
+        Returns the list of components attached to obj
+        """
         if obj in self.relation:
             return self.relation[obj]
         else:
             return []
 
     def is_related(self, obj_a, obj_b):
+        """
+        Returns true if obj_a is related to obj_b
+        """
         if obj_a in self.relation:
             return obj_b in self.relation[obj_a]
         else:
@@ -126,7 +135,10 @@ class AttachRelation(BinRelation):
     attach_methods_fwd = {}
     for class_name in Activity.class_names:
         to_proc = ['L = [CI] [EXIT] [CONTAINER] android.view.View ${MYTYPE}.findViewById(# : int)']
-        processed = EncoderUtils.enum_types_list(to_proc, [Subs(["MYTYPE"], [[class_name]])])
+        to_proc.append('[CB] [ENTRY] [CONTAINER] void ${MYTYPE}.onAttachFragment(L : ${FRAGMENT_TYPE})')
+
+        processed = EncoderUtils.enum_types_list(to_proc, [Subs(["MYTYPE"], [[class_name]]),
+                                                           Subs(["FRAGMENT_TYPE"],[[c] for c in Fragment.class_names])])
         attach_methods_fwd[class_name] = processed
 
     attach_methods_bwd = {}
@@ -135,7 +147,6 @@ class AttachRelation(BinRelation):
         processed = EncoderUtils.enum_types_list(to_proc, [Subs(["MYTYPE"], [[class_name]]),
                                                            Subs(["ACTIVITY_TYPE"],[[c] for c in Activity.class_names])])
         attach_methods_bwd[class_name] = processed
-
 
 
     """ Computes the attachment relation between objects """
@@ -155,9 +166,23 @@ class AttachRelation(BinRelation):
 
 
 class RegistrationRelation(BinRelation):
-    # Not important for flowdroid now
-    # We use the name of the onclick listener to register everything as it is doine
-    register_methods_fwd = {'android.view.View' : ['[CI] [ENTRY] [CONTAINER] void android.view.View.setOnClickListener(L : android.view.View$OnClickListener)']}
+    onClickListener = "[CI] [ENTRY] [CONTAINER] void " \
+                      "android.view.View.setOnClickListener" \
+                      "(L : android.view.View$OnClickListener)"
+
+    register_methods_fwd = {'android.view.View' : [onClickListener]}
+    register_methods_bwd = {}
+
+    def __init__(self, trace_map, trace, root_components):
+        BinRelation.__init__(self, trace_map, trace,
+                             "CONTAINER",
+                             "L",
+                             RegistrationRelation.register_methods_fwd,
+                             RegistrationRelation.register_methods_bwd,
+                             root_components)
+
+class EmptyRelation(BinRelation):
+    register_methods_fwd = {}
     register_methods_bwd = {}
 
     def __init__(self, trace_map, trace, root_components):

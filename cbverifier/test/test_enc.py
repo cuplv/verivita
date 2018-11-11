@@ -1058,3 +1058,99 @@ class TestEnc(unittest.TestCase):
         self.assertTrue(trace is None)
 
 
+    def test_linear_trace(self):
+        def _get_cb(number):
+            cb = CCallback(1, 1, "", "void m%d()" % number,
+                           [TestGrounding._get_obj("1","string")],
+                           None,
+                           [TestGrounding._get_fmwkov("","void m%d()" % number,
+                                                      False)])
+            return cb
+
+        def _get_ci(number):
+            ci = CCallin(1, 1, "", "void m%d()" % number,
+                         [TestGrounding._get_obj("1","string")],
+                         None)
+            return ci
+
+        def _add_entry(linear_trace, msg):
+            linear_trace.append((EncoderUtils.ENTRY, msg))
+        def _add_exit(linear_trace, msg):
+            linear_trace.append((EncoderUtils.EXIT, msg))
+
+
+        ctrace = CTrace()
+        linear_trace = []
+
+        # First cb
+        cb = _get_cb(1)
+        ci_1 = _get_ci(2)
+        ci_2 = _get_ci(3)
+        cb_inner = _get_cb(4)
+        ci_3 = _get_ci(5)
+
+        cb.add_msg(ci_1)
+        cb.add_msg(ci_2)
+        cb.add_msg(ci_3)
+        ci_2.add_msg(cb_inner)
+        ctrace.add_msg(cb)
+
+        _add_entry(linear_trace, cb)
+        _add_entry(linear_trace, ci_1)
+        _add_exit(linear_trace, ci_1)
+        _add_entry(linear_trace, ci_2)
+        _add_entry(linear_trace, cb_inner)
+        _add_exit(linear_trace, cb_inner)
+        _add_exit(linear_trace, ci_2)
+        _add_entry(linear_trace, ci_3)
+        _add_exit(linear_trace, ci_3)
+        _add_exit(linear_trace, cb)
+
+        # Second cb
+        cb = _get_cb(6)
+        ci_1 = _get_ci(7)
+        ci_2 = _get_ci(8)
+
+        cb.add_msg(ci_1)
+        cb.add_msg(ci_2)
+        ctrace.add_msg(cb)
+
+        _add_entry(linear_trace, cb)
+        _add_entry(linear_trace, ci_1)
+        _add_exit(linear_trace, ci_1)
+        _add_entry(linear_trace, ci_2)
+        _add_exit(linear_trace, ci_2)
+        _add_exit(linear_trace, cb)
+
+
+        # third cb
+        cb = _get_cb(9)
+        ci_1 = _get_ci(10)
+        ci_2 = _get_ci(11)
+
+        cb.add_msg(ci_1)
+        cb.add_msg(ci_2)
+        ctrace.add_msg(cb)
+
+        _add_entry(linear_trace, cb)
+        _add_entry(linear_trace, ci_1)
+        _add_exit(linear_trace, ci_1)
+        _add_entry(linear_trace, ci_2)
+        _add_exit(linear_trace, ci_2)
+        _add_exit(linear_trace, cb)
+
+        ts_enc = TSEncoder(ctrace, [], False)
+        ts = ts_enc._get_linear_trace()
+
+        computed_lt = ts_enc._get_linear_trace()
+        for (expected, computed) in zip(linear_trace, computed_lt):
+            (exp_type, exp_msg) = expected
+            (comp_type, comp_msg) = computed
+
+            # print("(%s,%s) == (%s,%s)?" % (exp_type, exp_msg.method_name,
+            # comp_type, comp_msg.method_name))
+
+            self.assertTrue(exp_type == comp_type)
+            self.assertTrue(exp_msg.method_name == comp_msg.method_name)
+
+

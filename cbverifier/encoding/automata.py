@@ -35,6 +35,7 @@ from pysmt.solvers.solver import Model
 from pysmt.logics import QF_BOOL
 from pysmt.logics import BOOL as BOOL_LOGIC
 
+from cbverifier.encoding.encoder_utils import EncoderUtils
 
 
 class AutoEnv(object):
@@ -59,9 +60,7 @@ class AutoEnv(object):
         if (not self.use_bdds):
             # sat solver instance
             # For now use z3, we can switch to picosat if needed
-            self.sat_solver = self.pysmt_env.factory.Solver(quantified=False,
-                                                            name="z3",
-                                                            logic=QF_BOOL)
+            self.sat_solver = EncoderUtils.get_new_solver(self.pysmt_env)
         else:
             self.bdd_solver = Solver(self.pysmt_env, name='bdd')
 

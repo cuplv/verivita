@@ -332,19 +332,27 @@ class CValue(object):
 
     def __repr__(self):
         #repr = ""
-        val = self.get_value()
-        str_repr = "value = %s" % val
+        val = self.get_value(10)
+        str_repr = "value = %s" % (val)
         return str_repr
 
-    def get_value(self):
+    def get_value(self, limit=10):
+        # We limit by default the length of the returned
+        # string -- string in trace runner can be
+        # extremely long
+
+        value = None
+
         if self.is_null is not None and self.is_null:
-            return "NULL"
+            value = "NULL"
         elif self.value is not None:
-            return CValue.enc(self.value)
+            value = CValue.enc(self.value)
         elif self.object_id is not None:
-            return CValue.enc(self.object_id)
+            value = CValue.enc(self.object_id)
         else:
             raise Exception("CValue from trace is empty!")
+
+        return value[:limit]
 
     def __hash__(self):
         # provide a hash to the object
@@ -411,7 +419,10 @@ class CTrace:
         self.app_info = None
         self.id_to_cb = None
 
-        self.all_values = None
+        # contains all the non-primitive values
+        # from the trace
+        self.nonprim_values = None
+
         # Map from values to their first framework type
         # It is not recorded in the trace, so we have to
         # infer it as much as we can from the method calls
@@ -480,29 +491,34 @@ class CTrace:
             return None
 
     def get_all_trace_values(self):
-        if (self.all_values is None):
-            self._collect_all_trace_values()
+        if (self.nonprim_values is None):
+            self._collect_trace_data()
 
-        return self.all_values
+        return self.nonprim_values
 
     def _get_fmwk_types(self, value):
         if (self.val2fmwk_type is None):
-            self._collect_all_trace_values()
+            self._collect_trace_data()
 
         if value in self.val2fmwk_type:
             return self.val2fmwk_type[value]
         else:
             return None
 
-    def _collect_all_trace_values(self):
+    def _collect_trace_data(self):
         """
-        Collect all trace values and try to reconstruct
-        the information about the first framework types
+        Computes different data from the trace.
+
+        Collect all the non-primitive values contained in
+        the trace (self.nonprim_values)
+
+        Try to reconstruct the information about the first
+        framework types (self.val2fmwk_type)
         """
-        self.all_values = set()
+        self.nonprim_values = set()
         self.val2fmwk_type = {}
 
-        # Fill the self.all_values set
+        # Fill the self.nonprim_values set
         #
         msg_stack = [trace_msg for trace_msg in self.children]
         while (0 < len(msg_stack)):
@@ -510,20 +526,24 @@ class CTrace:
 
             rec = current.get_receiver()
             if not rec is None:
-                self.all_values.add(rec)
+                if not rec.type in TraceConverter.JAVA_TYPES:
+                    self.nonprim_values.add(rec)
 
-                if not rec in self.val2fmwk_type:
-                    fmwk_types_set = set()
-                    self.val2fmwk_type[rec] = fmwk_types_set
-                else:
-                    fmwk_types_set = self.val2fmwk_type[rec]
+                    if not rec in self.val2fmwk_type:
+                        fmwk_types_set = set()
+                        self.val2fmwk_type[rec] = fmwk_types_set
+                    else:
+                        fmwk_types_set = self.val2fmwk_type[rec]
 
-                fmwk_types = self._get_val_fmwk_overrides(current)
-                fmwk_types_set.update(fmwk_types)
+                    fmwk_types = self._get_val_fmwk_overrides(current)
+                    fmwk_types_set.update(fmwk_types)
 
             for par in current.get_other_params():
+                if par.type in TraceConverter.JAVA_TYPES:
+                    continue
+
                 if not par is None:
-                    self.all_values.add(par)
+                    self.nonprim_values.add(par)
 
             for c in current.children: # visit the rest
                 msg_stack.append(c)
@@ -540,11 +560,17 @@ class CTrace:
         return overrides_set
 
     def _is_in_class_names(self, class_names, obj):
+        """
+        Return true if one of the types of obj are contained
+        in on of the class names.
+
+        Tries to use the type in the objects and the framework
+        types computed from the trace.
+        """
         is_in_class_names = ( ((not obj.type is None) and
                                (obj.type in class_names)) |
                               ((not obj.fmwk_type is None) and
                                (obj.fmwk_type in class_names)))
-
         if is_in_class_names:
             return is_in_class_names
 
@@ -554,6 +580,11 @@ class CTrace:
             return (not class_names.isdisjoint(obj_fmwk_type))
 
     def _get_class_names(self, class_names, obj):
+        """
+        Get the subset of class names in class_names that
+        are also types of obj (obj may have more types due
+        to interfaces and inheritance)
+        """
         new_set = set()
         if (not obj.type is None) and (obj.type in class_names):
             new_set.add(obj.type)
@@ -566,6 +597,28 @@ class CTrace:
                 int_set = obj_fmwk_type.intersection(class_names)
                 new_set.update(int_set)
         return new_set
+
+
+    def _is_in_class_msg(self, class_names, trace_msg):
+        """
+        Return true if trace_msg is a method that has one
+        of the types in class_names (e.g., inherits an
+        interface defining one if the class_names...)
+        """
+        is_in_class_names = False
+        for override in trace_msg.fmwk_overrides:
+            assert override is not None
+
+            # HACK: in the class names we have also the
+            # method type (e.g., void class_name).
+            # This is a tracerunner bug, here we are
+            # trying to get around it.
+            splitted = override.class_name.split(" ")
+            cname = splitted[len(splitted)-1]
+
+            if (cname in class_names):
+                return True
+        return False
 
 
 class CTraceSerializer:
@@ -1074,6 +1127,15 @@ class TraceConverter:
     JAVA_BOOLEAN_PRIMITIVE = "boolean"
     JAVA_BOOLEAN = "java.lang.Boolean"
     JAVA_STRING = "java.lang.String"
+
+    JAVA_TYPES = frozenset([JAVA_INT_PRIMITIVE,
+                            JAVA_INT,
+                            JAVA_FLOAT_PRIMITIVE,
+                            JAVA_FLOAT,
+                            JAVA_BOOLEAN_PRIMITIVE,
+                            JAVA_BOOLEAN,
+                            JAVA_STRING])
+
 
     TRUE_CONSTANT = "true"
     FALSE_CONSTANT = "false"
