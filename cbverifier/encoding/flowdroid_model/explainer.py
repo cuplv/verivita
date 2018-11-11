@@ -144,8 +144,10 @@ class Explainer:
             if(not owner_activities.isdisjoint(running_activities)):
                 # activity is running
                 if (not owner_activities.isdisjoint(infrag_activities)):
-                    return FailureFragInterleaving(stuck_msg, owner_activities,
-                                                   owner_fragments)
+                    # Activity is in the fragment state
+                    # The lifecycle message from the fragment is stuck
+                    return FailureFragLc(stuck_msg, owner_activities,
+                                         owner_fragments)
                 else:
                     # Activity is not in the fragment state
                     return FailureFragNonActive(stuck_msg, owner_activities,
