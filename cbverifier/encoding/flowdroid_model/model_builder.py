@@ -205,7 +205,7 @@ class FlowDroidModelBuilder:
         self.constrained_msgs = self._compute_const_msg()
 
         # print the model
-        if (logging.getLogger().getEffectiveLevel() >= logging.INFO):
+        if (logging.getLogger().isEnabledFor(logging.INFO)):
             self.print_model(sys.stdout)
 
     def get_components(self):
