@@ -46,9 +46,11 @@ SPEC TRUE[*]; [CI] [ENTRY] [view] void android.widget.TextView.setEnabled(FALSE 
 
 //activity pause disable
 //Note: I could trigger this off either the listener or the view, the view is more direct so will likely cause fewer simulation problems, the listener is more precise
-//Note: starting an activity allows pending clicks to still occur
-SPEC TRUE[*]; view_attached_has(act,view) & 
-	((!Activity_startActivity(act)) & TRUE)[*] & 
+//Note: starting another activity allows pending clicks to still occur same with finishing
+SPEC (TRUE[*]; view_attached_has(act,view)) & 
+	((!Activity_startActivity(act,#)) & TRUE)[*] & 
+	((!Activity_finish(act)) & TRUE)[*] &
+	Activity_startingActivityNotFinishing(act) &
 	view_onClick_listener_set_has(view,listener) &
 	Activity_not_visible_just(act) |- [CB] [ENTRY] [listener] void android.view.View$OnClickListener.onClick(# : android.view.View);
 

@@ -32,16 +32,31 @@ REGEXP Activity_not_visible_has(act) = [Activity_not_visible_just(act);TRUE[*]];
 //# ("void startActivityFromFragment(android.support.v4.app.Fragment,android.content.Intent,int)","android.support.v4.app.FragmentActivity.void startActivityFromFragment(android.support.v4.app.Fragment,android.content.Intent,int)")
 
 // ("void startActivityFromFragment(android.support.v4.app.Fragment,android.content.Intent,int,android.os.Bundle)","android.support.v4.app.FragmentActivity.void startActivityFromFragment(android.support.v4.app.Fragment,android.content.Intent,int,android.os.Bundle)")
-REGEXP Activity_startActivity(act) = [
-	[CI] [ENTRY] [act] void android.app.Activity.startActivity(# : android.content.Intent)
-	| [CI] [ENTRY] [act] void android.app.Activity.startActivity(# : android.content.Intent,#:android.os.Bundle)
-	| [CI] [ENTRY] [act] void android.app.Activity.startActivityForResult(# : android.content.Intent,# : int)
-	| [CI] [ENTRY] [act] void android.support.v4.app.FragmentActivity.startActivityForResult(# : android.content.Intent,# : int)
-	| [CI] [ENTRY] [act] void android.app.Activity.startActivityForResult(# : android.content.Intent,# : int, # : android.os.Bundle)
-	| [CI] [ENTRY] [act] void android.support.v4.app.FragmentActivity.startActivityForResult(# : android.content.Intent,# : int,# : android.os.Bundle)
-	| [CI] [ENTRY] [act] void android.app.Activity.startActivityFromChild(# : android.app.Activity,# : android.content.Intent,# : int)
-	| [CI] [ENTRY] [#] void android.app.Activity.startActivityFromChild(act : android.app.Activity,# : android.content.Intent,# : int)
-	| [CI] [ENTRY] [act] void android.app.Activity.startActivityFromFragment(# : android.app.Fragment,# : android.content.Intent,# : int,# : android.os.Bundle)
-	| [CI] [ENTRY] [act] void android.support.v4.app.FragmentActivity.startActivityFromFragment(# : android.support.v4.app.Fragment,# : android.content.Intent,# : int)
-	| [CI] [ENTRY] [act] void android.support.v4.app.FragmentActivity.startActivityFromFragment(# : android.support.v4.app.Fragment,# : android.content.Intent,# : int,# : android.os.Bundle)
+REGEXP Activity_startActivity(act,intent) = [
+	[CI] [ENTRY] [act] void android.app.Activity.startActivity(intent : android.content.Intent)
+	| [CI] [ENTRY] [act] void android.app.Activity.startActivity(intent : android.content.Intent,#:android.os.Bundle)
+	| [CI] [ENTRY] [act] void android.app.Activity.startActivityForResult(intent : android.content.Intent,# : int)
+	| [CI] [ENTRY] [act] void android.support.v4.app.FragmentActivity.startActivityForResult(intent : android.content.Intent,# : int)
+	| [CI] [ENTRY] [act] void android.app.Activity.startActivityForResult(intent : android.content.Intent,# : int, # : android.os.Bundle)
+	| [CI] [ENTRY] [act] void android.support.v4.app.FragmentActivity.startActivityForResult(intent : android.content.Intent,# : int,# : android.os.Bundle)
+	| [CI] [ENTRY] [act] void android.app.Activity.startActivityFromChild(# : android.app.Activity,intent : android.content.Intent,# : int)
+	| [CI] [ENTRY] [#] void android.app.Activity.startActivityFromChild(act : android.app.Activity,intent : android.content.Intent,# : int)
+	| [CI] [ENTRY] [act] void android.app.Activity.startActivityFromFragment(# : android.app.Fragment,intent : android.content.Intent,# : int,# : android.os.Bundle)
+	| [CI] [ENTRY] [act] void android.support.v4.app.FragmentActivity.startActivityFromFragment(# : android.support.v4.app.Fragment,intent : android.content.Intent,# : int)
+	| [CI] [ENTRY] [act] void android.support.v4.app.FragmentActivity.startActivityFromFragment(# : android.support.v4.app.Fragment,intent : android.content.Intent,# : int,# : android.os.Bundle)
+];
+//("void finish()",android.app.Activity)
+REGEXP Activity_finish(act) = [ [CI] [ENTRY] [act] void android.app.Activity.finish() ];
+// ("void onNewIntent(android.content.Intent)","android.app.Activity.void onNewIntent(android.content.Intent)")
+// ("void onNewIntent(android.content.Intent)","android.support.v4.app.FragmentActivity.void onNewIntent(android.content.Intent)")
+REGEXP Activity_onNewIntent(act,intent) = [
+	[CB] [ENTRY] [act] void android.app.Activity.onNewIntent(intent : android.content.Intent)
+	| [CB] [ENTRY] [act] void android.support.v4.app.FragmentActivity.onNewIntent(intent : android.content.Intent)
+];
+REGEXP Activity_startedFromActivity(act,startingact) = [ 
+	(TRUE[*] ; Activity_startActivity(startingact,intent) ; TRUE[*]; Activity_onNewIntent(act,intent); TRUE[*])];
+
+//(TRUE[*] ; Activity_finish(act2) ; TRUE[*]) & 
+REGEXP Activity_startingActivityNotFinishing(act) = [
+	(((!Activity_finish(act_st)) & TRUE)[*]) & Activity_startedFromActivity(act,act_st)
 ]
