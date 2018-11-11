@@ -17,6 +17,7 @@ activity).
 """
 
 import string
+import logging
 from cbverifier.specs.spec_parser import spec_parser
 from cbverifier.specs.spec_ast import *
 from cbverifier.encoding.grounding import TraceMap
@@ -36,12 +37,15 @@ class Component:
         self.my_type_const = my_type_const
         self.methods_msgs = {}
 
+        # DEBUG
+        # self.trace_map.print_map(sys.stdout)
+
         for class_name in self.class_names:
             for (key, cb_names) in self.get_class_cb():
                 for cb_name in cb_names:
                     # parse the message
-                    cb_name_subs = _substitute(cb_name,
-                                               {self.get_mytype_const() : class_name})
+                    sub_map = {self.get_mytype_const() : class_name}
+                    cb_name_subs = _substitute(cb_name, sub_map)
                     call_ast = spec_parser.parse_call(cb_name_subs)
 
                     if call_ast is None:
@@ -58,8 +62,8 @@ class Component:
 
                     # find the methods
                     my_var_name_ast = new_id(self.my_var_name)
-                    trace_msg_list = trace_map.find_methods(call_ast, {my_var_name_ast :
-                                                                       self.get_inst_value()})
+                    sub_map = {my_var_name_ast : self.get_inst_value()}
+                    trace_msg_list = trace_map.find_methods(call_ast, sub_map)
 
                     call_type = get_node_type(call_ast)
                     if (CALL_ENTRY == call_type):
@@ -92,6 +96,10 @@ class Component:
         if key not in self.methods_msgs:
             self.methods_msgs[key] = []
         self.methods_msgs[key].append(msg)
+
+        if (logging.getLogger().isEnabledFor(logging.DEBUG)):
+            print("Adding lifecylce message for " \
+                  "%s: %s..." % (self.inst_value,msg))
 
     def has_trace_msg(self, key):
         return key in self.methods_msgs
@@ -166,13 +174,20 @@ class Activity(Component):
                   # FlowDroid misses the onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) version
                   # called if R.attr.persistableMode set to persistAcrossReboots
                   #
-                  (ONACTIVITYSTARTED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityStarted(L : ${MYTYPE})"]),
-                  (ONACTIVITYSTOPPED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityStopped(L : ${MYTYPE})"]),
-                  (ONACTIVITYSAVEINSTANCESTATE, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivitySaveInstanceState(L : ${MYTYPE}, f : android.os.Bundle)"]),
-                  (ONACTIVITYRESUMED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityResumed(L : ${MYTYPE})"]),
-                  (ONACTIVITYPAUSED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityPaused(L : ${MYTYPE})"]),
-                  (ONACTIVITYDESTROYED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityDestroyed(L : ${MYTYPE})"]),
-                  (ONACTIVITYCREATED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityCreated(L : ${MYTYPE}, f : android.os.Bundle)"])]
+                  (ONACTIVITYSTARTED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityStarted(L : ${MYTYPE})",
+                                       "[CB] [ENTRY] [listener] void android.app.Application$ActivityLifecycleCallbacks.onActivityStarted(L : ${MYTYPE})"]),
+                  (ONACTIVITYSTOPPED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityStopped(L : ${MYTYPE})",
+                                       "[CB] [ENTRY] [listener] void android.app.Application$ActivityLifecycleCallbacks.onActivityStopped(L : ${MYTYPE})"]),
+                  (ONACTIVITYSAVEINSTANCESTATE, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivitySaveInstanceState(L : ${MYTYPE}, f : android.os.Bundle)",
+                                                 "[CB] [ENTRY] [listener] void android.app.Application$ActivityLifecycleCallbacks.onActivitySaveInstanceState(L : ${MYTYPE}, f : android.os.Bundle)"]),
+                  (ONACTIVITYRESUMED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityResumed(L : ${MYTYPE})",
+                                       "[CB] [ENTRY] [listener] void android.app.Application$ActivityLifecycleCallbacks.onActivityResumed(L : ${MYTYPE})"]),
+                  (ONACTIVITYPAUSED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityPaused(L : ${MYTYPE})",
+                                      "[CB] [ENTRY] [listener] void android.app.Application$ActivityLifecycleCallbacks.onActivityPaused(L : ${MYTYPE})"]),
+                  (ONACTIVITYDESTROYED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityDestroyed(L : ${MYTYPE})",
+                                         "[CB] [ENTRY] [listener] void android.app.Application$ActivityLifecycleCallbacks.onActivityDestroyed(L : ${MYTYPE})"]),
+                  (ONACTIVITYCREATED, ["[CB] [ENTRY] [listener] void android.app.Application.ActivityLifecycleCallbacks.onActivityCreated(L : ${MYTYPE}, f : android.os.Bundle)",
+                                       "[CB] [ENTRY] [listener] void android.app.Application$ActivityLifecycleCallbacks.onActivityCreated(L : ${MYTYPE}, f : android.os.Bundle)"])]
 
     cb_to_find = [ (key, EncoderUtils.enum_types_list(list_to_repl,
                                                       [])) # Subs(["MYTYPE"],[[c] for c in class_names])
