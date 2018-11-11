@@ -464,6 +464,12 @@ class FlowDroidEncoder:
         """
         cb_msg_enc = FALSE_PYSMT()
         for msg_key in self.fd_builder.get_comp_callbacks(c.get_inst_value()):
+
+            if (logging.getLogger().isEnabledFor(logging.DEBUG)):
+                    print("Encoding non-lifecycle message for component" \
+                          "%s: %s..." % (c.get_inst_value(),
+                                         msg_key))
+
             cb_msg_enc = Or(cb_msg_enc,
                             self._get_msg_label(msg_key))
         return cb_msg_enc
