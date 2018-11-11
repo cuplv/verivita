@@ -1406,3 +1406,16 @@ class TraceMap(object):
                 var_assignments.update(app_var_assignments)
 
         return var_assignments
+
+    def print_map(self, stream):
+        for msg_type, method_map in self.trace_map.iteritems():
+            for method_name, arity_map in method_map.iteritems():
+                for arity, entry_map in arity_map.iteritems():
+                    for entry, has_retval_map in entry_map.iteritems():
+                        for retval_key, _ in has_retval_map.iteritems():
+
+                            print "TRACE MAP: %s %s %s %s %s" % (str(msg_type),
+                                                                 str(method_name),
+                                                                 str(arity),
+                                                                 str(entry),
+                                                                 str(retval_key))
