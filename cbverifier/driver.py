@@ -5,13 +5,15 @@ import sys
 import os
 import optparse
 import logging
-
+import traceback
 
 from cbverifier.traces.ctrace import CTraceSerializer, CCallin, CMessage
 from cbverifier.traces.ctrace import CCallback, MessageFilter
-from cbverifier.traces.ctrace import MalformedTraceException, TraceEndsInErrorException
+from cbverifier.traces.ctrace import (
+    MalformedTraceException, TraceEndsInErrorException)
 from cbverifier.specs.spec import Spec
 from cbverifier.encoding.encoder import TSEncoder
+from cbverifier.encoding.flowdroid_model.explainer import Explainer
 from cbverifier.encoding.cex_printer import CexPrinter
 from cbverifier.bmc.bmc import BMC
 
@@ -164,13 +166,19 @@ class Driver:
                   ts_enc.get_ts_encoding(),
                   ts_enc.error_prop)
 
+        # always generate the last trace with the FlowDroid model
+        # to perform error localization
+        get_last_trace = (logging.getLogger().getEffectiveLevel() == logging.DEBUG or
+                          self.opts.use_flowdroid_model)
+
         trace_enc = ts_enc.get_trace_encoding(cb_sequence)
-        (step, trace, last_trace) = bmc.simulate(trace_enc)
+        (step, trace, last_trace) = bmc.simulate(trace_enc,
+                                                 get_last_trace)
 
         self.stats.stop_timer(Stats.SIMULATION_TIME)
         self.stats.write_times(sys.stdout, Stats.SIMULATION_TIME)
 
-        return (step, trace, last_trace, ts_enc.mapback)
+        return (step, trace, last_trace, ts_enc)
 
     def slice(self, object_id, stream):
         if object_id is not None:
@@ -424,7 +432,8 @@ def main(input_args=None):
             print "No bugs found up to %d steps" % (depth)
         return 0
     elif (opts.mode == "simulate"):
-        (steps, cex, last_cex, mapback) = driver.run_simulation(cb_sequence)
+        (steps, cex, last_cex, ts_enc) = driver.run_simulation(cb_sequence)
+        mapback = ts_enc.mapback
 
         if (cex is not None):
             print "\nThe trace can be simulated in %d steps." % steps
@@ -434,16 +443,29 @@ def main(input_args=None):
             print("The trace cannot be simulated (it gets stuck at the " +
                   "%d-th transition)" % (steps))
 
-
-            if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
-                if steps == 1:
-                    print("Cannot simulate the first event!")
-                else:
+            if steps == 1:
+                print("Cannot simulate the first event!")
+            else:
+                if (not last_cex is None):
                     print("Last simulable trace:")
-                    printer = CexPrinter(mapback, last_cex, sys.stdout, print_orig_spec)
+                    printer = CexPrinter(mapback, last_cex,
+                                         sys.stdout, print_orig_spec)
                     printer.print_cex()
-
                     print("\n--- WARNING: the trace *CANNOT* be simulated! ---")
+
+                    if (opts.use_flowdroid_model):
+                        # Do not fail if the explainer fail
+                        try:
+                            explainer = Explainer(ts_enc,
+                                                  mapback,
+                                                  last_cex,
+                                                  ts_enc.trace,
+                                                  cb_sequence)
+                            failure = explainer.find_failure()
+                            print(failure)
+                        except Exception:
+                            traceback.print_exc()
+
 
         return 0
     elif (opts.mode == "check-trace-relevance"):

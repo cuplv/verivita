@@ -19,6 +19,7 @@ from cbverifier.specs.spec import Spec
 from cbverifier.specs.spec_ast import *
 from cbverifier.traces.ctrace import CTrace, CValue, CCallin, CCallback
 from cbverifier.encoding.conversion import TraceSpecConverter
+from cbverifier.encoding.encoder_utils import EncoderUtils
 from cbverifier.utils.bimap import BiMap
 
 
@@ -754,9 +755,7 @@ class SymbolicGrounding:
         ground_formula = self._get_ground_bindings_formula(spec)
 
         # ALL SAT on assignments - the model is finite
-        solver = self.pysmt_env.factory.Solver(quantified=False,
-                                               name="z3",
-                                               logic=QF_BV)
+        solver = EncoderUtils.get_new_solver(self.pysmt_env)
 
         logging.debug("Starting the enumeration of the assignments...")
         count_models = 0
@@ -1407,3 +1406,16 @@ class TraceMap(object):
                 var_assignments.update(app_var_assignments)
 
         return var_assignments
+
+    def print_map(self, stream):
+        for msg_type, method_map in self.trace_map.iteritems():
+            for method_name, arity_map in method_map.iteritems():
+                for arity, entry_map in arity_map.iteritems():
+                    for entry, has_retval_map in entry_map.iteritems():
+                        for retval_key, _ in has_retval_map.iteritems():
+
+                            print "TRACE MAP: %s %s %s %s %s" % (str(msg_type),
+                                                                 str(method_name),
+                                                                 str(arity),
+                                                                 str(entry),
+                                                                 str(retval_key))

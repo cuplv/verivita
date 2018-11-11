@@ -112,7 +112,7 @@ class BMC:
 
         return res
 
-    def simulate(self, trace_enc, debug = False):
+    def simulate(self, trace_enc, get_last_trace = False):
         """Simulate the trace
         """
 
@@ -144,7 +144,9 @@ class BMC:
 
                 model = solver.get_model()
                 sim_trace = self._build_trace(model, i)
-            if (logging.getLogger().getEffectiveLevel() == logging.DEBUG):
+
+            if (logging.getLogger().getEffectiveLevel() == logging.DEBUG or
+                get_last_trace):
                 # read the partial model only in debug mode
                 model = solver.get_model()
                 app_trace = self._build_trace(model, i)

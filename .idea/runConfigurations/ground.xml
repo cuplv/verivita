@@ -1,22 +1,23 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="ground" type="PythonConfigurationType" factoryName="Python">
+    <module name="verivita" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
     <envs>
       <env name="PYTHONUNBUFFERED" value="1" />
-      <env name="PYTHONPATH" value="/Users/s/.smt_solvers/python-bindings-2.7:/Users/s/Documents/source/callback-verification/cbverifier:/Library/Python/2.7/site-packages" />
+      <env name="PYTHONPATH" value="$USER_HOME$/.smt_solvers/python-bindings-2.7:$USER_HOME$/.smt_solvers/python-bindings-2.7::$PROJECT_DIR$/cbverifier:$PROJECT_DIR$/../verivita:$USER_HOME$/software/pysmt:$PROJECT_DIR$/cbverifier:$PROJECT_DIR$/../verivita:$USER_HOME$/software/pysmt" />
     </envs>
-    <option name="SDK_HOME" value="/usr/local/bin/python2.7" />
+    <option name="SDK_HOME" value="$USER_HOME$/.pyenv/versions/2.7.14/bin/python" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cbverifier" />
     <option name="IS_MODULE_SDK" value="true" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
-    <module name="callback-verification" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
     <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cbverifier/driver.py" />
-    <option name="PARAMETERS" value="-m show-ground-specs -t $PROJECT_DIR$/../AndroidBugMuseum/real_bug/github/nguillaumin/osmtracker-android/0c75e04b82c6cbea19b701045881fdc4b97aa186/traces_fixed/manual1.trace -s $PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:$PROJECT_DIR$/cbverifier/android_specs/allowdisallow/android.app.AlertDialog/dismiss.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec -z -x" />
+    <option name="PARAMETERS" value="-m show-ground-specs -t $PROJECT_DIR$/../../data/monkey_traces/fragment-startActivity-traces-2/_traces/andstatus-andstatus-app/monkeyTraces/trace-app-debug_2017-04-16_01:38:04.repaired -s $PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:$PROJECT_DIR$/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:$PROJECT_DIR$/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec -z -x" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
+    <option name="MODULE_MODE" value="false" />
     <method />
   </configuration>
 </component>
