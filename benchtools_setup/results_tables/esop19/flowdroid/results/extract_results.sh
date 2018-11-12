@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 for f in `ls |grep tar.bz2`
 do
-	python ~/software/benchtools/analyze/extract_log.py -p -f ../filters/ic3_filter.py -o results_${f}.txt $f
+  tar xjf $f
+  filename="${f%.*}"
+  filename="${filename%.*}"
+  echo "python ~/software/benchtools/analyze/extract_log.py -p -f ../filters/ic3_filter.py -o results_${filename}.txt ${filename}"
+  python ~/software/benchtools/analyze/extract_log.py -p -f ../../../../filters/ic3_filter.py -o results_${filename}.txt ${filename}
 done
 
 for f in `ls |grep txt`
