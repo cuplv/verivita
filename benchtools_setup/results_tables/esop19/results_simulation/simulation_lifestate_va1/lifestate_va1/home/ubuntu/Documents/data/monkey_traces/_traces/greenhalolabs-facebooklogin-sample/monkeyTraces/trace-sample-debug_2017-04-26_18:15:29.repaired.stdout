@@ -1,0 +1,810 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/_traces/greenhalolabs-facebooklogin-sample/monkeyTraces/trace-sample-debug_2017-04-26_18:15:29.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/_traces/greenhalolabs-facebooklogin-sample/monkeyTraces/trace-sample-debug_2017-04-26_18:15:29.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 2.200000
+parsing - System time: 0.140000
+spec_grounding - User time: 208.160000
+spec_grounding - System time: 1.310000
+
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.<init>() (5badf51) 
+[0] [CB] [EXIT] NULL = void com.greenhalolabs.facebooklogin.sample.MainActivity.<init>() (5badf51) 
+[44] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+[44] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+[1778] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onStart() (5badf51) 
+[1778] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onStart() (5badf51) 
+[1794] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[1794] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[4138] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[4138] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[4162] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (600a547) 
+[4162] [CB] [EXIT] NULL = void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (600a547) 
+[4206] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (600a547,NULL) 
+[4206] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (600a547,NULL) 
+[5438] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (600a547) 
+[5438] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (600a547) 
+[5454] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (600a547) 
+[5454] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (600a547) 
+[9560] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (1fdd4f7,5acf69,-2,net::ERR_N,https://m.) 
+  [9577] [CI] [ENTRY] void android.app.Activity.finish() (600a547) 
+  [9577] [CI] [EXIT] void android.app.Activity.finish() (600a547) 
+[9560] [CB] [EXIT] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (1fdd4f7,5acf69,-2,net::ERR_N,https://m.) 
+[9686] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (600a547) 
+[9686] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (600a547) 
+[9854] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[9854] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[10366] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (600a547) 
+[10366] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (600a547) 
+[10370] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (600a547) 
+[10370] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (600a547) 
+[10962] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[10962] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[10986] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (753dad2) 
+[10986] [CB] [EXIT] NULL = void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (753dad2) 
+[11030] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (753dad2,NULL) 
+[11030] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (753dad2,NULL) 
+[12246] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (753dad2) 
+[12246] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (753dad2) 
+[12262] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (753dad2) 
+[12262] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (753dad2) 
+[16344] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (6f14718,129598b,-2,net::ERR_N,https://m.) 
+  [16361] [CI] [ENTRY] void android.app.Activity.finish() (753dad2) 
+  [16361] [CI] [EXIT] void android.app.Activity.finish() (753dad2) 
+[16344] [CB] [EXIT] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (6f14718,129598b,-2,net::ERR_N,https://m.) 
+[16470] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (753dad2) 
+[16470] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (753dad2) 
+[16638] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[16638] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[16866] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (753dad2) 
+[16866] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (753dad2) 
+[16870] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (753dad2) 
+[16870] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (753dad2) 
+[18034] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[18034] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[18058] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (774b145) 
+[18058] [CB] [EXIT] NULL = void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (774b145) 
+[18102] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (774b145,NULL) 
+[18102] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (774b145,NULL) 
+[19318] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (774b145) 
+[19318] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (774b145) 
+[19334] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (774b145) 
+[19334] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (774b145) 
+[23432] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (e8e2223,c462c22,-2,net::ERR_N,https://m.) 
+  [23449] [CI] [ENTRY] void android.app.Activity.finish() (774b145) 
+  [23449] [CI] [EXIT] void android.app.Activity.finish() (774b145) 
+[23432] [CB] [EXIT] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (e8e2223,c462c22,-2,net::ERR_N,https://m.) 
+[23558] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (774b145) 
+[23558] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (774b145) 
+[23758] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[23758] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[23982] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (774b145) 
+[23982] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (774b145) 
+[23986] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (774b145) 
+[23986] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (774b145) 
+[24782] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[24782] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[24806] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (4e8be39) 
+[24806] [CB] [EXIT] NULL = void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (4e8be39) 
+[24850] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (4e8be39,NULL) 
+[24850] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (4e8be39,NULL) 
+[26066] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (4e8be39) 
+[26066] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (4e8be39) 
+[26082] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (4e8be39) 
+[26082] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (4e8be39) 
+[30196] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (a5ede78,cc9aa61,-2,net::ERR_N,https://m.) 
+  [30213] [CI] [ENTRY] void android.app.Activity.finish() (4e8be39) 
+  [30213] [CI] [EXIT] void android.app.Activity.finish() (4e8be39) 
+[30196] [CB] [EXIT] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (a5ede78,cc9aa61,-2,net::ERR_N,https://m.) 
+[30322] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (4e8be39) 
+[30322] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (4e8be39) 
+[30490] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[30490] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[30766] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (4e8be39) 
+[30766] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (4e8be39) 
+[30770] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (4e8be39) 
+[30770] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (4e8be39) 
+[33686] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[33686] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[33710] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (e5cefa3) 
+[33710] [CB] [EXIT] NULL = void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (e5cefa3) 
+[33754] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (e5cefa3,NULL) 
+[33754] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (e5cefa3,NULL) 
+[34970] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (e5cefa3) 
+[34970] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (e5cefa3) 
+[34986] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (e5cefa3) 
+[34986] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (e5cefa3) 
+[39132] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (d921d71,a736268,-2,net::ERR_N,https://m.) 
+  [39149] [CI] [ENTRY] void android.app.Activity.finish() (e5cefa3) 
+  [39149] [CI] [EXIT] void android.app.Activity.finish() (e5cefa3) 
+[39132] [CB] [EXIT] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (d921d71,a736268,-2,net::ERR_N,https://m.) 
+[39258] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (e5cefa3) 
+[39258] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (e5cefa3) 
+[39426] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[39426] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[39646] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (e5cefa3) 
+[39646] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (e5cefa3) 
+[39650] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (e5cefa3) 
+[39650] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (e5cefa3) 
+[39894] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[39894] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[39918] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (cf02a24) 
+[39918] [CB] [EXIT] NULL = void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (cf02a24) 
+[39962] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (cf02a24,NULL) 
+[39962] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (cf02a24,NULL) 
+[41178] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (cf02a24) 
+[41178] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (cf02a24) 
+[41194] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (cf02a24) 
+[41194] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (cf02a24) 
+[45308] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (b62d6fa,eb6e135,-2,net::ERR_N,https://m.) 
+  [45325] [CI] [ENTRY] void android.app.Activity.finish() (cf02a24) 
+  [45325] [CI] [EXIT] void android.app.Activity.finish() (cf02a24) 
+[45308] [CB] [EXIT] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (b62d6fa,eb6e135,-2,net::ERR_N,https://m.) 
+[45434] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (cf02a24) 
+[45434] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (cf02a24) 
+[45606] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[45606] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[45858] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (cf02a24) 
+[45858] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (cf02a24) 
+[45862] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (cf02a24) 
+[45862] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (cf02a24) 
+[46062] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[46062] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+[46086] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (c9305c0) 
+[46086] [CB] [EXIT] NULL = void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (c9305c0) 
+[46130] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (c9305c0,NULL) 
+[46130] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (c9305c0,NULL) 
+[47346] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (c9305c0) 
+[47346] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (c9305c0) 
+[47362] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (c9305c0) 
+[47362] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (c9305c0) 
+[51456] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (dd31611,27e1188,-2,net::ERR_N,https://m.) 
+  [51473] [CI] [ENTRY] void android.app.Activity.finish() (c9305c0) 
+  [51473] [CI] [EXIT] void android.app.Activity.finish() (c9305c0) 
+[51456] [CB] [EXIT] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (dd31611,27e1188,-2,net::ERR_N,https://m.) 
+[51578] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (c9305c0) 
+[51578] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (c9305c0) 
+[51746] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[51746] [CB] [EXIT] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+[51974] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (c9305c0) 
+[51974] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (c9305c0) 
+[51978] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (c9305c0) 
+[51978] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (c9305c0) 
+
+
+
+TRACE STATISTICS
+Trace length: 95
+Top-level callbacks: 74
+CI-ENTRY: 7
+CI-EXIT: 0
+CB-ENTRY: 61
+CB-EXIT: 14
+        encoding - User time: 6.240000
+encoding - System time: 0.010000
+simulation - User time: 39.430000
+simulation - System time: 0.290000
+
+The trace can be simulated in 95 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[0] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.<init>() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.<init>()) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.<init>()) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.<init>()
+----------------------------------------
+Step: 2
+----------------------------------------
+[44] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(android.os.Bundle) (5badf51,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 3
+----------------------------------------
+[1778] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onStart() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onStart()) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onStart()) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+----------------------------------------
+Step: 4
+----------------------------------------
+[51746] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+----------------------------------------
+Step: 5
+----------------------------------------
+[46062] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+----------------------------------------
+Step: 6
+----------------------------------------
+[4162] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (600a547) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |+ [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |- [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()
+----------------------------------------
+Step: 7
+----------------------------------------
+[4206] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (600a547,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+----------------------------------------
+Step: 8
+----------------------------------------
+[4206] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (600a547,NULL) 
+----------------------------------------
+Step: 9
+----------------------------------------
+[5438] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (600a547) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |+ [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |- [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+----------------------------------------
+Step: 10
+----------------------------------------
+[5438] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (600a547) 
+----------------------------------------
+Step: 11
+----------------------------------------
+[5454] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (600a547) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |- [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |+ [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+----------------------------------------
+Step: 12
+----------------------------------------
+[9560] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (1fdd4f7,5acf69,-2,net::ERR_N,https://m.) 
+----------------------------------------
+Step: 13
+----------------------------------------
+[9577] [CI] [ENTRY] void android.app.Activity.finish() (600a547) 
+----------------------------------------
+Step: 14
+----------------------------------------
+[9686] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (600a547) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |- [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+----------------------------------------
+Step: 15
+----------------------------------------
+[51746] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 16
+----------------------------------------
+[10366] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (600a547) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |+ [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+----------------------------------------
+Step: 17
+----------------------------------------
+[10370] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (600a547) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [600a547] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+----------------------------------------
+Step: 18
+----------------------------------------
+[46062] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+----------------------------------------
+Step: 19
+----------------------------------------
+[10986] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (753dad2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |+ [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |- [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()
+----------------------------------------
+Step: 20
+----------------------------------------
+[11030] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (753dad2,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 21
+----------------------------------------
+[11030] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (753dad2,NULL) 
+----------------------------------------
+Step: 22
+----------------------------------------
+[12246] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (753dad2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |- [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |+ [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+----------------------------------------
+Step: 23
+----------------------------------------
+[12246] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (753dad2) 
+----------------------------------------
+Step: 24
+----------------------------------------
+[12262] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (753dad2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |- [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |+ [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+----------------------------------------
+Step: 25
+----------------------------------------
+[16344] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (6f14718,129598b,-2,net::ERR_N,https://m.) 
+----------------------------------------
+Step: 26
+----------------------------------------
+[16361] [CI] [ENTRY] void android.app.Activity.finish() (753dad2) 
+----------------------------------------
+Step: 27
+----------------------------------------
+[16470] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (753dad2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |- [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+----------------------------------------
+Step: 28
+----------------------------------------
+[51746] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 29
+----------------------------------------
+[16866] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (753dad2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |+ [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+----------------------------------------
+Step: 30
+----------------------------------------
+[16870] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (753dad2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [753dad2] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+----------------------------------------
+Step: 31
+----------------------------------------
+[46062] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+----------------------------------------
+Step: 32
+----------------------------------------
+[18058] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (774b145) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |- [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |+ [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 33
+----------------------------------------
+[18102] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (774b145,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+----------------------------------------
+Step: 34
+----------------------------------------
+[18102] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (774b145,NULL) 
+----------------------------------------
+Step: 35
+----------------------------------------
+[19318] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (774b145) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |+ [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |- [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+----------------------------------------
+Step: 36
+----------------------------------------
+[19318] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (774b145) 
+----------------------------------------
+Step: 37
+----------------------------------------
+[19334] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (774b145) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |- [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |+ [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+----------------------------------------
+Step: 38
+----------------------------------------
+[23432] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (e8e2223,c462c22,-2,net::ERR_N,https://m.) 
+----------------------------------------
+Step: 39
+----------------------------------------
+[23449] [CI] [ENTRY] void android.app.Activity.finish() (774b145) 
+----------------------------------------
+Step: 40
+----------------------------------------
+[23558] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (774b145) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |- [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 41
+----------------------------------------
+[51746] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 42
+----------------------------------------
+[23982] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (774b145) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |+ [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+----------------------------------------
+Step: 43
+----------------------------------------
+[23986] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (774b145) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [774b145] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 44
+----------------------------------------
+[46062] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+----------------------------------------
+Step: 45
+----------------------------------------
+[24806] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (4e8be39) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |+ [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |- [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()
+----------------------------------------
+Step: 46
+----------------------------------------
+[24850] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (4e8be39,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+----------------------------------------
+Step: 47
+----------------------------------------
+[24850] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (4e8be39,NULL) 
+----------------------------------------
+Step: 48
+----------------------------------------
+[26066] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (4e8be39) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |- [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |+ [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+----------------------------------------
+Step: 49
+----------------------------------------
+[26066] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (4e8be39) 
+----------------------------------------
+Step: 50
+----------------------------------------
+[26082] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (4e8be39) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |- [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |+ [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+----------------------------------------
+Step: 51
+----------------------------------------
+[30196] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (a5ede78,cc9aa61,-2,net::ERR_N,https://m.) 
+----------------------------------------
+Step: 52
+----------------------------------------
+[30213] [CI] [ENTRY] void android.app.Activity.finish() (4e8be39) 
+----------------------------------------
+Step: 53
+----------------------------------------
+[30322] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (4e8be39) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |- [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+----------------------------------------
+Step: 54
+----------------------------------------
+[51746] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 55
+----------------------------------------
+[30766] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (4e8be39) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |+ [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+----------------------------------------
+Step: 56
+----------------------------------------
+[30770] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (4e8be39) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [4e8be39] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 57
+----------------------------------------
+[46062] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+----------------------------------------
+Step: 58
+----------------------------------------
+[33710] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (e5cefa3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |- [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |+ [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 59
+----------------------------------------
+[33754] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (e5cefa3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+----------------------------------------
+Step: 60
+----------------------------------------
+[33754] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (e5cefa3,NULL) 
+----------------------------------------
+Step: 61
+----------------------------------------
+[34970] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (e5cefa3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |+ [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |- [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+----------------------------------------
+Step: 62
+----------------------------------------
+[34970] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (e5cefa3) 
+----------------------------------------
+Step: 63
+----------------------------------------
+[34986] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (e5cefa3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |+ [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |- [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+----------------------------------------
+Step: 64
+----------------------------------------
+[39132] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (d921d71,a736268,-2,net::ERR_N,https://m.) 
+----------------------------------------
+Step: 65
+----------------------------------------
+[39149] [CI] [ENTRY] void android.app.Activity.finish() (e5cefa3) 
+----------------------------------------
+Step: 66
+----------------------------------------
+[39258] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (e5cefa3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |- [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+----------------------------------------
+Step: 67
+----------------------------------------
+[51746] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 68
+----------------------------------------
+[39646] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (e5cefa3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |+ [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+----------------------------------------
+Step: 69
+----------------------------------------
+[39650] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (e5cefa3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [e5cefa3] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+----------------------------------------
+Step: 70
+----------------------------------------
+[46062] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+----------------------------------------
+Step: 71
+----------------------------------------
+[39918] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (cf02a24) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |+ [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |- [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()
+----------------------------------------
+Step: 72
+----------------------------------------
+[39962] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (cf02a24,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 73
+----------------------------------------
+[39962] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (cf02a24,NULL) 
+----------------------------------------
+Step: 74
+----------------------------------------
+[41178] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (cf02a24) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |- [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |+ [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+----------------------------------------
+Step: 75
+----------------------------------------
+[41178] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (cf02a24) 
+----------------------------------------
+Step: 76
+----------------------------------------
+[41194] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (cf02a24) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |+ [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |- [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+----------------------------------------
+Step: 77
+----------------------------------------
+[45308] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (b62d6fa,eb6e135,-2,net::ERR_N,https://m.) 
+----------------------------------------
+Step: 78
+----------------------------------------
+[45325] [CI] [ENTRY] void android.app.Activity.finish() (cf02a24) 
+----------------------------------------
+Step: 79
+----------------------------------------
+[45434] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (cf02a24) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |- [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 80
+----------------------------------------
+[51746] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 81
+----------------------------------------
+[45858] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (cf02a24) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |+ [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+----------------------------------------
+Step: 82
+----------------------------------------
+[45862] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (cf02a24) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [cf02a24] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 83
+----------------------------------------
+[46062] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); (((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+----------------------------------------
+Step: 84
+----------------------------------------
+[46086] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>() (c9305c0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |- [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.<init>()) |+ [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 85
+----------------------------------------
+[46130] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (c9305c0,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+----------------------------------------
+Step: 86
+----------------------------------------
+[46130] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(android.os.Bundle) (c9305c0,NULL) 
+----------------------------------------
+Step: 87
+----------------------------------------
+[47346] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (c9305c0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |- [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart()) |+ [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+----------------------------------------
+Step: 88
+----------------------------------------
+[47346] [CB] [EXIT] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStart() (c9305c0) 
+----------------------------------------
+Step: 89
+----------------------------------------
+[47362] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume() (c9305c0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |- [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()) |+ [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+----------------------------------------
+Step: 90
+----------------------------------------
+[51456] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.WebDialog$DialogWebViewClient.onReceivedError(android.webkit.WebView,int,java.lang.String,java.lang.String) (dd31611,27e1188,-2,net::ERR_N,https://m.) 
+----------------------------------------
+Step: 91
+----------------------------------------
+[51473] [CI] [ENTRY] void android.app.Activity.finish() (c9305c0) 
+----------------------------------------
+Step: 92
+----------------------------------------
+[51578] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause() (c9305c0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |- [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onPause()) |+ [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 93
+----------------------------------------
+[51746] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() (5badf51) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |+ [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((([CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume() | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume()) | [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onResume())) |- [CB] [ENTRY] [5badf51] void com.greenhalolabs.facebooklogin.sample.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 94
+----------------------------------------
+[51974] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop() (c9305c0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |- [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onStop()) |+ [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+----------------------------------------
+Step: 95
+----------------------------------------
+[51978] [CB] [ENTRY] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy() (c9305c0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onDestroy()) |- [CB] [ENTRY] [c9305c0] void com.greenhalolabs.facebooklogin.FacebookLoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------

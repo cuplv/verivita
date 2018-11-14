@@ -1,0 +1,707 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-2/_traces/android10-nfc_android_sample-bin/monkeyTraces/trace-MainActivity-debug-unaligned_2017-04-16_20:48:21.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-2/_traces/android10-nfc_android_sample-bin/monkeyTraces/trace-MainActivity-debug-unaligned_2017-04-16_20:48:21.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 1.080000
+parsing - System time: 0.090000
+spec_grounding - User time: 183.110000
+spec_grounding - System time: 1.080000
+
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.<init>() (917d566) 
+[0] [CB] [EXIT] NULL = void com.fernandocejas.example.android.nfc.MainActivity.<init>() (917d566) 
+[44] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(android.os.Bundle) (917d566,NULL) 
+  [1985] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (917d566,2131165186) 
+  [1985] [CI] [EXIT] 8196ffd = android.view.View android.app.Activity.findViewById(int) (917d566,2131165186) 
+  [1993] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (8196ffd,bc33743) 
+  [1993] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (8196ffd,bc33743) 
+  [1995] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (917d566,2131165187) 
+  [1995] [CI] [EXIT] fd00716 = android.view.View android.app.Activity.findViewById(int) (917d566,2131165187) 
+  [2003] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fd00716,c5e3a84) 
+  [2003] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fd00716,c5e3a84) 
+  [2005] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (917d566,2131165188) 
+  [2005] [CI] [EXIT] 61999ab = android.view.View android.app.Activity.findViewById(int) (917d566,2131165188) 
+  [2013] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (61999ab,f02fba1) 
+  [2013] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (61999ab,f02fba1) 
+[44] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(android.os.Bundle) (917d566,NULL) 
+[2024] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onStart() (917d566) 
+[2024] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onStart() (917d566) 
+[2040] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[2040] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[3444] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$2.onClick(android.view.View) (c5e3a84,fd00716) 
+[3444] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity$2.onClick(android.view.View) (c5e3a84,fd00716) 
+[3510] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[3510] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[3552] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>() (17a54e3) 
+[3552] [CB] [EXIT] NULL = void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>() (17a54e3) 
+[3596] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (17a54e3,NULL) 
+  [5313] [CI] [ENTRY] void android.app.Activity.finish() (17a54e3) 
+  [5313] [CI] [EXIT] void android.app.Activity.finish() (17a54e3) 
+[3596] [CB] [EXIT] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (17a54e3,NULL) 
+[5488] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[5488] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[5912] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy() (17a54e3) 
+[5912] [CB] [EXIT] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy() (17a54e3) 
+[5972] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$1.onClick(android.view.View) (bc33743,8196ffd) 
+[5972] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity$1.onClick(android.view.View) (bc33743,8196ffd) 
+[6010] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[6010] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[6052] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>() (e6b5636) 
+[6052] [CB] [EXIT] NULL = void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>() (e6b5636) 
+[6098] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (e6b5636,NULL) 
+  [8137] [CI] [ENTRY] void android.app.Activity.finish() (e6b5636) 
+  [8137] [CI] [EXIT] void android.app.Activity.finish() (e6b5636) 
+[6098] [CB] [EXIT] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (e6b5636,NULL) 
+[8316] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[8316] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[8588] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy() (e6b5636) 
+[8588] [CB] [EXIT] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy() (e6b5636) 
+[8688] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$2.onClick(android.view.View) (c5e3a84,fd00716) 
+[8688] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity$2.onClick(android.view.View) (c5e3a84,fd00716) 
+[8726] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[8726] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[8766] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>() (8f34fd1) 
+[8766] [CB] [EXIT] NULL = void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>() (8f34fd1) 
+[8810] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (8f34fd1,NULL) 
+  [10527] [CI] [ENTRY] void android.app.Activity.finish() (8f34fd1) 
+  [10527] [CI] [EXIT] void android.app.Activity.finish() (8f34fd1) 
+[8810] [CB] [EXIT] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (8f34fd1,NULL) 
+[10694] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[10694] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[11046] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy() (8f34fd1) 
+[11046] [CB] [EXIT] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy() (8f34fd1) 
+[11086] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$1.onClick(android.view.View) (bc33743,8196ffd) 
+[11086] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity$1.onClick(android.view.View) (bc33743,8196ffd) 
+[11152] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[11152] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[11192] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>() (8624069) 
+[11192] [CB] [EXIT] NULL = void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>() (8624069) 
+[11238] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (8624069,NULL) 
+  [13273] [CI] [ENTRY] void android.app.Activity.finish() (8624069) 
+  [13273] [CI] [EXIT] void android.app.Activity.finish() (8624069) 
+[11238] [CB] [EXIT] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (8624069,NULL) 
+[13468] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[13468] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[13488] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$1.onClick(android.view.View) (bc33743,8196ffd) 
+[13488] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity$1.onClick(android.view.View) (bc33743,8196ffd) 
+[13774] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy() (8624069) 
+[13774] [CB] [EXIT] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy() (8624069) 
+[13798] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[13798] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[13910] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>() (bad4a7f) 
+[13910] [CB] [EXIT] NULL = void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>() (bad4a7f) 
+[13956] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (bad4a7f,NULL) 
+  [15991] [CI] [ENTRY] void android.app.Activity.finish() (bad4a7f) 
+  [15991] [CI] [EXIT] void android.app.Activity.finish() (bad4a7f) 
+[13956] [CB] [EXIT] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (bad4a7f,NULL) 
+[16178] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[16178] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[16210] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$1.onClick(android.view.View) (bc33743,8196ffd) 
+[16210] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity$1.onClick(android.view.View) (bc33743,8196ffd) 
+[16488] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[16488] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[16500] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>() (1d5ce88) 
+[16500] [CB] [EXIT] NULL = void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>() (1d5ce88) 
+[16546] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (1d5ce88,NULL) 
+  [18581] [CI] [ENTRY] void android.app.Activity.finish() (1d5ce88) 
+  [18581] [CI] [EXIT] void android.app.Activity.finish() (1d5ce88) 
+[16546] [CB] [EXIT] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (1d5ce88,NULL) 
+[18588] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy() (bad4a7f) 
+[18588] [CB] [EXIT] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy() (bad4a7f) 
+[19052] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[19052] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[19084] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$2.onClick(android.view.View) (c5e3a84,fd00716) 
+[19084] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity$2.onClick(android.view.View) (c5e3a84,fd00716) 
+[19142] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[19142] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[19154] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>() (9474c4f) 
+[19154] [CB] [EXIT] NULL = void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>() (9474c4f) 
+[19198] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (9474c4f,NULL) 
+  [20915] [CI] [ENTRY] void android.app.Activity.finish() (9474c4f) 
+  [20915] [CI] [EXIT] void android.app.Activity.finish() (9474c4f) 
+[19198] [CB] [EXIT] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (9474c4f,NULL) 
+[20922] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy() (1d5ce88) 
+[20922] [CB] [EXIT] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy() (1d5ce88) 
+[21278] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[21278] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[21414] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$3.onClick(android.view.View) (f02fba1,61999ab) 
+[21414] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity$3.onClick(android.view.View) (f02fba1,61999ab) 
+[21688] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[21688] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[21704] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.BeamActivity.<init>() (72b4388) 
+[21704] [CB] [EXIT] NULL = void com.fernandocejas.example.android.nfc.BeamActivity.<init>() (72b4388) 
+[21748] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(android.os.Bundle) (72b4388,NULL) 
+  [23621] [CI] [ENTRY] void android.app.Activity.finish() (72b4388) 
+  [23621] [CI] [EXIT] void android.app.Activity.finish() (72b4388) 
+[21748] [CB] [EXIT] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(android.os.Bundle) (72b4388,NULL) 
+[23628] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy() (9474c4f) 
+[23628] [CB] [EXIT] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy() (9474c4f) 
+[24080] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[24080] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[24244] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$3.onClick(android.view.View) (f02fba1,61999ab) 
+[24244] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity$3.onClick(android.view.View) (f02fba1,61999ab) 
+[24282] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[24282] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[24322] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.BeamActivity.<init>() (3b172b4) 
+[24322] [CB] [EXIT] NULL = void com.fernandocejas.example.android.nfc.BeamActivity.<init>() (3b172b4) 
+[24366] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(android.os.Bundle) (3b172b4,NULL) 
+  [26239] [CI] [ENTRY] void android.app.Activity.finish() (3b172b4) 
+  [26239] [CI] [EXIT] void android.app.Activity.finish() (3b172b4) 
+[24366] [CB] [EXIT] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(android.os.Bundle) (3b172b4,NULL) 
+[26246] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.BeamActivity.onDestroy() (72b4388) 
+[26246] [CB] [EXIT] void com.fernandocejas.example.android.nfc.BeamActivity.onDestroy() (72b4388) 
+[26418] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[26418] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+[26722] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.BeamActivity.onDestroy() (3b172b4) 
+[26722] [CB] [EXIT] void com.fernandocejas.example.android.nfc.BeamActivity.onDestroy() (3b172b4) 
+[26890] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$2.onClick(android.view.View) (c5e3a84,fd00716) 
+[26890] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity$2.onClick(android.view.View) (c5e3a84,fd00716) 
+[26956] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[26956] [CB] [EXIT] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+[26996] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>() (c1cafb6) 
+[26996] [CB] [EXIT] NULL = void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>() (c1cafb6) 
+[27040] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (c1cafb6,NULL) 
+[27040] [CB] [EXIT] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (c1cafb6,NULL) 
+
+
+
+TRACE STATISTICS
+Trace length: 86
+Top-level callbacks: 62
+CI-ENTRY: 12
+CI-EXIT: 3
+CB-ENTRY: 37
+CB-EXIT: 9
+        encoding - User time: 6.480000
+encoding - System time: 0.010000
+simulation - User time: 31.470000
+simulation - System time: 0.310000
+
+The trace can be simulated in 86 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[0] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.<init>() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.<init>()) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.<init>()) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.<init>()
+----------------------------------------
+Step: 2
+----------------------------------------
+[44] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(android.os.Bundle) (917d566,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[1985] [CI] [EXIT] 8196ffd = android.view.View android.app.Activity.findViewById(int) (917d566,2131165186) 
+----------------------------------------
+Step: 4
+----------------------------------------
+[1993] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (8196ffd,bc33743) 
+----------------------------------------
+Step: 5
+----------------------------------------
+[1995] [CI] [EXIT] fd00716 = android.view.View android.app.Activity.findViewById(int) (917d566,2131165187) 
+----------------------------------------
+Step: 6
+----------------------------------------
+[2003] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fd00716,c5e3a84) 
+----------------------------------------
+Step: 7
+----------------------------------------
+[2005] [CI] [EXIT] 61999ab = android.view.View android.app.Activity.findViewById(int) (917d566,2131165188) 
+----------------------------------------
+Step: 8
+----------------------------------------
+[2013] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (61999ab,f02fba1) 
+----------------------------------------
+Step: 9
+----------------------------------------
+[2024] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onStart() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onStart()) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onStart()) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+----------------------------------------
+Step: 10
+----------------------------------------
+[26418] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+    SPEC ((((((TRUE)[*]); 61999ab = [CI] [EXIT] [917d566] android.view.View android.app.Activity.findViewById(2131165188 : int)); ((TRUE)[*])) & (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [61999ab] void android.view.View.setOnClickListener(f02fba1 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [f02fba1] void com.fernandocejas.example.android.nfc.MainActivity$3.onClick(61999ab : android.view.View)
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC ((((((TRUE)[*]); 8196ffd = [CI] [EXIT] [917d566] android.view.View android.app.Activity.findViewById(2131165186 : int)); ((TRUE)[*])) & (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [8196ffd] void android.view.View.setOnClickListener(bc33743 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [bc33743] void com.fernandocejas.example.android.nfc.MainActivity$1.onClick(8196ffd : android.view.View)
+    SPEC ((((((TRUE)[*]); fd00716 = [CI] [EXIT] [917d566] android.view.View android.app.Activity.findViewById(2131165187 : int)); ((TRUE)[*])) & (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [fd00716] void android.view.View.setOnClickListener(c5e3a84 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [c5e3a84] void com.fernandocejas.example.android.nfc.MainActivity$2.onClick(fd00716 : android.view.View)
+----------------------------------------
+Step: 11
+----------------------------------------
+[26890] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$2.onClick(android.view.View) (c5e3a84,fd00716) 
+----------------------------------------
+Step: 12
+----------------------------------------
+[26956] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+----------------------------------------
+Step: 13
+----------------------------------------
+[3552] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>() (17a54e3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [17a54e3] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>()) |- [CB] [ENTRY] [17a54e3] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [17a54e3] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>()) |+ [CB] [ENTRY] [17a54e3] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 14
+----------------------------------------
+[3596] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (17a54e3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [17a54e3] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [17a54e3] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 15
+----------------------------------------
+[5313] [CI] [ENTRY] void android.app.Activity.finish() (17a54e3) 
+----------------------------------------
+Step: 16
+----------------------------------------
+[3596] [CB] [EXIT] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (17a54e3,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [17a54e3] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); [CI] [ENTRY] [17a54e3] void android.app.Activity.finish()); ((TRUE)[*])); [CB] [EXIT] [17a54e3] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [17a54e3] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy()
+----------------------------------------
+Step: 17
+----------------------------------------
+[26418] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 18
+----------------------------------------
+[5912] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy() (17a54e3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [17a54e3] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy()) |- [CB] [ENTRY] [17a54e3] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy()
+----------------------------------------
+Step: 19
+----------------------------------------
+[16210] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$1.onClick(android.view.View) (bc33743,8196ffd) 
+----------------------------------------
+Step: 20
+----------------------------------------
+[26956] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+----------------------------------------
+Step: 21
+----------------------------------------
+[6052] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>() (e6b5636) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e6b5636] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>()) |+ [CB] [ENTRY] [e6b5636] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e6b5636] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>()) |- [CB] [ENTRY] [e6b5636] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>()
+----------------------------------------
+Step: 22
+----------------------------------------
+[6098] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (e6b5636,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e6b5636] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [e6b5636] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 23
+----------------------------------------
+[8137] [CI] [ENTRY] void android.app.Activity.finish() (e6b5636) 
+----------------------------------------
+Step: 24
+----------------------------------------
+[6098] [CB] [EXIT] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (e6b5636,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [e6b5636] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); [CI] [ENTRY] [e6b5636] void android.app.Activity.finish()); ((TRUE)[*])); [CB] [EXIT] [e6b5636] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [e6b5636] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy()
+----------------------------------------
+Step: 25
+----------------------------------------
+[26418] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 26
+----------------------------------------
+[8588] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy() (e6b5636) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e6b5636] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy()) |- [CB] [ENTRY] [e6b5636] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy()
+----------------------------------------
+Step: 27
+----------------------------------------
+[26890] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$2.onClick(android.view.View) (c5e3a84,fd00716) 
+----------------------------------------
+Step: 28
+----------------------------------------
+[26956] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+----------------------------------------
+Step: 29
+----------------------------------------
+[8766] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>() (8f34fd1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8f34fd1] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>()) |+ [CB] [ENTRY] [8f34fd1] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8f34fd1] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>()) |- [CB] [ENTRY] [8f34fd1] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>()
+----------------------------------------
+Step: 30
+----------------------------------------
+[8810] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (8f34fd1,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8f34fd1] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [8f34fd1] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 31
+----------------------------------------
+[10527] [CI] [ENTRY] void android.app.Activity.finish() (8f34fd1) 
+----------------------------------------
+Step: 32
+----------------------------------------
+[8810] [CB] [EXIT] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (8f34fd1,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [8f34fd1] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); [CI] [ENTRY] [8f34fd1] void android.app.Activity.finish()); ((TRUE)[*])); [CB] [EXIT] [8f34fd1] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8f34fd1] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy()
+----------------------------------------
+Step: 33
+----------------------------------------
+[26418] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 34
+----------------------------------------
+[11046] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy() (8f34fd1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8f34fd1] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy()) |- [CB] [ENTRY] [8f34fd1] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy()
+----------------------------------------
+Step: 35
+----------------------------------------
+[16210] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$1.onClick(android.view.View) (bc33743,8196ffd) 
+----------------------------------------
+Step: 36
+----------------------------------------
+[26956] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+----------------------------------------
+Step: 37
+----------------------------------------
+[11192] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>() (8624069) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8624069] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>()) |- [CB] [ENTRY] [8624069] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8624069] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>()) |+ [CB] [ENTRY] [8624069] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 38
+----------------------------------------
+[11238] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (8624069,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8624069] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [8624069] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 39
+----------------------------------------
+[13273] [CI] [ENTRY] void android.app.Activity.finish() (8624069) 
+----------------------------------------
+Step: 40
+----------------------------------------
+[11238] [CB] [EXIT] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (8624069,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [8624069] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); [CI] [ENTRY] [8624069] void android.app.Activity.finish()); ((TRUE)[*])); [CB] [EXIT] [8624069] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8624069] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy()
+----------------------------------------
+Step: 41
+----------------------------------------
+[26418] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 42
+----------------------------------------
+[16210] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$1.onClick(android.view.View) (bc33743,8196ffd) 
+----------------------------------------
+Step: 43
+----------------------------------------
+[13774] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy() (8624069) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8624069] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy()) |- [CB] [ENTRY] [8624069] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy()
+----------------------------------------
+Step: 44
+----------------------------------------
+[26956] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+----------------------------------------
+Step: 45
+----------------------------------------
+[13910] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>() (bad4a7f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bad4a7f] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>()) |- [CB] [ENTRY] [bad4a7f] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bad4a7f] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>()) |+ [CB] [ENTRY] [bad4a7f] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 46
+----------------------------------------
+[13956] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (bad4a7f,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bad4a7f] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [bad4a7f] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 47
+----------------------------------------
+[15991] [CI] [ENTRY] void android.app.Activity.finish() (bad4a7f) 
+----------------------------------------
+Step: 48
+----------------------------------------
+[13956] [CB] [EXIT] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (bad4a7f,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [bad4a7f] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); [CI] [ENTRY] [bad4a7f] void android.app.Activity.finish()); ((TRUE)[*])); [CB] [EXIT] [bad4a7f] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [bad4a7f] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy()
+----------------------------------------
+Step: 49
+----------------------------------------
+[26418] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 50
+----------------------------------------
+[16210] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$1.onClick(android.view.View) (bc33743,8196ffd) 
+----------------------------------------
+Step: 51
+----------------------------------------
+[26956] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+----------------------------------------
+Step: 52
+----------------------------------------
+[16500] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>() (1d5ce88) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1d5ce88] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>()) |+ [CB] [ENTRY] [1d5ce88] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1d5ce88] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>()) |- [CB] [ENTRY] [1d5ce88] void com.fernandocejas.example.android.nfc.WriteTagActivity.<init>()
+----------------------------------------
+Step: 53
+----------------------------------------
+[16546] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (1d5ce88,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1d5ce88] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [1d5ce88] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 54
+----------------------------------------
+[18581] [CI] [ENTRY] void android.app.Activity.finish() (1d5ce88) 
+----------------------------------------
+Step: 55
+----------------------------------------
+[16546] [CB] [EXIT] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(android.os.Bundle) (1d5ce88,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [1d5ce88] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); [CI] [ENTRY] [1d5ce88] void android.app.Activity.finish()); ((TRUE)[*])); [CB] [EXIT] [1d5ce88] void com.fernandocejas.example.android.nfc.WriteTagActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1d5ce88] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy()
+----------------------------------------
+Step: 56
+----------------------------------------
+[18588] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy() (bad4a7f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bad4a7f] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy()) |- [CB] [ENTRY] [bad4a7f] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy()
+----------------------------------------
+Step: 57
+----------------------------------------
+[26418] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 58
+----------------------------------------
+[26890] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$2.onClick(android.view.View) (c5e3a84,fd00716) 
+----------------------------------------
+Step: 59
+----------------------------------------
+[26956] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+----------------------------------------
+Step: 60
+----------------------------------------
+[19154] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>() (9474c4f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9474c4f] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>()) |+ [CB] [ENTRY] [9474c4f] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9474c4f] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>()) |- [CB] [ENTRY] [9474c4f] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>()
+----------------------------------------
+Step: 61
+----------------------------------------
+[19198] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (9474c4f,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9474c4f] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [9474c4f] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 62
+----------------------------------------
+[20915] [CI] [ENTRY] void android.app.Activity.finish() (9474c4f) 
+----------------------------------------
+Step: 63
+----------------------------------------
+[19198] [CB] [EXIT] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (9474c4f,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [9474c4f] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); [CI] [ENTRY] [9474c4f] void android.app.Activity.finish()); ((TRUE)[*])); [CB] [EXIT] [9474c4f] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [9474c4f] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy()
+----------------------------------------
+Step: 64
+----------------------------------------
+[20922] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy() (1d5ce88) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1d5ce88] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy()) |- [CB] [ENTRY] [1d5ce88] void com.fernandocejas.example.android.nfc.WriteTagActivity.onDestroy()
+----------------------------------------
+Step: 65
+----------------------------------------
+[26418] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 66
+----------------------------------------
+[24244] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$3.onClick(android.view.View) (f02fba1,61999ab) 
+----------------------------------------
+Step: 67
+----------------------------------------
+[26956] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+----------------------------------------
+Step: 68
+----------------------------------------
+[21704] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.BeamActivity.<init>() (72b4388) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [72b4388] void com.fernandocejas.example.android.nfc.BeamActivity.<init>()) |- [CB] [ENTRY] [72b4388] void com.fernandocejas.example.android.nfc.BeamActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [72b4388] void com.fernandocejas.example.android.nfc.BeamActivity.<init>()) |+ [CB] [ENTRY] [72b4388] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 69
+----------------------------------------
+[21748] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(android.os.Bundle) (72b4388,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [72b4388] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [72b4388] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 70
+----------------------------------------
+[23621] [CI] [ENTRY] void android.app.Activity.finish() (72b4388) 
+----------------------------------------
+Step: 71
+----------------------------------------
+[21748] [CB] [EXIT] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(android.os.Bundle) (72b4388,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [72b4388] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); [CI] [ENTRY] [72b4388] void android.app.Activity.finish()); ((TRUE)[*])); [CB] [EXIT] [72b4388] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [72b4388] void com.fernandocejas.example.android.nfc.BeamActivity.onDestroy()
+----------------------------------------
+Step: 72
+----------------------------------------
+[23628] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy() (9474c4f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9474c4f] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy()) |- [CB] [ENTRY] [9474c4f] void com.fernandocejas.example.android.nfc.ReadTagActivity.onDestroy()
+----------------------------------------
+Step: 73
+----------------------------------------
+[26418] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 74
+----------------------------------------
+[24244] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$3.onClick(android.view.View) (f02fba1,61999ab) 
+----------------------------------------
+Step: 75
+----------------------------------------
+[26956] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+----------------------------------------
+Step: 76
+----------------------------------------
+[24322] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.BeamActivity.<init>() (3b172b4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3b172b4] void com.fernandocejas.example.android.nfc.BeamActivity.<init>()) |+ [CB] [ENTRY] [3b172b4] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3b172b4] void com.fernandocejas.example.android.nfc.BeamActivity.<init>()) |- [CB] [ENTRY] [3b172b4] void com.fernandocejas.example.android.nfc.BeamActivity.<init>()
+----------------------------------------
+Step: 77
+----------------------------------------
+[24366] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(android.os.Bundle) (3b172b4,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3b172b4] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [3b172b4] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 78
+----------------------------------------
+[26239] [CI] [ENTRY] void android.app.Activity.finish() (3b172b4) 
+----------------------------------------
+Step: 79
+----------------------------------------
+[24366] [CB] [EXIT] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(android.os.Bundle) (3b172b4,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [3b172b4] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); [CI] [ENTRY] [3b172b4] void android.app.Activity.finish()); ((TRUE)[*])); [CB] [EXIT] [3b172b4] void com.fernandocejas.example.android.nfc.BeamActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [3b172b4] void com.fernandocejas.example.android.nfc.BeamActivity.onDestroy()
+----------------------------------------
+Step: 80
+----------------------------------------
+[26246] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.BeamActivity.onDestroy() (72b4388) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [72b4388] void com.fernandocejas.example.android.nfc.BeamActivity.onDestroy()) |- [CB] [ENTRY] [72b4388] void com.fernandocejas.example.android.nfc.BeamActivity.onDestroy()
+----------------------------------------
+Step: 81
+----------------------------------------
+[26418] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onResume() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 82
+----------------------------------------
+[26722] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.BeamActivity.onDestroy() (3b172b4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3b172b4] void com.fernandocejas.example.android.nfc.BeamActivity.onDestroy()) |- [CB] [ENTRY] [3b172b4] void com.fernandocejas.example.android.nfc.BeamActivity.onDestroy()
+----------------------------------------
+Step: 83
+----------------------------------------
+[26890] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity$2.onClick(android.view.View) (c5e3a84,fd00716) 
+----------------------------------------
+Step: 84
+----------------------------------------
+[26956] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.MainActivity.onPause() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |- [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((((((([CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause() | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause()) | [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onPause())) |+ [CB] [ENTRY] [917d566] void com.fernandocejas.example.android.nfc.MainActivity.onResume()
+----------------------------------------
+Step: 85
+----------------------------------------
+[26996] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>() (c1cafb6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c1cafb6] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>()) |+ [CB] [ENTRY] [c1cafb6] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c1cafb6] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>()) |- [CB] [ENTRY] [c1cafb6] void com.fernandocejas.example.android.nfc.ReadTagActivity.<init>()
+----------------------------------------
+Step: 86
+----------------------------------------
+[27040] [CB] [ENTRY] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(android.os.Bundle) (c1cafb6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c1cafb6] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [c1cafb6] void com.fernandocejas.example.android.nfc.ReadTagActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------

@@ -1,0 +1,723 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/other-dialog-traces-1/_traces/life0fun-Android-Webview-Ajax-bin/monkeyTraces/trace-AjaxWebApp-debug-unaligned_2017-04-16_03:13:57.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/other-dialog-traces-1/_traces/life0fun-Android-Webview-Ajax-bin/monkeyTraces/trace-AjaxWebApp-debug-unaligned_2017-04-16_03:13:57.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 1.260000
+parsing - System time: 0.070000
+spec_grounding - User time: 178.690000
+spec_grounding - System time: 0.910000
+
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.mot.ajaxwebapp.MainActivity.<init>() (87a46c0) 
+[0] [CB] [EXIT] NULL = void com.mot.ajaxwebapp.MainActivity.<init>() (87a46c0) 
+[24] [CB] [ENTRY] void com.mot.ajaxwebapp.MainActivity.onCreate(android.os.Bundle) (87a46c0,NULL) 
+  [1979] [CI] [ENTRY] void android.app.ListFragment.<init>() (ea56360) 
+  [1979] [CI] [EXIT] void android.app.ListFragment.<init>() (ea56360) 
+[24] [CB] [EXIT] void com.mot.ajaxwebapp.MainActivity.onCreate(android.os.Bundle) (87a46c0,NULL) 
+[2322] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onAttach(android.app.Activity) (ea56360,87a46c0) 
+[2322] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onAttach(android.app.Activity) (ea56360,87a46c0) 
+[2340] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onCreate(android.os.Bundle) (ea56360,NULL) 
+[2340] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onCreate(android.os.Bundle) (ea56360,NULL) 
+[2606] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ea56360,dd02520,869d86b,NULL) 
+[2606] [CB] [EXIT] b747b77 = android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ea56360,dd02520,869d86b,NULL) 
+[3092] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (ea56360,b747b77,NULL) 
+[3092] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (ea56360,b747b77,NULL) 
+[3100] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (ea56360,NULL) 
+[3100] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (ea56360,NULL) 
+[3116] [CB] [ENTRY] void com.mot.ajaxwebapp.MainActivity.onStart() (87a46c0) 
+[3116] [CB] [EXIT] void com.mot.ajaxwebapp.MainActivity.onStart() (87a46c0) 
+[3120] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (ea56360) 
+[3120] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onStart() (ea56360) 
+[3180] [CB] [ENTRY] void com.mot.ajaxwebapp.MainActivity.onResume() (87a46c0) 
+[3180] [CB] [EXIT] void com.mot.ajaxwebapp.MainActivity.onResume() (87a46c0) 
+[3184] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (ea56360) 
+[3184] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onResume() (ea56360) 
+[6356] [CB] [ENTRY] void com.mot.ajaxwebapp.MainActivity.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (87a46c0,2b3d431,6d3fec5) 
+  [6377] [CI] [ENTRY] void android.app.ListFragment.<init>() (a58211b) 
+  [6377] [CI] [EXIT] void android.app.ListFragment.<init>() (a58211b) 
+[6356] [CB] [EXIT] void com.mot.ajaxwebapp.MainActivity.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (87a46c0,2b3d431,6d3fec5) 
+[6444] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onPause() (ea56360) 
+[6444] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onPause() (ea56360) 
+[6448] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStop() (ea56360) 
+[6448] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onStop() (ea56360) 
+[6478] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (ea56360) 
+[6478] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (ea56360) 
+[6782] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onAttach(android.app.Activity) (a58211b,87a46c0) 
+[6782] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onAttach(android.app.Activity) (a58211b,87a46c0) 
+[6800] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onCreate(android.os.Bundle) (a58211b,NULL) 
+[6800] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onCreate(android.os.Bundle) (a58211b,NULL) 
+[7064] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a58211b,dd02520,869d86b,NULL) 
+[7064] [CB] [EXIT] 5daad67 = android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a58211b,dd02520,869d86b,NULL) 
+[7558] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (a58211b,5daad67,NULL) 
+[7558] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (a58211b,5daad67,NULL) 
+[7566] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (a58211b,NULL) 
+[7566] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (a58211b,NULL) 
+[7586] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (a58211b) 
+[7586] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onStart() (a58211b) 
+[7626] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (a58211b) 
+[7626] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onResume() (a58211b) 
+[9788] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onPause() (a58211b) 
+[9788] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onPause() (a58211b) 
+[9792] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStop() (a58211b) 
+[9792] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onStop() (a58211b) 
+[9822] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (a58211b) 
+[9822] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (a58211b) 
+[9918] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ea56360,dd02520,869d86b,NULL) 
+[9918] [CB] [EXIT] 46ab3a5 = android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ea56360,dd02520,869d86b,NULL) 
+[10442] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (ea56360,46ab3a5,NULL) 
+[10442] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (ea56360,46ab3a5,NULL) 
+[10450] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (ea56360,NULL) 
+[10450] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (ea56360,NULL) 
+[10466] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (ea56360) 
+[10466] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onStart() (ea56360) 
+[10584] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (ea56360) 
+[10584] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onResume() (ea56360) 
+[18664] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onPause() (ea56360) 
+[18664] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onPause() (ea56360) 
+[18668] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStop() (ea56360) 
+[18668] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onStop() (ea56360) 
+[18698] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (ea56360) 
+[18698] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (ea56360) 
+[18794] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a58211b,dd02520,869d86b,NULL) 
+[18794] [CB] [EXIT] 9fcfc6f = android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a58211b,dd02520,869d86b,NULL) 
+[19318] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (a58211b,9fcfc6f,NULL) 
+[19318] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (a58211b,9fcfc6f,NULL) 
+[19326] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (a58211b,NULL) 
+[19326] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (a58211b,NULL) 
+[19342] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (a58211b) 
+[19342] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onStart() (a58211b) 
+[19460] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (a58211b) 
+[19460] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onResume() (a58211b) 
+[21008] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onPause() (a58211b) 
+[21008] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onPause() (a58211b) 
+[21012] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStop() (a58211b) 
+[21012] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onStop() (a58211b) 
+[21042] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (a58211b) 
+[21042] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (a58211b) 
+[21138] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ea56360,dd02520,869d86b,NULL) 
+[21138] [CB] [EXIT] 3453a88 = android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ea56360,dd02520,869d86b,NULL) 
+[21662] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (ea56360,3453a88,NULL) 
+[21662] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (ea56360,3453a88,NULL) 
+[21670] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (ea56360,NULL) 
+[21670] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (ea56360,NULL) 
+[21686] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (ea56360) 
+[21686] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onStart() (ea56360) 
+[21776] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (ea56360) 
+[21776] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onResume() (ea56360) 
+[27400] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onPause() (ea56360) 
+[27400] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onPause() (ea56360) 
+[27404] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStop() (ea56360) 
+[27404] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onStop() (ea56360) 
+[27434] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (ea56360) 
+[27434] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (ea56360) 
+[27530] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a58211b,dd02520,869d86b,NULL) 
+[27530] [CB] [EXIT] 2e86ff3 = android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a58211b,dd02520,869d86b,NULL) 
+[28054] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (a58211b,2e86ff3,NULL) 
+[28054] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (a58211b,2e86ff3,NULL) 
+[28062] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (a58211b,NULL) 
+[28062] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (a58211b,NULL) 
+[28078] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (a58211b) 
+[28078] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onStart() (a58211b) 
+[28169] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (a58211b) 
+[28169] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onResume() (a58211b) 
+[29336] [CB] [ENTRY] void com.mot.ajaxwebapp.MainActivity.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (87a46c0,dfbfd0d,d7289df) 
+  [29361] [CI] [ENTRY] void android.app.ListFragment.<init>() (77b29c1) 
+  [29361] [CI] [EXIT] void android.app.ListFragment.<init>() (77b29c1) 
+[29336] [CB] [EXIT] void com.mot.ajaxwebapp.MainActivity.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (87a46c0,dfbfd0d,d7289df) 
+[29428] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onPause() (a58211b) 
+[29428] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onPause() (a58211b) 
+[29432] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStop() (a58211b) 
+[29432] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onStop() (a58211b) 
+[29462] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (a58211b) 
+[29462] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (a58211b) 
+[29514] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onAttach(android.app.Activity) (77b29c1,87a46c0) 
+[29514] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onAttach(android.app.Activity) (77b29c1,87a46c0) 
+[29532] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onCreate(android.os.Bundle) (77b29c1,NULL) 
+[29532] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onCreate(android.os.Bundle) (77b29c1,NULL) 
+[29796] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (77b29c1,dd02520,869d86b,NULL) 
+[29796] [CB] [EXIT] 5e50061 = android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (77b29c1,dd02520,869d86b,NULL) 
+[30290] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (77b29c1,5e50061,NULL) 
+[30290] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (77b29c1,5e50061,NULL) 
+[30298] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (77b29c1,NULL) 
+[30298] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (77b29c1,NULL) 
+[30318] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (77b29c1) 
+[30318] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onStart() (77b29c1) 
+[30375] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (77b29c1) 
+[30375] [CB] [EXIT] void com.mot.ajaxwebapp.WebviewFragment.onResume() (77b29c1) 
+
+
+
+TRACE STATISTICS
+Trace length: 71
+Top-level callbacks: 65
+CI-ENTRY: 3
+CI-EXIT: 3
+CB-ENTRY: 37
+CB-EXIT: 0
+        encoding - User time: 1.990000
+encoding - System time: 0.000000
+simulation - User time: 12.430000
+simulation - System time: 0.090000
+
+The trace can be simulated in 71 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[0] [CB] [ENTRY] void com.mot.ajaxwebapp.MainActivity.<init>() (87a46c0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.<init>()) |- [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.<init>()) |+ [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[24] [CB] [ENTRY] void com.mot.ajaxwebapp.MainActivity.onCreate(android.os.Bundle) (87a46c0,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 3
+----------------------------------------
+[1979] [CI] [ENTRY] void android.app.ListFragment.<init>() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [ea56360] void android.app.ListFragment.<init>()) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onAttach(87a46c0 : android.app.Activity)
+----------------------------------------
+Step: 4
+----------------------------------------
+[1979] [CI] [EXIT] void android.app.ListFragment.<init>() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [ea56360] void android.app.ListFragment.<init>()) |- [CI] [EXIT] [ea56360] void android.app.ListFragment.<init>()
+----------------------------------------
+Step: 5
+----------------------------------------
+[2322] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onAttach(android.app.Activity) (ea56360,87a46c0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onAttach(87a46c0 : android.app.Activity)) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onAttach(87a46c0 : android.app.Activity)) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onAttach(87a46c0 : android.app.Activity)
+----------------------------------------
+Step: 6
+----------------------------------------
+[2340] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onCreate(android.os.Bundle) (ea56360,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 7
+----------------------------------------
+[21138] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ea56360,dd02520,869d86b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 8
+----------------------------------------
+[3092] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (ea56360,b747b77,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 9
+----------------------------------------
+[21670] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (ea56360,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+----------------------------------------
+Step: 10
+----------------------------------------
+[3116] [CB] [ENTRY] void com.mot.ajaxwebapp.MainActivity.onStart() (87a46c0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.onStart()) |+ [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.onStart()) |- [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.onStart()
+----------------------------------------
+Step: 11
+----------------------------------------
+[21686] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+----------------------------------------
+Step: 12
+----------------------------------------
+[3180] [CB] [ENTRY] void com.mot.ajaxwebapp.MainActivity.onResume() (87a46c0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.onResume()) |- [CB] [ENTRY] [87a46c0] void com.mot.ajaxwebapp.MainActivity.onResume()
+----------------------------------------
+Step: 13
+----------------------------------------
+[21776] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause()
+----------------------------------------
+Step: 14
+----------------------------------------
+[6356] [CB] [ENTRY] void com.mot.ajaxwebapp.MainActivity.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (87a46c0,2b3d431,6d3fec5) 
+----------------------------------------
+Step: 15
+----------------------------------------
+[6377] [CI] [ENTRY] void android.app.ListFragment.<init>() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [a58211b] void android.app.ListFragment.<init>()) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onAttach(87a46c0 : android.app.Activity)
+----------------------------------------
+Step: 16
+----------------------------------------
+[6377] [CI] [EXIT] void android.app.ListFragment.<init>() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [a58211b] void android.app.ListFragment.<init>()) |- [CI] [EXIT] [a58211b] void android.app.ListFragment.<init>()
+----------------------------------------
+Step: 17
+----------------------------------------
+[27400] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onPause() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+----------------------------------------
+Step: 18
+----------------------------------------
+[27404] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStop() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+----------------------------------------
+Step: 19
+----------------------------------------
+[27434] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |+ [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 20
+----------------------------------------
+[6782] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onAttach(android.app.Activity) (a58211b,87a46c0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onAttach(87a46c0 : android.app.Activity)) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onAttach(87a46c0 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onAttach(87a46c0 : android.app.Activity)) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 21
+----------------------------------------
+[6800] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onCreate(android.os.Bundle) (a58211b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 22
+----------------------------------------
+[27530] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a58211b,dd02520,869d86b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 23
+----------------------------------------
+[7558] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (a58211b,5daad67,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 24
+----------------------------------------
+[28062] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (a58211b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+----------------------------------------
+Step: 25
+----------------------------------------
+[28078] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+----------------------------------------
+Step: 26
+----------------------------------------
+[28169] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause()
+----------------------------------------
+Step: 27
+----------------------------------------
+[29428] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onPause() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause()
+----------------------------------------
+Step: 28
+----------------------------------------
+[29432] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStop() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 29
+----------------------------------------
+[29462] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |+ [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+----------------------------------------
+Step: 30
+----------------------------------------
+[21138] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ea56360,dd02520,869d86b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 31
+----------------------------------------
+[10442] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (ea56360,46ab3a5,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 32
+----------------------------------------
+[21670] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (ea56360,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+----------------------------------------
+Step: 33
+----------------------------------------
+[21686] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+----------------------------------------
+Step: 34
+----------------------------------------
+[21776] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause()
+----------------------------------------
+Step: 35
+----------------------------------------
+[27400] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onPause() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+----------------------------------------
+Step: 36
+----------------------------------------
+[27404] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStop() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+----------------------------------------
+Step: 37
+----------------------------------------
+[27434] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |+ [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 38
+----------------------------------------
+[27530] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a58211b,dd02520,869d86b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 39
+----------------------------------------
+[19318] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (a58211b,9fcfc6f,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 40
+----------------------------------------
+[28062] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (a58211b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+----------------------------------------
+Step: 41
+----------------------------------------
+[28078] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+----------------------------------------
+Step: 42
+----------------------------------------
+[28169] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause()
+----------------------------------------
+Step: 43
+----------------------------------------
+[29428] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onPause() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause()
+----------------------------------------
+Step: 44
+----------------------------------------
+[29432] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStop() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 45
+----------------------------------------
+[29462] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |+ [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+----------------------------------------
+Step: 46
+----------------------------------------
+[21138] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ea56360,dd02520,869d86b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 47
+----------------------------------------
+[21662] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (ea56360,3453a88,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(3453a88 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(b747b77 : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(46ab3a5 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 48
+----------------------------------------
+[21670] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (ea56360,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle))) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle))) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+----------------------------------------
+Step: 49
+----------------------------------------
+[21686] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+----------------------------------------
+Step: 50
+----------------------------------------
+[21776] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause()
+----------------------------------------
+Step: 51
+----------------------------------------
+[27400] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onPause() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onPause())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+----------------------------------------
+Step: 52
+----------------------------------------
+[27404] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStop() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+----------------------------------------
+Step: 53
+----------------------------------------
+[27434] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (ea56360) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [ea56360] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |+ [CB] [ENTRY] [ea56360] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 54
+----------------------------------------
+[27530] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a58211b,dd02520,869d86b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 55
+----------------------------------------
+[28054] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (a58211b,2e86ff3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(2e86ff3 : android.view.View,NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5daad67 : android.view.View,NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(9fcfc6f : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 56
+----------------------------------------
+[28062] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (a58211b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle))) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle))) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+----------------------------------------
+Step: 57
+----------------------------------------
+[28078] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+----------------------------------------
+Step: 58
+----------------------------------------
+[28169] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause()
+----------------------------------------
+Step: 59
+----------------------------------------
+[29336] [CB] [ENTRY] void com.mot.ajaxwebapp.MainActivity.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (87a46c0,dfbfd0d,d7289df) 
+----------------------------------------
+Step: 60
+----------------------------------------
+[29361] [CI] [ENTRY] void android.app.ListFragment.<init>() (77b29c1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [77b29c1] void android.app.ListFragment.<init>()) |+ [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onAttach(87a46c0 : android.app.Activity)
+----------------------------------------
+Step: 61
+----------------------------------------
+[29361] [CI] [EXIT] void android.app.ListFragment.<init>() (77b29c1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [77b29c1] void android.app.ListFragment.<init>()) |- [CI] [EXIT] [77b29c1] void android.app.ListFragment.<init>()
+----------------------------------------
+Step: 62
+----------------------------------------
+[29428] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onPause() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onPause()
+----------------------------------------
+Step: 63
+----------------------------------------
+[29432] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStop() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStop())) |+ [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 64
+----------------------------------------
+[29462] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() (a58211b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |+ [CB] [ENTRY] [a58211b] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView() | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView()) | [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onDestroyView())) |- [CB] [ENTRY] [a58211b] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+----------------------------------------
+Step: 65
+----------------------------------------
+[29514] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onAttach(android.app.Activity) (77b29c1,87a46c0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onAttach(87a46c0 : android.app.Activity)) |+ [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onAttach(87a46c0 : android.app.Activity)) |- [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onAttach(87a46c0 : android.app.Activity)
+----------------------------------------
+Step: 66
+----------------------------------------
+[29532] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onCreate(android.os.Bundle) (77b29c1,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [77b29c1] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 67
+----------------------------------------
+[29796] [CB] [ENTRY] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (77b29c1,dd02520,869d86b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [77b29c1] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [77b29c1] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [77b29c1] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [77b29c1] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [77b29c1] android.view.View com.mot.ajaxwebapp.WebviewFragment.onCreateView(dd02520 : android.view.LayoutInflater,869d86b : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5e50061 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 68
+----------------------------------------
+[30290] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(android.view.View,android.os.Bundle) (77b29c1,5e50061,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5e50061 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onViewCreated(5e50061 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 69
+----------------------------------------
+[30298] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(android.os.Bundle) (77b29c1,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 70
+----------------------------------------
+[30318] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onStart() (77b29c1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onStart()) |- [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onStart()) |+ [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+----------------------------------------
+Step: 71
+----------------------------------------
+[30375] [CB] [ENTRY] void com.mot.ajaxwebapp.WebviewFragment.onResume() (77b29c1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onResume()) |- [CB] [ENTRY] [77b29c1] void com.mot.ajaxwebapp.WebviewFragment.onResume()
+----------------------------------------

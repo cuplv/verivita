@@ -1,0 +1,57 @@
+WARNING:root:Last callback truncated
+INFO:root:Total number of specs (before grounding): 17712
+Traceback (most recent call last):
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py", line 502, in <module>
+    main()
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py", line 435, in main
+    (steps, cex, last_cex, ts_enc) = driver.run_simulation(cb_sequence)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py", line 161, in run_simulation
+    self.opts.use_flowdroid_model)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/encoder.py", line 190, in __init__
+    self.stats)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/encoder.py", line 404, in _compute_ground_spec
+    tmp = gs.ground_spec(spec)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/grounding.py", line 68, in ground_spec
+    sg.process_substitutions(spec, self, self._process_subs, data)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/grounding.py", line 755, in process_substitutions
+    ground_formula = self._get_ground_bindings_formula(spec)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/grounding.py", line 677, in _get_ground_bindings_formula
+    ground_enc = self.resize_bvs(ground_enc)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/grounding.py", line 651, in resize_bvs
+    formula = substitute(formula, subs_map)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/shortcuts.py", line 96, in substitute
+    return get_env().substituter.substitute(formula, subs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/substituter.py", line 130, in substitute
+    res = self.walk(formula, substitutions=subs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/walkers/dag.py", line 107, in walk
+    res = self.iter_walk(formula, **kwargs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/walkers/dag.py", line 99, in iter_walk
+    self._process_stack(**kwargs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/walkers/dag.py", line 92, in _process_stack
+    self._compute_node_result(formula, **kwargs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/walkers/dag.py", line 76, in _compute_node_result
+    self.memoization[key] = f(formula, args=args, **kwargs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/substituter.py", line 155, in walk_identity_or_replace
+    return self._inner_idw.functions[formula.node_type()](formula, args=args, **kwargs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/walkers/identitydag.py", line 49, in walk_and
+    return self.mgr.And(args)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/formula.py", line 395, in And
+    args=tuple_args)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/formula.py", line 87, in create_node
+    self._do_type_check(n)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/formula.py", line 72, in _do_type_check_real
+    self.get_type(formula)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/type_checker.py", line 69, in get_type
+    res = self.walk(formula)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/walkers/dag.py", line 107, in walk
+    res = self.iter_walk(formula, **kwargs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/walkers/dag.py", line 99, in iter_walk
+    self._process_stack(**kwargs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/walkers/dag.py", line 92, in _process_stack
+    self._compute_node_result(formula, **kwargs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/walkers/dag.py", line 76, in _compute_node_result
+    self.memoization[key] = f(formula, args=args, **kwargs)
+MemoryError
+real 260.92
+user 258.44
+sys 2.46

@@ -1,0 +1,1616 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/_traces/SufficientlySecure-birthday-adapter-Birthday-Adapter/monkeyTraces/trace-Birthday-Adapter-full_google-debug_2017-04-25_18:11:26.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/_traces/SufficientlySecure-birthday-adapter-Birthday-Adapter/monkeyTraces/trace-Birthday-Adapter-full_google-debug_2017-04-25_18:11:26.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 3.150000
+parsing - System time: 0.230000
+spec_grounding - User time: 184.380000
+spec_grounding - System time: 1.030000
+
+---Simplified Trace---
+[22] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity.<init>() (315dfa) 
+[22] [CB] [EXIT] NULL = void org.birthdayadapter.ui.BaseActivity.<init>() (315dfa) 
+[50] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity.onCreate(android.os.Bundle) (315dfa,NULL) 
+[50] [CB] [EXIT] void org.birthdayadapter.ui.BaseActivity.onCreate(android.os.Bundle) (315dfa,NULL) 
+[1346] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity.onStart() (315dfa) 
+[1346] [CB] [EXIT] void org.birthdayadapter.ui.BaseActivity.onStart() (315dfa) 
+[1378] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity.onResume() (315dfa) 
+[1378] [CB] [EXIT] void org.birthdayadapter.ui.BaseActivity.onResume() (315dfa) 
+[2360] [CB] [ENTRY] java.lang.Object org.birthdayadapter.util.FragmentStatePagerAdapterV14.instantiateItem(android.view.ViewGroup,int) (53ced94,74fb74,0) 
+  [2375] [CI] [ENTRY] void android.preference.PreferenceFragment.<init>() (388f4d8) 
+  [2375] [CI] [EXIT] void android.preference.PreferenceFragment.<init>() (388f4d8) 
+[2360] [CB] [EXIT] 388f4d8 = java.lang.Object org.birthdayadapter.util.FragmentStatePagerAdapterV14.instantiateItem(android.view.ViewGroup,int) (53ced94,74fb74,0) 
+[2402] [CB] [ENTRY] java.lang.Object org.birthdayadapter.util.FragmentStatePagerAdapterV14.instantiateItem(android.view.ViewGroup,int) (53ced94,74fb74,1) 
+  [2415] [CI] [ENTRY] void android.preference.PreferenceFragment.<init>() (9650fb2) 
+  [2415] [CI] [EXIT] void android.preference.PreferenceFragment.<init>() (9650fb2) 
+[2402] [CB] [EXIT] 9650fb2 = java.lang.Object org.birthdayadapter.util.FragmentStatePagerAdapterV14.instantiateItem(android.view.ViewGroup,int) (53ced94,74fb74,1) 
+[2452] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [2479] [CB] [ENTRY] void org.birthdayadapter.ui.BaseFragment.onAttach(android.app.Activity) (388f4d8,315dfa) 
+  [2479] [CB] [EXIT] void org.birthdayadapter.ui.BaseFragment.onAttach(android.app.Activity) (388f4d8,315dfa) 
+  [2487] [CB] [ENTRY] void org.birthdayadapter.ui.BaseFragment.onCreate(android.os.Bundle) (388f4d8,NULL) 
+  [2487] [CB] [EXIT] void org.birthdayadapter.ui.BaseFragment.onCreate(android.os.Bundle) (388f4d8,NULL) 
+  [2519] [CB] [ENTRY] android.view.View org.birthdayadapter.ui.BaseFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (388f4d8,6c7a50b,74fb74,NULL) 
+  [2519] [CB] [EXIT] b0ad9e4 = android.view.View org.birthdayadapter.ui.BaseFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (388f4d8,6c7a50b,74fb74,NULL) 
+  [3311] [CB] [ENTRY] void org.birthdayadapter.ui.BaseFragment.onViewCreated(android.view.View,android.os.Bundle) (388f4d8,b0ad9e4,NULL) 
+  [3311] [CB] [EXIT] void org.birthdayadapter.ui.BaseFragment.onViewCreated(android.view.View,android.os.Bundle) (388f4d8,b0ad9e4,NULL) 
+  [3315] [CB] [ENTRY] void org.birthdayadapter.ui.BaseFragment.onActivityCreated(android.os.Bundle) (388f4d8,NULL) 
+  [3315] [CB] [EXIT] void org.birthdayadapter.ui.BaseFragment.onActivityCreated(android.os.Bundle) (388f4d8,NULL) 
+  [3439] [CB] [ENTRY] void org.birthdayadapter.ui.BaseFragment.onStart() (388f4d8) 
+  [3439] [CB] [EXIT] void org.birthdayadapter.ui.BaseFragment.onStart() (388f4d8) 
+  [3443] [CB] [ENTRY] void org.birthdayadapter.ui.BaseFragment.onResume() (388f4d8) 
+  [3443] [CB] [EXIT] void org.birthdayadapter.ui.BaseFragment.onResume() (388f4d8) 
+  [3467] [CB] [ENTRY] void org.birthdayadapter.ui.PreferencesFragment.onAttach(android.app.Activity) (9650fb2,315dfa) 
+  [3467] [CB] [EXIT] void org.birthdayadapter.ui.PreferencesFragment.onAttach(android.app.Activity) (9650fb2,315dfa) 
+  [3475] [CB] [ENTRY] void org.birthdayadapter.ui.PreferencesFragment.onCreate(android.os.Bundle) (9650fb2,NULL) 
+  [3669] [CB] [ENTRY] void org.birthdayadapter.ui.ReminderPreference.<init>(android.content.Context,android.util.AttributeSet) (3a7a98f,315dfa,7ed493f) 
+  [3669] [CB] [EXIT] NULL = void org.birthdayadapter.ui.ReminderPreference.<init>(android.content.Context,android.util.AttributeSet) (3a7a98f,315dfa,7ed493f) 
+  [3475] [CB] [EXIT] void org.birthdayadapter.ui.PreferencesFragment.onCreate(android.os.Bundle) (9650fb2,NULL) 
+  [4451] [CB] [ENTRY] android.view.View org.birthdayadapter.ui.PreferencesFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (9650fb2,ea1dab1,74fb74,NULL) 
+  [4451] [CB] [EXIT] c079266 = android.view.View org.birthdayadapter.ui.PreferencesFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (9650fb2,ea1dab1,74fb74,NULL) 
+  [5199] [CB] [ENTRY] void org.birthdayadapter.ui.PreferencesFragment.onViewCreated(android.view.View,android.os.Bundle) (9650fb2,c079266,NULL) 
+  [5199] [CB] [EXIT] void org.birthdayadapter.ui.PreferencesFragment.onViewCreated(android.view.View,android.os.Bundle) (9650fb2,c079266,NULL) 
+  [5203] [CB] [ENTRY] void org.birthdayadapter.ui.PreferencesFragment.onActivityCreated(android.os.Bundle) (9650fb2,NULL) 
+  [5203] [CB] [EXIT] void org.birthdayadapter.ui.PreferencesFragment.onActivityCreated(android.os.Bundle) (9650fb2,NULL) 
+  [5467] [CB] [ENTRY] void org.birthdayadapter.ui.PreferencesFragment.onStart() (9650fb2) 
+  [5467] [CB] [EXIT] void org.birthdayadapter.ui.PreferencesFragment.onStart() (9650fb2) 
+  [5471] [CB] [ENTRY] void org.birthdayadapter.ui.PreferencesFragment.onResume() (9650fb2) 
+  [5471] [CB] [EXIT] void org.birthdayadapter.ui.PreferencesFragment.onResume() (9650fb2) 
+[2452] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[15458] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[15458] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[19500] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity$TabsAdapter.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (53ced94,235b829,3d45a17) 
+  [19541] [CI] [ENTRY] void android.app.ListFragment.<init>() (435e239) 
+  [19541] [CI] [EXIT] void android.app.ListFragment.<init>() (435e239) 
+  [19582] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [19609] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onAttach(android.app.Activity) (435e239,315dfa) 
+  [19609] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onAttach(android.app.Activity) (435e239,315dfa) 
+  [19617] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onCreate(android.os.Bundle) (435e239,NULL) 
+  [19617] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onCreate(android.os.Bundle) (435e239,NULL) 
+  [19645] [CB] [ENTRY] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (435e239,14e6826,74fb74,NULL) 
+  [19645] [CB] [EXIT] ab706a5 = android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (435e239,14e6826,74fb74,NULL) 
+  [20069] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(android.view.View,android.os.Bundle) (435e239,ab706a5,NULL) 
+  [20069] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(android.view.View,android.os.Bundle) (435e239,ab706a5,NULL) 
+  [20077] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(android.os.Bundle) (435e239,NULL) 
+  [20077] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(android.os.Bundle) (435e239,NULL) 
+  [20173] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onStart() (435e239) 
+  [20173] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onStart() (435e239) 
+  [20203] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onResume() (435e239) 
+  [20203] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onResume() (435e239) 
+  [19582] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[19500] [CB] [EXIT] void org.birthdayadapter.ui.BaseActivity$TabsAdapter.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (53ced94,235b829,3d45a17) 
+[20298] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+  [20319] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [20319] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [20351] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [20351] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[20298] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20368] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+  [20409] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(android.os.Bundle) (435e239,378f28a) 
+  [20409] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(android.os.Bundle) (435e239,378f28a) 
+  [20436] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [20468] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onPause() (435e239) 
+  [20468] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onPause() (435e239) 
+  [20472] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onStop() (435e239) 
+  [20472] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onStop() (435e239) 
+  [20504] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDestroyView() (435e239) 
+  [20504] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onDestroyView() (435e239) 
+  [20521] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDestroy() (435e239) 
+  [20521] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onDestroy() (435e239) 
+  [20539] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDetach() (435e239) 
+  [20539] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onDetach() (435e239) 
+  [20436] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[20368] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20636] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[20636] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[20723] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20723] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20745] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20745] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20818] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20818] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20830] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20830] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20838] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20838] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20850] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20850] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20886] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20886] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20898] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20898] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20906] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20906] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20918] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20918] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20926] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20926] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20938] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20938] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20946] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20946] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20958] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[20958] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21002] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21002] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21014] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21014] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21022] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21022] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21034] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21034] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21042] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21042] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21050] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21050] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21062] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21062] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21070] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21070] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21082] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21082] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21090] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21090] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21102] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21102] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21110] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21110] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21122] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21122] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21130] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21130] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21142] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21142] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21150] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21150] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21162] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21162] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21170] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21170] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21182] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21182] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[21196] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity$TabsAdapter.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (53ced94,d0957f6,30f9a5f) 
+  [21239] [CI] [ENTRY] void android.app.ListFragment.<init>() (f1f77e6) 
+  [21239] [CI] [EXIT] void android.app.ListFragment.<init>() (f1f77e6) 
+  [21281] [CI] [ENTRY] void android.app.Fragment.<init>() (6aa1eef) 
+  [21281] [CI] [EXIT] void android.app.Fragment.<init>() (6aa1eef) 
+  [21322] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [21349] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onAttach(android.app.Activity) (f1f77e6,315dfa) 
+  [21349] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onAttach(android.app.Activity) (f1f77e6,315dfa) 
+  [21357] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onCreate(android.os.Bundle) (f1f77e6,f2393a2) 
+  [21357] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onCreate(android.os.Bundle) (f1f77e6,f2393a2) 
+  [21385] [CB] [ENTRY] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f1f77e6,b9afc13,74fb74,f2393a2) 
+  [21385] [CB] [EXIT] 9f6af58 = android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f1f77e6,b9afc13,74fb74,f2393a2) 
+  [21809] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(android.view.View,android.os.Bundle) (f1f77e6,9f6af58,f2393a2) 
+  [21809] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(android.view.View,android.os.Bundle) (f1f77e6,9f6af58,f2393a2) 
+  [21817] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(android.os.Bundle) (f1f77e6,f2393a2) 
+  [21817] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(android.os.Bundle) (f1f77e6,f2393a2) 
+  [21909] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onStart() (f1f77e6) 
+  [21909] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onStart() (f1f77e6) 
+  [21939] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onResume() (f1f77e6) 
+  [21939] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onResume() (f1f77e6) 
+  [21943] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onAttach(android.app.Activity) (6aa1eef,315dfa) 
+  [21943] [CB] [EXIT] void org.birthdayadapter.ui.HelpFragment.onAttach(android.app.Activity) (6aa1eef,315dfa) 
+  [21951] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onCreate(android.os.Bundle) (6aa1eef,NULL) 
+  [21951] [CB] [EXIT] void org.birthdayadapter.ui.HelpFragment.onCreate(android.os.Bundle) (6aa1eef,NULL) 
+  [21989] [CB] [ENTRY] android.view.View org.birthdayadapter.ui.HelpFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (6aa1eef,283fb45,74fb74,NULL) 
+  [21989] [CB] [EXIT] 492a6ab = android.view.View org.birthdayadapter.ui.HelpFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (6aa1eef,283fb45,74fb74,NULL) 
+  [22975] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onViewCreated(android.view.View,android.os.Bundle) (6aa1eef,492a6ab,NULL) 
+  [22975] [CB] [EXIT] void org.birthdayadapter.ui.HelpFragment.onViewCreated(android.view.View,android.os.Bundle) (6aa1eef,492a6ab,NULL) 
+  [22979] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onActivityCreated(android.os.Bundle) (6aa1eef,NULL) 
+  [22979] [CB] [EXIT] void org.birthdayadapter.ui.HelpFragment.onActivityCreated(android.os.Bundle) (6aa1eef,NULL) 
+  [22987] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onStart() (6aa1eef) 
+  [22987] [CB] [EXIT] void org.birthdayadapter.ui.HelpFragment.onStart() (6aa1eef) 
+  [22991] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onResume() (6aa1eef) 
+  [22991] [CB] [EXIT] void org.birthdayadapter.ui.HelpFragment.onResume() (6aa1eef) 
+  [21322] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[21196] [CB] [EXIT] void org.birthdayadapter.ui.BaseActivity$TabsAdapter.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (53ced94,d0957f6,30f9a5f) 
+[23134] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+  [23155] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [23155] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [23241] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [23241] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[23134] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[23312] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+  [23343] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(android.os.Bundle) (f1f77e6,378f28a) 
+  [23343] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(android.os.Bundle) (f1f77e6,378f28a) 
+  [23363] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onSaveInstanceState(android.os.Bundle) (6aa1eef,378f28a) 
+  [23363] [CB] [EXIT] void org.birthdayadapter.ui.HelpFragment.onSaveInstanceState(android.os.Bundle) (6aa1eef,378f28a) 
+  [23413] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [23448] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onPause() (f1f77e6) 
+  [23448] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onPause() (f1f77e6) 
+  [23452] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onStop() (f1f77e6) 
+  [23452] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onStop() (f1f77e6) 
+  [23480] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDestroyView() (f1f77e6) 
+  [23480] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onDestroyView() (f1f77e6) 
+  [23492] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDestroy() (f1f77e6) 
+  [23492] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onDestroy() (f1f77e6) 
+  [23510] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDetach() (f1f77e6) 
+  [23510] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onDetach() (f1f77e6) 
+  [23514] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onPause() (6aa1eef) 
+  [23514] [CB] [EXIT] void org.birthdayadapter.ui.HelpFragment.onPause() (6aa1eef) 
+  [23518] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onStop() (6aa1eef) 
+  [23518] [CB] [EXIT] void org.birthdayadapter.ui.HelpFragment.onStop() (6aa1eef) 
+  [23526] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onDestroyView() (6aa1eef) 
+  [23526] [CB] [EXIT] void org.birthdayadapter.ui.HelpFragment.onDestroyView() (6aa1eef) 
+  [23562] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onDestroy() (6aa1eef) 
+  [23562] [CB] [EXIT] void org.birthdayadapter.ui.HelpFragment.onDestroy() (6aa1eef) 
+  [23566] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onDetach() (6aa1eef) 
+  [23566] [CB] [EXIT] void org.birthdayadapter.ui.HelpFragment.onDetach() (6aa1eef) 
+  [23413] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [23591] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [23591] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[23312] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[23664] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[23664] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[23726] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[23726] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[23738] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[23738] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[23752] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity$TabsAdapter.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (53ced94,235b829,7bd6761) 
+  [23791] [CI] [ENTRY] void android.app.ListFragment.<init>() (b470617) 
+  [23791] [CI] [EXIT] void android.app.ListFragment.<init>() (b470617) 
+  [23834] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [23861] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onAttach(android.app.Activity) (b470617,315dfa) 
+  [23861] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onAttach(android.app.Activity) (b470617,315dfa) 
+  [23869] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onCreate(android.os.Bundle) (b470617,1647651) 
+  [23869] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onCreate(android.os.Bundle) (b470617,1647651) 
+  [23897] [CB] [ENTRY] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b470617,7de5016,74fb74,1647651) 
+  [23897] [CB] [EXIT] 3e0f73f = android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b470617,7de5016,74fb74,1647651) 
+  [24321] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(android.view.View,android.os.Bundle) (b470617,3e0f73f,1647651) 
+  [24321] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(android.view.View,android.os.Bundle) (b470617,3e0f73f,1647651) 
+  [24329] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(android.os.Bundle) (b470617,1647651) 
+  [24329] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(android.os.Bundle) (b470617,1647651) 
+  [24421] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onStart() (b470617) 
+  [24421] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onStart() (b470617) 
+  [24451] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onResume() (b470617) 
+  [24451] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onResume() (b470617) 
+  [23834] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[23752] [CB] [EXIT] void org.birthdayadapter.ui.BaseActivity$TabsAdapter.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (53ced94,235b829,7bd6761) 
+[24562] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[24562] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[25087] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[25087] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[25238] [CB] [ENTRY] void org.birthdayadapter.util.AccountListLoader.deliverResult(java.lang.Object) (bf2b212,27fc23f) 
+  [25297] [CI] [ENTRY] boolean android.app.Fragment.isResumed() (b470617) 
+  [25297] [CI] [EXIT] true = boolean android.app.Fragment.isResumed() (b470617) 
+[25238] [CB] [EXIT] void org.birthdayadapter.util.AccountListLoader.deliverResult(java.lang.Object) (bf2b212,27fc23f) 
+[25322] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[25322] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[25396] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[25396] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[25408] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+[25558] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[25558] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[54780] [CB] [ENTRY] void org.birthdayadapter.ui.ReminderPreference.onClick(android.content.DialogInterface,int) (3a7a98f,2a35b05,-1) 
+[54780] [CB] [EXIT] void org.birthdayadapter.ui.ReminderPreference.onClick(android.content.DialogInterface,int) (3a7a98f,2a35b05,-1) 
+[55488] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[55488] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[62838] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[62838] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[70114] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchKeyEvent(android.view.KeyEvent) (315dfa,3d19de5) 
+  [70179] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(android.os.Bundle) (b470617,378f28a) 
+  [70179] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(android.os.Bundle) (b470617,378f28a) 
+  [70205] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [70236] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onPause() (b470617) 
+  [70236] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onPause() (b470617) 
+  [70240] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onStop() (b470617) 
+  [70240] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onStop() (b470617) 
+  [70268] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDestroyView() (b470617) 
+  [70268] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onDestroyView() (b470617) 
+  [70280] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDestroy() (b470617) 
+  [70280] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onDestroy() (b470617) 
+  [70306] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDetach() (b470617) 
+  [70306] [CB] [EXIT] void org.birthdayadapter.ui.AccountListFragment.onDetach() (b470617) 
+  [70205] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[70114] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchKeyEvent(android.view.KeyEvent) (315dfa,3d19de5) 
+[73166] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+  [73191] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [73191] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[73166] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[73202] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[73202] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[73210] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[73210] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[73222] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[73222] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[73230] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[73230] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[73242] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[73242] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[73294] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[73294] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[75220] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[75220] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[75232] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[75232] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[75240] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[75240] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[75252] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[75252] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77372] [CB] [ENTRY] void org.birthdayadapter.ui.ReminderPreference.onClick(android.content.DialogInterface,int) (3a7a98f,4f21ae8,-2) 
+[77372] [CB] [EXIT] void org.birthdayadapter.ui.ReminderPreference.onClick(android.content.DialogInterface,int) (3a7a98f,4f21ae8,-2) 
+[77500] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77500] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77512] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77512] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77520] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77520] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77532] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77532] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77928] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77928] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77940] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77940] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77976] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77976] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77988] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[77988] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[78114] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[78114] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[78773] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[78773] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[78856] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[78856] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79102] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79102] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79114] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79114] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79122] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79122] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79134] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79134] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79532] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79532] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79544] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79544] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79552] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79552] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79564] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79564] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79572] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79572] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79584] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79584] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[79678] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[79678] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[80052] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80052] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80064] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80064] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80288] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80288] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80300] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80300] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80452] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80452] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80464] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80464] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80472] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80472] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80484] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80484] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80492] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80492] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80504] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80504] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80512] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80512] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80524] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80524] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80538] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80538] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80550] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80550] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80558] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80558] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80570] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80570] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80578] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80578] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80590] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80590] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80598] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80598] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80610] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80610] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80626] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+  [80655] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+  [80655] [CB] [EXIT] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+[80626] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80676] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80676] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80688] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80688] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80696] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80696] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80708] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80708] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80716] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80716] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80724] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80724] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80736] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80736] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80744] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80744] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+[80756] [CB] [EXIT] true = boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+
+
+
+TRACE STATISTICS
+Trace length: 220
+Top-level callbacks: 127
+CI-ENTRY: 6
+CI-EXIT: 7
+CB-ENTRY: 83
+CB-EXIT: 0
+        encoding - User time: 4.310000
+encoding - System time: 0.010000
+simulation - User time: 72.000000
+simulation - System time: 0.640000
+
+The trace can be simulated in 220 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[22] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity.<init>() (315dfa) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.<init>()) |+ [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.<init>()) |- [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.<init>()
+----------------------------------------
+Step: 2
+----------------------------------------
+[50] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity.onCreate(android.os.Bundle) (315dfa,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[1346] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity.onStart() (315dfa) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.onStart()) |- [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.onStart()) |+ [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.onResume()
+----------------------------------------
+Step: 4
+----------------------------------------
+[1378] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity.onResume() (315dfa) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.onResume()) |- [CB] [ENTRY] [315dfa] void org.birthdayadapter.ui.BaseActivity.onResume()
+----------------------------------------
+Step: 5
+----------------------------------------
+[2360] [CB] [ENTRY] java.lang.Object org.birthdayadapter.util.FragmentStatePagerAdapterV14.instantiateItem(android.view.ViewGroup,int) (53ced94,74fb74,0) 
+----------------------------------------
+Step: 6
+----------------------------------------
+[2375] [CI] [ENTRY] void android.preference.PreferenceFragment.<init>() (388f4d8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [388f4d8] void android.preference.PreferenceFragment.<init>()) |+ [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onAttach(315dfa : android.app.Activity)
+----------------------------------------
+Step: 7
+----------------------------------------
+[2375] [CI] [EXIT] void android.preference.PreferenceFragment.<init>() (388f4d8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [388f4d8] void android.preference.PreferenceFragment.<init>()) |- [CI] [EXIT] [388f4d8] void android.preference.PreferenceFragment.<init>()
+----------------------------------------
+Step: 8
+----------------------------------------
+[2402] [CB] [ENTRY] java.lang.Object org.birthdayadapter.util.FragmentStatePagerAdapterV14.instantiateItem(android.view.ViewGroup,int) (53ced94,74fb74,1) 
+----------------------------------------
+Step: 9
+----------------------------------------
+[2415] [CI] [ENTRY] void android.preference.PreferenceFragment.<init>() (9650fb2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [9650fb2] void android.preference.PreferenceFragment.<init>()) |+ [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onAttach(315dfa : android.app.Activity)
+----------------------------------------
+Step: 10
+----------------------------------------
+[2415] [CI] [EXIT] void android.preference.PreferenceFragment.<init>() (9650fb2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [9650fb2] void android.preference.PreferenceFragment.<init>()) |- [CI] [EXIT] [9650fb2] void android.preference.PreferenceFragment.<init>()
+----------------------------------------
+Step: 11
+----------------------------------------
+[2452] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 12
+----------------------------------------
+[2479] [CB] [ENTRY] void org.birthdayadapter.ui.BaseFragment.onAttach(android.app.Activity) (388f4d8,315dfa) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onAttach(315dfa : android.app.Activity)) |- [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onAttach(315dfa : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onAttach(315dfa : android.app.Activity)) |+ [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 13
+----------------------------------------
+[2487] [CB] [ENTRY] void org.birthdayadapter.ui.BaseFragment.onCreate(android.os.Bundle) (388f4d8,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [388f4d8] android.view.View org.birthdayadapter.ui.BaseFragment.onCreateView(6c7a50b : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 14
+----------------------------------------
+[2519] [CB] [ENTRY] android.view.View org.birthdayadapter.ui.BaseFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (388f4d8,6c7a50b,74fb74,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [388f4d8] android.view.View org.birthdayadapter.ui.BaseFragment.onCreateView(6c7a50b : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [388f4d8] android.view.View org.birthdayadapter.ui.BaseFragment.onCreateView(6c7a50b : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [388f4d8] android.view.View org.birthdayadapter.ui.BaseFragment.onCreateView(6c7a50b : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [388f4d8] android.view.View org.birthdayadapter.ui.BaseFragment.onCreateView(6c7a50b : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onViewCreated(b0ad9e4 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [388f4d8] android.view.View org.birthdayadapter.ui.BaseFragment.onCreateView(6c7a50b : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onStart()
+----------------------------------------
+Step: 15
+----------------------------------------
+[3311] [CB] [ENTRY] void org.birthdayadapter.ui.BaseFragment.onViewCreated(android.view.View,android.os.Bundle) (388f4d8,b0ad9e4,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onViewCreated(b0ad9e4 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onViewCreated(b0ad9e4 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 16
+----------------------------------------
+[3315] [CB] [ENTRY] void org.birthdayadapter.ui.BaseFragment.onActivityCreated(android.os.Bundle) (388f4d8,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 17
+----------------------------------------
+[3439] [CB] [ENTRY] void org.birthdayadapter.ui.BaseFragment.onStart() (388f4d8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onStart()) |- [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onStart()) |+ [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onResume()
+----------------------------------------
+Step: 18
+----------------------------------------
+[3443] [CB] [ENTRY] void org.birthdayadapter.ui.BaseFragment.onResume() (388f4d8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onResume()) |- [CB] [ENTRY] [388f4d8] void org.birthdayadapter.ui.BaseFragment.onResume()
+----------------------------------------
+Step: 19
+----------------------------------------
+[3467] [CB] [ENTRY] void org.birthdayadapter.ui.PreferencesFragment.onAttach(android.app.Activity) (9650fb2,315dfa) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onAttach(315dfa : android.app.Activity)) |+ [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onAttach(315dfa : android.app.Activity)) |- [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onAttach(315dfa : android.app.Activity)
+----------------------------------------
+Step: 20
+----------------------------------------
+[3475] [CB] [ENTRY] void org.birthdayadapter.ui.PreferencesFragment.onCreate(android.os.Bundle) (9650fb2,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [9650fb2] android.view.View org.birthdayadapter.ui.PreferencesFragment.onCreateView(ea1dab1 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 21
+----------------------------------------
+[3669] [CB] [ENTRY] void org.birthdayadapter.ui.ReminderPreference.<init>(android.content.Context,android.util.AttributeSet) (3a7a98f,315dfa,7ed493f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3a7a98f] void org.birthdayadapter.ui.ReminderPreference.<init>(315dfa : android.content.Context,7ed493f : android.util.AttributeSet)) |+ [CB] [ENTRY] [3a7a98f] void org.birthdayadapter.ui.ReminderPreference.onClick(4f21ae8 : android.content.DialogInterface,-2 : int)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3a7a98f] void org.birthdayadapter.ui.ReminderPreference.<init>(315dfa : android.content.Context,7ed493f : android.util.AttributeSet)) |+ [CB] [ENTRY] [3a7a98f] void org.birthdayadapter.ui.ReminderPreference.onClick(2a35b05 : android.content.DialogInterface,-1 : int)
+----------------------------------------
+Step: 22
+----------------------------------------
+[4451] [CB] [ENTRY] android.view.View org.birthdayadapter.ui.PreferencesFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (9650fb2,ea1dab1,74fb74,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9650fb2] android.view.View org.birthdayadapter.ui.PreferencesFragment.onCreateView(ea1dab1 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9650fb2] android.view.View org.birthdayadapter.ui.PreferencesFragment.onCreateView(ea1dab1 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onViewCreated(c079266 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9650fb2] android.view.View org.birthdayadapter.ui.PreferencesFragment.onCreateView(ea1dab1 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [9650fb2] android.view.View org.birthdayadapter.ui.PreferencesFragment.onCreateView(ea1dab1 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9650fb2] android.view.View org.birthdayadapter.ui.PreferencesFragment.onCreateView(ea1dab1 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onStart()
+----------------------------------------
+Step: 23
+----------------------------------------
+[5199] [CB] [ENTRY] void org.birthdayadapter.ui.PreferencesFragment.onViewCreated(android.view.View,android.os.Bundle) (9650fb2,c079266,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onViewCreated(c079266 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onViewCreated(c079266 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 24
+----------------------------------------
+[5203] [CB] [ENTRY] void org.birthdayadapter.ui.PreferencesFragment.onActivityCreated(android.os.Bundle) (9650fb2,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 25
+----------------------------------------
+[5467] [CB] [ENTRY] void org.birthdayadapter.ui.PreferencesFragment.onStart() (9650fb2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onStart()) |- [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onStart()) |+ [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onResume()
+----------------------------------------
+Step: 26
+----------------------------------------
+[5471] [CB] [ENTRY] void org.birthdayadapter.ui.PreferencesFragment.onResume() (9650fb2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onResume()) |- [CB] [ENTRY] [9650fb2] void org.birthdayadapter.ui.PreferencesFragment.onResume()
+----------------------------------------
+Step: 27
+----------------------------------------
+[79678] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 28
+----------------------------------------
+[19500] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity$TabsAdapter.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (53ced94,235b829,3d45a17) 
+----------------------------------------
+Step: 29
+----------------------------------------
+[19541] [CI] [ENTRY] void android.app.ListFragment.<init>() (435e239) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [435e239] void android.app.ListFragment.<init>()) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)
+----------------------------------------
+Step: 30
+----------------------------------------
+[19541] [CI] [EXIT] void android.app.ListFragment.<init>() (435e239) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [435e239] void android.app.ListFragment.<init>()) |- [CI] [EXIT] [435e239] void android.app.ListFragment.<init>()
+----------------------------------------
+Step: 31
+----------------------------------------
+[19582] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 32
+----------------------------------------
+[19609] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onAttach(android.app.Activity) (435e239,315dfa) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)
+----------------------------------------
+Step: 33
+----------------------------------------
+[19617] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onCreate(android.os.Bundle) (435e239,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [435e239] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(14e6826 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 34
+----------------------------------------
+[19645] [CB] [ENTRY] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (435e239,14e6826,74fb74,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(14e6826 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [435e239] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(14e6826 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(14e6826 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(14e6826 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(ab706a5 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(14e6826 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 35
+----------------------------------------
+[20069] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(android.view.View,android.os.Bundle) (435e239,ab706a5,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(ab706a5 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(ab706a5 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 36
+----------------------------------------
+[20077] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(android.os.Bundle) (435e239,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 37
+----------------------------------------
+[20173] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onStart() (435e239) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStart()) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStart()) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStart()) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStart()) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(378f28a : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStart()) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStart()
+----------------------------------------
+Step: 38
+----------------------------------------
+[20203] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onResume() (435e239) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onResume()) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onResume()) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onPause()
+----------------------------------------
+Step: 39
+----------------------------------------
+[20298] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 40
+----------------------------------------
+[20319] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 41
+----------------------------------------
+[20351] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 42
+----------------------------------------
+[20368] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 43
+----------------------------------------
+[20409] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(android.os.Bundle) (435e239,378f28a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(378f28a : android.os.Bundle)) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(378f28a : android.os.Bundle)
+----------------------------------------
+Step: 44
+----------------------------------------
+[20436] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 45
+----------------------------------------
+[20468] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onPause() (435e239) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onPause()) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onPause()) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onPause()
+----------------------------------------
+Step: 46
+----------------------------------------
+[20472] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onStop() (435e239) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStop()) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStop()) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStop()) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStop()) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStop()) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onResume()
+----------------------------------------
+Step: 47
+----------------------------------------
+[20504] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDestroyView() (435e239) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |+ [CB] [ENTRY] [435e239] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(14e6826 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onStart()
+----------------------------------------
+Step: 48
+----------------------------------------
+[20521] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDestroy() (435e239) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroy()) |- [CB] [ENTRY] [435e239] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(14e6826 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroy()) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDestroy()) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDetach()
+----------------------------------------
+Step: 49
+----------------------------------------
+[20539] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDetach() (435e239) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDetach()) |+ [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDetach()) |- [CB] [ENTRY] [435e239] void org.birthdayadapter.ui.AccountListFragment.onDetach()
+----------------------------------------
+Step: 50
+----------------------------------------
+[79678] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 51
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 52
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 53
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 54
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 55
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 56
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 57
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 58
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 59
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 60
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 61
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 62
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 63
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 64
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 65
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 66
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 67
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 68
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 69
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 70
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 71
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 72
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 73
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 74
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 75
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 76
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 77
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 78
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 79
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 80
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 81
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 82
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 83
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 84
+----------------------------------------
+[21196] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity$TabsAdapter.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (53ced94,d0957f6,30f9a5f) 
+----------------------------------------
+Step: 85
+----------------------------------------
+[21239] [CI] [ENTRY] void android.app.ListFragment.<init>() (f1f77e6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [f1f77e6] void android.app.ListFragment.<init>()) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)
+----------------------------------------
+Step: 86
+----------------------------------------
+[21239] [CI] [EXIT] void android.app.ListFragment.<init>() (f1f77e6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [f1f77e6] void android.app.ListFragment.<init>()) |- [CI] [EXIT] [f1f77e6] void android.app.ListFragment.<init>()
+----------------------------------------
+Step: 87
+----------------------------------------
+[21281] [CI] [ENTRY] void android.app.Fragment.<init>() (6aa1eef) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [6aa1eef] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onAttach(315dfa : android.app.Activity)
+----------------------------------------
+Step: 88
+----------------------------------------
+[21281] [CI] [EXIT] void android.app.Fragment.<init>() (6aa1eef) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [6aa1eef] void android.app.Fragment.<init>()) |- [CI] [EXIT] [6aa1eef] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 89
+----------------------------------------
+[21322] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 90
+----------------------------------------
+[21349] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onAttach(android.app.Activity) (f1f77e6,315dfa) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onCreate(f2393a2 : android.os.Bundle)
+----------------------------------------
+Step: 91
+----------------------------------------
+[21357] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onCreate(android.os.Bundle) (f1f77e6,f2393a2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onCreate(f2393a2 : android.os.Bundle)) |+ [CB] [ENTRY] [f1f77e6] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(b9afc13 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,f2393a2 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onCreate(f2393a2 : android.os.Bundle)) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onCreate(f2393a2 : android.os.Bundle)
+----------------------------------------
+Step: 92
+----------------------------------------
+[21385] [CB] [ENTRY] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f1f77e6,b9afc13,74fb74,f2393a2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(b9afc13 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,f2393a2 : android.os.Bundle)) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(b9afc13 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,f2393a2 : android.os.Bundle)) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(f2393a2 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(b9afc13 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,f2393a2 : android.os.Bundle)) |- [CB] [ENTRY] [f1f77e6] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(b9afc13 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,f2393a2 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(b9afc13 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,f2393a2 : android.os.Bundle)) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(9f6af58 : android.view.View,f2393a2 : android.os.Bundle)
+----------------------------------------
+Step: 93
+----------------------------------------
+[21809] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(android.view.View,android.os.Bundle) (f1f77e6,9f6af58,f2393a2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(9f6af58 : android.view.View,f2393a2 : android.os.Bundle)) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(9f6af58 : android.view.View,f2393a2 : android.os.Bundle)
+----------------------------------------
+Step: 94
+----------------------------------------
+[21817] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(android.os.Bundle) (f1f77e6,f2393a2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(f2393a2 : android.os.Bundle)) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(f2393a2 : android.os.Bundle)) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(f2393a2 : android.os.Bundle)
+----------------------------------------
+Step: 95
+----------------------------------------
+[21909] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onStart() (f1f77e6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStart()) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStart()) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStart()) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStart()) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(378f28a : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStart()) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStart()
+----------------------------------------
+Step: 96
+----------------------------------------
+[21939] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onResume() (f1f77e6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onResume()) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onResume()) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onPause()
+----------------------------------------
+Step: 97
+----------------------------------------
+[21943] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onAttach(android.app.Activity) (6aa1eef,315dfa) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onAttach(315dfa : android.app.Activity)) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onAttach(315dfa : android.app.Activity)) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onAttach(315dfa : android.app.Activity)
+----------------------------------------
+Step: 98
+----------------------------------------
+[21951] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onCreate(android.os.Bundle) (6aa1eef,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [6aa1eef] android.view.View org.birthdayadapter.ui.HelpFragment.onCreateView(283fb45 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 99
+----------------------------------------
+[21989] [CB] [ENTRY] android.view.View org.birthdayadapter.ui.HelpFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (6aa1eef,283fb45,74fb74,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] android.view.View org.birthdayadapter.ui.HelpFragment.onCreateView(283fb45 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] android.view.View org.birthdayadapter.ui.HelpFragment.onCreateView(283fb45 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] android.view.View org.birthdayadapter.ui.HelpFragment.onCreateView(283fb45 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [6aa1eef] android.view.View org.birthdayadapter.ui.HelpFragment.onCreateView(283fb45 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] android.view.View org.birthdayadapter.ui.HelpFragment.onCreateView(283fb45 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onViewCreated(492a6ab : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 100
+----------------------------------------
+[22975] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onViewCreated(android.view.View,android.os.Bundle) (6aa1eef,492a6ab,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onViewCreated(492a6ab : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onViewCreated(492a6ab : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 101
+----------------------------------------
+[22979] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onActivityCreated(android.os.Bundle) (6aa1eef,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 102
+----------------------------------------
+[22987] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onStart() (6aa1eef) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStart()) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStart()) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onSaveInstanceState(378f28a : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStart()) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStart()) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStart()) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onResume()
+----------------------------------------
+Step: 103
+----------------------------------------
+[22991] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onResume() (6aa1eef) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onResume()) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onResume()) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onPause()
+----------------------------------------
+Step: 104
+----------------------------------------
+[23134] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 105
+----------------------------------------
+[23155] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 106
+----------------------------------------
+[23241] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 107
+----------------------------------------
+[23312] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 108
+----------------------------------------
+[23343] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(android.os.Bundle) (f1f77e6,378f28a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(378f28a : android.os.Bundle)) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(378f28a : android.os.Bundle)
+----------------------------------------
+Step: 109
+----------------------------------------
+[23363] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onSaveInstanceState(android.os.Bundle) (6aa1eef,378f28a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onSaveInstanceState(378f28a : android.os.Bundle)) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onSaveInstanceState(378f28a : android.os.Bundle)
+----------------------------------------
+Step: 110
+----------------------------------------
+[23413] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 111
+----------------------------------------
+[23448] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onPause() (f1f77e6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onPause()) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onPause()) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onResume()
+----------------------------------------
+Step: 112
+----------------------------------------
+[23452] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onStop() (f1f77e6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStop()) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStop()) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStop()) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStop()) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStop()) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onCreate(f2393a2 : android.os.Bundle)
+----------------------------------------
+Step: 113
+----------------------------------------
+[23480] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDestroyView() (f1f77e6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |+ [CB] [ENTRY] [f1f77e6] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(b9afc13 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,f2393a2 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onCreate(f2393a2 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroy()
+----------------------------------------
+Step: 114
+----------------------------------------
+[23492] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDestroy() (f1f77e6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroy()) |- [CB] [ENTRY] [f1f77e6] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(b9afc13 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,f2393a2 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroy()) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDestroy()) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDetach()
+----------------------------------------
+Step: 115
+----------------------------------------
+[23510] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDetach() (f1f77e6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDetach()) |- [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onDetach()) |+ [CB] [ENTRY] [f1f77e6] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)
+----------------------------------------
+Step: 116
+----------------------------------------
+[23514] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onPause() (6aa1eef) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onPause()) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onPause()) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onResume()
+----------------------------------------
+Step: 117
+----------------------------------------
+[23518] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onStop() (6aa1eef) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStop()) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStop()) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStop()) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStop()) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStop()) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroyView()
+----------------------------------------
+Step: 118
+----------------------------------------
+[23526] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onDestroyView() (6aa1eef) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroyView()) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroyView()) |+ [CB] [ENTRY] [6aa1eef] android.view.View org.birthdayadapter.ui.HelpFragment.onCreateView(283fb45 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroyView()) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroyView()) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroyView()) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 119
+----------------------------------------
+[23562] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onDestroy() (6aa1eef) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroy()) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroy()) |- [CB] [ENTRY] [6aa1eef] android.view.View org.birthdayadapter.ui.HelpFragment.onCreateView(283fb45 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroy()) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDestroy()
+----------------------------------------
+Step: 120
+----------------------------------------
+[23566] [CB] [ENTRY] void org.birthdayadapter.ui.HelpFragment.onDetach() (6aa1eef) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDetach()) |+ [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onAttach(315dfa : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDetach()) |- [CB] [ENTRY] [6aa1eef] void org.birthdayadapter.ui.HelpFragment.onDetach()
+----------------------------------------
+Step: 121
+----------------------------------------
+[23591] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 122
+----------------------------------------
+[79678] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 123
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 124
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 125
+----------------------------------------
+[23752] [CB] [ENTRY] void org.birthdayadapter.ui.BaseActivity$TabsAdapter.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (53ced94,235b829,7bd6761) 
+----------------------------------------
+Step: 126
+----------------------------------------
+[23791] [CI] [ENTRY] void android.app.ListFragment.<init>() (b470617) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [b470617] void android.app.ListFragment.<init>()) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)
+----------------------------------------
+Step: 127
+----------------------------------------
+[23791] [CI] [EXIT] void android.app.ListFragment.<init>() (b470617) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [b470617] void android.app.ListFragment.<init>()) |- [CI] [EXIT] [b470617] void android.app.ListFragment.<init>()
+----------------------------------------
+Step: 128
+----------------------------------------
+[23834] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 129
+----------------------------------------
+[23861] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onAttach(android.app.Activity) (b470617,315dfa) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onCreate(1647651 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)
+----------------------------------------
+Step: 130
+----------------------------------------
+[23869] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onCreate(android.os.Bundle) (b470617,1647651) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onCreate(1647651 : android.os.Bundle)) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onCreate(1647651 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onCreate(1647651 : android.os.Bundle)) |+ [CB] [ENTRY] [b470617] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(7de5016 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,1647651 : android.os.Bundle)
+----------------------------------------
+Step: 131
+----------------------------------------
+[23897] [CB] [ENTRY] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b470617,7de5016,74fb74,1647651) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(7de5016 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,1647651 : android.os.Bundle)) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(7de5016 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,1647651 : android.os.Bundle)) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(1647651 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(7de5016 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,1647651 : android.os.Bundle)) |- [CB] [ENTRY] [b470617] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(7de5016 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,1647651 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(7de5016 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,1647651 : android.os.Bundle)) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(3e0f73f : android.view.View,1647651 : android.os.Bundle)
+----------------------------------------
+Step: 132
+----------------------------------------
+[24321] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(android.view.View,android.os.Bundle) (b470617,3e0f73f,1647651) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(3e0f73f : android.view.View,1647651 : android.os.Bundle)) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onViewCreated(3e0f73f : android.view.View,1647651 : android.os.Bundle)
+----------------------------------------
+Step: 133
+----------------------------------------
+[24329] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(android.os.Bundle) (b470617,1647651) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(1647651 : android.os.Bundle)) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(1647651 : android.os.Bundle)) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onActivityCreated(1647651 : android.os.Bundle)
+----------------------------------------
+Step: 134
+----------------------------------------
+[24421] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onStart() (b470617) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStart()) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStart()) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStart()) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStart()) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStart()) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(378f28a : android.os.Bundle)
+----------------------------------------
+Step: 135
+----------------------------------------
+[24451] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onResume() (b470617) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onResume()) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onResume()) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onResume()) |+ TRUE = [CI] [EXIT] [b470617] boolean android.app.Fragment.isResumed()
+----------------------------------------
+Step: 136
+----------------------------------------
+[79678] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 137
+----------------------------------------
+[79678] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 138
+----------------------------------------
+[25238] [CB] [ENTRY] void org.birthdayadapter.util.AccountListLoader.deliverResult(java.lang.Object) (bf2b212,27fc23f) 
+----------------------------------------
+Step: 139
+----------------------------------------
+[25297] [CI] [EXIT] true = boolean android.app.Fragment.isResumed() (b470617) 
+----------------------------------------
+Step: 140
+----------------------------------------
+[79678] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 141
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 142
+----------------------------------------
+[25408] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,2ba1822) 
+----------------------------------------
+Step: 143
+----------------------------------------
+[79678] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 144
+----------------------------------------
+[54780] [CB] [ENTRY] void org.birthdayadapter.ui.ReminderPreference.onClick(android.content.DialogInterface,int) (3a7a98f,2a35b05,-1) 
+----------------------------------------
+Step: 145
+----------------------------------------
+[79678] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 146
+----------------------------------------
+[79678] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 147
+----------------------------------------
+[70114] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchKeyEvent(android.view.KeyEvent) (315dfa,3d19de5) 
+----------------------------------------
+Step: 148
+----------------------------------------
+[70179] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(android.os.Bundle) (b470617,378f28a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(378f28a : android.os.Bundle)) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onSaveInstanceState(378f28a : android.os.Bundle)
+----------------------------------------
+Step: 149
+----------------------------------------
+[70205] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 150
+----------------------------------------
+[70236] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onPause() (b470617) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onPause()) |- TRUE = [CI] [EXIT] [b470617] boolean android.app.Fragment.isResumed()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onPause()) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onPause()) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onPause()
+----------------------------------------
+Step: 151
+----------------------------------------
+[70240] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onStop() (b470617) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStop()) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStop()) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onCreate(1647651 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStop()) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStop()) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStop()) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onResume()
+----------------------------------------
+Step: 152
+----------------------------------------
+[70268] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDestroyView() (b470617) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onCreate(1647651 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroyView()) |+ [CB] [ENTRY] [b470617] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(7de5016 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,1647651 : android.os.Bundle)
+----------------------------------------
+Step: 153
+----------------------------------------
+[70280] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDestroy() (b470617) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroy()) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroy()) |- [CB] [ENTRY] [b470617] android.view.View org.birthdayadapter.ui.AccountListFragment.onCreateView(7de5016 : android.view.LayoutInflater,74fb74 : android.view.ViewGroup,1647651 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroy()) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDestroy()
+----------------------------------------
+Step: 154
+----------------------------------------
+[70306] [CB] [ENTRY] void org.birthdayadapter.ui.AccountListFragment.onDetach() (b470617) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDetach()) |- [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onDetach()) |+ [CB] [ENTRY] [b470617] void org.birthdayadapter.ui.AccountListFragment.onAttach(315dfa : android.app.Activity)
+----------------------------------------
+Step: 155
+----------------------------------------
+[73166] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 156
+----------------------------------------
+[73191] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 157
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 158
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 159
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 160
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 161
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 162
+----------------------------------------
+[79678] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 163
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 164
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 165
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 166
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 167
+----------------------------------------
+[77372] [CB] [ENTRY] void org.birthdayadapter.ui.ReminderPreference.onClick(android.content.DialogInterface,int) (3a7a98f,4f21ae8,-2) 
+----------------------------------------
+Step: 168
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 169
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 170
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 171
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 172
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 173
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 174
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 175
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 176
+----------------------------------------
+[79678] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 177
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 178
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 179
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 180
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 181
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 182
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 183
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 184
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 185
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 186
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 187
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 188
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 189
+----------------------------------------
+[79678] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 190
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 191
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 192
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 193
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 194
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 195
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 196
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 197
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 198
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 199
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 200
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 201
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 202
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 203
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 204
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 205
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 206
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 207
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 208
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 209
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 210
+----------------------------------------
+[80626] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 211
+----------------------------------------
+[80655] [CB] [ENTRY] void org.birthdayadapter.util.FragmentStatePagerAdapterV14.finishUpdate(android.view.ViewGroup) (53ced94,74fb74) 
+----------------------------------------
+Step: 212
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 213
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 214
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 215
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 216
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 217
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 218
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 219
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------
+Step: 220
+----------------------------------------
+[80756] [CB] [ENTRY] boolean org.birthdayadapter.ui.BaseActivity.dispatchTouchEvent(android.view.MotionEvent) (315dfa,9da4c4d) 
+----------------------------------------

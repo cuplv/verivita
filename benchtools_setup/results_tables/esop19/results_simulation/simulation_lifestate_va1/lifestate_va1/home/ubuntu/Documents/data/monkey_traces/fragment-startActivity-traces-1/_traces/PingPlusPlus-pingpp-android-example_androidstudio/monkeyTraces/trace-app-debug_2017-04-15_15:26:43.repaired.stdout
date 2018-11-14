@@ -1,0 +1,761 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-1/_traces/PingPlusPlus-pingpp-android-example_androidstudio/monkeyTraces/trace-app-debug_2017-04-15_15:26:43.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-1/_traces/PingPlusPlus-pingpp-android-example_androidstudio/monkeyTraces/trace-app-debug_2017-04-15_15:26:43.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 1.370000
+parsing - System time: 0.130000
+spec_grounding - User time: 198.790000
+spec_grounding - System time: 1.270000
+
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.<init>() (d566f43) 
+[0] [CB] [EXIT] NULL = void com.jianmi.jmall.ExampleActivity.<init>() (d566f43) 
+[48] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.onCreate(android.os.Bundle) (d566f43,NULL) 
+  [1381] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (d566f43,2131296325) 
+  [1381] [CI] [EXIT] e7cbcac = android.view.View android.app.Activity.findViewById(int) (d566f43,2131296325) 
+  [1387] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e7cbcac,d566f43) 
+  [1387] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e7cbcac,d566f43) 
+[48] [CB] [EXIT] void com.jianmi.jmall.ExampleActivity.onCreate(android.os.Bundle) (d566f43,NULL) 
+[1402] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.onStart() (d566f43) 
+[1402] [CB] [EXIT] void com.jianmi.jmall.ExampleActivity.onStart() (d566f43) 
+[1418] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.onResume() (d566f43) 
+[1418] [CB] [EXIT] void com.jianmi.jmall.ExampleActivity.onResume() (d566f43) 
+[6892] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.onClick(android.view.View) (d566f43,e7cbcac) 
+[6892] [CB] [EXIT] void com.jianmi.jmall.ExampleActivity.onClick(android.view.View) (d566f43,e7cbcac) 
+[7080] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.onPause() (d566f43) 
+[7080] [CB] [EXIT] void com.jianmi.jmall.ExampleActivity.onPause() (d566f43) 
+[7104] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.<init>() (a08e607) 
+[7104] [CB] [EXIT] NULL = void com.pingplusplus.libone.PayActivity.<init>() (a08e607) 
+[7152] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onCreate(android.os.Bundle) (a08e607,NULL) 
+  [9851] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (a08e607,2131296332) 
+  [9851] [CI] [EXIT] a9e0829 = android.view.View android.app.Activity.findViewById(int) (a08e607,2131296332) 
+  [9857] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a9e0829,a08e607) 
+  [9857] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a9e0829,a08e607) 
+  [9869] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (a08e607,2131296333) 
+  [9869] [CI] [EXIT] 9aef475 = android.view.View android.app.Activity.findViewById(int) (a08e607,2131296333) 
+  [9875] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (9aef475,a08e607) 
+  [9875] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (9aef475,a08e607) 
+  [9887] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (a08e607,2131296336) 
+  [9887] [CI] [EXIT] a437bd9 = android.view.View android.app.Activity.findViewById(int) (a08e607,2131296336) 
+  [9893] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a437bd9,a08e607) 
+  [9893] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a437bd9,a08e607) 
+  [9905] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (a08e607,2131296334) 
+  [9905] [CI] [EXIT] bd76e81 = android.view.View android.app.Activity.findViewById(int) (a08e607,2131296334) 
+  [9911] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (bd76e81,a08e607) 
+  [9911] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (bd76e81,a08e607) 
+[7152] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onCreate(android.os.Bundle) (a08e607,NULL) 
+[10106] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onStart() (a08e607) 
+[10106] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onStart() (a08e607) 
+[10122] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onResume() (a08e607) 
+[10122] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onResume() (a08e607) 
+[12282] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,a437bd9) 
+  [12305] [CI] [ENTRY] void android.os.AsyncTask.<init>() (9ff0e54) 
+  [12305] [CI] [EXIT] void android.os.AsyncTask.<init>() (9ff0e54) 
+  [12309] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (9ff0e54,a4ca0f9,5b1e69f) 
+  [12310] [CB] [ENTRY] void com.pingplusplus.libone.c.onPreExecute() (9ff0e54) 
+  [12310] [CB] [EXIT] void com.pingplusplus.libone.c.onPreExecute() (9ff0e54) 
+  [12309] [CI] [EXIT] 9ff0e54 = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (9ff0e54,a4ca0f9,5b1e69f) 
+[12282] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,a437bd9) 
+[13635] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,a9e0829) 
+  [13670] [CI] [ENTRY] void android.os.AsyncTask.<init>() (9b9f08a) 
+  [13670] [CI] [EXIT] void android.os.AsyncTask.<init>() (9b9f08a) 
+  [13674] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (9b9f08a,a4ca0f9,d50f8c4) 
+  [13675] [CB] [ENTRY] void com.pingplusplus.libone.c.onPreExecute() (9b9f08a) 
+  [13675] [CB] [EXIT] void com.pingplusplus.libone.c.onPreExecute() (9b9f08a) 
+  [13674] [CI] [EXIT] 9b9f08a = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (9b9f08a,a4ca0f9,d50f8c4) 
+[13635] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,a9e0829) 
+[15042] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.onStop() (d566f43) 
+[15042] [CB] [EXIT] void com.jianmi.jmall.ExampleActivity.onStop() (d566f43) 
+[16106] [CB] [ENTRY] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (9ff0e54,) 
+[16106] [CB] [EXIT] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (9ff0e54,) 
+[16148] [CB] [ENTRY] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (9b9f08a,) 
+[16148] [CB] [EXIT] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (9b9f08a,) 
+[16206] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onPause() (a08e607) 
+[16206] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onPause() (a08e607) 
+[16218] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.<init>() (f7d427c) 
+[16218] [CB] [EXIT] NULL = void com.pingplusplus.libone.PayFiledActivity.<init>() (f7d427c) 
+[16266] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (f7d427c,NULL) 
+  [17983] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (f7d427c,2131296325) 
+  [17983] [CI] [EXIT] 5fd3711 = android.view.View android.app.Activity.findViewById(int) (f7d427c,2131296325) 
+  [17991] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (5fd3711,699e677) 
+  [17991] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (5fd3711,699e677) 
+[16266] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (f7d427c,NULL) 
+[18042] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStart() (f7d427c) 
+[18042] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onStart() (f7d427c) 
+[18058] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onResume() (f7d427c) 
+[18058] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onResume() (f7d427c) 
+[19710] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onStop() (a08e607) 
+[19710] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onStop() (a08e607) 
+[19802] [CB] [ENTRY] void com.pingplusplus.libone.d.onClick(android.view.View) (699e677,5fd3711) 
+  [19803] [CI] [ENTRY] void android.app.Activity.finish() (f7d427c) 
+  [19803] [CI] [EXIT] void android.app.Activity.finish() (f7d427c) 
+[19802] [CB] [EXIT] void com.pingplusplus.libone.d.onClick(android.view.View) (699e677,5fd3711) 
+[19818] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onPause() (f7d427c) 
+[19818] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onPause() (f7d427c) 
+[19830] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.<init>() (f0207c3) 
+[19830] [CB] [EXIT] NULL = void com.pingplusplus.libone.PayFiledActivity.<init>() (f0207c3) 
+[19878] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (f0207c3,NULL) 
+  [21595] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (f0207c3,2131296325) 
+  [21595] [CI] [EXIT] ccb7bd3 = android.view.View android.app.Activity.findViewById(int) (f0207c3,2131296325) 
+  [21603] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (ccb7bd3,d54ce09) 
+  [21603] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (ccb7bd3,d54ce09) 
+[19878] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (f0207c3,NULL) 
+[21654] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStart() (f0207c3) 
+[21654] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onStart() (f0207c3) 
+[21670] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onResume() (f0207c3) 
+[21670] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onResume() (f0207c3) 
+[23318] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStop() (f7d427c) 
+[23318] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onStop() (f7d427c) 
+[23322] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onDestroy() (f7d427c) 
+[23322] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onDestroy() (f7d427c) 
+[23838] [CB] [ENTRY] void com.pingplusplus.libone.d.onClick(android.view.View) (d54ce09,ccb7bd3) 
+  [23839] [CI] [ENTRY] void android.app.Activity.finish() (f0207c3) 
+  [23839] [CI] [EXIT] void android.app.Activity.finish() (f0207c3) 
+[23838] [CB] [EXIT] void com.pingplusplus.libone.d.onClick(android.view.View) (d54ce09,ccb7bd3) 
+[23854] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onPause() (f0207c3) 
+[23854] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onPause() (f0207c3) 
+[23870] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onRestart() (a08e607) 
+[23870] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onRestart() (a08e607) 
+[23878] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onStart() (a08e607) 
+[23878] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onStart() (a08e607) 
+[23882] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onResume() (a08e607) 
+[23882] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onResume() (a08e607) 
+[24054] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStop() (f0207c3) 
+[24054] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onStop() (f0207c3) 
+[24058] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onDestroy() (f0207c3) 
+[24058] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onDestroy() (f0207c3) 
+[24266] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,9aef475) 
+  [24313] [CI] [ENTRY] void android.os.AsyncTask.<init>() (4d896eb) 
+  [24313] [CI] [EXIT] void android.os.AsyncTask.<init>() (4d896eb) 
+  [24317] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (4d896eb,a4ca0f9,707c41d) 
+  [24318] [CB] [ENTRY] void com.pingplusplus.libone.c.onPreExecute() (4d896eb) 
+  [24318] [CB] [EXIT] void com.pingplusplus.libone.c.onPreExecute() (4d896eb) 
+  [24317] [CI] [EXIT] 4d896eb = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (4d896eb,a4ca0f9,707c41d) 
+[24266] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,9aef475) 
+[26497] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,a437bd9) 
+  [26520] [CI] [ENTRY] void android.os.AsyncTask.<init>() (3feeee2) 
+  [26520] [CI] [EXIT] void android.os.AsyncTask.<init>() (3feeee2) 
+  [26524] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (3feeee2,a4ca0f9,87c445c) 
+  [26525] [CB] [ENTRY] void com.pingplusplus.libone.c.onPreExecute() (3feeee2) 
+  [26525] [CB] [EXIT] void com.pingplusplus.libone.c.onPreExecute() (3feeee2) 
+  [26524] [CI] [EXIT] 3feeee2 = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (3feeee2,a4ca0f9,87c445c) 
+[26497] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,a437bd9) 
+[27774] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,bd76e81) 
+  [27833] [CI] [ENTRY] void android.os.AsyncTask.<init>() (637bb7c) 
+  [27833] [CI] [EXIT] void android.os.AsyncTask.<init>() (637bb7c) 
+  [27837] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (637bb7c,a4ca0f9,19b9c26) 
+  [27838] [CB] [ENTRY] void com.pingplusplus.libone.c.onPreExecute() (637bb7c) 
+  [27838] [CB] [EXIT] void com.pingplusplus.libone.c.onPreExecute() (637bb7c) 
+  [27837] [CI] [EXIT] 637bb7c = android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (637bb7c,a4ca0f9,19b9c26) 
+[27774] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,bd76e81) 
+[29128] [CB] [ENTRY] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (4d896eb,) 
+[29128] [CB] [EXIT] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (4d896eb,) 
+[29227] [CB] [ENTRY] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (3feeee2,) 
+[29227] [CB] [EXIT] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (3feeee2,) 
+[29283] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onPause() (a08e607) 
+[29283] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onPause() (a08e607) 
+[29299] [CB] [ENTRY] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (637bb7c,) 
+[29299] [CB] [EXIT] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (637bb7c,) 
+[29337] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.<init>() (693f72a) 
+[29337] [CB] [EXIT] NULL = void com.pingplusplus.libone.PayFiledActivity.<init>() (693f72a) 
+[29385] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (693f72a,NULL) 
+[29385] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (693f72a,NULL) 
+[31161] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStart() (693f72a) 
+[31161] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onStart() (693f72a) 
+[31177] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onResume() (693f72a) 
+[31177] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onResume() (693f72a) 
+[31325] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onPause() (693f72a) 
+[31325] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onPause() (693f72a) 
+[31337] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.<init>() (c0a783b) 
+[31337] [CB] [EXIT] NULL = void com.pingplusplus.libone.PayFiledActivity.<init>() (c0a783b) 
+[31385] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (c0a783b,NULL) 
+[31385] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (c0a783b,NULL) 
+[33161] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStart() (c0a783b) 
+[33161] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onStart() (c0a783b) 
+[33177] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onResume() (c0a783b) 
+[33177] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onResume() (c0a783b) 
+[36061] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStop() (693f72a) 
+[36061] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onStop() (693f72a) 
+[36077] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onStop() (a08e607) 
+[36077] [CB] [EXIT] void com.pingplusplus.libone.PayActivity.onStop() (a08e607) 
+
+
+
+TRACE STATISTICS
+Trace length: 89
+Top-level callbacks: 54
+CI-ENTRY: 14
+CI-EXIT: 12
+CB-ENTRY: 54
+CB-EXIT: 4
+        encoding - User time: 10.820000
+encoding - System time: 0.010000
+simulation - User time: 57.040000
+simulation - System time: 0.510000
+
+The trace can be simulated in 89 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[0] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.<init>() (d566f43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.<init>()) |- [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.<init>()) |+ [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[48] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.onCreate(android.os.Bundle) (d566f43,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[1381] [CI] [EXIT] e7cbcac = android.view.View android.app.Activity.findViewById(int) (d566f43,2131296325) 
+----------------------------------------
+Step: 4
+----------------------------------------
+[1387] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e7cbcac,d566f43) 
+----------------------------------------
+Step: 5
+----------------------------------------
+[1402] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.onStart() (d566f43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onStart()) |+ [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onStart()) |- [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onStart()
+----------------------------------------
+Step: 6
+----------------------------------------
+[1418] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.onResume() (d566f43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onResume()) |- [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onResume()
+    SPEC ((((((TRUE)[*]); e7cbcac = [CI] [EXIT] [d566f43] android.view.View android.app.Activity.findViewById(2131296325 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [e7cbcac] void android.view.View.setOnClickListener(d566f43 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onClick(e7cbcac : android.view.View)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onResume()) |+ [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onPause()
+----------------------------------------
+Step: 7
+----------------------------------------
+[6892] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.onClick(android.view.View) (d566f43,e7cbcac) 
+----------------------------------------
+Step: 8
+----------------------------------------
+[7080] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.onPause() (d566f43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onPause()) |+ [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onPause()) |- [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onPause()) |+ [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onPause()) |+ [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 9
+----------------------------------------
+[7104] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.<init>() (a08e607) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.<init>()) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.<init>()) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.<init>()
+----------------------------------------
+Step: 10
+----------------------------------------
+[7152] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onCreate(android.os.Bundle) (a08e607,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 11
+----------------------------------------
+[9851] [CI] [EXIT] a9e0829 = android.view.View android.app.Activity.findViewById(int) (a08e607,2131296332) 
+----------------------------------------
+Step: 12
+----------------------------------------
+[9857] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a9e0829,a08e607) 
+----------------------------------------
+Step: 13
+----------------------------------------
+[9869] [CI] [EXIT] 9aef475 = android.view.View android.app.Activity.findViewById(int) (a08e607,2131296333) 
+----------------------------------------
+Step: 14
+----------------------------------------
+[9875] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (9aef475,a08e607) 
+----------------------------------------
+Step: 15
+----------------------------------------
+[9887] [CI] [EXIT] a437bd9 = android.view.View android.app.Activity.findViewById(int) (a08e607,2131296336) 
+----------------------------------------
+Step: 16
+----------------------------------------
+[9893] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a437bd9,a08e607) 
+----------------------------------------
+Step: 17
+----------------------------------------
+[9905] [CI] [EXIT] bd76e81 = android.view.View android.app.Activity.findViewById(int) (a08e607,2131296334) 
+----------------------------------------
+Step: 18
+----------------------------------------
+[9911] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (bd76e81,a08e607) 
+----------------------------------------
+Step: 19
+----------------------------------------
+[23878] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onStart() (a08e607) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStart() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStart())) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStart() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStart())) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()
+----------------------------------------
+Step: 20
+----------------------------------------
+[23882] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onResume() (a08e607) 
+    Matched specifications:
+    SPEC ((((((TRUE)[*]); a437bd9 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296336 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [a437bd9] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(9aef475 : android.view.View)
+    SPEC ((((((TRUE)[*]); 9aef475 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296333 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [9aef475] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(9aef475 : android.view.View)
+    SPEC ((((((TRUE)[*]); bd76e81 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296334 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [bd76e81] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(9aef475 : android.view.View)
+    SPEC ((((((TRUE)[*]); a9e0829 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296332 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [a9e0829] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(9aef475 : android.view.View)
+    SPEC ((((((TRUE)[*]); a437bd9 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296336 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [a437bd9] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(bd76e81 : android.view.View)
+    SPEC ((((((TRUE)[*]); bd76e81 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296334 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [bd76e81] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(bd76e81 : android.view.View)
+    SPEC ((((((TRUE)[*]); 9aef475 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296333 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [9aef475] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(bd76e81 : android.view.View)
+    SPEC ((((((TRUE)[*]); a9e0829 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296332 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [a9e0829] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(bd76e81 : android.view.View)
+    SPEC ((((((TRUE)[*]); 9aef475 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296333 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [9aef475] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(a9e0829 : android.view.View)
+    SPEC ((((((TRUE)[*]); a437bd9 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296336 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [a437bd9] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(a9e0829 : android.view.View)
+    SPEC ((((((TRUE)[*]); bd76e81 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296334 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [bd76e81] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(a9e0829 : android.view.View)
+    SPEC ((((((TRUE)[*]); a9e0829 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296332 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [a9e0829] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(a9e0829 : android.view.View)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume())) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume())) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause()
+    SPEC ((((((TRUE)[*]); 9aef475 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296333 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [9aef475] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(a437bd9 : android.view.View)
+    SPEC ((((((TRUE)[*]); a437bd9 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296336 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [a437bd9] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(a437bd9 : android.view.View)
+    SPEC ((((((TRUE)[*]); bd76e81 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296334 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [bd76e81] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(a437bd9 : android.view.View)
+    SPEC ((((((TRUE)[*]); a9e0829 = [CI] [EXIT] [a08e607] android.view.View android.app.Activity.findViewById(2131296332 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [a9e0829] void android.view.View.setOnClickListener(a08e607 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onClick(a437bd9 : android.view.View)
+----------------------------------------
+Step: 21
+----------------------------------------
+[12282] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,a437bd9) 
+----------------------------------------
+Step: 22
+----------------------------------------
+[12305] [CI] [EXIT] void android.os.AsyncTask.<init>() (9ff0e54) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [9ff0e54] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [9ff0e54] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 23
+----------------------------------------
+[12309] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (9ff0e54,a4ca0f9,5b1e69f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [9ff0e54] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(a4ca0f9 : java.util.concurrent.Executor,5b1e69f : java.lang.Object[])) |+ [CB] [ENTRY] [9ff0e54] void com.pingplusplus.libone.c.onPreExecute()
+----------------------------------------
+Step: 24
+----------------------------------------
+[12310] [CB] [ENTRY] void com.pingplusplus.libone.c.onPreExecute() (9ff0e54) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9ff0e54] void com.pingplusplus.libone.c.onPreExecute()) |- [CB] [ENTRY] [9ff0e54] void com.pingplusplus.libone.c.onPreExecute()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9ff0e54] void com.pingplusplus.libone.c.onPreExecute()) |+ [CB] [ENTRY] [9ff0e54] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)
+----------------------------------------
+Step: 25
+----------------------------------------
+[13635] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,a9e0829) 
+----------------------------------------
+Step: 26
+----------------------------------------
+[13670] [CI] [EXIT] void android.os.AsyncTask.<init>() (9b9f08a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [9b9f08a] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [9b9f08a] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 27
+----------------------------------------
+[13674] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (9b9f08a,a4ca0f9,d50f8c4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [9b9f08a] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(a4ca0f9 : java.util.concurrent.Executor,d50f8c4 : java.lang.Object[])) |+ [CB] [ENTRY] [9b9f08a] void com.pingplusplus.libone.c.onPreExecute()
+----------------------------------------
+Step: 28
+----------------------------------------
+[13675] [CB] [ENTRY] void com.pingplusplus.libone.c.onPreExecute() (9b9f08a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9b9f08a] void com.pingplusplus.libone.c.onPreExecute()) |- [CB] [ENTRY] [9b9f08a] void com.pingplusplus.libone.c.onPreExecute()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9b9f08a] void com.pingplusplus.libone.c.onPreExecute()) |+ [CB] [ENTRY] [9b9f08a] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)
+----------------------------------------
+Step: 29
+----------------------------------------
+[15042] [CB] [ENTRY] void com.jianmi.jmall.ExampleActivity.onStop() (d566f43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onStop()) |- [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onStop()) |- [CB] [ENTRY] [d566f43] void com.jianmi.jmall.ExampleActivity.onStop()
+----------------------------------------
+Step: 30
+----------------------------------------
+[16106] [CB] [ENTRY] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (9ff0e54,) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9ff0e54] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)) |- [CB] [ENTRY] [9ff0e54] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)
+----------------------------------------
+Step: 31
+----------------------------------------
+[16148] [CB] [ENTRY] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (9b9f08a,) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9b9f08a] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)) |- [CB] [ENTRY] [9b9f08a] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)
+----------------------------------------
+Step: 32
+----------------------------------------
+[29283] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onPause() (a08e607) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause())) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause())) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause())) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause())) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()
+----------------------------------------
+Step: 33
+----------------------------------------
+[16218] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.<init>() (f7d427c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.<init>()) |- [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.<init>()) |+ [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 34
+----------------------------------------
+[16266] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (f7d427c,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 35
+----------------------------------------
+[17983] [CI] [EXIT] 5fd3711 = android.view.View android.app.Activity.findViewById(int) (f7d427c,2131296325) 
+----------------------------------------
+Step: 36
+----------------------------------------
+[17991] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (5fd3711,699e677) 
+----------------------------------------
+Step: 37
+----------------------------------------
+[16266] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (f7d427c,NULL) 
+----------------------------------------
+Step: 38
+----------------------------------------
+[18042] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStart() (f7d427c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onStart()) |+ [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onStart()) |- [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onStart()
+----------------------------------------
+Step: 39
+----------------------------------------
+[18042] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onStart() (f7d427c) 
+----------------------------------------
+Step: 40
+----------------------------------------
+[18058] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onResume() (f7d427c) 
+    Matched specifications:
+    SPEC ((((((TRUE)[*]); 5fd3711 = [CI] [EXIT] [f7d427c] android.view.View android.app.Activity.findViewById(2131296325 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [5fd3711] void android.view.View.setOnClickListener(699e677 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [699e677] void com.pingplusplus.libone.d.onClick(5fd3711 : android.view.View)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onResume()) |+ [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onResume()) |- [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onResume()
+----------------------------------------
+Step: 41
+----------------------------------------
+[36077] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onStop() (a08e607) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop())) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop())) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onRestart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop())) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()
+----------------------------------------
+Step: 42
+----------------------------------------
+[19802] [CB] [ENTRY] void com.pingplusplus.libone.d.onClick(android.view.View) (699e677,5fd3711) 
+----------------------------------------
+Step: 43
+----------------------------------------
+[19803] [CI] [ENTRY] void android.app.Activity.finish() (f7d427c) 
+----------------------------------------
+Step: 44
+----------------------------------------
+[19818] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onPause() (f7d427c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onPause()) |+ [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onPause()) |- [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onPause()) |+ [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onPause()) |+ [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onStop()
+----------------------------------------
+Step: 45
+----------------------------------------
+[19830] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.<init>() (f0207c3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.<init>()) |- [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.<init>()) |+ [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 46
+----------------------------------------
+[19878] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (f0207c3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 47
+----------------------------------------
+[21595] [CI] [EXIT] ccb7bd3 = android.view.View android.app.Activity.findViewById(int) (f0207c3,2131296325) 
+----------------------------------------
+Step: 48
+----------------------------------------
+[21603] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (ccb7bd3,d54ce09) 
+----------------------------------------
+Step: 49
+----------------------------------------
+[19878] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (f0207c3,NULL) 
+----------------------------------------
+Step: 50
+----------------------------------------
+[21654] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStart() (f0207c3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onStart()) |+ [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onStart()) |- [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onStart()
+----------------------------------------
+Step: 51
+----------------------------------------
+[21654] [CB] [EXIT] void com.pingplusplus.libone.PayFiledActivity.onStart() (f0207c3) 
+----------------------------------------
+Step: 52
+----------------------------------------
+[21670] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onResume() (f0207c3) 
+    Matched specifications:
+    SPEC ((((((TRUE)[*]); ccb7bd3 = [CI] [EXIT] [f0207c3] android.view.View android.app.Activity.findViewById(2131296325 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [ccb7bd3] void android.view.View.setOnClickListener(d54ce09 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [d54ce09] void com.pingplusplus.libone.d.onClick(ccb7bd3 : android.view.View)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onResume()) |+ [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onResume()) |- [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onResume()
+----------------------------------------
+Step: 53
+----------------------------------------
+[23318] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStop() (f7d427c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onStop()) |+ [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onStop()) |- [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onStop()) |- [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onStop()
+----------------------------------------
+Step: 54
+----------------------------------------
+[23322] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onDestroy() (f7d427c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onDestroy()) |- [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onDestroy()) |- [CB] [ENTRY] [f7d427c] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 55
+----------------------------------------
+[23838] [CB] [ENTRY] void com.pingplusplus.libone.d.onClick(android.view.View) (d54ce09,ccb7bd3) 
+----------------------------------------
+Step: 56
+----------------------------------------
+[23839] [CI] [ENTRY] void android.app.Activity.finish() (f0207c3) 
+----------------------------------------
+Step: 57
+----------------------------------------
+[23854] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onPause() (f0207c3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onPause()) |+ [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onPause()) |+ [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onPause()) |- [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onPause()) |+ [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 58
+----------------------------------------
+[23870] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onRestart() (a08e607) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onRestart()) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onRestart()) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onRestart()) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onRestart()
+----------------------------------------
+Step: 59
+----------------------------------------
+[23878] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onStart() (a08e607) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStart() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStart())) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStart() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStart())) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()
+----------------------------------------
+Step: 60
+----------------------------------------
+[23882] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onResume() (a08e607) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume())) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume())) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause()
+----------------------------------------
+Step: 61
+----------------------------------------
+[24054] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStop() (f0207c3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onStop()) |+ [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onStop()) |- [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onStop()) |- [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onStop()
+----------------------------------------
+Step: 62
+----------------------------------------
+[24058] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onDestroy() (f0207c3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onDestroy()) |- [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onDestroy()) |- [CB] [ENTRY] [f0207c3] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 63
+----------------------------------------
+[24266] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,9aef475) 
+----------------------------------------
+Step: 64
+----------------------------------------
+[24313] [CI] [EXIT] void android.os.AsyncTask.<init>() (4d896eb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [4d896eb] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [4d896eb] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 65
+----------------------------------------
+[24317] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (4d896eb,a4ca0f9,707c41d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [4d896eb] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(a4ca0f9 : java.util.concurrent.Executor,707c41d : java.lang.Object[])) |+ [CB] [ENTRY] [4d896eb] void com.pingplusplus.libone.c.onPreExecute()
+----------------------------------------
+Step: 66
+----------------------------------------
+[24318] [CB] [ENTRY] void com.pingplusplus.libone.c.onPreExecute() (4d896eb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4d896eb] void com.pingplusplus.libone.c.onPreExecute()) |- [CB] [ENTRY] [4d896eb] void com.pingplusplus.libone.c.onPreExecute()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4d896eb] void com.pingplusplus.libone.c.onPreExecute()) |+ [CB] [ENTRY] [4d896eb] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)
+----------------------------------------
+Step: 67
+----------------------------------------
+[26497] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,a437bd9) 
+----------------------------------------
+Step: 68
+----------------------------------------
+[26520] [CI] [EXIT] void android.os.AsyncTask.<init>() (3feeee2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [3feeee2] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [3feeee2] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 69
+----------------------------------------
+[26524] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (3feeee2,a4ca0f9,87c445c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [3feeee2] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(a4ca0f9 : java.util.concurrent.Executor,87c445c : java.lang.Object[])) |+ [CB] [ENTRY] [3feeee2] void com.pingplusplus.libone.c.onPreExecute()
+----------------------------------------
+Step: 70
+----------------------------------------
+[26525] [CB] [ENTRY] void com.pingplusplus.libone.c.onPreExecute() (3feeee2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3feeee2] void com.pingplusplus.libone.c.onPreExecute()) |+ [CB] [ENTRY] [3feeee2] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3feeee2] void com.pingplusplus.libone.c.onPreExecute()) |- [CB] [ENTRY] [3feeee2] void com.pingplusplus.libone.c.onPreExecute()
+----------------------------------------
+Step: 71
+----------------------------------------
+[27774] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onClick(android.view.View) (a08e607,bd76e81) 
+----------------------------------------
+Step: 72
+----------------------------------------
+[27833] [CI] [EXIT] void android.os.AsyncTask.<init>() (637bb7c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [637bb7c] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [637bb7c] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 73
+----------------------------------------
+[27837] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(java.util.concurrent.Executor,java.lang.Object[]) (637bb7c,a4ca0f9,19b9c26) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [637bb7c] android.os.AsyncTask android.os.AsyncTask.executeOnExecutor(a4ca0f9 : java.util.concurrent.Executor,19b9c26 : java.lang.Object[])) |+ [CB] [ENTRY] [637bb7c] void com.pingplusplus.libone.c.onPreExecute()
+----------------------------------------
+Step: 74
+----------------------------------------
+[27838] [CB] [ENTRY] void com.pingplusplus.libone.c.onPreExecute() (637bb7c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [637bb7c] void com.pingplusplus.libone.c.onPreExecute()) |+ [CB] [ENTRY] [637bb7c] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [637bb7c] void com.pingplusplus.libone.c.onPreExecute()) |- [CB] [ENTRY] [637bb7c] void com.pingplusplus.libone.c.onPreExecute()
+----------------------------------------
+Step: 75
+----------------------------------------
+[29128] [CB] [ENTRY] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (4d896eb,) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4d896eb] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)) |- [CB] [ENTRY] [4d896eb] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)
+----------------------------------------
+Step: 76
+----------------------------------------
+[29227] [CB] [ENTRY] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (3feeee2,) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3feeee2] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)) |- [CB] [ENTRY] [3feeee2] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)
+----------------------------------------
+Step: 77
+----------------------------------------
+[29283] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onPause() (a08e607) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause())) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause())) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause())) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onPause())) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()
+----------------------------------------
+Step: 78
+----------------------------------------
+[29299] [CB] [ENTRY] void com.pingplusplus.libone.c.onPostExecute(java.lang.Object) (637bb7c,) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [637bb7c] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)) |- [CB] [ENTRY] [637bb7c] void com.pingplusplus.libone.c.onPostExecute( : java.lang.Object)
+----------------------------------------
+Step: 79
+----------------------------------------
+[29337] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.<init>() (693f72a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.<init>()) |- [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.<init>()) |+ [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 80
+----------------------------------------
+[29385] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (693f72a,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onStart()
+----------------------------------------
+Step: 81
+----------------------------------------
+[31161] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStart() (693f72a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onStart()) |+ [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onStart()) |- [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onStart()
+----------------------------------------
+Step: 82
+----------------------------------------
+[31177] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onResume() (693f72a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onResume()) |+ [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onResume()) |- [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onResume()
+----------------------------------------
+Step: 83
+----------------------------------------
+[31325] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onPause() (693f72a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onPause()) |- [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onPause()) |+ [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onPause()) |+ [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onPause()) |+ [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onStop()
+----------------------------------------
+Step: 84
+----------------------------------------
+[31337] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.<init>() (c0a783b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.<init>()) |- [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.<init>()) |+ [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 85
+----------------------------------------
+[31385] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onCreate(android.os.Bundle) (c0a783b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 86
+----------------------------------------
+[33161] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStart() (c0a783b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.onStart()) |- [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.onStart()) |+ [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.onResume()
+----------------------------------------
+Step: 87
+----------------------------------------
+[33177] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onResume() (c0a783b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.onResume()) |- [CB] [ENTRY] [c0a783b] void com.pingplusplus.libone.PayFiledActivity.onResume()
+----------------------------------------
+Step: 88
+----------------------------------------
+[36061] [CB] [ENTRY] void com.pingplusplus.libone.PayFiledActivity.onStop() (693f72a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onStop()) |- [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onStop()) |- [CB] [ENTRY] [693f72a] void com.pingplusplus.libone.PayFiledActivity.onResume()
+----------------------------------------
+Step: 89
+----------------------------------------
+[36077] [CB] [ENTRY] void com.pingplusplus.libone.PayActivity.onStop() (a08e607) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop())) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop())) |+ [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onRestart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop() | [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onStop())) |- [CB] [ENTRY] [a08e607] void com.pingplusplus.libone.PayActivity.onResume()
+----------------------------------------

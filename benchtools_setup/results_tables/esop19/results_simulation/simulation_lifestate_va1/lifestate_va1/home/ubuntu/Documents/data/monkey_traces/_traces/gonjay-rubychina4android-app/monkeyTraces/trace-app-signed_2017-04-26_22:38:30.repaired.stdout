@@ -1,0 +1,848 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/_traces/gonjay-rubychina4android-app/monkeyTraces/trace-app-signed_2017-04-26_22:38:30.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/_traces/gonjay-rubychina4android-app/monkeyTraces/trace-app-signed_2017-04-26_22:38:30.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 1.420000
+parsing - System time: 0.140000
+spec_grounding - User time: 162.910000
+spec_grounding - System time: 0.830000
+
+---Simplified Trace---
+[200] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.<init>() (7c7eaec) 
+[200] [CB] [EXIT] NULL = void org.rubychina.app.ui.MainActivity.<init>() (7c7eaec) 
+[244] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onCreate(android.os.Bundle) (7c7eaec,NULL) 
+  [2223] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (5b56e3) 
+  [2223] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (5b56e3) 
+  [2249] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (2cfa9ca) 
+  [2249] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (2cfa9ca) 
+[244] [CB] [EXIT] void org.rubychina.app.ui.MainActivity.onCreate(android.os.Bundle) (7c7eaec,NULL) 
+[2274] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onStart() (7c7eaec) 
+  [2276] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onAttach(android.app.Activity) (5b56e3,7c7eaec) 
+  [2276] [CB] [EXIT] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onAttach(android.app.Activity) (5b56e3,7c7eaec) 
+  [2284] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreate(android.os.Bundle) (5b56e3,NULL) 
+  [2284] [CB] [EXIT] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreate(android.os.Bundle) (5b56e3,NULL) 
+  [2308] [CB] [ENTRY] android.view.View org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (5b56e3,b5b6d52,6c7a50b,NULL) 
+  [2637] [CI] [ENTRY] android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup) (b5b6d52,2130903088,NULL) 
+  [2637] [CI] [EXIT] 88de4e7 = android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup) (b5b6d52,2130903088,NULL) 
+  [2849] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (88de4e7,b2795d1) 
+  [2849] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (88de4e7,b2795d1) 
+  [2308] [CB] [EXIT] f31172d = android.view.View org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (5b56e3,b5b6d52,6c7a50b,NULL) 
+  [3370] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onViewCreated(android.view.View,android.os.Bundle) (5b56e3,8c18481,NULL) 
+  [3370] [CB] [EXIT] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onViewCreated(android.view.View,android.os.Bundle) (5b56e3,8c18481,NULL) 
+  [3374] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onActivityCreated(android.os.Bundle) (5b56e3,NULL) 
+  [3374] [CB] [EXIT] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onActivityCreated(android.os.Bundle) (5b56e3,NULL) 
+  [3382] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onAttach(android.app.Activity) (2cfa9ca,7c7eaec) 
+  [3382] [CB] [EXIT] void org.rubychina.app.ui.fragment.DrawerFragment.onAttach(android.app.Activity) (2cfa9ca,7c7eaec) 
+  [3390] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onCreate(android.os.Bundle) (2cfa9ca,NULL) 
+  [3390] [CB] [EXIT] void org.rubychina.app.ui.fragment.DrawerFragment.onCreate(android.os.Bundle) (2cfa9ca,NULL) 
+  [3414] [CB] [ENTRY] android.view.View org.rubychina.app.ui.fragment.DrawerFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (2cfa9ca,b5b6d52,44b81e5,NULL) 
+  [3999] [CI] [ENTRY] android.view.View android.view.View.findViewById(int) (5ecc5df,2131296332) 
+  [3999] [CI] [EXIT] f9e7120 = android.view.View android.view.View.findViewById(int) (5ecc5df,2131296332) 
+  [4019] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (f9e7120,b9122a4) 
+  [4019] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (f9e7120,b9122a4) 
+  [3414] [CB] [EXIT] 5ecc5df = android.view.View org.rubychina.app.ui.fragment.DrawerFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (2cfa9ca,b5b6d52,44b81e5,NULL) 
+  [4376] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onViewCreated(android.view.View,android.os.Bundle) (2cfa9ca,5e8d5b9,NULL) 
+  [4376] [CB] [EXIT] void org.rubychina.app.ui.fragment.DrawerFragment.onViewCreated(android.view.View,android.os.Bundle) (2cfa9ca,5e8d5b9,NULL) 
+  [4384] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onActivityCreated(android.os.Bundle) (2cfa9ca,NULL) 
+  [4384] [CB] [EXIT] void org.rubychina.app.ui.fragment.DrawerFragment.onActivityCreated(android.os.Bundle) (2cfa9ca,NULL) 
+  [4504] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onStart() (5b56e3) 
+  [4504] [CB] [EXIT] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onStart() (5b56e3) 
+  [4508] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onStart() (2cfa9ca) 
+  [4508] [CB] [EXIT] void org.rubychina.app.ui.fragment.DrawerFragment.onStart() (2cfa9ca) 
+[2274] [CB] [EXIT] void org.rubychina.app.ui.MainActivity.onStart() (7c7eaec) 
+[4666] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onResume() (7c7eaec) 
+[4666] [CB] [EXIT] void org.rubychina.app.ui.MainActivity.onResume() (7c7eaec) 
+[4670] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onPostResume() (7c7eaec) 
+  [4678] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume() (5b56e3) 
+  [4678] [CB] [EXIT] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume() (5b56e3) 
+  [4682] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onResume() (2cfa9ca) 
+  [4682] [CB] [EXIT] void org.rubychina.app.ui.fragment.DrawerFragment.onResume() (2cfa9ca) 
+[4670] [CB] [EXIT] void org.rubychina.app.ui.MainActivity.onPostResume() (7c7eaec) 
+[8857] [CB] [ENTRY] void org.rubychina.app.view.LoadingFooter$1.onClick(android.view.View) (b2795d1,88de4e7) 
+[8857] [CB] [EXIT] void org.rubychina.app.view.LoadingFooter$1.onClick(android.view.View) (b2795d1,88de4e7) 
+[16273] [CB] [ENTRY] void org.rubychina.app.view.LoadingFooter$1.onClick(android.view.View) (b2795d1,88de4e7) 
+[16273] [CB] [EXIT] void org.rubychina.app.view.LoadingFooter$1.onClick(android.view.View) (b2795d1,88de4e7) 
+[24247] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment$1.onClick(android.view.View) (b9122a4,f9e7120) 
+[24247] [CB] [EXIT] void org.rubychina.app.ui.fragment.DrawerFragment$1.onClick(android.view.View) (b9122a4,f9e7120) 
+[24301] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onPause() (7c7eaec) 
+  [24303] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onPause() (5b56e3) 
+  [24303] [CB] [EXIT] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onPause() (5b56e3) 
+  [24307] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onPause() (2cfa9ca) 
+  [24307] [CB] [EXIT] void org.rubychina.app.ui.fragment.DrawerFragment.onPause() (2cfa9ca) 
+[24301] [CB] [EXIT] void org.rubychina.app.ui.MainActivity.onPause() (7c7eaec) 
+[24329] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.<init>() (db43f91) 
+[24329] [CB] [EXIT] NULL = void org.rubychina.app.ui.LoginActivity.<init>() (db43f91) 
+[24373] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onCreate(android.os.Bundle) (db43f91,NULL) 
+  [26226] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (c3e5bb0) 
+  [26226] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (c3e5bb0) 
+[24373] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onCreate(android.os.Bundle) (db43f91,NULL) 
+[26243] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onStart() (db43f91) 
+  [26245] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(android.app.Activity) (c3e5bb0,db43f91) 
+  [26245] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(android.app.Activity) (c3e5bb0,db43f91) 
+  [26253] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(android.os.Bundle) (c3e5bb0,NULL) 
+  [26253] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(android.os.Bundle) (c3e5bb0,NULL) 
+  [26277] [CB] [ENTRY] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c3e5bb0,525bd39,59c6841,NULL) 
+  [26277] [CB] [EXIT] 29816db = android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c3e5bb0,525bd39,59c6841,NULL) 
+  [26775] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onViewCreated(android.view.View,android.os.Bundle) (c3e5bb0,84002a8,NULL) 
+  [26775] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onViewCreated(android.view.View,android.os.Bundle) (c3e5bb0,84002a8,NULL) 
+  [26779] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(android.os.Bundle) (c3e5bb0,NULL) 
+  [26779] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(android.os.Bundle) (c3e5bb0,NULL) 
+  [26787] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onStart() (c3e5bb0) 
+  [26787] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onStart() (c3e5bb0) 
+[26243] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onStart() (db43f91) 
+[26813] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onResume() (db43f91) 
+[26813] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onResume() (db43f91) 
+[26817] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onPostResume() (db43f91) 
+  [26825] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onResume() (c3e5bb0) 
+  [26825] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onResume() (c3e5bb0) 
+[26817] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onPostResume() (db43f91) 
+[28159] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment$1.onClick(android.view.View) (b9122a4,f9e7120) 
+[28159] [CB] [EXIT] void org.rubychina.app.ui.fragment.DrawerFragment$1.onClick(android.view.View) (b9122a4,f9e7120) 
+[29319] [CB] [ENTRY] boolean org.rubychina.app.ui.LoginActivity.onMenuItemSelected(int,android.view.MenuItem) (db43f91,0,267162e) 
+  [29325] [CI] [ENTRY] void android.app.Activity.finish() (db43f91) 
+  [29325] [CI] [EXIT] void android.app.Activity.finish() (db43f91) 
+[29319] [CB] [EXIT] true = boolean org.rubychina.app.ui.LoginActivity.onMenuItemSelected(int,android.view.MenuItem) (db43f91,0,267162e) 
+[29629] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onPause() (db43f91) 
+  [29631] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onPause() (c3e5bb0) 
+  [29631] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onPause() (c3e5bb0) 
+[29629] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onPause() (db43f91) 
+[29649] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.<init>() (b3a36f1) 
+[29649] [CB] [EXIT] NULL = void org.rubychina.app.ui.LoginActivity.<init>() (b3a36f1) 
+[29693] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onCreate(android.os.Bundle) (b3a36f1,NULL) 
+  [31546] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (c940f53) 
+  [31546] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (c940f53) 
+[29693] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onCreate(android.os.Bundle) (b3a36f1,NULL) 
+[31563] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onStart() (b3a36f1) 
+  [31565] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(android.app.Activity) (c940f53,b3a36f1) 
+  [31565] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(android.app.Activity) (c940f53,b3a36f1) 
+  [31573] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(android.os.Bundle) (c940f53,NULL) 
+  [31573] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(android.os.Bundle) (c940f53,NULL) 
+  [31597] [CB] [ENTRY] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c940f53,85ed899,838c408,NULL) 
+  [31980] [CI] [ENTRY] android.view.View android.view.View.findViewById(int) (11d29ca,2131296318) 
+  [31980] [CI] [EXIT] 5864bb5 = android.view.View android.view.View.findViewById(int) (11d29ca,2131296318) 
+  [31984] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (5864bb5,40605bb) 
+  [31984] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (5864bb5,40605bb) 
+  [31597] [CB] [EXIT] 11d29ca = android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c940f53,85ed899,838c408,NULL) 
+  [32087] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onViewCreated(android.view.View,android.os.Bundle) (c940f53,24dbac5,NULL) 
+  [32087] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onViewCreated(android.view.View,android.os.Bundle) (c940f53,24dbac5,NULL) 
+  [32091] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(android.os.Bundle) (c940f53,NULL) 
+  [32091] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(android.os.Bundle) (c940f53,NULL) 
+  [32099] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onStart() (c940f53) 
+  [32099] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onStart() (c940f53) 
+[31563] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onStart() (b3a36f1) 
+[32125] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onResume() (b3a36f1) 
+[32125] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onResume() (b3a36f1) 
+[32129] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onPostResume() (b3a36f1) 
+  [32137] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onResume() (c940f53) 
+  [32137] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onResume() (c940f53) 
+[32129] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onPostResume() (b3a36f1) 
+[33405] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onStop() (db43f91) 
+  [33407] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onStop() (c3e5bb0) 
+  [33407] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onStop() (c3e5bb0) 
+[33405] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onStop() (db43f91) 
+[33413] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onDestroy() (db43f91) 
+  [33419] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView() (c3e5bb0) 
+  [33419] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView() (c3e5bb0) 
+  [33423] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy() (c3e5bb0) 
+  [33423] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy() (c3e5bb0) 
+  [33427] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onDetach() (c3e5bb0) 
+  [33427] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onDetach() (c3e5bb0) 
+[33413] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onDestroy() (db43f91) 
+[34321] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment$1.onClick(android.view.View) (40605bb,5864bb5) 
+[34321] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment$1.onClick(android.view.View) (40605bb,5864bb5) 
+[34795] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (7c7eaec,73c3558) 
+  [34805] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onSaveInstanceState(android.os.Bundle) (5b56e3,dd6eca5) 
+  [34805] [CB] [EXIT] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onSaveInstanceState(android.os.Bundle) (5b56e3,dd6eca5) 
+  [34809] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onSaveInstanceState(android.os.Bundle) (2cfa9ca,dd6eca5) 
+  [34809] [CB] [EXIT] void org.rubychina.app.ui.fragment.DrawerFragment.onSaveInstanceState(android.os.Bundle) (2cfa9ca,dd6eca5) 
+[34795] [CB] [EXIT] void org.rubychina.app.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (7c7eaec,73c3558) 
+[35375] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment$1.onClick(android.view.View) (40605bb,5864bb5) 
+[35375] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment$1.onClick(android.view.View) (40605bb,5864bb5) 
+[36181] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment$1.onClick(android.view.View) (40605bb,5864bb5) 
+[36181] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment$1.onClick(android.view.View) (40605bb,5864bb5) 
+[36395] [CB] [ENTRY] boolean org.rubychina.app.ui.LoginActivity.onMenuItemSelected(int,android.view.MenuItem) (b3a36f1,0,f8cc681) 
+  [36401] [CI] [ENTRY] void android.app.Activity.finish() (b3a36f1) 
+  [36401] [CI] [EXIT] void android.app.Activity.finish() (b3a36f1) 
+[36395] [CB] [EXIT] true = boolean org.rubychina.app.ui.LoginActivity.onMenuItemSelected(int,android.view.MenuItem) (b3a36f1,0,f8cc681) 
+[36429] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onPause() (b3a36f1) 
+  [36431] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onPause() (c940f53) 
+  [36431] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onPause() (c940f53) 
+[36429] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onPause() (b3a36f1) 
+[36457] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onResume() (7c7eaec) 
+[36457] [CB] [EXIT] void org.rubychina.app.ui.MainActivity.onResume() (7c7eaec) 
+[36461] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onPostResume() (7c7eaec) 
+  [36469] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume() (5b56e3) 
+  [36469] [CB] [EXIT] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume() (5b56e3) 
+  [36473] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onResume() (2cfa9ca) 
+  [36473] [CB] [EXIT] void org.rubychina.app.ui.fragment.DrawerFragment.onResume() (2cfa9ca) 
+[36461] [CB] [EXIT] void org.rubychina.app.ui.MainActivity.onPostResume() (7c7eaec) 
+[36497] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onStop() (b3a36f1) 
+  [36499] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onStop() (c940f53) 
+  [36499] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onStop() (c940f53) 
+[36497] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onStop() (b3a36f1) 
+[36505] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onDestroy() (b3a36f1) 
+  [36511] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView() (c940f53) 
+  [36511] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView() (c940f53) 
+  [36515] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy() (c940f53) 
+  [36515] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy() (c940f53) 
+  [36519] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onDetach() (c940f53) 
+  [36519] [CB] [EXIT] void org.rubychina.app.ui.fragment.LoginFragment.onDetach() (c940f53) 
+[36505] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onDestroy() (b3a36f1) 
+
+
+
+TRACE STATISTICS
+Trace length: 98
+Top-level callbacks: 34
+CI-ENTRY: 9
+CI-EXIT: 7
+CB-ENTRY: 70
+CB-EXIT: 4
+        encoding - User time: 5.090000
+encoding - System time: 0.020000
+simulation - User time: 36.350000
+simulation - System time: 0.280000
+
+The trace can be simulated in 98 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[200] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.<init>() (7c7eaec) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.<init>()) |+ [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.<init>()) |- [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.<init>()
+----------------------------------------
+Step: 2
+----------------------------------------
+[244] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onCreate(android.os.Bundle) (7c7eaec,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 3
+----------------------------------------
+[2223] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (5b56e3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [5b56e3] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onAttach(7c7eaec : android.app.Activity)
+----------------------------------------
+Step: 4
+----------------------------------------
+[2223] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (5b56e3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [5b56e3] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [5b56e3] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 5
+----------------------------------------
+[2249] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (2cfa9ca) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [2cfa9ca] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onAttach(7c7eaec : android.app.Activity)
+----------------------------------------
+Step: 6
+----------------------------------------
+[2249] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (2cfa9ca) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [2cfa9ca] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [2cfa9ca] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 7
+----------------------------------------
+[2274] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onStart() (7c7eaec) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onStart()) |+ [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onStart()) |- [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onStart()
+----------------------------------------
+Step: 8
+----------------------------------------
+[2276] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onAttach(android.app.Activity) (5b56e3,7c7eaec) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onAttach(7c7eaec : android.app.Activity)) |+ [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onAttach(7c7eaec : android.app.Activity)) |- [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onAttach(7c7eaec : android.app.Activity)
+----------------------------------------
+Step: 9
+----------------------------------------
+[2284] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreate(android.os.Bundle) (5b56e3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5b56e3] android.view.View org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreateView(b5b6d52 : android.view.LayoutInflater,6c7a50b : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 10
+----------------------------------------
+[2308] [CB] [ENTRY] android.view.View org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (5b56e3,b5b6d52,6c7a50b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] android.view.View org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreateView(b5b6d52 : android.view.LayoutInflater,6c7a50b : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] android.view.View org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreateView(b5b6d52 : android.view.LayoutInflater,6c7a50b : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [5b56e3] android.view.View org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreateView(b5b6d52 : android.view.LayoutInflater,6c7a50b : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] android.view.View org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreateView(b5b6d52 : android.view.LayoutInflater,6c7a50b : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onViewCreated(8c18481 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] android.view.View org.rubychina.app.ui.fragment.topic.TopicsFragment.onCreateView(b5b6d52 : android.view.LayoutInflater,6c7a50b : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onStart()
+----------------------------------------
+Step: 11
+----------------------------------------
+[2637] [CI] [EXIT] 88de4e7 = android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup) (b5b6d52,2130903088,NULL) 
+----------------------------------------
+Step: 12
+----------------------------------------
+[2849] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (88de4e7,b2795d1) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); 88de4e7 = [CI] [EXIT] [b5b6d52] android.view.View android.view.LayoutInflater.inflate(2130903088 : int,NULL : android.view.ViewGroup)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [88de4e7] void android.view.View.setOnClickListener(b2795d1 : android.view.View$OnClickListener))) |+ [CB] [ENTRY] [b2795d1] void org.rubychina.app.view.LoadingFooter$1.onClick(88de4e7 : android.view.View)
+----------------------------------------
+Step: 13
+----------------------------------------
+[3370] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onViewCreated(android.view.View,android.os.Bundle) (5b56e3,8c18481,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onViewCreated(8c18481 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onViewCreated(8c18481 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 14
+----------------------------------------
+[3374] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onActivityCreated(android.os.Bundle) (5b56e3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 15
+----------------------------------------
+[3382] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onAttach(android.app.Activity) (2cfa9ca,7c7eaec) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onAttach(7c7eaec : android.app.Activity)) |+ [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onAttach(7c7eaec : android.app.Activity)) |- [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onAttach(7c7eaec : android.app.Activity)
+----------------------------------------
+Step: 16
+----------------------------------------
+[3390] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onCreate(android.os.Bundle) (2cfa9ca,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [2cfa9ca] android.view.View org.rubychina.app.ui.fragment.DrawerFragment.onCreateView(b5b6d52 : android.view.LayoutInflater,44b81e5 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 17
+----------------------------------------
+[3414] [CB] [ENTRY] android.view.View org.rubychina.app.ui.fragment.DrawerFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (2cfa9ca,b5b6d52,44b81e5,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] android.view.View org.rubychina.app.ui.fragment.DrawerFragment.onCreateView(b5b6d52 : android.view.LayoutInflater,44b81e5 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] android.view.View org.rubychina.app.ui.fragment.DrawerFragment.onCreateView(b5b6d52 : android.view.LayoutInflater,44b81e5 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onViewCreated(5e8d5b9 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] android.view.View org.rubychina.app.ui.fragment.DrawerFragment.onCreateView(b5b6d52 : android.view.LayoutInflater,44b81e5 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [2cfa9ca] android.view.View org.rubychina.app.ui.fragment.DrawerFragment.onCreateView(b5b6d52 : android.view.LayoutInflater,44b81e5 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] android.view.View org.rubychina.app.ui.fragment.DrawerFragment.onCreateView(b5b6d52 : android.view.LayoutInflater,44b81e5 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 18
+----------------------------------------
+[3999] [CI] [EXIT] f9e7120 = android.view.View android.view.View.findViewById(int) (5ecc5df,2131296332) 
+----------------------------------------
+Step: 19
+----------------------------------------
+[4019] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (f9e7120,b9122a4) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); f9e7120 = [CI] [EXIT] [5ecc5df] android.view.View android.view.View.findViewById(2131296332 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [f9e7120] void android.view.View.setOnClickListener(b9122a4 : android.view.View$OnClickListener))) |+ [CB] [ENTRY] [b9122a4] void org.rubychina.app.ui.fragment.DrawerFragment$1.onClick(f9e7120 : android.view.View)
+----------------------------------------
+Step: 20
+----------------------------------------
+[4376] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onViewCreated(android.view.View,android.os.Bundle) (2cfa9ca,5e8d5b9,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onViewCreated(5e8d5b9 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onViewCreated(5e8d5b9 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 21
+----------------------------------------
+[4384] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onActivityCreated(android.os.Bundle) (2cfa9ca,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 22
+----------------------------------------
+[4504] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onStart() (5b56e3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onStart()) |- [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onStart()) |+ [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onStart()) |+ [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onSaveInstanceState(dd6eca5 : android.os.Bundle)
+----------------------------------------
+Step: 23
+----------------------------------------
+[4508] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onStart() (2cfa9ca) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onStart()) |+ [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onStart()) |- [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onStart()) |+ [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onSaveInstanceState(dd6eca5 : android.os.Bundle)
+----------------------------------------
+Step: 24
+----------------------------------------
+[36457] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onResume() (7c7eaec) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume() | [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume())) |+ [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume() | [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume())) |- [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume()
+----------------------------------------
+Step: 25
+----------------------------------------
+[4670] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onPostResume() (7c7eaec) 
+----------------------------------------
+Step: 26
+----------------------------------------
+[4678] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume() (5b56e3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume() | [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume())) |+ [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume() | [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume())) |- [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume()
+----------------------------------------
+Step: 27
+----------------------------------------
+[4682] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onResume() (2cfa9ca) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume() | [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume())) |+ [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume() | [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume())) |- [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume()
+----------------------------------------
+Step: 28
+----------------------------------------
+[16273] [CB] [ENTRY] void org.rubychina.app.view.LoadingFooter$1.onClick(android.view.View) (b2795d1,88de4e7) 
+----------------------------------------
+Step: 29
+----------------------------------------
+[16273] [CB] [ENTRY] void org.rubychina.app.view.LoadingFooter$1.onClick(android.view.View) (b2795d1,88de4e7) 
+----------------------------------------
+Step: 30
+----------------------------------------
+[28159] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment$1.onClick(android.view.View) (b9122a4,f9e7120) 
+----------------------------------------
+Step: 31
+----------------------------------------
+[24301] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onPause() (7c7eaec) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onPause()) |+ [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onPause()) |+ [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onPause()) |- [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onPause()
+----------------------------------------
+Step: 32
+----------------------------------------
+[24303] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onPause() (5b56e3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onPause()) |- [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onPause()) |+ [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume()
+----------------------------------------
+Step: 33
+----------------------------------------
+[24307] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onPause() (2cfa9ca) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onPause()) |+ [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onPause()) |- [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onPause()
+----------------------------------------
+Step: 34
+----------------------------------------
+[24329] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.<init>() (db43f91) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.<init>()) |+ [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.<init>()) |- [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.<init>()
+----------------------------------------
+Step: 35
+----------------------------------------
+[24373] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onCreate(android.os.Bundle) (db43f91,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onStart()
+----------------------------------------
+Step: 36
+----------------------------------------
+[26226] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (c3e5bb0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [c3e5bb0] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(db43f91 : android.app.Activity)
+----------------------------------------
+Step: 37
+----------------------------------------
+[26226] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (c3e5bb0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [c3e5bb0] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [c3e5bb0] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 38
+----------------------------------------
+[24373] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onCreate(android.os.Bundle) (db43f91,NULL) 
+----------------------------------------
+Step: 39
+----------------------------------------
+[26243] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onStart() (db43f91) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onStart()) |- [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onStart()) |+ [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onResume()
+----------------------------------------
+Step: 40
+----------------------------------------
+[26245] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(android.app.Activity) (c3e5bb0,db43f91) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(db43f91 : android.app.Activity)) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(db43f91 : android.app.Activity)) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(db43f91 : android.app.Activity)
+----------------------------------------
+Step: 41
+----------------------------------------
+[26253] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(android.os.Bundle) (c3e5bb0,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c3e5bb0] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(525bd39 : android.view.LayoutInflater,59c6841 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 42
+----------------------------------------
+[26277] [CB] [ENTRY] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c3e5bb0,525bd39,59c6841,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(525bd39 : android.view.LayoutInflater,59c6841 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onViewCreated(84002a8 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(525bd39 : android.view.LayoutInflater,59c6841 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [c3e5bb0] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(525bd39 : android.view.LayoutInflater,59c6841 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(525bd39 : android.view.LayoutInflater,59c6841 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(525bd39 : android.view.LayoutInflater,59c6841 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 43
+----------------------------------------
+[26775] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onViewCreated(android.view.View,android.os.Bundle) (c3e5bb0,84002a8,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onViewCreated(84002a8 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onViewCreated(84002a8 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 44
+----------------------------------------
+[26779] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(android.os.Bundle) (c3e5bb0,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()
+----------------------------------------
+Step: 45
+----------------------------------------
+[26787] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onStart() (c3e5bb0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStart()) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStart()) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStart()) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStart()) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()
+----------------------------------------
+Step: 46
+----------------------------------------
+[26243] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onStart() (db43f91) 
+----------------------------------------
+Step: 47
+----------------------------------------
+[26813] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onResume() (db43f91) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onResume()) |- [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onResume()) |+ [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onPause()
+----------------------------------------
+Step: 48
+----------------------------------------
+[26817] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onPostResume() (db43f91) 
+----------------------------------------
+Step: 49
+----------------------------------------
+[26825] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onResume() (c3e5bb0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onResume()) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onResume()) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onPause()
+----------------------------------------
+Step: 50
+----------------------------------------
+[28159] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment$1.onClick(android.view.View) (b9122a4,f9e7120) 
+----------------------------------------
+Step: 51
+----------------------------------------
+[29319] [CB] [ENTRY] boolean org.rubychina.app.ui.LoginActivity.onMenuItemSelected(int,android.view.MenuItem) (db43f91,0,267162e) 
+----------------------------------------
+Step: 52
+----------------------------------------
+[29325] [CI] [ENTRY] void android.app.Activity.finish() (db43f91) 
+----------------------------------------
+Step: 53
+----------------------------------------
+[29629] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onPause() (db43f91) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onPause()) |+ [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onPause()) |+ [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onPause()) |- [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onPause()) |+ [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onResume()
+----------------------------------------
+Step: 54
+----------------------------------------
+[29631] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onPause() (c3e5bb0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onPause()) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onPause()) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onPause()
+----------------------------------------
+Step: 55
+----------------------------------------
+[29649] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.<init>() (b3a36f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.<init>()) |- [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.<init>()) |+ [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 56
+----------------------------------------
+[29693] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onCreate(android.os.Bundle) (b3a36f1,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 57
+----------------------------------------
+[31546] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (c940f53) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [c940f53] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(b3a36f1 : android.app.Activity)
+----------------------------------------
+Step: 58
+----------------------------------------
+[31546] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (c940f53) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [c940f53] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [c940f53] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 59
+----------------------------------------
+[29693] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onCreate(android.os.Bundle) (b3a36f1,NULL) 
+----------------------------------------
+Step: 60
+----------------------------------------
+[31563] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onStart() (b3a36f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onStart()) |+ [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onStart()) |- [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onStart()
+----------------------------------------
+Step: 61
+----------------------------------------
+[31565] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(android.app.Activity) (c940f53,b3a36f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(b3a36f1 : android.app.Activity)) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(b3a36f1 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(b3a36f1 : android.app.Activity)) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 62
+----------------------------------------
+[31573] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(android.os.Bundle) (c940f53,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c940f53] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(85ed899 : android.view.LayoutInflater,838c408 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 63
+----------------------------------------
+[31597] [CB] [ENTRY] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c940f53,85ed899,838c408,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(85ed899 : android.view.LayoutInflater,838c408 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [c940f53] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(85ed899 : android.view.LayoutInflater,838c408 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(85ed899 : android.view.LayoutInflater,838c408 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(85ed899 : android.view.LayoutInflater,838c408 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(85ed899 : android.view.LayoutInflater,838c408 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onViewCreated(24dbac5 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 64
+----------------------------------------
+[31980] [CI] [EXIT] 5864bb5 = android.view.View android.view.View.findViewById(int) (11d29ca,2131296318) 
+----------------------------------------
+Step: 65
+----------------------------------------
+[31984] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (5864bb5,40605bb) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); 5864bb5 = [CI] [EXIT] [11d29ca] android.view.View android.view.View.findViewById(2131296318 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [5864bb5] void android.view.View.setOnClickListener(40605bb : android.view.View$OnClickListener))) |+ [CB] [ENTRY] [40605bb] void org.rubychina.app.ui.fragment.LoginFragment$1.onClick(5864bb5 : android.view.View)
+----------------------------------------
+Step: 66
+----------------------------------------
+[32087] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onViewCreated(android.view.View,android.os.Bundle) (c940f53,24dbac5,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onViewCreated(24dbac5 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onViewCreated(24dbac5 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 67
+----------------------------------------
+[32091] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(android.os.Bundle) (c940f53,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()
+----------------------------------------
+Step: 68
+----------------------------------------
+[32099] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onStart() (c940f53) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStart()) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStart()) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStart()) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStart()) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onResume()
+----------------------------------------
+Step: 69
+----------------------------------------
+[31563] [CB] [EXIT] void org.rubychina.app.ui.LoginActivity.onStart() (b3a36f1) 
+----------------------------------------
+Step: 70
+----------------------------------------
+[32125] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onResume() (b3a36f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onResume()) |+ [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onResume()) |- [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onResume()
+----------------------------------------
+Step: 71
+----------------------------------------
+[32129] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onPostResume() (b3a36f1) 
+----------------------------------------
+Step: 72
+----------------------------------------
+[32137] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onResume() (c940f53) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onResume()) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onResume()) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onPause()
+----------------------------------------
+Step: 73
+----------------------------------------
+[33405] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onStop() (db43f91) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onStop()) |- [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onStop()) |- [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onStop()) |+ [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onDestroy()
+----------------------------------------
+Step: 74
+----------------------------------------
+[33407] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onStop() (c3e5bb0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStop()) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStop()) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStop()) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStop()) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStop()) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStart()
+----------------------------------------
+Step: 75
+----------------------------------------
+[33413] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onDestroy() (db43f91) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onDestroy()) |- [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onDestroy()) |- [CB] [ENTRY] [db43f91] void org.rubychina.app.ui.LoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 76
+----------------------------------------
+[33419] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView() (c3e5bb0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()) |+ [CB] [ENTRY] [c3e5bb0] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(525bd39 : android.view.LayoutInflater,59c6841 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 77
+----------------------------------------
+[33423] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy() (c3e5bb0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy()) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy()) |- [CB] [ENTRY] [c3e5bb0] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(525bd39 : android.view.LayoutInflater,59c6841 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy()) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDetach()
+----------------------------------------
+Step: 78
+----------------------------------------
+[33427] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onDetach() (c3e5bb0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDetach()) |- [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onDetach()) |+ [CB] [ENTRY] [c3e5bb0] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(db43f91 : android.app.Activity)
+----------------------------------------
+Step: 79
+----------------------------------------
+[36181] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment$1.onClick(android.view.View) (40605bb,5864bb5) 
+----------------------------------------
+Step: 80
+----------------------------------------
+[34795] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (7c7eaec,73c3558) 
+----------------------------------------
+Step: 81
+----------------------------------------
+[34805] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onSaveInstanceState(android.os.Bundle) (5b56e3,dd6eca5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onSaveInstanceState(dd6eca5 : android.os.Bundle)) |- [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onSaveInstanceState(dd6eca5 : android.os.Bundle)
+----------------------------------------
+Step: 82
+----------------------------------------
+[34809] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onSaveInstanceState(android.os.Bundle) (2cfa9ca,dd6eca5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onSaveInstanceState(dd6eca5 : android.os.Bundle)) |- [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onSaveInstanceState(dd6eca5 : android.os.Bundle)
+----------------------------------------
+Step: 83
+----------------------------------------
+[36181] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment$1.onClick(android.view.View) (40605bb,5864bb5) 
+----------------------------------------
+Step: 84
+----------------------------------------
+[36181] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment$1.onClick(android.view.View) (40605bb,5864bb5) 
+----------------------------------------
+Step: 85
+----------------------------------------
+[36395] [CB] [ENTRY] boolean org.rubychina.app.ui.LoginActivity.onMenuItemSelected(int,android.view.MenuItem) (b3a36f1,0,f8cc681) 
+----------------------------------------
+Step: 86
+----------------------------------------
+[36401] [CI] [ENTRY] void android.app.Activity.finish() (b3a36f1) 
+----------------------------------------
+Step: 87
+----------------------------------------
+[36429] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onPause() (b3a36f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onPause()) |+ [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onPause()) |+ [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onPause()) |- [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onPause()) |+ [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 88
+----------------------------------------
+[36431] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onPause() (c940f53) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onPause()) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onPause()) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onResume()
+----------------------------------------
+Step: 89
+----------------------------------------
+[36457] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onResume() (7c7eaec) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume() | [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume())) |- [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume() | [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume())) |+ [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume() | [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume())) |- [CB] [ENTRY] [7c7eaec] void org.rubychina.app.ui.MainActivity.onResume()
+----------------------------------------
+Step: 90
+----------------------------------------
+[36461] [CB] [ENTRY] void org.rubychina.app.ui.MainActivity.onPostResume() (7c7eaec) 
+----------------------------------------
+Step: 91
+----------------------------------------
+[36469] [CB] [ENTRY] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume() (5b56e3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume() | [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume())) |+ [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume() | [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume())) |+ [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onSaveInstanceState(dd6eca5 : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume() | [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume())) |- [CB] [ENTRY] [5b56e3] void org.rubychina.app.ui.fragment.topic.TopicsFragment.onResume()
+----------------------------------------
+Step: 92
+----------------------------------------
+[36473] [CB] [ENTRY] void org.rubychina.app.ui.fragment.DrawerFragment.onResume() (2cfa9ca) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume() | [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume())) |+ [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume() | [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume())) |+ [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onSaveInstanceState(dd6eca5 : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume() | [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume())) |- [CB] [ENTRY] [2cfa9ca] void org.rubychina.app.ui.fragment.DrawerFragment.onResume()
+----------------------------------------
+Step: 93
+----------------------------------------
+[36497] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onStop() (b3a36f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onStop()) |- [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onStop()) |+ [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onStop()) |- [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onStop()
+----------------------------------------
+Step: 94
+----------------------------------------
+[36499] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onStop() (c940f53) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStop()) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStop()) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStop()) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStop()) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStop()) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStart()
+----------------------------------------
+Step: 95
+----------------------------------------
+[36505] [CB] [ENTRY] void org.rubychina.app.ui.LoginActivity.onDestroy() (b3a36f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onDestroy()) |- [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onDestroy()) |- [CB] [ENTRY] [b3a36f1] void org.rubychina.app.ui.LoginActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 96
+----------------------------------------
+[36511] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView() (c940f53) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroyView()) |+ [CB] [ENTRY] [c940f53] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(85ed899 : android.view.LayoutInflater,838c408 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 97
+----------------------------------------
+[36515] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy() (c940f53) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy()) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy()) |- [CB] [ENTRY] [c940f53] android.view.View org.rubychina.app.ui.fragment.LoginFragment.onCreateView(85ed899 : android.view.LayoutInflater,838c408 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy()) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDestroy()
+----------------------------------------
+Step: 98
+----------------------------------------
+[36519] [CB] [ENTRY] void org.rubychina.app.ui.fragment.LoginFragment.onDetach() (c940f53) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDetach()) |+ [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onAttach(b3a36f1 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDetach()) |- [CB] [ENTRY] [c940f53] void org.rubychina.app.ui.fragment.LoginFragment.onDetach()
+----------------------------------------

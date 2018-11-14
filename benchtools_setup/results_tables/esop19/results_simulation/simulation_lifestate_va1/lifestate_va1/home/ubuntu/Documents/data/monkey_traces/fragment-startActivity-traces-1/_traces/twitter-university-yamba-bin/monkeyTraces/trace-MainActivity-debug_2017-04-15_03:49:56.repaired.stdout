@@ -1,0 +1,965 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-1/_traces/twitter-university-yamba-bin/monkeyTraces/trace-MainActivity-debug_2017-04-15_03:49:56.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-1/_traces/twitter-university-yamba-bin/monkeyTraces/trace-MainActivity-debug_2017-04-15_03:49:56.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 1.290000
+parsing - System time: 0.080000
+spec_grounding - User time: 218.390000
+spec_grounding - System time: 1.340000
+
+---Simplified Trace---
+[18] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.<init>() (48110d7) 
+[18] [CB] [EXIT] NULL = void com.marakana.android.yamba.MainActivity.<init>() (48110d7) 
+[62] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onCreate(android.os.Bundle) (48110d7,NULL) 
+  [1669] [CI] [ENTRY] void android.app.ListFragment.<init>() (c7c7c03) 
+  [1669] [CI] [EXIT] void android.app.ListFragment.<init>() (c7c7c03) 
+  [1684] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onAttach(android.app.Activity) (c7c7c03,48110d7) 
+  [1684] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onAttach(android.app.Activity) (c7c7c03,48110d7) 
+  [1692] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onCreate(android.os.Bundle) (c7c7c03,NULL) 
+  [1692] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onCreate(android.os.Bundle) (c7c7c03,NULL) 
+  [1712] [CB] [ENTRY] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c7c7c03,dc048ea,NULL,NULL) 
+  [1712] [CB] [EXIT] f15c6ce = android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c7c7c03,dc048ea,NULL,NULL) 
+  [2248] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onViewCreated(android.view.View,android.os.Bundle) (c7c7c03,f15c6ce,NULL) 
+  [2248] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onViewCreated(android.view.View,android.os.Bundle) (c7c7c03,f15c6ce,NULL) 
+[62] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onCreate(android.os.Bundle) (48110d7,NULL) 
+[2388] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(android.os.Bundle) (c7c7c03,NULL) 
+[2388] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(android.os.Bundle) (c7c7c03,NULL) 
+[2440] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onStart() (48110d7) 
+[2440] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onStart() (48110d7) 
+[2444] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onStart() (c7c7c03) 
+[2444] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onStart() (c7c7c03) 
+[2460] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onResume() (48110d7) 
+[2460] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onResume() (48110d7) 
+[2464] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onResume() (c7c7c03) 
+[2464] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onResume() (c7c7c03) 
+[7806] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onPause() (c7c7c03) 
+[7806] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onPause() (c7c7c03) 
+[7810] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onPause() (48110d7) 
+[7810] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onPause() (48110d7) 
+[7826] [CB] [ENTRY] void com.marakana.android.yamba.StatusActivity.<init>() (904205) 
+[7826] [CB] [EXIT] NULL = void com.marakana.android.yamba.StatusActivity.<init>() (904205) 
+[7870] [CB] [ENTRY] void com.marakana.android.yamba.StatusActivity.onCreate(android.os.Bundle) (904205,NULL) 
+  [9367] [CI] [ENTRY] void android.app.Fragment.<init>() (b3fa031) 
+  [9367] [CI] [EXIT] void android.app.Fragment.<init>() (b3fa031) 
+[7870] [CB] [EXIT] void com.marakana.android.yamba.StatusActivity.onCreate(android.os.Bundle) (904205,NULL) 
+[9410] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onAttach(android.app.Activity) (b3fa031,904205) 
+[9410] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onAttach(android.app.Activity) (b3fa031,904205) 
+[9418] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onCreate(android.os.Bundle) (b3fa031,NULL) 
+[9418] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onCreate(android.os.Bundle) (b3fa031,NULL) 
+[9462] [CB] [ENTRY] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b3fa031,bbccc62,4649dbd,NULL) 
+[9462] [CB] [EXIT] 35bab56 = android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b3fa031,bbccc62,4649dbd,NULL) 
+[9802] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onViewCreated(android.view.View,android.os.Bundle) (b3fa031,35bab56,NULL) 
+[9802] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onViewCreated(android.view.View,android.os.Bundle) (b3fa031,35bab56,NULL) 
+[9806] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onActivityCreated(android.os.Bundle) (b3fa031,NULL) 
+[9806] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onActivityCreated(android.os.Bundle) (b3fa031,NULL) 
+[9814] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onStart() (904205) 
+[9814] [CB] [EXIT] void com.marakana.android.yamba.SubActivity.onStart() (904205) 
+[9818] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onStart() (b3fa031) 
+[9818] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onStart() (b3fa031) 
+[9842] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onResume() (904205) 
+[9842] [CB] [EXIT] void com.marakana.android.yamba.SubActivity.onResume() (904205) 
+[9846] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onResume() (b3fa031) 
+[9846] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onResume() (b3fa031) 
+[11402] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onSaveInstanceState(android.os.Bundle) (48110d7,18b7b18) 
+  [11404] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onSaveInstanceState(android.os.Bundle) (c7c7c03,89dabad) 
+  [11404] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onSaveInstanceState(android.os.Bundle) (c7c7c03,89dabad) 
+[11402] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onSaveInstanceState(android.os.Bundle) (48110d7,18b7b18) 
+[11410] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onStop() (c7c7c03) 
+[11410] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onStop() (c7c7c03) 
+[11414] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onStop() (48110d7) 
+[11414] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onStop() (48110d7) 
+[11426] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onPause() (b3fa031) 
+[11426] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onPause() (b3fa031) 
+[11432] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onPause() (904205) 
+[11432] [CB] [EXIT] void com.marakana.android.yamba.SubActivity.onPause() (904205) 
+[11464] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.<init>() (b8e6a43) 
+[11464] [CB] [EXIT] NULL = void com.marakana.android.yamba.MainActivity.<init>() (b8e6a43) 
+[11508] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onCreate(android.os.Bundle) (b8e6a43,NULL) 
+  [13039] [CI] [ENTRY] void android.app.ListFragment.<init>() (f2d9684) 
+  [13039] [CI] [EXIT] void android.app.ListFragment.<init>() (f2d9684) 
+  [13054] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onAttach(android.app.Activity) (f2d9684,b8e6a43) 
+  [13054] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onAttach(android.app.Activity) (f2d9684,b8e6a43) 
+  [13062] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onCreate(android.os.Bundle) (f2d9684,NULL) 
+  [13062] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onCreate(android.os.Bundle) (f2d9684,NULL) 
+  [13082] [CB] [ENTRY] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f2d9684,202ecab,NULL,NULL) 
+  [13082] [CB] [EXIT] 17a52c3 = android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f2d9684,202ecab,NULL,NULL) 
+  [13610] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onViewCreated(android.view.View,android.os.Bundle) (f2d9684,17a52c3,NULL) 
+  [13610] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onViewCreated(android.view.View,android.os.Bundle) (f2d9684,17a52c3,NULL) 
+[11508] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onCreate(android.os.Bundle) (b8e6a43,NULL) 
+[13750] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(android.os.Bundle) (f2d9684,NULL) 
+[13750] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(android.os.Bundle) (f2d9684,NULL) 
+[13802] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onStart() (b8e6a43) 
+[13802] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onStart() (b8e6a43) 
+[13806] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onStart() (f2d9684) 
+[13806] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onStart() (f2d9684) 
+[13822] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onResume() (b8e6a43) 
+[13822] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onResume() (b8e6a43) 
+[13826] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onResume() (f2d9684) 
+[13826] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onResume() (f2d9684) 
+[15014] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onDestroyView() (c7c7c03) 
+[15014] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onDestroyView() (c7c7c03) 
+[15018] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onDestroy() (c7c7c03) 
+[15018] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onDestroy() (c7c7c03) 
+[15026] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onDetach() (c7c7c03) 
+[15026] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onDetach() (c7c7c03) 
+[15030] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onDestroy() (48110d7) 
+[15030] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onDestroy() (48110d7) 
+[16146] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onStop() (b3fa031) 
+[16146] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onStop() (b3fa031) 
+[16150] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onStop() (904205) 
+[16150] [CB] [EXIT] void com.marakana.android.yamba.SubActivity.onStop() (904205) 
+[16158] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onDestroyView() (b3fa031) 
+[16158] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onDestroyView() (b3fa031) 
+[16162] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onDestroy() (b3fa031) 
+[16162] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onDestroy() (b3fa031) 
+[16166] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onDetach() (b3fa031) 
+[16166] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onDetach() (b3fa031) 
+[16170] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onDestroy() (904205) 
+[16170] [CB] [EXIT] void com.marakana.android.yamba.SubActivity.onDestroy() (904205) 
+[23480] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onPause() (f2d9684) 
+[23480] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onPause() (f2d9684) 
+[23484] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onPause() (b8e6a43) 
+[23484] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onPause() (b8e6a43) 
+[23508] [CB] [ENTRY] void com.marakana.android.yamba.StatusActivity.<init>() (734c9f1) 
+[23508] [CB] [EXIT] NULL = void com.marakana.android.yamba.StatusActivity.<init>() (734c9f1) 
+[23552] [CB] [ENTRY] void com.marakana.android.yamba.StatusActivity.onCreate(android.os.Bundle) (734c9f1,NULL) 
+  [25047] [CI] [ENTRY] void android.app.Fragment.<init>() (1a08ec6) 
+  [25047] [CI] [EXIT] void android.app.Fragment.<init>() (1a08ec6) 
+[23552] [CB] [EXIT] void com.marakana.android.yamba.StatusActivity.onCreate(android.os.Bundle) (734c9f1,NULL) 
+[25090] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onAttach(android.app.Activity) (1a08ec6,734c9f1) 
+[25090] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onAttach(android.app.Activity) (1a08ec6,734c9f1) 
+[25098] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onCreate(android.os.Bundle) (1a08ec6,NULL) 
+[25098] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onCreate(android.os.Bundle) (1a08ec6,NULL) 
+[25142] [CB] [ENTRY] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (1a08ec6,9b8b99,de0452d,NULL) 
+[25142] [CB] [EXIT] 56dfb48 = android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (1a08ec6,9b8b99,de0452d,NULL) 
+[25474] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onViewCreated(android.view.View,android.os.Bundle) (1a08ec6,56dfb48,NULL) 
+[25474] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onViewCreated(android.view.View,android.os.Bundle) (1a08ec6,56dfb48,NULL) 
+[25478] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onActivityCreated(android.os.Bundle) (1a08ec6,NULL) 
+[25478] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onActivityCreated(android.os.Bundle) (1a08ec6,NULL) 
+[25486] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onStart() (734c9f1) 
+[25486] [CB] [EXIT] void com.marakana.android.yamba.SubActivity.onStart() (734c9f1) 
+[25490] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onStart() (1a08ec6) 
+[25490] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onStart() (1a08ec6) 
+[25514] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onResume() (734c9f1) 
+[25514] [CB] [EXIT] void com.marakana.android.yamba.SubActivity.onResume() (734c9f1) 
+[25518] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onResume() (1a08ec6) 
+[25518] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onResume() (1a08ec6) 
+[26922] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onSaveInstanceState(android.os.Bundle) (b8e6a43,f75528d) 
+  [26924] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onSaveInstanceState(android.os.Bundle) (f2d9684,583ea8e) 
+  [26924] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onSaveInstanceState(android.os.Bundle) (f2d9684,583ea8e) 
+[26922] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onSaveInstanceState(android.os.Bundle) (b8e6a43,f75528d) 
+[26930] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onStop() (f2d9684) 
+[26930] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onStop() (f2d9684) 
+[26934] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onStop() (b8e6a43) 
+[26934] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onStop() (b8e6a43) 
+[27842] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onPause() (1a08ec6) 
+[27842] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onPause() (1a08ec6) 
+[27848] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onPause() (734c9f1) 
+[27848] [CB] [EXIT] void com.marakana.android.yamba.SubActivity.onPause() (734c9f1) 
+[27864] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onDestroyView() (f2d9684) 
+[27864] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onDestroyView() (f2d9684) 
+[27868] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onDestroy() (f2d9684) 
+[27868] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onDestroy() (f2d9684) 
+[27876] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onDetach() (f2d9684) 
+[27876] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onDetach() (f2d9684) 
+[27880] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onDestroy() (b8e6a43) 
+[27880] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onDestroy() (b8e6a43) 
+[27964] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.<init>() (f5abc27) 
+[27964] [CB] [EXIT] NULL = void com.marakana.android.yamba.MainActivity.<init>() (f5abc27) 
+[28008] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onCreate(android.os.Bundle) (f5abc27,NULL) 
+  [29539] [CI] [ENTRY] void android.app.ListFragment.<init>() (56a6cb3) 
+  [29539] [CI] [EXIT] void android.app.ListFragment.<init>() (56a6cb3) 
+  [29554] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onAttach(android.app.Activity) (56a6cb3,f5abc27) 
+  [29554] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onAttach(android.app.Activity) (56a6cb3,f5abc27) 
+  [29562] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onCreate(android.os.Bundle) (56a6cb3,NULL) 
+  [29562] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onCreate(android.os.Bundle) (56a6cb3,NULL) 
+  [29582] [CB] [ENTRY] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (56a6cb3,f64780f,NULL,NULL) 
+  [29582] [CB] [EXIT] bf9173e = android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (56a6cb3,f64780f,NULL,NULL) 
+  [30110] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onViewCreated(android.view.View,android.os.Bundle) (56a6cb3,bf9173e,NULL) 
+  [30110] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onViewCreated(android.view.View,android.os.Bundle) (56a6cb3,bf9173e,NULL) 
+[28008] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onCreate(android.os.Bundle) (f5abc27,NULL) 
+[30250] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(android.os.Bundle) (56a6cb3,NULL) 
+[30250] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(android.os.Bundle) (56a6cb3,NULL) 
+[30302] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onStart() (f5abc27) 
+[30302] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onStart() (f5abc27) 
+[30306] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onStart() (56a6cb3) 
+[30306] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onStart() (56a6cb3) 
+[30335] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onResume() (f5abc27) 
+[30335] [CB] [EXIT] void com.marakana.android.yamba.MainActivity.onResume() (f5abc27) 
+[30339] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onResume() (56a6cb3) 
+[30339] [CB] [EXIT] void com.marakana.android.yamba.TimelineFragment.onResume() (56a6cb3) 
+[32576] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onStop() (1a08ec6) 
+[32576] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onStop() (1a08ec6) 
+[32580] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onStop() (734c9f1) 
+[32580] [CB] [EXIT] void com.marakana.android.yamba.SubActivity.onStop() (734c9f1) 
+[32588] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onDestroyView() (1a08ec6) 
+[32588] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onDestroyView() (1a08ec6) 
+[32592] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onDestroy() (1a08ec6) 
+[32592] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onDestroy() (1a08ec6) 
+[32596] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onDetach() (1a08ec6) 
+[32596] [CB] [EXIT] void com.marakana.android.yamba.StatusFragment.onDetach() (1a08ec6) 
+[32600] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onDestroy() (734c9f1) 
+[32600] [CB] [EXIT] void com.marakana.android.yamba.SubActivity.onDestroy() (734c9f1) 
+
+
+
+TRACE STATISTICS
+Trace length: 101
+Top-level callbacks: 77
+CI-ENTRY: 5
+CI-EXIT: 5
+CB-ENTRY: 91
+CB-EXIT: 0
+        encoding - User time: 5.150000
+encoding - System time: 0.000000
+simulation - User time: 35.520000
+simulation - System time: 0.230000
+
+The trace can be simulated in 101 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[18] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.<init>() (48110d7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.<init>()) |- [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.<init>()) |+ [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[62] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onCreate(android.os.Bundle) (48110d7,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[1669] [CI] [ENTRY] void android.app.ListFragment.<init>() (c7c7c03) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [c7c7c03] void android.app.ListFragment.<init>()) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onAttach(48110d7 : android.app.Activity)
+----------------------------------------
+Step: 4
+----------------------------------------
+[1669] [CI] [EXIT] void android.app.ListFragment.<init>() (c7c7c03) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [c7c7c03] void android.app.ListFragment.<init>()) |- [CI] [EXIT] [c7c7c03] void android.app.ListFragment.<init>()
+----------------------------------------
+Step: 5
+----------------------------------------
+[1684] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onAttach(android.app.Activity) (c7c7c03,48110d7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onAttach(48110d7 : android.app.Activity)) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onAttach(48110d7 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onAttach(48110d7 : android.app.Activity)) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 6
+----------------------------------------
+[1692] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onCreate(android.os.Bundle) (c7c7c03,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c7c7c03] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(dc048ea : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 7
+----------------------------------------
+[1712] [CB] [ENTRY] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c7c7c03,dc048ea,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(dc048ea : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onViewCreated(f15c6ce : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(dc048ea : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(dc048ea : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(dc048ea : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [c7c7c03] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(dc048ea : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 8
+----------------------------------------
+[2248] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onViewCreated(android.view.View,android.os.Bundle) (c7c7c03,f15c6ce,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onViewCreated(f15c6ce : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onViewCreated(f15c6ce : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 9
+----------------------------------------
+[2388] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(android.os.Bundle) (c7c7c03,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 10
+----------------------------------------
+[2440] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onStart() (48110d7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onStart()) |+ [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onStart()) |- [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onStart()
+----------------------------------------
+Step: 11
+----------------------------------------
+[2444] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onStart() (c7c7c03) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStart()) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onSaveInstanceState(89dabad : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStart()) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStart()) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStart()) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStart()) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStart()
+----------------------------------------
+Step: 12
+----------------------------------------
+[2460] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onResume() (48110d7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onResume()) |+ [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onResume()) |- [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onResume()
+----------------------------------------
+Step: 13
+----------------------------------------
+[2464] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onResume() (c7c7c03) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onResume()) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onResume()) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onResume()
+----------------------------------------
+Step: 14
+----------------------------------------
+[7806] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onPause() (c7c7c03) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onPause()) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onPause()) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onPause()
+----------------------------------------
+Step: 15
+----------------------------------------
+[7810] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onPause() (48110d7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onPause()) |+ [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onPause()) |- [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onPause()) |+ [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onPause()) |+ [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 16
+----------------------------------------
+[7826] [CB] [ENTRY] void com.marakana.android.yamba.StatusActivity.<init>() (904205) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.StatusActivity.<init>()) |- [CB] [ENTRY] [904205] void com.marakana.android.yamba.StatusActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.StatusActivity.<init>()) |+ [CB] [ENTRY] [904205] void com.marakana.android.yamba.StatusActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 17
+----------------------------------------
+[7870] [CB] [ENTRY] void com.marakana.android.yamba.StatusActivity.onCreate(android.os.Bundle) (904205,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.StatusActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [904205] void com.marakana.android.yamba.StatusActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.StatusActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onStart()
+----------------------------------------
+Step: 18
+----------------------------------------
+[9367] [CI] [ENTRY] void android.app.Fragment.<init>() (b3fa031) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [b3fa031] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onAttach(904205 : android.app.Activity)
+----------------------------------------
+Step: 19
+----------------------------------------
+[9367] [CI] [EXIT] void android.app.Fragment.<init>() (b3fa031) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [b3fa031] void android.app.Fragment.<init>()) |- [CI] [EXIT] [b3fa031] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 20
+----------------------------------------
+[9410] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onAttach(android.app.Activity) (b3fa031,904205) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onAttach(904205 : android.app.Activity)) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onAttach(904205 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onAttach(904205 : android.app.Activity)) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 21
+----------------------------------------
+[9418] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onCreate(android.os.Bundle) (b3fa031,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b3fa031] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(bbccc62 : android.view.LayoutInflater,4649dbd : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 22
+----------------------------------------
+[9462] [CB] [ENTRY] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b3fa031,bbccc62,4649dbd,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(bbccc62 : android.view.LayoutInflater,4649dbd : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [b3fa031] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(bbccc62 : android.view.LayoutInflater,4649dbd : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(bbccc62 : android.view.LayoutInflater,4649dbd : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(bbccc62 : android.view.LayoutInflater,4649dbd : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(bbccc62 : android.view.LayoutInflater,4649dbd : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onViewCreated(35bab56 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 23
+----------------------------------------
+[9802] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onViewCreated(android.view.View,android.os.Bundle) (b3fa031,35bab56,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onViewCreated(35bab56 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onViewCreated(35bab56 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 24
+----------------------------------------
+[9806] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onActivityCreated(android.os.Bundle) (b3fa031,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroyView()
+----------------------------------------
+Step: 25
+----------------------------------------
+[9814] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onStart() (904205) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onStart()) |+ [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onStart()) |- [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onStart()
+----------------------------------------
+Step: 26
+----------------------------------------
+[9818] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onStart() (b3fa031) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStart()) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStart()) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStart()) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStart()) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStop()
+----------------------------------------
+Step: 27
+----------------------------------------
+[9842] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onResume() (904205) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onResume()) |- [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onResume()) |+ [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onPause()
+----------------------------------------
+Step: 28
+----------------------------------------
+[9846] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onResume() (b3fa031) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onResume()) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onResume()) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onResume()
+----------------------------------------
+Step: 29
+----------------------------------------
+[11402] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onSaveInstanceState(android.os.Bundle) (48110d7,18b7b18) 
+----------------------------------------
+Step: 30
+----------------------------------------
+[11404] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onSaveInstanceState(android.os.Bundle) (c7c7c03,89dabad) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onSaveInstanceState(89dabad : android.os.Bundle)) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onSaveInstanceState(89dabad : android.os.Bundle)
+----------------------------------------
+Step: 31
+----------------------------------------
+[11410] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onStop() (c7c7c03) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStop()) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStop()) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStop()) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStop()) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStop()) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onResume()
+----------------------------------------
+Step: 32
+----------------------------------------
+[11414] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onStop() (48110d7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onStop()) |- [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onStop()) |+ [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onStop()) |- [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onResume()
+----------------------------------------
+Step: 33
+----------------------------------------
+[11426] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onPause() (b3fa031) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onPause()) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onPause()) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onPause()
+----------------------------------------
+Step: 34
+----------------------------------------
+[11432] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onPause() (904205) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onPause()) |+ [CB] [ENTRY] [904205] void com.marakana.android.yamba.StatusActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onPause()) |+ [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onPause()) |+ [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onPause()) |- [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onPause()
+----------------------------------------
+Step: 35
+----------------------------------------
+[11464] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.<init>() (b8e6a43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.<init>()) |- [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.<init>()) |+ [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 36
+----------------------------------------
+[11508] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onCreate(android.os.Bundle) (b8e6a43,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 37
+----------------------------------------
+[13039] [CI] [ENTRY] void android.app.ListFragment.<init>() (f2d9684) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [f2d9684] void android.app.ListFragment.<init>()) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onAttach(b8e6a43 : android.app.Activity)
+----------------------------------------
+Step: 38
+----------------------------------------
+[13039] [CI] [EXIT] void android.app.ListFragment.<init>() (f2d9684) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [f2d9684] void android.app.ListFragment.<init>()) |- [CI] [EXIT] [f2d9684] void android.app.ListFragment.<init>()
+----------------------------------------
+Step: 39
+----------------------------------------
+[13054] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onAttach(android.app.Activity) (f2d9684,b8e6a43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onAttach(b8e6a43 : android.app.Activity)) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onAttach(b8e6a43 : android.app.Activity)) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onAttach(b8e6a43 : android.app.Activity)
+----------------------------------------
+Step: 40
+----------------------------------------
+[13062] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onCreate(android.os.Bundle) (f2d9684,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f2d9684] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(202ecab : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 41
+----------------------------------------
+[13082] [CB] [ENTRY] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f2d9684,202ecab,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(202ecab : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onViewCreated(17a52c3 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(202ecab : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(202ecab : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(202ecab : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [f2d9684] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(202ecab : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 42
+----------------------------------------
+[13610] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onViewCreated(android.view.View,android.os.Bundle) (f2d9684,17a52c3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onViewCreated(17a52c3 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onViewCreated(17a52c3 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 43
+----------------------------------------
+[13750] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(android.os.Bundle) (f2d9684,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 44
+----------------------------------------
+[13802] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onStart() (b8e6a43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onStart()) |- [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onStart()) |+ [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onResume()
+----------------------------------------
+Step: 45
+----------------------------------------
+[13806] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onStart() (f2d9684) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStart()) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStart()) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStart()) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStart()) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStart()) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onSaveInstanceState(583ea8e : android.os.Bundle)
+----------------------------------------
+Step: 46
+----------------------------------------
+[13822] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onResume() (b8e6a43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onResume()) |+ [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onResume()) |- [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onResume()
+----------------------------------------
+Step: 47
+----------------------------------------
+[13826] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onResume() (f2d9684) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onResume()) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onResume()) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onResume()
+----------------------------------------
+Step: 48
+----------------------------------------
+[15014] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onDestroyView() (c7c7c03) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroyView()) |+ [CB] [ENTRY] [c7c7c03] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(dc048ea : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroyView()) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroyView()) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroyView()) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroyView()) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onStart()
+----------------------------------------
+Step: 49
+----------------------------------------
+[15018] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onDestroy() (c7c7c03) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroy()) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroy()) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDestroy()) |- [CB] [ENTRY] [c7c7c03] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(dc048ea : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 50
+----------------------------------------
+[15026] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onDetach() (c7c7c03) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDetach()) |+ [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onAttach(48110d7 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDetach()) |- [CB] [ENTRY] [c7c7c03] void com.marakana.android.yamba.TimelineFragment.onDetach()
+----------------------------------------
+Step: 51
+----------------------------------------
+[15030] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onDestroy() (48110d7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onDestroy()) |- [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onDestroy()) |- [CB] [ENTRY] [48110d7] void com.marakana.android.yamba.MainActivity.onDestroy()
+----------------------------------------
+Step: 52
+----------------------------------------
+[16146] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onStop() (b3fa031) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStop()) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStop()) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStop()) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStop()) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStop()) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroyView()
+----------------------------------------
+Step: 53
+----------------------------------------
+[16150] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onStop() (904205) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onStop()) |- [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onStop()) |+ [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onStop()) |- [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onResume()
+----------------------------------------
+Step: 54
+----------------------------------------
+[16158] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onDestroyView() (b3fa031) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroyView()) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroyView()) |+ [CB] [ENTRY] [b3fa031] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(bbccc62 : android.view.LayoutInflater,4649dbd : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroyView()) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroyView()) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroyView()) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroyView()
+----------------------------------------
+Step: 55
+----------------------------------------
+[16162] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onDestroy() (b3fa031) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroy()) |- [CB] [ENTRY] [b3fa031] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(bbccc62 : android.view.LayoutInflater,4649dbd : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroy()) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDestroy()) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDetach()
+----------------------------------------
+Step: 56
+----------------------------------------
+[16166] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onDetach() (b3fa031) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDetach()) |- [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onDetach()) |+ [CB] [ENTRY] [b3fa031] void com.marakana.android.yamba.StatusFragment.onAttach(904205 : android.app.Activity)
+----------------------------------------
+Step: 57
+----------------------------------------
+[16170] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onDestroy() (904205) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onDestroy()) |- [CB] [ENTRY] [904205] void com.marakana.android.yamba.StatusActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onDestroy()) |- [CB] [ENTRY] [904205] void com.marakana.android.yamba.SubActivity.onDestroy()
+----------------------------------------
+Step: 58
+----------------------------------------
+[23480] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onPause() (f2d9684) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onPause()) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onPause()) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onPause()
+----------------------------------------
+Step: 59
+----------------------------------------
+[23484] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onPause() (b8e6a43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onPause()) |+ [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onPause()) |+ [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onPause()) |+ [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onPause()) |- [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onPause()
+----------------------------------------
+Step: 60
+----------------------------------------
+[23508] [CB] [ENTRY] void com.marakana.android.yamba.StatusActivity.<init>() (734c9f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.StatusActivity.<init>()) |+ [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.StatusActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.StatusActivity.<init>()) |- [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.StatusActivity.<init>()
+----------------------------------------
+Step: 61
+----------------------------------------
+[23552] [CB] [ENTRY] void com.marakana.android.yamba.StatusActivity.onCreate(android.os.Bundle) (734c9f1,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.StatusActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.StatusActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.StatusActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 62
+----------------------------------------
+[25047] [CI] [ENTRY] void android.app.Fragment.<init>() (1a08ec6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [1a08ec6] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onAttach(734c9f1 : android.app.Activity)
+----------------------------------------
+Step: 63
+----------------------------------------
+[25047] [CI] [EXIT] void android.app.Fragment.<init>() (1a08ec6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [1a08ec6] void android.app.Fragment.<init>()) |- [CI] [EXIT] [1a08ec6] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 64
+----------------------------------------
+[25090] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onAttach(android.app.Activity) (1a08ec6,734c9f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onAttach(734c9f1 : android.app.Activity)) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onAttach(734c9f1 : android.app.Activity)) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onAttach(734c9f1 : android.app.Activity)
+----------------------------------------
+Step: 65
+----------------------------------------
+[25098] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onCreate(android.os.Bundle) (1a08ec6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1a08ec6] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(9b8b99 : android.view.LayoutInflater,de0452d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 66
+----------------------------------------
+[25142] [CB] [ENTRY] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (1a08ec6,9b8b99,de0452d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(9b8b99 : android.view.LayoutInflater,de0452d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(9b8b99 : android.view.LayoutInflater,de0452d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(9b8b99 : android.view.LayoutInflater,de0452d : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [1a08ec6] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(9b8b99 : android.view.LayoutInflater,de0452d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(9b8b99 : android.view.LayoutInflater,de0452d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onViewCreated(56dfb48 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 67
+----------------------------------------
+[25474] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onViewCreated(android.view.View,android.os.Bundle) (1a08ec6,56dfb48,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onViewCreated(56dfb48 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onViewCreated(56dfb48 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 68
+----------------------------------------
+[25478] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onActivityCreated(android.os.Bundle) (1a08ec6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroyView()
+----------------------------------------
+Step: 69
+----------------------------------------
+[25486] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onStart() (734c9f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onStart()) |+ [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onStart()) |- [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onStart()
+----------------------------------------
+Step: 70
+----------------------------------------
+[25490] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onStart() (1a08ec6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStart()) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStart()) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStart()) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStart()) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onResume()
+----------------------------------------
+Step: 71
+----------------------------------------
+[25514] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onResume() (734c9f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onResume()) |- [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onResume()) |+ [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onPause()
+----------------------------------------
+Step: 72
+----------------------------------------
+[25518] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onResume() (1a08ec6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onResume()) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onResume()) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onPause()
+----------------------------------------
+Step: 73
+----------------------------------------
+[26922] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onSaveInstanceState(android.os.Bundle) (b8e6a43,f75528d) 
+----------------------------------------
+Step: 74
+----------------------------------------
+[26924] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onSaveInstanceState(android.os.Bundle) (f2d9684,583ea8e) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onSaveInstanceState(583ea8e : android.os.Bundle)) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onSaveInstanceState(583ea8e : android.os.Bundle)
+----------------------------------------
+Step: 75
+----------------------------------------
+[26930] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onStop() (f2d9684) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStop()) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStop()) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStop()) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStop()) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStop()) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onResume()
+----------------------------------------
+Step: 76
+----------------------------------------
+[26934] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onStop() (b8e6a43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onStop()) |- [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onStop()) |+ [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onStop()) |- [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onResume()
+----------------------------------------
+Step: 77
+----------------------------------------
+[27842] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onPause() (1a08ec6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onPause()) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onPause()) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onResume()
+----------------------------------------
+Step: 78
+----------------------------------------
+[27848] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onPause() (734c9f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onPause()) |+ [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.StatusActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onPause()) |+ [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onPause()) |+ [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onPause()) |- [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onPause()
+----------------------------------------
+Step: 79
+----------------------------------------
+[27864] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onDestroyView() (f2d9684) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroyView()) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroyView()) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroyView()) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroyView()) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroyView()) |+ [CB] [ENTRY] [f2d9684] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(202ecab : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 80
+----------------------------------------
+[27868] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onDestroy() (f2d9684) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroy()) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroy()) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDestroy()) |- [CB] [ENTRY] [f2d9684] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(202ecab : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 81
+----------------------------------------
+[27876] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onDetach() (f2d9684) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDetach()) |+ [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onAttach(b8e6a43 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDetach()) |- [CB] [ENTRY] [f2d9684] void com.marakana.android.yamba.TimelineFragment.onDetach()
+----------------------------------------
+Step: 82
+----------------------------------------
+[27880] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onDestroy() (b8e6a43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onDestroy()) |- [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onDestroy()) |- [CB] [ENTRY] [b8e6a43] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 83
+----------------------------------------
+[27964] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.<init>() (f5abc27) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.<init>()) |- [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.<init>()) |+ [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 84
+----------------------------------------
+[28008] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onCreate(android.os.Bundle) (f5abc27,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.onStart()
+----------------------------------------
+Step: 85
+----------------------------------------
+[29539] [CI] [ENTRY] void android.app.ListFragment.<init>() (56a6cb3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [56a6cb3] void android.app.ListFragment.<init>()) |+ [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onAttach(f5abc27 : android.app.Activity)
+----------------------------------------
+Step: 86
+----------------------------------------
+[29539] [CI] [EXIT] void android.app.ListFragment.<init>() (56a6cb3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [56a6cb3] void android.app.ListFragment.<init>()) |- [CI] [EXIT] [56a6cb3] void android.app.ListFragment.<init>()
+----------------------------------------
+Step: 87
+----------------------------------------
+[29554] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onAttach(android.app.Activity) (56a6cb3,f5abc27) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onAttach(f5abc27 : android.app.Activity)) |- [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onAttach(f5abc27 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onAttach(f5abc27 : android.app.Activity)) |+ [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 88
+----------------------------------------
+[29562] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onCreate(android.os.Bundle) (56a6cb3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [56a6cb3] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(f64780f : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 89
+----------------------------------------
+[29582] [CB] [ENTRY] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (56a6cb3,f64780f,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [56a6cb3] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(f64780f : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [56a6cb3] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(f64780f : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [56a6cb3] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(f64780f : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [56a6cb3] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(f64780f : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [56a6cb3] android.view.View com.marakana.android.yamba.TimelineFragment.onCreateView(f64780f : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onViewCreated(bf9173e : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 90
+----------------------------------------
+[30110] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onViewCreated(android.view.View,android.os.Bundle) (56a6cb3,bf9173e,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onViewCreated(bf9173e : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onViewCreated(bf9173e : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 91
+----------------------------------------
+[30250] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(android.os.Bundle) (56a6cb3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 92
+----------------------------------------
+[30302] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onStart() (f5abc27) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.onStart()) |+ [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.onStart()) |- [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.onStart()
+----------------------------------------
+Step: 93
+----------------------------------------
+[30306] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onStart() (56a6cb3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onStart()) |- [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onStart()) |+ [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onResume()
+----------------------------------------
+Step: 94
+----------------------------------------
+[30335] [CB] [ENTRY] void com.marakana.android.yamba.MainActivity.onResume() (f5abc27) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.onResume()) |- [CB] [ENTRY] [f5abc27] void com.marakana.android.yamba.MainActivity.onResume()
+----------------------------------------
+Step: 95
+----------------------------------------
+[30339] [CB] [ENTRY] void com.marakana.android.yamba.TimelineFragment.onResume() (56a6cb3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onResume()) |- [CB] [ENTRY] [56a6cb3] void com.marakana.android.yamba.TimelineFragment.onResume()
+----------------------------------------
+Step: 96
+----------------------------------------
+[32576] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onStop() (1a08ec6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStop()) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStop()) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStop()) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStop()) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStop()) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStart()
+----------------------------------------
+Step: 97
+----------------------------------------
+[32580] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onStop() (734c9f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onStop()) |- [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onStop()) |- [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onStop()) |+ [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onDestroy()
+----------------------------------------
+Step: 98
+----------------------------------------
+[32588] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onDestroyView() (1a08ec6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroyView()) |+ [CB] [ENTRY] [1a08ec6] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(9b8b99 : android.view.LayoutInflater,de0452d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroyView()) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroyView()) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroyView()) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroyView()) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroyView()
+----------------------------------------
+Step: 99
+----------------------------------------
+[32592] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onDestroy() (1a08ec6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroy()) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroy()) |- [CB] [ENTRY] [1a08ec6] android.view.View com.marakana.android.yamba.StatusFragment.onCreateView(9b8b99 : android.view.LayoutInflater,de0452d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroy()) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDestroy()
+----------------------------------------
+Step: 100
+----------------------------------------
+[32596] [CB] [ENTRY] void com.marakana.android.yamba.StatusFragment.onDetach() (1a08ec6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDetach()) |- [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onDetach()) |+ [CB] [ENTRY] [1a08ec6] void com.marakana.android.yamba.StatusFragment.onAttach(734c9f1 : android.app.Activity)
+----------------------------------------
+Step: 101
+----------------------------------------
+[32600] [CB] [ENTRY] void com.marakana.android.yamba.SubActivity.onDestroy() (734c9f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onDestroy()) |- [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.SubActivity.onDestroy()) |- [CB] [ENTRY] [734c9f1] void com.marakana.android.yamba.StatusActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------

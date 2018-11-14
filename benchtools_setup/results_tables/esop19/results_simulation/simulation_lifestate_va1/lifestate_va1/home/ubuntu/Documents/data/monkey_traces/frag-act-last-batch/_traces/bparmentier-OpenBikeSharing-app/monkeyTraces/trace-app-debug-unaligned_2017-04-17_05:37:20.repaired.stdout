@@ -1,0 +1,465 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/frag-act-last-batch/_traces/bparmentier-OpenBikeSharing-app/monkeyTraces/trace-app-debug-unaligned_2017-04-17_05:37:20.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/frag-act-last-batch/_traces/bparmentier-OpenBikeSharing-app/monkeyTraces/trace-app-debug-unaligned_2017-04-17_05:37:20.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 0.690000
+parsing - System time: 0.060000
+spec_grounding - User time: 148.650000
+spec_grounding - System time: 0.820000
+
+---Simplified Trace---
+[2] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.<init>() (44eaa23) 
+[2] [CB] [EXIT] NULL = void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.<init>() (44eaa23) 
+[54] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onCreate(android.os.Bundle) (44eaa23,NULL) 
+  [1209] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (15db4d0) 
+  [1209] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (15db4d0) 
+  [1217] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (b249aa6) 
+  [1217] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (b249aa6) 
+[54] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onCreate(android.os.Bundle) (44eaa23,NULL) 
+[2452] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onStart() (44eaa23) 
+[2452] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onStart() (44eaa23) 
+[2484] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onResume() (44eaa23) 
+[2484] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onResume() (44eaa23) 
+[4296] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+  [4304] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(android.app.Activity) (15db4d0,44eaa23) 
+  [4304] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(android.app.Activity) (15db4d0,44eaa23) 
+  [4312] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(android.os.Bundle) (15db4d0,NULL) 
+  [4312] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(android.os.Bundle) (15db4d0,NULL) 
+[4296] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+[4336] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+  [4382] [CB] [ENTRY] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (15db4d0,995eda0,1af5e0c,NULL) 
+  [4382] [CB] [EXIT] 97cc1ee = android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (15db4d0,995eda0,1af5e0c,NULL) 
+  [5174] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onViewCreated(android.view.View,android.os.Bundle) (15db4d0,97cc1ee,NULL) 
+  [5174] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onViewCreated(android.view.View,android.os.Bundle) (15db4d0,97cc1ee,NULL) 
+  [5178] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onActivityCreated(android.os.Bundle) (15db4d0,NULL) 
+  [5178] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onActivityCreated(android.os.Bundle) (15db4d0,NULL) 
+  [5186] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart() (15db4d0) 
+  [5186] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart() (15db4d0) 
+  [5190] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume() (15db4d0) 
+  [5190] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume() (15db4d0) 
+  [5194] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(android.app.Activity) (b249aa6,44eaa23) 
+  [5194] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(android.app.Activity) (b249aa6,44eaa23) 
+  [5202] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(android.os.Bundle) (b249aa6,NULL) 
+  [5202] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(android.os.Bundle) (b249aa6,NULL) 
+  [5242] [CB] [ENTRY] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b249aa6,264ba68,1af5e0c,NULL) 
+  [5242] [CB] [EXIT] 673e31b = android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b249aa6,264ba68,1af5e0c,NULL) 
+  [6030] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onViewCreated(android.view.View,android.os.Bundle) (b249aa6,673e31b,NULL) 
+  [6030] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onViewCreated(android.view.View,android.os.Bundle) (b249aa6,673e31b,NULL) 
+  [6034] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onActivityCreated(android.os.Bundle) (b249aa6,NULL) 
+  [6034] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onActivityCreated(android.os.Bundle) (b249aa6,NULL) 
+  [6042] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart() (b249aa6) 
+  [6042] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart() (b249aa6) 
+  [6046] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume() (b249aa6) 
+  [6046] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume() (b249aa6) 
+[4336] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[6320] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+[6320] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+[6324] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[6324] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[6492] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+[6492] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+[6496] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[6496] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[6576] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+[6576] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+[6580] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[6580] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[8350] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+[8350] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+[8354] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[8354] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[8434] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+[8434] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+[8438] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[8438] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[11606] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (44eaa23,feb3a5f,d30c8ea) 
+  [11642] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+  [11642] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[11606] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (44eaa23,feb3a5f,d30c8ea) 
+[11736] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[11736] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[14860] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onMenuItemSelected(int,android.view.MenuItem) (44eaa23,0,9ec73d4) 
+  [14884] [CI] [ENTRY] void android.os.AsyncTask.<init>() (dc4071e) 
+  [14884] [CI] [EXIT] void android.os.AsyncTask.<init>() (dc4071e) 
+  [14886] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (dc4071e,17d3815) 
+  [14887] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$JSONDownloadTask.onPreExecute() (dc4071e) 
+  [14887] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$JSONDownloadTask.onPreExecute() (dc4071e) 
+  [14886] [CI] [EXIT] dc4071e = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (dc4071e,17d3815) 
+[14860] [CB] [EXIT] true = boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onMenuItemSelected(int,android.view.MenuItem) (44eaa23,0,9ec73d4) 
+[16402] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$JSONDownloadTask.onPostExecute(java.lang.Object) (dc4071e,Unable to ) 
+[16402] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$JSONDownloadTask.onPostExecute(java.lang.Object) (dc4071e,Unable to ) 
+[17004] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (44eaa23,42029cd,82f3f23) 
+  [17020] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+  [17020] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+  [17040] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+  [17040] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[17004] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (44eaa23,42029cd,82f3f23) 
+[17094] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+  [17115] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+  [17115] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+  [17119] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+  [17119] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+[17094] [CB] [EXIT] true = boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17126] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17126] [CB] [EXIT] true = boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17136] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17136] [CB] [EXIT] true = boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17148] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17148] [CB] [EXIT] true = boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17156] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17156] [CB] [EXIT] true = boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17168] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17168] [CB] [EXIT] true = boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17204] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17204] [CB] [EXIT] true = boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17216] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17216] [CB] [EXIT] true = boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+[17290] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onPause() (44eaa23) 
+  [17292] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause() (15db4d0) 
+  [17292] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause() (15db4d0) 
+  [17296] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause() (b249aa6) 
+  [17296] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause() (b249aa6) 
+[17290] [CB] [EXIT] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onPause() (44eaa23) 
+[17322] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.MapActivity.<init>() (6b0e6e9) 
+[17322] [CB] [EXIT] NULL = void be.brunoparmentier.openbikesharing.app.activities.MapActivity.<init>() (6b0e6e9) 
+
+
+
+TRACE STATISTICS
+Trace length: 59
+Top-level callbacks: 31
+CI-ENTRY: 3
+CI-EXIT: 3
+CB-ENTRY: 30
+CB-EXIT: 0
+        encoding - User time: 1.370000
+encoding - System time: 0.000000
+simulation - User time: 6.700000
+simulation - System time: 0.060000
+
+The trace can be simulated in 59 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[2] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.<init>() (44eaa23) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.<init>()) |- [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.<init>()) |+ [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[54] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onCreate(android.os.Bundle) (44eaa23,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 3
+----------------------------------------
+[1209] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (15db4d0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [15db4d0] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(44eaa23 : android.app.Activity)
+----------------------------------------
+Step: 4
+----------------------------------------
+[1209] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (15db4d0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [15db4d0] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [15db4d0] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 5
+----------------------------------------
+[1217] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (b249aa6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [b249aa6] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(44eaa23 : android.app.Activity)
+----------------------------------------
+Step: 6
+----------------------------------------
+[1217] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (b249aa6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [b249aa6] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [b249aa6] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 7
+----------------------------------------
+[2452] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onStart() (44eaa23) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onStart()) |- [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onStart()) |+ [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onResume()
+----------------------------------------
+Step: 8
+----------------------------------------
+[2484] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onResume() (44eaa23) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onResume()) |- [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onResume()) |+ [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onPause()
+----------------------------------------
+Step: 9
+----------------------------------------
+[4296] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+----------------------------------------
+Step: 10
+----------------------------------------
+[4304] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(android.app.Activity) (15db4d0,44eaa23) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(44eaa23 : android.app.Activity)) |+ [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(44eaa23 : android.app.Activity)) |- [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(44eaa23 : android.app.Activity)
+----------------------------------------
+Step: 11
+----------------------------------------
+[4312] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(android.os.Bundle) (15db4d0,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [15db4d0] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(995eda0 : android.view.LayoutInflater,1af5e0c : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 12
+----------------------------------------
+[4336] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+----------------------------------------
+Step: 13
+----------------------------------------
+[4382] [CB] [ENTRY] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (15db4d0,995eda0,1af5e0c,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(995eda0 : android.view.LayoutInflater,1af5e0c : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onViewCreated(97cc1ee : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(995eda0 : android.view.LayoutInflater,1af5e0c : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(995eda0 : android.view.LayoutInflater,1af5e0c : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [15db4d0] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(995eda0 : android.view.LayoutInflater,1af5e0c : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(995eda0 : android.view.LayoutInflater,1af5e0c : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 14
+----------------------------------------
+[5174] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onViewCreated(android.view.View,android.os.Bundle) (15db4d0,97cc1ee,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onViewCreated(97cc1ee : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onViewCreated(97cc1ee : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 15
+----------------------------------------
+[5178] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onActivityCreated(android.os.Bundle) (15db4d0,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 16
+----------------------------------------
+[5186] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart() (15db4d0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart()) |+ [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart()) |- [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart()
+----------------------------------------
+Step: 17
+----------------------------------------
+[5190] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume() (15db4d0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume()) |+ [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume()) |- [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume()
+----------------------------------------
+Step: 18
+----------------------------------------
+[5194] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(android.app.Activity) (b249aa6,44eaa23) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(44eaa23 : android.app.Activity)) |- [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(44eaa23 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onAttach(44eaa23 : android.app.Activity)) |+ [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 19
+----------------------------------------
+[5202] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(android.os.Bundle) (b249aa6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b249aa6] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(264ba68 : android.view.LayoutInflater,1af5e0c : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 20
+----------------------------------------
+[5242] [CB] [ENTRY] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b249aa6,264ba68,1af5e0c,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(264ba68 : android.view.LayoutInflater,1af5e0c : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(264ba68 : android.view.LayoutInflater,1af5e0c : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onViewCreated(673e31b : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(264ba68 : android.view.LayoutInflater,1af5e0c : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(264ba68 : android.view.LayoutInflater,1af5e0c : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [b249aa6] android.view.View be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onCreateView(264ba68 : android.view.LayoutInflater,1af5e0c : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 21
+----------------------------------------
+[6030] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onViewCreated(android.view.View,android.os.Bundle) (b249aa6,673e31b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onViewCreated(673e31b : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onViewCreated(673e31b : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 22
+----------------------------------------
+[6034] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onActivityCreated(android.os.Bundle) (b249aa6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 23
+----------------------------------------
+[6042] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart() (b249aa6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart()) |- [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onStart()) |+ [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume()
+----------------------------------------
+Step: 24
+----------------------------------------
+[6046] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume() (b249aa6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume()) |- [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume()) |+ [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause()
+----------------------------------------
+Step: 25
+----------------------------------------
+[8434] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+----------------------------------------
+Step: 26
+----------------------------------------
+[11736] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+----------------------------------------
+Step: 27
+----------------------------------------
+[8434] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+----------------------------------------
+Step: 28
+----------------------------------------
+[11736] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+----------------------------------------
+Step: 29
+----------------------------------------
+[8434] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+----------------------------------------
+Step: 30
+----------------------------------------
+[11736] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+----------------------------------------
+Step: 31
+----------------------------------------
+[8434] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+----------------------------------------
+Step: 32
+----------------------------------------
+[11736] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+----------------------------------------
+Step: 33
+----------------------------------------
+[8434] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+----------------------------------------
+Step: 34
+----------------------------------------
+[11736] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+----------------------------------------
+Step: 35
+----------------------------------------
+[11606] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (44eaa23,feb3a5f,d30c8ea) 
+----------------------------------------
+Step: 36
+----------------------------------------
+[11642] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+----------------------------------------
+Step: 37
+----------------------------------------
+[11736] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+----------------------------------------
+Step: 38
+----------------------------------------
+[14860] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onMenuItemSelected(int,android.view.MenuItem) (44eaa23,0,9ec73d4) 
+----------------------------------------
+Step: 39
+----------------------------------------
+[14884] [CI] [EXIT] void android.os.AsyncTask.<init>() (dc4071e) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [dc4071e] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [dc4071e] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 40
+----------------------------------------
+[14886] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (dc4071e,17d3815) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [dc4071e] android.os.AsyncTask android.os.AsyncTask.execute(17d3815 : java.lang.Object[])) |+ [CB] [ENTRY] [dc4071e] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$JSONDownloadTask.onPreExecute()
+----------------------------------------
+Step: 41
+----------------------------------------
+[14887] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$JSONDownloadTask.onPreExecute() (dc4071e) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dc4071e] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$JSONDownloadTask.onPreExecute()) |+ [CB] [ENTRY] [dc4071e] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$JSONDownloadTask.onPostExecute(Unable to resolve host "api.citybik.es": No address associated with hostname : java.lang.Object)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dc4071e] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$JSONDownloadTask.onPreExecute()) |- [CB] [ENTRY] [dc4071e] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$JSONDownloadTask.onPreExecute()
+----------------------------------------
+Step: 42
+----------------------------------------
+[16402] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$JSONDownloadTask.onPostExecute(java.lang.Object) (dc4071e,Unable to ) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dc4071e] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$JSONDownloadTask.onPostExecute(Unable to resolve host "api.citybik.es": No address associated with hostname : java.lang.Object)) |- [CB] [ENTRY] [dc4071e] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$JSONDownloadTask.onPostExecute(Unable to resolve host "api.citybik.es": No address associated with hostname : java.lang.Object)
+----------------------------------------
+Step: 43
+----------------------------------------
+[17004] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onTabSelected(android.app.ActionBar$Tab,android.app.FragmentTransaction) (44eaa23,42029cd,82f3f23) 
+----------------------------------------
+Step: 44
+----------------------------------------
+[17020] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+----------------------------------------
+Step: 45
+----------------------------------------
+[17040] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+----------------------------------------
+Step: 46
+----------------------------------------
+[17094] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+----------------------------------------
+Step: 47
+----------------------------------------
+[17115] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (559b0cd,1af5e0c,0,15db4d0) 
+----------------------------------------
+Step: 48
+----------------------------------------
+[17119] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity$TabsPagerAdapter.finishUpdate(android.view.ViewGroup) (559b0cd,1af5e0c) 
+----------------------------------------
+Step: 49
+----------------------------------------
+[17216] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+----------------------------------------
+Step: 50
+----------------------------------------
+[17216] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+----------------------------------------
+Step: 51
+----------------------------------------
+[17216] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+----------------------------------------
+Step: 52
+----------------------------------------
+[17216] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+----------------------------------------
+Step: 53
+----------------------------------------
+[17216] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+----------------------------------------
+Step: 54
+----------------------------------------
+[17216] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+----------------------------------------
+Step: 55
+----------------------------------------
+[17216] [CB] [ENTRY] boolean be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.dispatchTouchEvent(android.view.MotionEvent) (44eaa23,cd153e3) 
+----------------------------------------
+Step: 56
+----------------------------------------
+[17290] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onPause() (44eaa23) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onPause()) |+ [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onPause()) |- [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onPause()) |+ [CB] [ENTRY] [44eaa23] void be.brunoparmentier.openbikesharing.app.activities.StationsListActivity.onResume()
+----------------------------------------
+Step: 57
+----------------------------------------
+[17292] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause() (15db4d0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause()) |+ [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause()) |- [CB] [ENTRY] [15db4d0] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause()
+----------------------------------------
+Step: 58
+----------------------------------------
+[17296] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause() (b249aa6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause()) |+ [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause()) |- [CB] [ENTRY] [b249aa6] void be.brunoparmentier.openbikesharing.app.fragments.StationsListFragment.onPause()
+----------------------------------------
+Step: 59
+----------------------------------------
+[17322] [CB] [ENTRY] void be.brunoparmentier.openbikesharing.app.activities.MapActivity.<init>() (6b0e6e9) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b0e6e9] void be.brunoparmentier.openbikesharing.app.activities.MapActivity.<init>()) |- [CB] [ENTRY] [6b0e6e9] void be.brunoparmentier.openbikesharing.app.activities.MapActivity.<init>()
+----------------------------------------

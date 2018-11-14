@@ -1,0 +1,909 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/output/Kistenstapeln-fix/monkeyTraces/trace_2017-03-27_10:36:03.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/output/Kistenstapeln-fix/monkeyTraces/trace_2017-03-27_10:36:03.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 0.760000
+parsing - System time: 0.040000
+spec_grounding - User time: 193.800000
+spec_grounding - System time: 1.200000
+
+---Simplified Trace---
+[0] [CB] [ENTRY] void de.d120.ophasekistenstapeln.MainActivity.<init>() (e74e325) 
+[0] [CB] [EXIT] NULL = void de.d120.ophasekistenstapeln.MainActivity.<init>() (e74e325) 
+[48] [CB] [ENTRY] void de.d120.ophasekistenstapeln.MainActivity.onCreate(android.os.Bundle) (e74e325,NULL) 
+  [1747] [CI] [ENTRY] void android.app.Fragment.<init>() (c09b843) 
+  [1747] [CI] [EXIT] void android.app.Fragment.<init>() (c09b843) 
+  [1762] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onAttach(android.app.Activity) (c09b843,e74e325) 
+  [1762] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onAttach(android.app.Activity) (c09b843,e74e325) 
+  [1770] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreate(android.os.Bundle) (c09b843,NULL) 
+  [1801] [CI] [ENTRY] void android.app.Fragment.<init>() (7a33557) 
+  [1801] [CI] [EXIT] void android.app.Fragment.<init>() (7a33557) 
+  [1770] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreate(android.os.Bundle) (c09b843,NULL) 
+  [1878] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c09b843,f91ef81,NULL,NULL) 
+  [1878] [CB] [EXIT] 8051dd9 = android.view.View de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c09b843,f91ef81,NULL,NULL) 
+  [2042] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onViewCreated(android.view.View,android.os.Bundle) (c09b843,8051dd9,NULL) 
+  [2042] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onViewCreated(android.view.View,android.os.Bundle) (c09b843,8051dd9,NULL) 
+[48] [CB] [EXIT] void de.d120.ophasekistenstapeln.MainActivity.onCreate(android.os.Bundle) (e74e325,NULL) 
+[2212] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onActivityCreated(android.os.Bundle) (c09b843,NULL) 
+[2212] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onActivityCreated(android.os.Bundle) (c09b843,NULL) 
+[2250] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (7a33557,e74e325) 
+[2250] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (7a33557,e74e325) 
+[2258] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (7a33557,NULL) 
+[2258] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (7a33557,NULL) 
+[2286] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (7a33557,f91ef81,5d0a861,NULL) 
+[2286] [CB] [EXIT] af68024 = android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (7a33557,f91ef81,5d0a861,NULL) 
+[2770] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (7a33557,af68024,NULL) 
+[2770] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (7a33557,af68024,NULL) 
+[2774] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (7a33557,NULL) 
+[2774] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (7a33557,NULL) 
+[2820] [CB] [ENTRY] void de.d120.ophasekistenstapeln.MainActivity.onStart() (e74e325) 
+[2820] [CB] [EXIT] void de.d120.ophasekistenstapeln.MainActivity.onStart() (e74e325) 
+[2824] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onStart() (c09b843) 
+[2824] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onStart() (c09b843) 
+[2828] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (7a33557) 
+[2828] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (7a33557) 
+[2844] [CB] [ENTRY] void de.d120.ophasekistenstapeln.MainActivity.onResume() (e74e325) 
+[2844] [CB] [EXIT] void de.d120.ophasekistenstapeln.MainActivity.onResume() (e74e325) 
+[2848] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onResume() (c09b843) 
+[2848] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onResume() (c09b843) 
+[2852] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (7a33557) 
+[2852] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (7a33557) 
+[5104] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,2a94580,1,1) 
+  [5139] [CI] [ENTRY] void android.app.Fragment.<init>() (1f8480d) 
+  [5139] [CI] [EXIT] void android.app.Fragment.<init>() (1f8480d) 
+[5104] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,2a94580,1,1) 
+[5308] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (7a33557) 
+[5308] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (7a33557) 
+[5312] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (7a33557) 
+[5312] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (7a33557) 
+[5320] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (7a33557) 
+[5320] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (7a33557) 
+[5328] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (7a33557) 
+[5328] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (7a33557) 
+[5332] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (7a33557) 
+[5332] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (7a33557) 
+[5336] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(android.app.Activity) (1f8480d,e74e325) 
+[5336] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(android.app.Activity) (1f8480d,e74e325) 
+[5344] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(android.os.Bundle) (1f8480d,NULL) 
+[5344] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(android.os.Bundle) (1f8480d,NULL) 
+[5372] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (1f8480d,f91ef81,5d0a861,NULL) 
+[5372] [CB] [EXIT] f4841c1 = android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (1f8480d,f91ef81,5d0a861,NULL) 
+[7808] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(android.view.View,android.os.Bundle) (1f8480d,f4841c1,NULL) 
+[7808] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(android.view.View,android.os.Bundle) (1f8480d,f4841c1,NULL) 
+[7812] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(android.os.Bundle) (1f8480d,NULL) 
+[7812] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(android.os.Bundle) (1f8480d,NULL) 
+[7920] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onStart() (1f8480d) 
+[7920] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onStart() (1f8480d) 
+[7924] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onResume() (1f8480d) 
+[7924] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onResume() (1f8480d) 
+[10518] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,e0a470e,0,0) 
+  [10553] [CI] [ENTRY] void android.app.Fragment.<init>() (8ed5ea3) 
+  [10553] [CI] [EXIT] void android.app.Fragment.<init>() (8ed5ea3) 
+[10518] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,e0a470e,0,0) 
+[10826] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onPause() (1f8480d) 
+[10826] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onPause() (1f8480d) 
+[10830] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onStop() (1f8480d) 
+[10830] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onStop() (1f8480d) 
+[10838] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroyView() (1f8480d) 
+[10838] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroyView() (1f8480d) 
+[10846] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroy() (1f8480d) 
+[10846] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroy() (1f8480d) 
+[10850] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onDetach() (1f8480d) 
+[10850] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onDetach() (1f8480d) 
+[10854] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (8ed5ea3,e74e325) 
+[10854] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (8ed5ea3,e74e325) 
+[10862] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (8ed5ea3,NULL) 
+[10862] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (8ed5ea3,NULL) 
+[10890] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (8ed5ea3,f91ef81,5d0a861,NULL) 
+[10890] [CB] [EXIT] c9bd4e3 = android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (8ed5ea3,f91ef81,5d0a861,NULL) 
+[11362] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (8ed5ea3,c9bd4e3,NULL) 
+[11362] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (8ed5ea3,c9bd4e3,NULL) 
+[11366] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (8ed5ea3,NULL) 
+[11366] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (8ed5ea3,NULL) 
+[11412] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (8ed5ea3) 
+[11412] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (8ed5ea3) 
+[11416] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (8ed5ea3) 
+[11416] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (8ed5ea3) 
+[12152] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,e0a470e,0,0) 
+  [12187] [CI] [ENTRY] void android.app.Fragment.<init>() (89e2aff) 
+  [12187] [CI] [EXIT] void android.app.Fragment.<init>() (89e2aff) 
+[12152] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,e0a470e,0,0) 
+[12528] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (8ed5ea3) 
+[12528] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (8ed5ea3) 
+[12532] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (8ed5ea3) 
+[12532] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (8ed5ea3) 
+[12540] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (8ed5ea3) 
+[12540] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (8ed5ea3) 
+[12548] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (8ed5ea3) 
+[12548] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (8ed5ea3) 
+[12552] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (8ed5ea3) 
+[12552] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (8ed5ea3) 
+[12556] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (89e2aff,e74e325) 
+[12556] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (89e2aff,e74e325) 
+[12564] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (89e2aff,NULL) 
+[12564] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (89e2aff,NULL) 
+[12592] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (89e2aff,f91ef81,5d0a861,NULL) 
+[12592] [CB] [EXIT] 4597cf6 = android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (89e2aff,f91ef81,5d0a861,NULL) 
+[13064] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (89e2aff,4597cf6,NULL) 
+[13064] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (89e2aff,4597cf6,NULL) 
+[13068] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (89e2aff,NULL) 
+[13068] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (89e2aff,NULL) 
+[13114] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (89e2aff) 
+[13114] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (89e2aff) 
+[13118] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (89e2aff) 
+[13118] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (89e2aff) 
+[13850] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,e0a470e,0,0) 
+  [13881] [CI] [ENTRY] void android.app.Fragment.<init>() (f2fa730) 
+  [13881] [CI] [EXIT] void android.app.Fragment.<init>() (f2fa730) 
+[13850] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,e0a470e,0,0) 
+[14204] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (89e2aff) 
+[14204] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (89e2aff) 
+[14208] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (89e2aff) 
+[14208] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (89e2aff) 
+[14216] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (89e2aff) 
+[14216] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (89e2aff) 
+[14224] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (89e2aff) 
+[14224] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (89e2aff) 
+[14228] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (89e2aff) 
+[14228] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (89e2aff) 
+[14232] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (f2fa730,e74e325) 
+[14232] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (f2fa730,e74e325) 
+[14240] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (f2fa730,NULL) 
+[14240] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (f2fa730,NULL) 
+[14268] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f2fa730,f91ef81,5d0a861,NULL) 
+[14268] [CB] [EXIT] 81bd248 = android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f2fa730,f91ef81,5d0a861,NULL) 
+[14740] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (f2fa730,81bd248,NULL) 
+[14740] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (f2fa730,81bd248,NULL) 
+[14744] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (f2fa730,NULL) 
+[14744] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (f2fa730,NULL) 
+[14790] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (f2fa730) 
+[14790] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (f2fa730) 
+[14794] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (f2fa730) 
+[14794] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (f2fa730) 
+[15488] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,2a94580,1,1) 
+  [15523] [CI] [ENTRY] void android.app.Fragment.<init>() (a2f6feb) 
+  [15523] [CI] [EXIT] void android.app.Fragment.<init>() (a2f6feb) 
+[15488] [CB] [EXIT] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,2a94580,1,1) 
+[15768] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (f2fa730) 
+[15768] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (f2fa730) 
+[15772] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (f2fa730) 
+[15772] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (f2fa730) 
+[15780] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (f2fa730) 
+[15780] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (f2fa730) 
+[15788] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (f2fa730) 
+[15788] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (f2fa730) 
+[15792] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (f2fa730) 
+[15792] [CB] [EXIT] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (f2fa730) 
+[15796] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(android.app.Activity) (a2f6feb,e74e325) 
+[15796] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(android.app.Activity) (a2f6feb,e74e325) 
+[15804] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(android.os.Bundle) (a2f6feb,NULL) 
+[15804] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(android.os.Bundle) (a2f6feb,NULL) 
+[15832] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a2f6feb,f91ef81,5d0a861,NULL) 
+[15832] [CB] [EXIT] 9f38e0b = android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a2f6feb,f91ef81,5d0a861,NULL) 
+[18252] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(android.view.View,android.os.Bundle) (a2f6feb,9f38e0b,NULL) 
+[18252] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(android.view.View,android.os.Bundle) (a2f6feb,9f38e0b,NULL) 
+[18256] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(android.os.Bundle) (a2f6feb,NULL) 
+[18256] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(android.os.Bundle) (a2f6feb,NULL) 
+[18364] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onStart() (a2f6feb) 
+[18364] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onStart() (a2f6feb) 
+[18368] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onResume() (a2f6feb) 
+[18368] [CB] [EXIT] void de.d120.ophasekistenstapeln.CalculateFragment.onResume() (a2f6feb) 
+
+
+
+TRACE STATISTICS
+Trace length: 97
+Top-level callbacks: 79
+CI-ENTRY: 7
+CI-EXIT: 7
+CB-ENTRY: 80
+CB-EXIT: 0
+        encoding - User time: 4.840000
+encoding - System time: 0.020000
+simulation - User time: 34.160000
+simulation - System time: 0.340000
+
+The trace can be simulated in 97 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[0] [CB] [ENTRY] void de.d120.ophasekistenstapeln.MainActivity.<init>() (e74e325) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.<init>()) |+ [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.<init>()) |- [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.<init>()
+----------------------------------------
+Step: 2
+----------------------------------------
+[48] [CB] [ENTRY] void de.d120.ophasekistenstapeln.MainActivity.onCreate(android.os.Bundle) (e74e325,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 3
+----------------------------------------
+[1747] [CI] [ENTRY] void android.app.Fragment.<init>() (c09b843) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [c09b843] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 4
+----------------------------------------
+[1747] [CI] [EXIT] void android.app.Fragment.<init>() (c09b843) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [c09b843] void android.app.Fragment.<init>()) |- [CI] [EXIT] [c09b843] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 5
+----------------------------------------
+[1762] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onAttach(android.app.Activity) (c09b843,e74e325) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onAttach(e74e325 : android.app.Activity)) |+ [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onAttach(e74e325 : android.app.Activity)) |- [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 6
+----------------------------------------
+[1770] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreate(android.os.Bundle) (c09b843,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c09b843] android.view.View de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreateView(f91ef81 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 7
+----------------------------------------
+[1801] [CI] [ENTRY] void android.app.Fragment.<init>() (7a33557) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [7a33557] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 8
+----------------------------------------
+[1801] [CI] [EXIT] void android.app.Fragment.<init>() (7a33557) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [7a33557] void android.app.Fragment.<init>()) |- [CI] [EXIT] [7a33557] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 9
+----------------------------------------
+[1878] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (c09b843,f91ef81,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c09b843] android.view.View de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreateView(f91ef81 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onViewCreated(8051dd9 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c09b843] android.view.View de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreateView(f91ef81 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c09b843] android.view.View de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreateView(f91ef81 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [c09b843] android.view.View de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreateView(f91ef81 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c09b843] android.view.View de.d120.ophasekistenstapeln.NavigationDrawerFragment.onCreateView(f91ef81 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onStart()
+----------------------------------------
+Step: 10
+----------------------------------------
+[2042] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onViewCreated(android.view.View,android.os.Bundle) (c09b843,8051dd9,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onViewCreated(8051dd9 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onViewCreated(8051dd9 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 11
+----------------------------------------
+[2212] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onActivityCreated(android.os.Bundle) (c09b843,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 12
+----------------------------------------
+[2250] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (7a33557,e74e325) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 13
+----------------------------------------
+[2258] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (7a33557,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [7a33557] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 14
+----------------------------------------
+[2286] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (7a33557,f91ef81,5d0a861,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(af68024 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [7a33557] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+----------------------------------------
+Step: 15
+----------------------------------------
+[2770] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (7a33557,af68024,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(af68024 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(af68024 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 16
+----------------------------------------
+[2774] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (7a33557,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+----------------------------------------
+Step: 17
+----------------------------------------
+[2820] [CB] [ENTRY] void de.d120.ophasekistenstapeln.MainActivity.onStart() (e74e325) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.onStart()) |- [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.onStart()) |+ [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.onResume()
+----------------------------------------
+Step: 18
+----------------------------------------
+[2824] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onStart() (c09b843) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onStart()) |- [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onStart()) |+ [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onResume()
+----------------------------------------
+Step: 19
+----------------------------------------
+[2828] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (7a33557) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()
+----------------------------------------
+Step: 20
+----------------------------------------
+[2844] [CB] [ENTRY] void de.d120.ophasekistenstapeln.MainActivity.onResume() (e74e325) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.onResume()) |- [CB] [ENTRY] [e74e325] void de.d120.ophasekistenstapeln.MainActivity.onResume()
+----------------------------------------
+Step: 21
+----------------------------------------
+[2848] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onResume() (c09b843) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onResume()) |- [CB] [ENTRY] [c09b843] void de.d120.ophasekistenstapeln.NavigationDrawerFragment.onResume()
+----------------------------------------
+Step: 22
+----------------------------------------
+[2852] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (7a33557) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()
+----------------------------------------
+Step: 23
+----------------------------------------
+[5104] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,2a94580,1,1) 
+----------------------------------------
+Step: 24
+----------------------------------------
+[5139] [CI] [ENTRY] void android.app.Fragment.<init>() (1f8480d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [1f8480d] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 25
+----------------------------------------
+[5139] [CI] [EXIT] void android.app.Fragment.<init>() (1f8480d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [1f8480d] void android.app.Fragment.<init>()) |- [CI] [EXIT] [1f8480d] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 26
+----------------------------------------
+[5308] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (7a33557) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+----------------------------------------
+Step: 27
+----------------------------------------
+[5312] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (7a33557) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+----------------------------------------
+Step: 28
+----------------------------------------
+[5320] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (7a33557) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |+ [CB] [ENTRY] [7a33557] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 29
+----------------------------------------
+[5328] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (7a33557) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()) |- [CB] [ENTRY] [7a33557] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()
+----------------------------------------
+Step: 30
+----------------------------------------
+[5332] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (7a33557) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()) |- [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()) |+ [CB] [ENTRY] [7a33557] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 31
+----------------------------------------
+[5336] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(android.app.Activity) (1f8480d,e74e325) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(e74e325 : android.app.Activity)) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(e74e325 : android.app.Activity)) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 32
+----------------------------------------
+[5344] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(android.os.Bundle) (1f8480d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1f8480d] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 33
+----------------------------------------
+[5372] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (1f8480d,f91ef81,5d0a861,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(f4841c1 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [1f8480d] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStart()
+----------------------------------------
+Step: 34
+----------------------------------------
+[7808] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(android.view.View,android.os.Bundle) (1f8480d,f4841c1,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(f4841c1 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(f4841c1 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 35
+----------------------------------------
+[7812] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(android.os.Bundle) (1f8480d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroyView()
+----------------------------------------
+Step: 36
+----------------------------------------
+[7920] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onStart() (1f8480d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStart()) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStart()) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStart()) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStart()) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStart()
+----------------------------------------
+Step: 37
+----------------------------------------
+[7924] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onResume() (1f8480d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onResume()) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onResume()) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onPause()
+----------------------------------------
+Step: 38
+----------------------------------------
+[10518] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,e0a470e,0,0) 
+----------------------------------------
+Step: 39
+----------------------------------------
+[10553] [CI] [ENTRY] void android.app.Fragment.<init>() (8ed5ea3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [8ed5ea3] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 40
+----------------------------------------
+[10553] [CI] [EXIT] void android.app.Fragment.<init>() (8ed5ea3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [8ed5ea3] void android.app.Fragment.<init>()) |- [CI] [EXIT] [8ed5ea3] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 41
+----------------------------------------
+[10826] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onPause() (1f8480d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onPause()) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onPause()) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onResume()
+----------------------------------------
+Step: 42
+----------------------------------------
+[10830] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onStop() (1f8480d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStop()) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStop()) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStop()) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStop()) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStop()) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStop()
+----------------------------------------
+Step: 43
+----------------------------------------
+[10838] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroyView() (1f8480d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroyView()) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroyView()) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroyView()) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroyView()) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroyView()) |+ [CB] [ENTRY] [1f8480d] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 44
+----------------------------------------
+[10846] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroy() (1f8480d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroy()) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroy()) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDestroy()) |- [CB] [ENTRY] [1f8480d] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 45
+----------------------------------------
+[10850] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onDetach() (1f8480d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDetach()) |- [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onDetach()) |+ [CB] [ENTRY] [1f8480d] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 46
+----------------------------------------
+[10854] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (8ed5ea3,e74e325) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 47
+----------------------------------------
+[10862] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (8ed5ea3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8ed5ea3] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 48
+----------------------------------------
+[10890] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (8ed5ea3,f91ef81,5d0a861,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [8ed5ea3] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(c9bd4e3 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 49
+----------------------------------------
+[11362] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (8ed5ea3,c9bd4e3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(c9bd4e3 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(c9bd4e3 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 50
+----------------------------------------
+[11366] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (8ed5ea3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 51
+----------------------------------------
+[11412] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (8ed5ea3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+----------------------------------------
+Step: 52
+----------------------------------------
+[11416] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (8ed5ea3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+----------------------------------------
+Step: 53
+----------------------------------------
+[12152] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,e0a470e,0,0) 
+----------------------------------------
+Step: 54
+----------------------------------------
+[12187] [CI] [ENTRY] void android.app.Fragment.<init>() (89e2aff) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [89e2aff] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 55
+----------------------------------------
+[12187] [CI] [EXIT] void android.app.Fragment.<init>() (89e2aff) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [89e2aff] void android.app.Fragment.<init>()) |- [CI] [EXIT] [89e2aff] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 56
+----------------------------------------
+[12528] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (8ed5ea3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+----------------------------------------
+Step: 57
+----------------------------------------
+[12532] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (8ed5ea3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+----------------------------------------
+Step: 58
+----------------------------------------
+[12540] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (8ed5ea3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |+ [CB] [ENTRY] [8ed5ea3] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+----------------------------------------
+Step: 59
+----------------------------------------
+[12548] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (8ed5ea3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()) |- [CB] [ENTRY] [8ed5ea3] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()
+----------------------------------------
+Step: 60
+----------------------------------------
+[12552] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (8ed5ea3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()) |+ [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()) |- [CB] [ENTRY] [8ed5ea3] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()
+----------------------------------------
+Step: 61
+----------------------------------------
+[12556] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (89e2aff,e74e325) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 62
+----------------------------------------
+[12564] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (89e2aff,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [89e2aff] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 63
+----------------------------------------
+[12592] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (89e2aff,f91ef81,5d0a861,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(4597cf6 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [89e2aff] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 64
+----------------------------------------
+[13064] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (89e2aff,4597cf6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(4597cf6 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(4597cf6 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 65
+----------------------------------------
+[13068] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (89e2aff,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 66
+----------------------------------------
+[13114] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (89e2aff) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+----------------------------------------
+Step: 67
+----------------------------------------
+[13118] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (89e2aff) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()
+----------------------------------------
+Step: 68
+----------------------------------------
+[13850] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,e0a470e,0,0) 
+----------------------------------------
+Step: 69
+----------------------------------------
+[13881] [CI] [ENTRY] void android.app.Fragment.<init>() (f2fa730) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [f2fa730] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 70
+----------------------------------------
+[13881] [CI] [EXIT] void android.app.Fragment.<init>() (f2fa730) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [f2fa730] void android.app.Fragment.<init>()) |- [CI] [EXIT] [f2fa730] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 71
+----------------------------------------
+[14204] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (89e2aff) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+----------------------------------------
+Step: 72
+----------------------------------------
+[14208] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (89e2aff) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+----------------------------------------
+Step: 73
+----------------------------------------
+[14216] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (89e2aff) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |+ [CB] [ENTRY] [89e2aff] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()
+----------------------------------------
+Step: 74
+----------------------------------------
+[14224] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (89e2aff) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()) |- [CB] [ENTRY] [89e2aff] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()
+----------------------------------------
+Step: 75
+----------------------------------------
+[14228] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (89e2aff) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()) |- [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()) |+ [CB] [ENTRY] [89e2aff] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 76
+----------------------------------------
+[14232] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(android.app.Activity) (f2fa730,e74e325) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 77
+----------------------------------------
+[14240] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(android.os.Bundle) (f2fa730,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f2fa730] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 78
+----------------------------------------
+[14268] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f2fa730,f91ef81,5d0a861,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [f2fa730] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(81bd248 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 79
+----------------------------------------
+[14740] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(android.view.View,android.os.Bundle) (f2fa730,81bd248,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(81bd248 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onViewCreated(81bd248 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 80
+----------------------------------------
+[14744] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(android.os.Bundle) (f2fa730,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 81
+----------------------------------------
+[14790] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStart() (f2fa730) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+----------------------------------------
+Step: 82
+----------------------------------------
+[14794] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onResume() (f2fa730) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+----------------------------------------
+Step: 83
+----------------------------------------
+[15488] [CB] [ENTRY] void de.d120.ophasekistenstapeln.NavigationDrawerFragment$1.onItemClick(android.widget.AdapterView,android.view.View,int,long) (73bde7f,8051dd9,2a94580,1,1) 
+----------------------------------------
+Step: 84
+----------------------------------------
+[15523] [CI] [ENTRY] void android.app.Fragment.<init>() (a2f6feb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [a2f6feb] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 85
+----------------------------------------
+[15523] [CI] [EXIT] void android.app.Fragment.<init>() (a2f6feb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [a2f6feb] void android.app.Fragment.<init>()) |- [CI] [EXIT] [a2f6feb] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 86
+----------------------------------------
+[15768] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onPause() (f2fa730) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onPause()) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+----------------------------------------
+Step: 87
+----------------------------------------
+[15772] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onStop() (f2fa730) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStop()) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+----------------------------------------
+Step: 88
+----------------------------------------
+[15780] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView() (f2fa730) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroyView()) |+ [CB] [ENTRY] [f2fa730] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 89
+----------------------------------------
+[15788] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy() (f2fa730) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDestroy()) |- [CB] [ENTRY] [f2fa730] android.view.View de.d120.ophasekistenstapeln.CountdownFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 90
+----------------------------------------
+[15792] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach() (f2fa730) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()) |- [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onDetach()) |+ [CB] [ENTRY] [f2fa730] void de.d120.ophasekistenstapeln.CountdownFragment.onAttach(e74e325 : android.app.Activity)
+----------------------------------------
+Step: 91
+----------------------------------------
+[15796] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(android.app.Activity) (a2f6feb,e74e325) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(e74e325 : android.app.Activity)) |- [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(e74e325 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onAttach(e74e325 : android.app.Activity)) |+ [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 92
+----------------------------------------
+[15804] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(android.os.Bundle) (a2f6feb,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a2f6feb] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 93
+----------------------------------------
+[15832] [CB] [ENTRY] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a2f6feb,f91ef81,5d0a861,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a2f6feb] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a2f6feb] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [a2f6feb] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a2f6feb] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(9f38e0b : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a2f6feb] android.view.View de.d120.ophasekistenstapeln.CalculateFragment.onCreateView(f91ef81 : android.view.LayoutInflater,5d0a861 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onStart()
+----------------------------------------
+Step: 94
+----------------------------------------
+[18252] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(android.view.View,android.os.Bundle) (a2f6feb,9f38e0b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(9f38e0b : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onViewCreated(9f38e0b : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 95
+----------------------------------------
+[18256] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(android.os.Bundle) (a2f6feb,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 96
+----------------------------------------
+[18364] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onStart() (a2f6feb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onStart()) |- [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onStart()) |+ [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onResume()
+----------------------------------------
+Step: 97
+----------------------------------------
+[18368] [CB] [ENTRY] void de.d120.ophasekistenstapeln.CalculateFragment.onResume() (a2f6feb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onResume()) |- [CB] [ENTRY] [a2f6feb] void de.d120.ophasekistenstapeln.CalculateFragment.onResume()
+----------------------------------------

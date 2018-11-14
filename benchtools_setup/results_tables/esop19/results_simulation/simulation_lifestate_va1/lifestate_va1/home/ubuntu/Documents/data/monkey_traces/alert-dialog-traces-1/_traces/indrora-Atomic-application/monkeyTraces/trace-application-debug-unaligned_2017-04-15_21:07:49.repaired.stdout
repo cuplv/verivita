@@ -1,0 +1,492 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-1/_traces/indrora-Atomic-application/monkeyTraces/trace-application-debug-unaligned_2017-04-15_21:07:49.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-1/_traces/indrora-Atomic-application/monkeyTraces/trace-application-debug-unaligned_2017-04-15_21:07:49.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 1.860000
+parsing - System time: 0.150000
+spec_grounding - User time: 189.540000
+spec_grounding - System time: 1.100000
+
+---Simplified Trace---
+[294] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.<init>() (ce73f19) 
+[294] [CB] [EXIT] NULL = void indrora.atomic.activity.ServersActivity.<init>() (ce73f19) 
+[342] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onCreate(android.os.Bundle) (ce73f19,NULL) 
+[342] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onCreate(android.os.Bundle) (ce73f19,NULL) 
+[1154] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onStart() (ce73f19) 
+[1154] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onStart() (ce73f19) 
+[1186] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onResume() (ce73f19) 
+[1186] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onResume() (ce73f19) 
+[3314] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onPause() (ce73f19) 
+[3314] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onPause() (ce73f19) 
+[3386] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.<init>() (81f0fca) 
+[3386] [CB] [EXIT] NULL = void indrora.atomic.activity.AddServerActivity.<init>() (81f0fca) 
+[3434] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onCreate(android.os.Bundle) (81f0fca,NULL) 
+[3434] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onCreate(android.os.Bundle) (81f0fca,NULL) 
+[6786] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onStart() (81f0fca) 
+[6786] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onStart() (81f0fca) 
+[6818] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onResume() (81f0fca) 
+[6818] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onResume() (81f0fca) 
+[10878] [CB] [ENTRY] boolean indrora.atomic.activity.AddServerActivity.onMenuItemSelected(int,android.view.MenuItem) (81f0fca,0,37034fb) 
+  [10881] [CI] [ENTRY] void android.app.Activity.finish() (81f0fca) 
+  [10881] [CI] [EXIT] void android.app.Activity.finish() (81f0fca) 
+[10878] [CB] [EXIT] false = boolean indrora.atomic.activity.AddServerActivity.onMenuItemSelected(int,android.view.MenuItem) (81f0fca,0,37034fb) 
+[11662] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onPause() (81f0fca) 
+[11662] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onPause() (81f0fca) 
+[11740] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onResume() (ce73f19) 
+[11740] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onResume() (ce73f19) 
+[12564] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onStop() (81f0fca) 
+[12564] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onStop() (81f0fca) 
+[12568] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onDestroy() (81f0fca) 
+[12568] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onDestroy() (81f0fca) 
+[13162] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onPause() (ce73f19) 
+[13162] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onPause() (ce73f19) 
+[13234] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.<init>() (51036fd) 
+[13234] [CB] [EXIT] NULL = void indrora.atomic.activity.AddServerActivity.<init>() (51036fd) 
+[13282] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onCreate(android.os.Bundle) (51036fd,NULL) 
+[13282] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onCreate(android.os.Bundle) (51036fd,NULL) 
+[16586] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onStart() (51036fd) 
+[16586] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onStart() (51036fd) 
+[16618] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onResume() (51036fd) 
+[16618] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onResume() (51036fd) 
+[21798] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onStop() (ce73f19) 
+[21798] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onStop() (ce73f19) 
+[23870] [CB] [ENTRY] boolean indrora.atomic.activity.AddServerActivity.onMenuItemSelected(int,android.view.MenuItem) (51036fd,0,e51c23c) 
+  [23873] [CI] [ENTRY] void android.app.Activity.finish() (51036fd) 
+  [23873] [CI] [EXIT] void android.app.Activity.finish() (51036fd) 
+[23870] [CB] [EXIT] false = boolean indrora.atomic.activity.AddServerActivity.onMenuItemSelected(int,android.view.MenuItem) (51036fd,0,e51c23c) 
+[23894] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onPause() (51036fd) 
+[23894] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onPause() (51036fd) 
+[23908] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onRestart() (ce73f19) 
+[23908] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onRestart() (ce73f19) 
+[23916] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onStart() (ce73f19) 
+[23916] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onStart() (ce73f19) 
+[23920] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onResume() (ce73f19) 
+[23920] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onResume() (ce73f19) 
+[24660] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onPause() (ce73f19) 
+[24660] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onPause() (ce73f19) 
+[24888] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.<init>() (bfa70f0) 
+[24888] [CB] [EXIT] NULL = void indrora.atomic.activity.AddServerActivity.<init>() (bfa70f0) 
+[24936] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onCreate(android.os.Bundle) (bfa70f0,NULL) 
+[24936] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onCreate(android.os.Bundle) (bfa70f0,NULL) 
+[28240] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onStart() (bfa70f0) 
+[28240] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onStart() (bfa70f0) 
+[28272] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onResume() (bfa70f0) 
+[28272] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onResume() (bfa70f0) 
+[34984] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onStop() (ce73f19) 
+[34984] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onStop() (ce73f19) 
+[34992] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onStop() (51036fd) 
+[34992] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onStop() (51036fd) 
+[34996] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onDestroy() (51036fd) 
+[34996] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onDestroy() (51036fd) 
+[37936] [CB] [ENTRY] boolean indrora.atomic.activity.AddServerActivity.onMenuItemSelected(int,android.view.MenuItem) (bfa70f0,0,29f3c86) 
+  [38349] [CI] [ENTRY] void android.app.Activity.finish() (bfa70f0) 
+  [38349] [CI] [EXIT] void android.app.Activity.finish() (bfa70f0) 
+[37936] [CB] [EXIT] true = boolean indrora.atomic.activity.AddServerActivity.onMenuItemSelected(int,android.view.MenuItem) (bfa70f0,0,29f3c86) 
+[38372] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onPause() (bfa70f0) 
+[38372] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onPause() (bfa70f0) 
+[38450] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onRestart() (ce73f19) 
+[38450] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onRestart() (ce73f19) 
+[38458] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onStart() (ce73f19) 
+[38458] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onStart() (ce73f19) 
+[38462] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onResume() (ce73f19) 
+[38462] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onResume() (ce73f19) 
+[40772] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onPause() (ce73f19) 
+[40772] [CB] [EXIT] void indrora.atomic.activity.ServersActivity.onPause() (ce73f19) 
+[41132] [CB] [ENTRY] void indrora.atomic.activity.ConversationActivity.<init>() (20cc4d) 
+[41132] [CB] [EXIT] NULL = void indrora.atomic.activity.ConversationActivity.<init>() (20cc4d) 
+[41186] [CB] [ENTRY] void indrora.atomic.activity.ConversationActivity.onCreate(android.os.Bundle) (20cc4d,NULL) 
+[41186] [CB] [EXIT] void indrora.atomic.activity.ConversationActivity.onCreate(android.os.Bundle) (20cc4d,NULL) 
+[43154] [CB] [ENTRY] void indrora.atomic.activity.ConversationActivity.onStart() (20cc4d) 
+[43154] [CB] [EXIT] void indrora.atomic.activity.ConversationActivity.onStart() (20cc4d) 
+[43170] [CB] [ENTRY] void indrora.atomic.activity.ConversationActivity.onResume() (20cc4d) 
+[43170] [CB] [EXIT] void indrora.atomic.activity.ConversationActivity.onResume() (20cc4d) 
+[43484] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onStop() (bfa70f0) 
+[43484] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onStop() (bfa70f0) 
+[43488] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onDestroy() (bfa70f0) 
+[43488] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onDestroy() (bfa70f0) 
+
+
+
+TRACE STATISTICS
+Trace length: 54
+Top-level callbacks: 45
+CI-ENTRY: 3
+CI-EXIT: 0
+CB-ENTRY: 35
+CB-EXIT: 6
+        encoding - User time: 3.030000
+encoding - System time: 0.010000
+simulation - User time: 13.880000
+simulation - System time: 0.080000
+
+The trace can be simulated in 54 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[294] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.<init>() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.<init>()) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.<init>()) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.<init>()
+----------------------------------------
+Step: 2
+----------------------------------------
+[342] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onCreate(android.os.Bundle) (ce73f19,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[38458] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onStart() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()
+----------------------------------------
+Step: 4
+----------------------------------------
+[38462] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onResume() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()
+----------------------------------------
+Step: 5
+----------------------------------------
+[40772] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onPause() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()
+----------------------------------------
+Step: 6
+----------------------------------------
+[3386] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.<init>() (81f0fca) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.<init>()) |- [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.<init>()) |+ [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 7
+----------------------------------------
+[3434] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onCreate(android.os.Bundle) (81f0fca,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onStart()
+----------------------------------------
+Step: 8
+----------------------------------------
+[3434] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onCreate(android.os.Bundle) (81f0fca,NULL) 
+----------------------------------------
+Step: 9
+----------------------------------------
+[6786] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onStart() (81f0fca) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onStart()) |- [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onStart()) |+ [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onResume()
+----------------------------------------
+Step: 10
+----------------------------------------
+[6786] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onStart() (81f0fca) 
+----------------------------------------
+Step: 11
+----------------------------------------
+[6818] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onResume() (81f0fca) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onResume()) |- [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onResume()) |+ [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onPause()
+----------------------------------------
+Step: 12
+----------------------------------------
+[10878] [CB] [ENTRY] boolean indrora.atomic.activity.AddServerActivity.onMenuItemSelected(int,android.view.MenuItem) (81f0fca,0,37034fb) 
+----------------------------------------
+Step: 13
+----------------------------------------
+[10881] [CI] [ENTRY] void android.app.Activity.finish() (81f0fca) 
+----------------------------------------
+Step: 14
+----------------------------------------
+[11662] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onPause() (81f0fca) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onPause()) |+ [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onPause()) |+ [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onPause()) |+ [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onPause()) |- [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onPause()
+----------------------------------------
+Step: 15
+----------------------------------------
+[38462] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onResume() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop()
+----------------------------------------
+Step: 16
+----------------------------------------
+[12564] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onStop() (81f0fca) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onStop()) |- [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onStop()) |- [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onStop()) |+ [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onDestroy()
+----------------------------------------
+Step: 17
+----------------------------------------
+[12568] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onDestroy() (81f0fca) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onDestroy()) |- [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onDestroy()) |- [CB] [ENTRY] [81f0fca] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 18
+----------------------------------------
+[40772] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onPause() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()
+----------------------------------------
+Step: 19
+----------------------------------------
+[13234] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.<init>() (51036fd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.<init>()) |- [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.<init>()) |+ [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 20
+----------------------------------------
+[13282] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onCreate(android.os.Bundle) (51036fd,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 21
+----------------------------------------
+[13282] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onCreate(android.os.Bundle) (51036fd,NULL) 
+----------------------------------------
+Step: 22
+----------------------------------------
+[16586] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onStart() (51036fd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onStart()) |- [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onStart()) |+ [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onResume()
+----------------------------------------
+Step: 23
+----------------------------------------
+[16586] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onStart() (51036fd) 
+----------------------------------------
+Step: 24
+----------------------------------------
+[16618] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onResume() (51036fd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onResume()) |- [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onResume()) |+ [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onPause()
+----------------------------------------
+Step: 25
+----------------------------------------
+[34984] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onStop() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop()
+----------------------------------------
+Step: 26
+----------------------------------------
+[23870] [CB] [ENTRY] boolean indrora.atomic.activity.AddServerActivity.onMenuItemSelected(int,android.view.MenuItem) (51036fd,0,e51c23c) 
+----------------------------------------
+Step: 27
+----------------------------------------
+[23873] [CI] [ENTRY] void android.app.Activity.finish() (51036fd) 
+----------------------------------------
+Step: 28
+----------------------------------------
+[23894] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onPause() (51036fd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onPause()) |+ [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onPause()) |+ [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onPause()) |- [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onPause()) |+ [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 29
+----------------------------------------
+[38450] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onRestart() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart()
+----------------------------------------
+Step: 30
+----------------------------------------
+[38458] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onStart() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()
+----------------------------------------
+Step: 31
+----------------------------------------
+[38462] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onResume() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()
+----------------------------------------
+Step: 32
+----------------------------------------
+[40772] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onPause() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()
+----------------------------------------
+Step: 33
+----------------------------------------
+[24888] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.<init>() (bfa70f0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.<init>()) |- [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.<init>()) |+ [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 34
+----------------------------------------
+[24936] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onCreate(android.os.Bundle) (bfa70f0,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onStart()
+----------------------------------------
+Step: 35
+----------------------------------------
+[24936] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onCreate(android.os.Bundle) (bfa70f0,NULL) 
+----------------------------------------
+Step: 36
+----------------------------------------
+[28240] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onStart() (bfa70f0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onStart()) |- [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onStart()) |+ [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onResume()
+----------------------------------------
+Step: 37
+----------------------------------------
+[28240] [CB] [EXIT] void indrora.atomic.activity.AddServerActivity.onStart() (bfa70f0) 
+----------------------------------------
+Step: 38
+----------------------------------------
+[28272] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onResume() (bfa70f0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onResume()) |+ [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onResume()) |- [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onResume()
+----------------------------------------
+Step: 39
+----------------------------------------
+[34984] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onStop() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop()
+----------------------------------------
+Step: 40
+----------------------------------------
+[34992] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onStop() (51036fd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onStop()) |- [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onStop()) |+ [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onStop()) |- [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onStop()
+----------------------------------------
+Step: 41
+----------------------------------------
+[34996] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onDestroy() (51036fd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onDestroy()) |- [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onDestroy()) |- [CB] [ENTRY] [51036fd] void indrora.atomic.activity.AddServerActivity.onDestroy()
+----------------------------------------
+Step: 42
+----------------------------------------
+[37936] [CB] [ENTRY] boolean indrora.atomic.activity.AddServerActivity.onMenuItemSelected(int,android.view.MenuItem) (bfa70f0,0,29f3c86) 
+----------------------------------------
+Step: 43
+----------------------------------------
+[38349] [CI] [ENTRY] void android.app.Activity.finish() (bfa70f0) 
+----------------------------------------
+Step: 44
+----------------------------------------
+[38372] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onPause() (bfa70f0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onPause()) |- [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onPause()) |+ [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onPause()) |+ [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onPause()) |+ [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onResume()
+----------------------------------------
+Step: 45
+----------------------------------------
+[38450] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onRestart() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onRestart()
+----------------------------------------
+Step: 46
+----------------------------------------
+[38458] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onStart() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStart())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()
+----------------------------------------
+Step: 47
+----------------------------------------
+[38462] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onResume() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()
+----------------------------------------
+Step: 48
+----------------------------------------
+[40772] [CB] [ENTRY] void indrora.atomic.activity.ServersActivity.onPause() (ce73f19) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |- [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onStop()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause() | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause()) | [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onPause())) |+ [CB] [ENTRY] [ce73f19] void indrora.atomic.activity.ServersActivity.onResume()
+----------------------------------------
+Step: 49
+----------------------------------------
+[41132] [CB] [ENTRY] void indrora.atomic.activity.ConversationActivity.<init>() (20cc4d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.<init>()) |+ [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.<init>()) |- [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.<init>()
+----------------------------------------
+Step: 50
+----------------------------------------
+[41186] [CB] [ENTRY] void indrora.atomic.activity.ConversationActivity.onCreate(android.os.Bundle) (20cc4d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.onStart()
+----------------------------------------
+Step: 51
+----------------------------------------
+[43154] [CB] [ENTRY] void indrora.atomic.activity.ConversationActivity.onStart() (20cc4d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.onStart()) |- [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.onStart()) |+ [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.onResume()
+----------------------------------------
+Step: 52
+----------------------------------------
+[43170] [CB] [ENTRY] void indrora.atomic.activity.ConversationActivity.onResume() (20cc4d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.onResume()) |- [CB] [ENTRY] [20cc4d] void indrora.atomic.activity.ConversationActivity.onResume()
+----------------------------------------
+Step: 53
+----------------------------------------
+[43484] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onStop() (bfa70f0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onStop()) |- [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onStop()) |- [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onStop()) |+ [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onDestroy()
+----------------------------------------
+Step: 54
+----------------------------------------
+[43488] [CB] [ENTRY] void indrora.atomic.activity.AddServerActivity.onDestroy() (bfa70f0) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onDestroy()) |- [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onDestroy()) |- [CB] [ENTRY] [bfa70f0] void indrora.atomic.activity.AddServerActivity.onDestroy()
+----------------------------------------

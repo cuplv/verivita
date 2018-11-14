@@ -1,0 +1,656 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-1/_traces/androidsx-rate-me-SampleProject/monkeyTraces/trace-SampleProject-debug_2017-04-15_06:00:23.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-1/_traces/androidsx-rate-me-SampleProject/monkeyTraces/trace-SampleProject-debug_2017-04-15_06:00:23.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 0.960000
+parsing - System time: 0.070000
+spec_grounding - User time: 165.230000
+spec_grounding - System time: 0.890000
+
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.<init>() (dc49db8) 
+[0] [CB] [EXIT] NULL = void com.androidsx.rateme.demo1.SampleProjectMainActivity.<init>() (dc49db8) 
+[48] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onCreate(android.os.Bundle) (dc49db8,NULL) 
+[48] [CB] [EXIT] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onCreate(android.os.Bundle) (dc49db8,NULL) 
+[1170] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onStart() (dc49db8) 
+[1170] [CB] [EXIT] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onStart() (dc49db8) 
+[1252] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onResume() (dc49db8) 
+[1252] [CB] [EXIT] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onResume() (dc49db8) 
+[3118] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onCustomRateMeButtonClick(android.view.View) (dc49db8,3bf5e0e) 
+  [3153] [CI] [ENTRY] void android.app.DialogFragment.<init>() (ccaba1b) 
+  [3153] [CI] [EXIT] void android.app.DialogFragment.<init>() (ccaba1b) 
+[3118] [CB] [EXIT] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onCustomRateMeButtonClick(android.view.View) (dc49db8,3bf5e0e) 
+[3208] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (ccaba1b,dc49db8) 
+[3208] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (ccaba1b,dc49db8) 
+[3216] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (ccaba1b,NULL) 
+[3216] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (ccaba1b,NULL) 
+[4446] [CB] [ENTRY] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ccaba1b,a5d98de,NULL,NULL) 
+[4446] [CB] [EXIT] NULL = android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ccaba1b,a5d98de,NULL,NULL) 
+[4450] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (ccaba1b,NULL) 
+[4450] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (ccaba1b,NULL) 
+[4462] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStart() (ccaba1b) 
+[4462] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onStart() (ccaba1b) 
+[5670] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onResume() (ccaba1b) 
+[5670] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onResume() (ccaba1b) 
+[7134] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onPause() (ccaba1b) 
+[7134] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onPause() (ccaba1b) 
+[7138] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStop() (ccaba1b) 
+[7138] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onStop() (ccaba1b) 
+[7142] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroyView() (ccaba1b) 
+[7142] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onDestroyView() (ccaba1b) 
+[7146] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroy() (ccaba1b) 
+[7146] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onDestroy() (ccaba1b) 
+[7150] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDetach() (ccaba1b) 
+[7150] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onDetach() (ccaba1b) 
+[7306] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onPlainRateMeButtonClick(android.view.View) (dc49db8,72a0210) 
+  [7319] [CI] [ENTRY] void android.app.DialogFragment.<init>() (b0a0f40) 
+  [7319] [CI] [EXIT] void android.app.DialogFragment.<init>() (b0a0f40) 
+[7306] [CB] [EXIT] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onPlainRateMeButtonClick(android.view.View) (dc49db8,72a0210) 
+[7346] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (b0a0f40,dc49db8) 
+[7346] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (b0a0f40,dc49db8) 
+[7354] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (b0a0f40,NULL) 
+[7354] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (b0a0f40,NULL) 
+[8554] [CB] [ENTRY] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b0a0f40,c7d8ac2,NULL,NULL) 
+[8554] [CB] [EXIT] NULL = android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b0a0f40,c7d8ac2,NULL,NULL) 
+[8558] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (b0a0f40,NULL) 
+[8558] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (b0a0f40,NULL) 
+[8570] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStart() (b0a0f40) 
+[8570] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onStart() (b0a0f40) 
+[9762] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onResume() (b0a0f40) 
+[9762] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onResume() (b0a0f40) 
+[11202] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onCustomRateMeButtonClick(android.view.View) (dc49db8,3bf5e0e) 
+  [11237] [CI] [ENTRY] void android.app.DialogFragment.<init>() (3773657) 
+  [11237] [CI] [EXIT] void android.app.DialogFragment.<init>() (3773657) 
+[11202] [CB] [EXIT] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onCustomRateMeButtonClick(android.view.View) (dc49db8,3bf5e0e) 
+[11300] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (3773657,dc49db8) 
+[11300] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (3773657,dc49db8) 
+[11308] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (3773657,NULL) 
+[11308] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (3773657,NULL) 
+[12522] [CB] [ENTRY] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (3773657,22f90d,NULL,NULL) 
+[12522] [CB] [EXIT] NULL = android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (3773657,22f90d,NULL,NULL) 
+[12526] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (3773657,NULL) 
+[12526] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (3773657,NULL) 
+[12538] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStart() (3773657) 
+[12538] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onStart() (3773657) 
+[13730] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onResume() (3773657) 
+[13730] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onResume() (3773657) 
+[13746] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onPause() (b0a0f40) 
+[13746] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onPause() (b0a0f40) 
+[13750] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStop() (b0a0f40) 
+[13750] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onStop() (b0a0f40) 
+[13754] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroyView() (b0a0f40) 
+[13754] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onDestroyView() (b0a0f40) 
+[13758] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroy() (b0a0f40) 
+[13758] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onDestroy() (b0a0f40) 
+[13762] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDetach() (b0a0f40) 
+[13762] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onDetach() (b0a0f40) 
+[15178] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onPlainRateMeButtonClick(android.view.View) (dc49db8,72a0210) 
+  [15191] [CI] [ENTRY] void android.app.DialogFragment.<init>() (286e1c6) 
+  [15191] [CI] [EXIT] void android.app.DialogFragment.<init>() (286e1c6) 
+[15178] [CB] [EXIT] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onPlainRateMeButtonClick(android.view.View) (dc49db8,72a0210) 
+[15198] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onPlainRateMeButtonClick(android.view.View) (dc49db8,72a0210) 
+  [15211] [CI] [ENTRY] void android.app.DialogFragment.<init>() (a100f49) 
+  [15211] [CI] [EXIT] void android.app.DialogFragment.<init>() (a100f49) 
+[15198] [CB] [EXIT] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onPlainRateMeButtonClick(android.view.View) (dc49db8,72a0210) 
+[15286] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (286e1c6,dc49db8) 
+[15286] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (286e1c6,dc49db8) 
+[15294] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (286e1c6,NULL) 
+[15294] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (286e1c6,NULL) 
+[16494] [CB] [ENTRY] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (286e1c6,bd85e2d,NULL,NULL) 
+[16494] [CB] [EXIT] NULL = android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (286e1c6,bd85e2d,NULL,NULL) 
+[16498] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (286e1c6,NULL) 
+[16498] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (286e1c6,NULL) 
+[16510] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStart() (286e1c6) 
+[16510] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onStart() (286e1c6) 
+[17702] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onResume() (286e1c6) 
+[17702] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onResume() (286e1c6) 
+[17718] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (a100f49,dc49db8) 
+[17718] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (a100f49,dc49db8) 
+[17726] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (a100f49,NULL) 
+[17726] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (a100f49,NULL) 
+[18926] [CB] [ENTRY] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a100f49,5d74123,NULL,NULL) 
+[18926] [CB] [EXIT] NULL = android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a100f49,5d74123,NULL,NULL) 
+[18930] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (a100f49,NULL) 
+[18930] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (a100f49,NULL) 
+[18942] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStart() (a100f49) 
+[18942] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onStart() (a100f49) 
+[20134] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onResume() (a100f49) 
+[20134] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onResume() (a100f49) 
+[23210] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onPause() (286e1c6) 
+[23210] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onPause() (286e1c6) 
+[23214] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStop() (286e1c6) 
+[23214] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onStop() (286e1c6) 
+[23218] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroyView() (286e1c6) 
+[23218] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onDestroyView() (286e1c6) 
+[23222] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroy() (286e1c6) 
+[23222] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onDestroy() (286e1c6) 
+[23226] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDetach() (286e1c6) 
+[23226] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onDetach() (286e1c6) 
+[23262] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onPause() (a100f49) 
+[23262] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onPause() (a100f49) 
+[23266] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStop() (a100f49) 
+[23266] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onStop() (a100f49) 
+[23270] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroyView() (a100f49) 
+[23270] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onDestroyView() (a100f49) 
+[23274] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroy() (a100f49) 
+[23274] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onDestroy() (a100f49) 
+[23278] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDetach() (a100f49) 
+[23278] [CB] [EXIT] void com.androidsx.rateme.RateMeDialog.onDetach() (a100f49) 
+
+
+
+TRACE STATISTICS
+Trace length: 69
+Top-level callbacks: 59
+CI-ENTRY: 5
+CI-EXIT: 5
+CB-ENTRY: 56
+CB-EXIT: 0
+        encoding - User time: 3.100000
+encoding - System time: 0.010000
+simulation - User time: 18.500000
+simulation - System time: 0.120000
+
+The trace can be simulated in 69 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[0] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.<init>() (dc49db8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.<init>()) |- [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.<init>()) |+ [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[48] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onCreate(android.os.Bundle) (dc49db8,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 3
+----------------------------------------
+[1170] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onStart() (dc49db8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onStart()) |- [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onStart()) |+ [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onResume()
+----------------------------------------
+Step: 4
+----------------------------------------
+[1252] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onResume() (dc49db8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onResume()) |- [CB] [ENTRY] [dc49db8] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onResume()
+----------------------------------------
+Step: 5
+----------------------------------------
+[3118] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onCustomRateMeButtonClick(android.view.View) (dc49db8,3bf5e0e) 
+----------------------------------------
+Step: 6
+----------------------------------------
+[3153] [CI] [ENTRY] void android.app.DialogFragment.<init>() (ccaba1b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [ccaba1b] void android.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+----------------------------------------
+Step: 7
+----------------------------------------
+[3153] [CI] [EXIT] void android.app.DialogFragment.<init>() (ccaba1b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [ccaba1b] void android.app.DialogFragment.<init>()) |- [CI] [EXIT] [ccaba1b] void android.app.DialogFragment.<init>()
+----------------------------------------
+Step: 8
+----------------------------------------
+[3208] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (ccaba1b,dc49db8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+----------------------------------------
+Step: 9
+----------------------------------------
+[3216] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (ccaba1b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ccaba1b] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(a5d98de : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 10
+----------------------------------------
+[4446] [CB] [ENTRY] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ccaba1b,a5d98de,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(a5d98de : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(a5d98de : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(a5d98de : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [ccaba1b] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(a5d98de : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 11
+----------------------------------------
+[4450] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (ccaba1b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 12
+----------------------------------------
+[4462] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStart() (ccaba1b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStart()) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStart()) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStart()) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStart()) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStart()
+----------------------------------------
+Step: 13
+----------------------------------------
+[5670] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onResume() (ccaba1b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onResume()) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onResume()) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onPause()
+----------------------------------------
+Step: 14
+----------------------------------------
+[7134] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onPause() (ccaba1b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onPause()) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onPause()) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onResume()
+----------------------------------------
+Step: 15
+----------------------------------------
+[7138] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStop() (ccaba1b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStop()) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStop()) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStop()) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStop()) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStop()) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStart()
+----------------------------------------
+Step: 16
+----------------------------------------
+[7142] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroyView() (ccaba1b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |+ [CB] [ENTRY] [ccaba1b] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(a5d98de : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 17
+----------------------------------------
+[7146] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroy() (ccaba1b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroy()) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroy()) |- [CB] [ENTRY] [ccaba1b] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(a5d98de : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroy()) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDestroy()
+----------------------------------------
+Step: 18
+----------------------------------------
+[7150] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDetach() (ccaba1b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDetach()) |+ [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDetach()) |- [CB] [ENTRY] [ccaba1b] void com.androidsx.rateme.RateMeDialog.onDetach()
+----------------------------------------
+Step: 19
+----------------------------------------
+[7306] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onPlainRateMeButtonClick(android.view.View) (dc49db8,72a0210) 
+----------------------------------------
+Step: 20
+----------------------------------------
+[7319] [CI] [ENTRY] void android.app.DialogFragment.<init>() (b0a0f40) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [b0a0f40] void android.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+----------------------------------------
+Step: 21
+----------------------------------------
+[7319] [CI] [EXIT] void android.app.DialogFragment.<init>() (b0a0f40) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [b0a0f40] void android.app.DialogFragment.<init>()) |- [CI] [EXIT] [b0a0f40] void android.app.DialogFragment.<init>()
+----------------------------------------
+Step: 22
+----------------------------------------
+[7346] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (b0a0f40,dc49db8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 23
+----------------------------------------
+[7354] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (b0a0f40,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b0a0f40] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(c7d8ac2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 24
+----------------------------------------
+[8554] [CB] [ENTRY] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b0a0f40,c7d8ac2,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(c7d8ac2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [b0a0f40] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(c7d8ac2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(c7d8ac2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(c7d8ac2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 25
+----------------------------------------
+[8558] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (b0a0f40,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+----------------------------------------
+Step: 26
+----------------------------------------
+[8570] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStart() (b0a0f40) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStart()) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStart()) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStart()) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStart()) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+----------------------------------------
+Step: 27
+----------------------------------------
+[9762] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onResume() (b0a0f40) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onResume()) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onResume()) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onPause()
+----------------------------------------
+Step: 28
+----------------------------------------
+[11202] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onCustomRateMeButtonClick(android.view.View) (dc49db8,3bf5e0e) 
+----------------------------------------
+Step: 29
+----------------------------------------
+[11237] [CI] [ENTRY] void android.app.DialogFragment.<init>() (3773657) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [3773657] void android.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+----------------------------------------
+Step: 30
+----------------------------------------
+[11237] [CI] [EXIT] void android.app.DialogFragment.<init>() (3773657) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [3773657] void android.app.DialogFragment.<init>()) |- [CI] [EXIT] [3773657] void android.app.DialogFragment.<init>()
+----------------------------------------
+Step: 31
+----------------------------------------
+[11300] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (3773657,dc49db8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)) |+ [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)) |- [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+----------------------------------------
+Step: 32
+----------------------------------------
+[11308] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (3773657,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [3773657] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(22f90d : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 33
+----------------------------------------
+[12522] [CB] [ENTRY] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (3773657,22f90d,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3773657] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(22f90d : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3773657] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(22f90d : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3773657] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(22f90d : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [3773657] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(22f90d : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 34
+----------------------------------------
+[12526] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (3773657,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 35
+----------------------------------------
+[12538] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStart() (3773657) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onStart()) |+ [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onStart()) |- [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onStart()
+----------------------------------------
+Step: 36
+----------------------------------------
+[13730] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onResume() (3773657) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onResume()) |- [CB] [ENTRY] [3773657] void com.androidsx.rateme.RateMeDialog.onResume()
+----------------------------------------
+Step: 37
+----------------------------------------
+[13746] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onPause() (b0a0f40) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onPause()) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onPause()) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onResume()
+----------------------------------------
+Step: 38
+----------------------------------------
+[13750] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStop() (b0a0f40) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStop()) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStop()) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStop()) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStop()) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStop()) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+----------------------------------------
+Step: 39
+----------------------------------------
+[13754] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroyView() (b0a0f40) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |+ [CB] [ENTRY] [b0a0f40] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(c7d8ac2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroy()
+----------------------------------------
+Step: 40
+----------------------------------------
+[13758] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroy() (b0a0f40) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroy()) |- [CB] [ENTRY] [b0a0f40] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(c7d8ac2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroy()) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDestroy()) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDetach()
+----------------------------------------
+Step: 41
+----------------------------------------
+[13762] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDetach() (b0a0f40) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDetach()) |- [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onDetach()) |+ [CB] [ENTRY] [b0a0f40] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+----------------------------------------
+Step: 42
+----------------------------------------
+[15178] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onPlainRateMeButtonClick(android.view.View) (dc49db8,72a0210) 
+----------------------------------------
+Step: 43
+----------------------------------------
+[15191] [CI] [ENTRY] void android.app.DialogFragment.<init>() (286e1c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [286e1c6] void android.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+----------------------------------------
+Step: 44
+----------------------------------------
+[15191] [CI] [EXIT] void android.app.DialogFragment.<init>() (286e1c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [286e1c6] void android.app.DialogFragment.<init>()) |- [CI] [EXIT] [286e1c6] void android.app.DialogFragment.<init>()
+----------------------------------------
+Step: 45
+----------------------------------------
+[15198] [CB] [ENTRY] void com.androidsx.rateme.demo1.SampleProjectMainActivity.onPlainRateMeButtonClick(android.view.View) (dc49db8,72a0210) 
+----------------------------------------
+Step: 46
+----------------------------------------
+[15211] [CI] [ENTRY] void android.app.DialogFragment.<init>() (a100f49) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [a100f49] void android.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+----------------------------------------
+Step: 47
+----------------------------------------
+[15211] [CI] [EXIT] void android.app.DialogFragment.<init>() (a100f49) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [a100f49] void android.app.DialogFragment.<init>()) |- [CI] [EXIT] [a100f49] void android.app.DialogFragment.<init>()
+----------------------------------------
+Step: 48
+----------------------------------------
+[15286] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (286e1c6,dc49db8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+----------------------------------------
+Step: 49
+----------------------------------------
+[15294] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (286e1c6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [286e1c6] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(bd85e2d : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 50
+----------------------------------------
+[16494] [CB] [ENTRY] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (286e1c6,bd85e2d,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(bd85e2d : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(bd85e2d : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [286e1c6] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(bd85e2d : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(bd85e2d : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 51
+----------------------------------------
+[16498] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (286e1c6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 52
+----------------------------------------
+[16510] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStart() (286e1c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStart()) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStart()) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStart()) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStart()) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStart()
+----------------------------------------
+Step: 53
+----------------------------------------
+[17702] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onResume() (286e1c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onResume()) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onResume()) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onPause()
+----------------------------------------
+Step: 54
+----------------------------------------
+[17718] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onAttach(android.app.Activity) (a100f49,dc49db8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 55
+----------------------------------------
+[17726] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onCreate(android.os.Bundle) (a100f49,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a100f49] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(5d74123 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 56
+----------------------------------------
+[18926] [CB] [ENTRY] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (a100f49,5d74123,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(5d74123 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(5d74123 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [a100f49] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(5d74123 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(5d74123 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 57
+----------------------------------------
+[18930] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onActivityCreated(android.os.Bundle) (a100f49,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 58
+----------------------------------------
+[18942] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStart() (a100f49) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStart()) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStart()) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStart()) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStart()) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStop()
+----------------------------------------
+Step: 59
+----------------------------------------
+[20134] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onResume() (a100f49) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onResume()) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onResume()) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onResume()
+----------------------------------------
+Step: 60
+----------------------------------------
+[23210] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onPause() (286e1c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onPause()) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onPause()) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onResume()
+----------------------------------------
+Step: 61
+----------------------------------------
+[23214] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStop() (286e1c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStop()) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStop()) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStop()) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStop()) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStop()) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStop()
+----------------------------------------
+Step: 62
+----------------------------------------
+[23218] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroyView() (286e1c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |+ [CB] [ENTRY] [286e1c6] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(bd85e2d : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onStart()
+----------------------------------------
+Step: 63
+----------------------------------------
+[23222] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroy() (286e1c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroy()) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroy()) |- [CB] [ENTRY] [286e1c6] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(bd85e2d : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroy()) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDestroy()
+----------------------------------------
+Step: 64
+----------------------------------------
+[23226] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDetach() (286e1c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDetach()) |- [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onDetach()) |+ [CB] [ENTRY] [286e1c6] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+----------------------------------------
+Step: 65
+----------------------------------------
+[23262] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onPause() (a100f49) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onPause()) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onPause()) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onPause()
+----------------------------------------
+Step: 66
+----------------------------------------
+[23266] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onStop() (a100f49) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStop()) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStop()) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStop()) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStop()) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStop()) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 67
+----------------------------------------
+[23270] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroyView() (a100f49) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |+ [CB] [ENTRY] [a100f49] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(5d74123 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroyView()) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroy()
+----------------------------------------
+Step: 68
+----------------------------------------
+[23274] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDestroy() (a100f49) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroy()) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroy()) |- [CB] [ENTRY] [a100f49] android.view.View com.androidsx.rateme.RateMeDialog.onCreateView(5d74123 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDestroy()) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDetach()
+----------------------------------------
+Step: 69
+----------------------------------------
+[23278] [CB] [ENTRY] void com.androidsx.rateme.RateMeDialog.onDetach() (a100f49) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDetach()) |- [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onDetach()) |+ [CB] [ENTRY] [a100f49] void com.androidsx.rateme.RateMeDialog.onAttach(dc49db8 : android.app.Activity)
+----------------------------------------

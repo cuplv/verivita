@@ -1,0 +1,1361 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/other-dialog-traces-2/_traces/sh1r0-NovelDroid-app/monkeyTraces/trace-app-debug-unaligned_2017-04-16_11:55:53.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/other-dialog-traces-2/_traces/sh1r0-NovelDroid-app/monkeyTraces/trace-app-debug-unaligned_2017-04-16_11:55:53.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 5.540000
+parsing - System time: 0.370000
+spec_grounding - User time: 172.250000
+spec_grounding - System time: 0.670000
+
+---Simplified Trace---
+[16] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.<init>() (c56a969) 
+[16] [CB] [EXIT] NULL = void com.sh1r0.noveldroid.MainActivity.<init>() (c56a969) 
+[68] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onCreate(android.os.Bundle) (c56a969,NULL) 
+  [4321] [CI] [ENTRY] android.view.View android.support.v7.app.AppCompatActivity.findViewById(int) (c56a969,2131558487) 
+  [4321] [CI] [EXIT] 620d76f = android.view.View android.support.v7.app.AppCompatActivity.findViewById(int) (c56a969,2131558487) 
+  [4371] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (620d76f,35071e5) 
+  [4371] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (620d76f,35071e5) 
+[68] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onCreate(android.os.Bundle) (c56a969,NULL) 
+[4532] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStart() (c56a969) 
+[4532] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onStart() (c56a969) 
+[4604] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onResume() (c56a969) 
+[4604] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onResume() (c56a969) 
+[25316] [CB] [ENTRY] boolean com.dd.processbutton.FlatButton.performClick() (620d76f) 
+  [25329] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity$2.onClick(android.view.View) (35071e5,620d76f) 
+  [25330] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (620d76f,false) 
+  [25330] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (620d76f,false) 
+  [25329] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity$2.onClick(android.view.View) (35071e5,620d76f) 
+  [25677] [CI] [ENTRY] boolean android.view.View.performClick() (620d76f) 
+  [25677] [CI] [EXIT] true = boolean android.view.View.performClick() (620d76f) 
+[25316] [CB] [EXIT] true = boolean com.dd.processbutton.FlatButton.performClick() (620d76f) 
+[32760] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onPause() (c56a969) 
+[32760] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onPause() (c56a969) 
+[33110] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.<init>() (f824364) 
+[33110] [CB] [EXIT] NULL = void com.sh1r0.noveldroid.SettingsActivity.<init>() (f824364) 
+[33158] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onCreate(android.os.Bundle) (f824364,NULL) 
+  [34129] [CI] [ENTRY] void android.support.v7.preference.PreferenceFragmentCompat.<init>() (199f938) 
+  [34129] [CI] [EXIT] void android.support.v7.preference.PreferenceFragmentCompat.<init>() (199f938) 
+[33158] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onCreate(android.os.Bundle) (f824364,NULL) 
+[34144] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onStart() (f824364) 
+  [34152] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onAttach(android.app.Activity) (199f938,f824364) 
+  [34152] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onAttach(android.app.Activity) (199f938,f824364) 
+  [34162] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onCreate(android.os.Bundle) (199f938,NULL) 
+  [34162] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onCreate(android.os.Bundle) (199f938,NULL) 
+  [34352] [CB] [ENTRY] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (199f938,6e7268b,41075b4,NULL) 
+  [34352] [CB] [EXIT] 241146c = android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (199f938,6e7268b,41075b4,NULL) 
+  [34556] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onViewCreated(android.view.View,android.os.Bundle) (199f938,241146c,NULL) 
+  [34556] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onViewCreated(android.view.View,android.os.Bundle) (199f938,241146c,NULL) 
+  [34560] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onActivityCreated(android.os.Bundle) (199f938,NULL) 
+  [34560] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onActivityCreated(android.os.Bundle) (199f938,NULL) 
+  [34580] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onStart() (199f938) 
+  [34580] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onStart() (199f938) 
+[34144] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onStart() (f824364) 
+[34610] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onResume() (f824364) 
+[34610] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onResume() (f824364) 
+[34614] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onPostResume() (f824364) 
+  [34622] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onResume() (199f938) 
+  [34622] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onResume() (199f938) 
+[34614] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onPostResume() (f824364) 
+[39662] [CB] [ENTRY] boolean com.sh1r0.noveldroid.SettingsFragment$3.onPreferenceClick(android.support.v7.preference.Preference) (4a68e51,46160db) 
+  [39663] [CI] [ENTRY] void android.os.AsyncTask.<init>() (c9f5256) 
+  [39663] [CI] [EXIT] void android.os.AsyncTask.<init>() (c9f5256) 
+  [39665] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (c9f5256,81e86ad) 
+  [39666] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute() (c9f5256) 
+  [39666] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute() (c9f5256) 
+  [39665] [CI] [EXIT] c9f5256 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (c9f5256,81e86ad) 
+[39662] [CB] [EXIT] true = boolean com.sh1r0.noveldroid.SettingsFragment$3.onPreferenceClick(android.support.v7.preference.Preference) (4a68e51,46160db) 
+[42688] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPostExecute(java.lang.Object) (c9f5256,NULL) 
+[42688] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPostExecute(java.lang.Object) (c9f5256,NULL) 
+[42866] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onPause() (f824364) 
+  [42868] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onPause() (199f938) 
+  [42868] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onPause() (199f938) 
+[42866] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onPause() (f824364) 
+[43042] [CB] [ENTRY] void com.nononsenseapps.filepicker.FilePickerActivity.<init>() (3857562) 
+[43042] [CB] [EXIT] NULL = void com.nononsenseapps.filepicker.FilePickerActivity.<init>() (3857562) 
+[43090] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onCreate(android.os.Bundle) (3857562,NULL) 
+  [43953] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (ae5baba) 
+  [43953] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (ae5baba) 
+[43090] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onCreate(android.os.Bundle) (3857562,NULL) 
+[43992] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStart() (3857562) 
+  [44000] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onAttach(android.app.Activity) (ae5baba,3857562) 
+  [44000] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onAttach(android.app.Activity) (ae5baba,3857562) 
+  [44010] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreate(android.os.Bundle) (ae5baba,NULL) 
+  [44010] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreate(android.os.Bundle) (ae5baba,NULL) 
+  [44056] [CB] [ENTRY] android.view.View com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ae5baba,1e12fd7,7a34ed0,NULL) 
+  [44755] [CI] [ENTRY] android.view.View android.view.View.findViewById(int) (d019ac,2131558511) 
+  [44755] [CI] [EXIT] eaba360 = android.view.View android.view.View.findViewById(int) (d019ac,2131558511) 
+  [44759] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (eaba360,b49d8de) 
+  [44759] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (eaba360,b49d8de) 
+  [44056] [CB] [EXIT] d019ac = android.view.View com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ae5baba,1e12fd7,7a34ed0,NULL) 
+  [44804] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onViewCreated(android.view.View,android.os.Bundle) (ae5baba,d019ac,NULL) 
+  [44804] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onViewCreated(android.view.View,android.os.Bundle) (ae5baba,d019ac,NULL) 
+  [44808] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onActivityCreated(android.os.Bundle) (ae5baba,NULL) 
+  [44808] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onActivityCreated(android.os.Bundle) (ae5baba,NULL) 
+  [44862] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStart() (ae5baba) 
+  [44862] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStart() (ae5baba) 
+[43992] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStart() (3857562) 
+[44933] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onResume() (3857562) 
+[44933] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onResume() (3857562) 
+[44937] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onPostResume() (3857562) 
+  [44945] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onResume() (ae5baba) 
+  [44945] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onResume() (ae5baba) 
+[44937] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onPostResume() (3857562) 
+[46228] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStop() (c56a969) 
+[46228] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onStop() (c56a969) 
+[48126] [CB] [ENTRY] android.support.v7.widget.RecyclerView$ViewHolder com.nononsenseapps.filepicker.FileItemAdapter.onCreateViewHolder(android.view.ViewGroup,int) (21c9bfb,887e394,0) 
+  [48139] [CI] [ENTRY] android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup,boolean) (895da6a,2130903073,887e394,false) 
+  [48139] [CI] [EXIT] e927ae3 = android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup,boolean) (895da6a,2130903073,887e394,false) 
+  [48359] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e927ae3,5830b99) 
+  [48359] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e927ae3,5830b99) 
+[48126] [CB] [EXIT] 5830b99 = android.support.v7.widget.RecyclerView$ViewHolder com.nononsenseapps.filepicker.FileItemAdapter.onCreateViewHolder(android.view.ViewGroup,int) (21c9bfb,887e394,0) 
+[48526] [CB] [ENTRY] android.support.v7.widget.RecyclerView$ViewHolder com.nononsenseapps.filepicker.FileItemAdapter.onCreateViewHolder(android.view.ViewGroup,int) (21c9bfb,887e394,1) 
+  [48539] [CI] [ENTRY] android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup,boolean) (895da6a,2130903073,887e394,false) 
+  [48539] [CI] [EXIT] 67f98ee = android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup,boolean) (895da6a,2130903073,887e394,false) 
+  [48759] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (67f98ee,2ccfc1c) 
+  [48759] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (67f98ee,2ccfc1c) 
+[48526] [CB] [EXIT] 2ccfc1c = android.support.v7.widget.RecyclerView$ViewHolder com.nononsenseapps.filepicker.FileItemAdapter.onCreateViewHolder(android.view.ViewGroup,int) (21c9bfb,887e394,1) 
+[48940] [CB] [ENTRY] android.support.v7.widget.RecyclerView$ViewHolder com.nononsenseapps.filepicker.FileItemAdapter.onCreateViewHolder(android.view.ViewGroup,int) (21c9bfb,887e394,1) 
+  [48953] [CI] [ENTRY] android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup,boolean) (895da6a,2130903073,887e394,false) 
+  [48953] [CI] [EXIT] 374953a = android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup,boolean) (895da6a,2130903073,887e394,false) 
+  [49173] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (374953a,3262f48) 
+  [49173] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (374953a,3262f48) 
+[48940] [CB] [EXIT] 3262f48 = android.support.v7.widget.RecyclerView$ViewHolder com.nononsenseapps.filepicker.FileItemAdapter.onCreateViewHolder(android.view.ViewGroup,int) (21c9bfb,887e394,1) 
+[49354] [CB] [ENTRY] android.support.v7.widget.RecyclerView$ViewHolder com.nononsenseapps.filepicker.FileItemAdapter.onCreateViewHolder(android.view.ViewGroup,int) (21c9bfb,887e394,1) 
+  [49367] [CI] [ENTRY] android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup,boolean) (895da6a,2130903073,887e394,false) 
+  [49367] [CI] [EXIT] 4edba21 = android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup,boolean) (895da6a,2130903073,887e394,false) 
+  [49587] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (4edba21,6374807) 
+  [49587] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (4edba21,6374807) 
+[49354] [CB] [EXIT] 6374807 = android.support.v7.widget.RecyclerView$ViewHolder com.nononsenseapps.filepicker.FileItemAdapter.onCreateViewHolder(android.view.ViewGroup,int) (21c9bfb,887e394,1) 
+[50326] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (6374807,4edba21) 
+[50326] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (6374807,4edba21) 
+[50404] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (6374807,4edba21) 
+[50404] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (6374807,4edba21) 
+[50412] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onSaveInstanceState(android.os.Bundle) (f824364,49d10a8) 
+  [50414] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onSaveInstanceState(android.os.Bundle) (199f938,56ecefd) 
+  [50414] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onSaveInstanceState(android.os.Bundle) (199f938,56ecefd) 
+[50412] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onSaveInstanceState(android.os.Bundle) (f824364,49d10a8) 
+[50446] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onStop() (f824364) 
+  [50448] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onStop() (199f938) 
+  [50448] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onStop() (199f938) 
+[50446] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onStop() (f824364) 
+[51014] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$HeaderViewHolder.onClick(android.view.View) (5830b99,e927ae3) 
+[51014] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$HeaderViewHolder.onClick(android.view.View) (5830b99,e927ae3) 
+[53122] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$HeaderViewHolder.onClick(android.view.View) (5830b99,e927ae3) 
+[53122] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$HeaderViewHolder.onClick(android.view.View) (5830b99,e927ae3) 
+[53548] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (6374807,4edba21) 
+[53548] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (6374807,4edba21) 
+[54357] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (2ccfc1c,67f98ee) 
+[54357] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (2ccfc1c,67f98ee) 
+[56341] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (2ccfc1c,67f98ee) 
+[56341] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (2ccfc1c,67f98ee) 
+[56498] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (3262f48,374953a) 
+[56498] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (3262f48,374953a) 
+[56944] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (2ccfc1c,67f98ee) 
+[56944] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (2ccfc1c,67f98ee) 
+[58201] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$2.onClick(android.view.View) (b49d8de,eaba360) 
+  [58210] [CI] [ENTRY] void android.app.Activity.finish() (3857562) 
+  [58210] [CI] [EXIT] void android.app.Activity.finish() (3857562) 
+[58201] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$2.onClick(android.view.View) (b49d8de,eaba360) 
+[58282] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onPause() (3857562) 
+  [58284] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onPause() (ae5baba) 
+  [58284] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onPause() (ae5baba) 
+[58282] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onPause() (3857562) 
+[58386] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onRestart() (f824364) 
+[58386] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onRestart() (f824364) 
+[58394] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onStart() (f824364) 
+  [58396] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onStart() (199f938) 
+  [58396] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onStart() (199f938) 
+[58394] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onStart() (f824364) 
+[58402] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onResume() (f824364) 
+[58402] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onResume() (f824364) 
+[58406] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onPostResume() (f824364) 
+  [58414] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onResume() (199f938) 
+  [58414] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onResume() (199f938) 
+[58406] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onPostResume() (f824364) 
+[66360] [CB] [ENTRY] boolean com.sh1r0.noveldroid.SettingsFragment$3.onPreferenceClick(android.support.v7.preference.Preference) (4a68e51,46160db) 
+  [66361] [CI] [ENTRY] void android.os.AsyncTask.<init>() (15e596a) 
+  [66361] [CI] [EXIT] void android.os.AsyncTask.<init>() (15e596a) 
+  [66364] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (15e596a,3f5b537) 
+  [66366] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute() (15e596a) 
+  [66366] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute() (15e596a) 
+  [66364] [CI] [EXIT] 15e596a = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (15e596a,3f5b537) 
+[66360] [CB] [EXIT] true = boolean com.sh1r0.noveldroid.SettingsFragment$3.onPreferenceClick(android.support.v7.preference.Preference) (4a68e51,46160db) 
+[70852] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPostExecute(java.lang.Object) (15e596a,NULL) 
+[70852] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPostExecute(java.lang.Object) (15e596a,NULL) 
+[72900] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStop() (3857562) 
+  [72902] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStop() (ae5baba) 
+  [72902] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStop() (ae5baba) 
+[72900] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStop() (3857562) 
+[72912] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onDestroy() (3857562) 
+  [73252] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroyView() (ae5baba) 
+  [73252] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroyView() (ae5baba) 
+  [73256] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroy() (ae5baba) 
+  [73256] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroy() (ae5baba) 
+  [73318] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDetach() (ae5baba) 
+  [73318] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDetach() (ae5baba) 
+[72912] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onDestroy() (3857562) 
+[84412] [CB] [ENTRY] boolean com.sh1r0.noveldroid.SettingsActivity.onOptionsItemSelected(android.view.MenuItem) (f824364,f662be3) 
+  [84439] [CI] [ENTRY] void android.app.Activity.finish() (f824364) 
+  [84439] [CI] [EXIT] void android.app.Activity.finish() (f824364) 
+[84412] [CB] [EXIT] true = boolean com.sh1r0.noveldroid.SettingsActivity.onOptionsItemSelected(android.view.MenuItem) (f824364,f662be3) 
+[84457] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onPause() (f824364) 
+  [84459] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onPause() (199f938) 
+  [84459] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onPause() (199f938) 
+[84457] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onPause() (f824364) 
+[84488] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onRestart() (c56a969) 
+[84488] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onRestart() (c56a969) 
+[84496] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStart() (c56a969) 
+[84496] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onStart() (c56a969) 
+[84530] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onResume() (c56a969) 
+[84530] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onResume() (c56a969) 
+[92489] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onStop() (f824364) 
+  [92491] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onStop() (199f938) 
+  [92491] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onStop() (199f938) 
+[92489] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onStop() (f824364) 
+[92501] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onDestroy() (f824364) 
+  [92507] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView() (199f938) 
+  [92507] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView() (199f938) 
+  [92511] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onDestroy() (199f938) 
+  [92511] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onDestroy() (199f938) 
+  [92515] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onDetach() (199f938) 
+  [92515] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onDetach() (199f938) 
+[92501] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onDestroy() (f824364) 
+[120152] [CB] [ENTRY] boolean com.sh1r0.noveldroid.MainActivity.dispatchKeyEvent(android.view.KeyEvent) (c56a969,696518d) 
+  [120173] [CI] [ENTRY] void android.app.Activity.finish() (c56a969) 
+  [120173] [CI] [EXIT] void android.app.Activity.finish() (c56a969) 
+[120152] [CB] [EXIT] true = boolean com.sh1r0.noveldroid.MainActivity.dispatchKeyEvent(android.view.KeyEvent) (c56a969,696518d) 
+[122054] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onPause() (c56a969) 
+[122054] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onPause() (c56a969) 
+[123380] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.<init>() (f653ddb) 
+[123380] [CB] [EXIT] NULL = void com.sh1r0.noveldroid.MainActivity.<init>() (f653ddb) 
+[123432] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onCreate(android.os.Bundle) (f653ddb,NULL) 
+[123432] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onCreate(android.os.Bundle) (f653ddb,NULL) 
+[127696] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStart() (f653ddb) 
+[127696] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onStart() (f653ddb) 
+[127768] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onResume() (f653ddb) 
+[127768] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onResume() (f653ddb) 
+[135402] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStop() (c56a969) 
+[135402] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onStop() (c56a969) 
+[135410] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onDestroy() (c56a969) 
+[135410] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onDestroy() (c56a969) 
+[135976] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onItemClick(android.widget.AdapterView,android.view.View,int,long) (f653ddb,b8d2268,8b977de,2,2) 
+  [135995] [CI] [ENTRY] void android.app.Activity.finish() (f653ddb) 
+  [135995] [CI] [EXIT] void android.app.Activity.finish() (f653ddb) 
+[135976] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onItemClick(android.widget.AdapterView,android.view.View,int,long) (f653ddb,b8d2268,8b977de,2,2) 
+[136146] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onPause() (f653ddb) 
+[136146] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onPause() (f653ddb) 
+[136370] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStop() (f653ddb) 
+[136370] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onStop() (f653ddb) 
+[136378] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onDestroy() (f653ddb) 
+[136378] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onDestroy() (f653ddb) 
+[136490] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.<init>() (8178bc6) 
+[136490] [CB] [EXIT] NULL = void com.sh1r0.noveldroid.MainActivity.<init>() (8178bc6) 
+[136542] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onCreate(android.os.Bundle) (8178bc6,NULL) 
+  [140607] [CI] [ENTRY] android.view.View android.support.v7.app.AppCompatActivity.findViewById(int) (8178bc6,2131558487) 
+  [140607] [CI] [EXIT] f5e6bdf = android.view.View android.support.v7.app.AppCompatActivity.findViewById(int) (8178bc6,2131558487) 
+  [140657] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (f5e6bdf,686270a) 
+  [140657] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (f5e6bdf,686270a) 
+[136542] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onCreate(android.os.Bundle) (8178bc6,NULL) 
+[140806] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStart() (8178bc6) 
+[140806] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onStart() (8178bc6) 
+[140878] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onResume() (8178bc6) 
+[140878] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onResume() (8178bc6) 
+[147254] [CB] [ENTRY] boolean com.dd.processbutton.FlatButton.performClick() (f5e6bdf) 
+  [147287] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity$2.onClick(android.view.View) (686270a,f5e6bdf) 
+  [147288] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (f5e6bdf,false) 
+  [147288] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (f5e6bdf,false) 
+  [147287] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity$2.onClick(android.view.View) (686270a,f5e6bdf) 
+  [147627] [CI] [ENTRY] boolean android.view.View.performClick() (f5e6bdf) 
+  [147627] [CI] [EXIT] true = boolean android.view.View.performClick() (f5e6bdf) 
+[147254] [CB] [EXIT] true = boolean com.dd.processbutton.FlatButton.performClick() (f5e6bdf) 
+[154208] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onPause() (8178bc6) 
+[154208] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onPause() (8178bc6) 
+[154558] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.<init>() (9d1b10a) 
+[154558] [CB] [EXIT] NULL = void com.sh1r0.noveldroid.SettingsActivity.<init>() (9d1b10a) 
+[154606] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onCreate(android.os.Bundle) (9d1b10a,NULL) 
+  [155577] [CI] [ENTRY] void android.support.v7.preference.PreferenceFragmentCompat.<init>() (9fe847e) 
+  [155577] [CI] [EXIT] void android.support.v7.preference.PreferenceFragmentCompat.<init>() (9fe847e) 
+[154606] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onCreate(android.os.Bundle) (9d1b10a,NULL) 
+[155592] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onStart() (9d1b10a) 
+  [155600] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onAttach(android.app.Activity) (9fe847e,9d1b10a) 
+  [155600] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onAttach(android.app.Activity) (9fe847e,9d1b10a) 
+  [155610] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onCreate(android.os.Bundle) (9fe847e,NULL) 
+  [155610] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onCreate(android.os.Bundle) (9fe847e,NULL) 
+  [155788] [CB] [ENTRY] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (9fe847e,31807e7,cb322a0,NULL) 
+  [155788] [CB] [EXIT] e9ee4d8 = android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (9fe847e,31807e7,cb322a0,NULL) 
+  [155988] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onViewCreated(android.view.View,android.os.Bundle) (9fe847e,e9ee4d8,NULL) 
+  [155988] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onViewCreated(android.view.View,android.os.Bundle) (9fe847e,e9ee4d8,NULL) 
+  [155992] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onActivityCreated(android.os.Bundle) (9fe847e,NULL) 
+  [155992] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onActivityCreated(android.os.Bundle) (9fe847e,NULL) 
+  [156012] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onStart() (9fe847e) 
+  [156012] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onStart() (9fe847e) 
+[155592] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onStart() (9d1b10a) 
+[156042] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onResume() (9d1b10a) 
+[156042] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onResume() (9d1b10a) 
+[156046] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onPostResume() (9d1b10a) 
+  [156054] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onResume() (9fe847e) 
+  [156054] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment.onResume() (9fe847e) 
+[156046] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onPostResume() (9d1b10a) 
+[161150] [CB] [ENTRY] boolean com.sh1r0.noveldroid.SettingsFragment$3.onPreferenceClick(android.support.v7.preference.Preference) (b460fd3,2ced20d) 
+  [161151] [CI] [ENTRY] void android.os.AsyncTask.<init>() (554593c) 
+  [161151] [CI] [EXIT] void android.os.AsyncTask.<init>() (554593c) 
+  [161153] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (554593c,f7b4f4b) 
+  [161154] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute() (554593c) 
+  [161154] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute() (554593c) 
+  [161153] [CI] [EXIT] 554593c = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (554593c,f7b4f4b) 
+[161150] [CB] [EXIT] true = boolean com.sh1r0.noveldroid.SettingsFragment$3.onPreferenceClick(android.support.v7.preference.Preference) (b460fd3,2ced20d) 
+[162371] [CB] [ENTRY] boolean com.sh1r0.noveldroid.SettingsFragment$3.onPreferenceClick(android.support.v7.preference.Preference) (b460fd3,2ced20d) 
+  [162372] [CI] [ENTRY] void android.os.AsyncTask.<init>() (f32e81) 
+  [162372] [CI] [EXIT] void android.os.AsyncTask.<init>() (f32e81) 
+  [162374] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (f32e81,e17c514) 
+  [162375] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute() (f32e81) 
+  [162375] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute() (f32e81) 
+  [162374] [CI] [EXIT] f32e81 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (f32e81,e17c514) 
+[162371] [CB] [EXIT] true = boolean com.sh1r0.noveldroid.SettingsFragment$3.onPreferenceClick(android.support.v7.preference.Preference) (b460fd3,2ced20d) 
+
+
+
+TRACE STATISTICS
+Trace length: 165
+Top-level callbacks: 77
+CI-ENTRY: 22
+CI-EXIT: 14
+CB-ENTRY: 97
+CB-EXIT: 8
+        encoding - User time: 10.350000
+encoding - System time: 0.000000
+simulation - User time: 105.170000
+simulation - System time: 0.750000
+
+The trace can be simulated in 165 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[16] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.<init>() (c56a969) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.<init>()) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.<init>()) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.<init>()
+----------------------------------------
+Step: 2
+----------------------------------------
+[68] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onCreate(android.os.Bundle) (c56a969,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[4321] [CI] [EXIT] 620d76f = android.view.View android.support.v7.app.AppCompatActivity.findViewById(int) (c56a969,2131558487) 
+----------------------------------------
+Step: 4
+----------------------------------------
+[4371] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (620d76f,35071e5) 
+----------------------------------------
+Step: 5
+----------------------------------------
+[68] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onCreate(android.os.Bundle) (c56a969,NULL) 
+----------------------------------------
+Step: 6
+----------------------------------------
+[4532] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStart() (c56a969) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStart() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStart())) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStart() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStart())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume()
+----------------------------------------
+Step: 7
+----------------------------------------
+[4532] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onStart() (c56a969) 
+----------------------------------------
+Step: 8
+----------------------------------------
+[84530] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onResume() (c56a969) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume())) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause()
+    SPEC (((((((TRUE)[*]); 620d76f = [CI] [EXIT] [c56a969] android.view.View android.support.v7.app.AppCompatActivity.findViewById(2131558487 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [620d76f] void android.view.View.setOnClickListener(35071e5 : android.view.View$OnClickListener)); ((TRUE)[*]))) & (((! ([CI] [ENTRY] [620d76f] void android.widget.TextView.setEnabled(FALSE : boolean)) & TRUE))[*])) |+ [CB] [ENTRY] [35071e5] void com.sh1r0.noveldroid.MainActivity$2.onClick(620d76f : android.view.View)
+----------------------------------------
+Step: 9
+----------------------------------------
+[25316] [CB] [ENTRY] boolean com.dd.processbutton.FlatButton.performClick() (620d76f) 
+----------------------------------------
+Step: 10
+----------------------------------------
+[25329] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity$2.onClick(android.view.View) (35071e5,620d76f) 
+----------------------------------------
+Step: 11
+----------------------------------------
+[25330] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (620d76f,false) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [620d76f] void android.widget.TextView.setEnabled(FALSE : boolean)) |- [CB] [ENTRY] [35071e5] void com.sh1r0.noveldroid.MainActivity$2.onClick(620d76f : android.view.View)
+----------------------------------------
+Step: 12
+----------------------------------------
+[25677] [CI] [ENTRY] boolean android.view.View.performClick() (620d76f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [620d76f] boolean android.view.View.performClick()) |+ [CB] [ENTRY] [35071e5] void com.sh1r0.noveldroid.MainActivity$2.onClick(620d76f : android.view.View)
+----------------------------------------
+Step: 13
+----------------------------------------
+[122054] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onPause() (c56a969) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause())) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop()
+----------------------------------------
+Step: 14
+----------------------------------------
+[33110] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.<init>() (f824364) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.<init>()) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.<init>()) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 15
+----------------------------------------
+[33158] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onCreate(android.os.Bundle) (f824364,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStart()
+----------------------------------------
+Step: 16
+----------------------------------------
+[34129] [CI] [ENTRY] void android.support.v7.preference.PreferenceFragmentCompat.<init>() (199f938) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [199f938] void android.support.v7.preference.PreferenceFragmentCompat.<init>()) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onAttach(f824364 : android.app.Activity)
+----------------------------------------
+Step: 17
+----------------------------------------
+[34129] [CI] [EXIT] void android.support.v7.preference.PreferenceFragmentCompat.<init>() (199f938) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [199f938] void android.support.v7.preference.PreferenceFragmentCompat.<init>()) |- [CI] [EXIT] [199f938] void android.support.v7.preference.PreferenceFragmentCompat.<init>()
+----------------------------------------
+Step: 18
+----------------------------------------
+[33158] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onCreate(android.os.Bundle) (f824364,NULL) 
+----------------------------------------
+Step: 19
+----------------------------------------
+[34144] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onStart() (f824364) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStart() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStart())) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStart() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStart())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume()
+----------------------------------------
+Step: 20
+----------------------------------------
+[34152] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onAttach(android.app.Activity) (199f938,f824364) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onAttach(f824364 : android.app.Activity)) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onAttach(f824364 : android.app.Activity)) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onAttach(f824364 : android.app.Activity)
+----------------------------------------
+Step: 21
+----------------------------------------
+[34162] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onCreate(android.os.Bundle) (199f938,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [199f938] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(6e7268b : android.view.LayoutInflater,41075b4 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 22
+----------------------------------------
+[34352] [CB] [ENTRY] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (199f938,6e7268b,41075b4,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(6e7268b : android.view.LayoutInflater,41075b4 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(6e7268b : android.view.LayoutInflater,41075b4 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(6e7268b : android.view.LayoutInflater,41075b4 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [199f938] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(6e7268b : android.view.LayoutInflater,41075b4 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(6e7268b : android.view.LayoutInflater,41075b4 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onViewCreated(241146c : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 23
+----------------------------------------
+[34556] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onViewCreated(android.view.View,android.os.Bundle) (199f938,241146c,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onViewCreated(241146c : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onViewCreated(241146c : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 24
+----------------------------------------
+[34560] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onActivityCreated(android.os.Bundle) (199f938,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 25
+----------------------------------------
+[34580] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onStart() (199f938) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart())) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onSaveInstanceState(56ecefd : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart())) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart()
+----------------------------------------
+Step: 26
+----------------------------------------
+[34144] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onStart() (f824364) 
+----------------------------------------
+Step: 27
+----------------------------------------
+[58402] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onResume() (f824364) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume())) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume()
+----------------------------------------
+Step: 28
+----------------------------------------
+[34614] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onPostResume() (f824364) 
+----------------------------------------
+Step: 29
+----------------------------------------
+[34622] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onResume() (199f938) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume())) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume()
+----------------------------------------
+Step: 30
+----------------------------------------
+[39662] [CB] [ENTRY] boolean com.sh1r0.noveldroid.SettingsFragment$3.onPreferenceClick(android.support.v7.preference.Preference) (4a68e51,46160db) 
+----------------------------------------
+Step: 31
+----------------------------------------
+[39663] [CI] [EXIT] void android.os.AsyncTask.<init>() (c9f5256) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [c9f5256] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [c9f5256] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 32
+----------------------------------------
+[39665] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (c9f5256,81e86ad) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [c9f5256] android.os.AsyncTask android.os.AsyncTask.execute(81e86ad : java.lang.Object[])) |+ [CB] [ENTRY] [c9f5256] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()
+----------------------------------------
+Step: 33
+----------------------------------------
+[39666] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute() (c9f5256) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9f5256] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()) |+ [CB] [ENTRY] [c9f5256] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPostExecute(NULL : java.lang.Object)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9f5256] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()) |- [CB] [ENTRY] [c9f5256] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()
+----------------------------------------
+Step: 34
+----------------------------------------
+[42688] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPostExecute(java.lang.Object) (c9f5256,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c9f5256] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPostExecute(NULL : java.lang.Object)) |- [CB] [ENTRY] [c9f5256] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPostExecute(NULL : java.lang.Object)
+----------------------------------------
+Step: 35
+----------------------------------------
+[42866] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onPause() (f824364) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause())) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 36
+----------------------------------------
+[42868] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onPause() (199f938) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onPause() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onPause())) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onPause() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onPause())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume()
+----------------------------------------
+Step: 37
+----------------------------------------
+[43042] [CB] [ENTRY] void com.nononsenseapps.filepicker.FilePickerActivity.<init>() (3857562) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.FilePickerActivity.<init>()) |- [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.FilePickerActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.FilePickerActivity.<init>()) |+ [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 38
+----------------------------------------
+[43090] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onCreate(android.os.Bundle) (3857562,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStart()
+----------------------------------------
+Step: 39
+----------------------------------------
+[43953] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (ae5baba) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [ae5baba] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onAttach(3857562 : android.app.Activity)
+----------------------------------------
+Step: 40
+----------------------------------------
+[43953] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (ae5baba) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [ae5baba] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [ae5baba] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 41
+----------------------------------------
+[43090] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onCreate(android.os.Bundle) (3857562,NULL) 
+----------------------------------------
+Step: 42
+----------------------------------------
+[43992] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStart() (3857562) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStart()) |+ [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStart()) |- [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStart()
+----------------------------------------
+Step: 43
+----------------------------------------
+[44000] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onAttach(android.app.Activity) (ae5baba,3857562) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onAttach(3857562 : android.app.Activity)) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onAttach(3857562 : android.app.Activity)) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onAttach(3857562 : android.app.Activity)
+----------------------------------------
+Step: 44
+----------------------------------------
+[44010] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreate(android.os.Bundle) (ae5baba,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ae5baba] android.view.View com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreateView(1e12fd7 : android.view.LayoutInflater,7a34ed0 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 45
+----------------------------------------
+[44056] [CB] [ENTRY] android.view.View com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ae5baba,1e12fd7,7a34ed0,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] android.view.View com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreateView(1e12fd7 : android.view.LayoutInflater,7a34ed0 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] android.view.View com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreateView(1e12fd7 : android.view.LayoutInflater,7a34ed0 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] android.view.View com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreateView(1e12fd7 : android.view.LayoutInflater,7a34ed0 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onViewCreated(d019ac : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] android.view.View com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreateView(1e12fd7 : android.view.LayoutInflater,7a34ed0 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [ae5baba] android.view.View com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreateView(1e12fd7 : android.view.LayoutInflater,7a34ed0 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 46
+----------------------------------------
+[44755] [CI] [EXIT] eaba360 = android.view.View android.view.View.findViewById(int) (d019ac,2131558511) 
+----------------------------------------
+Step: 47
+----------------------------------------
+[44759] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (eaba360,b49d8de) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); eaba360 = [CI] [EXIT] [d019ac] android.view.View android.view.View.findViewById(2131558511 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [eaba360] void android.view.View.setOnClickListener(b49d8de : android.view.View$OnClickListener))) |+ [CB] [ENTRY] [b49d8de] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$2.onClick(eaba360 : android.view.View)
+----------------------------------------
+Step: 48
+----------------------------------------
+[44804] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onViewCreated(android.view.View,android.os.Bundle) (ae5baba,d019ac,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onViewCreated(d019ac : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onViewCreated(d019ac : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 49
+----------------------------------------
+[44808] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onActivityCreated(android.os.Bundle) (ae5baba,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroyView()
+----------------------------------------
+Step: 50
+----------------------------------------
+[44862] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStart() (ae5baba) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStart()) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStart()) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStart()) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStart()) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStart()
+----------------------------------------
+Step: 51
+----------------------------------------
+[43992] [CB] [EXIT] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStart() (3857562) 
+----------------------------------------
+Step: 52
+----------------------------------------
+[44933] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onResume() (3857562) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onResume()) |+ [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onResume()) |- [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onResume()
+----------------------------------------
+Step: 53
+----------------------------------------
+[44937] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onPostResume() (3857562) 
+----------------------------------------
+Step: 54
+----------------------------------------
+[44945] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onResume() (ae5baba) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onResume()) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onResume()) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onResume()
+----------------------------------------
+Step: 55
+----------------------------------------
+[135402] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStop() (c56a969) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop())) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop())) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onDestroy()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onRestart()
+----------------------------------------
+Step: 56
+----------------------------------------
+[48126] [CB] [ENTRY] android.support.v7.widget.RecyclerView$ViewHolder com.nononsenseapps.filepicker.FileItemAdapter.onCreateViewHolder(android.view.ViewGroup,int) (21c9bfb,887e394,0) 
+----------------------------------------
+Step: 57
+----------------------------------------
+[48139] [CI] [EXIT] e927ae3 = android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup,boolean) (895da6a,2130903073,887e394,false) 
+----------------------------------------
+Step: 58
+----------------------------------------
+[48359] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e927ae3,5830b99) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); e927ae3 = [CI] [EXIT] [895da6a] android.view.View android.view.LayoutInflater.inflate(2130903073 : int,887e394 : android.view.ViewGroup,FALSE : boolean)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [e927ae3] void android.view.View.setOnClickListener(5830b99 : android.view.View$OnClickListener))) |+ [CB] [ENTRY] [5830b99] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$HeaderViewHolder.onClick(e927ae3 : android.view.View)
+----------------------------------------
+Step: 59
+----------------------------------------
+[48526] [CB] [ENTRY] android.support.v7.widget.RecyclerView$ViewHolder com.nononsenseapps.filepicker.FileItemAdapter.onCreateViewHolder(android.view.ViewGroup,int) (21c9bfb,887e394,1) 
+----------------------------------------
+Step: 60
+----------------------------------------
+[48539] [CI] [EXIT] 67f98ee = android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup,boolean) (895da6a,2130903073,887e394,false) 
+----------------------------------------
+Step: 61
+----------------------------------------
+[48759] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (67f98ee,2ccfc1c) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); 67f98ee = [CI] [EXIT] [895da6a] android.view.View android.view.LayoutInflater.inflate(2130903073 : int,887e394 : android.view.ViewGroup,FALSE : boolean)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [67f98ee] void android.view.View.setOnClickListener(2ccfc1c : android.view.View$OnClickListener))) |+ [CB] [ENTRY] [2ccfc1c] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(67f98ee : android.view.View)
+----------------------------------------
+Step: 62
+----------------------------------------
+[48940] [CB] [ENTRY] android.support.v7.widget.RecyclerView$ViewHolder com.nononsenseapps.filepicker.FileItemAdapter.onCreateViewHolder(android.view.ViewGroup,int) (21c9bfb,887e394,1) 
+----------------------------------------
+Step: 63
+----------------------------------------
+[48953] [CI] [EXIT] 374953a = android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup,boolean) (895da6a,2130903073,887e394,false) 
+----------------------------------------
+Step: 64
+----------------------------------------
+[49173] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (374953a,3262f48) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); 374953a = [CI] [EXIT] [895da6a] android.view.View android.view.LayoutInflater.inflate(2130903073 : int,887e394 : android.view.ViewGroup,FALSE : boolean)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [374953a] void android.view.View.setOnClickListener(3262f48 : android.view.View$OnClickListener))) |+ [CB] [ENTRY] [3262f48] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(374953a : android.view.View)
+----------------------------------------
+Step: 65
+----------------------------------------
+[49354] [CB] [ENTRY] android.support.v7.widget.RecyclerView$ViewHolder com.nononsenseapps.filepicker.FileItemAdapter.onCreateViewHolder(android.view.ViewGroup,int) (21c9bfb,887e394,1) 
+----------------------------------------
+Step: 66
+----------------------------------------
+[49367] [CI] [EXIT] 4edba21 = android.view.View android.view.LayoutInflater.inflate(int,android.view.ViewGroup,boolean) (895da6a,2130903073,887e394,false) 
+----------------------------------------
+Step: 67
+----------------------------------------
+[49587] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (4edba21,6374807) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); 4edba21 = [CI] [EXIT] [895da6a] android.view.View android.view.LayoutInflater.inflate(2130903073 : int,887e394 : android.view.ViewGroup,FALSE : boolean)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [4edba21] void android.view.View.setOnClickListener(6374807 : android.view.View$OnClickListener))) |+ [CB] [ENTRY] [6374807] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(4edba21 : android.view.View)
+----------------------------------------
+Step: 68
+----------------------------------------
+[53548] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (6374807,4edba21) 
+----------------------------------------
+Step: 69
+----------------------------------------
+[53548] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (6374807,4edba21) 
+----------------------------------------
+Step: 70
+----------------------------------------
+[50412] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onSaveInstanceState(android.os.Bundle) (f824364,49d10a8) 
+----------------------------------------
+Step: 71
+----------------------------------------
+[50414] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onSaveInstanceState(android.os.Bundle) (199f938,56ecefd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onSaveInstanceState(56ecefd : android.os.Bundle)) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onSaveInstanceState(56ecefd : android.os.Bundle)
+----------------------------------------
+Step: 72
+----------------------------------------
+[50446] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onStop() (f824364) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop())) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onDestroy()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop())) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onRestart()
+----------------------------------------
+Step: 73
+----------------------------------------
+[50448] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onStop() (199f938) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop())) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop())) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume()
+----------------------------------------
+Step: 74
+----------------------------------------
+[53122] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$HeaderViewHolder.onClick(android.view.View) (5830b99,e927ae3) 
+----------------------------------------
+Step: 75
+----------------------------------------
+[53122] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$HeaderViewHolder.onClick(android.view.View) (5830b99,e927ae3) 
+----------------------------------------
+Step: 76
+----------------------------------------
+[53548] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (6374807,4edba21) 
+----------------------------------------
+Step: 77
+----------------------------------------
+[56944] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (2ccfc1c,67f98ee) 
+----------------------------------------
+Step: 78
+----------------------------------------
+[56944] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (2ccfc1c,67f98ee) 
+----------------------------------------
+Step: 79
+----------------------------------------
+[56498] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (3262f48,374953a) 
+----------------------------------------
+Step: 80
+----------------------------------------
+[56944] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$DirViewHolder.onClick(android.view.View) (2ccfc1c,67f98ee) 
+----------------------------------------
+Step: 81
+----------------------------------------
+[58201] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment$2.onClick(android.view.View) (b49d8de,eaba360) 
+----------------------------------------
+Step: 82
+----------------------------------------
+[58210] [CI] [ENTRY] void android.app.Activity.finish() (3857562) 
+----------------------------------------
+Step: 83
+----------------------------------------
+[58282] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onPause() (3857562) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onPause()) |+ [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onPause()) |+ [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onPause()) |- [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onPause()) |+ [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onResume()
+----------------------------------------
+Step: 84
+----------------------------------------
+[58284] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onPause() (ae5baba) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onPause()) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onPause()) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onPause()
+----------------------------------------
+Step: 85
+----------------------------------------
+[58386] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onRestart() (f824364) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onRestart()) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onRestart()) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onRestart()) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onRestart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onRestart()) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStart()
+----------------------------------------
+Step: 86
+----------------------------------------
+[58394] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onStart() (f824364) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStart() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStart())) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStart() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStart())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume()
+----------------------------------------
+Step: 87
+----------------------------------------
+[58396] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onStart() (199f938) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart())) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart())) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onSaveInstanceState(56ecefd : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart())) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart()
+----------------------------------------
+Step: 88
+----------------------------------------
+[58394] [CB] [EXIT] void com.sh1r0.noveldroid.SettingsActivity.onStart() (f824364) 
+----------------------------------------
+Step: 89
+----------------------------------------
+[58402] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onResume() (f824364) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume())) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume()
+----------------------------------------
+Step: 90
+----------------------------------------
+[58406] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onPostResume() (f824364) 
+----------------------------------------
+Step: 91
+----------------------------------------
+[58414] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onResume() (199f938) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume())) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume()
+----------------------------------------
+Step: 92
+----------------------------------------
+[66360] [CB] [ENTRY] boolean com.sh1r0.noveldroid.SettingsFragment$3.onPreferenceClick(android.support.v7.preference.Preference) (4a68e51,46160db) 
+----------------------------------------
+Step: 93
+----------------------------------------
+[66361] [CI] [EXIT] void android.os.AsyncTask.<init>() (15e596a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [15e596a] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [15e596a] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 94
+----------------------------------------
+[66364] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (15e596a,3f5b537) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [15e596a] android.os.AsyncTask android.os.AsyncTask.execute(3f5b537 : java.lang.Object[])) |+ [CB] [ENTRY] [15e596a] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()
+----------------------------------------
+Step: 95
+----------------------------------------
+[66366] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute() (15e596a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15e596a] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()) |+ [CB] [ENTRY] [15e596a] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPostExecute(NULL : java.lang.Object)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15e596a] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()) |- [CB] [ENTRY] [15e596a] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()
+----------------------------------------
+Step: 96
+----------------------------------------
+[70852] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPostExecute(java.lang.Object) (15e596a,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [15e596a] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPostExecute(NULL : java.lang.Object)) |- [CB] [ENTRY] [15e596a] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPostExecute(NULL : java.lang.Object)
+----------------------------------------
+Step: 97
+----------------------------------------
+[72900] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStop() (3857562) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStop()) |- [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStop()) |+ [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onStop()) |- [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onResume()
+----------------------------------------
+Step: 98
+----------------------------------------
+[72902] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStop() (ae5baba) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStop()) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStop()) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStop()) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStop()) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStop()) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onResume()
+----------------------------------------
+Step: 99
+----------------------------------------
+[72912] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onDestroy() (3857562) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onDestroy()) |- [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onDestroy()) |- [CB] [ENTRY] [3857562] void com.nononsenseapps.filepicker.AbstractFilePickerActivity.onDestroy()
+----------------------------------------
+Step: 100
+----------------------------------------
+[73252] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroyView() (ae5baba) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroyView()) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroyView()) |+ [CB] [ENTRY] [ae5baba] android.view.View com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreateView(1e12fd7 : android.view.LayoutInflater,7a34ed0 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroyView()) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroyView()) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroyView()) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 101
+----------------------------------------
+[73256] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroy() (ae5baba) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroy()) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroy()) |- [CB] [ENTRY] [ae5baba] android.view.View com.nononsenseapps.filepicker.AbstractFilePickerFragment.onCreateView(1e12fd7 : android.view.LayoutInflater,7a34ed0 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroy()) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDestroy()
+----------------------------------------
+Step: 102
+----------------------------------------
+[73318] [CB] [ENTRY] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDetach() (ae5baba) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDetach()) |+ [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onAttach(3857562 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDetach()) |- [CB] [ENTRY] [ae5baba] void com.nononsenseapps.filepicker.AbstractFilePickerFragment.onDetach()
+----------------------------------------
+Step: 103
+----------------------------------------
+[84412] [CB] [ENTRY] boolean com.sh1r0.noveldroid.SettingsActivity.onOptionsItemSelected(android.view.MenuItem) (f824364,f662be3) 
+----------------------------------------
+Step: 104
+----------------------------------------
+[84439] [CI] [ENTRY] void android.app.Activity.finish() (f824364) 
+----------------------------------------
+Step: 105
+----------------------------------------
+[84457] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onPause() (f824364) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause())) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onPause())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 106
+----------------------------------------
+[84459] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onPause() (199f938) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onPause() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onPause())) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onPause() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onPause())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume()
+----------------------------------------
+Step: 107
+----------------------------------------
+[84488] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onRestart() (c56a969) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onRestart()) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onRestart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onRestart()) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onRestart()) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onRestart()) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStart()
+----------------------------------------
+Step: 108
+----------------------------------------
+[84496] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStart() (c56a969) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStart() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStart())) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStart() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStart())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume()
+----------------------------------------
+Step: 109
+----------------------------------------
+[84496] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onStart() (c56a969) 
+----------------------------------------
+Step: 110
+----------------------------------------
+[84530] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onResume() (c56a969) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume())) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause()
+----------------------------------------
+Step: 111
+----------------------------------------
+[92489] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onStop() (f824364) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop())) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onDestroy()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop())) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop() | [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onStop())) |+ [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onRestart()
+----------------------------------------
+Step: 112
+----------------------------------------
+[92491] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onStop() (199f938) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop())) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop())) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop() | [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStop())) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onResume()
+----------------------------------------
+Step: 113
+----------------------------------------
+[92501] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onDestroy() (f824364) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onDestroy()) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onDestroy()) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onDestroy()) |- [CB] [ENTRY] [f824364] void com.sh1r0.noveldroid.SettingsActivity.onRestart()
+----------------------------------------
+Step: 114
+----------------------------------------
+[92507] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView() (199f938) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView()) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView()) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView()) |+ [CB] [ENTRY] [199f938] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(6e7268b : android.view.LayoutInflater,41075b4 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView()) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroyView()) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onStart()
+----------------------------------------
+Step: 115
+----------------------------------------
+[92511] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onDestroy() (199f938) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroy()) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroy()) |- [CB] [ENTRY] [199f938] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(6e7268b : android.view.LayoutInflater,41075b4 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDestroy()) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDetach()
+----------------------------------------
+Step: 116
+----------------------------------------
+[92515] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onDetach() (199f938) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDetach()) |+ [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onAttach(f824364 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDetach()) |- [CB] [ENTRY] [199f938] void com.sh1r0.noveldroid.SettingsFragment.onDetach()
+----------------------------------------
+Step: 117
+----------------------------------------
+[120152] [CB] [ENTRY] boolean com.sh1r0.noveldroid.MainActivity.dispatchKeyEvent(android.view.KeyEvent) (c56a969,696518d) 
+----------------------------------------
+Step: 118
+----------------------------------------
+[120173] [CI] [ENTRY] void android.app.Activity.finish() (c56a969) 
+----------------------------------------
+Step: 119
+----------------------------------------
+[122054] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onPause() (c56a969) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause())) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onPause())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop()
+----------------------------------------
+Step: 120
+----------------------------------------
+[123380] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.<init>() (f653ddb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.<init>()) |- [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.<init>()) |+ [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 121
+----------------------------------------
+[123432] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onCreate(android.os.Bundle) (f653ddb,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onStart()
+----------------------------------------
+Step: 122
+----------------------------------------
+[123432] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onCreate(android.os.Bundle) (f653ddb,NULL) 
+----------------------------------------
+Step: 123
+----------------------------------------
+[127696] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStart() (f653ddb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onStart()) |+ [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onStart()) |- [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onStart()
+----------------------------------------
+Step: 124
+----------------------------------------
+[127696] [CB] [EXIT] void com.sh1r0.noveldroid.MainActivity.onStart() (f653ddb) 
+----------------------------------------
+Step: 125
+----------------------------------------
+[127768] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onResume() (f653ddb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onResume()) |+ [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onResume()) |- [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onResume()
+----------------------------------------
+Step: 126
+----------------------------------------
+[135402] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStop() (c56a969) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop())) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop())) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onDestroy()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop() | [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onStop())) |+ [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onRestart()
+----------------------------------------
+Step: 127
+----------------------------------------
+[135410] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onDestroy() (c56a969) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onDestroy()) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onRestart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onDestroy()) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onDestroy()) |- [CB] [ENTRY] [c56a969] void com.sh1r0.noveldroid.MainActivity.onDestroy()
+----------------------------------------
+Step: 128
+----------------------------------------
+[135976] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onItemClick(android.widget.AdapterView,android.view.View,int,long) (f653ddb,b8d2268,8b977de,2,2) 
+----------------------------------------
+Step: 129
+----------------------------------------
+[135995] [CI] [ENTRY] void android.app.Activity.finish() (f653ddb) 
+----------------------------------------
+Step: 130
+----------------------------------------
+[136146] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onPause() (f653ddb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onPause()) |+ [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onPause()) |+ [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onPause()) |+ [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onPause()) |- [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onPause()
+----------------------------------------
+Step: 131
+----------------------------------------
+[136370] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStop() (f653ddb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onStop()) |+ [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onStop()) |- [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onStop()) |- [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onResume()
+----------------------------------------
+Step: 132
+----------------------------------------
+[136378] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onDestroy() (f653ddb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onDestroy()) |- [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onDestroy()) |- [CB] [ENTRY] [f653ddb] void com.sh1r0.noveldroid.MainActivity.onDestroy()
+----------------------------------------
+Step: 133
+----------------------------------------
+[136490] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.<init>() (8178bc6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.<init>()) |+ [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.<init>()) |- [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.<init>()
+----------------------------------------
+Step: 134
+----------------------------------------
+[136542] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onCreate(android.os.Bundle) (8178bc6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 135
+----------------------------------------
+[140607] [CI] [EXIT] f5e6bdf = android.view.View android.support.v7.app.AppCompatActivity.findViewById(int) (8178bc6,2131558487) 
+----------------------------------------
+Step: 136
+----------------------------------------
+[140657] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (f5e6bdf,686270a) 
+----------------------------------------
+Step: 137
+----------------------------------------
+[140806] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onStart() (8178bc6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onStart()) |- [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onStart()) |+ [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onResume()
+----------------------------------------
+Step: 138
+----------------------------------------
+[140878] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onResume() (8178bc6) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); f5e6bdf = [CI] [EXIT] [8178bc6] android.view.View android.support.v7.app.AppCompatActivity.findViewById(2131558487 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [f5e6bdf] void android.view.View.setOnClickListener(686270a : android.view.View$OnClickListener)); ((TRUE)[*]))) & (((! ([CI] [ENTRY] [f5e6bdf] void android.widget.TextView.setEnabled(FALSE : boolean)) & TRUE))[*])) |+ [CB] [ENTRY] [686270a] void com.sh1r0.noveldroid.MainActivity$2.onClick(f5e6bdf : android.view.View)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onResume()) |+ [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onResume()) |- [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onResume()
+----------------------------------------
+Step: 139
+----------------------------------------
+[147254] [CB] [ENTRY] boolean com.dd.processbutton.FlatButton.performClick() (f5e6bdf) 
+----------------------------------------
+Step: 140
+----------------------------------------
+[147287] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity$2.onClick(android.view.View) (686270a,f5e6bdf) 
+----------------------------------------
+Step: 141
+----------------------------------------
+[147288] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (f5e6bdf,false) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [f5e6bdf] void android.widget.TextView.setEnabled(FALSE : boolean)) |- [CB] [ENTRY] [686270a] void com.sh1r0.noveldroid.MainActivity$2.onClick(f5e6bdf : android.view.View)
+----------------------------------------
+Step: 142
+----------------------------------------
+[147627] [CI] [ENTRY] boolean android.view.View.performClick() (f5e6bdf) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [f5e6bdf] boolean android.view.View.performClick()) |+ [CB] [ENTRY] [686270a] void com.sh1r0.noveldroid.MainActivity$2.onClick(f5e6bdf : android.view.View)
+----------------------------------------
+Step: 143
+----------------------------------------
+[154208] [CB] [ENTRY] void com.sh1r0.noveldroid.MainActivity.onPause() (8178bc6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onPause()) |+ [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onPause()) |- [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onPause()) |+ [CB] [ENTRY] [8178bc6] void com.sh1r0.noveldroid.MainActivity.onResume()
+----------------------------------------
+Step: 144
+----------------------------------------
+[154558] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.<init>() (9d1b10a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.<init>()) |- [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.<init>()) |+ [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 145
+----------------------------------------
+[154606] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onCreate(android.os.Bundle) (9d1b10a,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.onStart()
+----------------------------------------
+Step: 146
+----------------------------------------
+[155577] [CI] [ENTRY] void android.support.v7.preference.PreferenceFragmentCompat.<init>() (9fe847e) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [9fe847e] void android.support.v7.preference.PreferenceFragmentCompat.<init>()) |+ [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onAttach(9d1b10a : android.app.Activity)
+----------------------------------------
+Step: 147
+----------------------------------------
+[155577] [CI] [EXIT] void android.support.v7.preference.PreferenceFragmentCompat.<init>() (9fe847e) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [9fe847e] void android.support.v7.preference.PreferenceFragmentCompat.<init>()) |- [CI] [EXIT] [9fe847e] void android.support.v7.preference.PreferenceFragmentCompat.<init>()
+----------------------------------------
+Step: 148
+----------------------------------------
+[155592] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onStart() (9d1b10a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.onStart()) |- [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.onStart()) |+ [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.onResume()
+----------------------------------------
+Step: 149
+----------------------------------------
+[155600] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onAttach(android.app.Activity) (9fe847e,9d1b10a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onAttach(9d1b10a : android.app.Activity)) |+ [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onAttach(9d1b10a : android.app.Activity)) |- [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onAttach(9d1b10a : android.app.Activity)
+----------------------------------------
+Step: 150
+----------------------------------------
+[155610] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onCreate(android.os.Bundle) (9fe847e,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [9fe847e] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(31807e7 : android.view.LayoutInflater,cb322a0 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 151
+----------------------------------------
+[155788] [CB] [ENTRY] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (9fe847e,31807e7,cb322a0,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9fe847e] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(31807e7 : android.view.LayoutInflater,cb322a0 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9fe847e] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(31807e7 : android.view.LayoutInflater,cb322a0 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onViewCreated(e9ee4d8 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9fe847e] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(31807e7 : android.view.LayoutInflater,cb322a0 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9fe847e] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(31807e7 : android.view.LayoutInflater,cb322a0 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [9fe847e] android.view.View com.sh1r0.noveldroid.SettingsFragment.onCreateView(31807e7 : android.view.LayoutInflater,cb322a0 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 152
+----------------------------------------
+[155988] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onViewCreated(android.view.View,android.os.Bundle) (9fe847e,e9ee4d8,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onViewCreated(e9ee4d8 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onViewCreated(e9ee4d8 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 153
+----------------------------------------
+[155992] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onActivityCreated(android.os.Bundle) (9fe847e,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 154
+----------------------------------------
+[156012] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onStart() (9fe847e) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onStart()) |- [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onStart()) |+ [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onResume()
+----------------------------------------
+Step: 155
+----------------------------------------
+[156042] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onResume() (9d1b10a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.onResume()) |- [CB] [ENTRY] [9d1b10a] void com.sh1r0.noveldroid.SettingsActivity.onResume()
+----------------------------------------
+Step: 156
+----------------------------------------
+[156046] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsActivity.onPostResume() (9d1b10a) 
+----------------------------------------
+Step: 157
+----------------------------------------
+[156054] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment.onResume() (9fe847e) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onResume()) |- [CB] [ENTRY] [9fe847e] void com.sh1r0.noveldroid.SettingsFragment.onResume()
+----------------------------------------
+Step: 158
+----------------------------------------
+[161150] [CB] [ENTRY] boolean com.sh1r0.noveldroid.SettingsFragment$3.onPreferenceClick(android.support.v7.preference.Preference) (b460fd3,2ced20d) 
+----------------------------------------
+Step: 159
+----------------------------------------
+[161151] [CI] [EXIT] void android.os.AsyncTask.<init>() (554593c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [554593c] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [554593c] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 160
+----------------------------------------
+[161153] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (554593c,f7b4f4b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [554593c] android.os.AsyncTask android.os.AsyncTask.execute(f7b4f4b : java.lang.Object[])) |+ [CB] [ENTRY] [554593c] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()
+----------------------------------------
+Step: 161
+----------------------------------------
+[161154] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute() (554593c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [554593c] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()) |- [CB] [ENTRY] [554593c] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()
+----------------------------------------
+Step: 162
+----------------------------------------
+[162371] [CB] [ENTRY] boolean com.sh1r0.noveldroid.SettingsFragment$3.onPreferenceClick(android.support.v7.preference.Preference) (b460fd3,2ced20d) 
+----------------------------------------
+Step: 163
+----------------------------------------
+[162372] [CI] [EXIT] void android.os.AsyncTask.<init>() (f32e81) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [f32e81] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [f32e81] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 164
+----------------------------------------
+[162374] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (f32e81,e17c514) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [f32e81] android.os.AsyncTask android.os.AsyncTask.execute(e17c514 : java.lang.Object[])) |+ [CB] [ENTRY] [f32e81] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()
+----------------------------------------
+Step: 165
+----------------------------------------
+[162375] [CB] [ENTRY] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute() (f32e81) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f32e81] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()) |- [CB] [ENTRY] [f32e81] void com.sh1r0.noveldroid.SettingsFragment$UpdateChecker.onPreExecute()
+----------------------------------------

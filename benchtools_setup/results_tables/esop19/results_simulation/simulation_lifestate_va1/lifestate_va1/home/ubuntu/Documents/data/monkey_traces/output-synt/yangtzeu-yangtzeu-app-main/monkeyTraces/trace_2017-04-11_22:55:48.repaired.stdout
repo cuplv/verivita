@@ -1,0 +1,482 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/output-synt/yangtzeu-yangtzeu-app-main/monkeyTraces/trace_2017-04-11_22:55:48.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/output-synt/yangtzeu-yangtzeu-app-main/monkeyTraces/trace_2017-04-11_22:55:48.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 0.710000
+parsing - System time: 0.040000
+spec_grounding - User time: 173.670000
+spec_grounding - System time: 1.050000
+
+---Simplified Trace---
+[290] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.<init>() (2f60819) 
+[290] [CB] [EXIT] NULL = void com.rex.yangtzeu.ui.Welcome.<init>() (2f60819) 
+[334] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onCreate(android.os.Bundle) (2f60819,NULL) 
+[334] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onCreate(android.os.Bundle) (2f60819,NULL) 
+[1478] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onStart() (2f60819) 
+[1478] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onStart() (2f60819) 
+[1494] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onResume() (2f60819) 
+[1494] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onResume() (2f60819) 
+[2170] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome$1.onAnimationEnd(android.view.animation.Animation) (9c21e13,292baaa) 
+  [2171] [CI] [ENTRY] void android.os.AsyncTask.<init>() (ef99225) 
+  [2171] [CI] [EXIT] void android.os.AsyncTask.<init>() (ef99225) 
+  [2173] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (ef99225,dca808) 
+  [2174] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPreExecute() (ef99225) 
+  [2174] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPreExecute() (ef99225) 
+  [2173] [CI] [EXIT] ef99225 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (ef99225,dca808) 
+[2170] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome$1.onAnimationEnd(android.view.animation.Animation) (9c21e13,292baaa) 
+[3904] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPostExecute(java.lang.Object) (ef99225,NULL) 
+  [4053] [CI] [ENTRY] void android.app.Activity.finish() (2f60819) 
+  [4053] [CI] [EXIT] void android.app.Activity.finish() (2f60819) 
+[3904] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPostExecute(java.lang.Object) (ef99225,NULL) 
+[4120] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onPause() (2f60819) 
+[4120] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onPause() (2f60819) 
+[4236] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.<init>() (5a4198f) 
+[4236] [CB] [EXIT] NULL = void com.rex.yangtzeu.ui.Main.<init>() (5a4198f) 
+[4280] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onCreate(android.os.Bundle) (5a4198f,NULL) 
+  [7163] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427354) 
+  [7163] [CI] [EXIT] 4399e2c = android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427354) 
+  [7169] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427355) 
+  [7169] [CI] [EXIT] fa06cb4 = android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427355) 
+  [7175] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427356) 
+  [7175] [CI] [EXIT] d024b8c = android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427356) 
+  [7181] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427357) 
+  [7181] [CI] [EXIT] b374780 = android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427357) 
+  [7187] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427358) 
+  [7187] [CI] [EXIT] 349e16 = android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427358) 
+  [7247] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (4399e2c,5a4198f) 
+  [7247] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (4399e2c,5a4198f) 
+  [7249] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fa06cb4,5a4198f) 
+  [7249] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fa06cb4,5a4198f) 
+  [7251] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (d024b8c,5a4198f) 
+  [7251] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (d024b8c,5a4198f) 
+  [7253] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (b374780,5a4198f) 
+  [7253] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (b374780,5a4198f) 
+  [7255] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (349e16,5a4198f) 
+  [7255] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (349e16,5a4198f) 
+[4280] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onCreate(android.os.Bundle) (5a4198f,NULL) 
+[7266] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onStart() (5a4198f) 
+[7266] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onStart() (5a4198f) 
+[7282] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onResume() (5a4198f) 
+[7282] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onResume() (5a4198f) 
+[9128] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onStop() (2f60819) 
+[9128] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onStop() (2f60819) 
+[9132] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onDestroy() (2f60819) 
+[9132] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onDestroy() (2f60819) 
+[9482] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onClick(android.view.View) (5a4198f,4399e2c) 
+[9482] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onClick(android.view.View) (5a4198f,4399e2c) 
+[9564] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onPause() (5a4198f) 
+[9564] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onPause() (5a4198f) 
+[9584] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onClick(android.view.View) (5a4198f,4399e2c) 
+[9584] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onClick(android.view.View) (5a4198f,4399e2c) 
+[9618] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.<init>() (5a8d092) 
+[9618] [CB] [EXIT] NULL = void com.rex.yangtzeu.ui.Jwc.<init>() (5a8d092) 
+[9662] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onCreate(android.os.Bundle) (5a8d092,NULL) 
+[9662] [CB] [EXIT] void com.rex.yangtzeu.ui.Jwc.onCreate(android.os.Bundle) (5a8d092,NULL) 
+[12456] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onStart() (5a8d092) 
+[12456] [CB] [EXIT] void com.rex.yangtzeu.ui.Jwc.onStart() (5a8d092) 
+[12472] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onResume() (5a8d092) 
+[12472] [CB] [EXIT] void com.rex.yangtzeu.ui.Jwc.onResume() (5a8d092) 
+[12676] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onPause() (5a8d092) 
+[12676] [CB] [EXIT] void com.rex.yangtzeu.ui.Jwc.onPause() (5a8d092) 
+[12688] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.<init>() (3a5810a) 
+[12688] [CB] [EXIT] NULL = void com.rex.yangtzeu.ui.Jwc.<init>() (3a5810a) 
+[12732] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onCreate(android.os.Bundle) (3a5810a,NULL) 
+  [15459] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427337) 
+  [15459] [CI] [EXIT] c03cfd6 = android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427337) 
+  [15465] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427338) 
+  [15465] [CI] [EXIT] f3abe59 = android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427338) 
+  [15471] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427340) 
+  [15471] [CI] [EXIT] fffe332 = android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427340) 
+  [15477] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427339) 
+  [15477] [CI] [EXIT] 78c7e5b = android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427339) 
+  [15483] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427341) 
+  [15483] [CI] [EXIT] adee36c = android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427341) 
+  [15509] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (c03cfd6,3a5810a) 
+  [15509] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (c03cfd6,3a5810a) 
+  [15511] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (f3abe59,3a5810a) 
+  [15511] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (f3abe59,3a5810a) 
+  [15513] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fffe332,3a5810a) 
+  [15513] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fffe332,3a5810a) 
+  [15515] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (78c7e5b,3a5810a) 
+  [15515] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (78c7e5b,3a5810a) 
+  [15517] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (adee36c,3a5810a) 
+  [15517] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (adee36c,3a5810a) 
+[12732] [CB] [EXIT] void com.rex.yangtzeu.ui.Jwc.onCreate(android.os.Bundle) (3a5810a,NULL) 
+[15528] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onStart() (3a5810a) 
+[15528] [CB] [EXIT] void com.rex.yangtzeu.ui.Jwc.onStart() (3a5810a) 
+[15544] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onResume() (3a5810a) 
+[15544] [CB] [EXIT] void com.rex.yangtzeu.ui.Jwc.onResume() (3a5810a) 
+[19060] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onClick(android.view.View) (3a5810a,78c7e5b) 
+[19060] [CB] [EXIT] void com.rex.yangtzeu.ui.Jwc.onClick(android.view.View) (3a5810a,78c7e5b) 
+[19066] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onClick(android.view.View) (3a5810a,78c7e5b) 
+[19066] [CB] [EXIT] void com.rex.yangtzeu.ui.Jwc.onClick(android.view.View) (3a5810a,78c7e5b) 
+[19076] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onStop() (5a8d092) 
+[19076] [CB] [EXIT] void com.rex.yangtzeu.ui.Jwc.onStop() (5a8d092) 
+[19092] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onStop() (5a4198f) 
+[19092] [CB] [EXIT] void com.rex.yangtzeu.ui.Main.onStop() (5a4198f) 
+[19104] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onClick(android.view.View) (3a5810a,f3abe59) 
+[19104] [CB] [EXIT] void com.rex.yangtzeu.ui.Jwc.onClick(android.view.View) (3a5810a,f3abe59) 
+[19148] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onPause() (3a5810a) 
+[19148] [CB] [EXIT] void com.rex.yangtzeu.ui.Jwc.onPause() (3a5810a) 
+[19164] [CB] [ENTRY] void com.rex.yangtzeu.ui.CetScore.<init>() (32815ee) 
+[19164] [CB] [EXIT] NULL = void com.rex.yangtzeu.ui.CetScore.<init>() (32815ee) 
+
+
+
+TRACE STATISTICS
+Trace length: 58
+Top-level callbacks: 32
+CI-ENTRY: 12
+CI-EXIT: 11
+CB-ENTRY: 31
+CB-EXIT: 2
+        encoding - User time: 10.380000
+encoding - System time: 0.020000
+simulation - User time: 37.310000
+simulation - System time: 0.320000
+
+The trace can be simulated in 58 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[290] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.<init>() (2f60819) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.<init>()) |- [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.<init>()) |+ [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[334] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onCreate(android.os.Bundle) (2f60819,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[334] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onCreate(android.os.Bundle) (2f60819,NULL) 
+----------------------------------------
+Step: 4
+----------------------------------------
+[1478] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onStart() (2f60819) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onStart()) |- [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onStart()) |+ [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onResume()
+----------------------------------------
+Step: 5
+----------------------------------------
+[1478] [CB] [EXIT] void com.rex.yangtzeu.ui.Welcome.onStart() (2f60819) 
+----------------------------------------
+Step: 6
+----------------------------------------
+[1494] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onResume() (2f60819) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onResume()) |- [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onResume()) |+ [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onPause()
+----------------------------------------
+Step: 7
+----------------------------------------
+[2170] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome$1.onAnimationEnd(android.view.animation.Animation) (9c21e13,292baaa) 
+----------------------------------------
+Step: 8
+----------------------------------------
+[2171] [CI] [EXIT] void android.os.AsyncTask.<init>() (ef99225) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [ef99225] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [ef99225] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 9
+----------------------------------------
+[2173] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (ef99225,dca808) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [ef99225] android.os.AsyncTask android.os.AsyncTask.execute(dca808 : java.lang.Object[])) |+ [CB] [ENTRY] [ef99225] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPreExecute()
+----------------------------------------
+Step: 10
+----------------------------------------
+[2174] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPreExecute() (ef99225) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ef99225] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPreExecute()) |+ [CB] [ENTRY] [ef99225] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPostExecute(NULL : java.lang.Object)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ef99225] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPreExecute()) |- [CB] [ENTRY] [ef99225] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPreExecute()
+----------------------------------------
+Step: 11
+----------------------------------------
+[3904] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPostExecute(java.lang.Object) (ef99225,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ef99225] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPostExecute(NULL : java.lang.Object)) |- [CB] [ENTRY] [ef99225] void com.rex.yangtzeu.ui.Welcome$LoginTask.onPostExecute(NULL : java.lang.Object)
+----------------------------------------
+Step: 12
+----------------------------------------
+[4053] [CI] [ENTRY] void android.app.Activity.finish() (2f60819) 
+----------------------------------------
+Step: 13
+----------------------------------------
+[4120] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onPause() (2f60819) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onPause()) |- [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onPause()) |+ [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onPause()) |+ [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onPause()) |+ [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onResume()
+----------------------------------------
+Step: 14
+----------------------------------------
+[4236] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.<init>() (5a4198f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.<init>()) |- [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.<init>()) |+ [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 15
+----------------------------------------
+[4280] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onCreate(android.os.Bundle) (5a4198f,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 16
+----------------------------------------
+[7163] [CI] [EXIT] 4399e2c = android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427354) 
+----------------------------------------
+Step: 17
+----------------------------------------
+[7169] [CI] [EXIT] fa06cb4 = android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427355) 
+----------------------------------------
+Step: 18
+----------------------------------------
+[7175] [CI] [EXIT] d024b8c = android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427356) 
+----------------------------------------
+Step: 19
+----------------------------------------
+[7181] [CI] [EXIT] b374780 = android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427357) 
+----------------------------------------
+Step: 20
+----------------------------------------
+[7187] [CI] [EXIT] 349e16 = android.view.View android.app.Activity.findViewById(int) (5a4198f,2131427358) 
+----------------------------------------
+Step: 21
+----------------------------------------
+[7247] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (4399e2c,5a4198f) 
+----------------------------------------
+Step: 22
+----------------------------------------
+[7249] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fa06cb4,5a4198f) 
+----------------------------------------
+Step: 23
+----------------------------------------
+[7251] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (d024b8c,5a4198f) 
+----------------------------------------
+Step: 24
+----------------------------------------
+[7253] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (b374780,5a4198f) 
+----------------------------------------
+Step: 25
+----------------------------------------
+[7255] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (349e16,5a4198f) 
+----------------------------------------
+Step: 26
+----------------------------------------
+[7266] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onStart() (5a4198f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onStart()) |+ [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onStart()) |- [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onStart()
+----------------------------------------
+Step: 27
+----------------------------------------
+[7282] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onResume() (5a4198f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onResume()) |+ [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onPause()
+    SPEC ((((((TRUE)[*]); 349e16 = [CI] [EXIT] [5a4198f] android.view.View android.app.Activity.findViewById(2131427358 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [349e16] void android.view.View.setOnClickListener(5a4198f : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onClick(4399e2c : android.view.View)
+    SPEC ((((((TRUE)[*]); d024b8c = [CI] [EXIT] [5a4198f] android.view.View android.app.Activity.findViewById(2131427356 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [d024b8c] void android.view.View.setOnClickListener(5a4198f : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onClick(4399e2c : android.view.View)
+    SPEC ((((((TRUE)[*]); fa06cb4 = [CI] [EXIT] [5a4198f] android.view.View android.app.Activity.findViewById(2131427355 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [fa06cb4] void android.view.View.setOnClickListener(5a4198f : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onClick(4399e2c : android.view.View)
+    SPEC ((((((TRUE)[*]); 4399e2c = [CI] [EXIT] [5a4198f] android.view.View android.app.Activity.findViewById(2131427354 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [4399e2c] void android.view.View.setOnClickListener(5a4198f : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onClick(4399e2c : android.view.View)
+    SPEC ((((((TRUE)[*]); b374780 = [CI] [EXIT] [5a4198f] android.view.View android.app.Activity.findViewById(2131427357 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [b374780] void android.view.View.setOnClickListener(5a4198f : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onClick(4399e2c : android.view.View)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onResume()) |- [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onResume()
+----------------------------------------
+Step: 28
+----------------------------------------
+[9128] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onStop() (2f60819) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onStop()) |- [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onStop()) |+ [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onStop()) |- [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onStop()
+----------------------------------------
+Step: 29
+----------------------------------------
+[9132] [CB] [ENTRY] void com.rex.yangtzeu.ui.Welcome.onDestroy() (2f60819) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onDestroy()) |- [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onDestroy()) |- [CB] [ENTRY] [2f60819] void com.rex.yangtzeu.ui.Welcome.onDestroy()
+----------------------------------------
+Step: 30
+----------------------------------------
+[9584] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onClick(android.view.View) (5a4198f,4399e2c) 
+----------------------------------------
+Step: 31
+----------------------------------------
+[9564] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onPause() (5a4198f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onPause()) |+ [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onPause()) |+ [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onPause()) |- [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onPause()) |+ [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 32
+----------------------------------------
+[9584] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onClick(android.view.View) (5a4198f,4399e2c) 
+----------------------------------------
+Step: 33
+----------------------------------------
+[9618] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.<init>() (5a8d092) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.<init>()) |+ [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.<init>()) |- [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.<init>()
+----------------------------------------
+Step: 34
+----------------------------------------
+[9662] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onCreate(android.os.Bundle) (5a8d092,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 35
+----------------------------------------
+[12456] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onStart() (5a8d092) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onStart()) |+ [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onStart()) |- [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onStart()
+----------------------------------------
+Step: 36
+----------------------------------------
+[12472] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onResume() (5a8d092) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onResume()) |+ [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onResume()) |- [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onResume()
+----------------------------------------
+Step: 37
+----------------------------------------
+[12676] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onPause() (5a8d092) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onPause()) |- [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onPause()) |+ [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onPause()) |+ [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onPause()) |+ [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 38
+----------------------------------------
+[12688] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.<init>() (3a5810a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.<init>()) |- [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.<init>()) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 39
+----------------------------------------
+[12732] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onCreate(android.os.Bundle) (3a5810a,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 40
+----------------------------------------
+[15459] [CI] [EXIT] c03cfd6 = android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427337) 
+----------------------------------------
+Step: 41
+----------------------------------------
+[15465] [CI] [EXIT] f3abe59 = android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427338) 
+----------------------------------------
+Step: 42
+----------------------------------------
+[15471] [CI] [EXIT] fffe332 = android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427340) 
+----------------------------------------
+Step: 43
+----------------------------------------
+[15477] [CI] [EXIT] 78c7e5b = android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427339) 
+----------------------------------------
+Step: 44
+----------------------------------------
+[15483] [CI] [EXIT] adee36c = android.view.View android.app.Activity.findViewById(int) (3a5810a,2131427341) 
+----------------------------------------
+Step: 45
+----------------------------------------
+[15509] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (c03cfd6,3a5810a) 
+----------------------------------------
+Step: 46
+----------------------------------------
+[15511] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (f3abe59,3a5810a) 
+----------------------------------------
+Step: 47
+----------------------------------------
+[15513] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fffe332,3a5810a) 
+----------------------------------------
+Step: 48
+----------------------------------------
+[15515] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (78c7e5b,3a5810a) 
+----------------------------------------
+Step: 49
+----------------------------------------
+[15517] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (adee36c,3a5810a) 
+----------------------------------------
+Step: 50
+----------------------------------------
+[15528] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onStart() (3a5810a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onStart()) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onStart()) |- [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onStart()
+----------------------------------------
+Step: 51
+----------------------------------------
+[15544] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onResume() (3a5810a) 
+    Matched specifications:
+    SPEC ((((((TRUE)[*]); adee36c = [CI] [EXIT] [3a5810a] android.view.View android.app.Activity.findViewById(2131427341 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [adee36c] void android.view.View.setOnClickListener(3a5810a : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onClick(f3abe59 : android.view.View)
+    SPEC ((((((TRUE)[*]); fffe332 = [CI] [EXIT] [3a5810a] android.view.View android.app.Activity.findViewById(2131427340 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [fffe332] void android.view.View.setOnClickListener(3a5810a : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onClick(f3abe59 : android.view.View)
+    SPEC ((((((TRUE)[*]); f3abe59 = [CI] [EXIT] [3a5810a] android.view.View android.app.Activity.findViewById(2131427338 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [f3abe59] void android.view.View.setOnClickListener(3a5810a : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onClick(f3abe59 : android.view.View)
+    SPEC ((((((TRUE)[*]); 78c7e5b = [CI] [EXIT] [3a5810a] android.view.View android.app.Activity.findViewById(2131427339 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [78c7e5b] void android.view.View.setOnClickListener(3a5810a : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onClick(f3abe59 : android.view.View)
+    SPEC ((((((TRUE)[*]); c03cfd6 = [CI] [EXIT] [3a5810a] android.view.View android.app.Activity.findViewById(2131427337 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [c03cfd6] void android.view.View.setOnClickListener(3a5810a : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onClick(f3abe59 : android.view.View)
+    SPEC ((((((TRUE)[*]); f3abe59 = [CI] [EXIT] [3a5810a] android.view.View android.app.Activity.findViewById(2131427338 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [f3abe59] void android.view.View.setOnClickListener(3a5810a : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onClick(78c7e5b : android.view.View)
+    SPEC ((((((TRUE)[*]); fffe332 = [CI] [EXIT] [3a5810a] android.view.View android.app.Activity.findViewById(2131427340 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [fffe332] void android.view.View.setOnClickListener(3a5810a : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onClick(78c7e5b : android.view.View)
+    SPEC ((((((TRUE)[*]); c03cfd6 = [CI] [EXIT] [3a5810a] android.view.View android.app.Activity.findViewById(2131427337 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [c03cfd6] void android.view.View.setOnClickListener(3a5810a : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onClick(78c7e5b : android.view.View)
+    SPEC ((((((TRUE)[*]); adee36c = [CI] [EXIT] [3a5810a] android.view.View android.app.Activity.findViewById(2131427341 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [adee36c] void android.view.View.setOnClickListener(3a5810a : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onClick(78c7e5b : android.view.View)
+    SPEC ((((((TRUE)[*]); 78c7e5b = [CI] [EXIT] [3a5810a] android.view.View android.app.Activity.findViewById(2131427339 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [78c7e5b] void android.view.View.setOnClickListener(3a5810a : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onClick(78c7e5b : android.view.View)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume()) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume()) |- [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume()
+----------------------------------------
+Step: 52
+----------------------------------------
+[19066] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onClick(android.view.View) (3a5810a,78c7e5b) 
+----------------------------------------
+Step: 53
+----------------------------------------
+[19066] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onClick(android.view.View) (3a5810a,78c7e5b) 
+----------------------------------------
+Step: 54
+----------------------------------------
+[19076] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onStop() (5a8d092) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onStop()) |- [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onStop()) |- [CB] [ENTRY] [5a8d092] void com.rex.yangtzeu.ui.Jwc.onStop()
+----------------------------------------
+Step: 55
+----------------------------------------
+[19092] [CB] [ENTRY] void com.rex.yangtzeu.ui.Main.onStop() (5a4198f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onStop()) |- [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onStop()) |- [CB] [ENTRY] [5a4198f] void com.rex.yangtzeu.ui.Main.onResume()
+----------------------------------------
+Step: 56
+----------------------------------------
+[19104] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onClick(android.view.View) (3a5810a,f3abe59) 
+----------------------------------------
+Step: 57
+----------------------------------------
+[19148] [CB] [ENTRY] void com.rex.yangtzeu.ui.Jwc.onPause() (3a5810a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onPause()) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onPause()) |- [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onPause()) |+ [CB] [ENTRY] [3a5810a] void com.rex.yangtzeu.ui.Jwc.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 58
+----------------------------------------
+[19164] [CB] [ENTRY] void com.rex.yangtzeu.ui.CetScore.<init>() (32815ee) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [32815ee] void com.rex.yangtzeu.ui.CetScore.<init>()) |- [CB] [ENTRY] [32815ee] void com.rex.yangtzeu.ui.CetScore.<init>()
+----------------------------------------

@@ -1,0 +1,662 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/frag-act-last-batch-2/_traces/peterpascale-FragmentExample-bin/monkeyTraces/trace-MasterListActivity-debug-unaligned_2017-04-16_22:43:20.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/frag-act-last-batch-2/_traces/peterpascale-FragmentExample-bin/monkeyTraces/trace-MasterListActivity-debug-unaligned_2017-04-16_22:43:20.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 0.320000
+parsing - System time: 0.050000
+spec_grounding - User time: 152.110000
+spec_grounding - System time: 0.860000
+
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.<init>() (917d566) 
+[0] [CB] [EXIT] NULL = void com.motherrobot.sample.fragment.MasterListActivity.<init>() (917d566) 
+[24] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onCreate(android.os.Bundle) (917d566,NULL) 
+  [607] [CI] [ENTRY] void android.support.v4.app.ListFragment.<init>() (ab03985) 
+  [607] [CI] [EXIT] void android.support.v4.app.ListFragment.<init>() (ab03985) 
+  [614] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onAttach(android.app.Activity) (ab03985,917d566) 
+  [614] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListFragment.onAttach(android.app.Activity) (ab03985,917d566) 
+  [622] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onCreate(android.os.Bundle) (ab03985,NULL) 
+  [622] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListFragment.onCreate(android.os.Bundle) (ab03985,NULL) 
+  [650] [CB] [ENTRY] android.view.View com.motherrobot.sample.fragment.MasterListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ab03985,2dfec6,NULL,NULL) 
+  [650] [CB] [EXIT] 7d62ac6 = android.view.View com.motherrobot.sample.fragment.MasterListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ab03985,2dfec6,NULL,NULL) 
+  [1026] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onViewCreated(android.view.View,android.os.Bundle) (ab03985,9220dc2,NULL) 
+  [1026] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListFragment.onViewCreated(android.view.View,android.os.Bundle) (ab03985,9220dc2,NULL) 
+[24] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListActivity.onCreate(android.os.Bundle) (917d566,NULL) 
+[1102] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onStart() (917d566) 
+  [1104] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onActivityCreated(android.os.Bundle) (ab03985,NULL) 
+  [1104] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListFragment.onActivityCreated(android.os.Bundle) (ab03985,NULL) 
+  [1108] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onStart() (ab03985) 
+  [1108] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListFragment.onStart() (ab03985) 
+[1102] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListActivity.onStart() (917d566) 
+[1126] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onResume() (917d566) 
+[1126] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListActivity.onResume() (917d566) 
+[1130] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onPostResume() (917d566) 
+  [1136] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onResume() (ab03985) 
+  [1136] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListFragment.onResume() (ab03985) 
+[1130] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListActivity.onPostResume() (917d566) 
+[1906] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onSaveInstanceState(android.os.Bundle) (917d566,98872a8) 
+  [1908] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onSaveInstanceState(android.os.Bundle) (ab03985,71528fd) 
+  [1908] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListFragment.onSaveInstanceState(android.os.Bundle) (ab03985,71528fd) 
+[1906] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListActivity.onSaveInstanceState(android.os.Bundle) (917d566,98872a8) 
+[1914] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onPause() (917d566) 
+  [1916] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onPause() (ab03985) 
+  [1916] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListFragment.onPause() (ab03985) 
+[1914] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListActivity.onPause() (917d566) 
+[1966] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.<init>() (401d95f) 
+[1966] [CB] [EXIT] NULL = void com.motherrobot.sample.fragment.DetailViewActivity.<init>() (401d95f) 
+[1990] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(android.os.Bundle) (401d95f,NULL) 
+  [2517] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (8329993) 
+  [2517] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (8329993) 
+  [2524] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(android.app.Activity) (8329993,401d95f) 
+  [2524] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(android.app.Activity) (8329993,401d95f) 
+  [2532] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(android.os.Bundle) (8329993,NULL) 
+  [2532] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(android.os.Bundle) (8329993,NULL) 
+  [2548] [CB] [ENTRY] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (8329993,6f28247,NULL,NULL) 
+  [2548] [CB] [EXIT] 7a1d374 = android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (8329993,6f28247,NULL,NULL) 
+  [2710] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onViewCreated(android.view.View,android.os.Bundle) (8329993,2a7d1e9,NULL) 
+  [2710] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onViewCreated(android.view.View,android.os.Bundle) (8329993,2a7d1e9,NULL) 
+[1990] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(android.os.Bundle) (401d95f,NULL) 
+[2808] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() (401d95f) 
+  [2810] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onActivityCreated(android.os.Bundle) (8329993,NULL) 
+  [2810] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onActivityCreated(android.os.Bundle) (8329993,NULL) 
+  [2814] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() (8329993) 
+  [2814] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() (8329993) 
+[2808] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() (401d95f) 
+[2832] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onResume() (401d95f) 
+[2832] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onResume() (401d95f) 
+[2836] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onPostResume() (401d95f) 
+  [2842] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onResume() (8329993) 
+  [2842] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onResume() (8329993) 
+[2836] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onPostResume() (401d95f) 
+[3256] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onSaveInstanceState(android.os.Bundle) (401d95f,69a685) 
+  [3258] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onSaveInstanceState(android.os.Bundle) (8329993,e51aca6) 
+  [3258] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onSaveInstanceState(android.os.Bundle) (8329993,e51aca6) 
+[3256] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onSaveInstanceState(android.os.Bundle) (401d95f,69a685) 
+[3264] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onPause() (401d95f) 
+  [3266] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onPause() (8329993) 
+  [3266] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onPause() (8329993) 
+[3264] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onPause() (401d95f) 
+[3280] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.<init>() (6b48b56) 
+[3280] [CB] [EXIT] NULL = void com.motherrobot.sample.fragment.DetailViewActivity.<init>() (6b48b56) 
+[3304] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(android.os.Bundle) (6b48b56,NULL) 
+  [3827] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (b3b5650) 
+  [3827] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (b3b5650) 
+  [3834] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(android.app.Activity) (b3b5650,6b48b56) 
+  [3834] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(android.app.Activity) (b3b5650,6b48b56) 
+  [3842] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(android.os.Bundle) (b3b5650,NULL) 
+  [3842] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(android.os.Bundle) (b3b5650,NULL) 
+  [3858] [CB] [ENTRY] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b3b5650,64e3fde,NULL,NULL) 
+  [3858] [CB] [EXIT] af98065 = android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b3b5650,64e3fde,NULL,NULL) 
+  [4016] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onViewCreated(android.view.View,android.os.Bundle) (b3b5650,7fa5f16,NULL) 
+  [4016] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onViewCreated(android.view.View,android.os.Bundle) (b3b5650,7fa5f16,NULL) 
+[3304] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(android.os.Bundle) (6b48b56,NULL) 
+[4114] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() (6b48b56) 
+  [4116] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onActivityCreated(android.os.Bundle) (b3b5650,NULL) 
+  [4116] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onActivityCreated(android.os.Bundle) (b3b5650,NULL) 
+  [4120] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() (b3b5650) 
+  [4120] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() (b3b5650) 
+[4114] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() (6b48b56) 
+[4138] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onResume() (6b48b56) 
+[4138] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onResume() (6b48b56) 
+[4142] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onPostResume() (6b48b56) 
+  [4148] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onResume() (b3b5650) 
+  [4148] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onResume() (b3b5650) 
+[4142] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onPostResume() (6b48b56) 
+[4618] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onStop() (401d95f) 
+  [4620] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onStop() (8329993) 
+  [4620] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onStop() (8329993) 
+[4618] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onStop() (401d95f) 
+[4634] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onStop() (917d566) 
+  [4636] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onStop() (ab03985) 
+  [4636] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListFragment.onStop() (ab03985) 
+[4634] [CB] [EXIT] void com.motherrobot.sample.fragment.MasterListActivity.onStop() (917d566) 
+[4958] [CB] [ENTRY] boolean com.motherrobot.sample.fragment.DetailViewActivity.dispatchKeyEvent(android.view.KeyEvent) (6b48b56,a64b145) 
+  [4975] [CI] [ENTRY] void android.app.Activity.finish() (6b48b56) 
+  [4975] [CI] [EXIT] void android.app.Activity.finish() (6b48b56) 
+[4958] [CB] [EXIT] true = boolean com.motherrobot.sample.fragment.DetailViewActivity.dispatchKeyEvent(android.view.KeyEvent) (6b48b56,a64b145) 
+[4990] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onPause() (6b48b56) 
+  [4992] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onPause() (b3b5650) 
+  [4992] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onPause() (b3b5650) 
+[4990] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onPause() (6b48b56) 
+[5006] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onRestart() (401d95f) 
+[5006] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onRestart() (401d95f) 
+[5014] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() (401d95f) 
+  [5016] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() (8329993) 
+  [5016] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() (8329993) 
+[5014] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() (401d95f) 
+[5022] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onResume() (401d95f) 
+[5022] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onResume() (401d95f) 
+[5026] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onPostResume() (401d95f) 
+  [5032] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onResume() (8329993) 
+  [5032] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onResume() (8329993) 
+[5026] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onPostResume() (401d95f) 
+[5218] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onStop() (6b48b56) 
+  [5220] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onStop() (b3b5650) 
+  [5220] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onStop() (b3b5650) 
+[5218] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onStop() (6b48b56) 
+[5226] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onDestroy() (6b48b56) 
+  [5232] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroyView() (b3b5650) 
+  [5232] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroyView() (b3b5650) 
+  [5236] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroy() (b3b5650) 
+  [5236] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroy() (b3b5650) 
+  [5240] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onDetach() (b3b5650) 
+  [5240] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewFragment.onDetach() (b3b5650) 
+[5226] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onDestroy() (6b48b56) 
+
+
+
+TRACE STATISTICS
+Trace length: 72
+Top-level callbacks: 29
+CI-ENTRY: 4
+CI-EXIT: 3
+CB-ENTRY: 58
+CB-EXIT: 2
+        encoding - User time: 3.170000
+encoding - System time: 0.020000
+simulation - User time: 17.770000
+simulation - System time: 0.160000
+
+The trace can be simulated in 72 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[0] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.<init>() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.<init>()) |+ [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.<init>()) |- [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.<init>()
+----------------------------------------
+Step: 2
+----------------------------------------
+[24] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onCreate(android.os.Bundle) (917d566,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[607] [CI] [ENTRY] void android.support.v4.app.ListFragment.<init>() (ab03985) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [ab03985] void android.support.v4.app.ListFragment.<init>()) |+ [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onAttach(917d566 : android.app.Activity)
+----------------------------------------
+Step: 4
+----------------------------------------
+[607] [CI] [EXIT] void android.support.v4.app.ListFragment.<init>() (ab03985) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [ab03985] void android.support.v4.app.ListFragment.<init>()) |- [CI] [EXIT] [ab03985] void android.support.v4.app.ListFragment.<init>()
+----------------------------------------
+Step: 5
+----------------------------------------
+[614] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onAttach(android.app.Activity) (ab03985,917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onAttach(917d566 : android.app.Activity)) |- [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onAttach(917d566 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onAttach(917d566 : android.app.Activity)) |+ [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 6
+----------------------------------------
+[622] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onCreate(android.os.Bundle) (ab03985,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ab03985] android.view.View com.motherrobot.sample.fragment.MasterListFragment.onCreateView(2dfec6 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 7
+----------------------------------------
+[650] [CB] [ENTRY] android.view.View com.motherrobot.sample.fragment.MasterListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (ab03985,2dfec6,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] android.view.View com.motherrobot.sample.fragment.MasterListFragment.onCreateView(2dfec6 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [ab03985] android.view.View com.motherrobot.sample.fragment.MasterListFragment.onCreateView(2dfec6 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] android.view.View com.motherrobot.sample.fragment.MasterListFragment.onCreateView(2dfec6 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] android.view.View com.motherrobot.sample.fragment.MasterListFragment.onCreateView(2dfec6 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] android.view.View com.motherrobot.sample.fragment.MasterListFragment.onCreateView(2dfec6 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onViewCreated(9220dc2 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 8
+----------------------------------------
+[1026] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onViewCreated(android.view.View,android.os.Bundle) (ab03985,9220dc2,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onViewCreated(9220dc2 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onViewCreated(9220dc2 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 9
+----------------------------------------
+[1102] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onStart() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onStart()) |- [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onStart()) |+ [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onResume()
+----------------------------------------
+Step: 10
+----------------------------------------
+[1104] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onActivityCreated(android.os.Bundle) (ab03985,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 11
+----------------------------------------
+[1108] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onStart() (ab03985) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onStart()) |+ [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onSaveInstanceState(71528fd : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onStart()) |- [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onStart()) |+ [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onStart()) |+ [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onResume()
+----------------------------------------
+Step: 12
+----------------------------------------
+[1126] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onResume() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onResume()) |- [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onResume()) |+ [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onPause()
+----------------------------------------
+Step: 13
+----------------------------------------
+[1130] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onPostResume() (917d566) 
+----------------------------------------
+Step: 14
+----------------------------------------
+[1136] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onResume() (ab03985) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onResume()) |- [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onResume()) |+ [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onPause()
+----------------------------------------
+Step: 15
+----------------------------------------
+[1906] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onSaveInstanceState(android.os.Bundle) (917d566,98872a8) 
+----------------------------------------
+Step: 16
+----------------------------------------
+[1908] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onSaveInstanceState(android.os.Bundle) (ab03985,71528fd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onSaveInstanceState(71528fd : android.os.Bundle)) |- [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onSaveInstanceState(71528fd : android.os.Bundle)
+----------------------------------------
+Step: 17
+----------------------------------------
+[1914] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onPause() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onPause()) |+ [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onPause()) |+ [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onPause()) |- [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onPause()) |+ [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onResume()
+----------------------------------------
+Step: 18
+----------------------------------------
+[1916] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onPause() (ab03985) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onPause()) |- [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onPause()) |+ [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onResume()
+----------------------------------------
+Step: 19
+----------------------------------------
+[1966] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.<init>() (401d95f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.<init>()) |+ [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.<init>()) |- [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.<init>()
+----------------------------------------
+Step: 20
+----------------------------------------
+[1990] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(android.os.Bundle) (401d95f,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStart()
+----------------------------------------
+Step: 21
+----------------------------------------
+[2517] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (8329993) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [8329993] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(401d95f : android.app.Activity)
+----------------------------------------
+Step: 22
+----------------------------------------
+[2517] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (8329993) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [8329993] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [8329993] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 23
+----------------------------------------
+[2524] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(android.app.Activity) (8329993,401d95f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(401d95f : android.app.Activity)) |- [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(401d95f : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(401d95f : android.app.Activity)) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 24
+----------------------------------------
+[2532] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(android.os.Bundle) (8329993,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8329993] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(6f28247 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 25
+----------------------------------------
+[2548] [CB] [ENTRY] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (8329993,6f28247,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(6f28247 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(6f28247 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [8329993] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(6f28247 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(6f28247 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onViewCreated(2a7d1e9 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(6f28247 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 26
+----------------------------------------
+[2710] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onViewCreated(android.view.View,android.os.Bundle) (8329993,2a7d1e9,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onViewCreated(2a7d1e9 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onViewCreated(2a7d1e9 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 27
+----------------------------------------
+[2808] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() (401d95f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() | [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStart())) |- [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() | [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStart())) |+ [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume()
+----------------------------------------
+Step: 28
+----------------------------------------
+[2810] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onActivityCreated(android.os.Bundle) (8329993,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 29
+----------------------------------------
+[2814] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() (8329993) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() | [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart())) |- [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() | [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart())) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onSaveInstanceState(e51aca6 : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() | [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart())) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() | [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart())) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume()
+----------------------------------------
+Step: 30
+----------------------------------------
+[5022] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onResume() (401d95f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume() | [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume())) |+ [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume() | [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume())) |- [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume()
+----------------------------------------
+Step: 31
+----------------------------------------
+[2836] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onPostResume() (401d95f) 
+----------------------------------------
+Step: 32
+----------------------------------------
+[2842] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onResume() (8329993) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume() | [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume())) |- [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume() | [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume())) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onPause()
+----------------------------------------
+Step: 33
+----------------------------------------
+[3256] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onSaveInstanceState(android.os.Bundle) (401d95f,69a685) 
+----------------------------------------
+Step: 34
+----------------------------------------
+[3258] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onSaveInstanceState(android.os.Bundle) (8329993,e51aca6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onSaveInstanceState(e51aca6 : android.os.Bundle)) |- [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onSaveInstanceState(e51aca6 : android.os.Bundle)
+----------------------------------------
+Step: 35
+----------------------------------------
+[3264] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onPause() (401d95f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onPause()) |- [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onPause()) |+ [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onPause()) |+ [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onPause()) |+ [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStop()
+----------------------------------------
+Step: 36
+----------------------------------------
+[3266] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onPause() (8329993) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onPause()) |- [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onPause()) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume()
+----------------------------------------
+Step: 37
+----------------------------------------
+[3280] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.<init>() (6b48b56) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.<init>()) |+ [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.<init>()) |- [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.<init>()
+----------------------------------------
+Step: 38
+----------------------------------------
+[3304] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(android.os.Bundle) (6b48b56,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 39
+----------------------------------------
+[3827] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (b3b5650) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [b3b5650] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(6b48b56 : android.app.Activity)
+----------------------------------------
+Step: 40
+----------------------------------------
+[3827] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (b3b5650) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [b3b5650] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [b3b5650] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 41
+----------------------------------------
+[3834] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(android.app.Activity) (b3b5650,6b48b56) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(6b48b56 : android.app.Activity)) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(6b48b56 : android.app.Activity)) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(6b48b56 : android.app.Activity)
+----------------------------------------
+Step: 42
+----------------------------------------
+[3842] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(android.os.Bundle) (b3b5650,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b3b5650] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(64e3fde : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 43
+----------------------------------------
+[3858] [CB] [ENTRY] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b3b5650,64e3fde,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(64e3fde : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(64e3fde : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [b3b5650] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(64e3fde : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(64e3fde : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onViewCreated(7fa5f16 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(64e3fde : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 44
+----------------------------------------
+[4016] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onViewCreated(android.view.View,android.os.Bundle) (b3b5650,7fa5f16,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onViewCreated(7fa5f16 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onViewCreated(7fa5f16 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 45
+----------------------------------------
+[3304] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(android.os.Bundle) (6b48b56,NULL) 
+----------------------------------------
+Step: 46
+----------------------------------------
+[4114] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() (6b48b56) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onStart()) |+ [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onStart()) |- [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onStart()
+----------------------------------------
+Step: 47
+----------------------------------------
+[4116] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onActivityCreated(android.os.Bundle) (b3b5650,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 48
+----------------------------------------
+[4120] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() (b3b5650) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStart()) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStart()) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStart()) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStart()) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onResume()
+----------------------------------------
+Step: 49
+----------------------------------------
+[4114] [CB] [EXIT] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() (6b48b56) 
+----------------------------------------
+Step: 50
+----------------------------------------
+[4138] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onResume() (6b48b56) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onResume()) |+ [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onResume()) |- [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onResume()
+----------------------------------------
+Step: 51
+----------------------------------------
+[4142] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onPostResume() (6b48b56) 
+----------------------------------------
+Step: 52
+----------------------------------------
+[4148] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onResume() (b3b5650) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onResume()) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onResume()) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onPause()
+----------------------------------------
+Step: 53
+----------------------------------------
+[4618] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onStop() (401d95f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStop()) |- [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStop()) |+ [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onRestart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStop()) |- [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume()
+----------------------------------------
+Step: 54
+----------------------------------------
+[4620] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onStop() (8329993) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()) |- [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()) |- [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 55
+----------------------------------------
+[4634] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListActivity.onStop() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onStop()) |- [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onStop()) |- [CB] [ENTRY] [917d566] void com.motherrobot.sample.fragment.MasterListActivity.onStop()
+----------------------------------------
+Step: 56
+----------------------------------------
+[4636] [CB] [ENTRY] void com.motherrobot.sample.fragment.MasterListFragment.onStop() (ab03985) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onStop()) |+ [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onStop()) |- [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onStop()) |- [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onStop()) |+ [CB] [ENTRY] [ab03985] void com.motherrobot.sample.fragment.MasterListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 57
+----------------------------------------
+[4958] [CB] [ENTRY] boolean com.motherrobot.sample.fragment.DetailViewActivity.dispatchKeyEvent(android.view.KeyEvent) (6b48b56,a64b145) 
+----------------------------------------
+Step: 58
+----------------------------------------
+[4975] [CI] [ENTRY] void android.app.Activity.finish() (6b48b56) 
+----------------------------------------
+Step: 59
+----------------------------------------
+[4990] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onPause() (6b48b56) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onPause()) |+ [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onPause()) |+ [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onPause()) |+ [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onPause()) |- [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onPause()
+----------------------------------------
+Step: 60
+----------------------------------------
+[4992] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onPause() (b3b5650) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onPause()) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onPause()) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onResume()
+----------------------------------------
+Step: 61
+----------------------------------------
+[5006] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onRestart() (401d95f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onRestart()) |- [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onRestart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onRestart()) |- [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onRestart()) |+ [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStart()
+----------------------------------------
+Step: 62
+----------------------------------------
+[5014] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() (401d95f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() | [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStart())) |- [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStart() | [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onStart())) |+ [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume()
+----------------------------------------
+Step: 63
+----------------------------------------
+[5016] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() (8329993) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() | [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart())) |- [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() | [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart())) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onSaveInstanceState(e51aca6 : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() | [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart())) |- [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() | [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart())) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart() | [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onStart())) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume()
+----------------------------------------
+Step: 64
+----------------------------------------
+[5022] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onResume() (401d95f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume() | [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume())) |+ [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume() | [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume())) |- [CB] [ENTRY] [401d95f] void com.motherrobot.sample.fragment.DetailViewActivity.onResume()
+----------------------------------------
+Step: 65
+----------------------------------------
+[5026] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onPostResume() (401d95f) 
+----------------------------------------
+Step: 66
+----------------------------------------
+[5032] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onResume() (8329993) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume() | [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume())) |- [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume() | [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onResume())) |+ [CB] [ENTRY] [8329993] void com.motherrobot.sample.fragment.DetailViewFragment.onPause()
+----------------------------------------
+Step: 67
+----------------------------------------
+[5218] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onStop() (6b48b56) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onStop()) |- [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onStop()) |+ [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onStop()) |- [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onStop()
+----------------------------------------
+Step: 68
+----------------------------------------
+[5220] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onStop() (b3b5650) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStop()
+----------------------------------------
+Step: 69
+----------------------------------------
+[5226] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewActivity.onDestroy() (6b48b56) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onDestroy()) |- [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onDestroy()) |- [CB] [ENTRY] [6b48b56] void com.motherrobot.sample.fragment.DetailViewActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 70
+----------------------------------------
+[5232] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroyView() (b3b5650) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroyView()) |+ [CB] [ENTRY] [b3b5650] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(64e3fde : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroyView()) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroyView()) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroyView()) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroyView()) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 71
+----------------------------------------
+[5236] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroy() (b3b5650) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroy()) |- [CB] [ENTRY] [b3b5650] android.view.View com.motherrobot.sample.fragment.DetailViewFragment.onCreateView(64e3fde : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroy()) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDestroy()) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDetach()
+----------------------------------------
+Step: 72
+----------------------------------------
+[5240] [CB] [ENTRY] void com.motherrobot.sample.fragment.DetailViewFragment.onDetach() (b3b5650) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDetach()) |+ [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onAttach(6b48b56 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDetach()) |- [CB] [ENTRY] [b3b5650] void com.motherrobot.sample.fragment.DetailViewFragment.onDetach()
+----------------------------------------

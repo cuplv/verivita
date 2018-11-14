@@ -1,0 +1,1202 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/frag-act-last-batch-2/_traces/luboganev-dejalist-DejalistApp/monkeyTraces/trace-app-debug-unaligned_2017-04-16_21:36:06.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/frag-act-last-batch-2/_traces/luboganev-dejalist-DejalistApp/monkeyTraces/trace-app-debug-unaligned_2017-04-16_21:36:06.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 2.510000
+parsing - System time: 0.200000
+spec_grounding - User time: 167.670000
+spec_grounding - System time: 0.770000
+
+---Simplified Trace---
+[50] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.<init>() (9613274) 
+[50] [CB] [EXIT] NULL = void com.luboganev.dejalist.ui.MainActivity.<init>() (9613274) 
+[96] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onCreate(android.os.Bundle) (9613274,NULL) 
+  [2825] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (90787a4) 
+  [2825] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (90787a4) 
+[96] [CB] [EXIT] void com.luboganev.dejalist.ui.MainActivity.onCreate(android.os.Bundle) (9613274,NULL) 
+[2956] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onStart() (9613274) 
+  [2958] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(android.app.Activity) (90787a4,9613274) 
+  [2958] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(android.app.Activity) (90787a4,9613274) 
+  [2966] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(android.os.Bundle) (90787a4,NULL) 
+  [2966] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(android.os.Bundle) (90787a4,NULL) 
+  [3000] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (90787a4,86dc428,8ac2e4d,NULL) 
+  [3000] [CB] [EXIT] 10961f5 = android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (90787a4,86dc428,8ac2e4d,NULL) 
+  [3648] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(android.view.View,android.os.Bundle) (90787a4,a38bbb2,NULL) 
+  [3648] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(android.view.View,android.os.Bundle) (90787a4,a38bbb2,NULL) 
+  [3652] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(android.os.Bundle) (90787a4,NULL) 
+  [3652] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(android.os.Bundle) (90787a4,NULL) 
+  [3746] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onStart() (90787a4) 
+  [3746] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onStart() (90787a4) 
+[2956] [CB] [EXIT] void com.luboganev.dejalist.ui.MainActivity.onStart() (9613274) 
+[3820] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onResume() (9613274) 
+[3820] [CB] [EXIT] void com.luboganev.dejalist.ui.MainActivity.onResume() (9613274) 
+[3824] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onPostResume() (9613274) 
+  [3832] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onResume() (90787a4) 
+  [3832] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onResume() (90787a4) 
+[3824] [CB] [EXIT] void com.luboganev.dejalist.ui.MainActivity.onPostResume() (9613274) 
+[19738] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,f2d9cfb,1,-102) 
+  [19841] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (dfa07f7) 
+  [19841] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (dfa07f7) 
+[19738] [CB] [EXIT] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,f2d9cfb,1,-102) 
+[20836] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onPause() (90787a4) 
+[20836] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onPause() (90787a4) 
+[20840] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onStop() (90787a4) 
+[20840] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onStop() (90787a4) 
+[20848] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView() (90787a4) 
+[20848] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView() (90787a4) 
+[20886] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy() (90787a4) 
+[20886] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy() (90787a4) 
+[20890] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach() (90787a4) 
+[20890] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach() (90787a4) 
+[20894] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(android.app.Activity) (dfa07f7,9613274) 
+[20894] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(android.app.Activity) (dfa07f7,9613274) 
+[20902] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(android.os.Bundle) (dfa07f7,NULL) 
+[20902] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(android.os.Bundle) (dfa07f7,NULL) 
+[20936] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (dfa07f7,86dc428,8ac2e4d,NULL) 
+[20936] [CB] [EXIT] 9a59d47 = android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (dfa07f7,86dc428,8ac2e4d,NULL) 
+[21618] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(android.view.View,android.os.Bundle) (dfa07f7,6f21ec6,NULL) 
+[21618] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(android.view.View,android.os.Bundle) (dfa07f7,6f21ec6,NULL) 
+[21622] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(android.os.Bundle) (dfa07f7,NULL) 
+[21622] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(android.os.Bundle) (dfa07f7,NULL) 
+[21712] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart() (dfa07f7) 
+[21712] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart() (dfa07f7) 
+[21716] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume() (dfa07f7) 
+[21716] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume() (dfa07f7) 
+[23030] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,c1a9b59,0,-101) 
+  [23127] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (8217032) 
+  [23127] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (8217032) 
+[23030] [CB] [EXIT] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,c1a9b59,0,-101) 
+[24214] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause() (dfa07f7) 
+[24214] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause() (dfa07f7) 
+[24218] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop() (dfa07f7) 
+[24218] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop() (dfa07f7) 
+[24226] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView() (dfa07f7) 
+[24226] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView() (dfa07f7) 
+[24264] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy() (dfa07f7) 
+[24264] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy() (dfa07f7) 
+[24268] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach() (dfa07f7) 
+[24268] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach() (dfa07f7) 
+[24272] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(android.app.Activity) (8217032,9613274) 
+[24272] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(android.app.Activity) (8217032,9613274) 
+[24280] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(android.os.Bundle) (8217032,NULL) 
+[24280] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(android.os.Bundle) (8217032,NULL) 
+[24314] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (8217032,86dc428,8ac2e4d,NULL) 
+[24314] [CB] [EXIT] 9575fdb = android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (8217032,86dc428,8ac2e4d,NULL) 
+[24930] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(android.view.View,android.os.Bundle) (8217032,6a2855a,NULL) 
+[24930] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(android.view.View,android.os.Bundle) (8217032,6a2855a,NULL) 
+[24934] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(android.os.Bundle) (8217032,NULL) 
+[24934] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(android.os.Bundle) (8217032,NULL) 
+[25024] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onStart() (8217032) 
+[25024] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onStart() (8217032) 
+[25028] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onResume() (8217032) 
+[25028] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onResume() (8217032) 
+[31678] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,589403c,4,2) 
+  [31779] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (5018be2) 
+  [31779] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (5018be2) 
+[31678] [CB] [EXIT] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,589403c,4,2) 
+[32882] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onPause() (8217032) 
+[32882] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onPause() (8217032) 
+[32886] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onStop() (8217032) 
+[32886] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onStop() (8217032) 
+[32894] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView() (8217032) 
+[32894] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView() (8217032) 
+[32912] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy() (8217032) 
+[32912] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy() (8217032) 
+[32916] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach() (8217032) 
+[32916] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach() (8217032) 
+[32920] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(android.app.Activity) (5018be2,9613274) 
+[32920] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(android.app.Activity) (5018be2,9613274) 
+[32928] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(android.os.Bundle) (5018be2,NULL) 
+[32928] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(android.os.Bundle) (5018be2,NULL) 
+[32962] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (5018be2,86dc428,8ac2e4d,NULL) 
+[32962] [CB] [EXIT] 1b29f4 = android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (5018be2,86dc428,8ac2e4d,NULL) 
+[33612] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(android.view.View,android.os.Bundle) (5018be2,628a10d,NULL) 
+[33612] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(android.view.View,android.os.Bundle) (5018be2,628a10d,NULL) 
+[33616] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(android.os.Bundle) (5018be2,NULL) 
+[33616] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(android.os.Bundle) (5018be2,NULL) 
+[33706] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart() (5018be2) 
+[33706] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart() (5018be2) 
+[33710] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume() (5018be2) 
+[33710] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume() (5018be2) 
+[36310] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,c1a9b59,0,-101) 
+  [36407] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (f996e60) 
+  [36407] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (f996e60) 
+[36310] [CB] [EXIT] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,c1a9b59,0,-101) 
+[37908] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause() (5018be2) 
+[37908] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause() (5018be2) 
+[37912] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop() (5018be2) 
+[37912] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop() (5018be2) 
+[37920] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView() (5018be2) 
+[37920] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView() (5018be2) 
+[37938] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy() (5018be2) 
+[37938] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy() (5018be2) 
+[37942] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach() (5018be2) 
+[37942] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach() (5018be2) 
+[37946] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(android.app.Activity) (f996e60,9613274) 
+[37946] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(android.app.Activity) (f996e60,9613274) 
+[37954] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(android.os.Bundle) (f996e60,NULL) 
+[37954] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(android.os.Bundle) (f996e60,NULL) 
+[37988] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f996e60,86dc428,8ac2e4d,NULL) 
+[37988] [CB] [EXIT] 63d34c0 = android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f996e60,86dc428,8ac2e4d,NULL) 
+[38604] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(android.view.View,android.os.Bundle) (f996e60,f590bf3,NULL) 
+[38604] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(android.view.View,android.os.Bundle) (f996e60,f590bf3,NULL) 
+[38608] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(android.os.Bundle) (f996e60,NULL) 
+[38608] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(android.os.Bundle) (f996e60,NULL) 
+[38704] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onStart() (f996e60) 
+[38704] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onStart() (f996e60) 
+[38708] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onResume() (f996e60) 
+[38708] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onResume() (f996e60) 
+[42774] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,ab03375,5,3) 
+  [42875] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (d968265) 
+  [42875] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (d968265) 
+[42774] [CB] [EXIT] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,ab03375,5,3) 
+[46588] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onPause() (f996e60) 
+[46588] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onPause() (f996e60) 
+[46592] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onStop() (f996e60) 
+[46592] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onStop() (f996e60) 
+[46600] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView() (f996e60) 
+[46600] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView() (f996e60) 
+[46618] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy() (f996e60) 
+[46618] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy() (f996e60) 
+[46622] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach() (f996e60) 
+[46622] [CB] [EXIT] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach() (f996e60) 
+[46626] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(android.app.Activity) (d968265,9613274) 
+[46626] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(android.app.Activity) (d968265,9613274) 
+[46634] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(android.os.Bundle) (d968265,NULL) 
+[46634] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(android.os.Bundle) (d968265,NULL) 
+[46668] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (d968265,86dc428,8ac2e4d,NULL) 
+[46668] [CB] [EXIT] 1c33152 = android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (d968265,86dc428,8ac2e4d,NULL) 
+[47318] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(android.view.View,android.os.Bundle) (d968265,c7cd193,NULL) 
+[47318] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(android.view.View,android.os.Bundle) (d968265,c7cd193,NULL) 
+[47322] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(android.os.Bundle) (d968265,NULL) 
+[47322] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(android.os.Bundle) (d968265,NULL) 
+[47441] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart() (d968265) 
+[47441] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart() (d968265) 
+[47445] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume() (d968265) 
+[47445] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume() (d968265) 
+[49538] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,7f5a1c1,2,-1) 
+  [49645] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (12bedb5) 
+  [49645] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (12bedb5) 
+[49538] [CB] [EXIT] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,7f5a1c1,2,-1) 
+[50546] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause() (d968265) 
+[50546] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause() (d968265) 
+[50550] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop() (d968265) 
+[50550] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop() (d968265) 
+[50558] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView() (d968265) 
+[50558] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView() (d968265) 
+[50576] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy() (d968265) 
+[50576] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy() (d968265) 
+[50580] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach() (d968265) 
+[50580] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach() (d968265) 
+[50584] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(android.app.Activity) (12bedb5,9613274) 
+[50584] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(android.app.Activity) (12bedb5,9613274) 
+[50592] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(android.os.Bundle) (12bedb5,NULL) 
+[50592] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(android.os.Bundle) (12bedb5,NULL) 
+[50626] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (12bedb5,86dc428,8ac2e4d,NULL) 
+[50626] [CB] [EXIT] 987a603 = android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (12bedb5,86dc428,8ac2e4d,NULL) 
+[51284] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(android.view.View,android.os.Bundle) (12bedb5,4c8cc65,NULL) 
+[51284] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(android.view.View,android.os.Bundle) (12bedb5,4c8cc65,NULL) 
+[51288] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(android.os.Bundle) (12bedb5,NULL) 
+[51288] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(android.os.Bundle) (12bedb5,NULL) 
+[51448] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart() (12bedb5) 
+[51448] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart() (12bedb5) 
+[51452] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume() (12bedb5) 
+[51452] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume() (12bedb5) 
+[52666] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onPause() (9613274) 
+  [52668] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause() (12bedb5) 
+  [52668] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause() (12bedb5) 
+[52666] [CB] [EXIT] void com.luboganev.dejalist.ui.MainActivity.onPause() (9613274) 
+[52762] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity.<init>() (237fe76) 
+[52762] [CB] [EXIT] NULL = void com.luboganev.dejalist.ui.ProductActivity.<init>() (237fe76) 
+[52810] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity.onCreate(android.os.Bundle) (237fe76,NULL) 
+  [55848] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (237fe76,2131492882) 
+  [55849] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (237fe76,2131492882) 
+  [55849] [CI] [EXIT] 20f1b6c = android.view.View android.app.Activity.findViewById(int) (237fe76,2131492882) 
+  [55848] [CI] [EXIT] 20f1b6c = android.view.View android.app.Activity.findViewById(int) (237fe76,2131492882) 
+  [56297] [CI] [ENTRY] android.view.View android.view.View.findViewById(int) (3e11638,2131492869) 
+  [56297] [CI] [EXIT] a33aefe = android.view.View android.view.View.findViewById(int) (3e11638,2131492869) 
+  [56301] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a33aefe,55baf2a) 
+  [56301] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a33aefe,55baf2a) 
+  [56507] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (20f1b6c,127c2a0) 
+  [56507] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (20f1b6c,127c2a0) 
+[52810] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductActivity.onCreate(android.os.Bundle) (237fe76,NULL) 
+[56526] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity.onStart() (237fe76) 
+[56526] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductActivity.onStart() (237fe76) 
+[56542] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity.onResume() (237fe76) 
+[56542] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductActivity.onResume() (237fe76) 
+[59654] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity$1.onClick(android.view.View) (55baf2a,a33aefe) 
+[59654] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductActivity$1.onClick(android.view.View) (55baf2a,a33aefe) 
+[59694] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (9613274,6b23bef) 
+  [59708] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onSaveInstanceState(android.os.Bundle) (12bedb5,8621f8a) 
+  [59708] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onSaveInstanceState(android.os.Bundle) (12bedb5,8621f8a) 
+[59694] [CB] [EXIT] void com.luboganev.dejalist.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (9613274,6b23bef) 
+[59728] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onStop() (9613274) 
+  [59730] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop() (12bedb5) 
+  [59730] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop() (12bedb5) 
+[59728] [CB] [EXIT] void com.luboganev.dejalist.ui.MainActivity.onStop() (9613274) 
+[59856] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity$3.onClick(android.view.View) (127c2a0,20f1b6c) 
+[59856] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductActivity$3.onClick(android.view.View) (127c2a0,20f1b6c) 
+[59882] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity.onPause() (237fe76) 
+[59882] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductActivity.onPause() (237fe76) 
+[59906] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.<init>() (9a3a5) 
+[59906] [CB] [EXIT] NULL = void com.luboganev.dejalist.crop.CropActivity.<init>() (9a3a5) 
+[59950] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.onCreate(android.os.Bundle) (9a3a5,NULL) 
+[59950] [CB] [EXIT] void com.luboganev.dejalist.crop.CropActivity.onCreate(android.os.Bundle) (9a3a5,NULL) 
+[62440] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.onStart() (9a3a5) 
+[62440] [CB] [EXIT] void com.luboganev.dejalist.crop.CropActivity.onStart() (9a3a5) 
+[62456] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.onResume() (9a3a5) 
+[62456] [CB] [EXIT] void com.luboganev.dejalist.crop.CropActivity.onResume() (9a3a5) 
+[62614] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.onPause() (9a3a5) 
+[62614] [CB] [EXIT] void com.luboganev.dejalist.crop.CropActivity.onPause() (9a3a5) 
+[62626] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.onResume() (9a3a5) 
+[62626] [CB] [EXIT] void com.luboganev.dejalist.crop.CropActivity.onResume() (9a3a5) 
+[63672] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.onPause() (9a3a5) 
+[63672] [CB] [EXIT] void com.luboganev.dejalist.crop.CropActivity.onPause() (9a3a5) 
+[63688] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity.onResume() (237fe76) 
+[63688] [CB] [EXIT] void com.luboganev.dejalist.ui.ProductActivity.onResume() (237fe76) 
+
+
+
+TRACE STATISTICS
+Trace length: 130
+Top-level callbacks: 101
+CI-ENTRY: 9
+CI-EXIT: 9
+CB-ENTRY: 107
+CB-EXIT: 0
+        encoding - User time: 6.810000
+encoding - System time: 0.050000
+simulation - User time: 62.470000
+simulation - System time: 0.550000
+
+The trace can be simulated in 130 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[50] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.<init>() (9613274) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.<init>()) |- [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.<init>()) |+ [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[96] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onCreate(android.os.Bundle) (9613274,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[2825] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (90787a4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [90787a4] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 4
+----------------------------------------
+[2825] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (90787a4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [90787a4] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [90787a4] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 5
+----------------------------------------
+[2956] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onStart() (9613274) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onStart()) |+ [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onStart()) |- [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onStart()
+----------------------------------------
+Step: 6
+----------------------------------------
+[2958] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(android.app.Activity) (90787a4,9613274) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 7
+----------------------------------------
+[2966] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(android.os.Bundle) (90787a4,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [90787a4] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 8
+----------------------------------------
+[3000] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (90787a4,86dc428,8ac2e4d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(a38bbb2 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [90787a4] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 9
+----------------------------------------
+[3648] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(android.view.View,android.os.Bundle) (90787a4,a38bbb2,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(a38bbb2 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(a38bbb2 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 10
+----------------------------------------
+[3652] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(android.os.Bundle) (90787a4,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 11
+----------------------------------------
+[3746] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onStart() (90787a4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()
+----------------------------------------
+Step: 12
+----------------------------------------
+[3820] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onResume() (9613274) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onResume()) |+ [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onResume()) |- [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onResume()
+----------------------------------------
+Step: 13
+----------------------------------------
+[3824] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onPostResume() (9613274) 
+----------------------------------------
+Step: 14
+----------------------------------------
+[3832] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onResume() (90787a4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onPause()
+----------------------------------------
+Step: 15
+----------------------------------------
+[19738] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,f2d9cfb,1,-102) 
+----------------------------------------
+Step: 16
+----------------------------------------
+[19841] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (dfa07f7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [dfa07f7] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 17
+----------------------------------------
+[19841] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (dfa07f7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [dfa07f7] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [dfa07f7] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 18
+----------------------------------------
+[20836] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onPause() (90787a4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onPause()) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onPause()) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onPause()
+----------------------------------------
+Step: 19
+----------------------------------------
+[20840] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onStop() (90787a4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()
+----------------------------------------
+Step: 20
+----------------------------------------
+[20848] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView() (90787a4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |+ [CB] [ENTRY] [90787a4] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()
+----------------------------------------
+Step: 21
+----------------------------------------
+[20886] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy() (90787a4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()) |- [CB] [ENTRY] [90787a4] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 22
+----------------------------------------
+[20890] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach() (90787a4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach()) |+ [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach()) |- [CB] [ENTRY] [90787a4] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach()
+----------------------------------------
+Step: 23
+----------------------------------------
+[20894] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(android.app.Activity) (dfa07f7,9613274) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 24
+----------------------------------------
+[20902] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(android.os.Bundle) (dfa07f7,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [dfa07f7] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 25
+----------------------------------------
+[20936] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (dfa07f7,86dc428,8ac2e4d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(6f21ec6 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [dfa07f7] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+----------------------------------------
+Step: 26
+----------------------------------------
+[21618] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(android.view.View,android.os.Bundle) (dfa07f7,6f21ec6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(6f21ec6 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(6f21ec6 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 27
+----------------------------------------
+[21622] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(android.os.Bundle) (dfa07f7,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()
+----------------------------------------
+Step: 28
+----------------------------------------
+[21712] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart() (dfa07f7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+----------------------------------------
+Step: 29
+----------------------------------------
+[21716] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume() (dfa07f7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()
+----------------------------------------
+Step: 30
+----------------------------------------
+[23030] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,c1a9b59,0,-101) 
+----------------------------------------
+Step: 31
+----------------------------------------
+[23127] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (8217032) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [8217032] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 32
+----------------------------------------
+[23127] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (8217032) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [8217032] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [8217032] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 33
+----------------------------------------
+[24214] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause() (dfa07f7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+----------------------------------------
+Step: 34
+----------------------------------------
+[24218] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop() (dfa07f7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()
+----------------------------------------
+Step: 35
+----------------------------------------
+[24226] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView() (dfa07f7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |+ [CB] [ENTRY] [dfa07f7] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()
+----------------------------------------
+Step: 36
+----------------------------------------
+[24264] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy() (dfa07f7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()) |- [CB] [ENTRY] [dfa07f7] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 37
+----------------------------------------
+[24268] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach() (dfa07f7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach()) |+ [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach()) |- [CB] [ENTRY] [dfa07f7] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach()
+----------------------------------------
+Step: 38
+----------------------------------------
+[24272] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(android.app.Activity) (8217032,9613274) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 39
+----------------------------------------
+[24280] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(android.os.Bundle) (8217032,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8217032] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 40
+----------------------------------------
+[24314] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (8217032,86dc428,8ac2e4d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(6a2855a : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [8217032] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 41
+----------------------------------------
+[24930] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(android.view.View,android.os.Bundle) (8217032,6a2855a,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(6a2855a : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(6a2855a : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 42
+----------------------------------------
+[24934] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(android.os.Bundle) (8217032,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 43
+----------------------------------------
+[25024] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onStart() (8217032) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()
+----------------------------------------
+Step: 44
+----------------------------------------
+[25028] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onResume() (8217032) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()
+----------------------------------------
+Step: 45
+----------------------------------------
+[31678] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,589403c,4,2) 
+----------------------------------------
+Step: 46
+----------------------------------------
+[31779] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (5018be2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [5018be2] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 47
+----------------------------------------
+[31779] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (5018be2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [5018be2] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [5018be2] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 48
+----------------------------------------
+[32882] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onPause() (8217032) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onPause()) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onPause()) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onPause()
+----------------------------------------
+Step: 49
+----------------------------------------
+[32886] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onStop() (8217032) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()
+----------------------------------------
+Step: 50
+----------------------------------------
+[32894] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView() (8217032) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |+ [CB] [ENTRY] [8217032] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 51
+----------------------------------------
+[32912] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy() (8217032) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()) |- [CB] [ENTRY] [8217032] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 52
+----------------------------------------
+[32916] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach() (8217032) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach()) |+ [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach()) |- [CB] [ENTRY] [8217032] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach()
+----------------------------------------
+Step: 53
+----------------------------------------
+[32920] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(android.app.Activity) (5018be2,9613274) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 54
+----------------------------------------
+[32928] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(android.os.Bundle) (5018be2,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5018be2] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 55
+----------------------------------------
+[32962] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (5018be2,86dc428,8ac2e4d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [5018be2] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(628a10d : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 56
+----------------------------------------
+[33612] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(android.view.View,android.os.Bundle) (5018be2,628a10d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(628a10d : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(628a10d : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 57
+----------------------------------------
+[33616] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(android.os.Bundle) (5018be2,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 58
+----------------------------------------
+[33706] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart() (5018be2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+----------------------------------------
+Step: 59
+----------------------------------------
+[33710] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume() (5018be2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()
+----------------------------------------
+Step: 60
+----------------------------------------
+[36310] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,c1a9b59,0,-101) 
+----------------------------------------
+Step: 61
+----------------------------------------
+[36407] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (f996e60) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [f996e60] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 62
+----------------------------------------
+[36407] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (f996e60) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [f996e60] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [f996e60] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 63
+----------------------------------------
+[37908] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause() (5018be2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+----------------------------------------
+Step: 64
+----------------------------------------
+[37912] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop() (5018be2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()
+----------------------------------------
+Step: 65
+----------------------------------------
+[37920] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView() (5018be2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |+ [CB] [ENTRY] [5018be2] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+----------------------------------------
+Step: 66
+----------------------------------------
+[37938] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy() (5018be2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()) |- [CB] [ENTRY] [5018be2] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach()
+----------------------------------------
+Step: 67
+----------------------------------------
+[37942] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach() (5018be2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach()) |- [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach()) |+ [CB] [ENTRY] [5018be2] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 68
+----------------------------------------
+[37946] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(android.app.Activity) (f996e60,9613274) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 69
+----------------------------------------
+[37954] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(android.os.Bundle) (f996e60,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f996e60] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 70
+----------------------------------------
+[37988] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (f996e60,86dc428,8ac2e4d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(f590bf3 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [f996e60] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()
+----------------------------------------
+Step: 71
+----------------------------------------
+[38604] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(android.view.View,android.os.Bundle) (f996e60,f590bf3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(f590bf3 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onViewCreated(f590bf3 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 72
+----------------------------------------
+[38608] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(android.os.Bundle) (f996e60,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 73
+----------------------------------------
+[38704] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onStart() (f996e60) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()
+----------------------------------------
+Step: 74
+----------------------------------------
+[38708] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onResume() (f996e60) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()
+----------------------------------------
+Step: 75
+----------------------------------------
+[42774] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,ab03375,5,3) 
+----------------------------------------
+Step: 76
+----------------------------------------
+[42875] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (d968265) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [d968265] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 77
+----------------------------------------
+[42875] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (d968265) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [d968265] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [d968265] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 78
+----------------------------------------
+[46588] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onPause() (f996e60) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onPause()) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onPause()) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onPause()
+----------------------------------------
+Step: 79
+----------------------------------------
+[46592] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onStop() (f996e60) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStop()) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()
+----------------------------------------
+Step: 80
+----------------------------------------
+[46600] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView() (f996e60) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |+ [CB] [ENTRY] [f996e60] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroyView()) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onStart()
+----------------------------------------
+Step: 81
+----------------------------------------
+[46618] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy() (f996e60) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDestroy()) |- [CB] [ENTRY] [f996e60] android.view.View com.luboganev.dejalist.ui.ChecklistFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 82
+----------------------------------------
+[46622] [CB] [ENTRY] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach() (f996e60) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach()) |+ [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onAttach(9613274 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach()) |- [CB] [ENTRY] [f996e60] void com.luboganev.dejalist.ui.ChecklistFragment.onDetach()
+----------------------------------------
+Step: 83
+----------------------------------------
+[46626] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(android.app.Activity) (d968265,9613274) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 84
+----------------------------------------
+[46634] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(android.os.Bundle) (d968265,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [d968265] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 85
+----------------------------------------
+[46668] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (d968265,86dc428,8ac2e4d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [d968265] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(c7cd193 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 86
+----------------------------------------
+[47318] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(android.view.View,android.os.Bundle) (d968265,c7cd193,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(c7cd193 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(c7cd193 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 87
+----------------------------------------
+[47322] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(android.os.Bundle) (d968265,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 88
+----------------------------------------
+[47441] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart() (d968265) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+----------------------------------------
+Step: 89
+----------------------------------------
+[47445] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume() (d968265) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()
+----------------------------------------
+Step: 90
+----------------------------------------
+[49538] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity$DrawerItemClickListener.onItemClick(android.widget.AdapterView,android.view.View,int,long) (5389f82,f02a17d,7f5a1c1,2,-1) 
+----------------------------------------
+Step: 91
+----------------------------------------
+[49645] [CI] [ENTRY] void android.support.v4.app.Fragment.<init>() (12bedb5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [12bedb5] void android.support.v4.app.Fragment.<init>()) |+ [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 92
+----------------------------------------
+[49645] [CI] [EXIT] void android.support.v4.app.Fragment.<init>() (12bedb5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [12bedb5] void android.support.v4.app.Fragment.<init>()) |- [CI] [EXIT] [12bedb5] void android.support.v4.app.Fragment.<init>()
+----------------------------------------
+Step: 93
+----------------------------------------
+[50546] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause() (d968265) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+----------------------------------------
+Step: 94
+----------------------------------------
+[50550] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop() (d968265) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 95
+----------------------------------------
+[50558] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView() (d968265) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |+ [CB] [ENTRY] [d968265] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroyView()
+----------------------------------------
+Step: 96
+----------------------------------------
+[50576] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy() (d968265) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDestroy()) |- [CB] [ENTRY] [d968265] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 97
+----------------------------------------
+[50580] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach() (d968265) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach()) |+ [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach()) |- [CB] [ENTRY] [d968265] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onDetach()
+----------------------------------------
+Step: 98
+----------------------------------------
+[50584] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(android.app.Activity) (12bedb5,9613274) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)) |+ [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)) |- [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onAttach(9613274 : android.app.Activity)
+----------------------------------------
+Step: 99
+----------------------------------------
+[50592] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(android.os.Bundle) (12bedb5,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [12bedb5] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 100
+----------------------------------------
+[50626] [CB] [ENTRY] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (12bedb5,86dc428,8ac2e4d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(4c8cc65 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [12bedb5] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] android.view.View com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreateView(86dc428 : android.view.LayoutInflater,8ac2e4d : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 101
+----------------------------------------
+[51284] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(android.view.View,android.os.Bundle) (12bedb5,4c8cc65,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(4c8cc65 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onViewCreated(4c8cc65 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 102
+----------------------------------------
+[51288] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(android.os.Bundle) (12bedb5,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 103
+----------------------------------------
+[51448] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart() (12bedb5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |- [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |+ [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onSaveInstanceState(8621f8a : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |+ [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()) |+ [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()
+----------------------------------------
+Step: 104
+----------------------------------------
+[51452] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume() (12bedb5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()) |- [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()) |+ [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()
+----------------------------------------
+Step: 105
+----------------------------------------
+[52666] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onPause() (9613274) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onPause()) |+ [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onPause()) |+ [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onPause()) |- [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onPause()) |+ [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 106
+----------------------------------------
+[52668] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause() (12bedb5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()) |- [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onPause()) |+ [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+----------------------------------------
+Step: 107
+----------------------------------------
+[52762] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity.<init>() (237fe76) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.<init>()) |+ [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.<init>()) |- [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.<init>()
+----------------------------------------
+Step: 108
+----------------------------------------
+[52810] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity.onCreate(android.os.Bundle) (237fe76,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onStart()
+----------------------------------------
+Step: 109
+----------------------------------------
+[55849] [CI] [EXIT] 20f1b6c = android.view.View android.app.Activity.findViewById(int) (237fe76,2131492882) 
+----------------------------------------
+Step: 110
+----------------------------------------
+[55848] [CI] [EXIT] 20f1b6c = android.view.View android.app.Activity.findViewById(int) (237fe76,2131492882) 
+----------------------------------------
+Step: 111
+----------------------------------------
+[56297] [CI] [EXIT] a33aefe = android.view.View android.view.View.findViewById(int) (3e11638,2131492869) 
+----------------------------------------
+Step: 112
+----------------------------------------
+[56301] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a33aefe,55baf2a) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); a33aefe = [CI] [EXIT] [3e11638] android.view.View android.view.View.findViewById(2131492869 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [a33aefe] void android.view.View.setOnClickListener(55baf2a : android.view.View$OnClickListener))) |+ [CB] [ENTRY] [55baf2a] void com.luboganev.dejalist.ui.ProductActivity$1.onClick(a33aefe : android.view.View)
+----------------------------------------
+Step: 113
+----------------------------------------
+[56507] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (20f1b6c,127c2a0) 
+----------------------------------------
+Step: 114
+----------------------------------------
+[56526] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity.onStart() (237fe76) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onStart()) |- [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onStart()) |+ [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume()
+----------------------------------------
+Step: 115
+----------------------------------------
+[63688] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity.onResume() (237fe76) 
+    Matched specifications:
+    SPEC ((((((TRUE)[*]); (20f1b6c = [CI] [EXIT] [237fe76] android.view.View android.app.Activity.findViewById(2131492882 : int) | 20f1b6c = [CI] [EXIT] [237fe76] android.view.View android.app.Activity.findViewById(2131492882 : int))); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume() | [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [20f1b6c] void android.view.View.setOnClickListener(127c2a0 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [127c2a0] void com.luboganev.dejalist.ui.ProductActivity$3.onClick(20f1b6c : android.view.View)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume() | [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume())) |+ [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume() | [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume())) |- [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume()
+----------------------------------------
+Step: 116
+----------------------------------------
+[59654] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity$1.onClick(android.view.View) (55baf2a,a33aefe) 
+----------------------------------------
+Step: 117
+----------------------------------------
+[59694] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (9613274,6b23bef) 
+----------------------------------------
+Step: 118
+----------------------------------------
+[59708] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onSaveInstanceState(android.os.Bundle) (12bedb5,8621f8a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onSaveInstanceState(8621f8a : android.os.Bundle)) |- [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onSaveInstanceState(8621f8a : android.os.Bundle)
+----------------------------------------
+Step: 119
+----------------------------------------
+[59728] [CB] [ENTRY] void com.luboganev.dejalist.ui.MainActivity.onStop() (9613274) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onStop()) |- [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onStop()) |- [CB] [ENTRY] [9613274] void com.luboganev.dejalist.ui.MainActivity.onResume()
+----------------------------------------
+Step: 120
+----------------------------------------
+[59730] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop() (12bedb5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |- [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |+ [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |+ [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onStop()) |- [CB] [ENTRY] [12bedb5] void com.luboganev.dejalist.ui.ProductsGalleryFragment.onResume()
+----------------------------------------
+Step: 121
+----------------------------------------
+[59856] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity$3.onClick(android.view.View) (127c2a0,20f1b6c) 
+----------------------------------------
+Step: 122
+----------------------------------------
+[59882] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity.onPause() (237fe76) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onPause()) |+ [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onPause()) |+ [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onPause()) |- [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onPause()
+----------------------------------------
+Step: 123
+----------------------------------------
+[59906] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.<init>() (9a3a5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.<init>()) |+ [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.<init>()) |- [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.<init>()
+----------------------------------------
+Step: 124
+----------------------------------------
+[59950] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.onCreate(android.os.Bundle) (9a3a5,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 125
+----------------------------------------
+[62440] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.onStart() (9a3a5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onStart()) |+ [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onStart()) |- [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onStart()
+----------------------------------------
+Step: 126
+----------------------------------------
+[62626] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.onResume() (9a3a5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume() | [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume())) |+ [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume() | [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume())) |- [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume()
+----------------------------------------
+Step: 127
+----------------------------------------
+[63672] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.onPause() (9a3a5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause() | [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause())) |+ [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause() | [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause())) |- [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause() | [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause())) |+ [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 128
+----------------------------------------
+[62626] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.onResume() (9a3a5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume() | [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume())) |+ [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume() | [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume())) |- [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume() | [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume())) |- [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume()
+----------------------------------------
+Step: 129
+----------------------------------------
+[63672] [CB] [ENTRY] void com.luboganev.dejalist.crop.CropActivity.onPause() (9a3a5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause() | [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause())) |+ [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause() | [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause())) |- [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause() | [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onPause())) |+ [CB] [ENTRY] [9a3a5] void com.luboganev.dejalist.crop.CropActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 130
+----------------------------------------
+[63688] [CB] [ENTRY] void com.luboganev.dejalist.ui.ProductActivity.onResume() (237fe76) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume() | [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume())) |- [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume() | [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume())) |+ [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume() | [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume())) |- [CB] [ENTRY] [237fe76] void com.luboganev.dejalist.ui.ProductActivity.onResume()
+----------------------------------------

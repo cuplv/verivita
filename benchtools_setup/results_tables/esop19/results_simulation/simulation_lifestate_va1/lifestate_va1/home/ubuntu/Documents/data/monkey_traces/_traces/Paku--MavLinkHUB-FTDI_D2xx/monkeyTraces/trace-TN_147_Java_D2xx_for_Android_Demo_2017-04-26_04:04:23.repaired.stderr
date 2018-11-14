@@ -1,0 +1,30 @@
+INFO:root:Total number of specs (before grounding): 17712
+Traceback (most recent call last):
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py", line 502, in <module>
+    main()
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py", line 435, in main
+    (steps, cex, last_cex, ts_enc) = driver.run_simulation(cb_sequence)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py", line 161, in run_simulation
+    self.opts.use_flowdroid_model)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/encoder.py", line 190, in __init__
+    self.stats)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/encoder.py", line 404, in _compute_ground_spec
+    tmp = gs.ground_spec(spec)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/grounding.py", line 68, in ground_spec
+    sg.process_substitutions(spec, self, self._process_subs, data)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/grounding.py", line 763, in process_substitutions
+    while (solver.solve()):
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/solvers/solver.py", line 373, in solve
+    res = self._solve(assumptions=assumptions)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/decorators.py", line 64, in clear_pending_pop_wrap
+    return f(self, *args, **kwargs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/solvers/z3.py", line 200, in _solve
+    res = self.z3.check()
+  File "/home/ubuntu/.smt_solvers/python-bindings-2.7/z3.py", line 5969, in check
+    r = Z3_solver_check_assumptions(self.ctx.ref(), self.solver, num, _assumptions)
+  File "/home/ubuntu/.smt_solvers/python-bindings-2.7/z3core.py", line 4239, in Z3_solver_check_assumptions
+    raise Z3Exception(lib().Z3_get_error_msg_ex(a0, err))
+z3types.Z3Exception: out of memory
+real 289.30
+user 286.52
+sys 2.75

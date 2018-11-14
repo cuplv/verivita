@@ -1,0 +1,866 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-2/_traces/andstatus-andstatus-app/monkeyTraces/trace-app-debug_2017-04-16_01:38:04.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-2/_traces/andstatus-andstatus-app/monkeyTraces/trace-app-debug_2017-04-16_01:38:04.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 0.710000
+parsing - System time: 0.040000
+spec_grounding - User time: 183.320000
+spec_grounding - System time: 1.140000
+
+---Simplified Trace---
+[498] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (7eb6f) 
+[498] [CB] [EXIT] NULL = void org.andstatus.app.msg.TimelineActivity.<init>() (7eb6f) 
+[526] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (7eb6f,NULL) 
+  [3165] [CI] [ENTRY] void android.app.Activity.finish() (7eb6f) 
+  [3194] [CI] [ENTRY] void android.app.Activity.finish() (7eb6f) 
+  [3194] [CI] [EXIT] void android.app.Activity.finish() (7eb6f) 
+  [3165] [CI] [EXIT] void android.app.Activity.finish() (7eb6f) 
+[526] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (7eb6f,NULL) 
+[3242] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (7eb6f,ee02ea) 
+  [3277] [CI] [ENTRY] void android.app.Activity.finish() (7eb6f) 
+  [3277] [CI] [EXIT] void android.app.Activity.finish() (7eb6f) 
+[3242] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (7eb6f,ee02ea) 
+[3812] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (7eb6f,29f1e1a) 
+  [3847] [CI] [ENTRY] void android.app.Activity.finish() (7eb6f) 
+  [3847] [CI] [EXIT] void android.app.Activity.finish() (7eb6f) 
+[3812] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (7eb6f,29f1e1a) 
+[3858] [CB] [ENTRY] void org.andstatus.app.HelpActivity.<init>() (ec731f6) 
+[3858] [CB] [EXIT] NULL = void org.andstatus.app.HelpActivity.<init>() (ec731f6) 
+[3882] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onCreate(android.os.Bundle) (ec731f6,NULL) 
+  [6341] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (ec731f6,2131624059) 
+  [6341] [CI] [EXIT] d5d230f = android.view.View android.app.Activity.findViewById(int) (ec731f6,2131624059) 
+  [6351] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (d5d230f,252e12b) 
+  [6351] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (d5d230f,252e12b) 
+[3882] [CB] [EXIT] void org.andstatus.app.HelpActivity.onCreate(android.os.Bundle) (ec731f6,NULL) 
+[6758] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onStart() (ec731f6) 
+[6758] [CB] [EXIT] void org.andstatus.app.HelpActivity.onStart() (ec731f6) 
+[6792] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+[6792] [CB] [EXIT] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+[6942] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (7eb6f) 
+[6942] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onDestroy() (7eb6f) 
+[8626] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+[8626] [CB] [EXIT] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+[8644] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (990b2b4) 
+[8644] [CB] [EXIT] NULL = void org.andstatus.app.msg.TimelineActivity.<init>() (990b2b4) 
+[8672] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (990b2b4,NULL) 
+  [8839] [CI] [ENTRY] void android.app.Activity.finish() (990b2b4) 
+  [8868] [CI] [ENTRY] void android.app.Activity.finish() (990b2b4) 
+  [8868] [CI] [EXIT] void android.app.Activity.finish() (990b2b4) 
+  [8839] [CI] [EXIT] void android.app.Activity.finish() (990b2b4) 
+[8672] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (990b2b4,NULL) 
+[8924] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onStop() (ec731f6) 
+[8924] [CB] [EXIT] void org.andstatus.app.HelpActivity.onStop() (ec731f6) 
+[9430] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onRestart() (ec731f6) 
+[9430] [CB] [EXIT] void org.andstatus.app.HelpActivity.onRestart() (ec731f6) 
+[9438] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onStart() (ec731f6) 
+[9438] [CB] [EXIT] void org.andstatus.app.HelpActivity.onStart() (ec731f6) 
+[9444] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+[9444] [CB] [EXIT] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+[10256] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+[10256] [CB] [EXIT] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+[10638] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (586de8b) 
+[10638] [CB] [EXIT] NULL = void org.andstatus.app.msg.TimelineActivity.<init>() (586de8b) 
+[10666] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (586de8b,NULL) 
+  [10833] [CI] [ENTRY] void android.app.Activity.finish() (586de8b) 
+  [10862] [CI] [ENTRY] void android.app.Activity.finish() (586de8b) 
+  [10862] [CI] [EXIT] void android.app.Activity.finish() (586de8b) 
+  [10833] [CI] [EXIT] void android.app.Activity.finish() (586de8b) 
+[10666] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (586de8b,NULL) 
+[10906] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (990b2b4) 
+[10906] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onDestroy() (990b2b4) 
+[10942] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (586de8b,d146c00) 
+  [10977] [CI] [ENTRY] void android.app.Activity.finish() (586de8b) 
+  [10977] [CI] [EXIT] void android.app.Activity.finish() (586de8b) 
+[10942] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (586de8b,d146c00) 
+[11376] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (586de8b,a6c8c85) 
+  [11411] [CI] [ENTRY] void android.app.Activity.finish() (586de8b) 
+  [11411] [CI] [EXIT] void android.app.Activity.finish() (586de8b) 
+[11376] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (586de8b,a6c8c85) 
+[11418] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (586de8b,ef0e9ea) 
+  [11453] [CI] [ENTRY] void android.app.Activity.finish() (586de8b) 
+  [11453] [CI] [EXIT] void android.app.Activity.finish() (586de8b) 
+[11418] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (586de8b,ef0e9ea) 
+[11644] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+[11644] [CB] [EXIT] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+[12068] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+[12068] [CB] [EXIT] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+[12102] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (8f51c71) 
+[12102] [CB] [EXIT] NULL = void org.andstatus.app.msg.TimelineActivity.<init>() (8f51c71) 
+[12130] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (8f51c71,NULL) 
+  [12297] [CI] [ENTRY] void android.app.Activity.finish() (8f51c71) 
+  [12326] [CI] [ENTRY] void android.app.Activity.finish() (8f51c71) 
+  [12326] [CI] [EXIT] void android.app.Activity.finish() (8f51c71) 
+  [12297] [CI] [EXIT] void android.app.Activity.finish() (8f51c71) 
+[12130] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (8f51c71,NULL) 
+[12370] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (586de8b) 
+[12370] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onDestroy() (586de8b) 
+[12470] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (8f51c71,8a7496e) 
+  [12505] [CI] [ENTRY] void android.app.Activity.finish() (8f51c71) 
+  [12505] [CI] [EXIT] void android.app.Activity.finish() (8f51c71) 
+[12470] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (8f51c71,8a7496e) 
+[12516] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (8f51c71,bbe77fb) 
+  [12551] [CI] [ENTRY] void android.app.Activity.finish() (8f51c71) 
+  [12551] [CI] [EXIT] void android.app.Activity.finish() (8f51c71) 
+[12516] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (8f51c71,bbe77fb) 
+[12562] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (4c953a7) 
+[12562] [CB] [EXIT] NULL = void org.andstatus.app.msg.TimelineActivity.<init>() (4c953a7) 
+[12590] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (4c953a7,NULL) 
+  [12757] [CI] [ENTRY] void android.app.Activity.finish() (4c953a7) 
+  [12786] [CI] [ENTRY] void android.app.Activity.finish() (4c953a7) 
+  [12786] [CI] [EXIT] void android.app.Activity.finish() (4c953a7) 
+  [12757] [CI] [EXIT] void android.app.Activity.finish() (4c953a7) 
+[12590] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (4c953a7,NULL) 
+[12854] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+[12854] [CB] [EXIT] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+[13294] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (8f51c71) 
+[13294] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onDestroy() (8f51c71) 
+[13326] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (4c953a7) 
+[13326] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onDestroy() (4c953a7) 
+[13370] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+[13370] [CB] [EXIT] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+[13388] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (492fff5) 
+[13388] [CB] [EXIT] NULL = void org.andstatus.app.msg.TimelineActivity.<init>() (492fff5) 
+[13416] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (492fff5,NULL) 
+  [13583] [CI] [ENTRY] void android.app.Activity.finish() (492fff5) 
+  [13612] [CI] [ENTRY] void android.app.Activity.finish() (492fff5) 
+  [13612] [CI] [EXIT] void android.app.Activity.finish() (492fff5) 
+  [13583] [CI] [EXIT] void android.app.Activity.finish() (492fff5) 
+[13416] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (492fff5,NULL) 
+[13684] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (492fff5,61adbfe) 
+  [13719] [CI] [ENTRY] void android.app.Activity.finish() (492fff5) 
+  [13719] [CI] [EXIT] void android.app.Activity.finish() (492fff5) 
+[13684] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (492fff5,61adbfe) 
+[13738] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+[13738] [CB] [EXIT] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+[14182] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+[14182] [CB] [EXIT] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+[14244] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (443caf7) 
+[14244] [CB] [EXIT] NULL = void org.andstatus.app.msg.TimelineActivity.<init>() (443caf7) 
+[14272] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (443caf7,NULL) 
+  [14439] [CI] [ENTRY] void android.app.Activity.finish() (443caf7) 
+  [14468] [CI] [ENTRY] void android.app.Activity.finish() (443caf7) 
+  [14468] [CI] [EXIT] void android.app.Activity.finish() (443caf7) 
+  [14439] [CI] [EXIT] void android.app.Activity.finish() (443caf7) 
+[14272] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (443caf7,NULL) 
+[14512] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (492fff5) 
+[14512] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onDestroy() (492fff5) 
+[14548] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (443caf7,4e1e97c) 
+  [14583] [CI] [ENTRY] void android.app.Activity.finish() (443caf7) 
+  [14583] [CI] [EXIT] void android.app.Activity.finish() (443caf7) 
+[14548] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (443caf7,4e1e97c) 
+[14634] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+[14634] [CB] [EXIT] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+[15122] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+[15122] [CB] [EXIT] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+[15156] [CB] [ENTRY] void org.andstatus.app.HelpActivity$2.onClick(android.view.View) (252e12b,d5d230f) 
+  [15181] [CI] [ENTRY] void android.app.Activity.finish() (ec731f6) 
+  [15181] [CI] [EXIT] void android.app.Activity.finish() (ec731f6) 
+[15156] [CB] [EXIT] void org.andstatus.app.HelpActivity$2.onClick(android.view.View) (252e12b,d5d230f) 
+[15208] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (5c83733) 
+[15208] [CB] [EXIT] NULL = void org.andstatus.app.msg.TimelineActivity.<init>() (5c83733) 
+[15236] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (5c83733,NULL) 
+  [15403] [CI] [ENTRY] void android.app.Activity.finish() (5c83733) 
+  [15432] [CI] [ENTRY] void android.app.Activity.finish() (5c83733) 
+  [15432] [CI] [EXIT] void android.app.Activity.finish() (5c83733) 
+  [15403] [CI] [EXIT] void android.app.Activity.finish() (5c83733) 
+[15236] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (5c83733,NULL) 
+[15476] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (443caf7) 
+[15476] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onDestroy() (443caf7) 
+[15524] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onStop() (ec731f6) 
+[15524] [CB] [EXIT] void org.andstatus.app.HelpActivity.onStop() (ec731f6) 
+[15530] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onDestroy() (ec731f6) 
+[15530] [CB] [EXIT] void org.andstatus.app.HelpActivity.onDestroy() (ec731f6) 
+[15588] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.<init>() (dce51f4) 
+[15588] [CB] [EXIT] NULL = void org.andstatus.app.backup.RestoreActivity.<init>() (dce51f4) 
+[15612] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.onCreate(android.os.Bundle) (dce51f4,NULL) 
+  [16745] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (dce51f4,2131624059) 
+  [16745] [CI] [EXIT] aefc826 = android.view.View android.app.Activity.findViewById(int) (dce51f4,2131624059) 
+  [16753] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (aefc826,2a80a14) 
+  [16753] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (aefc826,2a80a14) 
+[15612] [CB] [EXIT] void org.andstatus.app.backup.RestoreActivity.onCreate(android.os.Bundle) (dce51f4,NULL) 
+[16774] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.onStart() (dce51f4) 
+[16774] [CB] [EXIT] void org.andstatus.app.backup.RestoreActivity.onStart() (dce51f4) 
+[16808] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.onResume() (dce51f4) 
+[16808] [CB] [EXIT] void org.andstatus.app.backup.RestoreActivity.onResume() (dce51f4) 
+[16932] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (5c83733) 
+[16932] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onDestroy() (5c83733) 
+[16976] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.onPause() (dce51f4) 
+[16976] [CB] [EXIT] void org.andstatus.app.backup.RestoreActivity.onPause() (dce51f4) 
+[16992] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (88b8e02) 
+[16992] [CB] [EXIT] NULL = void org.andstatus.app.msg.TimelineActivity.<init>() (88b8e02) 
+[17020] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (88b8e02,NULL) 
+[17020] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (88b8e02,NULL) 
+[18232] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.onResume() (dce51f4) 
+[18232] [CB] [EXIT] void org.andstatus.app.backup.RestoreActivity.onResume() (dce51f4) 
+[18756] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity$1.onClick(android.view.View) (2a80a14,aefc826) 
+  [18765] [CI] [ENTRY] void android.os.AsyncTask.<init>() (de57b34) 
+  [18765] [CI] [EXIT] void android.os.AsyncTask.<init>() (de57b34) 
+  [18769] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (de57b34,fb39259) 
+  [18770] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity$RestoreTask.onPreExecute() (de57b34) 
+  [18770] [CB] [EXIT] void org.andstatus.app.backup.RestoreActivity$RestoreTask.onPreExecute() (de57b34) 
+  [18769] [CI] [EXIT] de57b34 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (de57b34,fb39259) 
+[18756] [CB] [EXIT] void org.andstatus.app.backup.RestoreActivity$1.onClick(android.view.View) (2a80a14,aefc826) 
+[18796] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity$1.onClick(android.view.View) (2a80a14,aefc826) 
+[18796] [CB] [EXIT] void org.andstatus.app.backup.RestoreActivity$1.onClick(android.view.View) (2a80a14,aefc826) 
+[18830] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity$1.onClick(android.view.View) (2a80a14,aefc826) 
+[18830] [CB] [EXIT] void org.andstatus.app.backup.RestoreActivity$1.onClick(android.view.View) (2a80a14,aefc826) 
+[18846] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.onPause() (dce51f4) 
+[18846] [CB] [EXIT] void org.andstatus.app.backup.RestoreActivity.onPause() (dce51f4) 
+
+
+
+TRACE STATISTICS
+Trace length: 110
+Top-level callbacks: 66
+CI-ENTRY: 12
+CI-EXIT: 3
+CB-ENTRY: 51
+CB-EXIT: 10
+        encoding - User time: 5.890000
+encoding - System time: 0.010000
+simulation - User time: 39.950000
+simulation - System time: 0.360000
+
+The trace can be simulated in 110 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[498] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (7eb6f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7eb6f] void org.andstatus.app.msg.TimelineActivity.<init>()) |- [CB] [ENTRY] [7eb6f] void org.andstatus.app.msg.TimelineActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7eb6f] void org.andstatus.app.msg.TimelineActivity.<init>()) |+ [CB] [ENTRY] [7eb6f] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[526] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (7eb6f,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7eb6f] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [7eb6f] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 3
+----------------------------------------
+[3165] [CI] [ENTRY] void android.app.Activity.finish() (7eb6f) 
+----------------------------------------
+Step: 4
+----------------------------------------
+[3194] [CI] [ENTRY] void android.app.Activity.finish() (7eb6f) 
+----------------------------------------
+Step: 5
+----------------------------------------
+[526] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (7eb6f,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [7eb6f] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); ((([CI] [ENTRY] [7eb6f] void android.app.Activity.finish() | [CI] [ENTRY] [7eb6f] void android.app.Activity.finish()) | [CI] [ENTRY] [7eb6f] void android.app.Activity.finish()) | [CI] [ENTRY] [7eb6f] void android.app.Activity.finish())); ((TRUE)[*])); [CB] [EXIT] [7eb6f] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [7eb6f] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 6
+----------------------------------------
+[3242] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (7eb6f,ee02ea) 
+----------------------------------------
+Step: 7
+----------------------------------------
+[3277] [CI] [ENTRY] void android.app.Activity.finish() (7eb6f) 
+----------------------------------------
+Step: 8
+----------------------------------------
+[3812] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (7eb6f,29f1e1a) 
+----------------------------------------
+Step: 9
+----------------------------------------
+[3847] [CI] [ENTRY] void android.app.Activity.finish() (7eb6f) 
+----------------------------------------
+Step: 10
+----------------------------------------
+[3858] [CB] [ENTRY] void org.andstatus.app.HelpActivity.<init>() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.<init>()) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.<init>()) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.<init>()
+----------------------------------------
+Step: 11
+----------------------------------------
+[3882] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onCreate(android.os.Bundle) (ec731f6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStart()
+----------------------------------------
+Step: 12
+----------------------------------------
+[6341] [CI] [EXIT] d5d230f = android.view.View android.app.Activity.findViewById(int) (ec731f6,2131624059) 
+----------------------------------------
+Step: 13
+----------------------------------------
+[6351] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (d5d230f,252e12b) 
+----------------------------------------
+Step: 14
+----------------------------------------
+[3882] [CB] [EXIT] void org.andstatus.app.HelpActivity.onCreate(android.os.Bundle) (ec731f6,NULL) 
+----------------------------------------
+Step: 15
+----------------------------------------
+[6758] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onStart() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStart() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStart())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStart() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStart())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+----------------------------------------
+Step: 16
+----------------------------------------
+[6758] [CB] [EXIT] void org.andstatus.app.HelpActivity.onStart() (ec731f6) 
+----------------------------------------
+Step: 17
+----------------------------------------
+[14634] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+    Matched specifications:
+    SPEC ((((((TRUE)[*]); d5d230f = [CI] [EXIT] [ec731f6] android.view.View android.app.Activity.findViewById(2131624059 : int)); ((TRUE)[*])) & (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [d5d230f] void android.view.View.setOnClickListener(252e12b : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [252e12b] void org.andstatus.app.HelpActivity$2.onClick(d5d230f : android.view.View)
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+----------------------------------------
+Step: 18
+----------------------------------------
+[6942] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (7eb6f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7eb6f] void org.andstatus.app.msg.TimelineActivity.onDestroy()) |- [CB] [ENTRY] [7eb6f] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 19
+----------------------------------------
+[15122] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+----------------------------------------
+Step: 20
+----------------------------------------
+[8644] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (990b2b4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [990b2b4] void org.andstatus.app.msg.TimelineActivity.<init>()) |- [CB] [ENTRY] [990b2b4] void org.andstatus.app.msg.TimelineActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [990b2b4] void org.andstatus.app.msg.TimelineActivity.<init>()) |+ [CB] [ENTRY] [990b2b4] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 21
+----------------------------------------
+[8672] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (990b2b4,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [990b2b4] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [990b2b4] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 22
+----------------------------------------
+[8839] [CI] [ENTRY] void android.app.Activity.finish() (990b2b4) 
+----------------------------------------
+Step: 23
+----------------------------------------
+[8868] [CI] [ENTRY] void android.app.Activity.finish() (990b2b4) 
+----------------------------------------
+Step: 24
+----------------------------------------
+[8672] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (990b2b4,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [990b2b4] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); ([CI] [ENTRY] [990b2b4] void android.app.Activity.finish() | [CI] [ENTRY] [990b2b4] void android.app.Activity.finish())); ((TRUE)[*])); [CB] [EXIT] [990b2b4] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [990b2b4] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 25
+----------------------------------------
+[15524] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onStop() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onDestroy()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onRestart()
+----------------------------------------
+Step: 26
+----------------------------------------
+[9430] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onRestart() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onRestart()) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onRestart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onRestart()) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onRestart()) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onRestart()) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStart()
+----------------------------------------
+Step: 27
+----------------------------------------
+[9438] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onStart() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStart() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStart())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStart() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStart())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+----------------------------------------
+Step: 28
+----------------------------------------
+[9438] [CB] [EXIT] void org.andstatus.app.HelpActivity.onStart() (ec731f6) 
+----------------------------------------
+Step: 29
+----------------------------------------
+[14634] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+----------------------------------------
+Step: 30
+----------------------------------------
+[15122] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+----------------------------------------
+Step: 31
+----------------------------------------
+[10638] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (586de8b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [586de8b] void org.andstatus.app.msg.TimelineActivity.<init>()) |- [CB] [ENTRY] [586de8b] void org.andstatus.app.msg.TimelineActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [586de8b] void org.andstatus.app.msg.TimelineActivity.<init>()) |+ [CB] [ENTRY] [586de8b] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 32
+----------------------------------------
+[10666] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (586de8b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [586de8b] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [586de8b] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 33
+----------------------------------------
+[10833] [CI] [ENTRY] void android.app.Activity.finish() (586de8b) 
+----------------------------------------
+Step: 34
+----------------------------------------
+[10862] [CI] [ENTRY] void android.app.Activity.finish() (586de8b) 
+----------------------------------------
+Step: 35
+----------------------------------------
+[10666] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (586de8b,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [586de8b] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); (((([CI] [ENTRY] [586de8b] void android.app.Activity.finish() | [CI] [ENTRY] [586de8b] void android.app.Activity.finish()) | [CI] [ENTRY] [586de8b] void android.app.Activity.finish()) | [CI] [ENTRY] [586de8b] void android.app.Activity.finish()) | [CI] [ENTRY] [586de8b] void android.app.Activity.finish())); ((TRUE)[*])); [CB] [EXIT] [586de8b] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [586de8b] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 36
+----------------------------------------
+[10906] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (990b2b4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [990b2b4] void org.andstatus.app.msg.TimelineActivity.onDestroy()) |- [CB] [ENTRY] [990b2b4] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 37
+----------------------------------------
+[10942] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (586de8b,d146c00) 
+----------------------------------------
+Step: 38
+----------------------------------------
+[10977] [CI] [ENTRY] void android.app.Activity.finish() (586de8b) 
+----------------------------------------
+Step: 39
+----------------------------------------
+[11376] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (586de8b,a6c8c85) 
+----------------------------------------
+Step: 40
+----------------------------------------
+[11411] [CI] [ENTRY] void android.app.Activity.finish() (586de8b) 
+----------------------------------------
+Step: 41
+----------------------------------------
+[11418] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (586de8b,ef0e9ea) 
+----------------------------------------
+Step: 42
+----------------------------------------
+[11453] [CI] [ENTRY] void android.app.Activity.finish() (586de8b) 
+----------------------------------------
+Step: 43
+----------------------------------------
+[14634] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 44
+----------------------------------------
+[15122] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+----------------------------------------
+Step: 45
+----------------------------------------
+[12102] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (8f51c71) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8f51c71] void org.andstatus.app.msg.TimelineActivity.<init>()) |- [CB] [ENTRY] [8f51c71] void org.andstatus.app.msg.TimelineActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8f51c71] void org.andstatus.app.msg.TimelineActivity.<init>()) |+ [CB] [ENTRY] [8f51c71] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 46
+----------------------------------------
+[12130] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (8f51c71,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8f51c71] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [8f51c71] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 47
+----------------------------------------
+[12297] [CI] [ENTRY] void android.app.Activity.finish() (8f51c71) 
+----------------------------------------
+Step: 48
+----------------------------------------
+[12326] [CI] [ENTRY] void android.app.Activity.finish() (8f51c71) 
+----------------------------------------
+Step: 49
+----------------------------------------
+[12130] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (8f51c71,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [8f51c71] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); ((([CI] [ENTRY] [8f51c71] void android.app.Activity.finish() | [CI] [ENTRY] [8f51c71] void android.app.Activity.finish()) | [CI] [ENTRY] [8f51c71] void android.app.Activity.finish()) | [CI] [ENTRY] [8f51c71] void android.app.Activity.finish())); ((TRUE)[*])); [CB] [EXIT] [8f51c71] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8f51c71] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 50
+----------------------------------------
+[12370] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (586de8b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [586de8b] void org.andstatus.app.msg.TimelineActivity.onDestroy()) |- [CB] [ENTRY] [586de8b] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 51
+----------------------------------------
+[12470] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (8f51c71,8a7496e) 
+----------------------------------------
+Step: 52
+----------------------------------------
+[12505] [CI] [ENTRY] void android.app.Activity.finish() (8f51c71) 
+----------------------------------------
+Step: 53
+----------------------------------------
+[12516] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (8f51c71,bbe77fb) 
+----------------------------------------
+Step: 54
+----------------------------------------
+[12551] [CI] [ENTRY] void android.app.Activity.finish() (8f51c71) 
+----------------------------------------
+Step: 55
+----------------------------------------
+[12562] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (4c953a7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4c953a7] void org.andstatus.app.msg.TimelineActivity.<init>()) |- [CB] [ENTRY] [4c953a7] void org.andstatus.app.msg.TimelineActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4c953a7] void org.andstatus.app.msg.TimelineActivity.<init>()) |+ [CB] [ENTRY] [4c953a7] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 56
+----------------------------------------
+[12590] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (4c953a7,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4c953a7] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [4c953a7] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 57
+----------------------------------------
+[12757] [CI] [ENTRY] void android.app.Activity.finish() (4c953a7) 
+----------------------------------------
+Step: 58
+----------------------------------------
+[12786] [CI] [ENTRY] void android.app.Activity.finish() (4c953a7) 
+----------------------------------------
+Step: 59
+----------------------------------------
+[12590] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (4c953a7,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [4c953a7] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); ([CI] [ENTRY] [4c953a7] void android.app.Activity.finish() | [CI] [ENTRY] [4c953a7] void android.app.Activity.finish())); ((TRUE)[*])); [CB] [EXIT] [4c953a7] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [4c953a7] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 60
+----------------------------------------
+[14634] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 61
+----------------------------------------
+[13294] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (8f51c71) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8f51c71] void org.andstatus.app.msg.TimelineActivity.onDestroy()) |- [CB] [ENTRY] [8f51c71] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 62
+----------------------------------------
+[13326] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (4c953a7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4c953a7] void org.andstatus.app.msg.TimelineActivity.onDestroy()) |- [CB] [ENTRY] [4c953a7] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 63
+----------------------------------------
+[15122] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+----------------------------------------
+Step: 64
+----------------------------------------
+[13388] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (492fff5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [492fff5] void org.andstatus.app.msg.TimelineActivity.<init>()) |+ [CB] [ENTRY] [492fff5] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [492fff5] void org.andstatus.app.msg.TimelineActivity.<init>()) |- [CB] [ENTRY] [492fff5] void org.andstatus.app.msg.TimelineActivity.<init>()
+----------------------------------------
+Step: 65
+----------------------------------------
+[13416] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (492fff5,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [492fff5] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [492fff5] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 66
+----------------------------------------
+[13583] [CI] [ENTRY] void android.app.Activity.finish() (492fff5) 
+----------------------------------------
+Step: 67
+----------------------------------------
+[13612] [CI] [ENTRY] void android.app.Activity.finish() (492fff5) 
+----------------------------------------
+Step: 68
+----------------------------------------
+[13416] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (492fff5,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [492fff5] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); (([CI] [ENTRY] [492fff5] void android.app.Activity.finish() | [CI] [ENTRY] [492fff5] void android.app.Activity.finish()) | [CI] [ENTRY] [492fff5] void android.app.Activity.finish())); ((TRUE)[*])); [CB] [EXIT] [492fff5] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [492fff5] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 69
+----------------------------------------
+[13684] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (492fff5,61adbfe) 
+----------------------------------------
+Step: 70
+----------------------------------------
+[13719] [CI] [ENTRY] void android.app.Activity.finish() (492fff5) 
+----------------------------------------
+Step: 71
+----------------------------------------
+[14634] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 72
+----------------------------------------
+[15122] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+----------------------------------------
+Step: 73
+----------------------------------------
+[14244] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (443caf7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [443caf7] void org.andstatus.app.msg.TimelineActivity.<init>()) |- [CB] [ENTRY] [443caf7] void org.andstatus.app.msg.TimelineActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [443caf7] void org.andstatus.app.msg.TimelineActivity.<init>()) |+ [CB] [ENTRY] [443caf7] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 74
+----------------------------------------
+[14272] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (443caf7,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [443caf7] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [443caf7] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 75
+----------------------------------------
+[14439] [CI] [ENTRY] void android.app.Activity.finish() (443caf7) 
+----------------------------------------
+Step: 76
+----------------------------------------
+[14468] [CI] [ENTRY] void android.app.Activity.finish() (443caf7) 
+----------------------------------------
+Step: 77
+----------------------------------------
+[14272] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (443caf7,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [443caf7] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); (([CI] [ENTRY] [443caf7] void android.app.Activity.finish() | [CI] [ENTRY] [443caf7] void android.app.Activity.finish()) | [CI] [ENTRY] [443caf7] void android.app.Activity.finish())); ((TRUE)[*])); [CB] [EXIT] [443caf7] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [443caf7] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 78
+----------------------------------------
+[14512] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (492fff5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [492fff5] void org.andstatus.app.msg.TimelineActivity.onDestroy()) |- [CB] [ENTRY] [492fff5] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 79
+----------------------------------------
+[14548] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onNewIntent(android.content.Intent) (443caf7,4e1e97c) 
+----------------------------------------
+Step: 80
+----------------------------------------
+[14583] [CI] [ENTRY] void android.app.Activity.finish() (443caf7) 
+----------------------------------------
+Step: 81
+----------------------------------------
+[14634] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onResume() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 82
+----------------------------------------
+[15122] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onPause() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop()
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((((([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause()) | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onPause())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+----------------------------------------
+Step: 83
+----------------------------------------
+[15156] [CB] [ENTRY] void org.andstatus.app.HelpActivity$2.onClick(android.view.View) (252e12b,d5d230f) 
+----------------------------------------
+Step: 84
+----------------------------------------
+[15181] [CI] [ENTRY] void android.app.Activity.finish() (ec731f6) 
+----------------------------------------
+Step: 85
+----------------------------------------
+[15208] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (5c83733) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5c83733] void org.andstatus.app.msg.TimelineActivity.<init>()) |- [CB] [ENTRY] [5c83733] void org.andstatus.app.msg.TimelineActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5c83733] void org.andstatus.app.msg.TimelineActivity.<init>()) |+ [CB] [ENTRY] [5c83733] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 86
+----------------------------------------
+[15236] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (5c83733,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5c83733] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [5c83733] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 87
+----------------------------------------
+[15403] [CI] [ENTRY] void android.app.Activity.finish() (5c83733) 
+----------------------------------------
+Step: 88
+----------------------------------------
+[15432] [CI] [ENTRY] void android.app.Activity.finish() (5c83733) 
+----------------------------------------
+Step: 89
+----------------------------------------
+[15236] [CB] [EXIT] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (5c83733,NULL) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); [CB] [ENTRY] [5c83733] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)); ((TRUE)[*])); ([CI] [ENTRY] [5c83733] void android.app.Activity.finish() | [CI] [ENTRY] [5c83733] void android.app.Activity.finish())); ((TRUE)[*])); [CB] [EXIT] [5c83733] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [5c83733] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 90
+----------------------------------------
+[15476] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (443caf7) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [443caf7] void org.andstatus.app.msg.TimelineActivity.onDestroy()) |- [CB] [ENTRY] [443caf7] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 91
+----------------------------------------
+[15524] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onStop() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onDestroy()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop())) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop() | [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onStop())) |+ [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onRestart()
+----------------------------------------
+Step: 92
+----------------------------------------
+[15530] [CB] [ENTRY] void org.andstatus.app.HelpActivity.onDestroy() (ec731f6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onDestroy()) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onRestart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onDestroy()) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onDestroy()) |- [CB] [ENTRY] [ec731f6] void org.andstatus.app.HelpActivity.onDestroy()
+----------------------------------------
+Step: 93
+----------------------------------------
+[15588] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.<init>() (dce51f4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.<init>()) |+ [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.<init>()) |- [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.<init>()
+----------------------------------------
+Step: 94
+----------------------------------------
+[15612] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.onCreate(android.os.Bundle) (dce51f4,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 95
+----------------------------------------
+[16745] [CI] [EXIT] aefc826 = android.view.View android.app.Activity.findViewById(int) (dce51f4,2131624059) 
+----------------------------------------
+Step: 96
+----------------------------------------
+[16753] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (aefc826,2a80a14) 
+----------------------------------------
+Step: 97
+----------------------------------------
+[16774] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.onStart() (dce51f4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onStart()) |+ [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onStart()) |- [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onStart()
+----------------------------------------
+Step: 98
+----------------------------------------
+[18232] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.onResume() (dce51f4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume() | [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume())) |+ [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume() | [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume())) |- [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume()
+    SPEC ((((((TRUE)[*]); aefc826 = [CI] [EXIT] [dce51f4] android.view.View android.app.Activity.findViewById(2131624059 : int)); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume() | [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume()))) & ((((TRUE)[*]); [CI] [ENTRY] [aefc826] void android.view.View.setOnClickListener(2a80a14 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [2a80a14] void org.andstatus.app.backup.RestoreActivity$1.onClick(aefc826 : android.view.View)
+----------------------------------------
+Step: 99
+----------------------------------------
+[16932] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onDestroy() (5c83733) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [5c83733] void org.andstatus.app.msg.TimelineActivity.onDestroy()) |- [CB] [ENTRY] [5c83733] void org.andstatus.app.msg.TimelineActivity.onDestroy()
+----------------------------------------
+Step: 100
+----------------------------------------
+[18846] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.onPause() (dce51f4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause() | [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause())) |+ [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause() | [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause())) |- [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause() | [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause())) |+ [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume()
+----------------------------------------
+Step: 101
+----------------------------------------
+[16992] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.<init>() (88b8e02) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [88b8e02] void org.andstatus.app.msg.TimelineActivity.<init>()) |- [CB] [ENTRY] [88b8e02] void org.andstatus.app.msg.TimelineActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [88b8e02] void org.andstatus.app.msg.TimelineActivity.<init>()) |+ [CB] [ENTRY] [88b8e02] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 102
+----------------------------------------
+[17020] [CB] [ENTRY] void org.andstatus.app.msg.TimelineActivity.onCreate(android.os.Bundle) (88b8e02,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [88b8e02] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [88b8e02] void org.andstatus.app.msg.TimelineActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 103
+----------------------------------------
+[18232] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.onResume() (dce51f4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume() | [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume())) |+ [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume() | [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume())) |- [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume() | [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume())) |- [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 104
+----------------------------------------
+[18756] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity$1.onClick(android.view.View) (2a80a14,aefc826) 
+----------------------------------------
+Step: 105
+----------------------------------------
+[18765] [CI] [EXIT] void android.os.AsyncTask.<init>() (de57b34) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [de57b34] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [de57b34] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 106
+----------------------------------------
+[18769] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (de57b34,fb39259) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [de57b34] android.os.AsyncTask android.os.AsyncTask.execute(fb39259 : java.lang.Object[])) |+ [CB] [ENTRY] [de57b34] void org.andstatus.app.backup.RestoreActivity$RestoreTask.onPreExecute()
+----------------------------------------
+Step: 107
+----------------------------------------
+[18770] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity$RestoreTask.onPreExecute() (de57b34) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [de57b34] void org.andstatus.app.backup.RestoreActivity$RestoreTask.onPreExecute()) |- [CB] [ENTRY] [de57b34] void org.andstatus.app.backup.RestoreActivity$RestoreTask.onPreExecute()
+----------------------------------------
+Step: 108
+----------------------------------------
+[18830] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity$1.onClick(android.view.View) (2a80a14,aefc826) 
+----------------------------------------
+Step: 109
+----------------------------------------
+[18830] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity$1.onClick(android.view.View) (2a80a14,aefc826) 
+----------------------------------------
+Step: 110
+----------------------------------------
+[18846] [CB] [ENTRY] void org.andstatus.app.backup.RestoreActivity.onPause() (dce51f4) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause() | [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause())) |+ [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause() | [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause())) |- [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause() | [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onPause())) |+ [CB] [ENTRY] [dce51f4] void org.andstatus.app.backup.RestoreActivity.onResume()
+----------------------------------------

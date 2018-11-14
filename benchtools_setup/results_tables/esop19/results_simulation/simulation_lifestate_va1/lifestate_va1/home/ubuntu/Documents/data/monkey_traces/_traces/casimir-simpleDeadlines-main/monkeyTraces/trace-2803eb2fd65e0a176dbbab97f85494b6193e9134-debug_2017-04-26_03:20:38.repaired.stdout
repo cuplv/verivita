@@ -1,0 +1,809 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/_traces/casimir-simpleDeadlines-main/monkeyTraces/trace-2803eb2fd65e0a176dbbab97f85494b6193e9134-debug_2017-04-26_03:20:38.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/_traces/casimir-simpleDeadlines-main/monkeyTraces/trace-2803eb2fd65e0a176dbbab97f85494b6193e9134-debug_2017-04-26_03:20:38.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 3.740000
+parsing - System time: 0.350000
+spec_grounding - User time: 166.820000
+spec_grounding - System time: 0.860000
+
+---Simplified Trace---
+[16] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.<init>() (aa0ce4a) 
+[16] [CB] [EXIT] NULL = void com.casimirlab.simpleDeadlines.ui.MainActivity.<init>() (aa0ce4a) 
+[64] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onCreate(android.os.Bundle) (aa0ce4a,NULL) 
+  [1375] [CI] [ENTRY] void android.support.v4.app.ListFragment.<init>() (938423f) 
+  [1375] [CI] [EXIT] void android.support.v4.app.ListFragment.<init>() (938423f) 
+  [1385] [CI] [ENTRY] void android.support.v4.app.ListFragment.<init>() (46a42d3) 
+  [1385] [CI] [EXIT] void android.support.v4.app.ListFragment.<init>() (46a42d3) 
+[64] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.MainActivity.onCreate(android.os.Bundle) (aa0ce4a,NULL) 
+[1436] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStart() (aa0ce4a) 
+[1436] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStart() (aa0ce4a) 
+[1496] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onResume() (aa0ce4a) 
+[1496] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.MainActivity.onResume() (aa0ce4a) 
+[2334] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [2342] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(android.app.Activity) (938423f,aa0ce4a) 
+  [2342] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(android.app.Activity) (938423f,aa0ce4a) 
+  [2350] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(android.os.Bundle) (938423f,NULL) 
+  [2350] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(android.os.Bundle) (938423f,NULL) 
+[2334] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+[2400] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [2446] [CB] [ENTRY] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (938423f,e8286bb,3a8e74f,NULL) 
+  [2446] [CB] [EXIT] 1ff1f74 = android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (938423f,e8286bb,3a8e74f,NULL) 
+  [2882] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(android.view.View,android.os.Bundle) (938423f,7450848,NULL) 
+  [2882] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(android.view.View,android.os.Bundle) (938423f,7450848,NULL) 
+  [2918] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(android.os.Bundle) (938423f,NULL) 
+  [2918] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(android.os.Bundle) (938423f,NULL) 
+  [2926] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart() (938423f) 
+  [2926] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart() (938423f) 
+  [2968] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume() (938423f) 
+  [2968] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume() (938423f) 
+  [2972] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(android.app.Activity) (46a42d3,aa0ce4a) 
+  [2972] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(android.app.Activity) (46a42d3,aa0ce4a) 
+  [2982] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(android.os.Bundle) (46a42d3,NULL) 
+  [2982] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(android.os.Bundle) (46a42d3,NULL) 
+  [3055] [CB] [ENTRY] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (46a42d3,9f1fea0,3a8e74f,NULL) 
+  [3055] [CB] [EXIT] ad804c6 = android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (46a42d3,9f1fea0,3a8e74f,NULL) 
+  [3530] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(android.view.View,android.os.Bundle) (46a42d3,762e07a,NULL) 
+  [3530] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(android.view.View,android.os.Bundle) (46a42d3,762e07a,NULL) 
+  [3566] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(android.os.Bundle) (46a42d3,NULL) 
+  [3566] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(android.os.Bundle) (46a42d3,NULL) 
+[2400] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[4840] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart() (46a42d3) 
+[4840] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart() (46a42d3) 
+[4881] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume() (46a42d3) 
+[4881] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume() (46a42d3) 
+[5078] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+[5078] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+[5082] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5082] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5258] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+  [5283] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5283] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5287] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [5287] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5258] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5294] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5294] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5348] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+  [5373] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5373] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5377] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [5377] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5348] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5384] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5384] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5428] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+[5428] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+[5432] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5432] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5528] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+  [5553] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5553] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5557] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [5557] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5528] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5564] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5564] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5584] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+  [5609] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5609] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5613] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [5613] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5584] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5620] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5620] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5640] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+  [5665] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5665] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5669] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [5669] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5640] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5676] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5676] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5696] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+  [5721] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5721] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5725] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [5725] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5696] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5732] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5732] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5752] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+  [5777] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5777] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5781] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [5781] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5752] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5788] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5788] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5816] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+  [5841] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5841] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5845] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [5845] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5816] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5852] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5852] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5872] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+  [5897] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5897] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5901] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [5901] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5872] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5908] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5908] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5928] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+  [5953] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5953] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [5957] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [5957] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5928] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5964] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5964] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[5984] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+  [6009] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [6009] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [6013] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [6013] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[5984] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[6020] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[6020] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[6040] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+  [6065] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [6065] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+  [6069] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+  [6069] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+[6040] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[6076] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[6076] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[6096] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[6096] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[6108] [CB] [EXIT] true = boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+[6186] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onPause() (aa0ce4a) 
+  [6188] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause() (938423f) 
+  [6188] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause() (938423f) 
+  [6192] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause() (46a42d3) 
+  [6192] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause() (46a42d3) 
+[6186] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.MainActivity.onPause() (aa0ce4a) 
+[6218] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.<init>() (1e276bb) 
+[6218] [CB] [EXIT] NULL = void com.casimirlab.simpleDeadlines.ui.Settings.<init>() (1e276bb) 
+[6266] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.onCreate(android.os.Bundle) (1e276bb,NULL) 
+  [8845] [CI] [ENTRY] void android.preference.PreferenceFragment.<init>() (14ed7ad) 
+  [8845] [CI] [EXIT] void android.preference.PreferenceFragment.<init>() (14ed7ad) 
+[6266] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings.onCreate(android.os.Bundle) (1e276bb,NULL) 
+[8888] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onAttach(android.app.Activity) (14ed7ad,1e276bb) 
+[8888] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onAttach(android.app.Activity) (14ed7ad,1e276bb) 
+[8896] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onCreate(android.os.Bundle) (14ed7ad,NULL) 
+  [8956] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.TimePickerPreference.<init>(android.content.Context,android.util.AttributeSet) (d77e098,1e276bb,fed9357) 
+  [8956] [CB] [EXIT] NULL = void com.casimirlab.simpleDeadlines.ui.TimePickerPreference.<init>(android.content.Context,android.util.AttributeSet) (d77e098,1e276bb,fed9357) 
+[8896] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onCreate(android.os.Bundle) (14ed7ad,NULL) 
+[9240] [CB] [ENTRY] android.view.View com.casimirlab.simpleDeadlines.ui.Settings$1.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (14ed7ad,697e015,3ef4043,NULL) 
+[9240] [CB] [EXIT] fae876d = android.view.View com.casimirlab.simpleDeadlines.ui.Settings$1.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (14ed7ad,697e015,3ef4043,NULL) 
+[9968] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onViewCreated(android.view.View,android.os.Bundle) (14ed7ad,fae876d,NULL) 
+[9968] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onViewCreated(android.view.View,android.os.Bundle) (14ed7ad,fae876d,NULL) 
+[9972] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onActivityCreated(android.os.Bundle) (14ed7ad,NULL) 
+[9972] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onActivityCreated(android.os.Bundle) (14ed7ad,NULL) 
+[10008] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.onStart() (1e276bb) 
+[10008] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings.onStart() (1e276bb) 
+[10012] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onStart() (14ed7ad) 
+[10012] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onStart() (14ed7ad) 
+[10028] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.onResume() (1e276bb) 
+[10028] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings.onResume() (1e276bb) 
+[10032] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume() (14ed7ad) 
+[10032] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume() (14ed7ad) 
+[18036] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (aa0ce4a,fc50f42) 
+  [18042] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(android.os.Bundle) (938423f,621dda8) 
+  [18042] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(android.os.Bundle) (938423f,621dda8) 
+  [18046] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(android.os.Bundle) (46a42d3,621dda8) 
+  [18046] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(android.os.Bundle) (46a42d3,621dda8) 
+[18036] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (aa0ce4a,fc50f42) 
+[18052] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStop() (aa0ce4a) 
+  [18054] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop() (938423f) 
+  [18054] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop() (938423f) 
+  [18058] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop() (46a42d3) 
+  [18058] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop() (46a42d3) 
+[18052] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStop() (aa0ce4a) 
+[40800] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.TimePickerPreference.onClick(android.content.DialogInterface,int) (d77e098,17907ea,-1) 
+[40800] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.TimePickerPreference.onClick(android.content.DialogInterface,int) (d77e098,17907ea,-1) 
+[92540] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onPause() (14ed7ad) 
+[92540] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onPause() (14ed7ad) 
+[92544] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.onPause() (1e276bb) 
+[92544] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings.onPause() (1e276bb) 
+[92844] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.onResume() (1e276bb) 
+[92844] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings.onResume() (1e276bb) 
+[92848] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume() (14ed7ad) 
+[92848] [CB] [EXIT] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume() (14ed7ad) 
+
+
+
+TRACE STATISTICS
+Trace length: 106
+Top-level callbacks: 57
+CI-ENTRY: 3
+CI-EXIT: 3
+CB-ENTRY: 45
+CB-EXIT: 0
+        encoding - User time: 2.320000
+encoding - System time: 0.000000
+simulation - User time: 19.700000
+simulation - System time: 0.140000
+
+The trace can be simulated in 106 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[16] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.<init>() (aa0ce4a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.<init>()) |- [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.<init>()) |+ [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[64] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onCreate(android.os.Bundle) (aa0ce4a,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[1375] [CI] [ENTRY] void android.support.v4.app.ListFragment.<init>() (938423f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [938423f] void android.support.v4.app.ListFragment.<init>()) |+ [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(aa0ce4a : android.app.Activity)
+----------------------------------------
+Step: 4
+----------------------------------------
+[1375] [CI] [EXIT] void android.support.v4.app.ListFragment.<init>() (938423f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [938423f] void android.support.v4.app.ListFragment.<init>()) |- [CI] [EXIT] [938423f] void android.support.v4.app.ListFragment.<init>()
+----------------------------------------
+Step: 5
+----------------------------------------
+[1385] [CI] [ENTRY] void android.support.v4.app.ListFragment.<init>() (46a42d3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [46a42d3] void android.support.v4.app.ListFragment.<init>()) |+ [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(aa0ce4a : android.app.Activity)
+----------------------------------------
+Step: 6
+----------------------------------------
+[1385] [CI] [EXIT] void android.support.v4.app.ListFragment.<init>() (46a42d3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [46a42d3] void android.support.v4.app.ListFragment.<init>()) |- [CI] [EXIT] [46a42d3] void android.support.v4.app.ListFragment.<init>()
+----------------------------------------
+Step: 7
+----------------------------------------
+[1436] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStart() (aa0ce4a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStart()) |- [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStart()) |+ [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onResume()
+----------------------------------------
+Step: 8
+----------------------------------------
+[1496] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onResume() (aa0ce4a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onResume()) |+ [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onResume()) |- [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onResume()
+----------------------------------------
+Step: 9
+----------------------------------------
+[2334] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 10
+----------------------------------------
+[2342] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(android.app.Activity) (938423f,aa0ce4a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(aa0ce4a : android.app.Activity)) |- [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(aa0ce4a : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(aa0ce4a : android.app.Activity)) |+ [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 11
+----------------------------------------
+[2350] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(android.os.Bundle) (938423f,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [938423f] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(e8286bb : android.view.LayoutInflater,3a8e74f : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 12
+----------------------------------------
+[2400] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 13
+----------------------------------------
+[2446] [CB] [ENTRY] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (938423f,e8286bb,3a8e74f,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(e8286bb : android.view.LayoutInflater,3a8e74f : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(e8286bb : android.view.LayoutInflater,3a8e74f : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(7450848 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(e8286bb : android.view.LayoutInflater,3a8e74f : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [938423f] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(e8286bb : android.view.LayoutInflater,3a8e74f : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(e8286bb : android.view.LayoutInflater,3a8e74f : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 14
+----------------------------------------
+[2882] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(android.view.View,android.os.Bundle) (938423f,7450848,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(7450848 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(7450848 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 15
+----------------------------------------
+[2918] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(android.os.Bundle) (938423f,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 16
+----------------------------------------
+[2926] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart() (938423f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()) |- [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()) |+ [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()) |+ [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(621dda8 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()) |+ [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume()
+----------------------------------------
+Step: 17
+----------------------------------------
+[2968] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume() (938423f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume()) |- [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume()) |+ [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause()
+----------------------------------------
+Step: 18
+----------------------------------------
+[2972] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(android.app.Activity) (46a42d3,aa0ce4a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(aa0ce4a : android.app.Activity)) |- [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(aa0ce4a : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onAttach(aa0ce4a : android.app.Activity)) |+ [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 19
+----------------------------------------
+[2982] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(android.os.Bundle) (46a42d3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [46a42d3] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(9f1fea0 : android.view.LayoutInflater,3a8e74f : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 20
+----------------------------------------
+[3055] [CB] [ENTRY] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (46a42d3,9f1fea0,3a8e74f,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(9f1fea0 : android.view.LayoutInflater,3a8e74f : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(9f1fea0 : android.view.LayoutInflater,3a8e74f : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [46a42d3] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(9f1fea0 : android.view.LayoutInflater,3a8e74f : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(9f1fea0 : android.view.LayoutInflater,3a8e74f : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] android.view.View com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreateView(9f1fea0 : android.view.LayoutInflater,3a8e74f : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(762e07a : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 21
+----------------------------------------
+[3530] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(android.view.View,android.os.Bundle) (46a42d3,762e07a,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(762e07a : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onViewCreated(762e07a : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 22
+----------------------------------------
+[3566] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(android.os.Bundle) (46a42d3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 23
+----------------------------------------
+[4840] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart() (46a42d3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()) |- [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()) |+ [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(621dda8 : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()) |+ [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()) |+ [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop()
+----------------------------------------
+Step: 24
+----------------------------------------
+[4881] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume() (46a42d3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume()) |- [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume()) |+ [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause()
+----------------------------------------
+Step: 25
+----------------------------------------
+[5428] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 26
+----------------------------------------
+[5432] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 27
+----------------------------------------
+[5258] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 28
+----------------------------------------
+[5283] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 29
+----------------------------------------
+[5287] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 30
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 31
+----------------------------------------
+[5348] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 32
+----------------------------------------
+[5373] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 33
+----------------------------------------
+[5377] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 34
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 35
+----------------------------------------
+[5428] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 36
+----------------------------------------
+[5432] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 37
+----------------------------------------
+[5528] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 38
+----------------------------------------
+[5553] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 39
+----------------------------------------
+[5557] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 40
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 41
+----------------------------------------
+[5584] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 42
+----------------------------------------
+[5609] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 43
+----------------------------------------
+[5613] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 44
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 45
+----------------------------------------
+[5640] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 46
+----------------------------------------
+[5665] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 47
+----------------------------------------
+[5669] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 48
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 49
+----------------------------------------
+[5696] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 50
+----------------------------------------
+[5721] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 51
+----------------------------------------
+[5725] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 52
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 53
+----------------------------------------
+[5752] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 54
+----------------------------------------
+[5777] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 55
+----------------------------------------
+[5781] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 56
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 57
+----------------------------------------
+[5816] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 58
+----------------------------------------
+[5841] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 59
+----------------------------------------
+[5845] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 60
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 61
+----------------------------------------
+[5872] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 62
+----------------------------------------
+[5897] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 63
+----------------------------------------
+[5901] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 64
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 65
+----------------------------------------
+[5928] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 66
+----------------------------------------
+[5953] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 67
+----------------------------------------
+[5957] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 68
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 69
+----------------------------------------
+[5984] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 70
+----------------------------------------
+[6009] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 71
+----------------------------------------
+[6013] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 72
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 73
+----------------------------------------
+[6040] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 74
+----------------------------------------
+[6065] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.setPrimaryItem(android.view.ViewGroup,int,java.lang.Object) (ba6ecc8,3a8e74f,0,938423f) 
+----------------------------------------
+Step: 75
+----------------------------------------
+[6069] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlinePagerAdapter.finishUpdate(android.view.ViewGroup) (ba6ecc8,3a8e74f) 
+----------------------------------------
+Step: 76
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 77
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 78
+----------------------------------------
+[6108] [CB] [ENTRY] boolean com.casimirlab.simpleDeadlines.ui.MainActivity.dispatchTouchEvent(android.view.MotionEvent) (aa0ce4a,b61adde) 
+----------------------------------------
+Step: 79
+----------------------------------------
+[6186] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onPause() (aa0ce4a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onPause()) |- [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onPause()) |+ [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onPause()) |+ [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onPause()) |+ [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 80
+----------------------------------------
+[6188] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause() (938423f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause()) |- [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause()) |+ [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume()
+----------------------------------------
+Step: 81
+----------------------------------------
+[6192] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause() (46a42d3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause()) |- [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onPause()) |+ [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume()
+----------------------------------------
+Step: 82
+----------------------------------------
+[6218] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.<init>() (1e276bb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.<init>()) |- [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.<init>()) |+ [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 83
+----------------------------------------
+[6266] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.onCreate(android.os.Bundle) (1e276bb,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 84
+----------------------------------------
+[8845] [CI] [ENTRY] void android.preference.PreferenceFragment.<init>() (14ed7ad) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [14ed7ad] void android.preference.PreferenceFragment.<init>()) |+ [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onAttach(1e276bb : android.app.Activity)
+----------------------------------------
+Step: 85
+----------------------------------------
+[8845] [CI] [EXIT] void android.preference.PreferenceFragment.<init>() (14ed7ad) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [14ed7ad] void android.preference.PreferenceFragment.<init>()) |- [CI] [EXIT] [14ed7ad] void android.preference.PreferenceFragment.<init>()
+----------------------------------------
+Step: 86
+----------------------------------------
+[8888] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onAttach(android.app.Activity) (14ed7ad,1e276bb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onAttach(1e276bb : android.app.Activity)) |+ [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onAttach(1e276bb : android.app.Activity)) |- [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onAttach(1e276bb : android.app.Activity)
+----------------------------------------
+Step: 87
+----------------------------------------
+[8896] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onCreate(android.os.Bundle) (14ed7ad,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [14ed7ad] android.view.View com.casimirlab.simpleDeadlines.ui.Settings$1.onCreateView(697e015 : android.view.LayoutInflater,3ef4043 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 88
+----------------------------------------
+[8956] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.TimePickerPreference.<init>(android.content.Context,android.util.AttributeSet) (d77e098,1e276bb,fed9357) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d77e098] void com.casimirlab.simpleDeadlines.ui.TimePickerPreference.<init>(1e276bb : android.content.Context,fed9357 : android.util.AttributeSet)) |+ [CB] [ENTRY] [d77e098] void com.casimirlab.simpleDeadlines.ui.TimePickerPreference.onClick(17907ea : android.content.DialogInterface,-1 : int)
+----------------------------------------
+Step: 89
+----------------------------------------
+[9240] [CB] [ENTRY] android.view.View com.casimirlab.simpleDeadlines.ui.Settings$1.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (14ed7ad,697e015,3ef4043,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] android.view.View com.casimirlab.simpleDeadlines.ui.Settings$1.onCreateView(697e015 : android.view.LayoutInflater,3ef4043 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [14ed7ad] android.view.View com.casimirlab.simpleDeadlines.ui.Settings$1.onCreateView(697e015 : android.view.LayoutInflater,3ef4043 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] android.view.View com.casimirlab.simpleDeadlines.ui.Settings$1.onCreateView(697e015 : android.view.LayoutInflater,3ef4043 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] android.view.View com.casimirlab.simpleDeadlines.ui.Settings$1.onCreateView(697e015 : android.view.LayoutInflater,3ef4043 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] android.view.View com.casimirlab.simpleDeadlines.ui.Settings$1.onCreateView(697e015 : android.view.LayoutInflater,3ef4043 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onViewCreated(fae876d : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 90
+----------------------------------------
+[9968] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onViewCreated(android.view.View,android.os.Bundle) (14ed7ad,fae876d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onViewCreated(fae876d : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onViewCreated(fae876d : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 91
+----------------------------------------
+[9972] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onActivityCreated(android.os.Bundle) (14ed7ad,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 92
+----------------------------------------
+[10008] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.onStart() (1e276bb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onStart()) |+ [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onStart()) |- [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onStart()
+----------------------------------------
+Step: 93
+----------------------------------------
+[10012] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onStart() (14ed7ad) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onStart()) |+ [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onStart()) |- [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onStart()
+----------------------------------------
+Step: 94
+----------------------------------------
+[92844] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.onResume() (1e276bb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume() | [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume())) |- [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume() | [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume())) |+ [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onPause()
+----------------------------------------
+Step: 95
+----------------------------------------
+[92848] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume() (14ed7ad) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume() | [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume())) |+ [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume() | [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume())) |- [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume()
+----------------------------------------
+Step: 96
+----------------------------------------
+[18036] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onSaveInstanceState(android.os.Bundle) (aa0ce4a,fc50f42) 
+----------------------------------------
+Step: 97
+----------------------------------------
+[18042] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(android.os.Bundle) (938423f,621dda8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(621dda8 : android.os.Bundle)) |- [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(621dda8 : android.os.Bundle)
+----------------------------------------
+Step: 98
+----------------------------------------
+[18046] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(android.os.Bundle) (46a42d3,621dda8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(621dda8 : android.os.Bundle)) |- [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onSaveInstanceState(621dda8 : android.os.Bundle)
+----------------------------------------
+Step: 99
+----------------------------------------
+[18052] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStop() (aa0ce4a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStop()) |- [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onStop()) |- [CB] [ENTRY] [aa0ce4a] void com.casimirlab.simpleDeadlines.ui.MainActivity.onResume()
+----------------------------------------
+Step: 100
+----------------------------------------
+[18054] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop() (938423f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop()) |- [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop()) |+ [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop()) |- [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop()) |+ [CB] [ENTRY] [938423f] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 101
+----------------------------------------
+[18058] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop() (46a42d3) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop()) |- [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop()) |+ [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop()) |- [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onStop()) |+ [CB] [ENTRY] [46a42d3] void com.casimirlab.simpleDeadlines.ui.DeadlineListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 102
+----------------------------------------
+[40800] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.TimePickerPreference.onClick(android.content.DialogInterface,int) (d77e098,17907ea,-1) 
+----------------------------------------
+Step: 103
+----------------------------------------
+[92540] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onPause() (14ed7ad) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onPause()) |+ [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onPause()) |- [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onPause()
+----------------------------------------
+Step: 104
+----------------------------------------
+[92544] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.onPause() (1e276bb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onPause()) |- [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onPause()) |+ [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onPause()) |+ [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 105
+----------------------------------------
+[92844] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings.onResume() (1e276bb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume() | [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume())) |- [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume() | [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume())) |- [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume() | [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onResume())) |+ [CB] [ENTRY] [1e276bb] void com.casimirlab.simpleDeadlines.ui.Settings.onPause()
+----------------------------------------
+Step: 106
+----------------------------------------
+[92848] [CB] [ENTRY] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume() (14ed7ad) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume() | [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume())) |+ [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume() | [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume())) |- [CB] [ENTRY] [14ed7ad] void com.casimirlab.simpleDeadlines.ui.Settings$1.onResume()
+----------------------------------------

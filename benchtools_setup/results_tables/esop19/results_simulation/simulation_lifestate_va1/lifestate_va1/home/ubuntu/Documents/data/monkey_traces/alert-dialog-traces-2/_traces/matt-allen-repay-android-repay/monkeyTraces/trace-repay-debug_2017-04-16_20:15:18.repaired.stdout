@@ -1,0 +1,625 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-2/_traces/matt-allen-repay-android-repay/monkeyTraces/trace-repay-debug_2017-04-16_20:15:18.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-2/_traces/matt-allen-repay-android-repay/monkeyTraces/trace-repay-debug_2017-04-16_20:15:18.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 0.740000
+parsing - System time: 0.060000
+spec_grounding - User time: 174.190000
+spec_grounding - System time: 0.890000
+
+---Simplified Trace---
+[208] [CB] [ENTRY] void com.repay.android.MainActivity.<init>() (978e820) 
+[208] [CB] [EXIT] NULL = void com.repay.android.MainActivity.<init>() (978e820) 
+[256] [CB] [ENTRY] void com.repay.android.MainActivity.onCreate(android.os.Bundle) (978e820,NULL) 
+  [1163] [CI] [ENTRY] void android.app.Fragment.<init>() (99ad615) 
+  [1163] [CI] [EXIT] void android.app.Fragment.<init>() (99ad615) 
+[256] [CB] [EXIT] void com.repay.android.MainActivity.onCreate(android.os.Bundle) (978e820,NULL) 
+[1202] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onAttach(android.app.Activity) (99ad615,978e820) 
+[1202] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onAttach(android.app.Activity) (99ad615,978e820) 
+[1210] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onCreate(android.os.Bundle) (99ad615,NULL) 
+[1210] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onCreate(android.os.Bundle) (99ad615,NULL) 
+[1240] [CB] [ENTRY] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (99ad615,2131766,3d0e0c4,NULL) 
+  [2029] [CI] [ENTRY] android.view.View android.view.View.findViewById(int) (50c5bc5,2131427464) 
+  [2029] [CI] [EXIT] cfa828c = android.view.View android.view.View.findViewById(int) (50c5bc5,2131427464) 
+  [2035] [CI] [ENTRY] android.view.View android.view.View.findViewById(int) (50c5bc5,2131427464) 
+  [2035] [CI] [EXIT] cfa828c = android.view.View android.view.View.findViewById(int) (50c5bc5,2131427464) 
+  [2037] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (cfa828c,99ad615) 
+  [2037] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (cfa828c,99ad615) 
+[1240] [CB] [EXIT] 50c5bc5 = android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (99ad615,2131766,3d0e0c4,NULL) 
+[2074] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onViewCreated(android.view.View,android.os.Bundle) (99ad615,50c5bc5,NULL) 
+[2074] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onViewCreated(android.view.View,android.os.Bundle) (99ad615,50c5bc5,NULL) 
+[2078] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(android.os.Bundle) (99ad615,NULL) 
+[2078] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(android.os.Bundle) (99ad615,NULL) 
+[2114] [CB] [ENTRY] void com.repay.android.MainActivity.onStart() (978e820) 
+[2114] [CB] [EXIT] void com.repay.android.MainActivity.onStart() (978e820) 
+[2118] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onStart() (99ad615) 
+[2118] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onStart() (99ad615) 
+[2150] [CB] [ENTRY] void com.repay.android.MainActivity.onResume() (978e820) 
+[2150] [CB] [EXIT] void com.repay.android.MainActivity.onResume() (978e820) 
+[2192] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onResume() (99ad615) 
+[2192] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onResume() (99ad615) 
+[9056] [CB] [ENTRY] boolean com.melnykov.fab.FloatingActionButton.performClick() (cfa828c) 
+  [9081] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onClick(android.view.View) (99ad615,cfa828c) 
+  [9081] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onClick(android.view.View) (99ad615,cfa828c) 
+  [9123] [CI] [ENTRY] boolean android.view.View.performClick() (cfa828c) 
+  [9123] [CI] [EXIT] true = boolean android.view.View.performClick() (cfa828c) 
+[9056] [CB] [EXIT] true = boolean com.melnykov.fab.FloatingActionButton.performClick() (cfa828c) 
+[9462] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onPause() (99ad615) 
+[9462] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onPause() (99ad615) 
+[9466] [CB] [ENTRY] void com.repay.android.MainActivity.onPause() (978e820) 
+[9466] [CB] [EXIT] void com.repay.android.MainActivity.onPause() (978e820) 
+[9520] [CB] [ENTRY] void com.repay.android.debtwizard.AddDebtActivity.<init>() (abc8668) 
+[9520] [CB] [EXIT] NULL = void com.repay.android.debtwizard.AddDebtActivity.<init>() (abc8668) 
+[9572] [CB] [ENTRY] void com.repay.android.debtwizard.AddDebtActivity.onCreate(android.os.Bundle) (abc8668,NULL) 
+  [10423] [CI] [ENTRY] void android.app.Fragment.<init>() (1ee2728) 
+  [10423] [CI] [EXIT] void android.app.Fragment.<init>() (1ee2728) 
+[9572] [CB] [EXIT] void com.repay.android.debtwizard.AddDebtActivity.onCreate(android.os.Bundle) (abc8668,NULL) 
+[10462] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onAttach(android.app.Activity) (1ee2728,abc8668) 
+[10462] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onAttach(android.app.Activity) (1ee2728,abc8668) 
+[10470] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onCreate(android.os.Bundle) (1ee2728,NULL) 
+[10470] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onCreate(android.os.Bundle) (1ee2728,NULL) 
+[10498] [CB] [ENTRY] android.view.View com.repay.android.debtwizard.fragment.ChoosePersonFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (1ee2728,17553d7,ffa3aa3,NULL) 
+[10498] [CB] [EXIT] 8e52bb9 = android.view.View com.repay.android.debtwizard.fragment.ChoosePersonFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (1ee2728,17553d7,ffa3aa3,NULL) 
+[11150] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onViewCreated(android.view.View,android.os.Bundle) (1ee2728,8e52bb9,NULL) 
+[11150] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onViewCreated(android.view.View,android.os.Bundle) (1ee2728,8e52bb9,NULL) 
+[11154] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.ChoosePersonFragment.onActivityCreated(android.os.Bundle) (1ee2728,NULL) 
+  [11229] [CI] [ENTRY] void android.os.AsyncTask.<init>() (e000349) 
+  [11229] [CI] [EXIT] void android.os.AsyncTask.<init>() (e000349) 
+  [11231] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (e000349,a15167c) 
+  [11232] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.ChoosePersonFragment$GetFriendsFromDB.onPreExecute() (e000349) 
+  [11232] [CB] [EXIT] void com.repay.android.debtwizard.fragment.ChoosePersonFragment$GetFriendsFromDB.onPreExecute() (e000349) 
+  [11231] [CI] [EXIT] e000349 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (e000349,a15167c) 
+[11154] [CB] [EXIT] void com.repay.android.debtwizard.fragment.ChoosePersonFragment.onActivityCreated(android.os.Bundle) (1ee2728,NULL) 
+[11242] [CB] [ENTRY] void com.repay.android.debtwizard.DebtActivity.onStart() (abc8668) 
+[11242] [CB] [EXIT] void com.repay.android.debtwizard.DebtActivity.onStart() (abc8668) 
+[11246] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onStart() (1ee2728) 
+[11246] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onStart() (1ee2728) 
+[11262] [CB] [ENTRY] void com.repay.android.debtwizard.DebtActivity.onResume() (abc8668) 
+[11262] [CB] [EXIT] void com.repay.android.debtwizard.DebtActivity.onResume() (abc8668) 
+[11266] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onResume() (1ee2728) 
+[11266] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onResume() (1ee2728) 
+[12856] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.ChoosePersonFragment$GetFriendsFromDB.onPostExecute(java.lang.Object) (e000349,4c5f205) 
+[12856] [CB] [EXIT] void com.repay.android.debtwizard.fragment.ChoosePersonFragment$GetFriendsFromDB.onPostExecute(java.lang.Object) (e000349,4c5f205) 
+[13252] [CB] [ENTRY] void com.repay.android.MainActivity.onSaveInstanceState(android.os.Bundle) (978e820,4908b9) 
+  [13254] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onSaveInstanceState(android.os.Bundle) (99ad615,8deb30a) 
+  [13254] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onSaveInstanceState(android.os.Bundle) (99ad615,8deb30a) 
+[13252] [CB] [EXIT] void com.repay.android.MainActivity.onSaveInstanceState(android.os.Bundle) (978e820,4908b9) 
+[13268] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onStop() (99ad615) 
+[13268] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onStop() (99ad615) 
+[13272] [CB] [ENTRY] void com.repay.android.MainActivity.onStop() (978e820) 
+[13272] [CB] [EXIT] void com.repay.android.MainActivity.onStop() (978e820) 
+[13468] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onPause() (1ee2728) 
+[13468] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onPause() (1ee2728) 
+[13472] [CB] [ENTRY] void com.repay.android.debtwizard.DebtActivity.onPause() (abc8668) 
+[13472] [CB] [EXIT] void com.repay.android.debtwizard.DebtActivity.onPause() (abc8668) 
+[13504] [CB] [ENTRY] void com.repay.android.MainActivity.<init>() (8172bb8) 
+[13504] [CB] [EXIT] NULL = void com.repay.android.MainActivity.<init>() (8172bb8) 
+[13552] [CB] [ENTRY] void com.repay.android.MainActivity.onCreate(android.os.Bundle) (8172bb8,NULL) 
+  [14387] [CI] [ENTRY] void android.app.Fragment.<init>() (947db5c) 
+  [14387] [CI] [EXIT] void android.app.Fragment.<init>() (947db5c) 
+[13552] [CB] [EXIT] void com.repay.android.MainActivity.onCreate(android.os.Bundle) (8172bb8,NULL) 
+[14426] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onAttach(android.app.Activity) (947db5c,8172bb8) 
+[14426] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onAttach(android.app.Activity) (947db5c,8172bb8) 
+[14434] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onCreate(android.os.Bundle) (947db5c,NULL) 
+[14434] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onCreate(android.os.Bundle) (947db5c,NULL) 
+[14464] [CB] [ENTRY] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (947db5c,8044511,3e86da7,NULL) 
+[14464] [CB] [EXIT] 5a567a0 = android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (947db5c,8044511,3e86da7,NULL) 
+[15278] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onViewCreated(android.view.View,android.os.Bundle) (947db5c,5a567a0,NULL) 
+[15278] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onViewCreated(android.view.View,android.os.Bundle) (947db5c,5a567a0,NULL) 
+[15282] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(android.os.Bundle) (947db5c,NULL) 
+[15282] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(android.os.Bundle) (947db5c,NULL) 
+[15318] [CB] [ENTRY] void com.repay.android.MainActivity.onStart() (8172bb8) 
+[15318] [CB] [EXIT] void com.repay.android.MainActivity.onStart() (8172bb8) 
+[15322] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onStart() (947db5c) 
+[15322] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onStart() (947db5c) 
+[15354] [CB] [ENTRY] void com.repay.android.MainActivity.onResume() (8172bb8) 
+[15354] [CB] [EXIT] void com.repay.android.MainActivity.onResume() (8172bb8) 
+[15396] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onResume() (947db5c) 
+[15396] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onResume() (947db5c) 
+[16984] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onDestroyView() (99ad615) 
+[16984] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onDestroyView() (99ad615) 
+[17080] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onDestroy() (99ad615) 
+[17080] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onDestroy() (99ad615) 
+[17084] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onDetach() (99ad615) 
+[17084] [CB] [EXIT] void com.repay.android.fragment.FriendsListFragment.onDetach() (99ad615) 
+[17088] [CB] [ENTRY] void com.repay.android.MainActivity.onDestroy() (978e820) 
+[17088] [CB] [EXIT] void com.repay.android.MainActivity.onDestroy() (978e820) 
+[18360] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onStop() (1ee2728) 
+[18360] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onStop() (1ee2728) 
+[18364] [CB] [ENTRY] void com.repay.android.debtwizard.DebtActivity.onStop() (abc8668) 
+[18364] [CB] [EXIT] void com.repay.android.debtwizard.DebtActivity.onStop() (abc8668) 
+[18372] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroyView() (1ee2728) 
+[18372] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroyView() (1ee2728) 
+[18376] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroy() (1ee2728) 
+[18376] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroy() (1ee2728) 
+[18380] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onDetach() (1ee2728) 
+[18380] [CB] [EXIT] void com.repay.android.debtwizard.fragment.DebtFragment.onDetach() (1ee2728) 
+[18384] [CB] [ENTRY] void com.repay.android.debtwizard.DebtActivity.onDestroy() (abc8668) 
+[18384] [CB] [EXIT] void com.repay.android.debtwizard.DebtActivity.onDestroy() (abc8668) 
+
+
+
+TRACE STATISTICS
+Trace length: 67
+Top-level callbacks: 52
+CI-ENTRY: 6
+CI-EXIT: 5
+CB-ENTRY: 55
+CB-EXIT: 0
+        encoding - User time: 3.140000
+encoding - System time: 0.010000
+simulation - User time: 17.790000
+simulation - System time: 0.130000
+
+The trace can be simulated in 67 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[208] [CB] [ENTRY] void com.repay.android.MainActivity.<init>() (978e820) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.<init>()) |+ [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.<init>()) |- [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.<init>()
+----------------------------------------
+Step: 2
+----------------------------------------
+[256] [CB] [ENTRY] void com.repay.android.MainActivity.onCreate(android.os.Bundle) (978e820,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[1163] [CI] [ENTRY] void android.app.Fragment.<init>() (99ad615) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [99ad615] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onAttach(978e820 : android.app.Activity)
+----------------------------------------
+Step: 4
+----------------------------------------
+[1163] [CI] [EXIT] void android.app.Fragment.<init>() (99ad615) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [99ad615] void android.app.Fragment.<init>()) |- [CI] [EXIT] [99ad615] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 5
+----------------------------------------
+[1202] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onAttach(android.app.Activity) (99ad615,978e820) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onAttach(978e820 : android.app.Activity)) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onAttach(978e820 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onAttach(978e820 : android.app.Activity)) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 6
+----------------------------------------
+[1210] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onCreate(android.os.Bundle) (99ad615,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [99ad615] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(2131766 : android.view.LayoutInflater,3d0e0c4 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 7
+----------------------------------------
+[1240] [CB] [ENTRY] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (99ad615,2131766,3d0e0c4,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(2131766 : android.view.LayoutInflater,3d0e0c4 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onViewCreated(50c5bc5 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(2131766 : android.view.LayoutInflater,3d0e0c4 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [99ad615] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(2131766 : android.view.LayoutInflater,3d0e0c4 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(2131766 : android.view.LayoutInflater,3d0e0c4 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(2131766 : android.view.LayoutInflater,3d0e0c4 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 8
+----------------------------------------
+[2029] [CI] [EXIT] cfa828c = android.view.View android.view.View.findViewById(int) (50c5bc5,2131427464) 
+----------------------------------------
+Step: 9
+----------------------------------------
+[2035] [CI] [EXIT] cfa828c = android.view.View android.view.View.findViewById(int) (50c5bc5,2131427464) 
+----------------------------------------
+Step: 10
+----------------------------------------
+[2037] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (cfa828c,99ad615) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); (cfa828c = [CI] [EXIT] [50c5bc5] android.view.View android.view.View.findViewById(2131427464 : int) | cfa828c = [CI] [EXIT] [50c5bc5] android.view.View android.view.View.findViewById(2131427464 : int))); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [cfa828c] void android.view.View.setOnClickListener(99ad615 : android.view.View$OnClickListener))) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onClick(cfa828c : android.view.View)
+----------------------------------------
+Step: 11
+----------------------------------------
+[2074] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onViewCreated(android.view.View,android.os.Bundle) (99ad615,50c5bc5,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onViewCreated(50c5bc5 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onViewCreated(50c5bc5 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 12
+----------------------------------------
+[2078] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(android.os.Bundle) (99ad615,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroyView()
+----------------------------------------
+Step: 13
+----------------------------------------
+[2114] [CB] [ENTRY] void com.repay.android.MainActivity.onStart() (978e820) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onStart()) |+ [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onStart()) |- [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onStart()
+----------------------------------------
+Step: 14
+----------------------------------------
+[2118] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onStart() (99ad615) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStart()) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStart()) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStart()) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStart()) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStart()) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onSaveInstanceState(8deb30a : android.os.Bundle)
+----------------------------------------
+Step: 15
+----------------------------------------
+[2150] [CB] [ENTRY] void com.repay.android.MainActivity.onResume() (978e820) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onResume()) |- [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onResume()) |+ [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onPause()
+----------------------------------------
+Step: 16
+----------------------------------------
+[2192] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onResume() (99ad615) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onResume()) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onResume()) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onPause()
+----------------------------------------
+Step: 17
+----------------------------------------
+[9056] [CB] [ENTRY] boolean com.melnykov.fab.FloatingActionButton.performClick() (cfa828c) 
+----------------------------------------
+Step: 18
+----------------------------------------
+[9081] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onClick(android.view.View) (99ad615,cfa828c) 
+----------------------------------------
+Step: 19
+----------------------------------------
+[9123] [CI] [ENTRY] boolean android.view.View.performClick() (cfa828c) 
+----------------------------------------
+Step: 20
+----------------------------------------
+[9462] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onPause() (99ad615) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onPause()) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onPause()) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onPause()
+----------------------------------------
+Step: 21
+----------------------------------------
+[9466] [CB] [ENTRY] void com.repay.android.MainActivity.onPause() (978e820) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onPause()) |+ [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onPause()) |+ [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onPause()) |+ [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onPause()) |- [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onPause()
+----------------------------------------
+Step: 22
+----------------------------------------
+[9520] [CB] [ENTRY] void com.repay.android.debtwizard.AddDebtActivity.<init>() (abc8668) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.AddDebtActivity.<init>()) |- [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.AddDebtActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.AddDebtActivity.<init>()) |+ [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.AddDebtActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 23
+----------------------------------------
+[9572] [CB] [ENTRY] void com.repay.android.debtwizard.AddDebtActivity.onCreate(android.os.Bundle) (abc8668,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.AddDebtActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.AddDebtActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.AddDebtActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 24
+----------------------------------------
+[10423] [CI] [ENTRY] void android.app.Fragment.<init>() (1ee2728) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [1ee2728] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onAttach(abc8668 : android.app.Activity)
+----------------------------------------
+Step: 25
+----------------------------------------
+[10423] [CI] [EXIT] void android.app.Fragment.<init>() (1ee2728) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [1ee2728] void android.app.Fragment.<init>()) |- [CI] [EXIT] [1ee2728] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 26
+----------------------------------------
+[10462] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onAttach(android.app.Activity) (1ee2728,abc8668) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onAttach(abc8668 : android.app.Activity)) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onAttach(abc8668 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onAttach(abc8668 : android.app.Activity)) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 27
+----------------------------------------
+[10470] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onCreate(android.os.Bundle) (1ee2728,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1ee2728] android.view.View com.repay.android.debtwizard.fragment.ChoosePersonFragment.onCreateView(17553d7 : android.view.LayoutInflater,ffa3aa3 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 28
+----------------------------------------
+[10498] [CB] [ENTRY] android.view.View com.repay.android.debtwizard.fragment.ChoosePersonFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (1ee2728,17553d7,ffa3aa3,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] android.view.View com.repay.android.debtwizard.fragment.ChoosePersonFragment.onCreateView(17553d7 : android.view.LayoutInflater,ffa3aa3 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onViewCreated(8e52bb9 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] android.view.View com.repay.android.debtwizard.fragment.ChoosePersonFragment.onCreateView(17553d7 : android.view.LayoutInflater,ffa3aa3 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.ChoosePersonFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] android.view.View com.repay.android.debtwizard.fragment.ChoosePersonFragment.onCreateView(17553d7 : android.view.LayoutInflater,ffa3aa3 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [1ee2728] android.view.View com.repay.android.debtwizard.fragment.ChoosePersonFragment.onCreateView(17553d7 : android.view.LayoutInflater,ffa3aa3 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] android.view.View com.repay.android.debtwizard.fragment.ChoosePersonFragment.onCreateView(17553d7 : android.view.LayoutInflater,ffa3aa3 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStart()
+----------------------------------------
+Step: 29
+----------------------------------------
+[11150] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onViewCreated(android.view.View,android.os.Bundle) (1ee2728,8e52bb9,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onViewCreated(8e52bb9 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onViewCreated(8e52bb9 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 30
+----------------------------------------
+[11154] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.ChoosePersonFragment.onActivityCreated(android.os.Bundle) (1ee2728,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.ChoosePersonFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.ChoosePersonFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.ChoosePersonFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroyView()
+----------------------------------------
+Step: 31
+----------------------------------------
+[11229] [CI] [EXIT] void android.os.AsyncTask.<init>() (e000349) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [e000349] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [e000349] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 32
+----------------------------------------
+[11231] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (e000349,a15167c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [e000349] android.os.AsyncTask android.os.AsyncTask.execute(a15167c : java.lang.Object[])) |+ [CB] [ENTRY] [e000349] void com.repay.android.debtwizard.fragment.ChoosePersonFragment$GetFriendsFromDB.onPreExecute()
+----------------------------------------
+Step: 33
+----------------------------------------
+[11232] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.ChoosePersonFragment$GetFriendsFromDB.onPreExecute() (e000349) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e000349] void com.repay.android.debtwizard.fragment.ChoosePersonFragment$GetFriendsFromDB.onPreExecute()) |- [CB] [ENTRY] [e000349] void com.repay.android.debtwizard.fragment.ChoosePersonFragment$GetFriendsFromDB.onPreExecute()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e000349] void com.repay.android.debtwizard.fragment.ChoosePersonFragment$GetFriendsFromDB.onPreExecute()) |+ [CB] [ENTRY] [e000349] void com.repay.android.debtwizard.fragment.ChoosePersonFragment$GetFriendsFromDB.onPostExecute(4c5f205 : java.lang.Object)
+----------------------------------------
+Step: 34
+----------------------------------------
+[11242] [CB] [ENTRY] void com.repay.android.debtwizard.DebtActivity.onStart() (abc8668) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onStart()) |+ [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onStart()) |- [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onStart()
+----------------------------------------
+Step: 35
+----------------------------------------
+[11246] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onStart() (1ee2728) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStart()) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStart()) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStart()) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStart()) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onResume()
+----------------------------------------
+Step: 36
+----------------------------------------
+[11262] [CB] [ENTRY] void com.repay.android.debtwizard.DebtActivity.onResume() (abc8668) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onResume()) |+ [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onResume()) |- [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onResume()
+----------------------------------------
+Step: 37
+----------------------------------------
+[11266] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onResume() (1ee2728) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onResume()) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onResume()) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onResume()
+----------------------------------------
+Step: 38
+----------------------------------------
+[12856] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.ChoosePersonFragment$GetFriendsFromDB.onPostExecute(java.lang.Object) (e000349,4c5f205) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e000349] void com.repay.android.debtwizard.fragment.ChoosePersonFragment$GetFriendsFromDB.onPostExecute(4c5f205 : java.lang.Object)) |- [CB] [ENTRY] [e000349] void com.repay.android.debtwizard.fragment.ChoosePersonFragment$GetFriendsFromDB.onPostExecute(4c5f205 : java.lang.Object)
+----------------------------------------
+Step: 39
+----------------------------------------
+[13252] [CB] [ENTRY] void com.repay.android.MainActivity.onSaveInstanceState(android.os.Bundle) (978e820,4908b9) 
+----------------------------------------
+Step: 40
+----------------------------------------
+[13254] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onSaveInstanceState(android.os.Bundle) (99ad615,8deb30a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onSaveInstanceState(8deb30a : android.os.Bundle)) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onSaveInstanceState(8deb30a : android.os.Bundle)
+----------------------------------------
+Step: 41
+----------------------------------------
+[13268] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onStop() (99ad615) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStop()) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStop()) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStop()) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStop()) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStop()) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStop()
+----------------------------------------
+Step: 42
+----------------------------------------
+[13272] [CB] [ENTRY] void com.repay.android.MainActivity.onStop() (978e820) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onStop()) |- [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onStop()) |+ [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onStop()) |- [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onStop()
+----------------------------------------
+Step: 43
+----------------------------------------
+[13468] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onPause() (1ee2728) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onPause()) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onPause()) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onResume()
+----------------------------------------
+Step: 44
+----------------------------------------
+[13472] [CB] [ENTRY] void com.repay.android.debtwizard.DebtActivity.onPause() (abc8668) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onPause()) |+ [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onPause()) |- [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onPause()) |+ [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.AddDebtActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onPause()) |+ [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onStop()
+----------------------------------------
+Step: 45
+----------------------------------------
+[13504] [CB] [ENTRY] void com.repay.android.MainActivity.<init>() (8172bb8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.<init>()) |- [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.<init>()) |+ [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 46
+----------------------------------------
+[13552] [CB] [ENTRY] void com.repay.android.MainActivity.onCreate(android.os.Bundle) (8172bb8,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 47
+----------------------------------------
+[14387] [CI] [ENTRY] void android.app.Fragment.<init>() (947db5c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [947db5c] void android.app.Fragment.<init>()) |+ [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onAttach(8172bb8 : android.app.Activity)
+----------------------------------------
+Step: 48
+----------------------------------------
+[14387] [CI] [EXIT] void android.app.Fragment.<init>() (947db5c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [947db5c] void android.app.Fragment.<init>()) |- [CI] [EXIT] [947db5c] void android.app.Fragment.<init>()
+----------------------------------------
+Step: 49
+----------------------------------------
+[14426] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onAttach(android.app.Activity) (947db5c,8172bb8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onAttach(8172bb8 : android.app.Activity)) |+ [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onAttach(8172bb8 : android.app.Activity)) |- [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onAttach(8172bb8 : android.app.Activity)
+----------------------------------------
+Step: 50
+----------------------------------------
+[14434] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onCreate(android.os.Bundle) (947db5c,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [947db5c] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(8044511 : android.view.LayoutInflater,3e86da7 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 51
+----------------------------------------
+[14464] [CB] [ENTRY] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (947db5c,8044511,3e86da7,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [947db5c] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(8044511 : android.view.LayoutInflater,3e86da7 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [947db5c] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(8044511 : android.view.LayoutInflater,3e86da7 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onViewCreated(5a567a0 : android.view.View,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [947db5c] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(8044511 : android.view.LayoutInflater,3e86da7 : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [947db5c] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(8044511 : android.view.LayoutInflater,3e86da7 : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [947db5c] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(8044511 : android.view.LayoutInflater,3e86da7 : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 52
+----------------------------------------
+[15278] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onViewCreated(android.view.View,android.os.Bundle) (947db5c,5a567a0,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onViewCreated(5a567a0 : android.view.View,NULL : android.os.Bundle)) |- [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onViewCreated(5a567a0 : android.view.View,NULL : android.os.Bundle)
+----------------------------------------
+Step: 53
+----------------------------------------
+[15282] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(android.os.Bundle) (947db5c,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 54
+----------------------------------------
+[15318] [CB] [ENTRY] void com.repay.android.MainActivity.onStart() (8172bb8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.onStart()) |+ [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.onStart()) |- [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.onStart()
+----------------------------------------
+Step: 55
+----------------------------------------
+[15322] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onStart() (947db5c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onStart()) |+ [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onStart()) |- [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onStart()
+----------------------------------------
+Step: 56
+----------------------------------------
+[15354] [CB] [ENTRY] void com.repay.android.MainActivity.onResume() (8172bb8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.onResume()) |- [CB] [ENTRY] [8172bb8] void com.repay.android.MainActivity.onResume()
+----------------------------------------
+Step: 57
+----------------------------------------
+[15396] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onResume() (947db5c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onResume()) |- [CB] [ENTRY] [947db5c] void com.repay.android.fragment.FriendsListFragment.onResume()
+----------------------------------------
+Step: 58
+----------------------------------------
+[16984] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onDestroyView() (99ad615) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroyView()) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroyView()) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroyView()) |+ [CB] [ENTRY] [99ad615] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(2131766 : android.view.LayoutInflater,3d0e0c4 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroyView()) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroyView()) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 59
+----------------------------------------
+[17080] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onDestroy() (99ad615) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroy()) |- [CB] [ENTRY] [99ad615] android.view.View com.repay.android.fragment.FriendsListFragment.onCreateView(2131766 : android.view.LayoutInflater,3d0e0c4 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroy()) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroy()) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDestroy()
+----------------------------------------
+Step: 60
+----------------------------------------
+[17084] [CB] [ENTRY] void com.repay.android.fragment.FriendsListFragment.onDetach() (99ad615) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDetach()) |+ [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onAttach(978e820 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDetach()) |- [CB] [ENTRY] [99ad615] void com.repay.android.fragment.FriendsListFragment.onDetach()
+----------------------------------------
+Step: 61
+----------------------------------------
+[17088] [CB] [ENTRY] void com.repay.android.MainActivity.onDestroy() (978e820) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onDestroy()) |- [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onDestroy()) |- [CB] [ENTRY] [978e820] void com.repay.android.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 62
+----------------------------------------
+[18360] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onStop() (1ee2728) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStop()) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStop()) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStop()) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStop()) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStop()) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStart()
+----------------------------------------
+Step: 63
+----------------------------------------
+[18364] [CB] [ENTRY] void com.repay.android.debtwizard.DebtActivity.onStop() (abc8668) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onStop()) |- [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onStop()) |- [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onStop()) |+ [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onDestroy()
+----------------------------------------
+Step: 64
+----------------------------------------
+[18372] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroyView() (1ee2728) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroyView()) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroyView()) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroyView()) |+ [CB] [ENTRY] [1ee2728] android.view.View com.repay.android.debtwizard.fragment.ChoosePersonFragment.onCreateView(17553d7 : android.view.LayoutInflater,ffa3aa3 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroyView()) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroyView()) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 65
+----------------------------------------
+[18376] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroy() (1ee2728) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroy()) |- [CB] [ENTRY] [1ee2728] android.view.View com.repay.android.debtwizard.fragment.ChoosePersonFragment.onCreateView(17553d7 : android.view.LayoutInflater,ffa3aa3 : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroy()) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDestroy()) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDetach()
+----------------------------------------
+Step: 66
+----------------------------------------
+[18380] [CB] [ENTRY] void com.repay.android.debtwizard.fragment.DebtFragment.onDetach() (1ee2728) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDetach()) |- [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onDetach()) |+ [CB] [ENTRY] [1ee2728] void com.repay.android.debtwizard.fragment.DebtFragment.onAttach(abc8668 : android.app.Activity)
+----------------------------------------
+Step: 67
+----------------------------------------
+[18384] [CB] [ENTRY] void com.repay.android.debtwizard.DebtActivity.onDestroy() (abc8668) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onDestroy()) |- [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.DebtActivity.onDestroy()) |- [CB] [ENTRY] [abc8668] void com.repay.android.debtwizard.AddDebtActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------

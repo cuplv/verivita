@@ -1,0 +1,32 @@
+INFO:root:Total number of specs (before grounding): 17712
+Traceback (most recent call last):
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py", line 502, in <module>
+    main()
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py", line 435, in main
+    (steps, cex, last_cex, ts_enc) = driver.run_simulation(cb_sequence)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py", line 161, in run_simulation
+    self.opts.use_flowdroid_model)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/encoder.py", line 190, in __init__
+    self.stats)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/encoder.py", line 404, in _compute_ground_spec
+    tmp = gs.ground_spec(spec)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/grounding.py", line 68, in ground_spec
+    sg.process_substitutions(spec, self, self._process_subs, data)
+  File "/home/ubuntu/Documents/source/callback-verification/cbverifier/encoding/grounding.py", line 762, in process_substitutions
+    solver.add_assertion(ground_formula)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/solvers/solver.py", line 364, in add_assertion
+    tracked = self._add_assertion(formula, named=named)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/decorators.py", line 64, in clear_pending_pop_wrap
+    return f(self, *args, **kwargs)
+  File "/home/ubuntu/.local/lib/python2.7/site-packages/pysmt/solvers/z3.py", line 177, in _add_assertion
+    self.z3.add(term)
+  File "/home/ubuntu/.smt_solvers/python-bindings-2.7/z3.py", line 5890, in add
+    self.assert_exprs(*args)
+  File "/home/ubuntu/.smt_solvers/python-bindings-2.7/z3.py", line 5879, in assert_exprs
+    Z3_solver_assert(self.ctx.ref(), self.solver, arg.as_ast())
+  File "/home/ubuntu/.smt_solvers/python-bindings-2.7/z3core.py", line 4213, in Z3_solver_assert
+    raise Z3Exception(lib().Z3_get_error_msg_ex(a0, err))
+z3types.Z3Exception: out of memory
+real 294.61
+user 291.34
+sys 3.24

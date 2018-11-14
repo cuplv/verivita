@@ -1,0 +1,889 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/_traces/lukhnos-roundandsplit-Android/monkeyTraces/trace-app-debug_2017-04-25_20:39:20.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/_traces/lukhnos-roundandsplit-Android/monkeyTraces/trace-app-debug_2017-04-25_20:39:20.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 1.420000
+parsing - System time: 0.110000
+spec_grounding - User time: 168.770000
+spec_grounding - System time: 0.880000
+
+---Simplified Trace---
+[2] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity.<init>() (a41f3b6) 
+[2] [CB] [EXIT] NULL = void org.lukhnos.roundandsplit.MainActivity.<init>() (a41f3b6) 
+[46] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity.onCreate(android.os.Bundle) (a41f3b6,NULL) 
+  [3533] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (cf854ed,2461d58) 
+  [3533] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (cf854ed,2461d58) 
+  [3545] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,cf854ed,-1) 
+  [3545] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,cf854ed,-1) 
+  [3633] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (b571884,2461d58) 
+  [3633] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (b571884,2461d58) 
+  [3645] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,b571884,-1) 
+  [3645] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,b571884,-1) 
+  [3733] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (7534bca,2461d58) 
+  [3733] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (7534bca,2461d58) 
+  [3745] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,7534bca,-1) 
+  [3745] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,7534bca,-1) 
+  [3833] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (9b0ca7,2461d58) 
+  [3833] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (9b0ca7,2461d58) 
+  [3845] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,9b0ca7,-1) 
+  [3845] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,9b0ca7,-1) 
+  [3933] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (6543dc5,2461d58) 
+  [3933] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (6543dc5,2461d58) 
+  [3945] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,6543dc5,-1) 
+  [3945] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,6543dc5,-1) 
+  [4033] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a5f8753,2461d58) 
+  [4033] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a5f8753,2461d58) 
+  [4045] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,a5f8753,-1) 
+  [4045] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,a5f8753,-1) 
+  [4133] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (8a808d1,2461d58) 
+  [4133] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (8a808d1,2461d58) 
+  [4145] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,8a808d1,-1) 
+  [4145] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,8a808d1,-1) 
+  [4233] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (9ebbdbf,2461d58) 
+  [4233] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (9ebbdbf,2461d58) 
+  [4245] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,9ebbdbf,-1) 
+  [4245] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,9ebbdbf,-1) 
+  [4333] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (9195d9d,2461d58) 
+  [4333] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (9195d9d,2461d58) 
+  [4345] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,9195d9d,-1) 
+  [4345] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,9195d9d,-1) 
+  [4431] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e0b51cf,2461d58) 
+  [4431] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e0b51cf,2461d58) 
+  [4443] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,e0b51cf,-1) 
+  [4443] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,e0b51cf,-1) 
+  [4529] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (79713d6,2461d58) 
+  [4529] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (79713d6,2461d58) 
+  [4541] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,79713d6,-1) 
+  [4541] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,79713d6,-1) 
+  [4627] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (996fa39,2461d58) 
+  [4627] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (996fa39,2461d58) 
+  [4639] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,996fa39,-1) 
+  [4639] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,996fa39,-1) 
+  [6103] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (a41f3b6,2131427334) 
+  [6103] [CI] [EXIT] d7acf35 = android.view.View android.app.Activity.findViewById(int) (a41f3b6,2131427334) 
+  [6111] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (d7acf35,56af53b) 
+  [6111] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (d7acf35,56af53b) 
+  [6265] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (c89bb1c,298d443) 
+  [6265] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (c89bb1c,298d443) 
+  [6271] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,c89bb1c,-1) 
+  [6271] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,c89bb1c,-1) 
+  [6367] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (276d4e9,298d443) 
+  [6367] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (276d4e9,298d443) 
+  [6373] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,276d4e9,-1) 
+  [6373] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,276d4e9,-1) 
+  [6469] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a8ef84a,298d443) 
+  [6469] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a8ef84a,298d443) 
+  [6475] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,a8ef84a,-1) 
+  [6475] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,a8ef84a,-1) 
+  [6517] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,false) 
+  [6517] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,false) 
+[46] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity.onCreate(android.os.Bundle) (a41f3b6,NULL) 
+[6638] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity.onStart() (a41f3b6) 
+[6638] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity.onStart() (a41f3b6) 
+[6654] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity.onResume() (a41f3b6) 
+  [6851] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (c009345,298d443) 
+  [6851] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (c009345,298d443) 
+  [6857] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,c009345,-1) 
+  [6857] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,c009345,-1) 
+  [6953] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e1de8d3,298d443) 
+  [6953] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e1de8d3,298d443) 
+  [6959] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,e1de8d3,-1) 
+  [6959] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,e1de8d3,-1) 
+  [7055] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (adbd651,298d443) 
+  [7055] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (adbd651,298d443) 
+  [7061] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,adbd651,-1) 
+  [7061] [CI] [EXIT] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,adbd651,-1) 
+  [7103] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,false) 
+  [7103] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,false) 
+[6654] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity.onResume() (a41f3b6) 
+[14544] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,79713d6) 
+[14544] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,79713d6) 
+[14610] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,996fa39) 
+[14610] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,996fa39) 
+[14768] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,7534bca) 
+  [14809] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,false) 
+  [14809] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,false) 
+[14768] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,7534bca) 
+[15390] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,a5f8753) 
+  [15431] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,false) 
+  [15431] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,false) 
+[15390] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,a5f8753) 
+[16468] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,6543dc5) 
+  [16559] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+  [16559] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+[16468] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,6543dc5) 
+[17044] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,7534bca) 
+  [17135] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+  [17135] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+[17044] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,7534bca) 
+[17604] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9195d9d) 
+  [17695] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+  [17695] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+[17604] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9195d9d) 
+[19008] [CB] [ENTRY] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(android.view.View) (298d443,c009345) 
+  [19117] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+  [19117] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+[19008] [CB] [EXIT] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(android.view.View) (298d443,c009345) 
+[19570] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9195d9d) 
+  [19661] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+  [19661] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+[19570] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9195d9d) 
+[20082] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$1.onClick(android.view.View) (56af53b,d7acf35) 
+  [20145] [CI] [ENTRY] void android.app.DialogFragment.<init>() (2fdcf6b) 
+  [20145] [CI] [EXIT] void android.app.DialogFragment.<init>() (2fdcf6b) 
+[20082] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$1.onClick(android.view.View) (56af53b,d7acf35) 
+[20176] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (2fdcf6b,a41f3b6) 
+[20176] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (2fdcf6b,a41f3b6) 
+[20184] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (2fdcf6b,NULL) 
+[20184] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (2fdcf6b,NULL) 
+[20188] [CB] [ENTRY] android.app.Dialog org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateDialog(android.os.Bundle) (2fdcf6b,NULL) 
+  [20191] [CI] [ENTRY] void android.app.AlertDialog$Builder.<init>(android.content.Context) (f245b1,a41f3b6) 
+  [20191] [CI] [EXIT] void android.app.AlertDialog$Builder.<init>(android.content.Context) (f245b1,a41f3b6) 
+  [20209] [CI] [ENTRY] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setItems(java.lang.CharSequence[],android.content.DialogInterface$OnClickListener) (f245b1,433b1e5,2dd4a5d) 
+  [20209] [CI] [EXIT] f245b1 = android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setItems(java.lang.CharSequence[],android.content.DialogInterface$OnClickListener) (f245b1,433b1e5,2dd4a5d) 
+  [20211] [CI] [ENTRY] android.app.AlertDialog android.app.AlertDialog$Builder.create() (f245b1) 
+  [20211] [CI] [EXIT] d1b6166 = android.app.AlertDialog android.app.AlertDialog$Builder.create() (f245b1) 
+[20188] [CB] [EXIT] d1b6166 = android.app.Dialog org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateDialog(android.os.Bundle) (2fdcf6b,NULL) 
+[20282] [CB] [ENTRY] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (2fdcf6b,6ec2df2,NULL,NULL) 
+[20282] [CB] [EXIT] NULL = android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (2fdcf6b,6ec2df2,NULL,NULL) 
+[20286] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (2fdcf6b,NULL) 
+[20286] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (2fdcf6b,NULL) 
+[20298] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (2fdcf6b) 
+[20298] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (2fdcf6b) 
+[21330] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (2fdcf6b) 
+[21330] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (2fdcf6b) 
+[22358] [CB] [ENTRY] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(android.view.View) (298d443,c009345) 
+  [22467] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+  [22467] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+[22358] [CB] [EXIT] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(android.view.View) (298d443,c009345) 
+[23344] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment$1.onClick(android.content.DialogInterface,int) (2dd4a5d,d1b6166,2) 
+[23344] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment$1.onClick(android.content.DialogInterface,int) (2dd4a5d,d1b6166,2) 
+[23614] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,a5f8753) 
+[23614] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,a5f8753) 
+[23632] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (2fdcf6b) 
+[23632] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (2fdcf6b) 
+[23636] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (2fdcf6b) 
+[23636] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (2fdcf6b) 
+[23640] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (2fdcf6b) 
+[23640] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (2fdcf6b) 
+[23644] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (2fdcf6b) 
+[23644] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (2fdcf6b) 
+[23648] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (2fdcf6b) 
+[23648] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (2fdcf6b) 
+[24008] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,996fa39) 
+  [24093] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+  [24093] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+[24008] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,996fa39) 
+[24562] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,b571884) 
+  [24653] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+  [24653] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+[24562] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,b571884) 
+[25454] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$1.onClick(android.view.View) (56af53b,d7acf35) 
+  [25517] [CI] [ENTRY] void android.app.DialogFragment.<init>() (69892c6) 
+  [25517] [CI] [EXIT] void android.app.DialogFragment.<init>() (69892c6) 
+[25454] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$1.onClick(android.view.View) (56af53b,d7acf35) 
+[25548] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (69892c6,a41f3b6) 
+[25548] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (69892c6,a41f3b6) 
+[25556] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (69892c6,NULL) 
+[25556] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (69892c6,NULL) 
+[25650] [CB] [ENTRY] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (69892c6,a05e7e7,NULL,NULL) 
+[25650] [CB] [EXIT] NULL = android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (69892c6,a05e7e7,NULL,NULL) 
+[25654] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (69892c6,NULL) 
+[25654] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (69892c6,NULL) 
+[25666] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (69892c6) 
+[25666] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (69892c6) 
+[26674] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (69892c6) 
+[26674] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (69892c6) 
+[28398] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9195d9d) 
+[28398] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9195d9d) 
+[28416] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (69892c6) 
+[28416] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (69892c6) 
+[28420] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (69892c6) 
+[28420] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (69892c6) 
+[28424] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (69892c6) 
+[28424] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (69892c6) 
+[28428] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (69892c6) 
+[28428] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (69892c6) 
+[28432] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (69892c6) 
+[28432] [CB] [EXIT] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (69892c6) 
+[28700] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,6543dc5) 
+[28700] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,6543dc5) 
+[28858] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,8a808d1) 
+[28858] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,8a808d1) 
+[29380] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,996fa39) 
+  [29465] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+  [29465] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+[29380] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,996fa39) 
+[29934] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9ebbdbf) 
+  [30025] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+  [30025] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+[29934] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9ebbdbf) 
+[30502] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,cf854ed) 
+[30502] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,cf854ed) 
+[30688] [CB] [ENTRY] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(android.view.View) (298d443,c009345) 
+  [30797] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+  [30797] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+[30688] [CB] [EXIT] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(android.view.View) (298d443,c009345) 
+[31302] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,cf854ed) 
+[31302] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,cf854ed) 
+[32244] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,8a808d1) 
+[32244] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,8a808d1) 
+[32374] [CB] [ENTRY] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(android.view.View) (298d443,e1de8d3) 
+  [32483] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+  [32483] [CI] [EXIT] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+[32374] [CB] [EXIT] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(android.view.View) (298d443,e1de8d3) 
+[32992] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,7534bca) 
+[32992] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,7534bca) 
+[33266] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,a5f8753) 
+[33266] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,a5f8753) 
+[33924] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,79713d6) 
+[33924] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,79713d6) 
+[34132] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,6543dc5) 
+[34132] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,6543dc5) 
+[34318] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,7534bca) 
+[34318] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,7534bca) 
+[34644] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,cf854ed) 
+[34644] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,cf854ed) 
+[34810] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,79713d6) 
+[34810] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,79713d6) 
+[35062] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,a5f8753) 
+[35062] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,a5f8753) 
+[35284] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9ebbdbf) 
+[35284] [CB] [EXIT] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9ebbdbf) 
+
+
+
+TRACE STATISTICS
+Trace length: 123
+Top-level callbacks: 62
+CI-ENTRY: 43
+CI-EXIT: 4
+CB-ENTRY: 41
+CB-EXIT: 0
+        encoding - User time: 14.890000
+encoding - System time: 0.020000
+simulation - User time: 100.950000
+simulation - System time: 0.820000
+
+The trace can be simulated in 123 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[2] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity.<init>() (a41f3b6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.<init>()) |- [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.<init>()) |+ [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[46] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity.onCreate(android.os.Bundle) (a41f3b6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[3533] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (cf854ed,2461d58) 
+----------------------------------------
+Step: 4
+----------------------------------------
+[3545] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,cf854ed,-1) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); [CI] [ENTRY] [cf854ed] void android.view.View.setOnClickListener(2461d58 : android.view.View$OnClickListener)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [4052a75] void android.view.ViewGroup.addView(cf854ed : android.view.View,-1 : int))) |+ [CB] [ENTRY] [2461d58] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(7534bca : android.view.View)
+    SPEC (((((TRUE)[*]); [CI] [ENTRY] [cf854ed] void android.view.View.setOnClickListener(2461d58 : android.view.View$OnClickListener)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [4052a75] void android.view.ViewGroup.addView(cf854ed : android.view.View,-1 : int))) |+ [CB] [ENTRY] [2461d58] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(9ebbdbf : android.view.View)
+    SPEC (((((TRUE)[*]); [CI] [ENTRY] [cf854ed] void android.view.View.setOnClickListener(2461d58 : android.view.View$OnClickListener)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [4052a75] void android.view.ViewGroup.addView(cf854ed : android.view.View,-1 : int))) |+ [CB] [ENTRY] [2461d58] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(cf854ed : android.view.View)
+    SPEC (((((TRUE)[*]); [CI] [ENTRY] [cf854ed] void android.view.View.setOnClickListener(2461d58 : android.view.View$OnClickListener)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [4052a75] void android.view.ViewGroup.addView(cf854ed : android.view.View,-1 : int))) |+ [CB] [ENTRY] [2461d58] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(996fa39 : android.view.View)
+    SPEC (((((TRUE)[*]); [CI] [ENTRY] [cf854ed] void android.view.View.setOnClickListener(2461d58 : android.view.View$OnClickListener)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [4052a75] void android.view.ViewGroup.addView(cf854ed : android.view.View,-1 : int))) |+ [CB] [ENTRY] [2461d58] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(8a808d1 : android.view.View)
+    SPEC (((((TRUE)[*]); [CI] [ENTRY] [cf854ed] void android.view.View.setOnClickListener(2461d58 : android.view.View$OnClickListener)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [4052a75] void android.view.ViewGroup.addView(cf854ed : android.view.View,-1 : int))) |+ [CB] [ENTRY] [2461d58] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(a5f8753 : android.view.View)
+    SPEC (((((TRUE)[*]); [CI] [ENTRY] [cf854ed] void android.view.View.setOnClickListener(2461d58 : android.view.View$OnClickListener)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [4052a75] void android.view.ViewGroup.addView(cf854ed : android.view.View,-1 : int))) |+ [CB] [ENTRY] [2461d58] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(79713d6 : android.view.View)
+    SPEC (((((TRUE)[*]); [CI] [ENTRY] [cf854ed] void android.view.View.setOnClickListener(2461d58 : android.view.View$OnClickListener)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [4052a75] void android.view.ViewGroup.addView(cf854ed : android.view.View,-1 : int))) |+ [CB] [ENTRY] [2461d58] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(b571884 : android.view.View)
+    SPEC (((((TRUE)[*]); [CI] [ENTRY] [cf854ed] void android.view.View.setOnClickListener(2461d58 : android.view.View$OnClickListener)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [4052a75] void android.view.ViewGroup.addView(cf854ed : android.view.View,-1 : int))) |+ [CB] [ENTRY] [2461d58] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(6543dc5 : android.view.View)
+    SPEC (((((TRUE)[*]); [CI] [ENTRY] [cf854ed] void android.view.View.setOnClickListener(2461d58 : android.view.View$OnClickListener)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [4052a75] void android.view.ViewGroup.addView(cf854ed : android.view.View,-1 : int))) |+ [CB] [ENTRY] [2461d58] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(9195d9d : android.view.View)
+----------------------------------------
+Step: 5
+----------------------------------------
+[3633] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (b571884,2461d58) 
+----------------------------------------
+Step: 6
+----------------------------------------
+[3645] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,b571884,-1) 
+----------------------------------------
+Step: 7
+----------------------------------------
+[3733] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (7534bca,2461d58) 
+----------------------------------------
+Step: 8
+----------------------------------------
+[3745] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,7534bca,-1) 
+----------------------------------------
+Step: 9
+----------------------------------------
+[3833] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (9b0ca7,2461d58) 
+----------------------------------------
+Step: 10
+----------------------------------------
+[3845] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,9b0ca7,-1) 
+----------------------------------------
+Step: 11
+----------------------------------------
+[3933] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (6543dc5,2461d58) 
+----------------------------------------
+Step: 12
+----------------------------------------
+[3945] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,6543dc5,-1) 
+----------------------------------------
+Step: 13
+----------------------------------------
+[4033] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a5f8753,2461d58) 
+----------------------------------------
+Step: 14
+----------------------------------------
+[4045] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,a5f8753,-1) 
+----------------------------------------
+Step: 15
+----------------------------------------
+[4133] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (8a808d1,2461d58) 
+----------------------------------------
+Step: 16
+----------------------------------------
+[4145] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,8a808d1,-1) 
+----------------------------------------
+Step: 17
+----------------------------------------
+[4233] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (9ebbdbf,2461d58) 
+----------------------------------------
+Step: 18
+----------------------------------------
+[4245] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,9ebbdbf,-1) 
+----------------------------------------
+Step: 19
+----------------------------------------
+[4333] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (9195d9d,2461d58) 
+----------------------------------------
+Step: 20
+----------------------------------------
+[4345] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,9195d9d,-1) 
+----------------------------------------
+Step: 21
+----------------------------------------
+[4431] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e0b51cf,2461d58) 
+----------------------------------------
+Step: 22
+----------------------------------------
+[4443] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,e0b51cf,-1) 
+----------------------------------------
+Step: 23
+----------------------------------------
+[4529] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (79713d6,2461d58) 
+----------------------------------------
+Step: 24
+----------------------------------------
+[4541] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,79713d6,-1) 
+----------------------------------------
+Step: 25
+----------------------------------------
+[4627] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (996fa39,2461d58) 
+----------------------------------------
+Step: 26
+----------------------------------------
+[4639] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (4052a75,996fa39,-1) 
+----------------------------------------
+Step: 27
+----------------------------------------
+[6103] [CI] [EXIT] d7acf35 = android.view.View android.app.Activity.findViewById(int) (a41f3b6,2131427334) 
+----------------------------------------
+Step: 28
+----------------------------------------
+[6111] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (d7acf35,56af53b) 
+----------------------------------------
+Step: 29
+----------------------------------------
+[6265] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (c89bb1c,298d443) 
+----------------------------------------
+Step: 30
+----------------------------------------
+[6271] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,c89bb1c,-1) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); [CI] [ENTRY] [c89bb1c] void android.view.View.setOnClickListener(298d443 : android.view.View$OnClickListener)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [29d270b] void android.view.ViewGroup.addView(c89bb1c : android.view.View,-1 : int))) |+ [CB] [ENTRY] [298d443] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(c009345 : android.view.View)
+    SPEC (((((TRUE)[*]); [CI] [ENTRY] [c89bb1c] void android.view.View.setOnClickListener(298d443 : android.view.View$OnClickListener)); ((TRUE)[*])) & (((TRUE)[*]); [CI] [ENTRY] [29d270b] void android.view.ViewGroup.addView(c89bb1c : android.view.View,-1 : int))) |+ [CB] [ENTRY] [298d443] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(e1de8d3 : android.view.View)
+----------------------------------------
+Step: 31
+----------------------------------------
+[6367] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (276d4e9,298d443) 
+----------------------------------------
+Step: 32
+----------------------------------------
+[6373] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,276d4e9,-1) 
+----------------------------------------
+Step: 33
+----------------------------------------
+[6469] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (a8ef84a,298d443) 
+----------------------------------------
+Step: 34
+----------------------------------------
+[6475] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,a8ef84a,-1) 
+----------------------------------------
+Step: 35
+----------------------------------------
+[6517] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,false) 
+----------------------------------------
+Step: 36
+----------------------------------------
+[6638] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity.onStart() (a41f3b6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.onStart()) |+ [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.onStart()) |- [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.onStart()
+----------------------------------------
+Step: 37
+----------------------------------------
+[6654] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity.onResume() (a41f3b6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.onResume()) |- [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.onResume()
+----------------------------------------
+Step: 38
+----------------------------------------
+[6851] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (c009345,298d443) 
+----------------------------------------
+Step: 39
+----------------------------------------
+[6857] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,c009345,-1) 
+----------------------------------------
+Step: 40
+----------------------------------------
+[6953] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e1de8d3,298d443) 
+----------------------------------------
+Step: 41
+----------------------------------------
+[6959] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,e1de8d3,-1) 
+----------------------------------------
+Step: 42
+----------------------------------------
+[7055] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (adbd651,298d443) 
+----------------------------------------
+Step: 43
+----------------------------------------
+[7061] [CI] [ENTRY] void android.view.ViewGroup.addView(android.view.View,int) (29d270b,adbd651,-1) 
+----------------------------------------
+Step: 44
+----------------------------------------
+[7103] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,false) 
+----------------------------------------
+Step: 45
+----------------------------------------
+[34810] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,79713d6) 
+----------------------------------------
+Step: 46
+----------------------------------------
+[14610] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,996fa39) 
+----------------------------------------
+Step: 47
+----------------------------------------
+[14768] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,7534bca) 
+----------------------------------------
+Step: 48
+----------------------------------------
+[14809] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,false) 
+----------------------------------------
+Step: 49
+----------------------------------------
+[15390] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,a5f8753) 
+----------------------------------------
+Step: 50
+----------------------------------------
+[15431] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,false) 
+----------------------------------------
+Step: 51
+----------------------------------------
+[16468] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,6543dc5) 
+----------------------------------------
+Step: 52
+----------------------------------------
+[16559] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+    Matched specifications:
+    SPEC (((((((TRUE)[*]); d7acf35 = [CI] [EXIT] [a41f3b6] android.view.View android.app.Activity.findViewById(2131427334 : int)); ((TRUE)[*])) & ((((TRUE)[*]); [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.onResume()); ((TRUE)[*]))) & ((((TRUE)[*]); [CI] [ENTRY] [d7acf35] void android.view.View.setOnClickListener(56af53b : android.view.View$OnClickListener)); ((TRUE)[*]))) & (((TRUE)[*]); ((((((((((([CI] [ENTRY] [d7acf35] void android.widget.TextView.setEnabled(TRUE : boolean) | [CI] [ENTRY] [d7acf35] void android.widget.TextView.setEnabled(TRUE : boolean)) | [CI] [ENTRY] [d7acf35] void android.widget.TextView.setEnabled(TRUE : boolean)) | [CI] [ENTRY] [d7acf35] void android.widget.TextView.setEnabled(TRUE : boolean)) | [CI] [ENTRY] [d7acf35] void android.widget.TextView.setEnabled(TRUE : boolean)) | [CI] [ENTRY] [d7acf35] void android.widget.TextView.setEnabled(TRUE : boolean)) | [CI] [ENTRY] [d7acf35] void android.widget.TextView.setEnabled(TRUE : boolean)) | [CI] [ENTRY] [d7acf35] void android.widget.TextView.setEnabled(TRUE : boolean)) | [CI] [ENTRY] [d7acf35] void android.widget.TextView.setEnabled(TRUE : boolean)) | [CI] [ENTRY] [d7acf35] void android.widget.TextView.setEnabled(TRUE : boolean)) | [CI] [ENTRY] [d7acf35] void android.widget.TextView.setEnabled(TRUE : boolean)) | [CI] [ENTRY] [d7acf35] void android.widget.TextView.setEnabled(TRUE : boolean)))) |+ [CB] [ENTRY] [56af53b] void org.lukhnos.roundandsplit.MainActivity$1.onClick(d7acf35 : android.view.View)
+----------------------------------------
+Step: 53
+----------------------------------------
+[17044] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,7534bca) 
+----------------------------------------
+Step: 54
+----------------------------------------
+[17135] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+----------------------------------------
+Step: 55
+----------------------------------------
+[17604] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9195d9d) 
+----------------------------------------
+Step: 56
+----------------------------------------
+[17695] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+----------------------------------------
+Step: 57
+----------------------------------------
+[19008] [CB] [ENTRY] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(android.view.View) (298d443,c009345) 
+----------------------------------------
+Step: 58
+----------------------------------------
+[19117] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+----------------------------------------
+Step: 59
+----------------------------------------
+[19570] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9195d9d) 
+----------------------------------------
+Step: 60
+----------------------------------------
+[19661] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+----------------------------------------
+Step: 61
+----------------------------------------
+[20082] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$1.onClick(android.view.View) (56af53b,d7acf35) 
+----------------------------------------
+Step: 62
+----------------------------------------
+[20145] [CI] [ENTRY] void android.app.DialogFragment.<init>() (2fdcf6b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [2fdcf6b] void android.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(a41f3b6 : android.app.Activity)
+----------------------------------------
+Step: 63
+----------------------------------------
+[20145] [CI] [EXIT] void android.app.DialogFragment.<init>() (2fdcf6b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [2fdcf6b] void android.app.DialogFragment.<init>()) |- [CI] [EXIT] [2fdcf6b] void android.app.DialogFragment.<init>()
+----------------------------------------
+Step: 64
+----------------------------------------
+[20176] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (2fdcf6b,a41f3b6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(a41f3b6 : android.app.Activity)) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(a41f3b6 : android.app.Activity)) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(a41f3b6 : android.app.Activity)
+----------------------------------------
+Step: 65
+----------------------------------------
+[20184] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (2fdcf6b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [2fdcf6b] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(6ec2df2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 66
+----------------------------------------
+[20188] [CB] [ENTRY] android.app.Dialog org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateDialog(android.os.Bundle) (2fdcf6b,NULL) 
+----------------------------------------
+Step: 67
+----------------------------------------
+[20191] [CI] [ENTRY] void android.app.AlertDialog$Builder.<init>(android.content.Context) (f245b1,a41f3b6) 
+----------------------------------------
+Step: 68
+----------------------------------------
+[20209] [CI] [ENTRY] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setItems(java.lang.CharSequence[],android.content.DialogInterface$OnClickListener) (f245b1,433b1e5,2dd4a5d) 
+----------------------------------------
+Step: 69
+----------------------------------------
+[20211] [CI] [EXIT] d1b6166 = android.app.AlertDialog android.app.AlertDialog$Builder.create() (f245b1) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); ((((TRUE)[*]); [CI] [ENTRY] [f245b1] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setItems(433b1e5 : java.lang.CharSequence[],2dd4a5d : android.content.DialogInterface$OnClickListener)); (((TRUE)[*]); d1b6166 = [CI] [EXIT] [f245b1] android.app.AlertDialog android.app.AlertDialog$Builder.create()))) & ((((TRUE)[*]); (([CI] [ENTRY] [f245b1] void android.app.AlertDialog$Builder.<init>(a41f3b6 : android.content.Context); ((TRUE)[*])); d1b6166 = [CI] [EXIT] [f245b1] android.app.AlertDialog android.app.AlertDialog$Builder.create())); ((TRUE)[*]))) & ((((TRUE)[*]); [CB] [ENTRY] [a41f3b6] void org.lukhnos.roundandsplit.MainActivity.onResume()); ((TRUE)[*]))) |+ [CB] [ENTRY] [2dd4a5d] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment$1.onClick(d1b6166 : android.content.DialogInterface,2 : int)
+----------------------------------------
+Step: 70
+----------------------------------------
+[20282] [CB] [ENTRY] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (2fdcf6b,6ec2df2,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(6ec2df2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [2fdcf6b] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(6ec2df2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(6ec2df2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(6ec2df2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()
+----------------------------------------
+Step: 71
+----------------------------------------
+[20286] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (2fdcf6b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 72
+----------------------------------------
+[20298] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (2fdcf6b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()
+----------------------------------------
+Step: 73
+----------------------------------------
+[21330] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (2fdcf6b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume()) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume()) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause()
+----------------------------------------
+Step: 74
+----------------------------------------
+[22358] [CB] [ENTRY] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(android.view.View) (298d443,c009345) 
+----------------------------------------
+Step: 75
+----------------------------------------
+[22467] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+----------------------------------------
+Step: 76
+----------------------------------------
+[23344] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment$1.onClick(android.content.DialogInterface,int) (2dd4a5d,d1b6166,2) 
+----------------------------------------
+Step: 77
+----------------------------------------
+[35062] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,a5f8753) 
+----------------------------------------
+Step: 78
+----------------------------------------
+[23632] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (2fdcf6b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause()) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause()) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause()
+----------------------------------------
+Step: 79
+----------------------------------------
+[23636] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (2fdcf6b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()
+----------------------------------------
+Step: 80
+----------------------------------------
+[23640] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (2fdcf6b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()) |+ [CB] [ENTRY] [2fdcf6b] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(6ec2df2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()
+----------------------------------------
+Step: 81
+----------------------------------------
+[23644] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (2fdcf6b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy()) |- [CB] [ENTRY] [2fdcf6b] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(6ec2df2 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy()) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy()) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy()
+----------------------------------------
+Step: 82
+----------------------------------------
+[23648] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (2fdcf6b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach()) |- [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach()) |+ [CB] [ENTRY] [2fdcf6b] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(a41f3b6 : android.app.Activity)
+----------------------------------------
+Step: 83
+----------------------------------------
+[24008] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,996fa39) 
+----------------------------------------
+Step: 84
+----------------------------------------
+[24093] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+----------------------------------------
+Step: 85
+----------------------------------------
+[24562] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,b571884) 
+----------------------------------------
+Step: 86
+----------------------------------------
+[24653] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+----------------------------------------
+Step: 87
+----------------------------------------
+[25454] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$1.onClick(android.view.View) (56af53b,d7acf35) 
+----------------------------------------
+Step: 88
+----------------------------------------
+[25517] [CI] [ENTRY] void android.app.DialogFragment.<init>() (69892c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [69892c6] void android.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(a41f3b6 : android.app.Activity)
+----------------------------------------
+Step: 89
+----------------------------------------
+[25517] [CI] [EXIT] void android.app.DialogFragment.<init>() (69892c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [69892c6] void android.app.DialogFragment.<init>()) |- [CI] [EXIT] [69892c6] void android.app.DialogFragment.<init>()
+----------------------------------------
+Step: 90
+----------------------------------------
+[25548] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(android.app.Activity) (69892c6,a41f3b6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(a41f3b6 : android.app.Activity)) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(a41f3b6 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(a41f3b6 : android.app.Activity)) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 91
+----------------------------------------
+[25556] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(android.os.Bundle) (69892c6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [69892c6] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(a05e7e7 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 92
+----------------------------------------
+[25650] [CB] [ENTRY] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (69892c6,a05e7e7,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(a05e7e7 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(a05e7e7 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(a05e7e7 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [69892c6] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(a05e7e7 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 93
+----------------------------------------
+[25654] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(android.os.Bundle) (69892c6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 94
+----------------------------------------
+[25666] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart() (69892c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume()
+----------------------------------------
+Step: 95
+----------------------------------------
+[26674] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume() (69892c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume()) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume()) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume()
+----------------------------------------
+Step: 96
+----------------------------------------
+[28398] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9195d9d) 
+----------------------------------------
+Step: 97
+----------------------------------------
+[28416] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause() (69892c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause()) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause()) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onPause()
+----------------------------------------
+Step: 98
+----------------------------------------
+[28420] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop() (69892c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStop()) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 99
+----------------------------------------
+[28424] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView() (69892c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()) |+ [CB] [ENTRY] [69892c6] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(a05e7e7 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroyView()) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 100
+----------------------------------------
+[28428] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy() (69892c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy()) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy()) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDestroy()) |- [CB] [ENTRY] [69892c6] android.view.View org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onCreateView(a05e7e7 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 101
+----------------------------------------
+[28432] [CB] [ENTRY] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach() (69892c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach()) |- [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onDetach()) |+ [CB] [ENTRY] [69892c6] void org.lukhnos.roundandsplit.MainActivity$SplitDialogFragment.onAttach(a41f3b6 : android.app.Activity)
+----------------------------------------
+Step: 102
+----------------------------------------
+[34132] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,6543dc5) 
+----------------------------------------
+Step: 103
+----------------------------------------
+[32244] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,8a808d1) 
+----------------------------------------
+Step: 104
+----------------------------------------
+[29380] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,996fa39) 
+----------------------------------------
+Step: 105
+----------------------------------------
+[29465] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+----------------------------------------
+Step: 106
+----------------------------------------
+[29934] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9ebbdbf) 
+----------------------------------------
+Step: 107
+----------------------------------------
+[30025] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+----------------------------------------
+Step: 108
+----------------------------------------
+[34644] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,cf854ed) 
+----------------------------------------
+Step: 109
+----------------------------------------
+[30688] [CB] [ENTRY] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(android.view.View) (298d443,c009345) 
+----------------------------------------
+Step: 110
+----------------------------------------
+[30797] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+----------------------------------------
+Step: 111
+----------------------------------------
+[34644] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,cf854ed) 
+----------------------------------------
+Step: 112
+----------------------------------------
+[32244] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,8a808d1) 
+----------------------------------------
+Step: 113
+----------------------------------------
+[32374] [CB] [ENTRY] void org.lukhnos.roundandsplit.ButtonStrip$1.onClick(android.view.View) (298d443,e1de8d3) 
+----------------------------------------
+Step: 114
+----------------------------------------
+[32483] [CI] [ENTRY] void android.widget.TextView.setEnabled(boolean) (d7acf35,true) 
+----------------------------------------
+Step: 115
+----------------------------------------
+[34318] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,7534bca) 
+----------------------------------------
+Step: 116
+----------------------------------------
+[35062] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,a5f8753) 
+----------------------------------------
+Step: 117
+----------------------------------------
+[34810] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,79713d6) 
+----------------------------------------
+Step: 118
+----------------------------------------
+[34132] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,6543dc5) 
+----------------------------------------
+Step: 119
+----------------------------------------
+[34318] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,7534bca) 
+----------------------------------------
+Step: 120
+----------------------------------------
+[34644] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,cf854ed) 
+----------------------------------------
+Step: 121
+----------------------------------------
+[34810] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,79713d6) 
+----------------------------------------
+Step: 122
+----------------------------------------
+[35062] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,a5f8753) 
+----------------------------------------
+Step: 123
+----------------------------------------
+[35284] [CB] [ENTRY] void org.lukhnos.roundandsplit.NumericKeypad$1.onClick(android.view.View) (2461d58,9ebbdbf) 
+----------------------------------------

@@ -1,0 +1,623 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-1/_traces/nguillaumin-osmtracker-android-app/monkeyTraces/trace-app-debug_2017-04-15_19:54:44.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-1/_traces/nguillaumin-osmtracker-android-app/monkeyTraces/trace-app-debug_2017-04-15_19:54:44.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 4.080000
+parsing - System time: 0.260000
+spec_grounding - User time: 203.250000
+spec_grounding - System time: 1.090000
+
+---Simplified Trace---
+[30] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.<init>() (1c75f68) 
+[30] [CB] [EXIT] NULL = void me.guillaumin.android.osmtracker.activity.TrackManager.<init>() (1c75f68) 
+[54] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(android.os.Bundle) (1c75f68,NULL) 
+[54] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(android.os.Bundle) (1c75f68,NULL) 
+[1082] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() (1c75f68) 
+[1082] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() (1c75f68) 
+[1110] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() (1c75f68) 
+[1110] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() (1c75f68) 
+[5452] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() (1c75f68) 
+[5452] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() (1c75f68) 
+[5564] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.<init>() (83ca122) 
+[5564] [CB] [EXIT] NULL = void me.guillaumin.android.osmtracker.activity.TrackLogger.<init>() (83ca122) 
+[5590] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.onCreate(android.os.Bundle) (83ca122,NULL) 
+[5590] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackLogger.onCreate(android.os.Bundle) (83ca122,NULL) 
+[7360] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStart() (83ca122) 
+[7360] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStart() (83ca122) 
+[7388] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.onResume() (83ca122) 
+[7388] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackLogger.onResume() (83ca122) 
+[42076] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() (1c75f68) 
+[42076] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() (1c75f68) 
+[66018] [CB] [ENTRY] boolean me.guillaumin.android.osmtracker.activity.TrackLogger.onMenuItemSelected(int,android.view.MenuItem) (83ca122,0,6bda40a) 
+  [66056] [CI] [ENTRY] void android.app.Activity.finish() (83ca122) 
+  [66056] [CI] [EXIT] void android.app.Activity.finish() (83ca122) 
+[66018] [CB] [EXIT] false = boolean me.guillaumin.android.osmtracker.activity.TrackLogger.onMenuItemSelected(int,android.view.MenuItem) (83ca122,0,6bda40a) 
+[66430] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.onPause() (83ca122) 
+[66430] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackLogger.onPause() (83ca122) 
+[66556] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart() (1c75f68) 
+[66556] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart() (1c75f68) 
+[66564] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() (1c75f68) 
+[66564] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() (1c75f68) 
+[66568] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() (1c75f68) 
+[66568] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() (1c75f68) 
+[68788] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStop() (83ca122) 
+[68788] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStop() (83ca122) 
+[68792] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.onDestroy() (83ca122) 
+[68792] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackLogger.onDestroy() (83ca122) 
+[69376] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() (1c75f68) 
+[69376] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() (1c75f68) 
+[69476] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>() (100d428) 
+[69476] [CB] [EXIT] NULL = void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>() (100d428) 
+[69500] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(android.os.Bundle) (100d428,NULL) 
+  [71047] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (100d428,2131361810) 
+  [71047] [CI] [EXIT] ca014d0 = android.view.View android.app.Activity.findViewById(int) (100d428,2131361810) 
+  [71055] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (ca014d0,9a9bfce) 
+  [71055] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (ca014d0,9a9bfce) 
+[69500] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(android.os.Bundle) (100d428,NULL) 
+[71084] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart() (100d428) 
+[71084] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart() (100d428) 
+[71112] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume() (100d428) 
+[71112] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume() (100d428) 
+[75438] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail$1.onClick(android.view.View) (9a9bfce,ca014d0) 
+  [75513] [CI] [ENTRY] void android.app.Activity.finish() (100d428) 
+  [75513] [CI] [EXIT] void android.app.Activity.finish() (100d428) 
+[75438] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail$1.onClick(android.view.View) (9a9bfce,ca014d0) 
+[75956] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause() (100d428) 
+[75956] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause() (100d428) 
+[75996] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() (1c75f68) 
+[75996] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() (1c75f68) 
+[77684] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop() (100d428) 
+[77684] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop() (100d428) 
+[77688] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy() (100d428) 
+[77688] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy() (100d428) 
+[78180] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() (1c75f68) 
+[78180] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() (1c75f68) 
+[78278] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>() (b4bd657) 
+[78278] [CB] [EXIT] NULL = void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>() (b4bd657) 
+[78302] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(android.os.Bundle) (b4bd657,NULL) 
+  [79841] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (b4bd657,2131361810) 
+  [79841] [CI] [EXIT] fea111a = android.view.View android.app.Activity.findViewById(int) (b4bd657,2131361810) 
+  [79849] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fea111a,f9abe28) 
+  [79849] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fea111a,f9abe28) 
+[78302] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(android.os.Bundle) (b4bd657,NULL) 
+[79878] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart() (b4bd657) 
+[79878] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart() (b4bd657) 
+[79906] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume() (b4bd657) 
+[79906] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume() (b4bd657) 
+[83136] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() (1c75f68) 
+[83136] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() (1c75f68) 
+[85560] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail$1.onClick(android.view.View) (f9abe28,fea111a) 
+  [85635] [CI] [ENTRY] void android.app.Activity.finish() (b4bd657) 
+  [85635] [CI] [EXIT] void android.app.Activity.finish() (b4bd657) 
+[85560] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail$1.onClick(android.view.View) (f9abe28,fea111a) 
+[86558] [CB] [ENTRY] boolean me.guillaumin.android.osmtracker.activity.TrackDetail.onMenuItemSelected(int,android.view.MenuItem) (b4bd657,0,121f7bf) 
+  [86562] [CI] [ENTRY] void android.os.AsyncTask.<init>() (73526b6) 
+  [86562] [CI] [EXIT] void android.os.AsyncTask.<init>() (73526b6) 
+  [86570] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (73526b6,c7b26cb) 
+  [86571] [CB] [ENTRY] void me.guillaumin.android.osmtracker.gpx.ExportTrackTask.onPreExecute() (73526b6) 
+  [86571] [CB] [EXIT] void me.guillaumin.android.osmtracker.gpx.ExportTrackTask.onPreExecute() (73526b6) 
+  [86570] [CI] [EXIT] 73526b6 = android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (73526b6,c7b26cb) 
+[86558] [CB] [EXIT] false = boolean me.guillaumin.android.osmtracker.activity.TrackDetail.onMenuItemSelected(int,android.view.MenuItem) (b4bd657,0,121f7bf) 
+[87889] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause() (b4bd657) 
+[87889] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause() (b4bd657) 
+[89738] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart() (1c75f68) 
+[89738] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart() (1c75f68) 
+[89746] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() (1c75f68) 
+[89746] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() (1c75f68) 
+[89750] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() (1c75f68) 
+[89750] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() (1c75f68) 
+[92488] [CB] [ENTRY] void me.guillaumin.android.osmtracker.gpx.ExportTrackTask.onPostExecute(java.lang.Object) (73526b6,true) 
+[92488] [CB] [EXIT] void me.guillaumin.android.osmtracker.gpx.ExportTrackTask.onPostExecute(java.lang.Object) (73526b6,true) 
+[92810] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() (1c75f68) 
+[92810] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() (1c75f68) 
+[92920] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>() (b975df6) 
+[92920] [CB] [EXIT] NULL = void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>() (b975df6) 
+[92944] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(android.os.Bundle) (b975df6,NULL) 
+[92944] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(android.os.Bundle) (b975df6,NULL) 
+[94496] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart() (b975df6) 
+[94496] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart() (b975df6) 
+[94524] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume() (b975df6) 
+[94524] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume() (b975df6) 
+[95032] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop() (b4bd657) 
+[95032] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop() (b4bd657) 
+[95036] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy() (b4bd657) 
+[95036] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy() (b4bd657) 
+[97922] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause() (b975df6) 
+[97922] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause() (b975df6) 
+[97962] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.WaypointList.<init>() (e79636d) 
+[97962] [CB] [EXIT] NULL = void me.guillaumin.android.osmtracker.activity.WaypointList.<init>() (e79636d) 
+[97986] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.WaypointList.onCreate(android.os.Bundle) (e79636d,NULL) 
+[97986] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.WaypointList.onCreate(android.os.Bundle) (e79636d,NULL) 
+[98022] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.WaypointList.onStart() (e79636d) 
+[98022] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.WaypointList.onStart() (e79636d) 
+[98038] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.WaypointList.onResume() (e79636d) 
+[98038] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.WaypointList.onResume() (e79636d) 
+[98820] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() (1c75f68) 
+[98820] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() (1c75f68) 
+[99496] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop() (b975df6) 
+[99496] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop() (b975df6) 
+
+
+
+TRACE STATISTICS
+Trace length: 70
+Top-level callbacks: 54
+CI-ENTRY: 6
+CI-EXIT: 3
+CB-ENTRY: 44
+CB-EXIT: 6
+        encoding - User time: 5.270000
+encoding - System time: 0.000000
+simulation - User time: 26.560000
+simulation - System time: 0.200000
+
+The trace can be simulated in 70 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[30] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.<init>() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.<init>()) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.<init>()) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[54] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(android.os.Bundle) (1c75f68,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[89746] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart()
+----------------------------------------
+Step: 4
+----------------------------------------
+[89750] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()
+----------------------------------------
+Step: 5
+----------------------------------------
+[92810] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 6
+----------------------------------------
+[5564] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.<init>() (83ca122) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.<init>()) |- [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.<init>()) |+ [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 7
+----------------------------------------
+[5590] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.onCreate(android.os.Bundle) (83ca122,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStart()
+----------------------------------------
+Step: 8
+----------------------------------------
+[5590] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackLogger.onCreate(android.os.Bundle) (83ca122,NULL) 
+----------------------------------------
+Step: 9
+----------------------------------------
+[7360] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStart() (83ca122) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStart()) |+ [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStart()) |- [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStart()
+----------------------------------------
+Step: 10
+----------------------------------------
+[7360] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStart() (83ca122) 
+----------------------------------------
+Step: 11
+----------------------------------------
+[7388] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.onResume() (83ca122) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onResume()) |- [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onResume()) |+ [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onPause()
+----------------------------------------
+Step: 12
+----------------------------------------
+[98820] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart()
+----------------------------------------
+Step: 13
+----------------------------------------
+[66018] [CB] [ENTRY] boolean me.guillaumin.android.osmtracker.activity.TrackLogger.onMenuItemSelected(int,android.view.MenuItem) (83ca122,0,6bda40a) 
+----------------------------------------
+Step: 14
+----------------------------------------
+[66056] [CI] [ENTRY] void android.app.Activity.finish() (83ca122) 
+----------------------------------------
+Step: 15
+----------------------------------------
+[66430] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.onPause() (83ca122) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onPause()) |- [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onPause()) |+ [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onPause()) |+ [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onPause()) |+ [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStop()
+----------------------------------------
+Step: 16
+----------------------------------------
+[89738] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart()
+----------------------------------------
+Step: 17
+----------------------------------------
+[89746] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart()
+----------------------------------------
+Step: 18
+----------------------------------------
+[89750] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()
+----------------------------------------
+Step: 19
+----------------------------------------
+[68788] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStop() (83ca122) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStop()) |+ [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStop()) |- [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onStop()) |- [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onResume()
+----------------------------------------
+Step: 20
+----------------------------------------
+[68792] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackLogger.onDestroy() (83ca122) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onDestroy()) |- [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onDestroy()) |- [CB] [ENTRY] [83ca122] void me.guillaumin.android.osmtracker.activity.TrackLogger.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 21
+----------------------------------------
+[92810] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 22
+----------------------------------------
+[69476] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>() (100d428) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>()) |- [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>()) |+ [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 23
+----------------------------------------
+[69500] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(android.os.Bundle) (100d428,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart()
+----------------------------------------
+Step: 24
+----------------------------------------
+[71047] [CI] [EXIT] ca014d0 = android.view.View android.app.Activity.findViewById(int) (100d428,2131361810) 
+----------------------------------------
+Step: 25
+----------------------------------------
+[71055] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (ca014d0,9a9bfce) 
+----------------------------------------
+Step: 26
+----------------------------------------
+[69500] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(android.os.Bundle) (100d428,NULL) 
+----------------------------------------
+Step: 27
+----------------------------------------
+[71084] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart() (100d428) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart()) |- [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart()) |+ [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()
+----------------------------------------
+Step: 28
+----------------------------------------
+[71084] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart() (100d428) 
+----------------------------------------
+Step: 29
+----------------------------------------
+[71112] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume() (100d428) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()) |+ [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()
+    SPEC ((((((TRUE)[*]); ca014d0 = [CI] [EXIT] [100d428] android.view.View android.app.Activity.findViewById(2131361810 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [ca014d0] void android.view.View.setOnClickListener(9a9bfce : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [9a9bfce] void me.guillaumin.android.osmtracker.activity.TrackDetail$1.onClick(ca014d0 : android.view.View)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()) |- [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()
+----------------------------------------
+Step: 30
+----------------------------------------
+[75438] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail$1.onClick(android.view.View) (9a9bfce,ca014d0) 
+----------------------------------------
+Step: 31
+----------------------------------------
+[75513] [CI] [ENTRY] void android.app.Activity.finish() (100d428) 
+----------------------------------------
+Step: 32
+----------------------------------------
+[75956] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause() (100d428) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()) |- [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()) |+ [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()) |+ [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()) |+ [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()
+----------------------------------------
+Step: 33
+----------------------------------------
+[89750] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()
+----------------------------------------
+Step: 34
+----------------------------------------
+[77684] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop() (100d428) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()) |- [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()) |+ [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()) |- [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()
+----------------------------------------
+Step: 35
+----------------------------------------
+[77688] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy() (100d428) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy()) |- [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy()) |- [CB] [ENTRY] [100d428] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy()
+----------------------------------------
+Step: 36
+----------------------------------------
+[92810] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 37
+----------------------------------------
+[78278] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>() (b4bd657) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>()) |+ [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>()) |- [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>()
+----------------------------------------
+Step: 38
+----------------------------------------
+[78302] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(android.os.Bundle) (b4bd657,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 39
+----------------------------------------
+[79841] [CI] [EXIT] fea111a = android.view.View android.app.Activity.findViewById(int) (b4bd657,2131361810) 
+----------------------------------------
+Step: 40
+----------------------------------------
+[79849] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (fea111a,f9abe28) 
+----------------------------------------
+Step: 41
+----------------------------------------
+[78302] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(android.os.Bundle) (b4bd657,NULL) 
+----------------------------------------
+Step: 42
+----------------------------------------
+[79878] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart() (b4bd657) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart()) |+ [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart()) |- [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart()
+----------------------------------------
+Step: 43
+----------------------------------------
+[79878] [CB] [EXIT] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart() (b4bd657) 
+----------------------------------------
+Step: 44
+----------------------------------------
+[79906] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume() (b4bd657) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()) |+ [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()
+    SPEC ((((((TRUE)[*]); fea111a = [CI] [EXIT] [b4bd657] android.view.View android.app.Activity.findViewById(2131361810 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [fea111a] void android.view.View.setOnClickListener(f9abe28 : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [f9abe28] void me.guillaumin.android.osmtracker.activity.TrackDetail$1.onClick(fea111a : android.view.View)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()) |- [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()
+----------------------------------------
+Step: 45
+----------------------------------------
+[98820] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart()
+----------------------------------------
+Step: 46
+----------------------------------------
+[85560] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail$1.onClick(android.view.View) (f9abe28,fea111a) 
+----------------------------------------
+Step: 47
+----------------------------------------
+[85635] [CI] [ENTRY] void android.app.Activity.finish() (b4bd657) 
+----------------------------------------
+Step: 48
+----------------------------------------
+[86558] [CB] [ENTRY] boolean me.guillaumin.android.osmtracker.activity.TrackDetail.onMenuItemSelected(int,android.view.MenuItem) (b4bd657,0,121f7bf) 
+----------------------------------------
+Step: 49
+----------------------------------------
+[86562] [CI] [EXIT] void android.os.AsyncTask.<init>() (73526b6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [73526b6] void android.os.AsyncTask.<init>()) |- [CI] [EXIT] [73526b6] void android.os.AsyncTask.<init>()
+----------------------------------------
+Step: 50
+----------------------------------------
+[86570] [CI] [ENTRY] android.os.AsyncTask android.os.AsyncTask.execute(java.lang.Object[]) (73526b6,c7b26cb) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [73526b6] android.os.AsyncTask android.os.AsyncTask.execute(c7b26cb : java.lang.Object[])) |+ [CB] [ENTRY] [73526b6] void me.guillaumin.android.osmtracker.gpx.ExportTrackTask.onPreExecute()
+----------------------------------------
+Step: 51
+----------------------------------------
+[86571] [CB] [ENTRY] void me.guillaumin.android.osmtracker.gpx.ExportTrackTask.onPreExecute() (73526b6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [73526b6] void me.guillaumin.android.osmtracker.gpx.ExportTrackTask.onPreExecute()) |+ [CB] [ENTRY] [73526b6] void me.guillaumin.android.osmtracker.gpx.ExportTrackTask.onPostExecute(TRUE : java.lang.Object)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [73526b6] void me.guillaumin.android.osmtracker.gpx.ExportTrackTask.onPreExecute()) |- [CB] [ENTRY] [73526b6] void me.guillaumin.android.osmtracker.gpx.ExportTrackTask.onPreExecute()
+----------------------------------------
+Step: 52
+----------------------------------------
+[87889] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause() (b4bd657) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()) |+ [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()) |+ [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()) |+ [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()) |- [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()
+----------------------------------------
+Step: 53
+----------------------------------------
+[89738] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart()
+----------------------------------------
+Step: 54
+----------------------------------------
+[89746] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStart()
+----------------------------------------
+Step: 55
+----------------------------------------
+[89750] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()
+----------------------------------------
+Step: 56
+----------------------------------------
+[92488] [CB] [ENTRY] void me.guillaumin.android.osmtracker.gpx.ExportTrackTask.onPostExecute(java.lang.Object) (73526b6,true) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [73526b6] void me.guillaumin.android.osmtracker.gpx.ExportTrackTask.onPostExecute(TRUE : java.lang.Object)) |- [CB] [ENTRY] [73526b6] void me.guillaumin.android.osmtracker.gpx.ExportTrackTask.onPostExecute(TRUE : java.lang.Object)
+----------------------------------------
+Step: 57
+----------------------------------------
+[92810] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); ((([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onPause())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 58
+----------------------------------------
+[92920] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>() (b975df6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>()) |- [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.<init>()) |+ [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 59
+----------------------------------------
+[92944] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(android.os.Bundle) (b975df6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 60
+----------------------------------------
+[94496] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart() (b975df6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart()) |+ [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart()) |- [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStart()
+----------------------------------------
+Step: 61
+----------------------------------------
+[94524] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume() (b975df6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()) |- [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()) |+ [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()
+----------------------------------------
+Step: 62
+----------------------------------------
+[95032] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop() (b4bd657) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()) |+ [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()) |- [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()) |- [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()
+----------------------------------------
+Step: 63
+----------------------------------------
+[95036] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy() (b4bd657) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy()) |- [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onDestroy()) |- [CB] [ENTRY] [b4bd657] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 64
+----------------------------------------
+[97922] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause() (b975df6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()) |- [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()) |+ [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()) |+ [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onPause()) |+ [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 65
+----------------------------------------
+[97962] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.WaypointList.<init>() (e79636d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.<init>()) |- [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.<init>()) |+ [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 66
+----------------------------------------
+[97986] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.WaypointList.onCreate(android.os.Bundle) (e79636d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 67
+----------------------------------------
+[98022] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.WaypointList.onStart() (e79636d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.onStart()) |+ [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.onStart()) |- [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.onStart()
+----------------------------------------
+Step: 68
+----------------------------------------
+[98038] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.WaypointList.onResume() (e79636d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.onResume()) |- [CB] [ENTRY] [e79636d] void me.guillaumin.android.osmtracker.activity.WaypointList.onResume()
+----------------------------------------
+Step: 69
+----------------------------------------
+[98820] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() (1c75f68) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop())) |- [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onResume()
+    SPEC (((TRUE)[*]); (([CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop() | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop()) | [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onStop())) |+ [CB] [ENTRY] [1c75f68] void me.guillaumin.android.osmtracker.activity.TrackManager.onRestart()
+----------------------------------------
+Step: 70
+----------------------------------------
+[99496] [CB] [ENTRY] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop() (b975df6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()) |- [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()) |- [CB] [ENTRY] [b975df6] void me.guillaumin.android.osmtracker.activity.TrackDetail.onStop()
+----------------------------------------

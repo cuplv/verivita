@@ -1,0 +1,1492 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/frag-act-last-batch-2/_traces/sherifelkhatib-Android-Media-Helper-downloads/monkeyTraces/trace-android-image-helper-sample-1.0.2_2017-04-17_00:44:29.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/frag-act-last-batch-2/_traces/sherifelkhatib-Android-Media-Helper-downloads/monkeyTraces/trace-android-image-helper-sample-1.0.2_2017-04-17_00:44:29.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 1.290000
+parsing - System time: 0.090000
+spec_grounding - User time: 166.640000
+spec_grounding - System time: 0.990000
+
+---Simplified Trace---
+[0] [CB] [ENTRY] void mobi.sherif.example.imageuploader.MainActivity.<init>() (917d566) 
+[0] [CB] [EXIT] NULL = void mobi.sherif.example.imageuploader.MainActivity.<init>() (917d566) 
+[24] [CB] [ENTRY] void mobi.sherif.example.imageuploader.MainActivity.onCreate(android.os.Bundle) (917d566,NULL) 
+[24] [CB] [EXIT] void mobi.sherif.example.imageuploader.MainActivity.onCreate(android.os.Bundle) (917d566,NULL) 
+[1714] [CB] [ENTRY] void mobi.sherif.example.imageuploader.MainActivity.onStart() (917d566) 
+[1714] [CB] [EXIT] void mobi.sherif.example.imageuploader.MainActivity.onStart() (917d566) 
+[1746] [CB] [ENTRY] void mobi.sherif.example.imageuploader.MainActivity.onResume() (917d566) 
+[1746] [CB] [EXIT] void mobi.sherif.example.imageuploader.MainActivity.onResume() (917d566) 
+[3708] [CB] [ENTRY] void mobi.sherif.example.imageuploader.MainActivity.onPause() (917d566) 
+[3708] [CB] [EXIT] void mobi.sherif.example.imageuploader.MainActivity.onPause() (917d566) 
+[3788] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.<init>() (4e4ee87) 
+[3788] [CB] [EXIT] NULL = void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.<init>() (4e4ee87) 
+[3812] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onCreate(android.os.Bundle) (4e4ee87,NULL) 
+[3812] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onCreate(android.os.Bundle) (4e4ee87,NULL) 
+[4970] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onStart() (4e4ee87) 
+[4970] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onStart() (4e4ee87) 
+[5002] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume() (4e4ee87) 
+[5002] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume() (4e4ee87) 
+[6370] [CB] [ENTRY] void mobi.sherif.example.imageuploader.MainActivity.onStop() (917d566) 
+[6370] [CB] [EXIT] void mobi.sherif.example.imageuploader.MainActivity.onStop() (917d566) 
+[7538] [CB] [ENTRY] boolean mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.dispatchKeyEvent(android.view.KeyEvent) (4e4ee87,dc494e9) 
+  [7600] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (6aebcd5) 
+  [7600] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (6aebcd5) 
+[7538] [CB] [EXIT] true = boolean mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.dispatchKeyEvent(android.view.KeyEvent) (4e4ee87,dc494e9) 
+[7726] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (6aebcd5,4e4ee87) 
+[7726] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (6aebcd5,4e4ee87) 
+[7734] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (6aebcd5,NULL) 
+[7734] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (6aebcd5,NULL) 
+[7738] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (6aebcd5,NULL) 
+  [7740] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (6aebcd5,NULL) 
+  [7740] [CB] [EXIT] 3bb6524 = android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (6aebcd5,NULL) 
+[7738] [CB] [EXIT] b5d1a53 = android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (6aebcd5,NULL) 
+[7820] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (6aebcd5,b5d1a53,NULL,NULL) 
+[7820] [CB] [EXIT] NULL = android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (6aebcd5,b5d1a53,NULL,NULL) 
+[7824] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (6aebcd5,NULL) 
+[7824] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (6aebcd5,NULL) 
+[7836] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (6aebcd5) 
+[7836] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (6aebcd5) 
+[8944] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (6aebcd5) 
+[8944] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (6aebcd5) 
+[9004] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+  [9041] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (80435d8) 
+  [9041] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (80435d8) 
+[9004] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+[10012] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (80435d8,4e4ee87) 
+[10012] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (80435d8,4e4ee87) 
+[10020] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (80435d8,NULL) 
+[10020] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (80435d8,NULL) 
+[10024] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (80435d8,NULL) 
+  [10026] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (80435d8,NULL) 
+  [10026] [CB] [EXIT] 6a1a92d = android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (80435d8,NULL) 
+[10024] [CB] [EXIT] a86d0b0 = android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (80435d8,NULL) 
+[10106] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (80435d8,a86d0b0,NULL,NULL) 
+[10106] [CB] [EXIT] NULL = android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (80435d8,a86d0b0,NULL,NULL) 
+[10110] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (80435d8,NULL) 
+[10110] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (80435d8,NULL) 
+[10122] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (80435d8) 
+[10122] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (80435d8) 
+[11202] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (80435d8) 
+[11202] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (80435d8) 
+[12462] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (80435d8) 
+[12462] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (80435d8) 
+[12466] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (80435d8) 
+[12466] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (80435d8) 
+[12470] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (80435d8) 
+[12470] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (80435d8) 
+[12474] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (80435d8) 
+[12474] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (80435d8) 
+[12478] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (80435d8) 
+[12478] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (80435d8) 
+[12526] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (6aebcd5) 
+[12526] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (6aebcd5) 
+[12530] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (6aebcd5) 
+[12530] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (6aebcd5) 
+[12534] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (6aebcd5) 
+[12534] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (6aebcd5) 
+[12538] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (6aebcd5) 
+[12538] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (6aebcd5) 
+[12542] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (6aebcd5) 
+[12542] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (6aebcd5) 
+[12638] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+  [12675] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (941cbd2) 
+  [12675] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (941cbd2) 
+[12638] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+[12750] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (941cbd2,4e4ee87) 
+[12750] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (941cbd2,4e4ee87) 
+[12758] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (941cbd2,NULL) 
+[12758] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (941cbd2,NULL) 
+[12762] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (941cbd2,NULL) 
+  [12764] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (941cbd2,NULL) 
+  [12764] [CB] [EXIT] b344499 = android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (941cbd2,NULL) 
+[12762] [CB] [EXIT] 40e040c = android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (941cbd2,NULL) 
+[12844] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (941cbd2,40e040c,NULL,NULL) 
+[12844] [CB] [EXIT] NULL = android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (941cbd2,40e040c,NULL,NULL) 
+[12848] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (941cbd2,NULL) 
+[12848] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (941cbd2,NULL) 
+[12860] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (941cbd2) 
+[12860] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (941cbd2) 
+[13940] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (941cbd2) 
+[13940] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (941cbd2) 
+[14932] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (941cbd2) 
+[14932] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (941cbd2) 
+[14936] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (941cbd2) 
+[14936] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (941cbd2) 
+[14940] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (941cbd2) 
+[14940] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (941cbd2) 
+[14944] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (941cbd2) 
+[14944] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (941cbd2) 
+[14948] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (941cbd2) 
+[14948] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (941cbd2) 
+[16832] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+  [16869] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (1bdd665) 
+  [16869] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (1bdd665) 
+[16832] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+[16916] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (1bdd665,4e4ee87) 
+[16916] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (1bdd665,4e4ee87) 
+[16924] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (1bdd665,NULL) 
+[16924] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (1bdd665,NULL) 
+[16928] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (1bdd665,NULL) 
+  [16930] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (1bdd665,NULL) 
+  [16930] [CB] [EXIT] cf501a = android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (1bdd665,NULL) 
+[16928] [CB] [EXIT] 51ce241 = android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (1bdd665,NULL) 
+[17010] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (1bdd665,51ce241,NULL,NULL) 
+[17010] [CB] [EXIT] NULL = android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (1bdd665,51ce241,NULL,NULL) 
+[17014] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (1bdd665,NULL) 
+[17014] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (1bdd665,NULL) 
+[17026] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (1bdd665) 
+[17026] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (1bdd665) 
+[18106] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (1bdd665) 
+[18106] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (1bdd665) 
+[19290] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (1bdd665) 
+[19290] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (1bdd665) 
+[19294] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (1bdd665) 
+[19294] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (1bdd665) 
+[19298] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (1bdd665) 
+[19298] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (1bdd665) 
+[19302] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (1bdd665) 
+[19302] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (1bdd665) 
+[19306] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (1bdd665) 
+[19306] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (1bdd665) 
+[20310] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+  [20347] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (4e3b6b1) 
+  [20347] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (4e3b6b1) 
+[20310] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+[20414] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (4e3b6b1,4e4ee87) 
+[20414] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (4e3b6b1,4e4ee87) 
+[20422] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (4e3b6b1,NULL) 
+[20422] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (4e3b6b1,NULL) 
+[20426] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (4e3b6b1,NULL) 
+  [20428] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (4e3b6b1,NULL) 
+  [20428] [CB] [EXIT] 802e480 = android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (4e3b6b1,NULL) 
+[20426] [CB] [EXIT] 35db65f = android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (4e3b6b1,NULL) 
+[20508] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (4e3b6b1,35db65f,NULL,NULL) 
+[20508] [CB] [EXIT] NULL = android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (4e3b6b1,35db65f,NULL,NULL) 
+[20512] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (4e3b6b1,NULL) 
+[20512] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (4e3b6b1,NULL) 
+[20524] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (4e3b6b1) 
+[20524] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (4e3b6b1) 
+[21604] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (4e3b6b1) 
+[21604] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (4e3b6b1) 
+[21664] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+  [21701] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (b2e49bd) 
+  [21701] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (b2e49bd) 
+[21664] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+[22664] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (b2e49bd,4e4ee87) 
+[22664] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (b2e49bd,4e4ee87) 
+[22672] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (b2e49bd,NULL) 
+[22672] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (b2e49bd,NULL) 
+[22676] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (b2e49bd,NULL) 
+  [22678] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (b2e49bd,NULL) 
+  [22678] [CB] [EXIT] 624c327 = android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (b2e49bd,NULL) 
+[22676] [CB] [EXIT] 85dc672 = android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (b2e49bd,NULL) 
+[22758] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b2e49bd,85dc672,NULL,NULL) 
+[22758] [CB] [EXIT] NULL = android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b2e49bd,85dc672,NULL,NULL) 
+[22762] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (b2e49bd,NULL) 
+[22762] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (b2e49bd,NULL) 
+[22774] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (b2e49bd) 
+[22774] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (b2e49bd) 
+[23854] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (b2e49bd) 
+[23854] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (b2e49bd) 
+[24842] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+  [24879] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (506c3c6) 
+  [24879] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (506c3c6) 
+[24842] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+[24982] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (4e3b6b1) 
+[24982] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (4e3b6b1) 
+[24986] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (4e3b6b1) 
+[24986] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (4e3b6b1) 
+[24990] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (4e3b6b1) 
+[24990] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (4e3b6b1) 
+[24994] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (4e3b6b1) 
+[24994] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (4e3b6b1) 
+[24998] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (4e3b6b1) 
+[24998] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (4e3b6b1) 
+[25014] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (506c3c6,4e4ee87) 
+[25014] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (506c3c6,4e4ee87) 
+[25022] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (506c3c6,NULL) 
+[25022] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (506c3c6,NULL) 
+[25026] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (506c3c6,NULL) 
+  [25028] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (506c3c6,NULL) 
+  [25055] [CI] [ENTRY] void android.app.AlertDialog$Builder.<init>(android.content.Context) (16935d7,4e4ee87) 
+  [25055] [CI] [EXIT] void android.app.AlertDialog$Builder.<init>(android.content.Context) (16935d7,4e4ee87) 
+  [25081] [CI] [ENTRY] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNegativeButton(java.lang.CharSequence,android.content.DialogInterface$OnClickListener) (16935d7,Choose fro,a17cf24) 
+  [25081] [CI] [EXIT] 16935d7 = android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNegativeButton(java.lang.CharSequence,android.content.DialogInterface$OnClickListener) (16935d7,Choose fro,a17cf24) 
+  [25083] [CI] [ENTRY] android.app.AlertDialog android.app.AlertDialog$Builder.create() (16935d7) 
+  [25083] [CI] [EXIT] 5c56531 = android.app.AlertDialog android.app.AlertDialog$Builder.create() (16935d7) 
+  [25028] [CB] [EXIT] 5c56531 = android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (506c3c6,NULL) 
+[25026] [CB] [EXIT] ad1af84 = android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (506c3c6,NULL) 
+[25108] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (506c3c6,ad1af84,NULL,NULL) 
+[25108] [CB] [EXIT] NULL = android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (506c3c6,ad1af84,NULL,NULL) 
+[25112] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (506c3c6,NULL) 
+[25112] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (506c3c6,NULL) 
+[25124] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (506c3c6) 
+[25124] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (506c3c6) 
+[26204] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (506c3c6) 
+[26204] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (506c3c6) 
+[27432] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog$2.onClick(android.content.DialogInterface,int) (a17cf24,5c56531,-2) 
+[27432] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog$2.onClick(android.content.DialogInterface,int) (a17cf24,5c56531,-2) 
+[27452] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPause() (4e4ee87) 
+  [27454] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (506c3c6) 
+  [27454] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (506c3c6) 
+  [27458] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (b2e49bd) 
+  [27458] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (b2e49bd) 
+[27452] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPause() (4e4ee87) 
+[27476] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume() (4e4ee87) 
+[27476] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume() (4e4ee87) 
+[27480] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPostResume() (4e4ee87) 
+  [27488] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (506c3c6) 
+  [27488] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (506c3c6) 
+  [27492] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (b2e49bd) 
+  [27492] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (b2e49bd) 
+[27480] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPostResume() (4e4ee87) 
+[27584] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (506c3c6) 
+[27584] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (506c3c6) 
+[27588] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (506c3c6) 
+[27588] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (506c3c6) 
+[27592] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (506c3c6) 
+[27592] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (506c3c6) 
+[27596] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (506c3c6) 
+[27596] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (506c3c6) 
+[27600] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (506c3c6) 
+[27600] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (506c3c6) 
+[27636] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (b2e49bd) 
+[27636] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (b2e49bd) 
+[27640] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (b2e49bd) 
+[27640] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (b2e49bd) 
+[27644] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (b2e49bd) 
+[27644] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (b2e49bd) 
+[27648] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (b2e49bd) 
+[27648] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (b2e49bd) 
+[27652] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (b2e49bd) 
+[27652] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (b2e49bd) 
+[27796] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+  [27833] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (41f43f9) 
+  [27833] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (41f43f9) 
+[27796] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+[27908] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (41f43f9,4e4ee87) 
+[27908] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (41f43f9,4e4ee87) 
+[27916] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (41f43f9,NULL) 
+[27916] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (41f43f9,NULL) 
+[27920] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (41f43f9,NULL) 
+  [27922] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (41f43f9,NULL) 
+  [27922] [CB] [EXIT] 8dcbd2c = android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (41f43f9,NULL) 
+[27920] [CB] [EXIT] 47e37fb = android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (41f43f9,NULL) 
+[28002] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (41f43f9,47e37fb,NULL,NULL) 
+[28002] [CB] [EXIT] NULL = android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (41f43f9,47e37fb,NULL,NULL) 
+[28006] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (41f43f9,NULL) 
+[28006] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (41f43f9,NULL) 
+[28018] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (41f43f9) 
+[28018] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (41f43f9) 
+[29098] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (41f43f9) 
+[29098] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (41f43f9) 
+[30314] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (41f43f9) 
+[30314] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (41f43f9) 
+[30318] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (41f43f9) 
+[30318] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (41f43f9) 
+[30322] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (41f43f9) 
+[30322] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (41f43f9) 
+[30326] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (41f43f9) 
+[30326] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (41f43f9) 
+[30330] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (41f43f9) 
+[30330] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (41f43f9) 
+[30746] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+  [30783] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (b18b70a) 
+  [30783] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (b18b70a) 
+[30746] [CB] [EXIT] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+[30830] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (b18b70a,4e4ee87) 
+[30830] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (b18b70a,4e4ee87) 
+[30838] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (b18b70a,NULL) 
+[30838] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (b18b70a,NULL) 
+[30842] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (b18b70a,NULL) 
+  [30844] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (b18b70a,NULL) 
+  [30844] [CB] [EXIT] c59c2db = android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (b18b70a,NULL) 
+[30842] [CB] [EXIT] 282c0b6 = android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (b18b70a,NULL) 
+[30924] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b18b70a,282c0b6,NULL,NULL) 
+[30924] [CB] [EXIT] NULL = android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b18b70a,282c0b6,NULL,NULL) 
+[30928] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (b18b70a,NULL) 
+[30928] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (b18b70a,NULL) 
+[30940] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (b18b70a) 
+[30940] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (b18b70a) 
+[32020] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (b18b70a) 
+[32020] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (b18b70a) 
+[33004] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (b18b70a) 
+[33004] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (b18b70a) 
+[33008] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (b18b70a) 
+[33008] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (b18b70a) 
+[33012] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (b18b70a) 
+[33012] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (b18b70a) 
+[33016] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (b18b70a) 
+[33016] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (b18b70a) 
+[33020] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (b18b70a) 
+[33020] [CB] [EXIT] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (b18b70a) 
+
+
+
+TRACE STATISTICS
+Trace length: 165
+Top-level callbacks: 131
+CI-ENTRY: 11
+CI-EXIT: 10
+CB-ENTRY: 132
+CB-EXIT: 0
+        encoding - User time: 12.420000
+encoding - System time: 0.020000
+simulation - User time: 122.780000
+simulation - System time: 1.170000
+
+The trace can be simulated in 165 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[0] [CB] [ENTRY] void mobi.sherif.example.imageuploader.MainActivity.<init>() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.<init>()) |- [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.<init>()) |+ [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[24] [CB] [ENTRY] void mobi.sherif.example.imageuploader.MainActivity.onCreate(android.os.Bundle) (917d566,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 3
+----------------------------------------
+[1714] [CB] [ENTRY] void mobi.sherif.example.imageuploader.MainActivity.onStart() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onStart()) |- [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onStart()) |+ [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onResume()
+----------------------------------------
+Step: 4
+----------------------------------------
+[1746] [CB] [ENTRY] void mobi.sherif.example.imageuploader.MainActivity.onResume() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onResume()) |+ [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onResume()) |- [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onResume()
+----------------------------------------
+Step: 5
+----------------------------------------
+[3708] [CB] [ENTRY] void mobi.sherif.example.imageuploader.MainActivity.onPause() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onPause()) |+ [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onPause()) |+ [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onPause()) |+ [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onPause()) |- [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onPause()
+----------------------------------------
+Step: 6
+----------------------------------------
+[3788] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.<init>() (4e4ee87) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.<init>()) |+ [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.<init>()) |- [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.<init>()
+----------------------------------------
+Step: 7
+----------------------------------------
+[3812] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onCreate(android.os.Bundle) (4e4ee87,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 8
+----------------------------------------
+[4970] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onStart() (4e4ee87) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onStart()) |+ [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onStart()) |- [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onStart()
+----------------------------------------
+Step: 9
+----------------------------------------
+[27476] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume() (4e4ee87) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume() | [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume())) |- [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume() | [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume())) |+ [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPause()
+----------------------------------------
+Step: 10
+----------------------------------------
+[6370] [CB] [ENTRY] void mobi.sherif.example.imageuploader.MainActivity.onStop() (917d566) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onStop()) |- [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onStop()) |- [CB] [ENTRY] [917d566] void mobi.sherif.example.imageuploader.MainActivity.onResume()
+----------------------------------------
+Step: 11
+----------------------------------------
+[7538] [CB] [ENTRY] boolean mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.dispatchKeyEvent(android.view.KeyEvent) (4e4ee87,dc494e9) 
+----------------------------------------
+Step: 12
+----------------------------------------
+[7600] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (6aebcd5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [6aebcd5] void android.support.v4.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 13
+----------------------------------------
+[7600] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (6aebcd5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [6aebcd5] void android.support.v4.app.DialogFragment.<init>()) |- [CI] [EXIT] [6aebcd5] void android.support.v4.app.DialogFragment.<init>()
+----------------------------------------
+Step: 14
+----------------------------------------
+[7726] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (6aebcd5,4e4ee87) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 15
+----------------------------------------
+[7734] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (6aebcd5,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [6aebcd5] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [6aebcd5] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(b5d1a53 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 16
+----------------------------------------
+[7738] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (6aebcd5,NULL) 
+----------------------------------------
+Step: 17
+----------------------------------------
+[7740] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (6aebcd5,NULL) 
+----------------------------------------
+Step: 18
+----------------------------------------
+[7820] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (6aebcd5,b5d1a53,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(b5d1a53 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(b5d1a53 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [6aebcd5] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(b5d1a53 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(b5d1a53 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 19
+----------------------------------------
+[7824] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (6aebcd5,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+----------------------------------------
+Step: 20
+----------------------------------------
+[7836] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (6aebcd5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 21
+----------------------------------------
+[8944] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (6aebcd5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 22
+----------------------------------------
+[9004] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+----------------------------------------
+Step: 23
+----------------------------------------
+[9041] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (80435d8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [80435d8] void android.support.v4.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 24
+----------------------------------------
+[9041] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (80435d8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [80435d8] void android.support.v4.app.DialogFragment.<init>()) |- [CI] [EXIT] [80435d8] void android.support.v4.app.DialogFragment.<init>()
+----------------------------------------
+Step: 25
+----------------------------------------
+[10012] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (80435d8,4e4ee87) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 26
+----------------------------------------
+[10020] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (80435d8,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [80435d8] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(a86d0b0 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [80435d8] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 27
+----------------------------------------
+[10024] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (80435d8,NULL) 
+----------------------------------------
+Step: 28
+----------------------------------------
+[10026] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (80435d8,NULL) 
+----------------------------------------
+Step: 29
+----------------------------------------
+[10106] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (80435d8,a86d0b0,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(a86d0b0 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(a86d0b0 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(a86d0b0 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [80435d8] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(a86d0b0 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 30
+----------------------------------------
+[10110] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (80435d8,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 31
+----------------------------------------
+[10122] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (80435d8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+----------------------------------------
+Step: 32
+----------------------------------------
+[11202] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (80435d8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 33
+----------------------------------------
+[12462] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (80435d8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+----------------------------------------
+Step: 34
+----------------------------------------
+[12466] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (80435d8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 35
+----------------------------------------
+[12470] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (80435d8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [80435d8] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(a86d0b0 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 36
+----------------------------------------
+[12474] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (80435d8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [80435d8] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(a86d0b0 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 37
+----------------------------------------
+[12478] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (80435d8) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |+ [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |- [CB] [ENTRY] [80435d8] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+----------------------------------------
+Step: 38
+----------------------------------------
+[12526] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (6aebcd5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 39
+----------------------------------------
+[12530] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (6aebcd5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 40
+----------------------------------------
+[12534] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (6aebcd5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [6aebcd5] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(b5d1a53 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 41
+----------------------------------------
+[12538] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (6aebcd5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [6aebcd5] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(b5d1a53 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+----------------------------------------
+Step: 42
+----------------------------------------
+[12542] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (6aebcd5) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |+ [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |- [CB] [ENTRY] [6aebcd5] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+----------------------------------------
+Step: 43
+----------------------------------------
+[12638] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+----------------------------------------
+Step: 44
+----------------------------------------
+[12675] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (941cbd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [941cbd2] void android.support.v4.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 45
+----------------------------------------
+[12675] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (941cbd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [941cbd2] void android.support.v4.app.DialogFragment.<init>()) |- [CI] [EXIT] [941cbd2] void android.support.v4.app.DialogFragment.<init>()
+----------------------------------------
+Step: 46
+----------------------------------------
+[12750] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (941cbd2,4e4ee87) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 47
+----------------------------------------
+[12758] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (941cbd2,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [941cbd2] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [941cbd2] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(40e040c : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 48
+----------------------------------------
+[12762] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (941cbd2,NULL) 
+----------------------------------------
+Step: 49
+----------------------------------------
+[12764] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (941cbd2,NULL) 
+----------------------------------------
+Step: 50
+----------------------------------------
+[12844] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (941cbd2,40e040c,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(40e040c : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(40e040c : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(40e040c : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [941cbd2] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(40e040c : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 51
+----------------------------------------
+[12848] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (941cbd2,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 52
+----------------------------------------
+[12860] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (941cbd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 53
+----------------------------------------
+[13940] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (941cbd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 54
+----------------------------------------
+[14932] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (941cbd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 55
+----------------------------------------
+[14936] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (941cbd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 56
+----------------------------------------
+[14940] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (941cbd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [941cbd2] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(40e040c : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 57
+----------------------------------------
+[14944] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (941cbd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [941cbd2] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(40e040c : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 58
+----------------------------------------
+[14948] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (941cbd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |- [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |+ [CB] [ENTRY] [941cbd2] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 59
+----------------------------------------
+[16832] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+----------------------------------------
+Step: 60
+----------------------------------------
+[16869] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (1bdd665) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [1bdd665] void android.support.v4.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 61
+----------------------------------------
+[16869] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (1bdd665) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [1bdd665] void android.support.v4.app.DialogFragment.<init>()) |- [CI] [EXIT] [1bdd665] void android.support.v4.app.DialogFragment.<init>()
+----------------------------------------
+Step: 62
+----------------------------------------
+[16916] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (1bdd665,4e4ee87) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 63
+----------------------------------------
+[16924] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (1bdd665,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1bdd665] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(51ce241 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1bdd665] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(NULL : android.os.Bundle)
+----------------------------------------
+Step: 64
+----------------------------------------
+[16928] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (1bdd665,NULL) 
+----------------------------------------
+Step: 65
+----------------------------------------
+[16930] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (1bdd665,NULL) 
+----------------------------------------
+Step: 66
+----------------------------------------
+[17010] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (1bdd665,51ce241,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(51ce241 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [1bdd665] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(51ce241 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(51ce241 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(51ce241 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 67
+----------------------------------------
+[17014] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (1bdd665,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+----------------------------------------
+Step: 68
+----------------------------------------
+[17026] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (1bdd665) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+----------------------------------------
+Step: 69
+----------------------------------------
+[18106] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (1bdd665) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 70
+----------------------------------------
+[19290] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (1bdd665) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 71
+----------------------------------------
+[19294] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (1bdd665) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+----------------------------------------
+Step: 72
+----------------------------------------
+[19298] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (1bdd665) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [1bdd665] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(51ce241 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+----------------------------------------
+Step: 73
+----------------------------------------
+[19302] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (1bdd665) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [1bdd665] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(51ce241 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 74
+----------------------------------------
+[19306] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (1bdd665) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |- [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |+ [CB] [ENTRY] [1bdd665] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 75
+----------------------------------------
+[20310] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+----------------------------------------
+Step: 76
+----------------------------------------
+[20347] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (4e3b6b1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [4e3b6b1] void android.support.v4.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 77
+----------------------------------------
+[20347] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (4e3b6b1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [4e3b6b1] void android.support.v4.app.DialogFragment.<init>()) |- [CI] [EXIT] [4e3b6b1] void android.support.v4.app.DialogFragment.<init>()
+----------------------------------------
+Step: 78
+----------------------------------------
+[20414] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (4e3b6b1,4e4ee87) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 79
+----------------------------------------
+[20422] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (4e3b6b1,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [4e3b6b1] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(35db65f : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [4e3b6b1] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(NULL : android.os.Bundle)
+----------------------------------------
+Step: 80
+----------------------------------------
+[20426] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (4e3b6b1,NULL) 
+----------------------------------------
+Step: 81
+----------------------------------------
+[20428] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (4e3b6b1,NULL) 
+----------------------------------------
+Step: 82
+----------------------------------------
+[20508] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (4e3b6b1,35db65f,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(35db65f : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(35db65f : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(35db65f : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [4e3b6b1] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(35db65f : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 83
+----------------------------------------
+[20512] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (4e3b6b1,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 84
+----------------------------------------
+[20524] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (4e3b6b1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+----------------------------------------
+Step: 85
+----------------------------------------
+[21604] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (4e3b6b1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 86
+----------------------------------------
+[21664] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+----------------------------------------
+Step: 87
+----------------------------------------
+[21701] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (b2e49bd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [b2e49bd] void android.support.v4.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 88
+----------------------------------------
+[21701] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (b2e49bd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [b2e49bd] void android.support.v4.app.DialogFragment.<init>()) |- [CI] [EXIT] [b2e49bd] void android.support.v4.app.DialogFragment.<init>()
+----------------------------------------
+Step: 89
+----------------------------------------
+[22664] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (b2e49bd,4e4ee87) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 90
+----------------------------------------
+[22672] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (b2e49bd,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b2e49bd] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b2e49bd] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(85dc672 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 91
+----------------------------------------
+[22676] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (b2e49bd,NULL) 
+----------------------------------------
+Step: 92
+----------------------------------------
+[22678] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (b2e49bd,NULL) 
+----------------------------------------
+Step: 93
+----------------------------------------
+[22758] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b2e49bd,85dc672,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(85dc672 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [b2e49bd] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(85dc672 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(85dc672 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(85dc672 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 94
+----------------------------------------
+[22762] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (b2e49bd,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 95
+----------------------------------------
+[22774] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (b2e49bd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+----------------------------------------
+Step: 96
+----------------------------------------
+[23854] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (b2e49bd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() | [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume())) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() | [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume())) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 97
+----------------------------------------
+[24842] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+----------------------------------------
+Step: 98
+----------------------------------------
+[24879] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (506c3c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [506c3c6] void android.support.v4.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 99
+----------------------------------------
+[24879] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (506c3c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [506c3c6] void android.support.v4.app.DialogFragment.<init>()) |- [CI] [EXIT] [506c3c6] void android.support.v4.app.DialogFragment.<init>()
+----------------------------------------
+Step: 100
+----------------------------------------
+[24982] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (4e3b6b1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+----------------------------------------
+Step: 101
+----------------------------------------
+[24986] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (4e3b6b1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 102
+----------------------------------------
+[24990] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (4e3b6b1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [4e3b6b1] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(35db65f : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 103
+----------------------------------------
+[24994] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (4e3b6b1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [4e3b6b1] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(35db65f : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+----------------------------------------
+Step: 104
+----------------------------------------
+[24998] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (4e3b6b1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |- [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |+ [CB] [ENTRY] [4e3b6b1] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 105
+----------------------------------------
+[25014] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (506c3c6,4e4ee87) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 106
+----------------------------------------
+[25022] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (506c3c6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [506c3c6] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [506c3c6] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(ad1af84 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 107
+----------------------------------------
+[25026] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (506c3c6,NULL) 
+----------------------------------------
+Step: 108
+----------------------------------------
+[25028] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (506c3c6,NULL) 
+----------------------------------------
+Step: 109
+----------------------------------------
+[25055] [CI] [ENTRY] void android.app.AlertDialog$Builder.<init>(android.content.Context) (16935d7,4e4ee87) 
+----------------------------------------
+Step: 110
+----------------------------------------
+[25081] [CI] [ENTRY] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNegativeButton(java.lang.CharSequence,android.content.DialogInterface$OnClickListener) (16935d7,Choose fro,a17cf24) 
+----------------------------------------
+Step: 111
+----------------------------------------
+[25083] [CI] [EXIT] 5c56531 = android.app.AlertDialog android.app.AlertDialog$Builder.create() (16935d7) 
+    Matched specifications:
+    SPEC (((((TRUE)[*]); ((((TRUE)[*]); [CI] [ENTRY] [16935d7] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNegativeButton(Choose from Gallery : java.lang.CharSequence,a17cf24 : android.content.DialogInterface$OnClickListener)); (((TRUE)[*]); 5c56531 = [CI] [EXIT] [16935d7] android.app.AlertDialog android.app.AlertDialog$Builder.create()))) & ((((TRUE)[*]); (([CI] [ENTRY] [16935d7] void android.app.AlertDialog$Builder.<init>(4e4ee87 : android.content.Context); ((TRUE)[*])); 5c56531 = [CI] [EXIT] [16935d7] android.app.AlertDialog android.app.AlertDialog$Builder.create())); ((TRUE)[*]))) & ((((TRUE)[*]); ([CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume() | [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume())); (((! ([CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPause()) & TRUE))[*]))) |+ [CB] [ENTRY] [a17cf24] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog$2.onClick(5c56531 : android.content.DialogInterface,-2 : int)
+----------------------------------------
+Step: 112
+----------------------------------------
+[25108] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (506c3c6,ad1af84,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(ad1af84 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(ad1af84 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [506c3c6] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(ad1af84 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(ad1af84 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 113
+----------------------------------------
+[25112] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (506c3c6,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+----------------------------------------
+Step: 114
+----------------------------------------
+[25124] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (506c3c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+----------------------------------------
+Step: 115
+----------------------------------------
+[26204] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (506c3c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() | [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume())) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() | [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume())) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 116
+----------------------------------------
+[27432] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog$2.onClick(android.content.DialogInterface,int) (a17cf24,5c56531,-2) 
+----------------------------------------
+Step: 117
+----------------------------------------
+[27452] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPause() (4e4ee87) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPause()) |+ [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPause()) |+ [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPause()) |- [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPause()
+    SPEC ((((((TRUE)[*]); ((((TRUE)[*]); [CI] [ENTRY] [16935d7] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNegativeButton(Choose from Gallery : java.lang.CharSequence,a17cf24 : android.content.DialogInterface$OnClickListener)); (((TRUE)[*]); 5c56531 = [CI] [EXIT] [16935d7] android.app.AlertDialog android.app.AlertDialog$Builder.create()))); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPause())) & ((((TRUE)[*]); (([CI] [ENTRY] [16935d7] void android.app.AlertDialog$Builder.<init>(4e4ee87 : android.content.Context); ((TRUE)[*])); 5c56531 = [CI] [EXIT] [16935d7] android.app.AlertDialog android.app.AlertDialog$Builder.create())); ((TRUE)[*]))) |- [CB] [ENTRY] [a17cf24] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog$2.onClick(5c56531 : android.content.DialogInterface,-2 : int)
+----------------------------------------
+Step: 118
+----------------------------------------
+[27454] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (506c3c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() | [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause())) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() | [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause())) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+----------------------------------------
+Step: 119
+----------------------------------------
+[27458] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (b2e49bd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() | [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause())) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() | [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause())) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+----------------------------------------
+Step: 120
+----------------------------------------
+[27476] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume() (4e4ee87) 
+    Matched specifications:
+    SPEC ((((((TRUE)[*]); ((((TRUE)[*]); [CI] [ENTRY] [16935d7] android.app.AlertDialog$Builder android.app.AlertDialog$Builder.setNegativeButton(Choose from Gallery : java.lang.CharSequence,a17cf24 : android.content.DialogInterface$OnClickListener)); (((TRUE)[*]); 5c56531 = [CI] [EXIT] [16935d7] android.app.AlertDialog android.app.AlertDialog$Builder.create()))); ((TRUE)[*])) & (((TRUE)[*]); ([CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume() | [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume()))) & ((((TRUE)[*]); (([CI] [ENTRY] [16935d7] void android.app.AlertDialog$Builder.<init>(4e4ee87 : android.content.Context); ((TRUE)[*])); 5c56531 = [CI] [EXIT] [16935d7] android.app.AlertDialog android.app.AlertDialog$Builder.create())); ((TRUE)[*]))) |+ [CB] [ENTRY] [a17cf24] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog$2.onClick(5c56531 : android.content.DialogInterface,-2 : int)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume() | [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume())) |- [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume() | [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume())) |- [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume() | [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onResume())) |+ [CB] [ENTRY] [4e4ee87] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPause()
+----------------------------------------
+Step: 121
+----------------------------------------
+[27480] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onPostResume() (4e4ee87) 
+----------------------------------------
+Step: 122
+----------------------------------------
+[27488] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (506c3c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() | [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume())) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() | [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume())) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 123
+----------------------------------------
+[27492] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (b2e49bd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() | [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume())) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() | [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume())) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 124
+----------------------------------------
+[27584] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (506c3c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() | [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause())) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() | [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause())) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+----------------------------------------
+Step: 125
+----------------------------------------
+[27588] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (506c3c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 126
+----------------------------------------
+[27592] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (506c3c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [506c3c6] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(ad1af84 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 127
+----------------------------------------
+[27596] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (506c3c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [506c3c6] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(ad1af84 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 128
+----------------------------------------
+[27600] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (506c3c6) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |+ [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |- [CB] [ENTRY] [506c3c6] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+----------------------------------------
+Step: 129
+----------------------------------------
+[27636] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (b2e49bd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() | [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause())) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); ([CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() | [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause())) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+----------------------------------------
+Step: 130
+----------------------------------------
+[27640] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (b2e49bd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 131
+----------------------------------------
+[27644] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (b2e49bd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [b2e49bd] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(85dc672 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 132
+----------------------------------------
+[27648] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (b2e49bd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [b2e49bd] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(85dc672 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+----------------------------------------
+Step: 133
+----------------------------------------
+[27652] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (b2e49bd) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |- [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |+ [CB] [ENTRY] [b2e49bd] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 134
+----------------------------------------
+[27796] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+----------------------------------------
+Step: 135
+----------------------------------------
+[27833] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (41f43f9) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [41f43f9] void android.support.v4.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 136
+----------------------------------------
+[27833] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (41f43f9) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [41f43f9] void android.support.v4.app.DialogFragment.<init>()) |- [CI] [EXIT] [41f43f9] void android.support.v4.app.DialogFragment.<init>()
+----------------------------------------
+Step: 137
+----------------------------------------
+[27908] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (41f43f9,4e4ee87) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 138
+----------------------------------------
+[27916] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (41f43f9,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [41f43f9] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [41f43f9] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(47e37fb : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 139
+----------------------------------------
+[27920] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (41f43f9,NULL) 
+----------------------------------------
+Step: 140
+----------------------------------------
+[27922] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (41f43f9,NULL) 
+----------------------------------------
+Step: 141
+----------------------------------------
+[28002] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (41f43f9,47e37fb,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(47e37fb : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [41f43f9] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(47e37fb : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(47e37fb : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(47e37fb : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+----------------------------------------
+Step: 142
+----------------------------------------
+[28006] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (41f43f9,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 143
+----------------------------------------
+[28018] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (41f43f9) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+----------------------------------------
+Step: 144
+----------------------------------------
+[29098] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (41f43f9) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+----------------------------------------
+Step: 145
+----------------------------------------
+[30314] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (41f43f9) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 146
+----------------------------------------
+[30318] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (41f43f9) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+----------------------------------------
+Step: 147
+----------------------------------------
+[30322] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (41f43f9) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [41f43f9] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(47e37fb : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 148
+----------------------------------------
+[30326] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (41f43f9) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [41f43f9] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(47e37fb : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+----------------------------------------
+Step: 149
+----------------------------------------
+[30330] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (41f43f9) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |- [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |+ [CB] [ENTRY] [41f43f9] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 150
+----------------------------------------
+[30746] [CB] [ENTRY] void mobi.sherif.example.imageuploader.ImageUploaderActivitySupport.onChoose(android.view.View) (4e4ee87,292c393) 
+----------------------------------------
+Step: 151
+----------------------------------------
+[30783] [CI] [ENTRY] void android.support.v4.app.DialogFragment.<init>() (b18b70a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [ENTRY] [b18b70a] void android.support.v4.app.DialogFragment.<init>()) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 152
+----------------------------------------
+[30783] [CI] [EXIT] void android.support.v4.app.DialogFragment.<init>() (b18b70a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CI] [EXIT] [b18b70a] void android.support.v4.app.DialogFragment.<init>()) |- [CI] [EXIT] [b18b70a] void android.support.v4.app.DialogFragment.<init>()
+----------------------------------------
+Step: 153
+----------------------------------------
+[30830] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(android.app.Activity) (b18b70a,4e4ee87) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------
+Step: 154
+----------------------------------------
+[30838] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(android.os.Bundle) (b18b70a,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b18b70a] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b18b70a] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(282c0b6 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 155
+----------------------------------------
+[30842] [CB] [ENTRY] android.view.LayoutInflater mobi.sherif.imageuploader.FragmentSupportYesNoDialog.getLayoutInflater(android.os.Bundle) (b18b70a,NULL) 
+----------------------------------------
+Step: 156
+----------------------------------------
+[30844] [CB] [ENTRY] android.app.Dialog mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateDialog(android.os.Bundle) (b18b70a,NULL) 
+----------------------------------------
+Step: 157
+----------------------------------------
+[30924] [CB] [ENTRY] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) (b18b70a,282c0b6,NULL,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(282c0b6 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(282c0b6 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(282c0b6 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)) |- [CB] [ENTRY] [b18b70a] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(282c0b6 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 158
+----------------------------------------
+[30928] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(android.os.Bundle) (b18b70a,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onActivityCreated(NULL : android.os.Bundle)
+----------------------------------------
+Step: 159
+----------------------------------------
+[30940] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart() (b18b70a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 160
+----------------------------------------
+[32020] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume() (b18b70a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+----------------------------------------
+Step: 161
+----------------------------------------
+[33004] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause() (b18b70a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onPause()
+----------------------------------------
+Step: 162
+----------------------------------------
+[33008] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop() (b18b70a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStop()) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+----------------------------------------
+Step: 163
+----------------------------------------
+[33012] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView() (b18b70a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [b18b70a] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(282c0b6 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroyView()) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+----------------------------------------
+Step: 164
+----------------------------------------
+[33016] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy() (b18b70a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDestroy()) |- [CB] [ENTRY] [b18b70a] android.view.View mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onCreateView(282c0b6 : android.view.LayoutInflater,NULL : android.view.ViewGroup,NULL : android.os.Bundle)
+----------------------------------------
+Step: 165
+----------------------------------------
+[33020] [CB] [ENTRY] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach() (b18b70a) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |- [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onDetach()) |+ [CB] [ENTRY] [b18b70a] void mobi.sherif.imageuploader.FragmentSupportYesNoDialog.onAttach(4e4ee87 : android.app.Activity)
+----------------------------------------

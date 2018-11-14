@@ -1,0 +1,633 @@
+COMMAND LINE: 
+BENCHTOOLS_PARAMS: /home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+BENCHTOOLS_INSTANCE: /home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-1/_traces/jgilfelt-ThisWayUp-bin/monkeyTraces/trace-SamplesListActivity-debug-unaligned_2017-04-15_12:54:11.repaired
+/home/ubuntu/Documents/source/callback-verification;/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+/home/ubuntu/Documents/source/callback-verification
+/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+python /home/ubuntu/Documents/source/callback-verification/cbverifier/driver.py -m simulate -z -t /home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-1/_traces/jgilfelt-ThisWayUp-bin/monkeyTraces/trace-SamplesListActivity-debug-unaligned_2017-04-15_12:54:11.repaired -s /home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/DialogFragment_lifecycle.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/view_REGEX.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.CountdownTimer/countdowntimer.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Fragment/Fragment.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.view.View/onClick_listener_setenabled.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.os.AsyncTask/AsyncTask.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.Activity/activity_lifestate.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.AlertDialog/dialog.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.app.AlertDialog/DialogInterfaces_OnClickListener.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.PopupMenu/popupmenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.PopupMenu/PopupMenu.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.widget.Toolbar/toolbar.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/enabledisable/android.widget.Toolbar/onMenuItemClick.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Fragment/fragment_callbacks.spec:/home/ubuntu/Documents/source/callback-verification/cbverifier/android_specs/subexpr/android.app.Activity/activity_aux.spec
+parsing - User time: 1.460000
+parsing - System time: 0.180000
+spec_grounding - User time: 208.340000
+spec_grounding - System time: 1.280000
+
+---Simplified Trace---
+[0] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.<init>() (d566f43) 
+[0] [CB] [EXIT] NULL = void com.example.thiswayup.SamplesListActivity.<init>() (d566f43) 
+[50] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (d566f43,NULL) 
+[50] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (d566f43,NULL) 
+[1972] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStart() (d566f43) 
+[1972] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onStart() (d566f43) 
+[1988] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onResume() (d566f43) 
+[1988] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onResume() (d566f43) 
+[4434] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onPause() (d566f43) 
+[4434] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onPause() (d566f43) 
+[4450] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.<init>() (335cf7b) 
+[4450] [CB] [EXIT] NULL = void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.<init>() (335cf7b) 
+[4494] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onCreate(android.os.Bundle) (335cf7b,NULL) 
+[4494] [CB] [EXIT] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onCreate(android.os.Bundle) (335cf7b,NULL) 
+[6242] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStart() (335cf7b) 
+[6242] [CB] [EXIT] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStart() (335cf7b) 
+[6266] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onResume() (335cf7b) 
+[6266] [CB] [EXIT] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onResume() (335cf7b) 
+[7462] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStop() (d566f43) 
+[7462] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onStop() (d566f43) 
+[7726] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onPause() (335cf7b) 
+[7726] [CB] [EXIT] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onPause() (335cf7b) 
+[7742] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onDestroy() (d566f43) 
+[7742] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onDestroy() (d566f43) 
+[7770] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.<init>() (6de1058) 
+[7770] [CB] [EXIT] NULL = void com.example.thiswayup.SamplesListActivity.<init>() (6de1058) 
+[7820] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (6de1058,NULL) 
+[7820] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (6de1058,NULL) 
+[9670] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStart() (6de1058) 
+[9670] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onStart() (6de1058) 
+[9686] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onResume() (6de1058) 
+[9686] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onResume() (6de1058) 
+[12236] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStop() (335cf7b) 
+[12236] [CB] [EXIT] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStop() (335cf7b) 
+[12240] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onDestroy() (335cf7b) 
+[12240] [CB] [EXIT] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onDestroy() (335cf7b) 
+[12462] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onPause() (6de1058) 
+[12462] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onPause() (6de1058) 
+[12478] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.<init>() (99c1f1d) 
+[12478] [CB] [EXIT] NULL = void com.example.thiswayup.jellybean.PostNotificatonActivity.<init>() (99c1f1d) 
+[12522] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(android.os.Bundle) (99c1f1d,NULL) 
+[12522] [CB] [EXIT] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(android.os.Bundle) (99c1f1d,NULL) 
+[14266] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart() (99c1f1d) 
+[14266] [CB] [EXIT] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart() (99c1f1d) 
+[14290] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume() (99c1f1d) 
+[14290] [CB] [EXIT] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume() (99c1f1d) 
+[15486] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStop() (6de1058) 
+[15486] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onStop() (6de1058) 
+[16074] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause() (99c1f1d) 
+[16074] [CB] [EXIT] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause() (99c1f1d) 
+[16086] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onDestroy() (6de1058) 
+[16086] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onDestroy() (6de1058) 
+[16118] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.<init>() (8eebb34) 
+[16118] [CB] [EXIT] NULL = void com.example.thiswayup.SamplesListActivity.<init>() (8eebb34) 
+[16168] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (8eebb34,NULL) 
+[16168] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (8eebb34,NULL) 
+[18018] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStart() (8eebb34) 
+[18018] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onStart() (8eebb34) 
+[18034] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onResume() (8eebb34) 
+[18034] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onResume() (8eebb34) 
+[20448] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop() (99c1f1d) 
+[20448] [CB] [EXIT] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop() (99c1f1d) 
+[20452] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy() (99c1f1d) 
+[20452] [CB] [EXIT] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy() (99c1f1d) 
+[20480] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onPause() (8eebb34) 
+[20480] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onPause() (8eebb34) 
+[20544] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.<init>() (7dee43c) 
+[20544] [CB] [EXIT] NULL = void com.example.thiswayup.support.PostNotificatonActivity.<init>() (7dee43c) 
+[20588] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.onCreate(android.os.Bundle) (7dee43c,NULL) 
+[20588] [CB] [EXIT] void com.example.thiswayup.support.PostNotificatonActivity.onCreate(android.os.Bundle) (7dee43c,NULL) 
+[22332] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.onStart() (7dee43c) 
+[22332] [CB] [EXIT] void com.example.thiswayup.support.PostNotificatonActivity.onStart() (7dee43c) 
+[22356] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.onResume() (7dee43c) 
+[22356] [CB] [EXIT] void com.example.thiswayup.support.PostNotificatonActivity.onResume() (7dee43c) 
+[23644] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStop() (8eebb34) 
+[23644] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onStop() (8eebb34) 
+[24474] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.onPause() (7dee43c) 
+[24474] [CB] [EXIT] void com.example.thiswayup.support.PostNotificatonActivity.onPause() (7dee43c) 
+[24498] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onDestroy() (8eebb34) 
+[24498] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onDestroy() (8eebb34) 
+[24518] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.<init>() (4680400) 
+[24518] [CB] [EXIT] NULL = void com.example.thiswayup.SamplesListActivity.<init>() (4680400) 
+[24568] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (4680400,NULL) 
+[24568] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (4680400,NULL) 
+[26418] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStart() (4680400) 
+[26418] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onStart() (4680400) 
+[26434] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onResume() (4680400) 
+[26434] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onResume() (4680400) 
+[28928] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.onStop() (7dee43c) 
+[28928] [CB] [EXIT] void com.example.thiswayup.support.PostNotificatonActivity.onStop() (7dee43c) 
+[28932] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.onDestroy() (7dee43c) 
+[28932] [CB] [EXIT] void com.example.thiswayup.support.PostNotificatonActivity.onDestroy() (7dee43c) 
+[29320] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onPause() (4680400) 
+[29320] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onPause() (4680400) 
+[29336] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.<init>() (60c3fd2) 
+[29336] [CB] [EXIT] NULL = void com.example.thiswayup.jellybean.PostNotificatonActivity.<init>() (60c3fd2) 
+[29380] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(android.os.Bundle) (60c3fd2,NULL) 
+  [31105] [CI] [ENTRY] android.view.View android.app.Activity.findViewById(int) (60c3fd2,2131361800) 
+  [31105] [CI] [EXIT] e3b1140 = android.view.View android.app.Activity.findViewById(int) (60c3fd2,2131361800) 
+  [31113] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e3b1140,cf6a9be) 
+  [31113] [CI] [EXIT] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e3b1140,cf6a9be) 
+[29380] [CB] [EXIT] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(android.os.Bundle) (60c3fd2,NULL) 
+[31124] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart() (60c3fd2) 
+[31124] [CB] [EXIT] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart() (60c3fd2) 
+[31148] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume() (60c3fd2) 
+[31148] [CB] [EXIT] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume() (60c3fd2) 
+[32384] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity$1.onClick(android.view.View) (cf6a9be,e3b1140) 
+[32384] [CB] [EXIT] void com.example.thiswayup.jellybean.PostNotificatonActivity$1.onClick(android.view.View) (cf6a9be,e3b1140) 
+[32832] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStop() (4680400) 
+[32832] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onStop() (4680400) 
+[33124] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause() (60c3fd2) 
+[33124] [CB] [EXIT] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause() (60c3fd2) 
+[33136] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onDestroy() (4680400) 
+[33136] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onDestroy() (4680400) 
+[33160] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.<init>() (23f16f1) 
+[33160] [CB] [EXIT] NULL = void com.example.thiswayup.SamplesListActivity.<init>() (23f16f1) 
+[33210] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (23f16f1,NULL) 
+[33210] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (23f16f1,NULL) 
+[35060] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStart() (23f16f1) 
+[35060] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onStart() (23f16f1) 
+[35076] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onResume() (23f16f1) 
+[35076] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onResume() (23f16f1) 
+[37798] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop() (60c3fd2) 
+[37798] [CB] [EXIT] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop() (60c3fd2) 
+[37802] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy() (60c3fd2) 
+[37802] [CB] [EXIT] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy() (60c3fd2) 
+[38040] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onPause() (23f16f1) 
+[38040] [CB] [EXIT] void com.example.thiswayup.SamplesListActivity.onPause() (23f16f1) 
+[38148] [CB] [ENTRY] void com.example.thiswayup.jellybean.RetainParentInstanceActivity.<init>() (918b29f) 
+[38148] [CB] [EXIT] NULL = void com.example.thiswayup.jellybean.RetainParentInstanceActivity.<init>() (918b29f) 
+
+
+
+TRACE STATISTICS
+Trace length: 65
+Top-level callbacks: 63
+CI-ENTRY: 1
+CI-EXIT: 1
+CB-ENTRY: 63
+CB-EXIT: 0
+        encoding - User time: 4.110000
+encoding - System time: 0.000000
+simulation - User time: 21.130000
+simulation - System time: 0.220000
+
+The trace can be simulated in 65 steps.
+
+         --- Counterexample ---         
+----------------------------------------
+Step: 1
+----------------------------------------
+[0] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.<init>() (d566f43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.<init>()) |- [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.<init>()) |+ [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 2
+----------------------------------------
+[50] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (d566f43,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onStart()
+----------------------------------------
+Step: 3
+----------------------------------------
+[1972] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStart() (d566f43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onStart()) |+ [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onStart()) |- [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onStart()
+----------------------------------------
+Step: 4
+----------------------------------------
+[1988] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onResume() (d566f43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onResume()) |+ [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onResume()) |- [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onResume()
+----------------------------------------
+Step: 5
+----------------------------------------
+[4434] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onPause() (d566f43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onPause()) |- [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onPause()
+----------------------------------------
+Step: 6
+----------------------------------------
+[4450] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.<init>() (335cf7b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.<init>()) |- [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.<init>()) |+ [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 7
+----------------------------------------
+[4494] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onCreate(android.os.Bundle) (335cf7b,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 8
+----------------------------------------
+[6242] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStart() (335cf7b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStart()) |+ [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStart()) |- [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStart()
+----------------------------------------
+Step: 9
+----------------------------------------
+[6266] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onResume() (335cf7b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onResume()) |- [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onResume()) |+ [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onPause()
+----------------------------------------
+Step: 10
+----------------------------------------
+[7462] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStop() (d566f43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onStop()) |- [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onStop()) |- [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onStop()) |+ [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onDestroy()
+----------------------------------------
+Step: 11
+----------------------------------------
+[7726] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onPause() (335cf7b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onPause()) |+ [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onPause()) |- [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onPause()) |+ [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onPause()) |+ [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStop()
+----------------------------------------
+Step: 12
+----------------------------------------
+[7742] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onDestroy() (d566f43) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onDestroy()) |- [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onDestroy()) |- [CB] [ENTRY] [d566f43] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 13
+----------------------------------------
+[7770] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.<init>() (6de1058) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.<init>()) |- [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.<init>()) |+ [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 14
+----------------------------------------
+[7820] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (6de1058,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onStart()
+----------------------------------------
+Step: 15
+----------------------------------------
+[9670] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStart() (6de1058) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onStart()) |- [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onStart()) |+ [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onResume()
+----------------------------------------
+Step: 16
+----------------------------------------
+[9686] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onResume() (6de1058) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onResume()) |- [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onResume()) |+ [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onPause()
+----------------------------------------
+Step: 17
+----------------------------------------
+[12236] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStop() (335cf7b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStop()) |- [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStop()) |+ [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onStop()) |- [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onResume()
+----------------------------------------
+Step: 18
+----------------------------------------
+[12240] [CB] [ENTRY] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onDestroy() (335cf7b) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onDestroy()) |- [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onDestroy()) |- [CB] [ENTRY] [335cf7b] void com.example.thiswayup.jellybean.LaunchBrowserTaskActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 19
+----------------------------------------
+[12462] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onPause() (6de1058) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onPause()) |- [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 20
+----------------------------------------
+[12478] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.<init>() (99c1f1d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.<init>()) |+ [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.<init>()) |- [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.<init>()
+----------------------------------------
+Step: 21
+----------------------------------------
+[12522] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(android.os.Bundle) (99c1f1d,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 22
+----------------------------------------
+[14266] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart() (99c1f1d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart()) |- [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart()) |+ [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume()
+----------------------------------------
+Step: 23
+----------------------------------------
+[14290] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume() (99c1f1d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume()) |- [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume()) |+ [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause()
+----------------------------------------
+Step: 24
+----------------------------------------
+[15486] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStop() (6de1058) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onStop()) |- [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onStop()) |- [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onStop()) |+ [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onDestroy()
+----------------------------------------
+Step: 25
+----------------------------------------
+[16074] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause() (99c1f1d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause()) |+ [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause()) |+ [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause()) |- [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause()) |+ [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume()
+----------------------------------------
+Step: 26
+----------------------------------------
+[16086] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onDestroy() (6de1058) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onDestroy()) |- [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onDestroy()) |- [CB] [ENTRY] [6de1058] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 27
+----------------------------------------
+[16118] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.<init>() (8eebb34) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.<init>()) |- [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.<init>()) |+ [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 28
+----------------------------------------
+[16168] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (8eebb34,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onStart()
+----------------------------------------
+Step: 29
+----------------------------------------
+[18018] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStart() (8eebb34) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onStart()) |- [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onStart()) |+ [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onResume()
+----------------------------------------
+Step: 30
+----------------------------------------
+[18034] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onResume() (8eebb34) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onResume()) |- [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onResume()) |+ [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onPause()
+----------------------------------------
+Step: 31
+----------------------------------------
+[20448] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop() (99c1f1d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop()) |- [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop()) |- [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop()) |+ [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy()
+----------------------------------------
+Step: 32
+----------------------------------------
+[20452] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy() (99c1f1d) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy()) |- [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy()) |- [CB] [ENTRY] [99c1f1d] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 33
+----------------------------------------
+[20480] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onPause() (8eebb34) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onPause()) |- [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onStop()
+----------------------------------------
+Step: 34
+----------------------------------------
+[20544] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.<init>() (7dee43c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.<init>()) |+ [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.<init>()) |- [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.<init>()
+----------------------------------------
+Step: 35
+----------------------------------------
+[20588] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.onCreate(android.os.Bundle) (7dee43c,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onStart()
+----------------------------------------
+Step: 36
+----------------------------------------
+[22332] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.onStart() (7dee43c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onStart()) |+ [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onStart()) |- [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onStart()
+----------------------------------------
+Step: 37
+----------------------------------------
+[22356] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.onResume() (7dee43c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onResume()) |- [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onResume()) |+ [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onPause()
+----------------------------------------
+Step: 38
+----------------------------------------
+[23644] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStop() (8eebb34) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onStop()) |- [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onStop()) |+ [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onStop()) |- [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onStop()
+----------------------------------------
+Step: 39
+----------------------------------------
+[24474] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.onPause() (7dee43c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onPause()) |- [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onPause()) |+ [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onPause()) |+ [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onPause()) |+ [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onStop()
+----------------------------------------
+Step: 40
+----------------------------------------
+[24498] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onDestroy() (8eebb34) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onDestroy()) |- [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onDestroy()) |- [CB] [ENTRY] [8eebb34] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 41
+----------------------------------------
+[24518] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.<init>() (4680400) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.<init>()) |- [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.<init>()) |+ [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 42
+----------------------------------------
+[24568] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (4680400,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 43
+----------------------------------------
+[26418] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStart() (4680400) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onStart()) |- [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onStart()) |+ [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onResume()
+----------------------------------------
+Step: 44
+----------------------------------------
+[26434] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onResume() (4680400) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onResume()) |- [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onResume()) |+ [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onPause()
+----------------------------------------
+Step: 45
+----------------------------------------
+[28928] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.onStop() (7dee43c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onStop()) |- [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onStop()) |- [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onStop()) |+ [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onDestroy()
+----------------------------------------
+Step: 46
+----------------------------------------
+[28932] [CB] [ENTRY] void com.example.thiswayup.support.PostNotificatonActivity.onDestroy() (7dee43c) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onDestroy()) |- [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onDestroy()) |- [CB] [ENTRY] [7dee43c] void com.example.thiswayup.support.PostNotificatonActivity.onDestroy()
+----------------------------------------
+Step: 47
+----------------------------------------
+[29320] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onPause() (4680400) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onPause()) |- [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onStop()
+----------------------------------------
+Step: 48
+----------------------------------------
+[29336] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.<init>() (60c3fd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.<init>()) |+ [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.<init>()) |- [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.<init>()
+----------------------------------------
+Step: 49
+----------------------------------------
+[29380] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(android.os.Bundle) (60c3fd2,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 50
+----------------------------------------
+[31105] [CI] [EXIT] e3b1140 = android.view.View android.app.Activity.findViewById(int) (60c3fd2,2131361800) 
+----------------------------------------
+Step: 51
+----------------------------------------
+[31113] [CI] [ENTRY] void android.view.View.setOnClickListener(android.view.View$OnClickListener) (e3b1140,cf6a9be) 
+----------------------------------------
+Step: 52
+----------------------------------------
+[31124] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart() (60c3fd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart()) |+ [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart()) |- [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStart()
+----------------------------------------
+Step: 53
+----------------------------------------
+[31148] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume() (60c3fd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume()) |+ [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause()
+    SPEC ((((((TRUE)[*]); e3b1140 = [CI] [EXIT] [60c3fd2] android.view.View android.app.Activity.findViewById(2131361800 : int)); ((TRUE)[*])) & (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume())) & ((((TRUE)[*]); [CI] [ENTRY] [e3b1140] void android.view.View.setOnClickListener(cf6a9be : android.view.View$OnClickListener)); ((TRUE)[*]))) |+ [CB] [ENTRY] [cf6a9be] void com.example.thiswayup.jellybean.PostNotificatonActivity$1.onClick(e3b1140 : android.view.View)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume()) |- [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume()
+----------------------------------------
+Step: 54
+----------------------------------------
+[32384] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity$1.onClick(android.view.View) (cf6a9be,e3b1140) 
+----------------------------------------
+Step: 55
+----------------------------------------
+[32832] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStop() (4680400) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onStop()) |- [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onStop()) |- [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onStop()) |+ [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onDestroy()
+----------------------------------------
+Step: 56
+----------------------------------------
+[33124] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause() (60c3fd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause()) |+ [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause()) |+ [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause()) |- [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onPause()) |+ [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 57
+----------------------------------------
+[33136] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onDestroy() (4680400) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onDestroy()) |- [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onDestroy()) |- [CB] [ENTRY] [4680400] void com.example.thiswayup.SamplesListActivity.onDestroy()
+----------------------------------------
+Step: 58
+----------------------------------------
+[33160] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.<init>() (23f16f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.<init>()) |- [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.<init>()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.<init>()) |+ [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 59
+----------------------------------------
+[33210] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onCreate(android.os.Bundle) (23f16f1,NULL) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)) |- [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)) |+ [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onStart()
+----------------------------------------
+Step: 60
+----------------------------------------
+[35060] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onStart() (23f16f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onStart()) |+ [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onStart()) |- [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onStart()
+----------------------------------------
+Step: 61
+----------------------------------------
+[35076] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onResume() (23f16f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onResume()) |+ [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onResume()) |- [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onResume()
+----------------------------------------
+Step: 62
+----------------------------------------
+[37798] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop() (60c3fd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop()) |- [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop()) |- [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onStop()) |+ [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy()
+----------------------------------------
+Step: 63
+----------------------------------------
+[37802] [CB] [ENTRY] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy() (60c3fd2) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy()) |- [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onDestroy()) |- [CB] [ENTRY] [60c3fd2] void com.example.thiswayup.jellybean.PostNotificatonActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 64
+----------------------------------------
+[38040] [CB] [ENTRY] void com.example.thiswayup.SamplesListActivity.onPause() (23f16f1) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onPause()) |- [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onPause()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onResume()
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onPause()) |+ [CB] [ENTRY] [23f16f1] void com.example.thiswayup.SamplesListActivity.onCreate(NULL : android.os.Bundle)
+----------------------------------------
+Step: 65
+----------------------------------------
+[38148] [CB] [ENTRY] void com.example.thiswayup.jellybean.RetainParentInstanceActivity.<init>() (918b29f) 
+    Matched specifications:
+    SPEC (((TRUE)[*]); [CB] [ENTRY] [918b29f] void com.example.thiswayup.jellybean.RetainParentInstanceActivity.<init>()) |- [CB] [ENTRY] [918b29f] void com.example.thiswayup.jellybean.RetainParentInstanceActivity.<init>()
+----------------------------------------
