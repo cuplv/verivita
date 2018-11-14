@@ -1,0 +1,65 @@
+accepted non sim
+-----
+
+getDiscipliuned --perform click issue, not sure what is going on here --appears to be tr bug
+home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-2/_traces/rrtigga-GetDisciplined-app/monkeyTraces/trace-BetaTest_GetDisciplined_2017-04-16_12:24:34.repaired -- should have been fixed with startActivity
+home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-2/_traces/rrtigga-GetDisciplined-app/monkeyTraces/trace-BetaTest_GetDisciplined_2017-04-16_12:20:15.repaired
+home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-2/_traces/rrtigga-GetDisciplined-app/monkeyTraces/trace-BetaTest_GetDisciplined_2017-04-16_12:28:04.repaired
+home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-2/_traces/rrtigga-GetDisciplined-app/monkeyTraces/trace-BetaTest_GetDisciplined_2017-04-16_12:44:52.repaired
+home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-2/_traces/rrtigga-GetDisciplined-app/monkeyTraces/trace-BetaTest_GetDisciplined_2017-04-16_12:51:26.repaired
+
+
+muharremtac-android_programlama_kitap-KODLAR_EXTRALAR # action bar sherlock
+xCatG-Nanidroid-bin #execute on background thread
+
+Look into
+---------
+ces/ciasaboark-Tacere-release/monkeyTraces/trace-Tacere.v2.0.1_2017-04-25_14:53:15.repaired
+
+
+fixed
+-----
+home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-2/_traces/andstatus-andstatus-app/monkeyTraces/trace-app-debug_2017-04-16_01:38:04.repaired
+home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-2/_traces/martinmarinov-rtl_tcp_andro--bin/monkeyTraces/trace-StreamActivity-debug_2017-04-15_23:15:04.repaired -- different from last time --unknown problem, writing paper with this problem in place
+home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-2/_traces/martinmarinov-rtl_tcp_andro--bin/monkeyTraces/trace-StreamActivity-debug_2017-04-15_23:15:04.repaired
+trace id: 1050
+
+
+
+imulation_lifestate_va1/lifestate_va1//home/ubuntu/Documents/data/monkey_traces/fragment-startActivity-traces-2/_traces/andstatus-andstatus-app/monkeyTraces/trace-app-debug_2017-04-16_01:38:04.repaired.stderr -- does finish or something else cause click to not happen while attached?
+	-- fixed by linking parent activity with onNewIntent, that was a rough fix to find :-(
+
+
+
+old exclusions below this line
+======
+not worrying about non simulation on the following I believe they are simply bugs in the data collection:
+
+
+ 240 /home/ubuntu/Documents/data/monkey_traces/_traces/martinmarinov-rtl_tcp_andro--bin/monkeyTraces/trace-StreamActivity-debug_2017-04-26_12:42:53.repaired result Block time 225.55 steps ? #
+ 241         # can remove only x to make simulate:
+ 242                 activity_lifestate.spec
+ 243                 Fragment.spec
+ 244                 onClick_listener_setenabled.spec
+ 245         # removing only y still won't simulate
+ 246                 countdowntimer.spec
+ 247                 DialogFragment_lifecycle
+ 248                 AsyncTask.spec
+
+all from this app
+rrtigga-GetDisciplined-app
+ 784 /home/ubuntu/Documents/data/monkey_traces/alert-dialog-traces-2/_traces/rrtigga-GetDisciplined-app/monkeyTraces/trace-BetaTest_GetDisciplined_2017-04-16_12:20:15.repaired result Block time 154.88 steps ? # tracing bug? onClick before perfo     rmClick not sure what is going on here https://github.com/rrtigga/GetDisciplined/blob/884ebae03c8bee242d8b030637a9d30bfeb080e3/app/src/main/java/com/spicycurryman/getdisciplined10/app/MainActivity.java
+ 785     Note: this is a bug in tracerunner that I believe is now fixed.
+
+
+other exclusions:
+muharremtac-android_programlama_kitap-KODLAR_EXTRALAR # action bar sherlock
+xCatG-Nanidroid-bin #execute on background thread
+com.daviancorp.android.monsterhunter3udatabase # action bar sherlock
+com.boardgamegeek # action bar sherlock
+fr.xtof54.dragonGoApp #threading issue: TODO understand this again
+
+
+new exclusions
+This stopped simulating recently and I am trying to understand why
+/Users/s/Documents/data/pldi_2017_submission_data/monkey_traces//output-synt/yangtzeu-yangtzeu-app-main/monkeyTraces/trace_2017-04-11_00:55:57.repaired
