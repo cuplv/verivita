@@ -73,7 +73,8 @@ class ResultLine:
             raise Exception("trying to parse comment line")
         if len(splithash) == 2:
             annotation = splithash[1].strip()
-            assert(annotation in {"MSafe", "MReproduce","MBug"})
+            if not (annotation in {"", "MReproduce","MBug"}):
+                assert(False)
             self.annotation = annotation
 
 class SimLine:

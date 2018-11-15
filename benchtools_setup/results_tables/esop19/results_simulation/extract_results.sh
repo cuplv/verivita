@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-python ~/software/benchtools/analyze/extract_log.py -p -f ~/Documents/source/callback-verification/benchtools_setup/filters/simulate_big.py -o results_simulation_va1.txt simulation_lifestate_va1
+python ~/software/benchtools/analyze/extract_log.py -p -f ~/Documents/source/verivita/benchtools_setup/filters/simulate_big.py -o results_simulation_va1.txt simulation_lifestate_va1
 
 #for f in `ls |grep tar.bz2`
 #do
