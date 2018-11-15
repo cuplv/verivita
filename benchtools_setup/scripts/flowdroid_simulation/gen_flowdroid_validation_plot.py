@@ -93,7 +93,6 @@ def main(input_args=None):
     # counts the number of traces that have been completed are >= 
     sim_buckets_cat = {}
     sim_buckets_length_cat = {}
-    sim_buckets_length_non_cumul_cat = {}
     sim_buckets_total_length_cat = {}
 
     max_simul_steps = get_max_trace_length(opts.logfile, INDEX_STEPS)
@@ -113,6 +112,8 @@ def main(input_args=None):
         bucket_total_size_length = bucket_size_length
         total_buckets_total_length = int(math.floor(max_length / bucket_total_size_length))
 
+    total_0_length_traces = 0
+    total_error_traces = 0
     total_number_of_traces = 0
     sum_of_lengths = 0
     with open(opts.logfile) as logfile:
@@ -122,9 +123,8 @@ def main(input_args=None):
             line = line.strip()
 
             splitted = line.split(" ")
-
             result = splitted[INDEX_RESULT].strip()
-            time =splitted[INDEX_TIME]
+            time = splitted[INDEX_TIME]
 
             if result == "Ok":
                 reason = "Ok"
@@ -132,40 +132,50 @@ def main(input_args=None):
                 reason = splitted[INDEX_FAILURE_REASON]
             else:
                 print("Skipping trace with %s result..." % result)
+                total_error_traces += 1
                 continue
 
             try:
                 steps = float(splitted[INDEX_STEPS])
             except:
-                logging.warning("Cannot convert steps %s" % splitted[INDEX_STEPS])
+                logging.warning("Cannot convert steps "\
+                                "%s" % splitted[INDEX_STEPS])
                 continue
             try:
                 total = float(splitted[INDEX_STEPS_TOTAL])
             except:
-                logging.warning("Cannot convert total steps %s" % splitted[INDEX_STEPS_TOTAL])
-
+                logging.warning("Cannot convert total steps " \
+                                "%s" % splitted[INDEX_STEPS_TOTAL])
 
             if total == 0:
+                total_0_length_traces += 1
                 continue
+
+            if reason == "?":
+                print("Found trace with ? failure reason! --- %s\n" \
+                      "Check that the trace get stuck in the first step \n" \
+                      "on a lifecycle-controlled callback!\n" \
+                      "We are assuming this when generating the plots" % line)
+                reason = "FailureCbNonActive"
+
+            if reason == "FailureFragLc":
+                print("Mergin fragment lifecylce errors with activity "\
+                      "lifecycle errors!\n")
+                reason = "FailureActLc"
 
             total_number_of_traces += 1
             sum_of_lengths += total
 
-
-            # print("RESULT=%s\n" \
-            #       "TIME=%s\n" \
-            #       "STEPS=%s\n" \
-            #       "STEPS_TOTAL=%s\n" \
-            #       "FAILURE_REASON=%s\n" % (result, time, steps, total, reason))
             assert steps <= total
 
+            # Cumulative number of traces
+            # Count the traces also in the previous buckets!
             index = get_bucket_index(steps, bucket_size_length)
             assert index >=0 and index <= total_buckets
-            inc_bucket_cat(sim_buckets_length_non_cumul_cat, index, reason)
             for i in range(index+1):
                 inc_bucket_cat(sim_buckets_length_cat, i, reason)
 
-
+            # Total (non-cumulative) number of traces
             index = get_bucket_index(total, bucket_total_size_length)
             assert index >=0 and index <= total_buckets_total_length
             inc_bucket_cat(sim_buckets_total_length_cat, index, reason)
@@ -176,12 +186,6 @@ def main(input_args=None):
                            "flowdroid_trace_completion_trace_cat",
                            101)
 
-        gen_trace_plot_cat(sim_buckets_length_non_cumul_cat, bucket_size_length,
-                           "Validated trace length",
-                           "Number of traces",
-                           "flowdroid_trace_completion_trace_non_cumul_cat",
-                           250)
-
         gen_trace_plot_cat(sim_buckets_total_length_cat, bucket_total_size_length,
                            "Total length of the trace to validate",
                            "Number of traces",
@@ -190,28 +194,31 @@ def main(input_args=None):
 
 
         average_length = float(sum_of_lengths) / float(total_number_of_traces)
-        print("Trace statistics:\n"\
-              "Total number of traces: %d\n"\
-              "Average trace length: %f\n" % (total_number_of_traces,
-                                              average_length))
+        print("Trace statistics:\n" \
+              "Skipped 0-length traces: %d\n" \
+              "Skipped error traces traces: %d\n" \
+              "Total number of processed traces: %d\n" \
+              "Average trace length: %f"  % (total_0_length_traces,
+                                             total_error_traces,
+                                             total_number_of_traces,
+                                             average_length))
+
+        for key, value in sim_buckets_length_cat.iteritems():
+            print "%s/%s" % (str(key), str(value))
 
 
 def gen_trace_plot_cat(sim_buckets_cat, bucket_size,xlabel, ylabel,name, max_bucket = None):
-
-
     categories = ["Ok",
                   "FailureActInterleaving",
                   "FailureFragNonActive",
                   "FailureActLc",
                   "FailureCbNonActive"]
-# ignore, 0 in the experiments!
-#                  "FailureFragInterleaving",
 
-    readable = {"FailureActInterleaving" : "\"No interleaving of Activities\"",
+    readable = {"FailureActInterleaving" : "\"No interleaving of Components\"",
                 "FailureActLc" : "\"Wrong lifecycle automata\"",
                 "FailureCbNonActive" : "\"Wrong active state\"",
                 "FailureFragInterleaving" : "\"No interleaving of Fragments\"",
-                "FailureFragNonActive" : "\"Wrong state for the Fragment lifecycle\"",
+                "FailureFragNonActive" : "\"Wrong state to start Fragment lifecycle\"",
                 "Ok" : "\"No errors\""}
 
     # Generate trace completion plot
