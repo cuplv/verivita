@@ -96,22 +96,25 @@ def main(input_args=None):
     sim_buckets_length_non_cumul_cat = {}
     sim_buckets_total_length_cat = {}
 
-    # Divide the traces by completion rate
-    total_buckets = 10
-    bucket_size = 100 / total_buckets
-
     max_simul_steps = get_max_trace_length(opts.logfile, INDEX_STEPS)
-    bucket_size_length = max_simul_steps / total_buckets
-
-    total_buckets_total_length = total_buckets
     max_length = get_max_trace_length(opts.logfile, INDEX_STEPS_TOTAL)
-    bucket_total_size_length = max_length / total_buckets_total_length
 
+    # Divide the traces by completion rate
+    if (False):
+        total_buckets = 10
+        bucket_size_length = max_simul_steps / total_buckets
+
+        total_buckets_total_length = total_buckets
+        bucket_total_size_length = max_length / total_buckets_total_length
+    else:
+        bucket_size_length = 25
+        total_buckets = int(math.floor(max_simul_steps / bucket_size_length))
+
+        bucket_total_size_length = bucket_size_length
+        total_buckets_total_length = int(math.floor(max_length / bucket_total_size_length))
 
     total_number_of_traces = 0
     sum_of_lengths = 0
-
-    cumulative = True
     with open(opts.logfile) as logfile:
         for line in logfile:
             if line.startswith("#"): # skip comments
@@ -128,6 +131,7 @@ def main(input_args=None):
             elif result == "Block":
                 reason = splitted[INDEX_FAILURE_REASON]
             else:
+                print("Skipping trace with %s result..." % result)
                 continue
 
             try:
@@ -167,16 +171,22 @@ def main(input_args=None):
             inc_bucket_cat(sim_buckets_total_length_cat, index, reason)
 
         gen_trace_plot_cat(sim_buckets_length_cat, bucket_size_length,
-                           "Validated trace length", "Cumulative number of traces",
-                           "flowdroid_trace_completion_trace_cat")
+                           "Steps before unsoundness",
+                           "Cumulative number of traces",
+                           "flowdroid_trace_completion_trace_cat",
+                           101)
 
         gen_trace_plot_cat(sim_buckets_length_non_cumul_cat, bucket_size_length,
-                           "Validated trace length", "Number of traces",
-                           "flowdroid_trace_completion_trace_non_cumul_cat")
+                           "Validated trace length",
+                           "Number of traces",
+                           "flowdroid_trace_completion_trace_non_cumul_cat",
+                           250)
 
         gen_trace_plot_cat(sim_buckets_total_length_cat, bucket_total_size_length,
-                           "Total length of the trace to validate", "Number of traces",
-                           "flowdroid_total_length_trace_cat")
+                           "Total length of the trace to validate",
+                           "Number of traces",
+                           "flowdroid_total_length_trace_cat",
+                           250)
 
 
         average_length = float(sum_of_lengths) / float(total_number_of_traces)
@@ -186,15 +196,16 @@ def main(input_args=None):
                                               average_length))
 
 
-def gen_trace_plot_cat(sim_buckets_cat, bucket_size,xlabel, ylabel,name):
+def gen_trace_plot_cat(sim_buckets_cat, bucket_size,xlabel, ylabel,name, max_bucket = None):
 
 
     categories = ["Ok",
                   "FailureActInterleaving",
-                  "FailureFragInterleaving",
                   "FailureFragNonActive",
                   "FailureActLc",
                   "FailureCbNonActive"]
+# ignore, 0 in the experiments!
+#                  "FailureFragInterleaving",
 
     readable = {"FailureActInterleaving" : "\"No interleaving of Activities\"",
                 "FailureActLc" : "\"Wrong lifecycle automata\"",
@@ -213,16 +224,40 @@ def gen_trace_plot_cat(sim_buckets_cat, bucket_size,xlabel, ylabel,name):
             tc_data.write(" %s" % readable[cat])
         tc_data.write("\n")
 
+        last_floor = None
+        category_sum = [0 for c in categories]
+        last_ceiling = None
+
         for key, category_map in sim_buckets_cat.iteritems():
             completion_floor = int(math.ceil(key * bucket_size))
             completion_ceiling = int(math.floor((key+1) * bucket_size))
-            tc_data.write("\"%s-%s\"" % (str(completion_floor), str(completion_ceiling)))
 
-            for cat in categories:
-                if cat in category_map:
-                    count = category_map[cat]
-                else:
-                    count = 0
+            if (max_bucket is None or completion_ceiling < max_bucket):
+                tc_data.write("\"%s-%s\"" % (str(completion_floor), str(completion_ceiling)))
+
+                for cat in categories:
+                    if cat in category_map:
+                        count = category_map[cat]
+                    else:
+                        count = 0
+                    tc_data.write(" %s" % (str(count)))
+                tc_data.write("\n")
+            else:
+                if last_floor is None:
+                    last_floor = completion_floor
+                last_ceiling = completion_ceiling
+
+                for i in range(len(categories)):
+                    cat = categories[i]
+                    if cat in category_map:
+                        count = category_map[cat]
+                    else:
+                        count = 0
+                    category_sum[i] += count
+
+        if not last_floor is None:
+            tc_data.write("\"%s-%s\"" % (str(last_floor), str(last_ceiling)))
+            for count in category_sum:
                 tc_data.write(" %s" % (str(count)))
             tc_data.write("\n")
 
@@ -245,7 +280,8 @@ set boxwidth 0.75
 set xtic rotate by -45 scale 0
 #set bmargin 10 
 
-plot '%s' using 2:xtic(1), for [i=3:%d] '' using i """ % (plot_name, xlabel, ylabel, tc_data_name, len(categories)+1)
+plot '%s' using 2:xtic(1) lc 1 fillstyle pattern 3, \\
+for [i=3:%d] '' using i lc i fillstyle pattern i==4 ? i+5 : i+1;""" % (plot_name, xlabel, ylabel, tc_data_name, len(categories)+1)
 
     gnuplot_file_name = "%s.g" % name
     with open(gnuplot_file_name, 'w') as gpf:
