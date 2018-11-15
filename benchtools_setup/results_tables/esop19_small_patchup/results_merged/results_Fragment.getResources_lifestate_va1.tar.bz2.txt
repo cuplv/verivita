@@ -11,6 +11,7 @@
 # tempdir: 
 # num_cores: 3
 # NOTE: the bugs in this are predicated on onCreateDialog happening out of order in the lifecycle, we observed this in one trace: monkey_traces/fragment-startActivity-traces-2/_traces/martinmarinov-rtl_tcp_andro--bin/monkeyTraces/trace-StreamActivity-debug_2017-04-15_23:15:04.repaired
+# Note: looked back into it and do not believe onCreateDialog is unbounded in previously suspected way, changed and reran
 /home/ubuntu/Documents/data/apps_man_corp/com.danielkim.soundrecorder/8/traces/manual1.trace.repaired result Unsafe time 575.88 steps ? #MBug
 /home/ubuntu/Documents/data/apps_man_corp/com.danielkim.soundrecorder/8/traces/manual10.trace.repaired result Safe time 253.94 steps ? 
 /home/ubuntu/Documents/data/apps_man_corp/com.danielkim.soundrecorder/8/traces/manual2.trace.repaired result Safe time 155.47 steps ? 
