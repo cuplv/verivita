@@ -35,6 +35,9 @@ class ResultsFile:
                 self.precision_number = 5 #TODO: you just changed this, get results files dumped into same dir and edit rest of code
             else:
                 raise Exception("parse level exception")
+        elif precision == "flowdroid" + FILE_SUFFIX:
+            self.precision_level = "flowdroid"
+            self.precision_number = 2
         else:
             raise Exception("parse level exception")
 
@@ -44,7 +47,7 @@ class ResultLine:
     #line: line created by benchtools
     #alias_map Dictionary[String,String]: map from directory names to actual name
     #    (use this to merge data from one apps' traces being in different dirs)
-    def __init__(self, line, alias_map):
+    def __init__(self, line, alias_map,fname):
         self.origional_line = line
         split_line = line.split(" ")
         self.trace_path = split_line[0]
@@ -73,8 +76,8 @@ class ResultLine:
             raise Exception("trying to parse comment line")
         if len(splithash) == 2:
             annotation = splithash[1].strip()
-            if not (annotation in {"", "MReproduce","MBug"}):
-                assert(False)
+            if not (annotation in {"MReproduce","MBug", "MSafe"}):
+                assert("lifestate_va1" in fname)
             self.annotation = annotation
 
 class SimLine:
@@ -105,6 +108,12 @@ def ignoreLineInResultFile(line):
         return True
     return False
 
+def isExcluded(tracepath, exclusions):
+    exclude = False
+    for exclusion in exclusions:
+        if exclusion in tracepath:
+            exclude = True
+    return exclude
 def loadDirectory(directory, alias_map, trace_exclusions, app_exclusions, isSim=False):
     file_map = {} #mapping from a filename to a set of ResultLine objects Dictionary[String,(ResultsFile,List[ResultLine])]
     toProcess = [ x for x in os.listdir(args.dir) if x.endswith(FILE_SUFFIX)]
@@ -113,15 +122,12 @@ def loadDirectory(directory, alias_map, trace_exclusions, app_exclusions, isSim=
         lines = f.readlines()
         file_map[fname] = (ResultsFile(fname), [])
         for line in lines:
-            exclude = False
-            for exclusion in trace_exclusions:
-                if exclusion in line:
-                    exclude = True
 
+            exclude = isExcluded(line, trace_exclusions)
             if(not exclude):
 
                 if not ignoreLineInResultFile(line):
-                    resultLine = SimLine(line,alias_map) if isSim else ResultLine(line, alias_map)
+                    resultLine = SimLine(line,alias_map) if isSim else ResultLine(line, alias_map,fname)
                     if(resultLine.app_name not in app_exclusions):
                         resultsFile,list_resultLine = file_map[fname]
                         list_resultLine.append(resultLine)
@@ -316,7 +322,9 @@ def genTable(loadedResults, outdir):
         df.set_value(property, "total", totalTraces)
         verifiable_list = [trace for trace in results_list[-1] if
                             (trace[1].proof_status in ["Timeout","Safe","MemoryError"]) or (trace[1].annotation == "MSafe")]
-
+        verifiable_paths = [a[1].trace_path for a in verifiable_list]
+        no_sl_verifiable_paths = [a[1:] for a in verifiable_paths]
+        verifiable_paths.extend(no_sl_verifiable_paths) #flowdroid results have no leading /
         verifiable_count = len(verifiable_list)
         sum_verifiable_traces += verifiable_count
         sum_total_traces += totalTraces
@@ -332,10 +340,15 @@ def genTable(loadedResults, outdir):
                 sum_prop[levelname] = 0
             unsafe_trace_list = [ trace for trace in results_list[level] if isunsafe(trace)]
             unsafe_app_set = set([trace[1].app_name for trace in unsafe_trace_list])
-            safe_trace_list = [trace for trace in results_list[level] if trace[1].proof_status == "Safe"]
+            safe_trace_list = [trace for trace in results_list[level] if (trace[1].proof_status == "Safe") and (trace[1].trace_path in verifiable_paths)]
+            bad_proof_trace_list = [trace for trace in results_list[level] if (trace[1].proof_status == "Safe") and (trace[1].trace_path not in verifiable_paths)]
+            if len(bad_proof_trace_list):
+                print "level %s proved but shouldn't: "
+                for bpf in bad_proof_trace_list:
+                    print "----%s - %s" % (bpf[0].method,bpf[0].precision_level)
+                    print bpf[1].trace_path
             safe_trace_count = len(safe_trace_list)
             sum_prop[levelname] += safe_trace_count
-
 
             unsafe_trace_count = len(unsafe_trace_list)
             unsafe_app_count = len(unsafe_app_set)
@@ -343,6 +356,8 @@ def genTable(loadedResults, outdir):
             df.set_value(property, precision_level_string + "-trace", safe_trace_count)
             frac = float(safe_trace_count) / verifiable_count if verifiable_count != 0 else float("NaN")
             df.set_value(property, precision_level_string + "-perc", round(frac*100))
+            if(PRECISION_LEVELS.index("flowdroid") == level):
+                df.set_value(property, precision_level_string + "-bad", len(bad_proof_trace_list))
             # df.set_value(property, precision_level_string + "-app", unsafe_app_count)
 
     df.set_value("sum","total",sum_total_traces)
@@ -495,7 +510,7 @@ if __name__ == "__main__":
     parser.add_argument('--app_alias', type=str,
                         help="file with each line representing the possible aliases for an app separated by commas")
     parser.add_argument('--out', type=str, help="output directory to dump gnu plot data and other files", required=True)
-    parser.add_argument('--mode', type=str, help="timeSafe, timeAll or table")
+    parser.add_argument('--mode', type=str, help="timeSafe, timeAll, appCount, or table")
 
     args = parser.parse_args()
     simModes = ["simTimePlot"]
@@ -516,7 +531,22 @@ if __name__ == "__main__":
 
 
     # if args.mode not in ["timeSafe","timeAll"]:
+    if args.mode == "appCount":
+        f = open(args.dir,'r')
+        lines = f.readlines()
+        apps = set([ summarize_results.pathToAppId(l, alias_map) for l in lines if not isExcluded(l,trace_exclusions)])
+        print "app count: %i" % len(apps)
+        not_excluded_traces = [l for l in lines if not isExcluded(l,trace_exclusions)]
+        print "trace count : %i" % len(not_excluded_traces)
+        a = list(apps)
+        a.sort()
+        # for b in a:
+        #     print b
+        exit()
+
     loadedResults = loadDirectory(args.dir, alias_map, trace_exclusions, app_exclusions, isSim)
+
+    pass
     if args.mode == "timeSafe":
         gnuplotTime(loadedResults, 10, args.out)
     elif args.mode == "timeAll":
@@ -531,6 +561,8 @@ if __name__ == "__main__":
         timeComp(loadedResults,args.out)
     elif args.mode == "simTimePlot":
         simulationTimePlot(loadedResults,args.out)
+    # elif args.mode == "appCount":
+    #     appCount(loadedResults)
     else:
         raise Exception("Please specify mode with --mode")
 
