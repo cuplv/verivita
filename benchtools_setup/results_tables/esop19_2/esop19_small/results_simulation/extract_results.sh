@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 for f in `ls |grep tar.bz2`
 do
-	python ~/software/benchtools/analyze/extract_log.py -p -f ../filters/simulate.py -o results_${f}.txt $f
+	python ~/software/benchtools/analyze/extract_log.py -p -f /home/ubuntu/Documents/source/callback-verification/benchtools_setup/filters/simulate.pyi -o results_${f}.txt $f
 done
 
 for f in `ls |grep txt`

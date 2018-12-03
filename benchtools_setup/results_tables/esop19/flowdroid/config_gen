@@ -4,13 +4,13 @@ delay_notifications = true
 create_db = true
 scheduler=make
 dump_scheduler_script = output_scheduler_local.txt
-num_cores = 3
+num_cores = 2
 
 
 [group_flowdroid_Fragment.startActivity]
 executable =./scripts/verify_flowdroid.sh
 basedir=/
-time_limit=30
+time_limit=3600
 mem_limit=4000000
 email=
 disabled=false
@@ -21,7 +21,7 @@ instances_file=./instances/Fragment_all.startActivity.txt
 [group_flowdroid_AlertDialog.dismiss]
 executable =./scripts/verify_flowdroid.sh
 basedir=/
-time_limit=30
+time_limit=3600
 mem_limit=4000000
 email=
 disabled=false
@@ -32,7 +32,7 @@ instances_file=./instances/Dialog.dismiss.txt
 [group_flowdroid_AsyncTask.execute]
 executable =./scripts/verify_flowdroid.sh
 basedir=/
-time_limit=30
+time_limit=3600
 mem_limit=4000000
 email=
 disabled=false
@@ -43,7 +43,7 @@ instances_file=./instances/AsyncTask_all.execute.txt
 [group_flowdroid_AlertDialog.show]
 executable =./scripts/verify_flowdroid.sh
 basedir=/
-time_limit=30
+time_limit=3600
 mem_limit=4000000
 email=
 disabled=false
@@ -54,7 +54,7 @@ instances_file=./instances/Dialog.show.txt
 [group_flowdroid_Fragment.getResources]
 executable =./scripts/verify_flowdroid.sh
 basedir=/
-time_limit=30
+time_limit=3600
 mem_limit=4000000
 email=
 disabled=false
@@ -65,7 +65,7 @@ instances_file=./instances/Fragment_all.getResources.txt
 [group_flowdroid_Fragment.setArguments]
 executable =./scripts/verify_flowdroid.sh
 basedir=/
-time_limit=30
+time_limit=3600
 mem_limit=4000000
 email=
 disabled=false
@@ -76,7 +76,7 @@ instances_file=./instances/Fragment.setArguments.txt
 [group_flowdroid_Fragment.getString]
 executable =./scripts/verify_flowdroid.sh
 basedir=/
-time_limit=30
+time_limit=3600
 mem_limit=4000000
 email=
 disabled=false
