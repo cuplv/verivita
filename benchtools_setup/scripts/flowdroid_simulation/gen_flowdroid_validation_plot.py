@@ -181,16 +181,16 @@ def main(input_args=None):
             inc_bucket_cat(sim_buckets_total_length_cat, index, reason)
 
         gen_trace_plot_cat(sim_buckets_length_cat, bucket_size_length,
-                           "Steps before unsoundness",
+                           "Steps simulated before the unsoundness",
                            "Cumulative number of traces",
                            "flowdroid_trace_completion_trace_cat",
-                           101)
+                           76, True)
 
         gen_trace_plot_cat(sim_buckets_total_length_cat, bucket_total_size_length,
                            "Total length of the trace to validate",
                            "Number of traces",
                            "flowdroid_total_length_trace_cat",
-                           250)
+                           251, False)
 
 
         average_length = float(sum_of_lengths) / float(total_number_of_traces)
@@ -207,18 +207,18 @@ def main(input_args=None):
             print "%s/%s" % (str(key), str(value))
 
 
-def gen_trace_plot_cat(sim_buckets_cat, bucket_size,xlabel, ylabel,name, max_bucket = None):
+def gen_trace_plot_cat(sim_buckets_cat, bucket_size,xlabel, ylabel,name, max_bucket = None, cumulative = True):
     categories = ["Ok",
                   "FailureActInterleaving",
                   "FailureFragNonActive",
                   "FailureActLc",
                   "FailureCbNonActive"]
 
-    readable = {"FailureActInterleaving" : "\"No interleaving of Components\"",
-                "FailureActLc" : "\"Wrong lifecycle automata\"",
-                "FailureCbNonActive" : "\"Wrong active state\"",
-                "FailureFragInterleaving" : "\"No interleaving of Fragments\"",
-                "FailureFragNonActive" : "\"Wrong state to start Fragment lifecycle\"",
+    readable = {"FailureActInterleaving" : "\"components' interleaving\"",
+                "FailureActLc" : "\"lifecycle automata\"",
+                "FailureCbNonActive" : "\"active state\"",
+                "FailureFragInterleaving" : "\"no interleaving of Fragments\"",
+                "FailureFragNonActive" : "\"start of Fragment lifecycle\"",
                 "Ok" : "\"No errors\""}
 
     # Generate trace completion plot
@@ -236,7 +236,7 @@ def gen_trace_plot_cat(sim_buckets_cat, bucket_size,xlabel, ylabel,name, max_buc
         last_ceiling = None
 
         for key, category_map in sim_buckets_cat.iteritems():
-            completion_floor = int(math.ceil(key * bucket_size))
+            completion_floor = int(math.ceil(key * bucket_size)) + 1
             completion_ceiling = int(math.floor((key+1) * bucket_size))
 
             if (max_bucket is None or completion_ceiling < max_bucket):
@@ -254,13 +254,19 @@ def gen_trace_plot_cat(sim_buckets_cat, bucket_size,xlabel, ylabel,name, max_buc
                     last_floor = completion_floor
                 last_ceiling = completion_ceiling
 
+                # Do not sum again if the plot was already cumulative
+                # the previous bucket already sum the data from the 
+                # following buckets
                 for i in range(len(categories)):
                     cat = categories[i]
                     if cat in category_map:
                         count = category_map[cat]
                     else:
-                        count = 0
+                        count = 0                    
                     category_sum[i] += count
+
+                if (cumulative):
+                    break
 
         if not last_floor is None:
             tc_data.write("\"%s-%s\"" % (str(last_floor), str(last_ceiling)))
@@ -271,21 +277,18 @@ def gen_trace_plot_cat(sim_buckets_cat, bucket_size,xlabel, ylabel,name, max_buc
         tc_data.close()
 
     plot_name = "%s.png" % name
-    gnuplot_cmd = """
-set terminal png   enhanced font "arial,10" fontscale 1.0 size 600, 400 
+    gnuplot_cmd = """set terminal png enhanced font "helvetica,18" fontscale 1.0 size 600, 400 
 set output '%s'
 
 set xlabel \"%s\"
 set ylabel \"%s\"
 
-set key autotitle columnheader invert
+set key autotitle columnheader invert font "helvetica,14"
 set style data histogram
 set style histogram rowstacked gap 1
 set style fill solid border -1
 set boxwidth 0.75
-#set boxwidth 0.9
 set xtic rotate by -45 scale 0
-#set bmargin 10 
 
 plot '%s' using 2:xtic(1) lc 1 fillstyle pattern 3, \\
 for [i=3:%d] '' using i lc i fillstyle pattern i==4 ? i+5 : i+1;""" % (plot_name, xlabel, ylabel, tc_data_name, len(categories)+1)
