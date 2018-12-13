@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
-for f in `ls |grep tar.bz2`
-do
-	(python ~/software/benchtools/analyze/extract_log.py -p -f ../../../../../filters/simulate.py -o results_${f}.txt $f)&
-done
+python ~/software/benchtools/analyze/extract_log.py -p -f ../../../../../filters/simulate.py -o results_${f}.txt simulation_flowdroid
 
 for f in `ls |grep txt`
 do
