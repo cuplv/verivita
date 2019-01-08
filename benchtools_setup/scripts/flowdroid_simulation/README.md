@@ -34,6 +34,11 @@ cd <verivita-repo>/benchtools_setup/results_tables/popl/flowdroid/simulation/
 python <verivita-repo>/benchtools_setup/scripts/flowdroid_simulation/gen_flowdroid_validation_plot.py -f simulation_flowdroid.log
 ```
 
+The script can also considers the exclusion file used by Shawn with the `--trace_blacklist` argument.
+
+```
+python <verivita-repo>/benchtools_setup/scripts/flowdroid_simulation/gen_flowdroid_validation_plot.py -f simulation_flowdroid.log --trace_blacklist <path_to_blacklist_of_traces>
+```
 
 
 
