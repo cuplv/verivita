@@ -6,6 +6,7 @@ import logging
 import subprocess
 
 # index starts from 0
+INDEX_TRACE_NAME=0
 INDEX_RESULT=2
 INDEX_TIME=INDEX_RESULT + 2
 INDEX_STEPS=INDEX_TIME + 2
@@ -76,6 +77,10 @@ def main(input_args=None):
     p.add_option('-f', '--logfile',
                  help="Logfile with the flowdroid simulation results")
 
+    p.add_option('-e', '--trace_blacklist',
+                 help="File used to exclude traces")
+
+
     def usage(msg=""):
         if msg: print "----%s----\n" % msg
         p.print_help()
@@ -88,6 +93,20 @@ def main(input_args=None):
     if (not opts.logfile): usage("Missing log file (-f)")
     if (not os.path.exists(opts.logfile)):
         usage("Log file %s does not exists!" % opts.logfile)
+
+    use_exclusions = False
+    if (opts.trace_blacklist):
+        use_exclusions = True
+
+        if (not os.path.exists(opts.trace_blacklist)):
+            usage("Exclusion file %s does not exists!" % opts.trace_blacklist)
+        
+        exclusions_list = []
+        with open(opts.trace_blacklist, 'r') as ef:
+            for line in ef:
+                line = line.strip()
+                exclusions_list.append(line)
+            ef.close()
 
 
     # counts the number of traces that have been completed are >= 
@@ -112,26 +131,47 @@ def main(input_args=None):
         bucket_total_size_length = bucket_size_length
         total_buckets_total_length = int(math.floor(max_length / bucket_total_size_length))
 
+    total_traces = 0
     total_0_length_traces = 0
     total_error_traces = 0
+    total_excluded_traces = 0
     total_number_of_traces = 0
     sum_of_lengths = 0
+
     with open(opts.logfile) as logfile:
         for line in logfile:
             if line.startswith("#"): # skip comments
                 continue
             line = line.strip()
 
+            if not line:
+                continue
+
             splitted = line.split(" ")
+            trace_name = splitted[INDEX_TRACE_NAME]
             result = splitted[INDEX_RESULT].strip()
             time = splitted[INDEX_TIME]
+
+            total_traces = total_traces + 1
+
+            if (use_exclusions):
+                fixed_compare = "/" + trace_name
+                to_exclude = False
+                for exclusion in exclusions_list:
+                    if exclusion in fixed_compare:
+                        total_excluded_traces = total_excluded_traces + 1
+                        to_exclude = True
+                        break
+                if to_exclude:
+                    continue
+
 
             if result == "Ok":
                 reason = "Ok"
             elif result == "Block":
                 reason = splitted[INDEX_FAILURE_REASON]
             else:
-                print("Skipping trace with %s result..." % result)
+                print("Skipping trace with %s result (%s)..." % (result,"/"+trace_name))
                 total_error_traces += 1
                 continue
 
@@ -152,15 +192,15 @@ def main(input_args=None):
                 continue
 
             if reason == "?":
-                print("Found trace with ? failure reason! --- %s\n" \
-                      "Check that the trace get stuck in the first step \n" \
-                      "on a lifecycle-controlled callback!\n" \
-                      "We are assuming this when generating the plots" % line)
+                # print("Found trace with ? failure reason! --- %s\n" \
+                #       "Check that the trace get stuck in the first step \n" \
+                #       "on a lifecycle-controlled callback!\n" \
+                #       "We are assuming this when generating the plots" % line)
                 reason = "FailureCbNonActive"
 
             if reason == "FailureFragLc":
-                print("Mergin fragment lifecylce errors with activity "\
-                      "lifecycle errors!\n")
+                # print("Mergin fragment lifecylce errors with activity "\
+                #       "lifecycle errors!\n")
                 reason = "FailureActLc"
 
             total_number_of_traces += 1
@@ -180,6 +220,7 @@ def main(input_args=None):
             assert index >=0 and index <= total_buckets_total_length
             inc_bucket_cat(sim_buckets_total_length_cat, index, reason)
 
+
         gen_trace_plot_cat(sim_buckets_length_cat, bucket_size_length,
                            "Steps simulated before the unsoundness",
                            "Cumulative number of traces",
@@ -192,19 +233,23 @@ def main(input_args=None):
                            "flowdroid_total_length_trace_cat",
                            251, False)
 
-
         average_length = float(sum_of_lengths) / float(total_number_of_traces)
         print("Trace statistics:\n" \
+              "Total traces: %d\n" \
+              "Skipped excluded traces: %d\n" \
               "Skipped 0-length traces: %d\n" \
               "Skipped error traces traces: %d\n" \
               "Total number of processed traces: %d\n" \
-              "Average trace length: %f"  % (total_0_length_traces,
+              "Average trace length: %f"  % (total_traces,
+                                             total_excluded_traces if use_exclusions  else 0,
+                                             total_0_length_traces,
                                              total_error_traces,
                                              total_number_of_traces,
                                              average_length))
 
         for key, value in sim_buckets_length_cat.iteritems():
             print "%s/%s" % (str(key), str(value))
+
 
 
 def gen_trace_plot_cat(sim_buckets_cat, bucket_size,xlabel, ylabel,name, max_bucket = None, cumulative = True):
