@@ -247,7 +247,7 @@ def isunsafe(trace):
     else:
         raise Exception("bad type in isUnsafe")
 
-def genTable(loadedResults, outdir):
+def genTable(loadedResults, outdir, proof_filter=False):
     column_names = []
     properties = set()
     for precision_level in PRECISION_LEVELS:
@@ -267,9 +267,13 @@ def genTable(loadedResults, outdir):
     for prop in properties_list:
         property_result_map[prop] = [set() for f in PRECISION_LEVELS]
 
+    results_tup = []
     for result_filename in loadedResults:
-        result_file = loadedResults[result_filename][0]
-        result_list = loadedResults[result_filename][1]
+        results_tup.append(loadedResults[result_filename])
+
+    for t in results_tup:
+        result_file = t[0]
+        result_list = t[1]
         property = result_file.method
         precision_level = result_file.precision_level
         precision_number = result_file.precision_number
@@ -288,27 +292,25 @@ def genTable(loadedResults, outdir):
         pass
 
     del result_list
-    level_filter = False
-    if level_filter: #Set to true for level filtering
+    if proof_filter: #Set to true for level filtering
         for property in property_result_map:
             results_list = property_result_map[property]
-            for level in xrange(len(results_list)):
-                unsafe_trace_count = 0
-                unsafe_app_set = set()
+            #PRECISION_LEVELS = [0:"just_disallow",1:"lifecycle",2:"flowdroid",3:"baseline", 4:"lifestate_va0",5:"lifestate_va1"]
+            filter_levels = [0,1,5] #only filter just disallow, lifecycle and lifestate, flowdroid is unsound so no filter
+            for level in filter_levels:
                 iter_level_list = results_list[level].copy()
                 for result in iter_level_list:
                     property = result[0].method
                     trace_path = result[1].trace_path
-                    lowerlevels = range(level)
+                    lowerlevels = [l for l in filter_levels if l < level]
                     #check if a lower level proved this result
                     # proved_inlowerlevel = False
                     for lowerlevel in lowerlevels:
                         lowerlevelset = results_list[lowerlevel]
-                        #TODO: if result is proved in lower level then remvoe it from results_list TODO: remove this behavior
                         for lower_result in lowerlevelset:
-                            pass
                             if lower_result[1].trace_path == trace_path and lower_result[1].proof_status == "Safe":
                                 results_list[level].remove(result)
+                                raise Exception("TODO")
 
 
 
@@ -320,6 +322,14 @@ def genTable(loadedResults, outdir):
         results_list = property_result_map[property]
         totalTraces = len(results_list[0])
         df.set_value(property, "total", totalTraces)
+        if(outdir is not None and outdir != "/dev/null"):
+            inst_file = open(os.path.join(outdir,property),'w')
+            for r in results_list[0]:
+                trace_path = r[1].trace_path.split("/")
+                trace_path[1] = "Users"
+                trace_path[2] = "s"
+                inst_file.write("/".join(trace_path) + "\n")
+            inst_file.close()
         verifiable_list = [trace for trace in results_list[-1] if
                             (trace[1].proof_status in ["Timeout","Safe","MemoryError"]) or (trace[1].annotation == "MSafe")]
         verifiable_paths = [a[1].trace_path for a in verifiable_list]
@@ -329,8 +339,9 @@ def genTable(loadedResults, outdir):
         sum_verifiable_traces += verifiable_count
         sum_total_traces += totalTraces
         df.set_value(property, "verifiable", verifiable_count)
-        # for level in xrange(len(results_list)):#TODO: put this check back in when we get flowdroid data
-        #     assert(totalTraces == len(results_list[level]))
+        for level in xrange(len(results_list)):#TODO: put this check back in when we get flowdroid data
+            if ( not totalTraces == len(results_list[level]) ) and level != 4: #Don't fail on va0
+                assert(False)
 
         for level in xrange(len(results_list)): #TODO: make sure this level thing is behaving correctly
             levelname = PRECISION_LEVELS[level]
@@ -467,7 +478,25 @@ def simulationTimePlot(loadedResults, out):
             f.write(key + " 1 " + str(v1) + " " + str(v2) + "\n")
     f.close()
 
+def cleanStringForLatex(s):
+    out = []
+    for c in s:
+        if c in ["_"]:
+            out.append("\\_")
+        else:
+            out.append(c)
+    return "".join(out).strip()
 
+def cleanName(iname):
+    spl = iname.split("/")
+    org = spl[0]
+    name = spl[1][0].upper()
+    name += spl[1][1:]
+    for suffix in ["-bin","-app","-main","-fix","-bug"]:
+        if(name.endswith(suffix)):
+            name = name.split("-bin")[0]
+        break
+    return (cleanStringForLatex(org),cleanStringForLatex(name))
 def timeComp(loadedResults, out):
     proofs = {}
     for result in loadedResults:
@@ -510,6 +539,7 @@ if __name__ == "__main__":
     parser.add_argument('--app_alias', type=str,
                         help="file with each line representing the possible aliases for an app separated by commas")
     parser.add_argument('--out', type=str, help="output directory to dump gnu plot data and other files", required=True)
+    parser.add_argument('--out2', type=str, help="", required=False)
     parser.add_argument('--mode', type=str, help="timeSafe, timeAll, appCount, or table")
 
     args = parser.parse_args()
@@ -533,15 +563,71 @@ if __name__ == "__main__":
     # if args.mode not in ["timeSafe","timeAll"]:
     if args.mode == "appCount":
         f = open(args.dir,'r')
-        lines = f.readlines()
-        apps = set([ summarize_results.pathToAppId(l, alias_map) for l in lines if not isExcluded(l,trace_exclusions)])
+        github_lookup = f.readlines()
+        apps = set([summarize_results.pathToAppId(l, alias_map) for l in github_lookup if not isExcluded(l, trace_exclusions)])
         print "app count: %i" % len(apps)
-        not_excluded_traces = [l for l in lines if not isExcluded(l,trace_exclusions)]
+
+        not_excluded_traces = [l for l in github_lookup if not isExcluded(l, trace_exclusions)]
         print "trace count : %i" % len(not_excluded_traces)
         a = list(apps)
         a.sort()
         # for b in a:
         #     print b
+        github_lookup = {}
+    print "\n\n%%%------"
+    if(args.apps_list != None):
+        app_sources = open(args.apps_list,'r')
+
+        for lin in app_sources:
+            line = lin.strip()
+            spl = line.split(",")
+            if len(spl) == 3 and (not spl[2].startswith('(')):
+                (org,name) = spl[2].split(" ")
+                github_lookup[spl[0]] = (cleanStringForLatex(org),cleanStringForLatex(name),spl[1].strip())
+            # elif (len(spl) >1) and (len(spl) == 2 or spl[2].startswith('(')):
+            elif (len(spl) == 2):
+                (org,name) = cleanName(spl[1])
+                #Note url not cleaned as it goes into a "\url" tag
+                # org = cleanStringForLatex(org)
+                # name2 = cleanStringForLatex(name)
+                github_lookup[spl[0]] = (org, name, spl[1].strip())
+            else:
+                pass
+                # raise Exception("unfilled entry")
+            # else:
+            #     print line
+
+        # print ""
+        filesmap = {}
+        currentCount = 0
+        currentFile = 0
+        for app in apps:
+            fname = "apps_part%i.tex" % currentFile
+            if fname not in filesmap:
+                filesmap[fname] = []
+            github_stub = github_lookup[app]
+            filesmap[fname].append("\\fmtapporg{%s} & \\fmtappname{%s} & \\fmtappurl{https://github.com/%s} \\\\\n" % github_stub)
+            currentCount += 1
+            if currentCount > 40:
+                currentFile+=1
+                currentCount=0
+
+
+        if(args.out != None and args.out != "/dev/null"):
+            for fname in filesmap:
+                with open(os.path.join(args.out,fname),'w') as f:
+                    f.writelines(filesmap[fname])
+        elif(args.out2 != None):
+            with open(os.path.join(args.out2,"allTraces.txt"),'w') as alltracesfile:
+                for nextr in not_excluded_traces:
+                    alltracesfile.write(nextr)
+                pass
+        else:
+            raise Exception("out needed")
+        # print "\\\\"
+
+        pass
+        print "-----"
         exit()
 
     loadedResults = loadDirectory(args.dir, alias_map, trace_exclusions, app_exclusions, isSim)
