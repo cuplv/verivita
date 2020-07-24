@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/user_interface_label">
+        <ListPreference
+            android:entryValues="@array/theme_values"
+            android:entries="@array/theme_options"
+            android:title="@string/pref_set_theme_title"
+            android:key="prefTheme"
+            android:summary="@string/pref_set_theme_sum"
+            android:defaultValue="0"/>
+        <PreferenceScreen
+            android:key="prefDrawerSettings"
+            android:summary="@string/pref_nav_drawer_sum"
+            android:title="@string/pref_nav_drawer_title">
+            <Preference
+                android:key="prefHiddenDrawerItems"
+                android:summary="@string/pref_nav_drawer_items_sum"
+                android:title="@string/pref_nav_drawer_items_title" />
+            <ListPreference
+                android:entryValues="@array/nav_drawer_feed_order_values"
+                android:entries="@array/nav_drawer_feed_order_options"
+                android:title="@string/pref_nav_drawer_feed_order_title"
+                android:key="prefDrawerFeedOrder"
+                android:summary="@string/pref_nav_drawer_feed_order_sum"
+                android:defaultValue="0"/>
+            <ListPreference
+                android:entryValues="@array/nav_drawer_feed_counter_values"
+                android:entries="@array/nav_drawer_feed_counter_options"
+                android:title="@string/pref_nav_drawer_feed_counter_title"
+                android:key="prefDrawerFeedIndicator"
+                android:summary="@string/pref_nav_drawer_feed_counter_sum"
+                android:defaultValue="0"/>
+        </PreferenceScreen>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:enabled="true"
+            android:key="prefExpandNotify"
+            android:summary="@string/pref_expandNotify_sum"
+            android:title="@string/pref_expandNotify_title"/>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:enabled="true"
+            android:key="prefPersistNotify"
+            android:summary="@string/pref_persistNotify_sum"
+            android:title="@string/pref_persistNotify_title"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:enabled="true"
+            android:key="prefLockscreenBackground"
+            android:summary="@string/pref_lockscreen_background_sum"
+            android:title="@string/pref_lockscreen_background_title"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:enabled="true"
+            android:key="prefShowDownloadReport"
+            android:summary="@string/pref_showDownloadReport_sum"
+            android:title="@string/pref_showDownloadReport_title"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/queue_label">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:enabled="true"
+            android:key="prefQueueAddToFront"
+            android:summary="@string/pref_queueAddToFront_sum"
+            android:title="@string/pref_queueAddToFront_title"/>
+        />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/playback_pref">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:enabled="true"
+            android:key="prefPauseOnHeadsetDisconnect"
+            android:summary="@string/pref_pauseOnHeadsetDisconnect_sum"
+            android:title="@string/pref_pauseOnHeadsetDisconnect_title"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:enabled="true"
+            android:dependency="prefPauseOnHeadsetDisconnect"
+            android:key="prefUnpauseOnHeadsetReconnect"
+            android:summary="@string/pref_unpauseOnHeadsetReconnect_sum"
+            android:title="@string/pref_unpauseOnHeadsetReconnect_title"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:enabled="true"
+            android:key="prefFollowQueue"
+            android:summary="@string/pref_followQueue_sum"
+            android:title="@string/pref_followQueue_title"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:enabled="true"
+            android:key="prefSkipKeepsEpisode"
+            android:summary="@string/pref_skip_keeps_episodes_sum"
+            android:title="@string/pref_skip_keeps_episodes_title"/>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:enabled="true"
+            android:key="prefAutoDelete"
+            android:summary="@string/pref_auto_delete_sum"
+            android:title="@string/pref_auto_delete_title"/>
+        <ListPreference
+            android:defaultValue="30"
+            android:entries="@array/smart_mark_as_played_values"
+            android:entryValues="@array/smart_mark_as_played_values"
+            android:key="prefSmartMarkAsPlayedSecs"
+            android:summary="@string/pref_smart_mark_as_played_sum"
+            android:title="@string/pref_smart_mark_as_played_title"/>
+        <Preference
+            android:key="prefPlaybackSpeedLauncher"
+            android:summary="@string/pref_playback_speed_sum"
+            android:title="@string/pref_playback_speed_title" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:enabled="true"
+            android:key="prefPauseForFocusLoss"
+            android:summary="@string/pref_pausePlaybackForFocusLoss_sum"
+            android:title="@string/pref_pausePlaybackForFocusLoss_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:enabled="true"
+            android:key="prefResumeAfterCall"
+            android:summary="@string/pref_resumeAfterCall_sum"
+            android:title="@string/pref_resumeAfterCall_title"/>
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/network_pref">
+        <Preference
+            android:key="prefAutoUpdateIntervall"
+            android:summary="@string/pref_autoUpdateIntervallOrTime_sum"
+            android:title="@string/pref_autoUpdateIntervallOrTime_title"/>
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:enabled="true"
+            android:key="prefMobileUpdate"
+            android:summary="@string/pref_mobileUpdate_sum"
+            android:title="@string/pref_mobileUpdate_title"/>
+
+        <ListPreference
+            android:defaultValue="-1"
+            android:entries="@array/episode_cleanup_entries"
+            android:key="prefEpisodeCleanup"
+            android:title="@string/pref_episode_cleanup_title"
+            android:summary="@string/pref_episode_cleanup_summary"
+            android:entryValues="@array/episode_cleanup_values"/>
+
+        <de.danoeh.antennapod.preferences.CustomEditTextPreference
+            android:defaultValue="6"
+            android:inputType="number"
+            android:key="prefParallelDownloads"
+            android:title="@string/pref_parallel_downloads_title"/>
+        <ListPreference
+            android:defaultValue="20"
+            android:entries="@array/episode_cache_size_entries"
+            android:key="prefEpisodeCacheSize"
+            android:title="@string/pref_episode_cache_title"
+            android:entryValues="@array/episode_cache_size_values"/>
+        <PreferenceScreen
+            android:summary="@string/pref_automatic_download_sum"
+            android:key="prefAutoDownloadSettings"
+            android:title="@string/pref_automatic_download_title">
+            <CheckBoxPreference
+                android:key="prefEnableAutoDl"
+                android:title="@string/pref_automatic_download_title"
+                android:defaultValue="false"/>
+            <CheckBoxPreference
+                android:key="prefEnableAutoDownloadOnBattery"
+                android:title="@string/pref_automatic_download_on_battery_title"
+                android:summary="@string/pref_automatic_download_on_battery_sum"
+                android:defaultValue="true"/>
+            <CheckBoxPreference
+                android:key="prefEnableAutoDownloadWifiFilter"
+                android:title="@string/pref_autodl_wifi_filter_title"
+                android:summary="@string/pref_autodl_wifi_filter_sum"/>
+
+        </PreferenceScreen>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/services_label">
+        <PreferenceScreen
+            android:key="prefFlattrSettings"
+            android:title="@string/flattr_label">
+            <PreferenceScreen
+                android:key="pref_flattr_authenticate"
+                android:summary="@string/pref_flattr_auth_sum"
+                android:title="@string/pref_flattr_auth_title">
+                <intent android:action=".activities.FlattrAuthActivity"/>
+            </PreferenceScreen>
+
+            <Preference
+                android:key="prefAutoFlattrPrefs"
+                android:summary="@string/pref_auto_flattr_sum"
+                android:title="@string/pref_auto_flattr_title" />
+            <Preference
+                android:key="prefRevokeAccess"
+                android:summary="@string/pref_revokeAccess_sum"
+                android:title="@string/pref_revokeAccess_title"/>
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="prefFlattrSettings"
+            android:title="@string/gpodnet_main_label">
+
+            <PreferenceScreen
+                android:key="pref_gpodnet_authenticate"
+                android:title="@string/pref_gpodnet_authenticate_title"
+                android:summary="@string/pref_gpodnet_authenticate_sum">
+                <intent android:action=".activity.gpoddernet.GpodnetAuthenticationActivity"/>
+            </PreferenceScreen>
+            <Preference
+                android:key="pref_gpodnet_setlogin_information"
+                android:title="@string/pref_gpodnet_setlogin_information_title"
+                android:summary="@string/pref_gpodnet_setlogin_information_sum"/>
+            <Preference
+                android:key="pref_gpodnet_logout"
+                android:title="@string/pref_gpodnet_logout_title"/>
+            <Preference
+                android:key="pref_gpodnet_hostname"
+                android:title="@string/pref_gpodnet_sethostname_title"/>
+        </PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/other_pref">
+        <Preference
+            android:title="@string/choose_data_directory"
+            android:key="prefChooseDataDir"/>
+        <ListPreference
+            android:entryValues="@array/image_cache_size_values"
+            android:entries="@array/image_cache_size_options"
+            android:title="@string/pref_image_cache_size_title"
+            android:key="prefImageCacheSize"
+            android:summary="@string/pref_image_cache_size_sum"
+            android:defaultValue="100"/>
+        <Preference
+            android:key="prefOpmlExport"
+            android:title="@string/opml_export_label"/>
+        <Preference
+            android:key="prefAbout"
+            android:title="@string/about_pref"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/experimental_pref">
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:enabled="false"
+        android:key="prefSonic"
+        android:summary="@string/pref_sonic_message"
+        android:title="@string/pref_sonic_title"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
